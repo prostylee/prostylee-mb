@@ -6,8 +6,10 @@ import {
 } from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
-import {userSelectors} from '../reducers';
+import {userSelectors, dataSelectors} from 'reducers';
 import {navigationRef} from './rootNavigator';
+
+import {lightTheme, darkTheme} from 'theme';
 
 const Stack = createStackNavigator();
 
@@ -51,9 +53,12 @@ function SignedOut() {
 
 const App = React.forwardRef(() => {
   const user = useSelector((state) => userSelectors.getUser(state));
+  const themeMode = useSelector((state) => dataSelectors.getThemeMode(state));
 
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer
+      ref={navigationRef}
+      theme={themeMode === 'dark' ? darkTheme : lightTheme}>
       <Stack.Navigator
         screenOptions={{
           gestureEnabled: true,

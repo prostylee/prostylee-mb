@@ -18,6 +18,7 @@ import ModalNetworkWarning from './ModalNetworkWarning';
 import RnActionSheet from './RnActionSheet';
 import Image from './Image';
 import Colors from './Colors';
+import ModalImagePicker from './ModalImagePicker';
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -38,5 +39,6 @@ export {
   ModalZoomImage,
   ModalNetworkWarning,
   RnActionSheet,
+  ModalImagePicker,
   Colors,
 };

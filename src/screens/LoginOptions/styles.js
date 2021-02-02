@@ -35,4 +35,12 @@ export default EStyleSheet.create({
       tintColor: '$mainColor',
     },
   },
+  lightText: {
+    color: '$black',
+    fontSize: '$largeText',
+  },
+  darkText: {
+    color: '$white',
+    fontSize: '$largeText',
+  },
 });

@@ -7,6 +7,7 @@ import {dataSelectors, dataActions} from 'reducers';
 import styles from './styles';
 
 import I18n from 'I18n';
+import {Button} from 'react-native-paper';
 
 export class LoginOptions extends React.PureComponent {
   constructor(props) {
@@ -15,11 +16,18 @@ export class LoginOptions extends React.PureComponent {
   }
 
   render() {
+    const {theme} = this.props;
     return (
       <Container>
         <View style={styles.container}>
-          <Text>{I18n.t('test')}</Text>
+          <Text style={styles[`${theme}Text`]}>{I18n.t('test')}</Text>
           <Text>{`Is loading : ${this.props.isLoading}`}</Text>
+          <Button
+            icon="camera"
+            mode="contained"
+            onPress={() => console.log('Pressed')}>
+            Press me
+          </Button>
         </View>
       </Container>
     );
@@ -28,6 +36,7 @@ export class LoginOptions extends React.PureComponent {
 
 const mapStateToProps = (state) => ({
   isLoading: dataSelectors.getLoading(state),
+  theme: dataSelectors.getThemeMode(state),
 });
 
 const mapDispatchToProps = {

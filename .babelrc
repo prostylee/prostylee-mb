@@ -19,7 +19,8 @@
             "saga": "./src/saga",
             "config": "./src/config",
             "services": "./src/services",
-            "I18n": "./src/I18n"
+            "I18n": "./src/I18n",
+            "theme": "./src/theme"
           }
         }
       ]

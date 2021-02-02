@@ -4,10 +4,17 @@ import {Provider} from 'react-redux';
 
 import Index from './src';
 
+import {
+  Provider as PaperProvider,
+  DarkTheme as PaperDarkTheme,
+} from 'react-native-paper';
+
 const App = () => {
   return (
     <Provider store={store}>
-      <Index />
+      <PaperProvider theme={PaperDarkTheme}>
+        <Index />
+      </PaperProvider>
     </Provider>
   );
 };
