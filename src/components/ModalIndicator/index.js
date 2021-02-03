@@ -14,7 +14,7 @@ const ModalIndicator = ({style, visible}) => {
       animationOutTiming={20}
       backdropOpacity={0.3}>
       <View style={styles.containerAlert}>
-        <ActivityIndicator size="large" color="red" style={style} />
+        <ActivityIndicator size="large" color="#ccc" style={style} />
       </View>
     </Modal>
   );
