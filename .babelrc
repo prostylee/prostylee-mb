@@ -11,16 +11,17 @@
           "root": ["./src"],
           "alias": {
             "assets": "./src/assets",
-            "reducers": "./src/reducers",
+            "reducers": "./src/redux/reducers",
             "components": "./src/components",
             "screens": "./src/screens",
             "navigator": "./src/navigator",
             "data": "./src/data",
-            "saga": "./src/saga",
+            "saga": "./src/redux/saga",
             "config": "./src/config",
             "services": "./src/services",
-            "I18n": "./src/I18n",
-            "theme": "./src/theme"
+            "i18n": "./src/i18n",
+            "theme": "./src/theme",
+            "contants": "./src/contants"
           }
         }
       ]

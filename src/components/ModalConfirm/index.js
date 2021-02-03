@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, TouchableWithoutFeedback} from 'react-native';
 import styles from './styles';
 
-import I18n from 'I18n';
+import i18n from 'i18n';
 
 import Modal from 'react-native-modal';
 
@@ -15,8 +15,8 @@ const ModalConfirm = ({
   cancelTitle,
   confirmTitle,
 }) => {
-  const confTitle = confirmTitle ? confirmTitle : I18n.t('confirm');
-  const cancTitle = cancelTitle ? cancelTitle : I18n.t('cancel');
+  const confTitle = confirmTitle ? confirmTitle : i18n.t('confirm');
+  const cancTitle = cancelTitle ? cancelTitle : i18n.t('cancel');
   return (
     <Modal
       animationIn="fadeIn"

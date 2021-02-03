@@ -1,19 +1,3 @@
-import * as common from './common';
-import * as datetime from './datetime';
-import * as ui from './ui';
-
-//IPHONE 6 SCREEN RESOLUTION
-const baseWidth = 375;
-const baseHeight = 667;
-
-export const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
-
-const baseAvg = (baseWidth + baseHeight) / 2;
-const screenAvg = (screenWidth + screenHeight) / 2;
-
-export const rem = screenAvg / baseAvg;
-
 export const convertUnixTime = (UNIX_TIMESTAMP) => {
   const a = new Date(UNIX_TIMESTAMP);
   const months = [
@@ -62,10 +46,6 @@ export const convertISODate = (isoDate) => {
   );
 };
 
-export const formatVND = (num) => {
-  return num.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-};
-
 export const getToday = () => {
   const t = new Date();
   const d = t.getDate();
@@ -82,22 +62,3 @@ const checkValue = (value) => {
   }
   return value;
 };
-
-export const getFirstLetter = (str) => {
-  if (str && typeof str === 'string' && str.length > 0) {
-    return str[0].toUpperCase();
-  } else {
-    return null;
-  }
-};
-
-export const colorApp = '#115e35';
-
-const dim = Dimensions.get('window');
-
-export const isIPhoneXSize = () => dim.height === 812 || dim.width === 812;
-
-export const isIPhoneXrSize = () => dim.height === 896 || dim.width === 896;
-
-export const isIphoneX = () =>
-  Platform.OS === 'ios' && (isIPhoneXSize() || isIPhoneXrSize());

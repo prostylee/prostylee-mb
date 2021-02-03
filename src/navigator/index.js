@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
-import {userSelectors, dataSelectors} from 'reducers';
+import {userSelectors, commonSelectors} from 'reducers';
 import {navigationRef} from './rootNavigator';
 
 import {lightTheme, darkTheme} from 'theme';
@@ -53,7 +53,7 @@ function SignedOut() {
 
 const App = React.forwardRef(() => {
   const user = useSelector((state) => userSelectors.getUser(state));
-  const themeMode = useSelector((state) => dataSelectors.getThemeMode(state));
+  const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
 
   return (
     <NavigationContainer

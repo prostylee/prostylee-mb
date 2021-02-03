@@ -3,13 +3,13 @@ import {StyleSheet, View} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
 
-import {dataActions, dataSelectors, userActions} from './reducers';
+import {commonActions, commonSelectors, userActions} from './redux/reducers';
 
-import {rem, screenWidth} from './utils';
+import {common} from './utils';
 
 import Navigator from './navigator';
 
-import AsyncStorage from './data/AsyncStorage';
+import asyncStorage from './data/asyncStorage';
 
 import {
   ModalIndicator,
@@ -23,7 +23,7 @@ import * as RootNavigator from 'navigator/rootNavigator';
 import NetInfo from '@react-native-community/netinfo';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import FlashMessage from 'react-native-flash-message';
-// import codePush from 'react-native-code-push';
+import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
 // import NotificationPopup from 'react-native-push-notification-popup';
 
@@ -38,25 +38,25 @@ import {
 
 EStyleSheet.build({
   ...Colors,
-  $rem: rem,
-  $smallText: 11 * rem,
-  $normalText: 12 * rem,
-  $mediumText: 13 * rem,
-  $largeText: 14 * rem,
-  $maxText: 20 * rem,
-  $screenWidth: screenWidth,
+  $rem: common.rem,
+  $smallText: 11 * common.rem,
+  $normalText: 12 * common.rem,
+  $mediumText: 13 * common.rem,
+  $largeText: 14 * common.rem,
+  $maxText: 20 * common.rem,
+  $screenWidth: common.dim.width,
   $font1: 'Arial',
 });
 
-// const codePushOptions = {
-//   checkFrequency: codePush.CheckFrequency.MANUAL,
-// };
+const codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.MANUAL,
+};
 
 const Index = () => {
   // useEffect functions
   React.useEffect(() => {
-    // requestUserPermission();
-    // onCodepushCheckForUpdateApp();
+    requestUserPermission();
+    onCodepushCheckForUpdateApp();
     async function getInfo() {
       const res = await getDeviceInfo();
       // console.log(res);
@@ -74,14 +74,14 @@ const Index = () => {
 
   //redux state selector
   const networkStatus = useSelector((state) =>
-    dataSelectors.getNetworkStatus(state),
+    commonSelectors.getNetworkStatus(state),
   );
 
   // const isRequireUpdate = useSelector((state) =>
-  //   dataSelectors.getRequireUpdate(state),
+  //   commonSelectors.getRequireUpdate(state),
   // );
 
-  const isLoading = useSelector((state) => dataSelectors.getLoading(state));
+  const isLoading = useSelector((state) => commonSelectors.getLoading(state));
 
   //other functions
   const getDeviceInfo = async () => {
@@ -106,110 +106,197 @@ const Index = () => {
   const onCheckNetWorkStatus = () => {
     NetInfo.addEventListener((state) => {
       if (networkStatus !== state.isConnected) {
-        dispatch(dataActions.updateNetworkStatus(state.isConnected));
+        dispatch(commonActions.updateNetworkStatus(state.isConnected));
       }
     });
   };
 
-  //   //codepush handle
-  //   const onCodepushCheckForUpdateApp = async () => {
-  //     try {
-  //       await dispatch(dataActions.toggleLoading(true));
-  //       let isUpdate = await codePush.checkForUpdate();
-  //       console.log('CHECKING FOR UPDATE APP...');
-  //       if (isUpdate) {
-  //         console.log('has new version');
-  //         await dispatch(dataActions.toggleLoading(false));
-  //         setTimeout(async () => {
-  //           await dispatch(dataActions.setRequireUpdate());
-  //         }, 300);
-  //       } else {
-  //         console.log('APP IS UP TO DATE');
-  //         onCheckLoginSession();
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //       await dispatch(dataActions.toggleLoading(false));
-  //     }
-  //   };
+  //codepush handle
+  const onCodepushCheckForUpdateApp = async () => {
+    try {
+      await dispatch(commonActions.toggleLoading(true));
+      let isUpdate = await codePush.checkForUpdate();
+      console.log('CHECKING FOR UPDATE APP...');
+      if (isUpdate) {
+        console.log('has new version');
+        await dispatch(commonActions.toggleLoading(false));
+        setTimeout(async () => {
+          await dispatch(commonActions.setRequireUpdate());
+        }, 300);
+      } else {
+        console.log('APP IS UP TO DATE');
+        onCheckLoginSession();
+      }
+    } catch (err) {
+      console.log(err);
+      await dispatch(commonActions.toggleLoading(false));
+    }
+  };
 
-  //   const codePushStatusDidChange = async (status) => {
-  //     switch (status) {
-  //       case codePush.SyncStatus.DOWNLOADING_PACKAGE:
-  //         console.log('Downloading package.');
-  //         break;
-  //       case codePush.SyncStatus.INSTALLING_UPDATE:
-  //         console.log('Installing update.');
-  //         break;
-  //       case codePush.SyncStatus.UP_TO_DATE:
-  //         console.log('Up-to-date.');
-  //         onCheckLoginSession();
-  //         break;
-  //       case codePush.SyncStatus.UPDATE_INSTALLED:
-  //         console.log('Update installed.');
-  //         onCheckLoginSession();
-  //         break;
-  //       default:
-  //         dispatch(dataActions.toggleLoading(false));
-  //         break;
-  //     }
-  //   };
+  const codePushStatusDidChange = async (status) => {
+    switch (status) {
+      case codePush.SyncStatus.DOWNLOADING_PACKAGE:
+        console.log('Downloading package.');
+        break;
+      case codePush.SyncStatus.INSTALLING_UPDATE:
+        console.log('Installing update.');
+        break;
+      case codePush.SyncStatus.UP_TO_DATE:
+        console.log('Up-to-date.');
+        onCheckLoginSession();
+        break;
+      case codePush.SyncStatus.UPDATE_INSTALLED:
+        console.log('Update installed.');
+        onCheckLoginSession();
+        break;
+      default:
+        dispatch(commonActions.toggleLoading(false));
+        break;
+    }
+  };
 
-  //   const onError = (error) => {
-  //     console.log('Codepush: An error occurred. ' + error);
-  //   };
+  const onError = (error) => {
+    console.log('Codepush: An error occurred. ' + error);
+  };
 
-  //   const onDownloadProgress = (downloadProgress) => {
-  //     if (downloadProgress) {
-  //       console.log('Downloading ' + downloadProgress.receivedBytes);
-  //     }
-  //   };
+  const onDownloadProgress = (downloadProgress) => {
+    if (downloadProgress) {
+      console.log('Downloading ' + downloadProgress.receivedBytes);
+    }
+  };
 
-  //   const onHandleUpdate = async () => {
-  //     await dispatch(dataActions.closeRequireUpdate());
-  //     codePush.sync(
-  //       {
-  //         installMode: codePush.InstallMode.IMMEDIATE,
-  //       },
-  //       codePushStatusDidChange,
-  //       onDownloadProgress,
-  //       onError,
-  //     );
-  //   };
+  const onHandleUpdate = async () => {
+    await dispatch(commonActions.closeRequireUpdate());
+    codePush.sync(
+      {
+        installMode: codePush.InstallMode.IMMEDIATE,
+      },
+      codePushStatusDidChange,
+      onDownloadProgress,
+      onError,
+    );
+  };
 
-  //   const onCheckLoginSession = async () => {
-  //     const token = await AsyncStorage.getUserToken();
-  //     const userInfo = await AsyncStorage.getUserData();
-  //     if (token && userInfo) {
-  //       dispatch(
-  //         userActions.getUserInfo({
-  //           token,
-  //           onSuccess: (data) => onFinishedGetUserInfo(data),
-  //         }),
-  //       );
-  //     } else {
-  //       dispatch(dataActions.toggleLoading(false));
-  //     }
-  //   };
+  const onCheckLoginSession = async () => {
+    await dispatch(commonActions.toggleLoading(false));
+  };
 
-  //   const onFinishedGetUserInfo = async (data) => {
-  //     if (data.role_id !== 3) {
-  //       await messaging()
-  //         .subscribeToTopic('user_all')
-  //         .then(async () => {
-  //           console.log('Subscribed to topic all!');
-  //         });
-  //     }
-  //     await messaging()
-  //       .subscribeToTopic(`user_${data.id}`)
-  //       .then(async () => {
-  //         setTimeout(async () => {
-  //           dispatch(userActions.getUserInfoSuccess(data));
-  //           dispatch(dataActions.toggleLoading(false));
-  //         }, 300);
-  //         console.log('Subscribed to topic user!');
-  //       });
-  //   };
+  const onFinishedGetUserInfo = async (data) => {
+    await dispatch(commonActions.toggleLoading(false));
+  };
+
+  //firebase Message
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      // console.log('Authorization status:', authStatus);
+      onReceiveMessage();
+    }
+  };
+
+  const onReceiveMessage = async () => {
+    //notification arrived when app on foreground state
+    messaging().onMessage(async (remoteMessage) => {
+      console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
+
+      if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'notification'
+      ) {
+        //do something here
+        //.........
+      } else if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'message' &&
+        remoteMessage.data.user
+      ) {
+        //do something here
+        //.........
+      } else if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'message' &&
+        !remoteMessage.data.user
+      ) {
+        //do something here
+        //.........
+      } else {
+        //do something here
+        //.........
+      }
+    });
+
+    //notification was opened when app on background state
+    messaging().onNotificationOpenedApp(async (remoteMessage) => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage,
+      );
+      if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'notification'
+      ) {
+        //do something here
+        //.........
+      } else if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'message' &&
+        remoteMessage.data.user
+      ) {
+        //do something here
+        //.........
+      } else if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'message' &&
+        !remoteMessage.data.user
+      ) {
+        //do something here
+        //.........
+      } else {
+        //do something here
+        //.........
+      }
+    });
+
+    //notification was opened when app on quite state
+    messaging()
+      .getInitialNotification()
+      .then(async (remoteMessage) => {
+        if (remoteMessage) {
+          console.log(
+            'Notification caused app to open from quit state:',
+            remoteMessage,
+          );
+          if (
+            remoteMessage.data.type &&
+            remoteMessage.data.type === 'notification'
+          ) {
+            //do something here
+            //.........
+          } else if (
+            remoteMessage.data.type &&
+            remoteMessage.data.type === 'message' &&
+            remoteMessage.data.user
+          ) {
+            //do something here
+            //.........
+          } else if (
+            remoteMessage.data.type &&
+            remoteMessage.data.type === 'message' &&
+            !remoteMessage.data.user
+          ) {
+            //do something here
+            //.........
+          } else {
+            //do something here
+            //.........
+          }
+        }
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -241,6 +328,4 @@ const styles = StyleSheet.create({
   textMessage: {textAlign: 'center'},
 });
 
-export default Index;
-
-// export default codePush(codePushOptions)(Index);
+export default codePush(codePushOptions)(Index);

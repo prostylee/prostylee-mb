@@ -13,9 +13,9 @@ export const actions = {
 };
 
 export const selectors = {
-  getNetworkStatus: (state) => state.data.networkStatus,
-  getLoading: (state) => state.data.isLoading,
-  getThemeMode: (state) => state.data.themeMode,
+  getNetworkStatus: (state) => state.common.networkStatus,
+  getLoading: (state) => state.common.isLoading,
+  getThemeMode: (state) => state.common.themeMode,
 };
 
 const defaultState = {

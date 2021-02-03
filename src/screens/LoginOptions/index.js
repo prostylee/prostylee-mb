@@ -2,11 +2,11 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {Container} from 'components';
-import {dataSelectors, dataActions} from 'reducers';
+import {commonSelectors, commonActions} from 'reducers';
 
 import styles from './styles';
 
-import I18n from 'I18n';
+import i18n from 'i18n';
 import {Button} from 'react-native-paper';
 
 export class LoginOptions extends React.PureComponent {
@@ -20,7 +20,7 @@ export class LoginOptions extends React.PureComponent {
     return (
       <Container>
         <View style={styles.container}>
-          <Text style={styles[`${theme}Text`]}>{I18n.t('test')}</Text>
+          <Text style={styles[`${theme}Text`]}>{i18n.t('test')}</Text>
           <Text>{`Is loading : ${this.props.isLoading}`}</Text>
           <Button
             icon="camera"
@@ -35,12 +35,12 @@ export class LoginOptions extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  isLoading: dataSelectors.getLoading(state),
-  theme: dataSelectors.getThemeMode(state),
+  isLoading: commonSelectors.getLoading(state),
+  theme: commonSelectors.getThemeMode(state),
 });
 
 const mapDispatchToProps = {
-  toggleLoading: dataActions.toggleLoading,
+  toggleLoading: commonActions.toggleLoading,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginOptions);
