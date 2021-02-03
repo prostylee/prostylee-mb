@@ -306,7 +306,7 @@ const Index = () => {
         titleStyle={styles.textMessage}
         floating={true}
       />
-      <ModalIndicator visible={isLoading} />
+      <ModalIndicator visible={isLoading}/>
       {/* <ModalRequireUpdate
         visible={isRequireUpdate}
         onConfirm={() => onHandleUpdate()}
