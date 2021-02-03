@@ -2,5 +2,7 @@ import Home from './Home';
 import Login from './Login';
 import SignUp from './SignUp';
 import LoginOptions from './LoginOptions';
+import Welcome from './Welcome';
+import Onboarding from './Onboarding';
 
-export {Home, Login, SignUp, LoginOptions};
+export {Welcome, Onboarding, Home, Login, SignUp, LoginOptions};

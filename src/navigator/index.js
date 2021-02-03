@@ -13,7 +13,7 @@ import {lightTheme, darkTheme} from 'theme';
 
 const Stack = createStackNavigator();
 
-import {Login, SignUp, Home, LoginOptions} from 'screens';
+import {Welcome, Onboarding, Login, SignUp, Home, LoginOptions} from 'screens';
 
 function SignedIn() {
   return (
@@ -40,13 +40,15 @@ function SignedOut() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="LoginOptions"
+      initialRouteName="Welcome"
       mode="card"
       headerMode="none"
       animation="fade">
       <Stack.Screen name="LoginOptions" component={LoginOptions} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="Welcome" component={Welcome} />
+      <Stack.Screen name="Onboarding" component={Onboarding} />
     </Stack.Navigator>
   );
 }

@@ -6,7 +6,7 @@ const Image = (props) => {
     <FastImage
       style={props.style}
       source={props.source}
-      resizeMode={`FastImage.resizeMode.${props.resizeMode}`}
+      resizeMode={FastImage.resizeMode[props.resizeMode]}
       tintColor={props.tintColor}
     />
   );

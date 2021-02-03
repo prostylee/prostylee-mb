@@ -4,7 +4,8 @@ const styles = EStyleSheet.create({
   containerAlert: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: '20%',
   },
 });
 
