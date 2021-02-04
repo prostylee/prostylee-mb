@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const KEY_USER_DATA = '@userData';
 const KEY_DEVICE_INFO = '@deviceInfo';
 const KEY_USER_TOKEN = '@userToken';
-const KEY_USER_REFRESH_TOKEN = '@userRefreshToken';
 
 export default class LocalDB {
   static async setUserToken(userToken) {
