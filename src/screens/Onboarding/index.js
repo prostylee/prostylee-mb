@@ -40,6 +40,7 @@ const Index = (props) => {
             horizontal
             pagingEnabled={true}
             bounces={false}
+            // snapToInterval
           />
         </View>
       </Container>
