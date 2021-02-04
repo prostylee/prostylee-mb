@@ -1,1 +1,1 @@
-export { default as Home } from 'screens/Home'
+export { default as NewFeed } from 'screens/NewFeed'

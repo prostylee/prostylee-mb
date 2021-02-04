@@ -1,12 +1,12 @@
 export const bottomTabs = {
-  home: 'Home',
+  newFeed: 'NewFeed',
   shop: "ProductCategory",
   account: "Account"
 }
 
 export const tabsSetting = {
   configs: {
-    initialRouteName: bottomTabs['home'],
+    initialRouteName: bottomTabs['newFeed'],
     tabBarColor: '#ffffff',
     activeColor: '#823FFD',
     inactiveColor: 'gray'
@@ -21,7 +21,7 @@ export const tabsSetting = {
         vi: 'New Feed',
         en: 'New Feed'
       },
-      screen: bottomTabs['home'],
+      screen: bottomTabs['newFeed'],
       option: {
         tabBarIcon: 'NewFeedTab'
       }
@@ -35,7 +35,7 @@ export const tabsSetting = {
         vi: 'Cửa hàng',
         en: 'Store'
       },
-      screen: bottomTabs['home'],
+      screen: bottomTabs['newFeed'],
       option: {
         tabBarIcon: 'StoreTab'
       }
@@ -49,7 +49,7 @@ export const tabsSetting = {
         vi: 'Thông báo',
         en: 'Notification'
       },
-      screen: bottomTabs['home'],
+      screen: bottomTabs['newFeed'],
       option: {
         tabBarIcon: 'NotifTab'
       }
@@ -63,7 +63,7 @@ export const tabsSetting = {
         vi: 'Tài khoản',
         en: 'Account'
       },
-      screen: bottomTabs['home'],
+      screen: bottomTabs['newFeed'],
       option: {
         tabBarIcon: 'AccountTab'
       }
