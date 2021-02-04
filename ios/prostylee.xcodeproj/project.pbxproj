@@ -24,6 +24,10 @@
 		B71CBE79E0FE41059AF6509B /* arial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3D27667A2CC46708CE7BFCD /* arial.ttf */; };
 		D7988A60906047E386188432 /* Play-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 86E00503389549FFB03828DC /* Play-Bold.ttf */; };
 		E0DD759B206C40EBAA9E60FF /* Play-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55F1CF05B7C54979AE2463F0 /* Play-Regular.ttf */; };
+		C55296DE8E97404B80C54929 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D83EB17FF77240C096A4A8FD /* Inter-Bold.ttf */; };
+		F704031DBF3A47C09BF3CCD9 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D3399B1F61C4E1794800993 /* Inter-Regular.ttf */; };
+		19E5F64499FC466FB4AF522F /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC9BBBDFCB0B456AB786F46E /* Inter-SemiBold.ttf */; };
+		4934DB7F44BA4677B3B10225 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6DA5112A0F446828CC12972 /* Inter-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +98,10 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F3D27667A2CC46708CE7BFCD /* arial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = arial.ttf; path = ../src/assets/fonts/arial.ttf; sourceTree = "<group>"; };
 		FB1B1D93B5D27FA74B2A15F7 /* libPods-prostylee.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-prostylee.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D83EB17FF77240C096A4A8FD /* Inter-Bold.ttf */ = {isa = PBXFileReference; name = "Inter-Bold.ttf"; path = "../src/assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7D3399B1F61C4E1794800993 /* Inter-Regular.ttf */ = {isa = PBXFileReference; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FC9BBBDFCB0B456AB786F46E /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; name = "Inter-SemiBold.ttf"; path = "../src/assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F6DA5112A0F446828CC12972 /* Inter-Medium.ttf */ = {isa = PBXFileReference; name = "Inter-Medium.ttf"; path = "../src/assets/fonts/Inter-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +210,10 @@
 				6B20C0BC4C764054901F7ECE /* rubicon-icon-font.ttf */,
 				78A04BA5658B4299A699F848 /* SimpleLineIcons.ttf */,
 				B9D428E3186149D4992DA62F /* Zocial.ttf */,
+				D83EB17FF77240C096A4A8FD /* Inter-Bold.ttf */,
+				7D3399B1F61C4E1794800993 /* Inter-Regular.ttf */,
+				FC9BBBDFCB0B456AB786F46E /* Inter-SemiBold.ttf */,
+				F6DA5112A0F446828CC12972 /* Inter-Medium.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -405,6 +417,10 @@
 				B71CBE79E0FE41059AF6509B /* arial.ttf in Resources */,
 				D7988A60906047E386188432 /* Play-Bold.ttf in Resources */,
 				E0DD759B206C40EBAA9E60FF /* Play-Regular.ttf in Resources */,
+				C55296DE8E97404B80C54929 /* Inter-Bold.ttf in Resources */,
+				F704031DBF3A47C09BF3CCD9 /* Inter-Regular.ttf in Resources */,
+				19E5F64499FC466FB4AF522F /* Inter-SemiBold.ttf in Resources */,
+				4934DB7F44BA4677B3B10225 /* Inter-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

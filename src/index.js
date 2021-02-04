@@ -44,8 +44,10 @@ EStyleSheet.build({
   $mediumText: 13 * common.rem,
   $largeText: 14 * common.rem,
   $maxText: 20 * common.rem,
+  $maxText2: 24 * common.rem,
   $screenWidth: common.dim.width,
-  $font1: 'Arial',
+  $font1: 'Inter',
+  $font1Bold: 'Inter-Medium',
 });
 
 const codePushOptions = {
@@ -306,7 +308,7 @@ const Index = () => {
         titleStyle={styles.textMessage}
         floating={true}
       />
-      <ModalIndicator visible={isLoading}/>
+      <ModalIndicator visible={isLoading} />
       {/* <ModalRequireUpdate
         visible={isRequireUpdate}
         onConfirm={() => onHandleUpdate()}

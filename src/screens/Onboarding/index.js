@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, FlatList} from 'react-native';
-import {Image, Container} from 'components';
+import {Image, ContainerWithoutScrollView} from 'components';
 
 import styles from './styles';
 
@@ -8,11 +8,24 @@ import {onboarding as data} from 'data/localJson';
 
 import {dim} from 'utils/common';
 
+import {Button} from 'react-native-paper';
+
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
 
 const Index = (props) => {
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
+  const onSliderScrollEnd = (e) => {
+    let contentOffset = e.nativeEvent.contentOffset;
+    let viewSize = e.nativeEvent.layoutMeasurement;
+
+    let i = Math.floor(contentOffset.x / viewSize.width);
+    setActiveIndex(i);
+  };
+
   const _renderItem = ({item, index}) => {
+    const labelBtn = index === data.length - 1 ? 'Get Started' : 'Next';
     return (
       <View style={[styles.pageWrapper, {width: WIDTH, height: HEIGHT}]}>
         <View style={styles.imgWrapper}>
@@ -23,14 +36,34 @@ const Index = (props) => {
           />
         </View>
         <View style={styles.body}>
-          <Text style={styles.title}>{item.title}</Text>
+          <View style={styles.contentWrapper}>
+            <View style={styles.pagination}>
+              {data.map((x, y) => {
+                const backgroundColor =
+                  activeIndex === y ? '#111111' : 'rgba(0, 0, 0, 0.1)';
+                return <View style={[styles.dot, {backgroundColor}]} key={y} />;
+              })}
+            </View>
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.content}>{item.content}</Text>
+          </View>
+          <View style={styles.btnWrapper}>
+            <Button
+              mode="contained"
+              uppercase={false}
+              onPress={() => console.log('Pressed')}
+              style={styles.btn}
+              labelStyle={styles.btnLabel}>
+              {labelBtn}
+            </Button>
+          </View>
         </View>
       </View>
     );
   };
   return (
     <View style={styles.container}>
-      <Container>
+      <ContainerWithoutScrollView safeAreaTopStyle={styles.safeAreaTopStyle}>
         <View style={styles.mainWrapper}>
           <FlatList
             data={data}
@@ -40,10 +73,11 @@ const Index = (props) => {
             horizontal
             pagingEnabled={true}
             bounces={false}
-            // snapToInterval
+            showsHorizontalScrollIndicator={false}
+            onMomentumScrollEnd={onSliderScrollEnd}
           />
         </View>
-      </Container>
+      </ContainerWithoutScrollView>
     </View>
   );
 };

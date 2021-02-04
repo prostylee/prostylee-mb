@@ -1,12 +1,12 @@
 export default {
   $white: '#FFFFFF',
-  $bgColor: '#ecf0f1',
+  $bgColor: '#F4F5F5',
   $borderColor: '#D5D5D5',
   $disabled: '#ccc',
-  $lightGray: '#7f8c8d',
+  $lightGray: '#8B9399',
   $label: '#929292',
   $gray: '#4A4A4A',
-  $black: '#242424',
+  $black: '#333333',
   $success: '#2ecc71',
   $green: '#148247',
   $pink: '#ED7581',
@@ -16,4 +16,5 @@ export default {
   $organ: '#f39c12',
   $primaryBlue: '#3498db',
   $mainColor: '#ff7675',
+  $purple: '#823FFD',
 };
