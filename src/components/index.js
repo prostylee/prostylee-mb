@@ -19,6 +19,7 @@ import RnActionSheet from './RnActionSheet';
 import Image from './Image';
 import Colors from './Colors';
 import ModalImagePicker from './ModalImagePicker';
+import ThemeView from './ThemeView'
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -41,4 +42,5 @@ export {
   RnActionSheet,
   ModalImagePicker,
   Colors,
+  ThemeView,
 };

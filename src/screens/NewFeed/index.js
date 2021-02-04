@@ -1,24 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {View, Text} from 'react-native';
-import {connect} from 'react-redux';
 
-export class Login extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+import {ThemeView} from 'components'
 
-  render() {
-    return (
-      <View>
-        <Text> New Feed </Text>
-      </View>
-    );
-  }
+const NewFeed = (props) => {
+  return (
+    <ThemeView isFullView>
+
+    </ThemeView>
+  )
 }
 
-const mapStateToProps = (state) => ({});
+NewFeed.defaultProps = {
+}
 
-const mapDispatchToProps = {};
+NewFeed.propTypes = {
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default NewFeed
