@@ -58,12 +58,15 @@ export default EStyleSheet.create({
     alignItems: 'center',
     backgroundColor: '$purple',
     marginHorizontal: '3%',
+    padding: 0,
   },
   btnLabel: {
+    width: '100%',
     fontSize: '$largeText',
     fontFamily: '$font1',
     textAlign: 'center',
     color: '$white',
+    margin: 0,
   },
   pagination: {
     flexDirection: 'row',

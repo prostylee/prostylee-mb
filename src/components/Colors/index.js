@@ -17,4 +17,5 @@ export default {
   $primaryBlue: '#3498db',
   $mainColor: '#ff7675',
   $purple: '#823FFD',
+  $line: '#E9EAEB',
 };

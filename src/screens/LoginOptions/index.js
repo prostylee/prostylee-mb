@@ -1,41 +1,85 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {connect} from 'react-redux';
-import {Container} from 'components';
-import {commonSelectors, commonActions} from 'reducers';
-import {useTheme} from '@react-navigation/native';
+import {Text, View, ImageBackground, TouchableOpacity} from 'react-native';
+
+import {Image} from 'components';
+
+import {Button} from 'react-native-paper';
+
+//IMG
+const IMG_BG = require('assets/images/loginBg.jpg');
+const IMG_LOGO = require('assets/images/logo.png');
+
+//ICON
+const IC_FACEBOOK = require('assets/icons/facebook.png');
+const IC_GOOGLE = require('assets/icons/google.png');
+const IC_ZALO = require('assets/icons/zalo.png');
+const IC_APPLE = require('assets/icons/apple.png');
 
 import styles from './styles';
 
-import i18n from 'i18n';
-import {Button} from 'react-native-paper';
-
-const LoginOptions = (props) => {
-  const {colors} = useTheme();
+const Index = () => {
   return (
-    <Container>
-      <View style={styles.container}>
-        <Text style={styles[`${props.theme}Text`]}>{i18n.t('test')}</Text>
-        <Text>{`Is loading : ${props.isLoading}`}</Text>
-        <Button
-          icon="camera"
-          mode="contained"
-          onPress={() => console.log('Pressed')}>
-          Press me
-        </Button>
-        <Text style={{color: colors.loading}}>Tesst theme!</Text>
+    <ImageBackground source={IMG_BG} style={styles.background}>
+      <View style={styles.mainWrapper}>
+        <View style={styles.logoWrapper}>
+          <Image source={IMG_LOGO} style={styles.logo} resizeMode="contain" />
+        </View>
+        <View style={styles.btnWrapper}>
+          <Button
+            mode="contained"
+            uppercase={false}
+            onPress={() => {}}
+            style={styles.loginBtn}
+            labelStyle={styles.loginBtnLabel}>
+            Đăng nhập
+          </Button>
+          <Button
+            mode="contained"
+            uppercase={false}
+            onPress={() => {}}
+            style={styles.signupBtn}
+            labelStyle={styles.signupBtnLabel}>
+            Đăng ký
+          </Button>
+        </View>
+        <View style={styles.divider}>
+          <View style={styles.line} />
+          <Text style={styles.labelDivider}>Hoặc đăng nhập bằng</Text>
+          <View style={styles.line} />
+        </View>
+        <View style={styles.socialLogin}>
+          <TouchableOpacity style={styles.socialBtnWrapper}>
+            <Image
+              source={IC_FACEBOOK}
+              resizeMode="contain"
+              style={styles.socialBtn}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.socialBtnWrapper}>
+            <Image
+              source={IC_GOOGLE}
+              resizeMode="contain"
+              style={styles.socialBtn}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.socialBtnWrapper}>
+            <Image
+              source={IC_ZALO}
+              resizeMode="contain"
+              style={styles.socialBtn}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.socialBtnWrapper}>
+            <Image
+              source={IC_APPLE}
+              resizeMode="contain"
+              style={styles.socialBtn}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-    </Container>
+    </ImageBackground>
   );
 };
 
-const mapStateToProps = (state) => ({
-  isLoading: commonSelectors.getLoading(state),
-  theme: commonSelectors.getThemeMode(state),
-});
-
-const mapDispatchToProps = {
-  toggleLoading: commonActions.toggleLoading,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginOptions);
+export default Index;

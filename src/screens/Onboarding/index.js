@@ -16,12 +16,22 @@ const HEIGHT = dim.height;
 const Index = (props) => {
   const [activeIndex, setActiveIndex] = React.useState(0);
 
+  const flatListRef = React.useRef(null);
+
   const onSliderScrollEnd = (e) => {
     let contentOffset = e.nativeEvent.contentOffset;
     let viewSize = e.nativeEvent.layoutMeasurement;
 
     let i = Math.floor(contentOffset.x / viewSize.width);
     setActiveIndex(i);
+  };
+
+  const onPressItem = (index) => {
+    if (index < data.length - 1) {
+      flatListRef.current.scrollToIndex({animated: true, index: index + 1});
+    } else {
+      props.navigation.navigate('LoginOptions');
+    }
   };
 
   const _renderItem = ({item, index}) => {
@@ -51,7 +61,7 @@ const Index = (props) => {
             <Button
               mode="contained"
               uppercase={false}
-              onPress={() => console.log('Pressed')}
+              onPress={() => onPressItem(index)}
               style={styles.btn}
               labelStyle={styles.btnLabel}>
               {labelBtn}
@@ -66,6 +76,7 @@ const Index = (props) => {
       <ContainerWithoutScrollView safeAreaTopStyle={styles.safeAreaTopStyle}>
         <View style={styles.mainWrapper}>
           <FlatList
+            ref={flatListRef}
             data={data}
             renderItem={_renderItem}
             keyExtractor={(item, index) => `${index}`}
