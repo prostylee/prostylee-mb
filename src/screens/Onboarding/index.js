@@ -38,7 +38,7 @@ const Index = (props) => {
     const labelBtn = index === data.length - 1 ? 'Get Started' : 'Next';
     return (
       <View style={[styles.pageWrapper, {width: WIDTH, height: HEIGHT}]}>
-        <View style={styles.imgWrapper}>
+        <View style={[styles.imgWrapper, styles[`onboarding${index}`]]}>
           <Image
             style={styles.image}
             source={item.image}

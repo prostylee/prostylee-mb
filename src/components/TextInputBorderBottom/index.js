@@ -1,5 +1,11 @@
 import React from 'react';
-import {TextInput, View} from 'react-native';
+import {
+  TextInput,
+  View,
+  TouchableWithoutFeedback,
+  Image,
+  Text,
+} from 'react-native';
 import styles from './styles';
 
 const TextInputBorderBottom = ({
@@ -20,6 +26,10 @@ const TextInputBorderBottom = ({
   onFocus,
   inputRef,
   placeholderTextColor,
+  icon,
+  unit,
+  onPressIcon,
+  disablePressIcon,
 }) => (
   <View style={[styles.container, style]}>
     <TextInput
@@ -39,8 +49,18 @@ const TextInputBorderBottom = ({
       autoFocus={autoFocus}
       onFocus={onFocus}
       editable={editable}
-      placeholderTextColor={placeholderTextColor}
+      placeholderTextColor={placeholderTextColor || '#BBC0C3'}
     />
+    {icon ? (
+      <View style={styles.wrapperIcon}>
+        <TouchableWithoutFeedback
+          onPress={onPressIcon}
+          disabled={disablePressIcon === false ? false : true}>
+          <Image source={icon} style={styles.icon} resizeMode="contain" />
+        </TouchableWithoutFeedback>
+      </View>
+    ) : null}
+    {unit ? <Text style={styles.unitText}>{unit}</Text> : null}
   </View>
 );
 

@@ -18,8 +18,17 @@ export default EStyleSheet.create({
     flex: 1.5,
     backgroundColor: '$bgColor',
     paddingBottom: 0,
-    paddingHorizontal: '10%',
+    paddingHorizontal: '15%',
     paddingTop: '10%',
+  },
+  onboarding0: {
+    paddingHorizontal: '5%',
+  },
+  onboarding1: {
+    paddingHorizontal: '15%',
+  },
+  onboarding2: {
+    paddingHorizontal: '5%',
   },
   image: {
     width: '100%',
@@ -43,7 +52,7 @@ export default EStyleSheet.create({
     lineHeight: '30rem',
   },
   content: {
-    fontSize: '$largeText',
+    fontSize: '$mediumText',
     fontFamily: '$font1',
     textAlign: 'center',
     color: '$lightGray',
@@ -62,7 +71,7 @@ export default EStyleSheet.create({
   },
   btnLabel: {
     width: '100%',
-    fontSize: '$largeText',
+    fontSize: '$mediumText',
     fontFamily: '$font1',
     textAlign: 'center',
     color: '$white',

@@ -7,7 +7,7 @@ export default EStyleSheet.create({
   },
   mainWrapper: {
     flex: 1,
-    paddingTop: '110%',
+    paddingTop: '115%',
   },
   logoWrapper: {
     justifyContent: 'center',
@@ -19,7 +19,7 @@ export default EStyleSheet.create({
     alignSelf: 'center',
   },
   btnWrapper: {
-    marginTop: '20rem',
+    marginTop: '25rem',
     marginHorizontal: '10%',
   },
   loginBtn: {
@@ -40,7 +40,7 @@ export default EStyleSheet.create({
   },
   loginBtnLabel: {
     width: '100%',
-    fontSize: '$largeText',
+    fontSize: '$mediumText',
     fontFamily: '$font1',
     textAlign: 'center',
     color: '$white',
@@ -48,7 +48,7 @@ export default EStyleSheet.create({
   },
   signupBtnLabel: {
     width: '100%',
-    fontSize: '$largeText',
+    fontSize: '$mediumText',
     fontFamily: '$font1',
     textAlign: 'center',
     color: '$purple',
@@ -66,7 +66,7 @@ export default EStyleSheet.create({
     backgroundColor: '$line',
   },
   labelDivider: {
-    fontSize: '$largeText',
+    fontSize: '$mediumText',
     fontFamily: '$font1',
     textAlign: 'center',
     color: '$lightGray',

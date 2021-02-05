@@ -17,6 +17,6 @@ export default [
     id: 3,
     title: 'Đăng sản phẩm và kiếm tiền từ chúng',
     content: 'Đăng bán sản phẩm dễ dàng, thanh toán nhanh chóng.',
-    image: require('assets/images/onboarding02.png'),
+    image: require('assets/images/onboarding03.png'),
   },
 ];
