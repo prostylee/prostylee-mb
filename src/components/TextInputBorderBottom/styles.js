@@ -11,7 +11,7 @@ const styles = EStyleSheet.create({
   textInput: {
     flex: 1,
     fontFamily: '$font1',
-    fontSize: '$mediumText',
+    fontSize: '$normalText',
     padding: 0,
     borderColor: '$borderColor',
     borderBottomWidth: 1,
