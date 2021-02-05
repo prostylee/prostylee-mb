@@ -10,6 +10,11 @@ export const centerFull = {
   alignItems: 'center',
 }
 
+export const flexRow = {
+  display: 'flex',
+  flexDirection: 'row',
+}
+
 export const fullWidthBox = {
   width: "100%"
 }
@@ -42,6 +47,7 @@ export const absolute = (top = 0, bottom = 0, left = 0, right = 0) => ({
 
 export default {
   center,
+  flexRow,
   centerFull,
   fullWidthBox,
   fullHeightBox,
