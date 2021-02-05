@@ -20,7 +20,7 @@ import Image from './Image';
 import Colors from './Colors';
 import ModalImagePicker from './ModalImagePicker';
 import ThemeView from './ThemeView';
-import ImageAnimated from './Image/ImageAnimated';
+import ImageAnimated from './Image/imageAnimated';
 import ContainerView from './ContainerView';
 export {
   ContainerWithoutScrollView,
