@@ -1,33 +1,31 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, TouchableWithoutFeedback, View, SafeAreaView} from 'react-native';
+import {Text, View, SafeAreaView} from 'react-native';
 
 import styles from './styles';
-
-const IC_BACK = require('assets/icons/back.png');
-
+import {IconButton, Divider} from 'react-native-paper';
 import Image from '../Image';
+
+const IC_BACK = require('assets/icons/arrowLeft.png');
 
 const HeaderBack = ({style, titleStyle, title, onBack}) => (
   <View>
     <SafeAreaView />
     <View style={styles.header}>
-      <TouchableWithoutFeedback onPress={onBack}>
-        <View style={[styles.container, style]}>
-          <View style={styles.wrapperIconBack}>
+      <View style={styles.btnWrapper}>
+        <IconButton
+          icon={({size, color}) => (
             <Image
               source={IC_BACK}
-              style={styles.iconBack}
-              resizeMode="contain"
-              tintColor="#fff"
+              style={{width: size, height: size, tintColor: color}}
             />
-          </View>
-
-          <Text style={[styles.headerTitle, titleStyle]}>{title}</Text>
-        </View>
-      </TouchableWithoutFeedback>
-      <View style={{flex: 1}} />
+          )}
+          onPress={onBack}
+        />
+      </View>
+      <Text style={[styles.headerTitle, titleStyle]}>{title}</Text>
+      <View style={styles.btnWrapper} />
     </View>
+    <Divider />
   </View>
 );
 

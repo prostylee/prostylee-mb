@@ -3,7 +3,7 @@ import {Button} from 'react-native-paper';
 
 import styles from './styles';
 
-const ButtonRounded = ({
+const TextButton = ({
   icon,
   mode,
   onPress,
@@ -37,11 +37,11 @@ const ButtonRounded = ({
   </Button>
 );
 
-ButtonRounded.defaultProps = {
-  mode: 'contained',
+TextButton.defaultProps = {
+  mode: 'text',
   loading: false,
   disabled: false,
   uppercase: false,
 };
 
-export default ButtonRounded;
+export default TextButton;

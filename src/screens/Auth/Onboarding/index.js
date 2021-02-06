@@ -1,14 +1,12 @@
 import React from 'react';
 import {View, Text, FlatList} from 'react-native';
-import {Image, ContainerWithoutScrollView} from 'components';
+import {Image, ContainerWithoutScrollView, ButtonRounded} from 'components';
 
 import styles from './styles';
 
 import {onboarding as data} from 'data/localJson';
 
 import {dim} from 'utils/common';
-
-import {Button} from 'react-native-paper';
 
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
@@ -58,14 +56,10 @@ const Index = (props) => {
             <Text style={styles.content}>{item.content}</Text>
           </View>
           <View style={styles.btnWrapper}>
-            <Button
-              mode="contained"
-              uppercase={false}
+            <ButtonRounded
               onPress={() => onPressItem(index)}
-              style={styles.btn}
-              labelStyle={styles.btnLabel}>
-              {labelBtn}
-            </Button>
+              label={labelBtn}
+            />
           </View>
         </View>
       </View>

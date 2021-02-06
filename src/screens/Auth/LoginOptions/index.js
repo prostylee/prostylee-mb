@@ -7,9 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {Image} from 'components';
-
-import {Button} from 'react-native-paper';
+import {Image, ButtonRounded} from 'components';
 
 //IMG
 const IMG_BG = require('assets/images/loginBg.png');
@@ -37,22 +35,14 @@ const Index = (props) => {
           <Image source={IMG_LOGO} style={styles.logo} resizeMode="contain" />
         </View>
         <View style={styles.btnWrapper}>
-          <Button
-            mode="contained"
-            uppercase={false}
-            onPress={() => onLogin()}
-            style={styles.loginBtn}
-            labelStyle={styles.loginBtnLabel}>
-            Đăng nhập
-          </Button>
-          <Button
-            mode="contained"
-            uppercase={false}
+          <ButtonRounded onPress={() => onLogin()} label="Đăng Nhập" />
+          <ButtonRounded
             onPress={() => onSignUp()}
-            style={styles.signupBtn}
-            labelStyle={styles.signupBtnLabel}>
-            Đăng ký
-          </Button>
+            contentStyle={styles.signupBtn}
+            labelStyle={styles.signupBtnLabel}
+            style={styles.btnContainer}
+            label="Đăng Ký"
+          />
         </View>
         <View style={styles.divider}>
           <View style={styles.line} />

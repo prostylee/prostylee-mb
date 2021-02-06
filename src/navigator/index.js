@@ -13,7 +13,15 @@ import {lightTheme, darkTheme} from 'theme';
 
 const Stack = createStackNavigator();
 
-import {Welcome, Onboarding, Login, SignUp, Home, LoginOptions} from 'screens';
+import {
+  Welcome,
+  Onboarding,
+  Login,
+  SignUpViaPhone,
+  LoginViaPhone,
+  Home,
+  LoginOptions,
+} from 'screens';
 
 function SignedIn() {
   return (
@@ -46,7 +54,8 @@ function SignedOut() {
       animation="fade">
       <Stack.Screen name="LoginOptions" component={LoginOptions} />
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="SignUpViaPhone" component={SignUpViaPhone} />
+      <Stack.Screen name="LoginViaPhone" component={LoginViaPhone} />
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
     </Stack.Navigator>

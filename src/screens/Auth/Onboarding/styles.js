@@ -61,22 +61,6 @@ export default EStyleSheet.create({
   btnWrapper: {
     flex: 1,
   },
-  btn: {
-    height: '40rem',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '$purple',
-    marginHorizontal: '3%',
-    padding: 0,
-  },
-  btnLabel: {
-    width: '100%',
-    fontSize: '$mediumText',
-    fontFamily: '$font1',
-    textAlign: 'center',
-    color: '$white',
-    margin: 0,
-  },
   pagination: {
     flexDirection: 'row',
     alignItems: 'center',

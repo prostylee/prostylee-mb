@@ -1,8 +1,17 @@
 import Home from './Home';
-import Login from './Login';
-import SignUp from './SignUp';
-import LoginOptions from './LoginOptions';
-import Welcome from './Welcome';
-import Onboarding from './Onboarding';
+import Login from './Auth/Login';
+import SignUpViaPhone from './Auth/SignUpViaPhone';
+import LoginOptions from './Auth/LoginOptions';
+import Welcome from './Auth/Welcome';
+import Onboarding from './Auth/Onboarding';
+import LoginViaPhone from './Auth/LoginViaPhone';
 
-export {Welcome, Onboarding, Home, Login, SignUp, LoginOptions};
+export {
+  Welcome,
+  Onboarding,
+  Home,
+  Login,
+  SignUpViaPhone,
+  LoginViaPhone,
+  LoginOptions,
+};

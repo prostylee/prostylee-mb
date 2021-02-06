@@ -58,22 +58,6 @@ export default EStyleSheet.create({
   btnWrapper: {
     marginTop: '20rem',
   },
-  loginBtn: {
-    marginBottom: '5rem',
-    height: '40rem',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '4rem',
-    backgroundColor: '$purple',
-  },
-  loginBtnLabel: {
-    width: '100%',
-    fontSize: '$mediumText',
-    fontFamily: '$font1',
-    textAlign: 'center',
-    color: '$white',
-    margin: 0,
-  },
   divider: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -115,26 +99,33 @@ export default EStyleSheet.create({
     borderRadius: '23rem',
   },
   textBtnLabel: {
-    fontSize: '$mediumText',
-    fontFamily: '$font1',
-    textAlign: 'center',
     color: '$black500',
-    margin: 0,
   },
   textBtn: {
     marginTop: '-10rem',
   },
   labelBtn: {
-    fontSize: '$mediumText',
-    fontFamily: '$font1',
-    textAlign: 'center',
     color: '$lightGray',
-    margin: 0,
   },
-  iconTextLabel: {
-    fontSize: '$mediumText',
+  privacyWrapper: {
+    paddingHorizontal: '8%',
+    marginTop: '10rem',
+  },
+  noticeText: {
+    fontSize: '$smallText',
     fontFamily: '$font1',
+    color: '$lightGray',
     textAlign: 'center',
-    color: '$purple',
+  },
+  btnRowWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  privacyButton: {
+    fontSize: '$smallText',
+    fontFamily: '$font1',
+    color: '$black',
+    paddingHorizontal: 0,
   },
 });

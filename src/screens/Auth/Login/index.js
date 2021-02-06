@@ -5,12 +5,13 @@ import {
   ContainerWithoutScrollView,
   Image,
   TextInputBorderBottom,
+  ButtonRounded,
+  TextButton,
 } from 'components';
 import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
-import {Button} from 'react-native-paper';
-import {useTheme} from '@react-navigation/native';
 
 import styles from './styles';
+import * as RootNavigator from 'navigator/rootNavigator';
 
 //IMG
 const IMG_LOGO = require('assets/images/logoBlack.png');
@@ -27,35 +28,14 @@ const initialLayout = {width: Dimensions.get('window').width};
 
 const Index = () => {
   const [index, setIndex] = React.useState(0);
-  const [email, setEmail] = React.useState('');
-  const [fullname, setFullname] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [activeBtnSignUp, setActiveBtnSignUp] = React.useState(false);
   const [routes] = React.useState([
     {key: 'login', title: 'Đăng Nhập'},
     {key: 'signup', title: 'Đăng Ký'},
   ]);
 
-  //Theme
-  const {colors} = useTheme();
-
-  //textInput
-  const onChangeEmail = (value) => {
-    // setEmail(value);
-  };
-  const onChangePassword = (value) => {
-    setPassword(value);
-  };
-  const onChangeFullname = (value) => {
-    setFullname(value);
-  };
-
   //handle funcs
-  const onLogin = () => {};
-  const onLoginWithPhone = () => {};
-  const onSignUp = () => {};
-  const onSignUpWithPhone = () => {};
-  const onForgotPw = () => {};
+  const onGoToTerms = () => {};
+  const onGoToPrivacy = () => {};
 
   const renderScene = SceneMap({
     login: LoginTab,
@@ -131,6 +111,26 @@ const Index = () => {
               </TouchableOpacity>
             )}
           </View>
+          {index === 1 && (
+            <View style={styles.privacyWrapper}>
+              <Text style={styles.noticeText}>
+                Bằng việc đăng kí, bạn đã đồng ý với chúng tôi về
+              </Text>
+              <View style={styles.btnRowWrapper}>
+                <TextButton
+                  onPress={() => onGoToTerms()}
+                  label="Điều khoản dịch vụ"
+                  labelStyle={styles.privacyButton}
+                />
+                <Text style={styles.noticeText}>và</Text>
+                <TextButton
+                  onPress={() => onGoToPrivacy()}
+                  label="Chính sách bảo mật"
+                  labelStyle={styles.privacyButton}
+                />
+              </View>
+            </View>
+          )}
         </View>
       </ContainerWithoutScrollView>
     </View>
@@ -151,7 +151,9 @@ const LoginTab = () => {
 
   //handle funcs
   const onLogin = () => {};
-  const onLoginWithPhone = () => {};
+  const onLoginWithPhone = () => {
+    RootNavigator.navigate('LoginViaPhone');
+  };
   const onForgotPw = () => {};
 
   return (
@@ -172,33 +174,25 @@ const LoginTab = () => {
           secureTextEntry={true}
         />
         <View style={styles.btnWrapper}>
-          <Button
-            mode="contained"
-            uppercase={false}
+          <ButtonRounded
             onPress={() => onLogin()}
-            style={styles.loginBtn}
-            labelStyle={styles.loginBtnLabel}>
-            Đăng nhập
-          </Button>
+            label="Đăng Nhập"
+            disabled={false}
+          />
         </View>
         <View style={styles.btnWrapper}>
-          <Button
-            mode="text"
-            uppercase={false}
+          <TextButton
             onPress={() => onLoginWithPhone()}
-            labelStyle={styles.textBtnLabel}>
-            Đăng nhập bằng số điện thoại
-          </Button>
+            labelStyle={styles.textBtnLabel}
+            label="Đăng nhập bằng số điện thoại"
+          />
         </View>
-        <View style={styles.btnWrapper}>
-          <Button
-            mode="text"
-            uppercase={false}
+        <View>
+          <TextButton
             onPress={() => onForgotPw()}
-            style={styles.textBtn}
-            labelStyle={styles.labelBtn}>
-            Quên mật khẩu?
-          </Button>
+            labelStyle={styles.labelBtn}
+            label="Quên mật khẩu?"
+          />
         </View>
       </View>
     </View>
@@ -210,9 +204,6 @@ const SignupTab = () => {
   const [fullname, setFullname] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [activeBtnSignUp, setActiveBtnSignUp] = React.useState(false);
-
-  //Theme
-  const {colors} = useTheme();
 
   //textInput
   const onChangeEmail = (value) => {
@@ -228,10 +219,6 @@ const SignupTab = () => {
   //handle funcs
   const onSignUp = () => {};
   const onSignUpWithPhone = () => {};
-
-  //CONST
-  const backgroundColor = activeBtnSignUp ? colors['$purple'] : colors['$line'];
-  const color = activeBtnSignUp ? colors['$white'] : colors['$lightGray'];
   return (
     <View style={styles.tabViewWrapper}>
       <View style={styles.form}>
@@ -256,30 +243,24 @@ const SignupTab = () => {
           secureTextEntry={true}
         />
         <View style={styles.btnWrapper}>
-          <Button
-            mode="contained"
-            uppercase={false}
-            disabled={!activeBtnSignUp}
+          <ButtonRounded
             onPress={() => onSignUp()}
-            style={[styles.loginBtn, {backgroundColor}]}
-            labelStyle={[styles.loginBtnLabel, {color}]}>
-            Đăng ký
-          </Button>
+            label="Đăng Ký"
+            disabled={true}
+          />
         </View>
         <View style={styles.btnWrapper}>
-          <Button
-            mode="text"
+          <TextButton
             icon={({size, color}) => (
               <Image
                 source={IC_PHONE}
                 style={{width: size, height: size, tintColor: color}}
               />
             )}
-            uppercase={false}
             onPress={() => onSignUpWithPhone()}
-            labelStyle={styles.iconTextLabel}>
-            Đăng ký bằng số điện thoại
-          </Button>
+            labelStyle={styles.iconTextLabel}
+            label="Đăng ký bằng số điện thoại"
+          />
         </View>
       </View>
     </View>
