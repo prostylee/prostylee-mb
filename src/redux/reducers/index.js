@@ -18,14 +18,21 @@ import user, {
   types as userTypes,
 } from './user';
 
+import newFeed, {
+  actions as newFeedActions,
+  types as newFeedTypes,
+} from './newFeed';
+
 const rootReducer = combineReducers({
   common,
   product,
   user,
+  newFeed,
 });
 
 export {commonActions, commonSelectors, commonTypes};
 export {productActions, productSelectors, productTypes};
 export {userActions, userSelectors, userTypes};
+export {newFeedActions, newFeedTypes};
 
 export default rootReducer;

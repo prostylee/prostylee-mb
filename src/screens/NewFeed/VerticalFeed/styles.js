@@ -18,6 +18,21 @@ export default EStyleSheet.create({
   wrapFollow: {
     ...center,
   },
+  socialActionWrap: {
+    ...flexRow,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 15,
+  },
+  postAction: {
+    ...flexRow,
+  },
+  touchHeart: {
+    paddingRight: 8,
+  },
+  touchMes: {
+    paddingHorizontal: 8,
+  },
 
 
   mainWrapper: {

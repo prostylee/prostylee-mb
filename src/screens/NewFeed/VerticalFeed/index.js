@@ -7,6 +7,8 @@ import {Avatar} from 'react-native-paper'
 
 import {ThemeView, ContainerView} from 'components'
 
+import {Heart, Message, More} from 'svg/social';
+
 const VerticalFeed = (props) => {
   return (
     <ThemeView isFullView>
@@ -17,6 +19,19 @@ const VerticalFeed = (props) => {
         </View>
         <TouchableOpacity style={styles.wrapFollow}>
           <Text>Follow</Text>
+        </TouchableOpacity>
+      </ContainerView>
+      <ContainerView style={styles.socialActionWrap}>
+        <View style={styles.postAction}>
+          <TouchableOpacity style={styles.touchHeart}>
+            <Heart/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.touchMes}>
+            <Message/>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.touchOption}>
+          <More/>
         </TouchableOpacity>
       </ContainerView>
     </ThemeView>

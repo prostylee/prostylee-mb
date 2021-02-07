@@ -9,10 +9,10 @@ export const INTERNAL_SERVER_ERROR = 500;
 export const TIME_OUT = 20000;
 
 // HTTP METHODS
-export const POST = 'POST';
-export const GET = 'GET';
-export const PUT = 'PUT';
-export const DELETE = 'DELETE';
+export const POST = 'post';
+export const GET = 'get';
+export const PUT = 'put';
+export const DELETE = 'delete';
 
 //ERROR MESSAGE
 export const UNKNOWN_MESSAGE = 'Đã xảy ra lỗi, vui lòng thử lại sau';
