@@ -2,6 +2,10 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import {center,flexRow} from 'theme/style'
 
 export default EStyleSheet.create({
+  container: {
+    backgroundColor: '$white',
+    marginVertical: 4,
+  },
   headerContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -9,6 +13,7 @@ export default EStyleSheet.create({
   },
   headerWrap: {
     ...flexRow,
+    paddingVertical: 10,
   },
   textTitle: {
     paddingLeft: 10,

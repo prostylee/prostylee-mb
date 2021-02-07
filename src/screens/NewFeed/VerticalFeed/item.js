@@ -13,7 +13,7 @@ import FeedSlide from './slide';
 
 const VerticalFeedItem = ({newFeedItem}) => {
   return (
-    <>
+    <View style={styles.container}>
       <ContainerView style={styles.headerContainer}>
         <View style={styles.headerWrap}>
           <Avatar.Image 
@@ -39,7 +39,7 @@ const VerticalFeedItem = ({newFeedItem}) => {
           <More/>
         </TouchableOpacity>
       </ContainerView>
-    </>
+    </View>
   )
 }
 
