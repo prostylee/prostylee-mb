@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
-import {View, Text, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
 import styles from './styles'
 
 import {ThemeView} from 'components'
 
 import VerticalFeed from './VerticalFeed'
+import HeaderFeed from './HeaderFeed'
 
 import {newFeedActions} from 'redux/reducers'
 import {getNewFeedSelector} from 'redux/selectors/newFeed'
@@ -24,12 +25,12 @@ const NewFeed = (props) => {
   }, [])
   return (
     <ThemeView isFullView>
+      <HeaderFeed/>
       <ScrollView
           scrollEventThrottle={1}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
       >
-        <View style={{height: 80}}></View>
         <VerticalFeed newFeedList={newFeedList}/>
       </ScrollView>
     </ThemeView>
