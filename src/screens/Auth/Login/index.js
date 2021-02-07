@@ -12,6 +12,7 @@ import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
 
 import styles from './styles';
 import * as RootNavigator from 'navigator/rootNavigator';
+import I18n from 'i18n';
 
 //IMG
 const IMG_LOGO = require('assets/images/logoBlack.png');
@@ -29,8 +30,8 @@ const initialLayout = {width: Dimensions.get('window').width};
 const Index = () => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'login', title: 'Đăng Nhập'},
-    {key: 'signup', title: 'Đăng Ký'},
+    {key: 'login', title: I18n.t('login')},
+    {key: 'signup', title: I18n.t('signUp')},
   ]);
 
   //handle funcs
@@ -75,7 +76,9 @@ const Index = () => {
           />
           <View style={styles.divider}>
             <View style={styles.line} />
-            <Text style={styles.labelDivider}>Hoặc đăng nhập bằng</Text>
+            <Text style={styles.labelDivider}>
+              {I18n.t('otherLoginOptions')}
+            </Text>
             <View style={styles.line} />
           </View>
           <View style={styles.socialLogin}>
@@ -113,18 +116,18 @@ const Index = () => {
           {index === 1 && (
             <View style={styles.privacyWrapper}>
               <Text style={styles.noticeText}>
-                Bằng việc đăng kí, bạn đã đồng ý với chúng tôi về
+                {I18n.t('signUpPolicyNoti')}
               </Text>
               <View style={styles.btnRowWrapper}>
                 <TextButton
                   onPress={() => onGoToTerms()}
-                  label="Điều khoản dịch vụ"
+                  label={I18n.t('policy1')}
                   labelStyle={styles.privacyButton}
                 />
-                <Text style={styles.noticeText}>và</Text>
+                <Text style={styles.noticeText}>{I18n.t('and')}</Text>
                 <TextButton
                   onPress={() => onGoToPrivacy()}
-                  label="Chính sách bảo mật"
+                  label={I18n.t('policy2')}
                   labelStyle={styles.privacyButton}
                 />
               </View>
@@ -153,19 +156,21 @@ const LoginTab = () => {
   const onLoginWithPhone = () => {
     RootNavigator.navigate('LoginViaPhone');
   };
-  const onForgotPw = () => {};
+  const onForgotPw = () => {
+    RootNavigator.navigate('ForgotPassword');
+  };
 
   return (
     <View style={styles.tabViewWrapper}>
       <View style={styles.form}>
         <TextInputBorderBottom
-          hint="Email"
+          hint={I18n.t('email')}
           value={email}
           onChangeText={(text) => onChangeEmail(text)}
           textInputStyle={styles.textInput}
         />
         <TextInputBorderBottom
-          hint="Mật khẩu"
+          hint={I18n.t('password')}
           value={password}
           onChangeText={(text) => onChangePassword(text)}
           textInputStyle={styles.textInput}
@@ -175,7 +180,7 @@ const LoginTab = () => {
         <View style={styles.btnWrapper}>
           <ButtonRounded
             onPress={() => onLogin()}
-            label="Đăng Nhập"
+            label={I18n.t('login')}
             disabled={false}
           />
         </View>
@@ -183,14 +188,14 @@ const LoginTab = () => {
           <TextButton
             onPress={() => onLoginWithPhone()}
             labelStyle={styles.textBtnLabel}
-            label="Đăng nhập bằng số điện thoại"
+            label={I18n.t('loginWithPhone')}
           />
         </View>
         <View>
           <TextButton
             onPress={() => onForgotPw()}
             labelStyle={styles.labelBtn}
-            label="Quên mật khẩu?"
+            label={I18n.t('forgotPw')}
           />
         </View>
       </View>
@@ -224,19 +229,19 @@ const SignupTab = () => {
     <View style={styles.tabViewWrapper}>
       <View style={styles.form}>
         <TextInputBorderBottom
-          hint="Họ tên"
+          hint={I18n.t('fullname')}
           value={fullname}
           onChangeText={(text) => onChangeFullname(text)}
           textInputStyle={styles.textInput}
         />
         <TextInputBorderBottom
-          hint="Email"
+          hint={I18n.t('email')}
           value={email}
           onChangeText={(text) => onChangeEmail(text)}
           textInputStyle={styles.textInput}
         />
         <TextInputBorderBottom
-          hint="Mật khẩu"
+          hint={I18n.t('password')}
           value={password}
           onChangeText={(text) => onChangePassword(text)}
           textInputStyle={styles.textInput}
@@ -246,7 +251,7 @@ const SignupTab = () => {
         <View style={styles.btnWrapper}>
           <ButtonRounded
             onPress={() => onSignUp()}
-            label="Đăng Ký"
+            label={I18n.t('signUp')}
             disabled={true}
           />
         </View>
@@ -260,7 +265,7 @@ const SignupTab = () => {
             )}
             onPress={() => onSignUpWithPhone()}
             labelStyle={styles.iconTextLabel}
-            label="Đăng ký bằng số điện thoại"
+            label={I18n.t('signUpWithPhone')}
           />
         </View>
       </View>

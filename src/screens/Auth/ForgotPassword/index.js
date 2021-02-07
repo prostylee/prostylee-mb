@@ -30,22 +30,18 @@ const Index = (props) => {
     <View style={styles.container}>
       <ContainerWithoutScrollView>
         <View style={styles.mainWrapper}>
-          <HeaderBack
-            title={I18n.t('loginWithPhone')}
-            onBack={() => onGoBack()}
-          />
+          <HeaderBack title={I18n.t('forgotPw')} onBack={() => onGoBack()} />
           <View style={styles.form}>
-            <Text style={styles.label}>{I18n.t('yourPhoneLabel')}</Text>
+            <Text style={styles.label}>{I18n.t('emailOrPhone')}</Text>
             <TextInputBorderBottom
               hint=""
               value={phone}
               onChangeText={(text) => onChangePhone(text)}
               textInputStyle={styles.textInput}
               autoFocus={true}
-              keyboardType="phone-pad"
             />
             <ButtonRounded
-              label={I18n.t('sendVerificationCode')}
+              label={I18n.t('nextVn')}
               style={styles.button}
               onPress={() => onVerifyOTP()}
             />

@@ -9,6 +9,8 @@ import {
 
 import {Image, ButtonRounded} from 'components';
 
+import I18n from 'i18n';
+
 //IMG
 const IMG_BG = require('assets/images/loginBg.png');
 const IMG_LOGO = require('assets/images/logoWhite.png');
@@ -35,18 +37,18 @@ const Index = (props) => {
           <Image source={IMG_LOGO} style={styles.logo} resizeMode="contain" />
         </View>
         <View style={styles.btnWrapper}>
-          <ButtonRounded onPress={() => onLogin()} label="Đăng Nhập" />
+          <ButtonRounded onPress={() => onLogin()} label={I18n.t('login')} />
           <ButtonRounded
             onPress={() => onSignUp()}
             contentStyle={styles.signupBtn}
             labelStyle={styles.signupBtnLabel}
             style={styles.btnContainer}
-            label="Đăng Ký"
+            label={I18n.t('signUp')}
           />
         </View>
         <View style={styles.divider}>
           <View style={styles.line} />
-          <Text style={styles.labelDivider}>Hoặc đăng nhập bằng</Text>
+          <Text style={styles.labelDivider}>{I18n.t('otherLoginOptions')}</Text>
           <View style={styles.line} />
         </View>
         <View style={styles.socialLogin}>

@@ -22,6 +22,9 @@ import {
   Home,
   LoginOptions,
   OTPVerification,
+  ForgotPassword,
+  ResetPassword,
+  ResetPasswordViaMail,
 } from 'screens';
 
 function SignedIn() {
@@ -60,6 +63,12 @@ function SignedOut() {
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
       <Stack.Screen name="OTPVerification" component={OTPVerification} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen name="ResetPassword" component={ResetPassword} />
+      <Stack.Screen
+        name="ResetPasswordViaMail"
+        component={ResetPasswordViaMail}
+      />
     </Stack.Navigator>
   );
 }

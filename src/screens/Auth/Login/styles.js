@@ -54,6 +54,7 @@ export default EStyleSheet.create({
   textInput: {
     height: '46rem',
     marginBottom: '10rem',
+    paddingRight: '5%',
   },
   btnWrapper: {
     marginTop: '20rem',

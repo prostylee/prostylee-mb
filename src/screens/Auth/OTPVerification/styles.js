@@ -30,7 +30,8 @@ export default EStyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    marginTop: '20rem',
+    marginTop: '30rem',
+    marginBottom: '20rem',
   },
   cellStyle: {
     borderBottomWidth: 1,
@@ -48,5 +49,8 @@ export default EStyleSheet.create({
     fontFamily: '$font1',
     color: '$black500',
     fontSize: '$maxText',
+  },
+  labelTextButton: {
+    color: '$primaryBlue',
   },
 });

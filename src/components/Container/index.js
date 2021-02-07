@@ -4,7 +4,6 @@ import {
   ScrollView,
   StatusBar,
   KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 
 import styles from './styles';
@@ -25,9 +24,7 @@ const Container = ({
   <KeyboardAvoidingView style={styles.wrapper}>
     <ScrollView
       contentContainerStyle={[styles.container, style]}
-      keyboardShouldPersistTaps={
-        keyboardShouldPersistTaps ? keyboardShouldPersistTaps : 'handled'
-      }
+      keyboardShouldPersistTaps={keyboardShouldPersistTaps}
       onScroll={onScroll}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
@@ -35,18 +32,23 @@ const Container = ({
       bounces={false}
       ref={scrollViewRef}>
       <SafeAreaView style={[styles.safeAreaTopStyle, safeAreaTopStyle]} />
-      {Platform.OS === 'ios' && (
-        <StatusBar
-          barStyle={barStyle || 'dark-content'}
-          hidden={hidden || false}
-          backgroundColor={bgStatusBar || '#fff'}
-        />
-      )}
+      <StatusBar
+        barStyle={barStyle}
+        hidden={hidden}
+        backgroundColor={bgStatusBar}
+      />
 
       {children}
       <SafeAreaView style={[styles.safeAreaBottomStyle, safeAreaBottomStyle]} />
     </ScrollView>
   </KeyboardAvoidingView>
 );
+
+Container.defaultProps = {
+  keyboardShouldPersistTaps: 'handled',
+  barStyle: 'dark-content',
+  hidden: false,
+  bgStatusBar: '#fff',
+};
 
 export default Container;

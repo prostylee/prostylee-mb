@@ -20,6 +20,7 @@ import Image from './Image';
 import Colors from './Colors';
 import ModalImagePicker from './ModalImagePicker';
 import TextButton from './TextButton';
+import ButtonOutlined from './ButtonOutlined';
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -43,4 +44,5 @@ export {
   RnActionSheet,
   ModalImagePicker,
   Colors,
+  ButtonOutlined,
 };

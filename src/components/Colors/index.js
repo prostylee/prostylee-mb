@@ -15,7 +15,7 @@ export default {
   $danger: '#c0392b',
   $yellow: '#f1c40f',
   $organ: '#f39c12',
-  $primaryBlue: '#3498db',
+  $primaryBlue: '#2F80ED',
   $mainColor: '#ff7675',
   $purple: '#823FFD',
   $line: '#E9EAEB',

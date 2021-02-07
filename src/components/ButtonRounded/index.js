@@ -42,6 +42,7 @@ ButtonRounded.defaultProps = {
   loading: false,
   disabled: false,
   uppercase: false,
+  color: '#823FFD',
 };
 
 export default ButtonRounded;

@@ -9,6 +9,8 @@ import {
   TextButton,
 } from 'components';
 
+import I18n from 'i18n';
+
 import styles from './styles';
 
 //ICONS
@@ -28,25 +30,27 @@ const Index = (props) => {
   const onChangePhone = (text) => {
     setPhone(text);
   };
+  const onGoToTerms = () => {};
+  const onGoToPrivacy = () => {};
   return (
     <View style={styles.container}>
       <ContainerWithoutScrollView>
         <View style={styles.mainWrapper}>
           <HeaderBack
-            title="Đăng ký bằng số điện thoại"
+            title={I18n.t('signUpWithPhone')}
             onBack={() => onGoBack()}
           />
           <View style={styles.form}>
             {/* <Text style={styles.label}>Số điện thoại của bạn</Text> */}
             <TextInputBorderBottom
-              hint="Họ tên"
+              hint={I18n.t('fullname')}
               value={phone}
               onChangeText={(text) => onChangePhone(text)}
               style={styles.textInput}
               autoFocus={true}
             />
             <TextInputBorderBottom
-              hint="Số điện thoại"
+              hint={I18n.t('yourPhone')}
               value={phone}
               onChangeText={(text) => onChangePhone(text)}
               style={styles.textInput}
@@ -54,14 +58,16 @@ const Index = (props) => {
               keyboardType="phone-pad"
             />
             <ButtonRounded
-              label="Đăng ký"
+              label={I18n.t('signUp')}
               style={styles.button}
               disabled={true}
             />
           </View>
           <View style={styles.divider}>
             <View style={styles.line} />
-            <Text style={styles.labelDivider}>Hoặc đăng nhập bằng</Text>
+            <Text style={styles.labelDivider}>
+              {I18n.t('otherLoginOptions')}
+            </Text>
             <View style={styles.line} />
           </View>
           <View style={styles.socialLogin}>
@@ -98,19 +104,17 @@ const Index = (props) => {
           </View>
 
           <View style={styles.privacyWrapper}>
-            <Text style={styles.noticeText}>
-              Bằng việc đăng kí, bạn đã đồng ý với chúng tôi về
-            </Text>
+            <Text style={styles.noticeText}>{I18n.t('signUpPolicyNoti')}</Text>
             <View style={styles.btnRowWrapper}>
               <TextButton
                 onPress={() => onGoToTerms()}
-                label="Điều khoản dịch vụ"
+                label={I18n.t('policy1')}
                 labelStyle={styles.privacyButton}
               />
-              <Text style={styles.noticeText}>và</Text>
+              <Text style={styles.noticeText}>{I18n.t('and')}</Text>
               <TextButton
                 onPress={() => onGoToPrivacy()}
-                label="Chính sách bảo mật"
+                label={I18n.t('policy2')}
                 labelStyle={styles.privacyButton}
               />
             </View>

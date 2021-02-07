@@ -5,6 +5,7 @@ import {Image, ContainerWithoutScrollView, ButtonRounded} from 'components';
 import {useTheme} from '@react-navigation/native';
 
 import styles from './styles';
+import I18n from 'i18n';
 
 import {onboarding as data} from 'data/localJson';
 
@@ -39,7 +40,7 @@ const Index = (props) => {
   };
 
   const _renderItem = ({item, index}) => {
-    const labelBtn = index === data.length - 1 ? 'Get Started' : 'Next';
+    const labelBtn = index === data.length - 1 ? I18n.t('getStarted') : I18n.t('next');
     return (
       <View style={[styles.pageWrapper, {width: WIDTH, height: HEIGHT}]}>
         <View style={[styles.imgWrapper, styles[`onboarding${index}`]]}>

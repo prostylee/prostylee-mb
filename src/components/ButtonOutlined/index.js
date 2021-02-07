@@ -3,7 +3,7 @@ import {Button} from 'react-native-paper';
 
 import styles from './styles';
 
-const TextButton = ({
+const ButtonOutlined = ({
   icon,
   mode,
   onPress,
@@ -37,12 +37,12 @@ const TextButton = ({
   </Button>
 );
 
-TextButton.defaultProps = {
-  mode: 'text',
+ButtonOutlined.defaultProps = {
+  mode: 'outlined',
   loading: false,
   disabled: false,
   uppercase: false,
   color: '#fff',
 };
 
-export default TextButton;
+export default ButtonOutlined;

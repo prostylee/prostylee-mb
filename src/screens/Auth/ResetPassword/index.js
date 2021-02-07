@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -7,9 +7,12 @@ import {
   HeaderBack,
 } from 'components';
 
+import I18n from 'i18n';
+
 import styles from './styles';
 
-import I18n from 'i18n';
+//ICONS
+const IC_EYE = require('assets/icons/eye.png');
 
 const Index = (props) => {
   //State
@@ -30,22 +33,19 @@ const Index = (props) => {
     <View style={styles.container}>
       <ContainerWithoutScrollView>
         <View style={styles.mainWrapper}>
-          <HeaderBack
-            title={I18n.t('loginWithPhone')}
-            onBack={() => onGoBack()}
-          />
+          <HeaderBack title={I18n.t('resetPw')} onBack={() => onGoBack()} />
           <View style={styles.form}>
-            <Text style={styles.label}>{I18n.t('yourPhoneLabel')}</Text>
             <TextInputBorderBottom
-              hint=""
+              hint={I18n.t('yourNewPw')}
               value={phone}
               onChangeText={(text) => onChangePhone(text)}
               textInputStyle={styles.textInput}
               autoFocus={true}
-              keyboardType="phone-pad"
+              icon={IC_EYE}
+              secureTextEntry={true}
             />
             <ButtonRounded
-              label={I18n.t('sendVerificationCode')}
+              label={I18n.t('nextVn')}
               style={styles.button}
               onPress={() => onVerifyOTP()}
             />

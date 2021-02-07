@@ -3,9 +3,11 @@ import {View, Text} from 'react-native';
 import {
   ContainerWithoutScrollView,
   ButtonRounded,
-  TextInputBorderBottom,
+  TextButton,
   HeaderBack,
 } from 'components';
+
+import I18n from 'i18n';
 
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 
@@ -23,18 +25,17 @@ const Index = (props) => {
     setCode(text);
   };
 
-  const onVerifyOTP = () => {
-    props.navigation.navigate('OTPVerification');
+  const onResetPassword = () => {
+    props.navigation.navigate('ResetPasswordViaMail');
   };
+  const onResendOTP = () => {};
   return (
     <View style={styles.container}>
       <ContainerWithoutScrollView>
         <View style={styles.mainWrapper}>
-          <HeaderBack title="Nhập mã xác minh" onBack={() => onGoBack()} />
+          <HeaderBack title={I18n.t('enterOTP')} onBack={() => onGoBack()} />
           <View style={styles.form}>
-            <Text style={styles.label}>
-              Mã xác minh đã được vào số điện thoại
-            </Text>
+            <Text style={styles.label}>{I18n.t('otpSent')}</Text>
             <Text style={styles.phone}>(+84) 12237283</Text>
             <SmoothPinCodeInput
               cellStyle={styles.cellStyle}
@@ -49,10 +50,17 @@ const Index = (props) => {
               onTextChange={(value) => onChangeCode(value)}
             />
             <ButtonRounded
-              label="Tiếp"
+              label={I18n.t('nextVn')}
               style={styles.button}
-              onPress={() => onVerifyOTP()}
-              disabled={true}
+              onPress={() => onResetPassword()}
+              disabled={false}
+            />
+          </View>
+          <View style={styles.btnWrapper}>
+            <TextButton
+              label={I18n.t('resendOTP')}
+              labelStyle={styles.labelTextButton}
+              onPress={() => onResendOTP()}
             />
           </View>
         </View>
