@@ -5,7 +5,7 @@ import styles from './styles'
 
 import {Header} from 'components'
 
-import {Search, Bag} from 'svg/common'
+import {Search, Bag, FeedStore, DubHeart} from 'svg/common'
 import {Message} from 'svg/social';
 
 const HeaderFeed = (props) => {
@@ -18,14 +18,16 @@ const HeaderFeed = (props) => {
       }
       middleComponent={
         <View style={styles.midHeader}>
-          <TouchableOpacity 
-            style={styles.midTouch}>
-            <Message/>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.midTouch}>
-            <Bag/>
-          </TouchableOpacity>
+          <View style={styles.midBorder}>
+            <TouchableOpacity 
+              style={styles.midTouch}>
+              <FeedStore/>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.midTouch}>
+              <DubHeart/>
+            </TouchableOpacity>
+          </View>
         </View>
       }
       rightComponent={

@@ -21,14 +21,27 @@ export default EStyleSheet.create({
     paddingHorizontal: 8,
   },
   midHeader: {
-    ...flexRow,
     justifyContent: 'center',
     alignItems: 'center',
     width: width / 3,
+    marginBottom: -4,
   },
   leftHeader: {
     justifyContent: 'center',
     paddingLeft: 20,
     width: width / 3,
+  },
+  midTouch: {
+    padding: 10,
+    backgroundColor: '#333',
+    borderRadius: 50,
+  },
+  midBorder: {
+    ...flexRow,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f4f5f5',
+    borderRadius: 20,
+    padding: 2,
   }
 })
