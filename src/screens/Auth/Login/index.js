@@ -47,7 +47,6 @@ const Index = () => {
       {...props}
       indicatorStyle={styles.indicatorStyle}
       style={styles.tabBarStyle}
-      labelStyle={styles.labelStyle}
       renderLabel={renderLabel}
     />
   );
@@ -218,7 +217,9 @@ const SignupTab = () => {
 
   //handle funcs
   const onSignUp = () => {};
-  const onSignUpWithPhone = () => {};
+  const onSignUpWithPhone = () => {
+    RootNavigator.navigate('SignUpViaPhone');
+  };
   return (
     <View style={styles.tabViewWrapper}>
       <View style={styles.form}>

@@ -29,9 +29,9 @@ export default EStyleSheet.create({
   },
   labelWrapper: {
     height: '40rem',
+    width: '$screenWidth/2',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: '20rem',
   },
   activeLabel: {
     color: '$black',

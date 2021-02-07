@@ -41,7 +41,7 @@ export default EStyleSheet.create({
     paddingHorizontal: '5%',
   },
   contentWrapper: {
-    flex: 1.5,
+    flex: 2,
   },
   title: {
     fontSize: '$maxText2',

@@ -16,7 +16,7 @@ const styles = EStyleSheet.create({
     borderColor: '$borderColor',
     borderBottomWidth: 1,
     color: '$gray',
-    height: '40rem',
+    height: '46rem',
     paddingRight: '11%',
   },
   wrapperIcon: {

@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, SafeAreaView} from 'react-native';
 
 import styles from './styles';
-import {IconButton, Divider} from 'react-native-paper';
+import {IconButton} from 'react-native-paper';
 import Image from '../Image';
 
 const IC_BACK = require('assets/icons/arrowLeft.png');
@@ -25,7 +25,6 @@ const HeaderBack = ({style, titleStyle, title, onBack}) => (
       <Text style={[styles.headerTitle, titleStyle]}>{title}</Text>
       <View style={styles.btnWrapper} />
     </View>
-    <Divider />
   </View>
 );
 

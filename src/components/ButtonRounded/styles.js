@@ -17,6 +17,7 @@ const styles = EStyleSheet.create({
     fontSize: '$mediumText',
     fontFamily: '$font1',
     textAlign: 'center',
+    color: '$white',
   },
 });
 

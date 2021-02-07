@@ -2,6 +2,8 @@ import React from 'react';
 import {View, Text, FlatList} from 'react-native';
 import {Image, ContainerWithoutScrollView, ButtonRounded} from 'components';
 
+import {useTheme} from '@react-navigation/native';
+
 import styles from './styles';
 
 import {onboarding as data} from 'data/localJson';
@@ -16,6 +18,10 @@ const Index = (props) => {
 
   const flatListRef = React.useRef(null);
 
+  //Theme
+  const {colors} = useTheme();
+
+  //Other funcs
   const onSliderScrollEnd = (e) => {
     let contentOffset = e.nativeEvent.contentOffset;
     let viewSize = e.nativeEvent.layoutMeasurement;
@@ -67,7 +73,9 @@ const Index = (props) => {
   };
   return (
     <View style={styles.container}>
-      <ContainerWithoutScrollView safeAreaTopStyle={styles.safeAreaTopStyle}>
+      <ContainerWithoutScrollView
+        safeAreaTopStyle={styles.safeAreaTopStyle}
+        bgStatusBar={colors['$bgColor']}>
         <View style={styles.mainWrapper}>
           <FlatList
             ref={flatListRef}

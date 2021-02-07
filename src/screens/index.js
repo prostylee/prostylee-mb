@@ -5,6 +5,7 @@ import LoginOptions from './Auth/LoginOptions';
 import Welcome from './Auth/Welcome';
 import Onboarding from './Auth/Onboarding';
 import LoginViaPhone from './Auth/LoginViaPhone';
+import OTPVerification from './Auth/OTPVerification';
 
 export {
   Welcome,
@@ -14,4 +15,5 @@ export {
   SignUpViaPhone,
   LoginViaPhone,
   LoginOptions,
+  OTPVerification,
 };

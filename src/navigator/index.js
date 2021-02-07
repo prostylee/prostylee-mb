@@ -21,6 +21,7 @@ import {
   LoginViaPhone,
   Home,
   LoginOptions,
+  OTPVerification,
 } from 'screens';
 
 function SignedIn() {
@@ -58,6 +59,7 @@ function SignedOut() {
       <Stack.Screen name="LoginViaPhone" component={LoginViaPhone} />
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
+      <Stack.Screen name="OTPVerification" component={OTPVerification} />
     </Stack.Navigator>
   );
 }

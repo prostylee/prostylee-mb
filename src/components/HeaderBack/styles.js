@@ -5,7 +5,10 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: '2%',
+    paddingHorizontal: '3%',
+    paddingBottom: '8rem',
+    borderBottomWidth: '0.5rem',
+    borderColor: '$line',
   },
   headerTitle: {
     fontSize: '$largeText',
