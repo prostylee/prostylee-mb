@@ -6,6 +6,7 @@ import {useTheme} from '@react-navigation/native';
 
 import styles from './styles';
 import I18n from 'i18n';
+import {useBackHandler} from '@react-native-community/hooks';
 
 import {onboarding as data} from 'data/localJson';
 
@@ -18,6 +19,11 @@ const Index = (props) => {
   const [activeIndex, setActiveIndex] = React.useState(0);
 
   const flatListRef = React.useRef(null);
+
+  //BackHandler handle
+  useBackHandler(() => {
+    return true;
+  });
 
   //Theme
   const {colors} = useTheme();

@@ -9,6 +9,7 @@ import {
   TextButton,
 } from 'components';
 import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
+import {useKeyboard, useBackHandler} from '@react-native-community/hooks';
 
 import styles from './styles';
 import * as RootNavigator from 'navigator/rootNavigator';
@@ -27,8 +28,22 @@ const IC_PHONE = require('assets/icons/phone-outline.png');
 
 const initialLayout = {width: Dimensions.get('window').width};
 
-const Index = () => {
+const Index = (props) => {
   const [index, setIndex] = React.useState(0);
+  const keyboard = useKeyboard();
+
+  //UseEffect
+  React.useEffect(() => {});
+
+  //BackHandler handle
+  useBackHandler(() => {
+    if (props.route.name === 'Login') {
+      props.navigation.goBack();
+      return true;
+    }
+  });
+
+  //initial Tabs
   const [routes] = React.useState([
     {key: 'login', title: I18n.t('login')},
     {key: 'signup', title: I18n.t('signUp')},
@@ -74,63 +89,67 @@ const Index = () => {
             initialLayout={initialLayout}
             renderTabBar={renderTabBar}
           />
-          <View style={styles.divider}>
-            <View style={styles.line} />
-            <Text style={styles.labelDivider}>
-              {I18n.t('otherLoginOptions')}
-            </Text>
-            <View style={styles.line} />
-          </View>
-          <View style={styles.socialLogin}>
-            <TouchableOpacity style={styles.socialBtnWrapper}>
-              <Image
-                source={IC_FACEBOOK}
-                resizeMode="contain"
-                style={styles.socialBtn}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.socialBtnWrapper}>
-              <Image
-                source={IC_GOOGLE}
-                resizeMode="contain"
-                style={[styles.socialBtn, styles.btnBordered]}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.socialBtnWrapper}>
-              <Image
-                source={IC_ZALO}
-                resizeMode="contain"
-                style={styles.socialBtn}
-              />
-            </TouchableOpacity>
-            {Platform.OS === 'ios' && (
-              <TouchableOpacity style={styles.socialBtnWrapper}>
-                <Image
-                  source={IC_APPLE}
-                  resizeMode="contain"
-                  style={styles.socialBtn}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-          {index === 1 && (
-            <View style={styles.privacyWrapper}>
-              <Text style={styles.noticeText}>
-                {I18n.t('signUpPolicyNoti')}
-              </Text>
-              <View style={styles.btnRowWrapper}>
-                <TextButton
-                  onPress={() => onGoToTerms()}
-                  label={I18n.t('policy1')}
-                  labelStyle={styles.privacyButton}
-                />
-                <Text style={styles.noticeText}>{I18n.t('and')}</Text>
-                <TextButton
-                  onPress={() => onGoToPrivacy()}
-                  label={I18n.t('policy2')}
-                  labelStyle={styles.privacyButton}
-                />
+          {!keyboard.keyboardShown && (
+            <View>
+              <View style={styles.divider}>
+                <View style={styles.line} />
+                <Text style={styles.labelDivider}>
+                  {I18n.t('otherLoginOptions')}
+                </Text>
+                <View style={styles.line} />
               </View>
+              <View style={styles.socialLogin}>
+                <TouchableOpacity style={styles.socialBtnWrapper}>
+                  <Image
+                    source={IC_FACEBOOK}
+                    resizeMode="contain"
+                    style={styles.socialBtn}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.socialBtnWrapper}>
+                  <Image
+                    source={IC_GOOGLE}
+                    resizeMode="contain"
+                    style={[styles.socialBtn, styles.btnBordered]}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.socialBtnWrapper}>
+                  <Image
+                    source={IC_ZALO}
+                    resizeMode="contain"
+                    style={styles.socialBtn}
+                  />
+                </TouchableOpacity>
+                {Platform.OS === 'ios' && (
+                  <TouchableOpacity style={styles.socialBtnWrapper}>
+                    <Image
+                      source={IC_APPLE}
+                      resizeMode="contain"
+                      style={styles.socialBtn}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+              {index === 1 && (
+                <View style={styles.privacyWrapper}>
+                  <Text style={styles.noticeText}>
+                    {I18n.t('signUpPolicyNoti')}
+                  </Text>
+                  <View style={styles.btnRowWrapper}>
+                    <TextButton
+                      onPress={() => onGoToTerms()}
+                      label={I18n.t('policy1')}
+                      labelStyle={styles.privacyButton}
+                    />
+                    <Text style={styles.noticeText}>{I18n.t('and')}</Text>
+                    <TextButton
+                      onPress={() => onGoToPrivacy()}
+                      label={I18n.t('policy2')}
+                      labelStyle={styles.privacyButton}
+                    />
+                  </View>
+                </View>
+              )}
             </View>
           )}
         </View>

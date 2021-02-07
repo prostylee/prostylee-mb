@@ -41,7 +41,7 @@ export default EStyleSheet.create({
     paddingHorizontal: '5%',
   },
   contentWrapper: {
-    flex: 2,
+    flex: 1.5,
   },
   title: {
     fontSize: '$maxText2',
@@ -59,7 +59,7 @@ export default EStyleSheet.create({
     lineHeight: '18rem',
   },
   btnWrapper: {
-    flex: 1,
+    height: '115rem',
   },
   pagination: {
     flexDirection: 'row',

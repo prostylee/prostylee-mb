@@ -4,7 +4,6 @@ import {
   View,
   StatusBar,
   KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 
 import styles from './styles';
@@ -17,6 +16,7 @@ const ContainerWithoutScrollView = ({
   safeAreaBottomStyle,
   barStyle,
   bgStatusBar,
+  translucent,
 }) => (
   <KeyboardAvoidingView style={styles.wrapper}>
     <View style={[styles.container, style]}>
@@ -26,6 +26,7 @@ const ContainerWithoutScrollView = ({
         barStyle={barStyle}
         hidden={hidden}
         backgroundColor={bgStatusBar}
+        translucent={translucent}
       />
 
       {children}
@@ -36,6 +37,7 @@ const ContainerWithoutScrollView = ({
 
 ContainerWithoutScrollView.defaultProps = {
   barStyle: 'dark-content',
+  translucent: true,
   hidden: false,
   bgStatusBar: '#fff',
 };

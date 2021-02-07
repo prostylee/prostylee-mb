@@ -9,6 +9,8 @@ import {
   TextButton,
 } from 'components';
 
+import {useKeyboard} from '@react-native-community/hooks';
+
 import I18n from 'i18n';
 
 import styles from './styles';
@@ -25,6 +27,9 @@ const Index = (props) => {
   const onGoBack = () => {
     props.navigation.goBack();
   };
+
+  //keyboard
+  const keyboard = useKeyboard();
 
   //input
   const onChangePhone = (text) => {
@@ -63,62 +68,68 @@ const Index = (props) => {
               disabled={true}
             />
           </View>
-          <View style={styles.divider}>
-            <View style={styles.line} />
-            <Text style={styles.labelDivider}>
-              {I18n.t('otherLoginOptions')}
-            </Text>
-            <View style={styles.line} />
-          </View>
-          <View style={styles.socialLogin}>
-            <TouchableOpacity style={styles.socialBtnWrapper}>
-              <Image
-                source={IC_FACEBOOK}
-                resizeMode="contain"
-                style={styles.socialBtn}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.socialBtnWrapper}>
-              <Image
-                source={IC_GOOGLE}
-                resizeMode="contain"
-                style={[styles.socialBtn, styles.btnBordered]}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.socialBtnWrapper}>
-              <Image
-                source={IC_ZALO}
-                resizeMode="contain"
-                style={styles.socialBtn}
-              />
-            </TouchableOpacity>
-            {Platform.OS === 'ios' && (
-              <TouchableOpacity style={styles.socialBtnWrapper}>
-                <Image
-                  source={IC_APPLE}
-                  resizeMode="contain"
-                  style={styles.socialBtn}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
+          {!keyboard.keyboardShown && (
+            <View>
+              <View style={styles.divider}>
+                <View style={styles.line} />
+                <Text style={styles.labelDivider}>
+                  {I18n.t('otherLoginOptions')}
+                </Text>
+                <View style={styles.line} />
+              </View>
+              <View style={styles.socialLogin}>
+                <TouchableOpacity style={styles.socialBtnWrapper}>
+                  <Image
+                    source={IC_FACEBOOK}
+                    resizeMode="contain"
+                    style={styles.socialBtn}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.socialBtnWrapper}>
+                  <Image
+                    source={IC_GOOGLE}
+                    resizeMode="contain"
+                    style={[styles.socialBtn, styles.btnBordered]}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.socialBtnWrapper}>
+                  <Image
+                    source={IC_ZALO}
+                    resizeMode="contain"
+                    style={styles.socialBtn}
+                  />
+                </TouchableOpacity>
+                {Platform.OS === 'ios' && (
+                  <TouchableOpacity style={styles.socialBtnWrapper}>
+                    <Image
+                      source={IC_APPLE}
+                      resizeMode="contain"
+                      style={styles.socialBtn}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
 
-          <View style={styles.privacyWrapper}>
-            <Text style={styles.noticeText}>{I18n.t('signUpPolicyNoti')}</Text>
-            <View style={styles.btnRowWrapper}>
-              <TextButton
-                onPress={() => onGoToTerms()}
-                label={I18n.t('policy1')}
-                labelStyle={styles.privacyButton}
-              />
-              <Text style={styles.noticeText}>{I18n.t('and')}</Text>
-              <TextButton
-                onPress={() => onGoToPrivacy()}
-                label={I18n.t('policy2')}
-                labelStyle={styles.privacyButton}
-              />
+              <View style={styles.privacyWrapper}>
+                <Text style={styles.noticeText}>
+                  {I18n.t('signUpPolicyNoti')}
+                </Text>
+                <View style={styles.btnRowWrapper}>
+                  <TextButton
+                    onPress={() => onGoToTerms()}
+                    label={I18n.t('policy1')}
+                    labelStyle={styles.privacyButton}
+                  />
+                  <Text style={styles.noticeText}>{I18n.t('and')}</Text>
+                  <TextButton
+                    onPress={() => onGoToPrivacy()}
+                    label={I18n.t('policy2')}
+                    labelStyle={styles.privacyButton}
+                  />
+                </View>
+              </View>
             </View>
-          </View>
+          )}
         </View>
       </ContainerWithoutScrollView>
     </View>

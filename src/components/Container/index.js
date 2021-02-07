@@ -20,6 +20,7 @@ const Container = ({
   bgStatusBar,
   scrollViewRef,
   keyboardShouldPersistTaps,
+  translucent,
 }) => (
   <KeyboardAvoidingView style={styles.wrapper}>
     <ScrollView
@@ -36,6 +37,7 @@ const Container = ({
         barStyle={barStyle}
         hidden={hidden}
         backgroundColor={bgStatusBar}
+        translucent={translucent}
       />
 
       {children}
@@ -47,6 +49,7 @@ const Container = ({
 Container.defaultProps = {
   keyboardShouldPersistTaps: 'handled',
   barStyle: 'dark-content',
+  translucent: true,
   hidden: false,
   bgStatusBar: '#fff',
 };

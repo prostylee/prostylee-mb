@@ -5,7 +5,10 @@ import {
   View,
   ImageBackground,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
+
+import {useBackHandler} from '@react-native-community/hooks';
 
 import {Image, ButtonRounded} from 'components';
 
@@ -24,6 +27,11 @@ const IC_APPLE = require('assets/icons/appleWhite.png');
 import styles from './styles';
 
 const Index = (props) => {
+  //BackHandler handle
+  useBackHandler(() => {
+    return true;
+  });
+
   const onLogin = () => {
     props.navigation.navigate('Login', {index: 0});
   };
@@ -32,6 +40,7 @@ const Index = (props) => {
   };
   return (
     <ImageBackground source={IMG_BG} style={styles.background}>
+      <StatusBar translucent backgroundColor="transparent" />
       <View style={styles.mainWrapper}>
         <View style={styles.logoWrapper}>
           <Image source={IMG_LOGO} style={styles.logo} resizeMode="contain" />

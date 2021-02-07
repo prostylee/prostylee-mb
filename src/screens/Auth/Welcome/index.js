@@ -1,6 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Image} from 'components';
+import {View, StatusBar, ImageBackground} from 'react-native';
 
 const IMG_SPLASH = require('assets/images/splash.png');
 
@@ -13,9 +12,9 @@ const Index = (props) => {
     }, 1000);
   }, []);
   return (
-    <View style={styles.container}>
-      <Image source={IMG_SPLASH} resizeMode="cover" style={styles.image} />
-    </View>
+    <ImageBackground source={IMG_SPLASH} style={styles.image}>
+      <StatusBar translucent backgroundColor="transparent" />
+    </ImageBackground>
   );
 };
 
