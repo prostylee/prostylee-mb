@@ -14,12 +14,10 @@ const NewFeed = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(newFeedActions.getNewFeed({
+    dispatch(newFeedActions.getNewFeed({ 
       page: 1,
       limit: 12,
-      keywords: '',
-      storeId: 0,
-      newFeedType: 'STORE',
+      newFeedType: "STORE"
     }));
   }, [])
   return (

@@ -1,11 +1,11 @@
 import apisauce from 'apisauce';
 
-import {api_url} from 'config';
+import configEnv from 'config';
 import {TIME_OUT} from 'constants';
 
 var config = {
-  url: api_url,
-  baseURL: api_url,
+  url: configEnv.api_url,
+  baseURL: configEnv.api_url,
   timeout: TIME_OUT,
 };
 
