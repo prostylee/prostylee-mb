@@ -14,7 +14,7 @@ const getNewFeeds = function* ({payload}) {
       yield put(commonActions.getNewFeedFailed());
     }
   } catch (e) {
-    console.error(e.message);
+    console.error(e);
   }finally{
     yield put(newFeedActions.setLoading(false));
   }

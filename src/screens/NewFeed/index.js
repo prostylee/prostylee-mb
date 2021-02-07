@@ -9,13 +9,15 @@ import {ThemeView} from 'components'
 import VerticalFeed from './VerticalFeed'
 
 import {newFeedActions} from 'redux/reducers'
+import {getNewFeedSelector} from 'redux/selectors/newFeed'
 
 const NewFeed = (props) => {
   const dispatch = useDispatch();
+  const newFeedList = useSelector(state => getNewFeedSelector(state));
 
   useEffect(() => {
     dispatch(newFeedActions.getNewFeed({ 
-      page: 1,
+      page: 0,
       limit: 12,
       newFeedType: "STORE"
     }));
@@ -28,7 +30,7 @@ const NewFeed = (props) => {
           showsHorizontalScrollIndicator={false}
       >
         <View style={{height: 80}}></View>
-        <VerticalFeed/>
+        <VerticalFeed newFeedList={newFeedList}/>
       </ScrollView>
     </ThemeView>
   )
