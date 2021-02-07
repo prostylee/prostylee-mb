@@ -19,13 +19,22 @@ const VerticalFeedItem = ({newFeedItem}) => {
           <Avatar.Image 
             size={32} 
             source={{uri: 'https://www.iphonehacks.com/wp-content/uploads/2020/07/ios-14-home-screen-widgets-alt.png'}} />
-          <Text style={styles.textTitle}>{newFeedItem?.name}</Text>
+          <Text numberOfLines={1} style={styles.textTitle}>{newFeedItem?.name}</Text>
         </View>
         <TouchableOpacity style={styles.wrapFollow}>
           <Text>Follow</Text>
         </TouchableOpacity>
       </ContainerView>
       <FeedSlide images= {newFeedItem?.imageUrls || []}/>
+      <ContainerView fluid style={styles.description}>
+        <View style={styles.wrapInfo}>
+          <Text style={styles.productName}>Áo khoác blazer Nữ tay dài</Text>
+          <Text style={styles.price}>1000000 đ</Text>
+        </View>
+        <TouchableOpacity style={styles.touchBuyNow}>
+          <Text style={styles.touchTextByNow}>Mua ngay</Text>
+        </TouchableOpacity>
+      </ContainerView>
       <ContainerView style={styles.socialActionWrap}>
         <View style={styles.postAction}>
           <TouchableOpacity style={styles.touchHeart}>
