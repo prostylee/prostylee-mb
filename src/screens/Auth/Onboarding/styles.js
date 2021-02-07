@@ -59,7 +59,7 @@ export default EStyleSheet.create({
     lineHeight: '18rem',
   },
   btnWrapper: {
-    height: '115rem',
+    height: '100rem',
   },
   pagination: {
     flexDirection: 'row',

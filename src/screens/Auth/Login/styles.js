@@ -53,7 +53,7 @@ export default EStyleSheet.create({
   },
   textInput: {
     height: '46rem',
-    marginBottom: '10rem',
+    marginTop: '10rem',
     paddingRight: '5%',
   },
   btnWrapper: {
@@ -128,5 +128,11 @@ export default EStyleSheet.create({
     fontFamily: '$font1',
     color: '$black',
     paddingHorizontal: 0,
+  },
+  errMsg: {
+    fontFamily: '$font1',
+    fontSize: '$smallText',
+    color: '$red',
+    marginTop: '4rem',
   },
 });

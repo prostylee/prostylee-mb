@@ -4,88 +4,20 @@ import {api, authApi} from 'services';
 import {userActions, userTypes, commonActions} from 'reducers';
 
 import {showMessage} from 'react-native-flash-message';
-import {errMsg, sessionExpired} from 'constants';
+import {
+  UNKNOWN_MESSAGE,
+  SESSION_EXPIRED_MESSAGE,
+  SUCCESS,
+  BAD_REQUEST,
+  SESSION_EXPIRED,
+  NOT_FOUND,
+  INTERNAL_SERVER_ERROR,
+} from 'constants';
 import asyncStorage from 'data/asyncStorage';
 
 import messaging from '@react-native-firebase/messaging';
 
-const checkEmailExisted = function* ({payload: {email, onSuccess}}) {
-  try {
-    const res = yield call(authApi.checkEmailExisted, email);
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === 200) {
-      yield onSuccess(res.data.data.number);
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.errors[0],
-        type: 'danger',
-      });
-    }
-  } catch (e) {
-    //Lỗi server api
-    console.log(e);
-    yield put(commonActions.toggleLoading(false));
-    yield showMessage({
-      message: errMsg,
-      type: 'danger',
-    });
-  }
-};
-
-const signUpGetEmailCode = function* ({payload: {email, onSuccess}}) {
-  try {
-    const res = yield call(authApi.signUpGetEmailCode, email);
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === 200) {
-      yield onSuccess(res.data.data);
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.errors[0],
-        type: 'danger',
-      });
-    }
-  } catch (e) {
-    //Lỗi server api
-    console.log(e);
-    yield put(commonActions.toggleLoading(false));
-    yield showMessage({
-      message: errMsg,
-      type: 'danger',
-    });
-  }
-};
-
-const signUpCheckEmailCode = function* ({payload: {email, code, onSuccess}}) {
-  try {
-    const res = yield call(authApi.signUpCheckEmailCode, {
-      email,
-      code,
-    });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === 200) {
-      yield onSuccess(res.data.data);
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.errors[0],
-        type: 'danger',
-      });
-    }
-  } catch (e) {
-    //Lỗi server api
-    console.log(e);
-    yield put(commonActions.toggleLoading(false));
-    yield showMessage({
-      message: errMsg,
-      type: 'danger',
-    });
-  }
-};
+import {APP_CLIENT_ID, APP_CLIENT_SECRET} from 'constants';
 
 const userSignUp = function* ({
   payload: {fullname, phone_number, email, password, city_id, code, onSuccess},
@@ -112,9 +44,9 @@ const userSignUp = function* ({
     }
   } catch (e) {
     //Lỗi server api
-    yield put(ç.toggleLoading(false));
+    yield put(commonActions.toggleLoading(false));
     yield showMessage({
-      message: errMsg,
+      message: UNKNOWN_MESSAGE,
       type: 'danger',
     });
   }
@@ -122,22 +54,29 @@ const userSignUp = function* ({
 
 const userLogin = function* ({payload: {email, password, onSuccess}}) {
   try {
-    const res = yield call(authApi.userLogin, {email, password});
+    const res = yield call(authApi.userLogin, {
+      appClientId: APP_CLIENT_ID,
+      appClientSecret: APP_CLIENT_SECRET,
+      username: email,
+      password,
+    });
+    console.log(res);
     // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === 200) {
+    if (res.ok && res.data.status === SUCCESS) {
+      yield asyncStorage.setUserToken(res.data.data);
       yield onSuccess(res.data.data);
-    } else if (res.ok && res.data.status === 400) {
+    } else if (res.ok && res.data.status === BAD_REQUEST) {
       //thông báo lỗi từ api trả về
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
-        message: 'Mật khẩu không đúng',
+        message: res.data.error,
         type: 'danger',
       });
     } else {
       //thông báo lỗi từ api trả về
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
-        message: 'Xảy ra lỗi khi đăng nhập',
+        message: UNKNOWN_MESSAGE,
         type: 'danger',
       });
     }
@@ -146,7 +85,7 @@ const userLogin = function* ({payload: {email, password, onSuccess}}) {
     console.log(e);
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
-      message: errMsg,
+      message: UNKNOWN_MESSAGE,
       type: 'danger',
     });
   }
@@ -182,7 +121,7 @@ const userLogout = function* ({payload: {token, id}}) {
     console.log(e);
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
-      message: errMsg,
+      message: UNKNOWN_MESSAGE,
       type: 'danger',
     });
   }
@@ -222,7 +161,7 @@ const getUserInfo = function* ({payload: {token, onSuccess}}) {
     yield put(commonActions.toggleLoading(false));
     console.log(e);
     yield showMessage({
-      message: errMsg,
+      message: UNKNOWN_MESSAGE,
       type: 'danger',
     });
   }
@@ -265,7 +204,7 @@ const updateUserPassword = function* ({
     console.log(e);
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
-      message: errMsg,
+      message: UNKNOWN_MESSAGE,
       type: 'danger',
     });
   }
@@ -307,7 +246,7 @@ const updateUserAvatar = function* ({
     console.log(e);
     yield onFail();
     yield showMessage({
-      message: errMsg,
+      message: UNKNOWN_MESSAGE,
       type: 'danger',
     });
   }
@@ -332,7 +271,7 @@ const forgotPwGetEmailCode = function* ({payload: {email, onSuccess}}) {
     console.log(e);
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
-      message: errMsg,
+      message: UNKNOWN_MESSAGE,
       type: 'danger',
     });
   }
@@ -373,7 +312,7 @@ const userForgotPw = function* ({
     console.log(e);
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
-      message: errMsg,
+      message: UNKNOWN_MESSAGE,
       type: 'danger',
     });
   }
@@ -401,18 +340,15 @@ const forgotPwCheckEmailCode = function* ({payload: {email, code, onSuccess}}) {
     console.log(e);
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
-      message: errMsg,
+      message: UNKNOWN_MESSAGE,
       type: 'danger',
     });
   }
 };
 
 const watcher = function* () {
-  // yield takeLatest(userTypes.CHECK_EMAIL_EXISTED, checkEmailExisted);
   // yield takeLatest(userTypes.USER_SIGN_UP, userSignUp);
-  // yield takeLatest(userTypes.SIGN_UP_GET_EMAIL_CODE, signUpGetEmailCode);
-  // yield takeLatest(userTypes.SIGN_UP_CHECK_EMAIL_CODE, signUpCheckEmailCode);
-  // yield takeLatest(userTypes.USER_LOGIN, userLogin);
+  yield takeLatest(userTypes.USER_LOGIN, userLogin);
   // yield takeLatest(userTypes.GET_USER_INFO, getUserInfo);
   // yield takeLatest(userTypes.USER_LOGOUT, userLogout);
 };

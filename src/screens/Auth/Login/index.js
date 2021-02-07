@@ -14,6 +14,10 @@ import {useKeyboard, useBackHandler} from '@react-native-community/hooks';
 import styles from './styles';
 import * as RootNavigator from 'navigator/rootNavigator';
 import I18n from 'i18n';
+import _ from 'lodash';
+
+import {userActions, commonActions} from 'reducers';
+import {useDispatch} from 'react-redux';
 
 //IMG
 const IMG_LOGO = require('assets/images/logoBlack.png');
@@ -159,24 +163,88 @@ const Index = (props) => {
 };
 
 const LoginTab = () => {
+  //Initial States
   const [email, setEmail] = React.useState('');
+  const [invalidEmail, setInvalidEmail] = React.useState(false);
+  const [errEmailMsg, setErrEmailMsg] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [invalidPassword, setInvalidPassword] = React.useState(false);
+  const [errPasswordMsg, setErrPasswordMsg] = React.useState('');
+  const [disabledLoginBtn, setDisabledLoginBtn] = React.useState(false);
+  const [isVisiblePw, setVisiblePw] = React.useState(true);
+
+  //useEffect
+  React.useEffect(() => {
+    if (
+      invalidEmail ||
+      invalidPassword ||
+      _.isEmpty(email) ||
+      _.isEmpty(password)
+    ) {
+      setDisabledLoginBtn(true);
+    } else {
+      setDisabledLoginBtn(false);
+    }
+  }, [invalidEmail, invalidPassword, email, password]);
+
+  //Dispatch Redux
+  const dispatch = useDispatch();
 
   //textInput
-  const onChangeEmail = (value) => {
-    setEmail(value);
+  const onChangeEmail = async (value) => {
+    let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    if (value !== '') {
+      //nếu textInput có giá trị khác rỗng
+      if (reg.test(value) === false) {
+        setEmail(value.toLowerCase());
+        setInvalidEmail(true);
+        setErrEmailMsg('Email không hợp lệ');
+        return false;
+      } else {
+        //email hợp lệ
+        setEmail(value.toLowerCase());
+        setInvalidEmail(false);
+        setErrEmailMsg('');
+      }
+    } else {
+      //nếu textInput rỗng
+      setEmail(value);
+      setInvalidEmail(false);
+      setErrEmailMsg('');
+    }
   };
-  const onChangePassword = (value) => {
+  const onChangePassword = async (value) => {
     setPassword(value);
+    setInvalidPassword(false);
+    setErrPasswordMsg('');
   };
 
   //handle funcs
-  const onLogin = () => {};
   const onLoginWithPhone = () => {
     RootNavigator.navigate('LoginViaPhone');
   };
   const onForgotPw = () => {
     RootNavigator.navigate('ForgotPassword');
+  };
+
+  const onTogglePasswordVisibility = () => {
+    setVisiblePw(!isVisiblePw);
+  };
+
+  //handle User login
+  const onLogin = async () => {
+    await dispatch(commonActions.toggleLoading(true));
+    await dispatch(
+      userActions.userLogin({
+        email,
+        password,
+        onSuccess: (data) => onLoginSuccess(data),
+      }),
+    );
+  };
+
+  const onLoginSuccess = async (data) => {
+    dispatch(commonActions.toggleLoading(false));
   };
 
   return (
@@ -187,20 +255,24 @@ const LoginTab = () => {
           value={email}
           onChangeText={(text) => onChangeEmail(text)}
           textInputStyle={styles.textInput}
+          keyboardType="email-address"
         />
+        {invalidEmail && <Text style={styles.errMsg}>{errEmailMsg}</Text>}
         <TextInputBorderBottom
           hint={I18n.t('password')}
           value={password}
           onChangeText={(text) => onChangePassword(text)}
           textInputStyle={styles.textInput}
           icon={IC_EYE}
-          secureTextEntry={true}
+          secureTextEntry={isVisiblePw}
+          onPressIcon={() => onTogglePasswordVisibility()}
         />
+        {invalidPassword && <Text style={styles.errMsg}>{errPasswordMsg}</Text>}
         <View style={styles.btnWrapper}>
           <ButtonRounded
             onPress={() => onLogin()}
             label={I18n.t('login')}
-            disabled={false}
+            disabled={disabledLoginBtn}
           />
         </View>
         <View style={styles.btnWrapper}>

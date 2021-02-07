@@ -1,8 +1,6 @@
 import {createAction, handleActions} from 'redux-actions';
 
 export const types = {
-  CHECK_EMAIL_EXISTED: 'CHECK_EMAIL_EXISTED',
-
   USER_SIGN_UP: 'USER_SIGN_UP',
 
   USER_LOGIN: 'USER_LOGIN',
@@ -18,7 +16,6 @@ export const types = {
 };
 
 export const actions = {
-  checkEmailExisted: createAction(types.CHECK_EMAIL_EXISTED),
   userLogin: createAction(types.USER_LOGIN),
   userLoginSuccess: createAction(types.GET_USER_INFO_SUCCESS),
   userLoginFail: createAction(types.USER_LOGIN_FAIL),

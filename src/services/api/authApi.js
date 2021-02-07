@@ -7,7 +7,7 @@ export const userSignUp = (payload) => {
 };
 
 export const userLogin = (payload) => {
-  return _fetch(POST, '/login', payload);
+  return _fetch(POST, '/auth/sign-in', payload);
 };
 
 export const checkEmailExisted = (payload) => {
