@@ -25,7 +25,9 @@ const Index = (props) => {
   const [isDisabledBtn, setDisabledBtn] = React.useState(true);
   const [timeLeft, setTimeLeft] = React.useState(TIME);
 
+  //Ref
   const inputRef = React.useRef(null);
+  const intervalRef = React.useRef(null);
 
   React.useEffect(() => {
     inputRef.current.focus();
@@ -36,11 +38,11 @@ const Index = (props) => {
     if (!timeLeft) {
       return;
     }
-    const intervalId = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setTimeLeft(timeLeft - 1);
     }, 1000);
     // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(intervalId);
+    return () => clearInterval(intervalRef.current);
   }, [timeLeft]);
 
   //dispatch
@@ -75,6 +77,8 @@ const Index = (props) => {
 
   const onVerifyOTPSuccess = async () => {
     await dispatch(commonActions.toggleLoading(false));
+    await clearInterval(intervalRef.current);
+    await setTimeLeft(0);
     props.navigation.navigate('ResetPassword', {
       email: props.route.params.email,
       otp: code,
