@@ -14,3 +14,16 @@ export const userLogin = (payload) => {
 export const userRefreshToken = (payload) => {
   return _fetch(POST, '/auth/refresh', payload);
 };
+
+export const userForgotPassword = (payload) => {
+  return _fetch(POST, '/auth/forgot-password', payload);
+};
+
+export const userVerifyOTP = (payload) => {
+  return _fetch(POST, '/auth/verify-otp', payload);
+};
+
+export const userChangePassword = (payload) => {
+  console.log({payload});
+  return _fetch(PUT, '/auth/change-password', payload);
+};

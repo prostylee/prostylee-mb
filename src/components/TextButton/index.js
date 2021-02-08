@@ -32,7 +32,11 @@ const TextButton = ({
       contentStyle,
     ]}
     style={style}
-    labelStyle={[styles.labelStyle, labelStyle]}>
+    labelStyle={[
+      styles.labelStyle,
+      labelStyle,
+      disabled && styles.disabledText,
+    ]}>
     {label}
   </Button>
 );

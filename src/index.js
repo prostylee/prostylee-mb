@@ -214,6 +214,8 @@ const Index = () => {
         //accessToken valid
         dispatch(commonActions.toggleLoading(false));
       }
+    } else {
+      dispatch(commonActions.toggleLoading(false));
     }
   };
 

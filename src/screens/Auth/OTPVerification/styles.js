@@ -14,6 +14,8 @@ export default EStyleSheet.create({
   form: {
     paddingHorizontal: '6%',
     marginTop: '20rem',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   label: {
     fontFamily: '$font1',
@@ -32,6 +34,7 @@ export default EStyleSheet.create({
   button: {
     marginTop: '30rem',
     marginBottom: '20rem',
+    width: '100%',
   },
   cellStyle: {
     borderBottomWidth: 1,
@@ -52,5 +55,11 @@ export default EStyleSheet.create({
   },
   labelTextButton: {
     color: '$primaryBlue',
+  },
+  countDown: {
+    textAlign: 'center',
+    fontFamily: '$font1',
+    color: '$black500',
+    fontSize: '$largeText',
   },
 });

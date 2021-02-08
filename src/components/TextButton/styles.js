@@ -12,6 +12,9 @@ const styles = EStyleSheet.create({
     textAlign: 'center',
     color: '$purple',
   },
+  disabledText: {
+    color: '$lightGray',
+  },
 });
 
 export default styles;

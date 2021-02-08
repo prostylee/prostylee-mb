@@ -23,4 +23,10 @@ export default EStyleSheet.create({
   button: {
     marginTop: '15rem',
   },
+  errMsg: {
+    fontFamily: '$font1',
+    fontSize: '$smallText',
+    color: '$red',
+    marginTop: '4rem',
+  },
 });

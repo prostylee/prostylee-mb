@@ -10,12 +10,43 @@ import {
 import I18n from 'i18n';
 
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
+import {userActions, commonActions} from 'reducers';
+import {useDispatch} from 'react-redux';
+
+import {showMessage} from 'react-native-flash-message';
 
 import styles from './styles';
+
+const TIME = 60;
 
 const Index = (props) => {
   //State
   const [code, setCode] = React.useState('');
+  const [isDisabledBtn, setDisabledBtn] = React.useState(true);
+  const [timeLeft, setTimeLeft] = React.useState(TIME);
+
+  const inputRef = React.useRef(null);
+
+  React.useEffect(() => {
+    inputRef.current.focus();
+  });
+
+  React.useEffect(() => {
+    // exit early when we reach 0
+    if (!timeLeft) {
+      return;
+    }
+    const intervalId = setInterval(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+    // clear interval on re-render to avoid memory leaks
+    return () => clearInterval(intervalId);
+  }, [timeLeft]);
+
+  //dispatch
+  const dispatch = useDispatch();
+
+  //Back
   const onGoBack = () => {
     props.navigation.goBack();
   };
@@ -23,12 +54,58 @@ const Index = (props) => {
   //input
   const onChangeCode = (text) => {
     setCode(text);
+    if (text.length === 5) {
+      setDisabledBtn(false);
+    } else {
+      setDisabledBtn(true);
+    }
   };
 
-  const onResetPassword = () => {
-    props.navigation.navigate('ResetPasswordViaMail');
+  const onVerifyOTP = async () => {
+    await dispatch(commonActions.toggleLoading(true));
+    dispatch(
+      userActions.userVerifyOTP({
+        email: props.route.params.email,
+        otp: code,
+        onSuccess: () => onVerifyOTPSuccess(),
+        onFail: () => onVerifyOTPFail(),
+      }),
+    );
   };
-  const onResendOTP = () => {};
+
+  const onVerifyOTPSuccess = async () => {
+    await dispatch(commonActions.toggleLoading(false));
+    props.navigation.navigate('ResetPassword', {
+      email: props.route.params.email,
+      otp: code,
+    });
+  };
+
+  const onVerifyOTPFail = async () => {
+    await dispatch(commonActions.toggleLoading(false));
+    showMessage({
+      message: I18n.t('invalidOTP'),
+      type: 'danger',
+    });
+  };
+  const onResendOTP = async () => {
+    await dispatch(commonActions.toggleLoading(true));
+    await dispatch(
+      userActions.userForgotPassword({
+        email: props.route.params.email,
+        onSuccess: () => onResendOTPSuccess(),
+      }),
+    );
+  };
+
+  const onResendOTPSuccess = async () => {
+    await dispatch(commonActions.toggleLoading(false));
+    showMessage({
+      message: I18n.t('resendOTPSuccess'),
+      type: 'success',
+    });
+    setTimeLeft(TIME);
+  };
   return (
     <View style={styles.container}>
       <ContainerWithoutScrollView>
@@ -36,14 +113,15 @@ const Index = (props) => {
           <HeaderBack title={I18n.t('enterOTP')} onBack={() => onGoBack()} />
           <View style={styles.form}>
             <Text style={styles.label}>{I18n.t('otpSent')}</Text>
-            <Text style={styles.phone}>(+84) 12237283</Text>
+            <Text style={styles.phone}>{props.route.params.email}</Text>
             <SmoothPinCodeInput
+              ref={inputRef}
               cellStyle={styles.cellStyle}
               cellStyleFocused={styles.cellStyleFocused}
               textStyle={styles.textStyle}
               textStyleFocused={styles.textStyleFocused}
-              cellSpacing={15}
-              codeLength={6}
+              cellSpacing={25}
+              codeLength={5}
               autoFocus={true}
               onFulfill={() => {}}
               value={code}
@@ -52,8 +130,8 @@ const Index = (props) => {
             <ButtonRounded
               label={I18n.t('nextVn')}
               style={styles.button}
-              onPress={() => onResetPassword()}
-              disabled={false}
+              onPress={() => onVerifyOTP()}
+              disabled={isDisabledBtn}
             />
           </View>
           <View style={styles.btnWrapper}>
@@ -61,8 +139,14 @@ const Index = (props) => {
               label={I18n.t('resendOTP')}
               labelStyle={styles.labelTextButton}
               onPress={() => onResendOTP()}
+              disabled={timeLeft > 0}
             />
           </View>
+          {timeLeft > 0 && (
+            <Text style={styles.countDown}>{`(${I18n.t(
+              'after',
+            )} ${timeLeft}s)`}</Text>
+          )}
         </View>
       </ContainerWithoutScrollView>
     </View>

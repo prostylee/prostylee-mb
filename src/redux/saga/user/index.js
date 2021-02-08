@@ -114,6 +114,7 @@ const userRefreshToken = function* ({payload: {refreshToken, onSuccess}}) {
       yield onSuccess();
     } else if (res.ok && res.data.status === BAD_REQUEST) {
       //thông báo lỗi từ api trả về
+      yield put(userActions.userRefreshTokenFail());
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
         message: res.data.error,
@@ -121,6 +122,121 @@ const userRefreshToken = function* ({payload: {refreshToken, onSuccess}}) {
       });
     } else {
       //thông báo lỗi từ api trả về
+      yield put(userActions.userRefreshTokenFail());
+      yield put(commonActions.toggleLoading(false));
+      yield showMessage({
+        message: UNKNOWN_MESSAGE,
+        type: 'danger',
+      });
+    }
+  } catch (e) {
+    //Lỗi server api
+    console.log(e);
+    yield put(userActions.userRefreshTokenFail());
+    yield put(commonActions.toggleLoading(false));
+    yield showMessage({
+      message: UNKNOWN_MESSAGE,
+      type: 'danger',
+    });
+  }
+};
+
+const userForgotPassword = function* ({payload: {email, onSuccess}}) {
+  try {
+    const res = yield call(authApi.userForgotPassword, {
+      email,
+    });
+    // xử lý dữ liệu trả về từ api
+    if (res.ok && res.data.status === SUCCESS) {
+      yield onSuccess();
+    } else if (res.ok && res.data.status === BAD_REQUEST) {
+      //thông báo lỗi từ api trả về
+      yield put(commonActions.toggleLoading(false));
+      yield showMessage({
+        message: res.data.error,
+        type: 'danger',
+      });
+    } else {
+      //thông báo lỗi từ api trả ve
+      yield put(commonActions.toggleLoading(false));
+      yield showMessage({
+        message: UNKNOWN_MESSAGE,
+        type: 'danger',
+      });
+    }
+  } catch (e) {
+    //Lỗi server api
+    console.log(e);
+    yield put(commonActions.toggleLoading(false));
+    yield showMessage({
+      message: UNKNOWN_MESSAGE,
+      type: 'danger',
+    });
+  }
+};
+
+const userVerifyOTP = function* ({payload: {email, otp, onSuccess, onFail}}) {
+  try {
+    const res = yield call(authApi.userVerifyOTP, {
+      email,
+      otp,
+    });
+    // xử lý dữ liệu trả về từ api
+    if (res.ok && res.data.status === SUCCESS) {
+      if (res.data.data) {
+        yield onSuccess();
+      } else {
+        yield onFail();
+      }
+    } else if (res.ok && res.data.status === BAD_REQUEST) {
+      //thông báo lỗi từ api trả về
+      yield put(commonActions.toggleLoading(false));
+      yield showMessage({
+        message: res.data.error,
+        type: 'danger',
+      });
+    } else {
+      //thông báo lỗi từ api trả ve
+      yield put(commonActions.toggleLoading(false));
+      yield showMessage({
+        message: UNKNOWN_MESSAGE,
+        type: 'danger',
+      });
+    }
+  } catch (e) {
+    //Lỗi server api
+    console.log(e);
+    yield put(commonActions.toggleLoading(false));
+    yield showMessage({
+      message: UNKNOWN_MESSAGE,
+      type: 'danger',
+    });
+  }
+};
+
+const userChangePassword = function* ({
+  payload: {email, password, newPassword, onSuccess},
+}) {
+  try {
+    const res = yield call(authApi.userChangePassword, {
+      email,
+      password,
+      newPassword,
+    });
+
+    console.log(res);
+    // xử lý dữ liệu trả về từ api
+    if (res.ok && res.data.status === SUCCESS) {
+      yield onSuccess();
+    } else if (res.ok && res.data.status === BAD_REQUEST) {
+      //thông báo lỗi từ api trả về
+      yield put(commonActions.toggleLoading(false));
+      yield showMessage({
+        message: res.data.error,
+        type: 'danger',
+      });
+    } else {
+      //thông báo lỗi từ api trả ve
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
         message: UNKNOWN_MESSAGE,
@@ -397,6 +513,9 @@ const watcher = function* () {
   yield takeLatest(userTypes.USER_SIGN_UP, userSignUp);
   yield takeLatest(userTypes.USER_LOGIN, userLogin);
   yield takeLatest(userTypes.USER_REFRESH_TOKEN, userRefreshToken);
+  yield takeLatest(userTypes.USER_FORGOT_PASSWORD, userForgotPassword);
+  yield takeLatest(userTypes.USER_VERIFY_OTP, userVerifyOTP);
+  yield takeLatest(userTypes.USER_CHANGE_PASSWORD, userChangePassword);
   // yield takeLatest(userTypes.GET_USER_INFO, getUserInfo);
   // yield takeLatest(userTypes.USER_LOGOUT, userLogout);
 };

@@ -203,7 +203,7 @@ const LoginTab = () => {
       if (reg.test(value) === false) {
         setEmail(value.toLowerCase());
         setInvalidEmail(true);
-        setErrEmailMsg('Email không hợp lệ');
+        setErrEmailMsg(I18n.t('invalidEmail'));
         return false;
       } else {
         //email hợp lệ
@@ -248,7 +248,7 @@ const LoginTab = () => {
     );
   };
 
-  const onLoginSuccess = async (data) => {
+  const onLoginSuccess = async () => {
     dispatch(commonActions.toggleLoading(false));
   };
 
@@ -347,7 +347,7 @@ const SignupTab = () => {
       if (reg.test(value) === false) {
         setFullname(value);
         setInvalidFullname(true);
-        setErrFullnameMsg('Họ tên không hợp lệ');
+        setErrFullnameMsg(I18n.t('invalidFullname'));
         return false;
       } else {
         //email hợp lệ
@@ -370,7 +370,7 @@ const SignupTab = () => {
       if (reg.test(value) === false) {
         setEmail(value.toLowerCase());
         setInvalidEmail(true);
-        setErrEmailMsg('Email không hợp lệ');
+        setErrEmailMsg(I18n.t('invalidEmail'));
         return false;
       } else {
         //email hợp lệ
@@ -392,7 +392,7 @@ const SignupTab = () => {
       if (reg.test(value) === false) {
         setPassword(value);
         setInvalidPassword(true);
-        setErrPasswordMsg('Mật khẩu không được ít hơn 4 kí tự');
+        setErrPasswordMsg(I18n.t('invalidPassword'));
         return false;
       } else {
         //email hợp lệ
