@@ -21,6 +21,10 @@ import Colors from './Colors';
 import ModalImagePicker from './ModalImagePicker';
 import TextButton from './TextButton';
 import ButtonOutlined from './ButtonOutlined';
+import ThemeView from './ThemeView';
+import ImageAnimated from './Image/imageAnimated';
+import ContainerView from './ContainerView';
+import Header from './Header';
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -45,4 +49,8 @@ export {
   ModalImagePicker,
   Colors,
   ButtonOutlined,
+  ThemeView,
+  ImageAnimated,
+  ContainerView,
+  Header,
 };
