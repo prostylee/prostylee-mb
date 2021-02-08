@@ -23,9 +23,7 @@ const Index = (props) => {
     setPhone(text);
   };
 
-  const onVerifyOTP = () => {
-    props.navigation.navigate('OTPVerification');
-  };
+  const onVerifyOTP = () => {};
   return (
     <View style={styles.container}>
       <ContainerWithoutScrollView>

@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {ContainerWithoutScrollView, ButtonOutlined, Image} from 'components';
+import {ContainerWithoutScrollView, ButtonOutlined} from 'components';
 
 import I18n from 'i18n';
 
 import styles from './styles';
 
-const IC_SUCCESS = require('assets/icons/success.png');
+import {Success} from 'svg/common';
 
 const Index = (props) => {
   const onBackToLogin = () => {
@@ -16,7 +16,7 @@ const Index = (props) => {
     <View style={styles.container}>
       <ContainerWithoutScrollView>
         <View style={styles.mainWrapper}>
-          <Image source={IC_SUCCESS} style={styles.icon} resizeMode="contain" />
+          <Success />
           <Text style={styles.label}>{I18n.t('pwChangeSuccess')}</Text>
           <Text style={styles.content}>{I18n.t('pwChangeSuccessNoti')}</Text>
           <ButtonOutlined

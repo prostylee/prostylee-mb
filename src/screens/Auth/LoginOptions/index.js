@@ -13,18 +13,15 @@ import {useBackHandler} from '@react-native-community/hooks';
 import {Image, ButtonRounded} from 'components';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
+import {LogoWhite, Facebook, Google, Apple} from 'svg/common';
 
 import I18n from 'i18n';
 
 //IMG
 const IMG_BG = require('assets/images/loginBg.png');
-const IMG_LOGO = require('assets/images/logoWhite.png');
 
 //ICON
-const IC_FACEBOOK = require('assets/icons/facebook.png');
-const IC_GOOGLE = require('assets/icons/google.png');
 const IC_ZALO = require('assets/icons/zalo.png');
-const IC_APPLE = require('assets/icons/appleWhite.png');
 
 import styles from './styles';
 
@@ -53,7 +50,7 @@ const Index = (props) => {
       <StatusBar translucent backgroundColor="transparent" />
       <View style={styles.mainWrapper}>
         <View style={styles.logoWrapper}>
-          <Image source={IMG_LOGO} style={styles.logo} resizeMode="contain" />
+          <LogoWhite />
         </View>
         <View style={styles.btnWrapper}>
           <ButtonRounded onPress={() => onLogin()} label={I18n.t('login')} />
@@ -72,18 +69,10 @@ const Index = (props) => {
         </View>
         <View style={styles.socialLogin}>
           <TouchableOpacity style={styles.socialBtnWrapper}>
-            <Image
-              source={IC_FACEBOOK}
-              resizeMode="contain"
-              style={styles.socialBtn}
-            />
+            <Facebook />
           </TouchableOpacity>
           <TouchableOpacity style={styles.socialBtnWrapper}>
-            <Image
-              source={IC_GOOGLE}
-              resizeMode="contain"
-              style={styles.socialBtn}
-            />
+            <Google />
           </TouchableOpacity>
           <TouchableOpacity style={styles.socialBtnWrapper}>
             <Image
@@ -94,11 +83,7 @@ const Index = (props) => {
           </TouchableOpacity>
           {Platform.OS === 'ios' && (
             <TouchableOpacity style={styles.socialBtnWrapper}>
-              <Image
-                source={IC_APPLE}
-                resizeMode="contain"
-                style={styles.socialBtn}
-              />
+              <Apple />
             </TouchableOpacity>
           )}
         </View>

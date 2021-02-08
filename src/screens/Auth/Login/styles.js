@@ -16,10 +16,6 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  logo: {
-    width: '132rem',
-    height: '32rem',
-  },
   tabBarStyle: {
     backgroundColor: '$white',
     height: '50rem',

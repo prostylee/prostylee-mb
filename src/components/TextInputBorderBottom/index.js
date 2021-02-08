@@ -50,7 +50,7 @@ const TextInputBorderBottom = ({
         style={styles.wrapperIcon}
         onPress={onPressIcon}
         disabled={disablePressIcon}>
-        <Image source={icon} style={styles.icon} resizeMode="contain" />
+        {icon}
       </TouchableOpacity>
     ) : null}
     {unit ? <Text style={styles.unitText}>{unit}</Text> : null}

@@ -13,11 +13,6 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  logo: {
-    width: '160rem',
-    height: '42rem',
-    alignSelf: 'center',
-  },
   btnWrapper: {
     marginTop: '25rem',
     marginHorizontal: '10%',
@@ -56,8 +51,6 @@ export default EStyleSheet.create({
     marginVertical: '15rem',
   },
   socialBtnWrapper: {
-    width: '46rem',
-    height: '46rem',
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: '8rem',

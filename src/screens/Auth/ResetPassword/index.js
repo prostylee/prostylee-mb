@@ -10,13 +10,12 @@ import {
 import I18n from 'i18n';
 import _ from 'lodash';
 
+import {Eye} from 'svg/common';
+
 import {userActions, commonActions} from 'reducers';
 import {useDispatch} from 'react-redux';
 
 import styles from './styles';
-
-//ICONS
-const IC_EYE = require('assets/icons/eye.png');
 
 const Index = (props) => {
   //Initial States
@@ -99,7 +98,7 @@ const Index = (props) => {
               onChangeText={(text) => onChangePassword(text)}
               textInputStyle={styles.textInput}
               autoFocus={true}
-              icon={IC_EYE}
+              icon={<Eye />}
               secureTextEntry={isVisiblePw}
               onPressIcon={() => onTogglePasswordVisibility()}
             />

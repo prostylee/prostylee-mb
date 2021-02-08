@@ -18,17 +18,10 @@ import _ from 'lodash';
 
 import {userActions, commonActions} from 'reducers';
 import {useDispatch} from 'react-redux';
-
-//IMG
-const IMG_LOGO = require('assets/images/logoBlack.png');
+import {LogoBlack, Facebook, Google, AppleBlack, Eye, Phone} from 'svg/common';
 
 //ICONS
-const IC_EYE = require('assets/icons/eye.png');
-const IC_FACEBOOK = require('assets/icons/facebook.png');
-const IC_GOOGLE = require('assets/icons/google.png');
 const IC_ZALO = require('assets/icons/zalo.png');
-const IC_APPLE = require('assets/icons/appleBlack.png');
-const IC_PHONE = require('assets/icons/phone-outline.png');
 
 const initialLayout = {width: Dimensions.get('window').width};
 
@@ -89,7 +82,7 @@ const Index = (props) => {
       <ContainerWithoutScrollView>
         <View style={styles.mainWrapper}>
           <View style={styles.logoWrapper}>
-            <Image source={IMG_LOGO} style={styles.logo} resizeMode="contain" />
+            <LogoBlack />
           </View>
           <TabView
             navigationState={{index, routes}}
@@ -109,18 +102,12 @@ const Index = (props) => {
               </View>
               <View style={styles.socialLogin}>
                 <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <Image
-                    source={IC_FACEBOOK}
-                    resizeMode="contain"
-                    style={styles.socialBtn}
-                  />
+                  <Facebook />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <Image
-                    source={IC_GOOGLE}
-                    resizeMode="contain"
-                    style={[styles.socialBtn, styles.btnBordered]}
-                  />
+                  <View style={styles.btnBordered}>
+                    <Google />
+                  </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.socialBtnWrapper}>
                   <Image
@@ -131,11 +118,7 @@ const Index = (props) => {
                 </TouchableOpacity>
                 {Platform.OS === 'ios' && (
                   <TouchableOpacity style={styles.socialBtnWrapper}>
-                    <Image
-                      source={IC_APPLE}
-                      resizeMode="contain"
-                      style={styles.socialBtn}
-                    />
+                    <AppleBlack />
                   </TouchableOpacity>
                 )}
               </View>
@@ -268,7 +251,7 @@ const LoginTab = () => {
           value={password}
           onChangeText={(text) => onChangePassword(text)}
           textInputStyle={styles.textInput}
-          icon={IC_EYE}
+          icon={<Eye />}
           secureTextEntry={isVisiblePw}
           onPressIcon={() => onTogglePasswordVisibility()}
         />
@@ -455,7 +438,7 @@ const SignupTab = () => {
           value={password}
           onChangeText={(text) => onChangePassword(text)}
           textInputStyle={styles.textInput}
-          icon={IC_EYE}
+          icon={<Eye />}
           secureTextEntry={isVisiblePw}
           onPressIcon={() => onTogglePasswordVisibility()}
         />
@@ -469,12 +452,7 @@ const SignupTab = () => {
         </View>
         <View style={styles.btnWrapper}>
           <TextButton
-            icon={({size, color}) => (
-              <Image
-                source={IC_PHONE}
-                style={{width: size, height: size, tintColor: color}}
-              />
-            )}
+            icon={({size, color}) => <Phone />}
             onPress={() => onSignUpWithPhone()}
             labelStyle={styles.iconTextLabel}
             label={I18n.t('signUpWithPhone')}

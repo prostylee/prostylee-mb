@@ -14,18 +14,13 @@ export default EStyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: '5%',
   },
-  icon: {
-    width: '55rem',
-    height: '55rem',
-    alignSelf: 'center',
-    marginBottom: '20rem',
-  },
   label: {
     fontFamily: '$font1Bold',
     color: '$black500',
     fontSize: '$largeText',
     textAlign: 'center',
     lineHeight: '28rem',
+    marginTop: '15rem',
   },
   content: {
     fontFamily: '$font1',
