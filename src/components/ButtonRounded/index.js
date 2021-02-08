@@ -1,51 +1,48 @@
-/* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {Text, TouchableWithoutFeedback, View} from 'react-native';
+import * as React from 'react';
+import {Button} from 'react-native-paper';
+
 import styles from './styles';
 
-import Image from '../Image';
-
 const ButtonRounded = ({
-  title,
+  icon,
+  mode,
   onPress,
-  style,
-  hide,
+  color,
+  loading,
   disabled,
-  iconLeft,
-  iconRight,
-  tintColor,
-  titleStyle,
-  iconStyle,
-}) =>
-  hide ? null : (
-    <TouchableWithoutFeedback
-      disabled={disabled ? disabled : false}
-      onPress={onPress}>
-      <View
-        style={[
-          styles.button,
-          {backgroundColor: disabled ? '#ccc' : 'transparent'},
-          style,
-        ]}>
-        {iconLeft ? (
-          <Image
-            source={iconLeft}
-            resizeMethod="resize"
-            style={[styles.iconLeft, iconStyle]}
-            tintColor={tintColor}
-          />
-        ) : null}
-        <Text style={[styles.text, titleStyle]}>{title}</Text>
-        {iconRight ? (
-          <Image
-            source={iconRight}
-            resizeMethod="resize"
-            style={[styles.iconRight, iconStyle]}
-            tintColor={tintColor}
-          />
-        ) : null}
-      </View>
-    </TouchableWithoutFeedback>
-  );
+  label,
+  uppercase,
+  onLongPress,
+  contentStyle,
+  style,
+  labelStyle,
+}) => (
+  <Button
+    icon={icon}
+    mode={mode}
+    onPress={onPress}
+    color={color}
+    disabled={disabled}
+    loading={loading}
+    uppercase={uppercase}
+    onLongPress={onLongPress}
+    contentStyle={[
+      styles.button,
+      disabled && styles.disabledButton,
+      contentStyle,
+    ]}
+    style={style}
+    labelStyle={[styles.labelStyle, labelStyle]}>
+    {label}
+  </Button>
+);
+
+ButtonRounded.defaultProps = {
+  mode: 'contained',
+  loading: false,
+  disabled: false,
+  uppercase: false,
+  color: '#823FFD',
+};
 
 export default ButtonRounded;

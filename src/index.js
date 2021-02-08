@@ -2,10 +2,16 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
+import jwt_decode from 'jwt-decode';
 
-import {commonActions, commonSelectors, userActions} from './redux/reducers';
+import {
+  commonActions,
+  commonSelectors,
+  userActions,
+  userSelectors,
+} from './redux/reducers';
 
-import {common} from './utils';
+import {common, datetime} from './utils';
 
 import Navigator from './navigator';
 
@@ -44,8 +50,10 @@ EStyleSheet.build({
   $mediumText: 13 * common.rem,
   $largeText: 14 * common.rem,
   $maxText: 20 * common.rem,
+  $maxText2: 24 * common.rem,
   $screenWidth: common.dim.width,
-  $font1: 'Arial',
+  $font1: 'Inter',
+  $font1Bold: 'Inter-Medium',
 });
 
 const codePushOptions = {
@@ -82,6 +90,7 @@ const Index = () => {
   // );
 
   const isLoading = useSelector((state) => commonSelectors.getLoading(state));
+  const userToken = useSelector((state) => userSelectors.getUserToken(state));
 
   //other functions
   const getDeviceInfo = async () => {
@@ -178,11 +187,40 @@ const Index = () => {
   };
 
   const onCheckLoginSession = async () => {
-    await dispatch(commonActions.toggleLoading(false));
+    await dispatch(commonActions.toggleLoading(true));
+    if (userToken) {
+      let accessToken = await jwt_decode(userToken.accessToken);
+      let refreshToken = await jwt_decode(userToken.refreshToken);
+      let isAccessTokenExpired = await datetime.checkExpiredDate(
+        accessToken.exp,
+      );
+      let isRefreshTokenExpired = await datetime.checkExpiredDate(
+        refreshToken.exp,
+      );
+      if (isAccessTokenExpired) {
+        //accessToken expired
+        RootNavigator.navigate('LoginOptions');
+        dispatch(commonActions.toggleLoading(false));
+      } else if (isAccessTokenExpired && !isRefreshTokenExpired) {
+        //refresh token valid
+        //get new access token
+        dispatch(
+          userActions.userRefreshToken({
+            refreshToken: userToken.refreshToken,
+            onSuccess: () => onUserRefreshTokenSuccess(),
+          }),
+        );
+      } else {
+        //accessToken valid
+        dispatch(commonActions.toggleLoading(false));
+      }
+    } else {
+      dispatch(commonActions.toggleLoading(false));
+    }
   };
 
-  const onFinishedGetUserInfo = async (data) => {
-    await dispatch(commonActions.toggleLoading(false));
+  const onUserRefreshTokenSuccess = async () => {
+    dispatch(commonActions.toggleLoading(false));
   };
 
   //firebase Message
@@ -306,7 +344,7 @@ const Index = () => {
         titleStyle={styles.textMessage}
         floating={true}
       />
-      <ModalIndicator visible={isLoading}/>
+      <ModalIndicator visible={isLoading} />
       {/* <ModalRequireUpdate
         visible={isRequireUpdate}
         onConfirm={() => onHandleUpdate()}

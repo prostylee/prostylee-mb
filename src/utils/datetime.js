@@ -62,3 +62,13 @@ const checkValue = (value) => {
   }
   return value;
 };
+
+export const checkExpiredDate = (date) => {
+  console.log(Date.now());
+  console.log(date * 1000);
+  if (Date.now() >= date * 1000) {
+    return true;
+  } else {
+    return false;
+  }
+};

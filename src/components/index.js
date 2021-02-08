@@ -19,9 +19,12 @@ import RnActionSheet from './RnActionSheet';
 import Image from './Image';
 import Colors from './Colors';
 import ModalImagePicker from './ModalImagePicker';
+import TextButton from './TextButton';
+import ButtonOutlined from './ButtonOutlined';
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
+  TextButton,
   ModalIndicator,
   RnRadioSelect,
   SearchBox,
@@ -41,4 +44,5 @@ export {
   RnActionSheet,
   ModalImagePicker,
   Colors,
+  ButtonOutlined,
 };

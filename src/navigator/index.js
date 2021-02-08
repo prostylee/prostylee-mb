@@ -13,7 +13,19 @@ import {lightTheme, darkTheme} from 'theme';
 
 const Stack = createStackNavigator();
 
-import {Welcome, Onboarding, Login, SignUp, Home, LoginOptions} from 'screens';
+import {
+  Welcome,
+  Onboarding,
+  Login,
+  SignUpViaPhone,
+  LoginViaPhone,
+  Home,
+  LoginOptions,
+  OTPVerification,
+  ForgotPassword,
+  ResetPassword,
+  ResetPasswordViaMail,
+} from 'screens';
 
 function SignedIn() {
   return (
@@ -33,6 +45,9 @@ function SignedIn() {
 }
 
 function SignedOut() {
+  const initialRouteName = useSelector((state) =>
+    commonSelectors.getInitialRouteName(state),
+  );
   return (
     <Stack.Navigator
       screenOptions={{
@@ -40,21 +55,29 @@ function SignedOut() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Welcome"
+      initialRouteName={initialRouteName}
       mode="card"
       headerMode="none"
       animation="fade">
       <Stack.Screen name="LoginOptions" component={LoginOptions} />
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="SignUpViaPhone" component={SignUpViaPhone} />
+      <Stack.Screen name="LoginViaPhone" component={LoginViaPhone} />
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
+      <Stack.Screen name="OTPVerification" component={OTPVerification} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen name="ResetPassword" component={ResetPassword} />
+      <Stack.Screen
+        name="ResetPasswordViaMail"
+        component={ResetPasswordViaMail}
+      />
     </Stack.Navigator>
   );
 }
 
 const App = React.forwardRef(() => {
-  const user = useSelector((state) => userSelectors.getUser(state));
+  const userToken = useSelector((state) => userSelectors.getUserToken(state));
   const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
 
   return (
@@ -70,7 +93,7 @@ const App = React.forwardRef(() => {
         mode="card"
         headerMode="none"
         animation="fade">
-        {user === null ? (
+        {userToken === null ? (
           <Stack.Screen name="SignedOut" component={SignedOut} />
         ) : (
           <Stack.Screen name="SignedIn" component={SignedIn} />

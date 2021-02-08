@@ -1,11 +1,16 @@
 import apisauce from 'apisauce';
 
-import {api_url} from 'config';
-import {TIME_OUT} from 'constants';
+import configEnv from 'config';
+import {
+  TIME_OUT,
+  SUCCESS,
+  INTERNAL_SERVER_ERROR,
+  UNKNOWN_MESSAGE,
+} from 'constants';
 
 var config = {
-  url: api_url,
-  baseURL: api_url,
+  url: configEnv.api_url,
+  baseURL: configEnv.api_url,
   timeout: TIME_OUT,
 };
 
@@ -16,7 +21,29 @@ export const api = apisauce.create({
 
 export async function _fetch(method, path, data) {
   return api[method](path, data).then((res) => {
-    return {ok: true, data: res.data};
+    let response;
+    if (res && res.status === SUCCESS) {
+      response = {
+        status: res.status,
+        error: null,
+        data: res.data,
+      };
+      return {ok: true, data: response};
+    } else if (res && res.status !== SUCCESS) {
+      response = {
+        status: res.status,
+        error: res.data.message,
+        data: null,
+      };
+      return {ok: true, data: response};
+    } else {
+      response = {
+        status: INTERNAL_SERVER_ERROR,
+        error: UNKNOWN_MESSAGE,
+        data: null,
+      };
+      return {ok: true, data: response};
+    }
   });
 }
 

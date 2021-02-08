@@ -17,7 +17,7 @@ const styles = EStyleSheet.create({
     padding: 0,
     paddingLeft: '6rem',
     fontFamily: '$font1',
-    fontSize: '$normalText',
+    fontSize: '$mediumText',
     color: '$gray',
     height: '35rem',
   },
