@@ -37,7 +37,12 @@ const Index = (props) => {
   const keyboard = useKeyboard();
 
   //UseEffect
-  React.useEffect(() => {});
+  React.useEffect(() => {
+    const tabIndex = props.route.params?.index;
+    if (tabIndex === 1) {
+      setIndex(tabIndex);
+    }
+  }, []);
 
   //BackHandler handle
   useBackHandler(() => {
@@ -193,7 +198,7 @@ const LoginTab = () => {
   //textInput
   const onChangeEmail = async (value) => {
     let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    if (value !== '') {
+    if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
       if (reg.test(value) === false) {
         setEmail(value.toLowerCase());
@@ -238,7 +243,7 @@ const LoginTab = () => {
       userActions.userLogin({
         email,
         password,
-        onSuccess: (data) => onLoginSuccess(data),
+        onSuccess: () => onLoginSuccess(),
       }),
     );
   };
@@ -295,26 +300,138 @@ const LoginTab = () => {
 };
 
 const SignupTab = () => {
-  const [email, setEmail] = React.useState('');
+  //Initial States
   const [fullname, setFullname] = React.useState('');
+  const [invalidFullname, setInvalidFullname] = React.useState(false);
+  const [errFullnameMsg, setErrFullnameMsg] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [invalidEmail, setInvalidEmail] = React.useState(false);
+  const [errEmailMsg, setErrEmailMsg] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [activeBtnSignUp, setActiveBtnSignUp] = React.useState(false);
+  const [invalidPassword, setInvalidPassword] = React.useState(false);
+  const [errPasswordMsg, setErrPasswordMsg] = React.useState('');
+  const [disabledSignUpBtn, setDisabledSignUpBtn] = React.useState(false);
+  const [isVisiblePw, setVisiblePw] = React.useState(true);
+
+  //useEffect
+  React.useEffect(() => {
+    if (
+      invalidEmail ||
+      invalidPassword ||
+      invalidFullname ||
+      _.isEmpty(email) ||
+      _.isEmpty(fullname) ||
+      _.isEmpty(password)
+    ) {
+      setDisabledSignUpBtn(true);
+    } else {
+      setDisabledSignUpBtn(false);
+    }
+  }, [
+    invalidEmail,
+    invalidPassword,
+    invalidFullname,
+    fullname,
+    email,
+    password,
+  ]);
+
+  //Dispatch Redux
+  const dispatch = useDispatch();
 
   //textInput
-  const onChangeEmail = (value) => {
-    setEmail(value);
+  const onChangeFullname = async (value) => {
+    let reg = /^[a-zA-ZÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ" +"ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ"+"ụủứừỬỮỰỲỴÝỶỸửữựỳýỵỷỹ\s]{1,50}$/;
+    if (!_.isEmpty(value)) {
+      //nếu textInput có giá trị khác rỗng
+      if (reg.test(value) === false) {
+        setFullname(value);
+        setInvalidFullname(true);
+        setErrFullnameMsg('Họ tên không hợp lệ');
+        return false;
+      } else {
+        //email hợp lệ
+        setFullname(value);
+        setInvalidFullname(false);
+        setErrFullnameMsg('');
+      }
+    } else {
+      //nếu textInput rỗng
+      setFullname(value);
+      setInvalidFullname(false);
+      setErrFullnameMsg('');
+    }
   };
-  const onChangePassword = (value) => {
-    setPassword(value);
+
+  const onChangeEmail = async (value) => {
+    let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    if (!_.isEmpty(value)) {
+      //nếu textInput có giá trị khác rỗng
+      if (reg.test(value) === false) {
+        setEmail(value.toLowerCase());
+        setInvalidEmail(true);
+        setErrEmailMsg('Email không hợp lệ');
+        return false;
+      } else {
+        //email hợp lệ
+        setEmail(value.toLowerCase());
+        setInvalidEmail(false);
+        setErrEmailMsg('');
+      }
+    } else {
+      //nếu textInput rỗng
+      setEmail(value);
+      setInvalidEmail(false);
+      setErrEmailMsg('');
+    }
   };
-  const onChangeFullname = (value) => {
-    setFullname(value);
+  const onChangePassword = async (value) => {
+    let reg = /^.{4,50}$/;
+    if (!_.isEmpty(value)) {
+      //nếu textInput có giá trị khác rỗng
+      if (reg.test(value) === false) {
+        setPassword(value);
+        setInvalidPassword(true);
+        setErrPasswordMsg('Mật khẩu không được ít hơn 4 kí tự');
+        return false;
+      } else {
+        //email hợp lệ
+        setPassword(value);
+        setInvalidPassword(false);
+        setErrPasswordMsg('');
+      }
+    } else {
+      //nếu textInput rỗng
+      setPassword(value);
+      setInvalidPassword(false);
+      setErrPasswordMsg('');
+    }
   };
 
   //handle funcs
-  const onSignUp = () => {};
   const onSignUpWithPhone = () => {
     RootNavigator.navigate('SignUpViaPhone');
+  };
+
+  const onTogglePasswordVisibility = () => {
+    setVisiblePw(!isVisiblePw);
+  };
+
+  //handle User login
+  const onSignUp = async () => {
+    await dispatch(commonActions.toggleLoading(true));
+    await dispatch(
+      userActions.userSignUp({
+        fullname,
+        email,
+        password,
+        onSuccess: () => onSignUpSuccess(),
+      }),
+    );
+  };
+
+  const onSignUpSuccess = async () => {
+    dispatch(commonActions.toggleLoading(false));
   };
   return (
     <View style={styles.tabViewWrapper}>
@@ -325,25 +442,29 @@ const SignupTab = () => {
           onChangeText={(text) => onChangeFullname(text)}
           textInputStyle={styles.textInput}
         />
+        {invalidFullname && <Text style={styles.errMsg}>{errFullnameMsg}</Text>}
         <TextInputBorderBottom
           hint={I18n.t('email')}
           value={email}
           onChangeText={(text) => onChangeEmail(text)}
           textInputStyle={styles.textInput}
         />
+        {invalidEmail && <Text style={styles.errMsg}>{errEmailMsg}</Text>}
         <TextInputBorderBottom
           hint={I18n.t('password')}
           value={password}
           onChangeText={(text) => onChangePassword(text)}
           textInputStyle={styles.textInput}
           icon={IC_EYE}
-          secureTextEntry={true}
+          secureTextEntry={isVisiblePw}
+          onPressIcon={() => onTogglePasswordVisibility()}
         />
+        {invalidPassword && <Text style={styles.errMsg}>{errPasswordMsg}</Text>}
         <View style={styles.btnWrapper}>
           <ButtonRounded
             onPress={() => onSignUp()}
             label={I18n.t('signUp')}
-            disabled={true}
+            disabled={disabledSignUpBtn}
           />
         </View>
         <View style={styles.btnWrapper}>

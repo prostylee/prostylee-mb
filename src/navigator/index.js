@@ -45,6 +45,9 @@ function SignedIn() {
 }
 
 function SignedOut() {
+  const initialRouteName = useSelector((state) =>
+    commonSelectors.getInitialRouteName(state),
+  );
   return (
     <Stack.Navigator
       screenOptions={{
@@ -52,7 +55,7 @@ function SignedOut() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Welcome"
+      initialRouteName={initialRouteName}
       mode="card"
       headerMode="none"
       animation="fade">
@@ -74,7 +77,7 @@ function SignedOut() {
 }
 
 const App = React.forwardRef(() => {
-  const user = useSelector((state) => userSelectors.getUser(state));
+  const userToken = useSelector((state) => userSelectors.getUserToken(state));
   const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
 
   return (
@@ -90,7 +93,7 @@ const App = React.forwardRef(() => {
         mode="card"
         headerMode="none"
         animation="fade">
-        {user === null ? (
+        {userToken === null ? (
           <Stack.Screen name="SignedOut" component={SignedOut} />
         ) : (
           <Stack.Screen name="SignedIn" component={SignedIn} />

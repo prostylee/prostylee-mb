@@ -11,6 +11,8 @@ import {
 import {useBackHandler} from '@react-native-community/hooks';
 
 import {Image, ButtonRounded} from 'components';
+import {useDispatch} from 'react-redux';
+import {commonActions} from 'reducers';
 
 import I18n from 'i18n';
 
@@ -27,6 +29,14 @@ const IC_APPLE = require('assets/icons/appleWhite.png');
 import styles from './styles';
 
 const Index = (props) => {
+  //dispatch
+  const dispatch = useDispatch();
+
+  //UseEffect
+  React.useEffect(() => {
+    dispatch(commonActions.setInitialRouteName('Welcome'));
+  }, []);
+
   //BackHandler handle
   useBackHandler(() => {
     return true;

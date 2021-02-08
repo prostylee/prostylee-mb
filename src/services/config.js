@@ -24,7 +24,6 @@ export async function _fetch(method, path, data) {
     let response;
     if (res && res.status === SUCCESS) {
       response = {
-        oke: true,
         status: res.status,
         error: null,
         data: res.data,
@@ -32,7 +31,6 @@ export async function _fetch(method, path, data) {
       return {ok: true, data: response};
     } else if (res && res.status !== SUCCESS) {
       response = {
-        oke: true,
         status: res.status,
         error: res.data.message,
         data: null,
@@ -40,7 +38,6 @@ export async function _fetch(method, path, data) {
       return {ok: true, data: response};
     } else {
       response = {
-        oke: true,
         status: INTERNAL_SERVER_ERROR,
         error: UNKNOWN_MESSAGE,
         data: null,

@@ -59,7 +59,12 @@ export default EStyleSheet.create({
     lineHeight: '18rem',
   },
   btnWrapper: {
-    height: '100rem',
+    '@media ios': {
+      height: '115rem',
+    },
+    '@media android': {
+      height: '100rem',
+    },
   },
   pagination: {
     flexDirection: 'row',

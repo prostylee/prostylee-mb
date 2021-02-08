@@ -20,30 +20,39 @@ import messaging from '@react-native-firebase/messaging';
 import {APP_CLIENT_ID, APP_CLIENT_SECRET} from 'constants';
 
 const userSignUp = function* ({
-  payload: {fullname, phone_number, email, password, city_id, code, onSuccess},
+  payload: {fullname, email, password, onSuccess},
 }) {
   try {
     const res = yield call(authApi.userSignUp, {
-      fullname,
-      phone_number,
-      email,
+      fullName: fullname,
+      username: email,
       password,
-      city_id,
-      code,
     });
+
     // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === 200) {
-      yield onSuccess(res.data.data);
+    if (res.ok && res.data.status === SUCCESS) {
+      yield asyncStorage.setUserToken(res.data.data);
+      yield put(commonActions.showOnboardingScreen(false));
+      yield put(userActions.userSignUpSuccess(res.data.data));
+      yield onSuccess();
+    } else if (res.ok && res.data.status === BAD_REQUEST) {
+      //thông báo lỗi từ api trả về
+      yield put(commonActions.toggleLoading(false));
+      yield showMessage({
+        message: res.data.error,
+        type: 'danger',
+      });
     } else {
       //thông báo lỗi từ api trả về
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
-        message: res.data.errors[0],
+        message: UNKNOWN_MESSAGE,
         type: 'danger',
       });
     }
   } catch (e) {
     //Lỗi server api
+    console.log(e);
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
       message: UNKNOWN_MESSAGE,
@@ -60,11 +69,49 @@ const userLogin = function* ({payload: {email, password, onSuccess}}) {
       username: email,
       password,
     });
-    console.log(res);
     // xử lý dữ liệu trả về từ api
     if (res.ok && res.data.status === SUCCESS) {
       yield asyncStorage.setUserToken(res.data.data);
-      yield onSuccess(res.data.data);
+      yield put(commonActions.showOnboardingScreen(false));
+      yield put(userActions.userLoginSuccess(res.data.data));
+      yield onSuccess();
+    } else if (res.ok && res.data.status === BAD_REQUEST) {
+      //thông báo lỗi từ api trả về
+      yield put(commonActions.toggleLoading(false));
+      yield showMessage({
+        message: res.data.error,
+        type: 'danger',
+      });
+    } else {
+      //thông báo lỗi từ api trả về
+      yield put(commonActions.toggleLoading(false));
+      yield showMessage({
+        message: UNKNOWN_MESSAGE,
+        type: 'danger',
+      });
+    }
+  } catch (e) {
+    //Lỗi server api
+    console.log(e);
+    yield put(commonActions.toggleLoading(false));
+    yield showMessage({
+      message: UNKNOWN_MESSAGE,
+      type: 'danger',
+    });
+  }
+};
+
+const userRefreshToken = function* ({payload: {refreshToken, onSuccess}}) {
+  try {
+    const res = yield call(authApi.userRefreshToken, {
+      refreshToken,
+    });
+    // xử lý dữ liệu trả về từ api
+    if (res.ok && res.data.status === SUCCESS) {
+      yield asyncStorage.setUserToken(res.data.data);
+      yield put(commonActions.showOnboardingScreen(false));
+      yield put(userActions.userRefreshTokenSuccess(res.data.data));
+      yield onSuccess();
     } else if (res.ok && res.data.status === BAD_REQUEST) {
       //thông báo lỗi từ api trả về
       yield put(commonActions.toggleLoading(false));
@@ -143,7 +190,7 @@ const getUserInfo = function* ({payload: {token, onSuccess}}) {
       //token hết hạn => force logOut
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
-        message: sessionExpired,
+        message: SESSION_EXPIRED_MESSAGE,
         type: 'danger',
       });
       yield asyncStorage.logOut();
@@ -186,7 +233,7 @@ const updateUserPassword = function* ({
       //token hết hạn => force logOut
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
-        message: sessionExpired,
+        message: SESSION_EXPIRED_MESSAGE,
         type: 'danger',
       });
       yield asyncStorage.logOut();
@@ -228,7 +275,7 @@ const updateUserAvatar = function* ({
       //token hết hạn => force logOut
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
-        message: sessionExpired,
+        message: SESSION_EXPIRED_MESSAGE,
         type: 'danger',
       });
       yield asyncStorage.logOut();
@@ -294,7 +341,7 @@ const userForgotPw = function* ({
       //token hết hạn => force logOut
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
-        message: sessionExpired,
+        message: SESSION_EXPIRED_MESSAGE,
         type: 'danger',
       });
       yield asyncStorage.logOut();
@@ -347,8 +394,9 @@ const forgotPwCheckEmailCode = function* ({payload: {email, code, onSuccess}}) {
 };
 
 const watcher = function* () {
-  // yield takeLatest(userTypes.USER_SIGN_UP, userSignUp);
+  yield takeLatest(userTypes.USER_SIGN_UP, userSignUp);
   yield takeLatest(userTypes.USER_LOGIN, userLogin);
+  yield takeLatest(userTypes.USER_REFRESH_TOKEN, userRefreshToken);
   // yield takeLatest(userTypes.GET_USER_INFO, getUserInfo);
   // yield takeLatest(userTypes.USER_LOGOUT, userLogout);
 };
