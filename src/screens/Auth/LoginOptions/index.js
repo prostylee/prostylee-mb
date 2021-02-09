@@ -21,7 +21,7 @@ import I18n from 'i18n';
 const IMG_BG = require('assets/images/loginBg.png');
 
 //ICON
-const IC_ZALO = require('assets/icons/zalo.png');
+import IC_ZALO from 'assets/icons/zalo.png';
 
 import styles from './styles';
 

@@ -197,8 +197,9 @@ const Index = () => {
       let isRefreshTokenExpired = await datetime.checkExpiredDate(
         refreshToken.exp,
       );
-      if (isAccessTokenExpired) {
-        //accessToken expired
+      if (isAccessTokenExpired && isRefreshTokenExpired) {
+        //accessToken && refreshToken expired
+        dispatch(userActions.userClearExpiredToken());
         RootNavigator.navigate('LoginOptions');
         dispatch(commonActions.toggleLoading(false));
       } else if (isAccessTokenExpired && !isRefreshTokenExpired) {

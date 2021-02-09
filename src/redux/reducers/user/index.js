@@ -7,6 +7,8 @@ export const types = {
   USER_LOGIN: 'USER_LOGIN',
   USER_LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS',
 
+  USER_CLEAR_EXPIRED_TOKEN: 'USER_CLEAR_EXPIRED_TOKEN',
+
   USER_REFRESH_TOKEN: 'USER_REFRESH_TOKEN',
   USER_REFRESH_TOKEN_SUCCESS: 'USER_REFRESH_TOKEN_SUCCESS',
   USER_REFRESH_TOKEN_FAIL: 'USER_REFRESH_TOKEN_FAIL',
@@ -28,6 +30,7 @@ export const actions = {
   userLoginSuccess: createAction(types.USER_LOGIN_SUCCESS),
   userSignUp: createAction(types.USER_SIGN_UP),
   userSignUpSuccess: createAction(types.USER_SIGNUP_SUCCESS),
+  userClearExpiredToken: createAction(types.USER_CLEAR_EXPIRED_TOKEN),
   userRefreshToken: createAction(types.USER_REFRESH_TOKEN),
   userRefreshTokenSuccess: createAction(types.USER_REFRESH_TOKEN_SUCCESS),
   userRefreshTokenFail: createAction(types.USER_REFRESH_TOKEN_FAIL),
@@ -58,6 +61,9 @@ export default handleActions(
     },
     [types.USER_SIGNUP_SUCCESS]: (state, {payload}) => {
       return {...state, userToken: payload};
+    },
+    [types.USER_CLEAR_EXPIRED_TOKEN]: (state, {payload}) => {
+      return {...state, userToken: null};
     },
     [types.USER_REFRESH_TOKEN_SUCCESS]: (state, {payload}) => {
       return {...state, userToken: payload};
