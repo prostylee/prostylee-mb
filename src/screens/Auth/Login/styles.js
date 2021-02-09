@@ -87,8 +87,10 @@ export default EStyleSheet.create({
     marginHorizontal: '8rem',
   },
   socialBtn: {
-    width: '46rem',
-    height: '46rem',
+    width: 24,
+    height: 24,
+    position: 'absolute',
+    zIndex: 1,
   },
   btnBordered: {
     borderWidth: 0.5,

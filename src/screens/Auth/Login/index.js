@@ -18,12 +18,20 @@ import _ from 'lodash';
 
 import {userActions, commonActions} from 'reducers';
 import {useDispatch} from 'react-redux';
-import {LogoBlack, Facebook, Google, AppleBlack, Eye, Phone} from 'svg/common';
+import {
+  LogoBlack,
+  Facebook,
+  Google,
+  AppleBlack,
+  Eye,
+  Phone,
+  Zalo,
+} from 'svg/common';
 
 import {emailRegex, passwordRegex, fullNameRegex} from 'utils/common';
 
-//ICONS
-const IC_ZALO = require('assets/icons/zalo.png');
+//ICON
+const IC_ZALO = require('assets/icons/zaloIcon.png');
 
 const initialLayout = {width: Dimensions.get('window').width};
 
@@ -117,6 +125,7 @@ const Index = (props) => {
                     resizeMode="contain"
                     style={styles.socialBtn}
                   />
+                  <Zalo />
                 </TouchableOpacity>
                 {Platform.OS === 'ios' && (
                   <TouchableOpacity style={styles.socialBtnWrapper}>

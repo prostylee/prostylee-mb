@@ -15,10 +15,10 @@ import I18n from 'i18n';
 
 import styles from './styles';
 
-import {Facebook, Google, AppleBlack} from 'svg/common';
+import {Facebook, Google, AppleBlack, Zalo} from 'svg/common';
 
 //ICONS
-const IC_ZALO = require('assets/icons/zalo.png');
+const IC_ZALO = require('assets/icons/zaloIcon.png');
 
 const Index = (props) => {
   //State
@@ -91,6 +91,7 @@ const Index = (props) => {
                     resizeMode="contain"
                     style={styles.socialBtn}
                   />
+                  <Zalo />
                 </TouchableOpacity>
                 {Platform.OS === 'ios' && (
                   <TouchableOpacity style={styles.socialBtnWrapper}>

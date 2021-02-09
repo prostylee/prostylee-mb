@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, {Path, Circle} from 'react-native-svg';
+import Svg, {Path, Circle, Rect, Pattern, Defs, Image} from 'react-native-svg';
 
 export const Search = ({width = 24, height = 24, color = '#8B9399'}) => {
   return (
@@ -366,6 +366,42 @@ export const Success = () => {
         stroke-width="3"
         stroke-linecap="round"
         stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const Zalo = () => {
+  return (
+    <Svg
+      id="zalo"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      width="46"
+      height="46"
+      viewBox="0 0 46 46">
+      <Defs>
+        <Pattern id="pattern" width="100%" height="100%" viewBox="0 0 492 492">
+          {/* <Image
+            width="492"
+            height="492"
+            href={require('assets/icons/zaloIcon.png')}
+          /> */}
+        </Pattern>
+      </Defs>
+      <Path
+        id="Path_1"
+        data-name="Path 1"
+        d="M0,23A23,23,0,1,1,23,46,23,23,0,0,1,0,23Z"
+        fill="#0068ff"
+      />
+      <Rect
+        id="Rectangle_1"
+        data-name="Rectangle 1"
+        width="24"
+        height="24"
+        rx="2"
+        fill="url(#pattern)"
       />
     </Svg>
   );

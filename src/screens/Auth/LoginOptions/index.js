@@ -13,7 +13,7 @@ import {useBackHandler} from '@react-native-community/hooks';
 import {Image, ButtonRounded} from 'components';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
-import {LogoWhite, Facebook, Google, Apple} from 'svg/common';
+import {LogoWhite, Facebook, Google, Apple, Zalo} from 'svg/common';
 
 import I18n from 'i18n';
 
@@ -21,7 +21,7 @@ import I18n from 'i18n';
 const IMG_BG = require('assets/images/loginBg.png');
 
 //ICON
-import IC_ZALO from 'assets/icons/zalo.png';
+const IC_ZALO = require('assets/icons/zaloIcon.png');
 
 import styles from './styles';
 
@@ -80,6 +80,7 @@ const Index = (props) => {
               resizeMode="contain"
               style={styles.socialBtn}
             />
+            <Zalo />
           </TouchableOpacity>
           {Platform.OS === 'ios' && (
             <TouchableOpacity style={styles.socialBtnWrapper}>
