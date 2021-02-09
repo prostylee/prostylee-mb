@@ -20,6 +20,8 @@ import {userActions, commonActions} from 'reducers';
 import {useDispatch} from 'react-redux';
 import {LogoBlack, Facebook, Google, AppleBlack, Eye, Phone} from 'svg/common';
 
+import {emailRegex, passwordRegex, fullNameRegex} from 'utils/common';
+
 //ICONS
 const IC_ZALO = require('assets/icons/zalo.png');
 
@@ -130,13 +132,13 @@ const Index = (props) => {
                   <View style={styles.btnRowWrapper}>
                     <TextButton
                       onPress={() => onGoToTerms()}
-                      label={I18n.t('policy1')}
+                      label={I18n.t('termOfUse')}
                       labelStyle={styles.privacyButton}
                     />
                     <Text style={styles.noticeText}>{I18n.t('and')}</Text>
                     <TextButton
                       onPress={() => onGoToPrivacy()}
-                      label={I18n.t('policy2')}
+                      label={I18n.t('privacyPolicy')}
                       labelStyle={styles.privacyButton}
                     />
                   </View>
@@ -180,10 +182,9 @@ const LoginTab = () => {
 
   //textInput
   const onChangeEmail = async (value) => {
-    let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
-      if (reg.test(value) === false) {
+      if (emailRegex.test(value) === false) {
         setEmail(value.toLowerCase());
         setInvalidEmail(true);
         setErrEmailMsg(I18n.t('invalidEmail'));
@@ -274,7 +275,7 @@ const LoginTab = () => {
           <TextButton
             onPress={() => onForgotPw()}
             labelStyle={styles.labelBtn}
-            label={I18n.t('forgotPw')}
+            label={I18n.t('forgotPassword')}
           />
         </View>
       </View>
@@ -324,10 +325,9 @@ const SignupTab = () => {
 
   //textInput
   const onChangeFullname = async (value) => {
-    let reg = /^[a-zA-ZÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ" +"ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ"+"ụủứừỬỮỰỲỴÝỶỸửữựỳýỵỷỹ\s]{1,50}$/;
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
-      if (reg.test(value) === false) {
+      if (fullNameRegex.test(value) === false) {
         setFullname(value);
         setInvalidFullname(true);
         setErrFullnameMsg(I18n.t('invalidFullname'));
@@ -347,10 +347,9 @@ const SignupTab = () => {
   };
 
   const onChangeEmail = async (value) => {
-    let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
-      if (reg.test(value) === false) {
+      if (emailRegex.test(value) === false) {
         setEmail(value.toLowerCase());
         setInvalidEmail(true);
         setErrEmailMsg(I18n.t('invalidEmail'));
@@ -369,10 +368,9 @@ const SignupTab = () => {
     }
   };
   const onChangePassword = async (value) => {
-    let reg = /^.{4,50}$/;
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
-      if (reg.test(value) === false) {
+      if (passwordRegex.test(value) === false) {
         setPassword(value);
         setInvalidPassword(true);
         setErrPasswordMsg(I18n.t('invalidPassword'));

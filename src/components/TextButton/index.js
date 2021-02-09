@@ -3,40 +3,20 @@ import {Button} from 'react-native-paper';
 
 import styles from './styles';
 
-const TextButton = ({
-  icon,
-  mode,
-  onPress,
-  color,
-  loading,
-  disabled,
-  label,
-  uppercase,
-  onLongPress,
-  contentStyle,
-  style,
-  labelStyle,
-}) => (
+const TextButton = ({disabled, label, contentStyle, labelStyle, ...props}) => (
   <Button
-    icon={icon}
-    mode={mode}
-    onPress={onPress}
-    color={color}
-    disabled={disabled}
-    loading={loading}
-    uppercase={uppercase}
-    onLongPress={onLongPress}
     contentStyle={[
       styles.button,
       disabled && styles.disabledButton,
       contentStyle,
     ]}
-    style={style}
     labelStyle={[
       styles.labelStyle,
       labelStyle,
       disabled && styles.disabledText,
-    ]}>
+    ]}
+    disabled={disabled}
+    {...props}>
     {label}
   </Button>
 );

@@ -106,7 +106,7 @@ const Index = (props) => {
               <Text style={styles.errMsg}>{errPasswordMsg}</Text>
             )}
             <ButtonRounded
-              label={I18n.t('nextVn')}
+              label={I18n.t('next')}
               style={styles.button}
               onPress={() => onUpdateNewPassword()}
               disabled={disabledBtn}

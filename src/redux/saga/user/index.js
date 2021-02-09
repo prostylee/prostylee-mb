@@ -17,7 +17,7 @@ import asyncStorage from 'data/asyncStorage';
 
 import messaging from '@react-native-firebase/messaging';
 
-import {APP_CLIENT_ID, APP_CLIENT_SECRET} from 'constants';
+import configEnv from 'config';
 
 const userSignUp = function* ({
   payload: {fullname, email, password, onSuccess},
@@ -64,8 +64,8 @@ const userSignUp = function* ({
 const userLogin = function* ({payload: {email, password, onSuccess}}) {
   try {
     const res = yield call(authApi.userLogin, {
-      appClientId: APP_CLIENT_ID,
-      appClientSecret: APP_CLIENT_SECRET,
+      appClientId: configEnv.APP_CLIENT_ID,
+      appClientSecret: configEnv.APP_CLIENT_SECRET,
       username: email,
       password,
     });

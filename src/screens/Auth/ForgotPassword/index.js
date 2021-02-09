@@ -83,7 +83,10 @@ const Index = (props) => {
     <View style={styles.container}>
       <ContainerWithoutScrollView>
         <View style={styles.mainWrapper}>
-          <HeaderBack title={I18n.t('forgotPw')} onBack={() => onGoBack()} />
+          <HeaderBack
+            title={I18n.t('forgotPassword')}
+            onBack={() => onGoBack()}
+          />
           <View style={styles.form}>
             <Text style={styles.label}>{I18n.t('emailOrPhone')}</Text>
             <TextInputBorderBottom
@@ -96,7 +99,7 @@ const Index = (props) => {
             />
             {invalidEmail && <Text style={styles.errMsg}>{errEmailMsg}</Text>}
             <ButtonRounded
-              label={I18n.t('nextVn')}
+              label={I18n.t('next')}
               style={styles.button}
               onPress={() => onSubmitEmail()}
               disabled={disabledBtn}

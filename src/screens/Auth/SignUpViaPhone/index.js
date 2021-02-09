@@ -106,13 +106,13 @@ const Index = (props) => {
                 <View style={styles.btnRowWrapper}>
                   <TextButton
                     onPress={() => onGoToTerms()}
-                    label={I18n.t('policy1')}
+                    label={I18n.t('termOfUse')}
                     labelStyle={styles.privacyButton}
                   />
                   <Text style={styles.noticeText}>{I18n.t('and')}</Text>
                   <TextButton
                     onPress={() => onGoToPrivacy()}
-                    label={I18n.t('policy2')}
+                    label={I18n.t('privacyPolicy')}
                     labelStyle={styles.privacyButton}
                   />
                 </View>

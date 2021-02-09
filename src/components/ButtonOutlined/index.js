@@ -4,35 +4,17 @@ import {Button} from 'react-native-paper';
 import styles from './styles';
 
 const ButtonOutlined = ({
-  icon,
-  mode,
-  onPress,
-  color,
-  loading,
   disabled,
   label,
-  uppercase,
-  onLongPress,
   contentStyle,
-  style,
   labelStyle,
+  ...props
 }) => (
   <Button
-    icon={icon}
-    mode={mode}
-    onPress={onPress}
-    color={color}
-    disabled={disabled}
-    loading={loading}
-    uppercase={uppercase}
-    onLongPress={onLongPress}
-    contentStyle={[
-      styles.button,
-      disabled && styles.disabledButton,
-      contentStyle,
-    ]}
-    style={style}
-    labelStyle={[styles.labelStyle, labelStyle]}>
+    contentStyle={[styles.button, contentStyle]}
+    style={[styles.buttonWrapper, disabled && styles.disabledButton]}
+    labelStyle={[styles.labelStyle, labelStyle]}
+    {...props}>
     {label}
   </Button>
 );

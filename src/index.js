@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
-import jwt_decode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 
 import {
   commonActions,
@@ -189,8 +189,8 @@ const Index = () => {
   const onCheckLoginSession = async () => {
     await dispatch(commonActions.toggleLoading(true));
     if (userToken) {
-      let accessToken = await jwt_decode(userToken.accessToken);
-      let refreshToken = await jwt_decode(userToken.refreshToken);
+      let accessToken = await jwtDecode(userToken.accessToken);
+      let refreshToken = await jwtDecode(userToken.refreshToken);
       let isAccessTokenExpired = await datetime.checkExpiredDate(
         accessToken.exp,
       );

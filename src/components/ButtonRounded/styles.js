@@ -1,12 +1,14 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
+  buttonWrapper: {
+    backgroundColor: '$purple',
+  },
   button: {
     height: '40rem',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '4rem',
-    backgroundColor: '$purple',
   },
 
   disabledButton: {

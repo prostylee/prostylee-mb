@@ -132,7 +132,7 @@ const Index = (props) => {
               onTextChange={(value) => onChangeCode(value)}
             />
             <ButtonRounded
-              label={I18n.t('nextVn')}
+              label={I18n.t('next')}
               style={styles.button}
               onPress={() => onVerifyOTP()}
               disabled={isDisabledBtn}
