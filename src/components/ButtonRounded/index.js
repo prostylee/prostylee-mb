@@ -11,6 +11,7 @@ const ButtonRounded = ({
   ...props
 }) => (
   <Button
+    disabled={disabled}
     contentStyle={[styles.button, contentStyle]}
     style={[styles.buttonWrapper, disabled && styles.disabledButton]}
     labelStyle={[styles.labelStyle, labelStyle]}
