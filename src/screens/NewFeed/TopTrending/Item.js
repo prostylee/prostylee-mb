@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Text } from 'react-native'
 import { ThemeView } from 'components'
 import { Avatar, Button } from "react-native-paper"
@@ -8,7 +8,31 @@ import styles from './styles'
 import { View } from 'native-base'
 import { MapPin } from 'svg/common'
 
+import {follow, unfollow, like, unlike} from 'services/api/socialApi'
+
+const STORE = 'STORE'
 const Item = ({ item, style }) => {
+  const [followed, setFollowed] = useState(false)
+
+  const _followPress = async () => {
+    if (!followed) {
+      const res = await follow({
+        targetId: item?.id,
+        targetType: STORE
+      })
+      if (res.ok) {
+        setFollowed(true)
+      }
+    } else {
+      const res = await unfollow({
+        targetId: newFeedItem?.id,
+        targetType: STORE
+      })
+      if (res.ok) {
+        setFollowed(false)
+      }
+    }
+  }
   return (
     <ThemeView colorSecondary style={[styles.itemContainer, style && style]}>
       <Avatar.Image
@@ -31,7 +55,8 @@ const Item = ({ item, style }) => {
       <Button
         mode="contained"
         uppercase={false}
-        onPress={() => {}}
+        disabled={followed}
+        onPress={() => _followPress()}
         style={styles.followBtn}
         labelStyle={styles.followBtnBtnLabel}>
         {i18n.t('common.textFollow')}
