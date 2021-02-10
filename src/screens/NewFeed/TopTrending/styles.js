@@ -30,7 +30,8 @@ export default EStyleSheet.create({
     fontFamily: '$font1',
   },
   info: {
-    ...center
+    ...center,
+    marginBottom: 8,
   },
   name: {
     fontSize: 14,
@@ -48,5 +49,20 @@ export default EStyleSheet.create({
   },
   addressWrap: {
     ...flexRow,
-  }
+  },
+  followBtn: {
+    height: '28rem',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '4rem',
+    backgroundColor: '$purple',
+  },
+  followBtnBtnLabel: {
+    width: '90%',
+    fontFamily: '$font1',
+    textAlign: 'center',
+    fontWeight: '500',
+    color: '$white',
+    margin: 0,
+  },
 });
