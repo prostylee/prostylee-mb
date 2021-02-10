@@ -1,5 +1,8 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {center,flexRow} from 'theme/style'
+import {Dimensions} from 'react-native'
+
+const WIDTH = Dimensions.get('window').width
 
 export default EStyleSheet.create({
   viewContainer: {
@@ -12,7 +15,7 @@ export default EStyleSheet.create({
     paddingTop: 8,
   },
   itemContainer: {
-    width: 252,
+    width: WIDTH * 0.7,
     padding: 16,
     alignItems: 'center',
   },
