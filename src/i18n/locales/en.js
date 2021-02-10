@@ -8,5 +8,6 @@ export default {
   common: {
     textSeeMore: 'See more',
     textFollow: 'Follow',
+    textFollowed: 'Followed'
   }
 };

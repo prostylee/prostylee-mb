@@ -6,4 +6,5 @@ import authApi from './api/authApi';
 import productApi from './api/productApi';
 import newFeedApi from './api/newFeedApi';
 import storeApi from './api/storeApi';
-export {api, authApi, productApi, newFeedApi, storeApi};
+import socialApi from './api/socialApi'
+export {api, authApi, productApi, newFeedApi, storeApi, socialApi};

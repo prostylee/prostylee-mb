@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {View, Text, TouchableOpacity} from 'react-native'
 import styles from './styles'
@@ -7,17 +7,61 @@ import {isEmpty} from 'lodash'
 
 import {Avatar} from 'react-native-paper'
 
-import {ContainerView} from 'components'
+import {ContainerView, Colors} from 'components'
 
 import {Heart, Message, More} from 'svg/social';
 
+import {follow, unfollow, like, unlike} from 'services/api/socialApi'
+
 import FeedSlide from './slide';
 
+const STORE = 'STORE'
 const VerticalFeedItem = ({newFeedItem}) => {
   if (isEmpty(newFeedItem)) return null;
+
+  const [followed, setFollowed] = useState(false)
+  const [liked, setLiked] = useState(false)
   
   const disCountPer = newFeedItem?.priceSale / newFeedItem?.price
 
+  const _followPress = async () => {
+    if (!followed) {
+      const res = await follow({
+        targetId: newFeedItem?.id,
+        targetType: STORE
+      })
+      if (res.ok) {
+        setFollowed(true)
+      }
+    } else {
+      const res = await unfollow({
+        targetId: newFeedItem?.id,
+        targetType: STORE
+      })
+      if (res.ok) {
+        setFollowed(false)
+      }
+    }
+  }
+  const _likePress = async () => {
+    if (!liked) {
+      const res = await like({
+        targetId: newFeedItem?.id,
+        targetType: STORE
+      })
+      if (res.ok) {
+        setLiked(true)
+      }
+    } else {
+      const res = await unlike({
+        targetId: newFeedItem?.id,
+        targetType: STORE
+      })
+      if (res.ok) {
+        setLiked(false)
+      }
+    }
+  }
   return (
     <View style={styles.container}>
       <ContainerView style={styles.headerContainer}>
@@ -27,8 +71,11 @@ const VerticalFeedItem = ({newFeedItem}) => {
             source={{uri: 'https://www.iphonehacks.com/wp-content/uploads/2020/07/ios-14-home-screen-widgets-alt.png'}} />
           <Text numberOfLines={1} style={styles.textTitle}>{newFeedItem?.name}</Text>
         </View>
-        <TouchableOpacity style={styles.wrapFollow}>
-          <Text style={styles.textFollow}>{i18n.t('common.textFollow')}</Text>
+        <TouchableOpacity onPress={() => _followPress()} style={styles.wrapFollow}>
+          <Text 
+            style={!followed ? styles.textFollow : styles.textFollowed}>{
+            !followed ? i18n.t('common.textFollow') : i18n.t('common.textFollowed')
+          }</Text>
         </TouchableOpacity>
       </ContainerView>
       <View style={styles.slideWrap}>
@@ -49,8 +96,10 @@ const VerticalFeedItem = ({newFeedItem}) => {
       </ContainerView>
       <ContainerView style={styles.socialActionWrap}>
         <View style={styles.postAction}>
-          <TouchableOpacity style={styles.touchHeart}>
-            <Heart/>
+          <TouchableOpacity 
+            onPress={() => _likePress()} 
+            style={styles.touchHeart}>
+            <Heart color={liked ? Colors.$purple : Colors.$icon}/>
           </TouchableOpacity>
           <TouchableOpacity style={styles.touchMes}>
             <Message/>

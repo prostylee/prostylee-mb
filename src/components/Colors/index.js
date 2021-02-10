@@ -18,4 +18,5 @@ export default {
   $mainColor: '#ff7675',
   $purple: '#823FFD',
   $line: '#E9EAEB',
+  $icon: '#8B9399',
 };

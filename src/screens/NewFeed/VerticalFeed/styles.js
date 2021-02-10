@@ -77,6 +77,9 @@ export default EStyleSheet.create({
   textFollow: {
     color: '$purple',
   },
+  textFollowed: {
+    color: '#8B9399'
+  },
   discountPercent: {
     ...absolute(null, 8, 8, null),
     padding: 6,

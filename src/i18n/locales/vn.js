@@ -8,5 +8,6 @@ export default {
   common: {
     textSeeMore: 'Xem thêm',
     textFollow: 'Theo dõi',
+    textFollowed: 'Đã theo dõi'
   }
 };
