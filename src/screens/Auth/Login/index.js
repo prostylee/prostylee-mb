@@ -194,7 +194,7 @@ const LoginTab = () => {
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
       if (emailRegex.test(value) === false) {
-        setEmail(value.toLowerCase());
+        setEmail(value);
         setInvalidEmail(true);
         setErrEmailMsg(I18n.t('invalidEmail'));
         return false;
@@ -359,7 +359,7 @@ const SignupTab = () => {
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
       if (emailRegex.test(value) === false) {
-        setEmail(value.toLowerCase());
+        setEmail(value);
         setInvalidEmail(true);
         setErrEmailMsg(I18n.t('invalidEmail'));
         return false;
@@ -438,6 +438,7 @@ const SignupTab = () => {
           value={email}
           onChangeText={(text) => onChangeEmail(text)}
           textInputStyle={styles.textInput}
+          keyboardType="email-address"
         />
         {invalidEmail && <Text style={styles.errMsg}>{errEmailMsg}</Text>}
         <TextInputBorderBottom

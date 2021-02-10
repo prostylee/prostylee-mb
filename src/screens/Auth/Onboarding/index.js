@@ -7,6 +7,8 @@ import {useTheme} from '@react-navigation/native';
 import styles from './styles';
 import I18n from 'i18n';
 import {useBackHandler} from '@react-native-community/hooks';
+import {commonActions} from 'reducers';
+import {useDispatch} from 'react-redux';
 
 import {onboarding as data} from 'data/localJson';
 
@@ -19,6 +21,9 @@ const Index = (props) => {
   const [activeIndex, setActiveIndex] = React.useState(0);
 
   const flatListRef = React.useRef(null);
+
+  //dispatch
+  const dispatch = useDispatch();
 
   //BackHandler handle
   useBackHandler(() => {
@@ -37,16 +42,18 @@ const Index = (props) => {
     setActiveIndex(i);
   };
 
-  const onPressItem = (index) => {
+  const onPressItem = async (index) => {
     if (index < data.length - 1) {
       flatListRef.current.scrollToIndex({animated: true, index: index + 1});
     } else {
+      await dispatch(commonActions.showOnboardingScreen(false));
       props.navigation.navigate('LoginOptions');
     }
   };
 
   const _renderItem = ({item, index}) => {
-    const labelBtn = index === data.length - 1 ? I18n.t('getStarted') : I18n.t('next');
+    const labelBtn =
+      index === data.length - 1 ? I18n.t('getStarted') : I18n.t('next');
     return (
       <View style={[styles.pageWrapper, {width: WIDTH, height: HEIGHT}]}>
         <View style={[styles.imgWrapper, styles[`onboarding${index}`]]}>

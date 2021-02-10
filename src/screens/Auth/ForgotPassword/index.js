@@ -41,7 +41,7 @@ const Index = (props) => {
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
       if (reg.test(value) === false) {
-        setEmail(value.toLowerCase());
+        setEmail(value);
         setInvalidEmail(true);
         setErrEmailMsg(I18n.t('invalidEmail'));
         return false;

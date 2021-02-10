@@ -32,7 +32,6 @@ const userSignUp = function* ({
     // xử lý dữ liệu trả về từ api
     if (res.ok && res.data.status === SUCCESS) {
       yield asyncStorage.setUserToken(res.data.data);
-      yield put(commonActions.showOnboardingScreen(false));
       yield put(userActions.userSignUpSuccess(res.data.data));
       yield onSuccess();
     } else if (res.ok && res.data.status === BAD_REQUEST) {
@@ -72,7 +71,6 @@ const userLogin = function* ({payload: {email, password, onSuccess}}) {
     // xử lý dữ liệu trả về từ api
     if (res.ok && res.data.status === SUCCESS) {
       yield asyncStorage.setUserToken(res.data.data);
-      yield put(commonActions.showOnboardingScreen(false));
       yield put(userActions.userLoginSuccess(res.data.data));
       yield onSuccess();
     } else if (res.ok && res.data.status === BAD_REQUEST) {
@@ -109,7 +107,6 @@ const userRefreshToken = function* ({payload: {refreshToken, onSuccess}}) {
     // xử lý dữ liệu trả về từ api
     if (res.ok && res.data.status === SUCCESS) {
       yield asyncStorage.setUserToken(res.data.data);
-      yield put(commonActions.showOnboardingScreen(false));
       yield put(userActions.userRefreshTokenSuccess(res.data.data));
       yield onSuccess();
     } else if (res.ok && res.data.status === BAD_REQUEST) {
