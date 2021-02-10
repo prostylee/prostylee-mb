@@ -6,15 +6,14 @@ import {
   ActivityIndicator,
   FlatList,
   Dimensions,
+  Text,
 } from 'react-native'
+import styles from './styles'
 
 import { ImageAnimated as Image} from 'components'
 
-import { absoluteCenter, absolute } from 'theme/style'
-
 const DEFAULT_IMG = require('assets/images/default.png')
 const WIDTH = Dimensions.get('window').width
-const RATIO_IMG = 1.5
 
 const Slide = React.memo(props => {
   const {
@@ -25,7 +24,7 @@ const Slide = React.memo(props => {
 
   const flatListRef = useRef(null)
 
-  const [state, setState] = useState({ visible: false, indexCurrency: 0, })
+  const [state, setState] = useState({ visible: false, indexCurrency: 1, })
 
   const _getItemLayout = (data, index) => {
     return { length: width, offset: width * index, index };
@@ -78,18 +77,11 @@ const Slide = React.memo(props => {
           ) : null
         }
       />
-      {/* <View style={styles.footerImage}>
-        <Pagination
-          containerStyle={styles.viewPagination}
-          activeVisit={state.indexCurrency}
-          count={images.length}
-        />
-      </View> */}
+        <View style={styles.renderSlide}>
+          <Text>{state.indexCurrency + 1 + '/' + images.length}</Text>
+        </View>
     </>
   )
-})
-
-const styles = EStyleSheet.create({
 })
 
 Slide.defaultProps = {

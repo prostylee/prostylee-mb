@@ -89,5 +89,12 @@ export default EStyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     fontFamily: '$font1',
+  },
+  renderSlide: {
+    ...absolute(null, 8, null, 8),
+    backgroundColor: '$white',
+    paddingHorizontal: 8,
+    borderRadius: 24,
+    paddingVertical: 6,
   }
 });
