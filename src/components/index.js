@@ -22,7 +22,8 @@ import ModalImagePicker from './ModalImagePicker';
 import ThemeView from './ThemeView';
 import ImageAnimated from './Image/imageAnimated';
 import ContainerView from './ContainerView';
-import Header from './Header'
+import Header from './Header';
+import Title from './Title';
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -49,4 +50,5 @@ export {
   ImageAnimated,
   ContainerView,
   Header,
+  Title,
 };

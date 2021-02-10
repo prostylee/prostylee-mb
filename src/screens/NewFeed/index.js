@@ -8,6 +8,7 @@ import {ThemeView} from 'components'
 
 import VerticalFeed from './VerticalFeed'
 import HeaderFeed from './HeaderFeed'
+import TopTrending from './TopTrending'
 
 import {newFeedActions, storeActions} from 'redux/reducers'
 import {getNewFeedSelector} from 'redux/selectors/newFeed'
@@ -37,6 +38,7 @@ const NewFeed = (props) => {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
       >
+        <TopTrending topProduct={topProduct}/>
         <VerticalFeed newFeedList={newFeedList}/>
       </ScrollView>
     </ThemeView>

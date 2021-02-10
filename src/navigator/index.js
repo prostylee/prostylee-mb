@@ -14,6 +14,7 @@ import {lightTheme, darkTheme} from 'theme';
 const Stack = createStackNavigator();
 
 import {Welcome, Onboarding, Login, SignUp, Home, LoginOptions} from 'screens';
+import BottomTabs from './bottomTab';
 
 function SignedIn() {
   return (
@@ -27,7 +28,7 @@ function SignedIn() {
       mode="card"
       headerMode="none"
       animation="fade">
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Home" component={BottomTabs} />
     </Stack.Navigator>
   );
 }
@@ -53,6 +54,23 @@ function SignedOut() {
   );
 }
 
+function MainStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}
+      initialRouteName="Home"
+      mode="card"
+      headerMode="none"
+      animation="fade">
+      <Stack.Screen name="Home" component={BottomTabs} />
+    </Stack.Navigator>
+  );
+}
+
 const App = React.forwardRef(() => {
   const user = useSelector((state) => userSelectors.getUser(state));
   const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
@@ -71,7 +89,7 @@ const App = React.forwardRef(() => {
         headerMode="none"
         animation="fade">
         {user === null ? (
-          <Stack.Screen name="SignedOut" component={SignedOut} />
+          <Stack.Screen name="SignedOut" component={MainStack} />
         ) : (
           <Stack.Screen name="SignedIn" component={SignedIn} />
         )}

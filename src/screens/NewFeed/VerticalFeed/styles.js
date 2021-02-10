@@ -19,9 +19,11 @@ export default EStyleSheet.create({
     width: WIDTH * 0.7
   },
   textTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 20,
+    fontFamily: '$font1',
     paddingLeft: 10,
-    fontSize: '$mediumText',
-    fontSize: '$largeText'
   },
   wrapFollow: {
     ...center,
@@ -60,12 +62,17 @@ export default EStyleSheet.create({
     color: '#8B9399'
   },
   productName: {
-    fontSize: '$mediumText',
-    fontSize: '$largeText'
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 20,
+    fontFamily: '$font1',
   },
   price: {
     color: '#8B9399',
     lineHeight: 24,
+    fontSize: 14,
+    fontWeight: '500',
+    fontFamily: '$font1',
   },
 
 

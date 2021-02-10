@@ -1,9 +1,6 @@
 import React from 'react'
 
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Text } from '~/Theme/Components'
-import { padding } from '~/Theme/Configs/spacing'
-import { sizes } from '~/Theme/Configs/dimension'
+import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 
 const Title = ({ title, subTitle, onPress, subTitleComponent, style, containerStyle }) => {
   return (
@@ -15,7 +12,7 @@ const Title = ({ title, subTitle, onPress, subTitleComponent, style, containerSt
         ? subTitleComponent
         : subTitle ? (
           <TouchableOpacity onPress={onPress} style={styles.touchSubtitle}>
-            <Text colorThird h6>
+            <Text>
               {subTitle}
             </Text>
           </TouchableOpacity>
@@ -27,12 +24,10 @@ const Title = ({ title, subTitle, onPress, subTitleComponent, style, containerSt
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingVertical: padding.big,
+    alignItems: 'center',
   },
   textTitle: {
     flex: 1,
-    fontSize: sizes.h3,
-    paddingRight: padding.large,
   },
   touchSubtitle: {
     paddingVertical: 5,
