@@ -1,4 +1,6 @@
 import React from 'react'
+import {View} from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import * as screens from './tabNavigators'
@@ -6,6 +8,14 @@ import * as screens from './tabNavigators'
 import { tabsSetting } from 'config/navigator'
 
 import * as TabsIcon from 'svg/bottomTab'
+
+const SpecialIcon = (props) => {
+    return (
+      <View style={styles.specialIcon}>
+        {props.children}
+      </View>
+    )
+  }
 
 const Tab = createBottomTabNavigator()
 const BottomTabs = (props) => {
@@ -20,8 +30,10 @@ const BottomTabs = (props) => {
       initialRouteName={initialRouteName}
       backBehavior={backBehavior}
       shifting={true}
-      activeColor={activeColor}
-      inactiveColor={inactiveColor}
+      tabBarOptions={{
+        activeTintColor: activeColor,
+        inactiveTintColor: inactiveColor,
+      }}
       sceneAnimationEnabled={true}
     >
       {
@@ -34,10 +46,20 @@ const BottomTabs = (props) => {
               name={tab.name[lang]}
               component={screens[tab.screen]}
               options={{
-                tabBarIcon: ({ color }) => (
-                  <TabBarIcon color={color} size={28} />
-                ),
+                tabBarIcon: ({ color }) => {
+                  if (tab?.isTurnOfLabel) {
+                    return (
+                      <SpecialIcon>
+                        <TabBarIcon/>
+                      </SpecialIcon>
+                    )
+                  }
+                  return(
+                    <TabBarIcon color={color} size={28} />
+                  )
+                },
                 tabBarColor,
+                title: tab?.isTurnOfLabel ? '' : tab.name[lang],
               }}
             />
           )
@@ -46,5 +68,11 @@ const BottomTabs = (props) => {
     </Tab.Navigator>
   )
 }
+
+const styles = EStyleSheet.create({
+  specialIcon: {
+    marginBottom: -35,
+  },
+})
 
 export default BottomTabs

@@ -46,6 +46,21 @@ export const tabsSetting = {
         en: '',
       },
       name: {
+        vi: 'Post News',
+        en: 'Post News',
+      },
+      isTurnOfLabel: true,
+      screen: bottomTabs['newFeed'],
+      option: {
+        tabBarIcon: 'MainTab'
+      }
+    },
+    {
+      title: {
+        vi: '',
+        en: '',
+      },
+      name: {
         vi: 'Thông báo',
         en: 'Notification'
       },
