@@ -8,6 +8,9 @@ export default EStyleSheet.create({
     margin: 8,
     borderRadius: 8,
   },
+  titleContainer: {
+    paddingTop: 8,
+  },
   itemContainer: {
     width: 252,
     padding: 16,

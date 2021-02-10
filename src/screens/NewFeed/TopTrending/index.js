@@ -15,7 +15,7 @@ const TopTrending = ({ topProduct }) => {
   const topProductList = topProduct?.content
   return (
     <>
-     <Container>
+     <Container style={styles.titleContainer}>
         <Title
           title={
             'Cửa hàng nổi bật'

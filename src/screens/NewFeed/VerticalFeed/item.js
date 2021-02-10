@@ -22,7 +22,7 @@ const VerticalFeedItem = ({newFeedItem}) => {
           <Text numberOfLines={1} style={styles.textTitle}>{newFeedItem?.name}</Text>
         </View>
         <TouchableOpacity style={styles.wrapFollow}>
-          <Text>Follow</Text>
+          <Text style={styles.textFollow}>Follow</Text>
         </TouchableOpacity>
       </ContainerView>
       <FeedSlide images= {newFeedItem?.imageUrls || []}/>

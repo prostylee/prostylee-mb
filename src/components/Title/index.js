@@ -1,8 +1,9 @@
 import React from 'react'
 
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet';
+import { TouchableOpacity, View, Text } from 'react-native'
 
-const Title = ({ title, subTitle, onPress, subTitleComponent, style, containerStyle }) => {
+const Title = ({ title, subTitle, onPress, subTitleComponent, style, containerStyle, textStyle }) => {
   return (
     <View style={[styles.container, containerStyle && containerStyle]}>
       <Text medium style={[styles.textTitle, style && style]}>
@@ -12,7 +13,7 @@ const Title = ({ title, subTitle, onPress, subTitleComponent, style, containerSt
         ? subTitleComponent
         : subTitle ? (
           <TouchableOpacity onPress={onPress} style={styles.touchSubtitle}>
-            <Text>
+            <Text style={[styles.textStyle, textStyle && textStyle]}>
               {subTitle}
             </Text>
           </TouchableOpacity>
@@ -21,7 +22,7 @@ const Title = ({ title, subTitle, onPress, subTitleComponent, style, containerSt
   )
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -33,6 +34,9 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     justifyContent: 'center',
   },
+  textStyle: {
+    color: '$purple',
+  }
 })
 
 Title.defaultProps = {
