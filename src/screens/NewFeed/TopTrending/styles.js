@@ -41,5 +41,9 @@ export default EStyleSheet.create({
     lineHeight: 16,
     fontFamily: '$font1',
     color: '#8B9399',
+    paddingLeft: 4,
+  },
+  addressWrap: {
+    ...flexRow,
   }
 });

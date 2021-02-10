@@ -5,9 +5,9 @@ import { Avatar } from "react-native-paper"
 
 import styles from './styles'
 import { View } from 'native-base'
+import { MapPin } from 'svg/common'
 
 const Item = ({ item, style }) => {
-  console.log(item)
   return (
     <ThemeView colorSecondary style={[styles.itemContainer, style && style]}>
       <Avatar.Image
@@ -22,7 +22,10 @@ const Item = ({ item, style }) => {
       />
       <View style={styles.info}>
         <Text style={styles.name}>{item?.name}</Text>
-        <Text style={styles.address}>{item?.address}</Text>
+        <View style={styles.addressWrap}>
+          <MapPin/>
+          <Text style={styles.address}>{item?.address}</Text>
+        </View>
       </View>
     </ThemeView>
   )
