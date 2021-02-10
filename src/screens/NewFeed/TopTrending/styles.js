@@ -44,7 +44,7 @@ export default EStyleSheet.create({
     fontSize: 11,
     lineHeight: 16,
     fontFamily: '$font1',
-    color: '#8B9399',
+    color: '$lightGray',
     paddingLeft: 4,
   },
   addressWrap: {

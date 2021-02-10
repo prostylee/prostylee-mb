@@ -56,10 +56,10 @@ export default EStyleSheet.create({
     borderWidth: 1,
     padding: 6,
     borderRadius: 8,
-    borderColor: '#8B9399'
+    borderColor: '$lightGray'
   },
   touchTextByNow: {
-    color: '#8B9399'
+    color: '$lightGray'
   },
   productName: {
     fontSize: 14,
@@ -68,7 +68,7 @@ export default EStyleSheet.create({
     fontFamily: '$font1',
   },
   price: {
-    color: '#8B9399',
+    color: '$lightGray',
     lineHeight: 24,
     fontSize: 14,
     fontWeight: '500',
@@ -78,7 +78,7 @@ export default EStyleSheet.create({
     color: '$purple',
   },
   textFollowed: {
-    color: '#8B9399'
+    color: '$lightGray'
   },
   discountPercent: {
     ...absolute(null, 8, 8, null),
