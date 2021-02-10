@@ -1,6 +1,6 @@
 import {Dimensions} from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {center,flexRow} from 'theme/style'
+import {center,flexRow, absolute} from 'theme/style'
 
 const WIDTH = Dimensions.get('window').width - 30
 export default EStyleSheet.create({
@@ -77,4 +77,17 @@ export default EStyleSheet.create({
   textFollow: {
     color: '$purple',
   },
+  discountPercent: {
+    ...absolute(null, 8, 8, null),
+    padding: 6,
+    borderRadius: 4,
+    backgroundColor: '$red',
+  },
+  textDiscount: {
+    color: '$white',
+    lineHeight: 18,
+    fontSize: 14,
+    fontWeight: '500',
+    fontFamily: '$font1',
+  }
 });

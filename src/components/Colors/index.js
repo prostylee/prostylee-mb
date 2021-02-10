@@ -10,7 +10,7 @@ export default {
   $success: '#2ecc71',
   $green: '#148247',
   $pink: '#ED7581',
-  $red: '#ff0f09',
+  $red: '#ed2727',
   $danger: '#c0392b',
   $yellow: '#f1c40f',
   $organ: '#f39c12',

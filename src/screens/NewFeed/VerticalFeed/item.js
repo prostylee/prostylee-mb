@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {View, Text, TouchableOpacity} from 'react-native'
 import styles from './styles'
 import i18n from 'i18n'
+import {isEmpty} from 'lodash'
 
 import {Avatar} from 'react-native-paper'
 
@@ -13,6 +14,10 @@ import {Heart, Message, More} from 'svg/social';
 import FeedSlide from './slide';
 
 const VerticalFeedItem = ({newFeedItem}) => {
+  if (isEmpty(newFeedItem)) return null;
+  
+  const disCountPer = newFeedItem?.priceSale / newFeedItem?.price
+
   return (
     <View style={styles.container}>
       <ContainerView style={styles.headerContainer}>
@@ -26,7 +31,13 @@ const VerticalFeedItem = ({newFeedItem}) => {
           <Text style={styles.textFollow}>{i18n.t('common.textFollow')}</Text>
         </TouchableOpacity>
       </ContainerView>
-      <FeedSlide images= {newFeedItem?.imageUrls || []}/>
+      <View style={styles.slideWrap}>
+        <FeedSlide images= {newFeedItem?.imageUrls || []}/>
+        {disCountPer !== 1 && 
+        <View style={styles.discountPercent}>
+          <Text style={styles.textDiscount}>{`Giảm ${Math.floor(disCountPer * 100)} %`}</Text>
+        </View>}
+      </View>
       <ContainerView fluid style={styles.description}>
         <View style={styles.wrapInfo}>
           <Text style={styles.productName}>Áo khoác blazer Nữ tay dài</Text>
