@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
 import { isEmpty } from 'lodash'
+import i18n from 'i18n'
 
 import { ContainerView as Container, Title } from 'components'
 
@@ -17,12 +18,10 @@ const TopTrending = ({ topProduct }) => {
     <>
      <Container style={styles.titleContainer}>
         <Title
-          title={
-            'Cửa hàng nổi bật'
-          }
+          title={i18n.t('stores.titleTopStore')}
           style={styles.textTitle}
           containerStyle={{ }}
-          subTitle={'Xem thêm'}
+          subTitle={i18n.t('common.textSeeMore')}
           onPress={() => { }}
         />
       </Container>

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {View, Text, TouchableOpacity} from 'react-native'
 import styles from './styles'
+import i18n from 'i18n'
 
 import {Avatar} from 'react-native-paper'
 
@@ -22,7 +23,7 @@ const VerticalFeedItem = ({newFeedItem}) => {
           <Text numberOfLines={1} style={styles.textTitle}>{newFeedItem?.name}</Text>
         </View>
         <TouchableOpacity style={styles.wrapFollow}>
-          <Text style={styles.textFollow}>Follow</Text>
+          <Text style={styles.textFollow}>{i18n.t('common.textFollow')}</Text>
         </TouchableOpacity>
       </ContainerView>
       <FeedSlide images= {newFeedItem?.imageUrls || []}/>
