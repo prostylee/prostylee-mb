@@ -5,4 +5,5 @@ import * as api from './config';
 import authApi from './api/authApi';
 import productApi from './api/productApi';
 import newFeedApi from './api/newFeedApi';
-export {api, authApi, productApi, newFeedApi};
+import storeApi from './api/storeApi';
+export {api, authApi, productApi, newFeedApi, storeApi};

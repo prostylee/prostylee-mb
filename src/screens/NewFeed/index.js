@@ -9,18 +9,24 @@ import {ThemeView} from 'components'
 import VerticalFeed from './VerticalFeed'
 import HeaderFeed from './HeaderFeed'
 
-import {newFeedActions} from 'redux/reducers'
+import {newFeedActions, storeActions} from 'redux/reducers'
 import {getNewFeedSelector} from 'redux/selectors/newFeed'
+import {getTopProduct} from 'redux/selectors/stores'
 
 const NewFeed = (props) => {
   const dispatch = useDispatch();
   const newFeedList = useSelector(state => getNewFeedSelector(state));
+  const topProduct = useSelector(state => getTopProduct(state));
 
   useEffect(() => {
     dispatch(newFeedActions.getNewFeed({ 
       page: 0,
       limit: 12,
       newFeedType: "STORE"
+    }));
+    dispatch(storeActions.getTopProduct({ 
+      page: 0,
+      limit: 12,
     }));
   }, [])
   return (
