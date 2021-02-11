@@ -109,12 +109,14 @@ const Index = (props) => {
             {isShowErrMsg && invalidEmail && (
               <Text style={styles.errMsg}>{errEmailMsg}</Text>
             )}
-            <ButtonRounded
-              label={I18n.t('next')}
-              style={styles.button}
-              onPress={() => onSubmitEmail()}
-              disabled={disabledBtn}
-            />
+            <View style={styles.btnWrapper}>
+              <ButtonRounded
+                label={I18n.t('next')}
+                style={styles.button}
+                onPress={() => onSubmitEmail()}
+                disabled={disabledBtn}
+              />
+            </View>
           </View>
         </View>
       </Container>
