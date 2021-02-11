@@ -86,11 +86,6 @@ const Index = (props) => {
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <Image
-                    source={IC_ZALO}
-                    resizeMode="contain"
-                    style={styles.socialBtn}
-                  />
                   <Zalo />
                 </TouchableOpacity>
                 {Platform.OS === 'ios' && (

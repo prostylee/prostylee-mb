@@ -36,13 +36,6 @@ export async function _fetch(method, path, data) {
         data: null,
       };
       return {ok: true, data: response};
-    } else {
-      response = {
-        status: INTERNAL_SERVER_ERROR,
-        error: UNKNOWN_MESSAGE,
-        data: null,
-      };
-      return {ok: true, data: response};
     }
   });
 }

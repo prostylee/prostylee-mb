@@ -24,6 +24,7 @@ const TextInputBorderBottom = ({
   unit,
   onPressIcon,
   disablePressIcon,
+  onBlur,
 }) => (
   <View style={[styles.container, style]}>
     <TextInput
@@ -44,6 +45,7 @@ const TextInputBorderBottom = ({
       onFocus={onFocus}
       editable={editable}
       placeholderTextColor={placeholderTextColor}
+      onBlur={onBlur}
     />
     {icon ? (
       <TouchableOpacity

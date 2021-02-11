@@ -2,8 +2,7 @@ import React from 'react';
 import {Text, View, Dimensions, Platform, TouchableOpacity} from 'react-native';
 
 import {
-  ContainerWithoutScrollView,
-  Image,
+  Container,
   TextInputBorderBottom,
   ButtonRounded,
   TextButton,
@@ -29,9 +28,6 @@ import {
 } from 'svg/common';
 
 import {emailRegex, passwordRegex, fullNameRegex} from 'utils/common';
-
-//ICON
-const IC_ZALO = require('assets/icons/zaloIcon.png');
 
 const initialLayout = {width: Dimensions.get('window').width};
 
@@ -89,7 +85,7 @@ const Index = (props) => {
 
   return (
     <View style={styles.container}>
-      <ContainerWithoutScrollView>
+      <Container>
         <View style={styles.mainWrapper}>
           <View style={styles.logoWrapper}>
             <LogoBlack />
@@ -120,11 +116,6 @@ const Index = (props) => {
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <Image
-                    source={IC_ZALO}
-                    resizeMode="contain"
-                    style={styles.socialBtn}
-                  />
                   <Zalo />
                 </TouchableOpacity>
                 {Platform.OS === 'ios' && (
@@ -156,7 +147,7 @@ const Index = (props) => {
             </View>
           )}
         </View>
-      </ContainerWithoutScrollView>
+      </Container>
     </View>
   );
 };
@@ -171,6 +162,7 @@ const LoginTab = () => {
   const [errPasswordMsg, setErrPasswordMsg] = React.useState('');
   const [disabledLoginBtn, setDisabledLoginBtn] = React.useState(false);
   const [isVisiblePw, setVisiblePw] = React.useState(true);
+  const [isShowErrMsg, toggleShowErrMsg] = React.useState(false);
 
   //useEffect
   React.useEffect(() => {
@@ -197,6 +189,7 @@ const LoginTab = () => {
         setEmail(value);
         setInvalidEmail(true);
         setErrEmailMsg(I18n.t('invalidEmail'));
+        toggleShowErrMsg(false);
         return false;
       } else {
         //email hợp lệ
@@ -211,6 +204,13 @@ const LoginTab = () => {
       setErrEmailMsg('');
     }
   };
+
+  const onBlurEmailInput = () => {
+    if (invalidEmail) {
+      toggleShowErrMsg(true);
+    }
+  };
+
   const onChangePassword = async (value) => {
     setPassword(value);
     setInvalidPassword(false);
@@ -254,8 +254,11 @@ const LoginTab = () => {
           onChangeText={(text) => onChangeEmail(text)}
           textInputStyle={styles.textInput}
           keyboardType="email-address"
+          onBlur={() => onBlurEmailInput()}
         />
-        {invalidEmail && <Text style={styles.errMsg}>{errEmailMsg}</Text>}
+        {isShowErrMsg && invalidEmail && (
+          <Text style={styles.errMsg}>{errEmailMsg}</Text>
+        )}
         <TextInputBorderBottom
           hint={I18n.t('password')}
           value={password}
@@ -305,6 +308,13 @@ const SignupTab = () => {
   const [errPasswordMsg, setErrPasswordMsg] = React.useState('');
   const [disabledSignUpBtn, setDisabledSignUpBtn] = React.useState(false);
   const [isVisiblePw, setVisiblePw] = React.useState(true);
+  const [isShowFullNameErrMsg, toggleShowFullNameErrMsg] = React.useState(
+    false,
+  );
+  const [isShowEmailErrMsg, toggleShowEmailErrMsg] = React.useState(false);
+  const [isShowPasswordErrMsg, toggleShowPasswordErrMsg] = React.useState(
+    false,
+  );
 
   //useEffect
   React.useEffect(() => {
@@ -340,6 +350,7 @@ const SignupTab = () => {
         setFullname(value);
         setInvalidFullname(true);
         setErrFullnameMsg(I18n.t('invalidFullname'));
+        toggleShowFullNameErrMsg(false);
         return false;
       } else {
         //email hợp lệ
@@ -355,6 +366,12 @@ const SignupTab = () => {
     }
   };
 
+  const onBlurFullNameInput = () => {
+    if (invalidFullname) {
+      toggleShowFullNameErrMsg(true);
+    }
+  };
+
   const onChangeEmail = async (value) => {
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
@@ -362,6 +379,7 @@ const SignupTab = () => {
         setEmail(value);
         setInvalidEmail(true);
         setErrEmailMsg(I18n.t('invalidEmail'));
+        toggleShowEmailErrMsg(false);
         return false;
       } else {
         //email hợp lệ
@@ -376,6 +394,13 @@ const SignupTab = () => {
       setErrEmailMsg('');
     }
   };
+
+  const onBlurEmailInput = () => {
+    if (invalidEmail) {
+      toggleShowEmailErrMsg(true);
+    }
+  };
+
   const onChangePassword = async (value) => {
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
@@ -383,6 +408,7 @@ const SignupTab = () => {
         setPassword(value);
         setInvalidPassword(true);
         setErrPasswordMsg(I18n.t('invalidPassword'));
+        toggleShowPasswordErrMsg(false);
         return false;
       } else {
         //email hợp lệ
@@ -395,6 +421,12 @@ const SignupTab = () => {
       setPassword(value);
       setInvalidPassword(false);
       setErrPasswordMsg('');
+    }
+  };
+
+  const onBlurPasswordInput = () => {
+    if (invalidPassword) {
+      toggleShowPasswordErrMsg(true);
     }
   };
 
@@ -431,16 +463,22 @@ const SignupTab = () => {
           value={fullname}
           onChangeText={(text) => onChangeFullname(text)}
           textInputStyle={styles.textInput}
+          onBlur={() => onBlurFullNameInput()}
         />
-        {invalidFullname && <Text style={styles.errMsg}>{errFullnameMsg}</Text>}
+        {isShowFullNameErrMsg && invalidFullname && (
+          <Text style={styles.errMsg}>{errFullnameMsg}</Text>
+        )}
         <TextInputBorderBottom
           hint={I18n.t('email')}
           value={email}
           onChangeText={(text) => onChangeEmail(text)}
           textInputStyle={styles.textInput}
           keyboardType="email-address"
+          onBlur={() => onBlurEmailInput()}
         />
-        {invalidEmail && <Text style={styles.errMsg}>{errEmailMsg}</Text>}
+        {isShowEmailErrMsg && invalidEmail && (
+          <Text style={styles.errMsg}>{errEmailMsg}</Text>
+        )}
         <TextInputBorderBottom
           hint={I18n.t('password')}
           value={password}
@@ -449,8 +487,11 @@ const SignupTab = () => {
           icon={<Eye />}
           secureTextEntry={isVisiblePw}
           onPressIcon={() => onTogglePasswordVisibility()}
+          onBlur={() => onBlurPasswordInput()}
         />
-        {invalidPassword && <Text style={styles.errMsg}>{errPasswordMsg}</Text>}
+        {isShowPasswordErrMsg && invalidPassword && (
+          <Text style={styles.errMsg}>{errPasswordMsg}</Text>
+        )}
         <View style={styles.btnWrapper}>
           <ButtonRounded
             onPress={() => onSignUp()}

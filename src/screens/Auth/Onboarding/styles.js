@@ -19,16 +19,15 @@ export default EStyleSheet.create({
     backgroundColor: '$bgColor',
     paddingBottom: 0,
     paddingHorizontal: '15%',
-    paddingTop: '10%',
   },
   onboarding0: {
-    paddingHorizontal: '5%',
+    paddingHorizontal: '0%',
   },
   onboarding1: {
-    paddingHorizontal: '15%',
+    paddingHorizontal: '0%',
   },
   onboarding2: {
-    paddingHorizontal: '5%',
+    paddingHorizontal: '0%',
   },
   image: {
     width: '100%',
@@ -37,7 +36,7 @@ export default EStyleSheet.create({
   body: {
     flex: 1,
     backgroundColor: '$white',
-    marginTop: '-10%',
+    marginTop: '-15%',
     paddingHorizontal: '5%',
   },
   contentWrapper: {

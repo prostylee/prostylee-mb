@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import {
-  ContainerWithoutScrollView,
+  Container,
   ButtonRounded,
   TextInputBorderBottom,
   HeaderBack,
@@ -22,6 +22,7 @@ const Index = (props) => {
   const [invalidEmail, setInvalidEmail] = React.useState(false);
   const [errEmailMsg, setErrEmailMsg] = React.useState('');
   const [disabledBtn, setDisabledBtn] = React.useState(false);
+  const [isShowErrMsg, toggleShowErrMsg] = React.useState(false);
 
   //useEffect
   React.useEffect(() => {
@@ -44,6 +45,7 @@ const Index = (props) => {
         setEmail(value);
         setInvalidEmail(true);
         setErrEmailMsg(I18n.t('invalidEmail'));
+        toggleShowErrMsg(false);
         return false;
       } else {
         //email hợp lệ
@@ -56,6 +58,12 @@ const Index = (props) => {
       setEmail(value);
       setInvalidEmail(false);
       setErrEmailMsg('');
+    }
+  };
+
+  const onBlurEmailInput = () => {
+    if (invalidEmail) {
+      toggleShowErrMsg(true);
     }
   };
 
@@ -81,7 +89,7 @@ const Index = (props) => {
 
   return (
     <View style={styles.container}>
-      <ContainerWithoutScrollView>
+      <Container>
         <View style={styles.mainWrapper}>
           <HeaderBack
             title={I18n.t('forgotPassword')}
@@ -96,8 +104,11 @@ const Index = (props) => {
               textInputStyle={styles.textInput}
               autoFocus={true}
               keyboardType="email-address"
+              onBlur={() => onBlurEmailInput()}
             />
-            {invalidEmail && <Text style={styles.errMsg}>{errEmailMsg}</Text>}
+            {isShowErrMsg && invalidEmail && (
+              <Text style={styles.errMsg}>{errEmailMsg}</Text>
+            )}
             <ButtonRounded
               label={I18n.t('next')}
               style={styles.button}
@@ -106,7 +117,7 @@ const Index = (props) => {
             />
           </View>
         </View>
-      </ContainerWithoutScrollView>
+      </Container>
     </View>
   );
 };

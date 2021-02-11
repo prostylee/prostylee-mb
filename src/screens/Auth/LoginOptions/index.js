@@ -75,11 +75,11 @@ const Index = (props) => {
             <Google />
           </TouchableOpacity>
           <TouchableOpacity style={styles.socialBtnWrapper}>
-            <Image
+            {/* <Image
               source={IC_ZALO}
               resizeMode="contain"
               style={styles.socialBtn}
-            />
+            /> */}
             <Zalo />
           </TouchableOpacity>
           {Platform.OS === 'ios' && (

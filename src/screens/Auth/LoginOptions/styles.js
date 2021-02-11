@@ -55,10 +55,4 @@ export default EStyleSheet.create({
     alignItems: 'center',
     marginHorizontal: '8rem',
   },
-  socialBtn: {
-    width: 24,
-    height: 24,
-    position: 'absolute',
-    zIndex: 1,
-  },
 });

@@ -18,6 +18,7 @@ import asyncStorage from 'data/asyncStorage';
 import messaging from '@react-native-firebase/messaging';
 
 import configEnv from 'config';
+import I18n from 'i18n';
 
 const userSignUp = function* ({
   payload: {fullname, email, password, onSuccess},
@@ -38,7 +39,7 @@ const userSignUp = function* ({
       //thông báo lỗi từ api trả về
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
-        message: res.data.error,
+        message: I18n.t('existedEmail'),
         type: 'danger',
       });
     } else {
@@ -73,11 +74,11 @@ const userLogin = function* ({payload: {email, password, onSuccess}}) {
       yield asyncStorage.setUserToken(res.data.data);
       yield put(userActions.userLoginSuccess(res.data.data));
       yield onSuccess();
-    } else if (res.ok && res.data.status === BAD_REQUEST) {
+    } else if (res.ok && res.data.status === SESSION_EXPIRED) {
       //thông báo lỗi từ api trả về
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
-        message: res.data.error,
+        message: I18n.t('incorrectEmailOrPassword'),
         type: 'danger',
       });
     } else {
@@ -145,12 +146,20 @@ const userForgotPassword = function* ({payload: {email, onSuccess}}) {
     });
     // xử lý dữ liệu trả về từ api
     if (res.ok && res.data.status === SUCCESS) {
-      yield onSuccess();
-    } else if (res.ok && res.data.status === BAD_REQUEST) {
+      if (res.data.data.data) {
+        yield onSuccess();
+      } else {
+        yield put(commonActions.toggleLoading(false));
+        yield showMessage({
+          message: I18n.t('unExistedEmail'),
+          type: 'danger',
+        });
+      }
+    } else if (res.ok && res.data.status === INTERNAL_SERVER_ERROR) {
       //thông báo lỗi từ api trả về
       yield put(commonActions.toggleLoading(false));
       yield showMessage({
-        message: res.data.error,
+        message: I18n.t('unExistedEmail'),
         type: 'danger',
       });
     } else {
@@ -180,7 +189,7 @@ const userVerifyOTP = function* ({payload: {email, otp, onSuccess, onFail}}) {
     });
     // xử lý dữ liệu trả về từ api
     if (res.ok && res.data.status === SUCCESS) {
-      if (res.data.data) {
+      if (res.data.data.data) {
         yield onSuccess();
       } else {
         yield onFail();
@@ -220,8 +229,6 @@ const userChangePassword = function* ({
       password,
       newPassword,
     });
-
-    console.log(res);
     // xử lý dữ liệu trả về từ api
     if (res.ok && res.data.status === SUCCESS) {
       yield onSuccess();

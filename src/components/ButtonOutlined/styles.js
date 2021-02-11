@@ -2,7 +2,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
   buttonWrapper: {
-    backgroundColor: '$purple',
+    borderColor: '$purple',
   },
   button: {
     height: '40rem',
@@ -19,7 +19,7 @@ const styles = EStyleSheet.create({
     fontSize: '$mediumText',
     fontFamily: '$font1',
     textAlign: 'center',
-    color: '$white',
+    color: '$purple',
   },
 });
 

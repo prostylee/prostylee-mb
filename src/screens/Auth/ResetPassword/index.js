@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import {
-  ContainerWithoutScrollView,
+  Container,
   ButtonRounded,
   TextInputBorderBottom,
   HeaderBack,
@@ -24,6 +24,7 @@ const Index = (props) => {
   const [errPasswordMsg, setErrPasswordMsg] = React.useState('');
   const [disabledBtn, setDisabledBtn] = React.useState(false);
   const [isVisiblePw, setVisiblePw] = React.useState(true);
+  const [isShowErrMsg, toggleShowErrMsg] = React.useState(true);
 
   //useEffect
   React.useEffect(() => {
@@ -50,6 +51,7 @@ const Index = (props) => {
         setPassword(value);
         setInvalidPassword(true);
         setErrPasswordMsg(I18n.t('invalidPassword'));
+        toggleShowErrMsg(false);
         return false;
       } else {
         //email hợp lệ
@@ -62,6 +64,12 @@ const Index = (props) => {
       setPassword(value);
       setInvalidPassword(false);
       setErrPasswordMsg('');
+    }
+  };
+
+  const onBlurPasswordInput = () => {
+    if (invalidPassword) {
+      toggleShowErrMsg(true);
     }
   };
 
@@ -88,7 +96,7 @@ const Index = (props) => {
   };
   return (
     <View style={styles.container}>
-      <ContainerWithoutScrollView>
+      <Container>
         <View style={styles.mainWrapper}>
           <HeaderBack title={I18n.t('resetPw')} onBack={() => onGoBack()} />
           <View style={styles.form}>
@@ -101,8 +109,9 @@ const Index = (props) => {
               icon={<Eye />}
               secureTextEntry={isVisiblePw}
               onPressIcon={() => onTogglePasswordVisibility()}
+              onBlur={() => onBlurPasswordInput()}
             />
-            {invalidPassword && (
+            {isShowErrMsg && invalidPassword && (
               <Text style={styles.errMsg}>{errPasswordMsg}</Text>
             )}
             <ButtonRounded
@@ -113,7 +122,7 @@ const Index = (props) => {
             />
           </View>
         </View>
-      </ContainerWithoutScrollView>
+      </Container>
     </View>
   );
 };

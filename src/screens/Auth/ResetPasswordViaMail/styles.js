@@ -38,10 +38,10 @@ export default EStyleSheet.create({
   },
   contentButton: {
     backgroundColor: 'transparent',
-    borderWidth: '1rem',
-    borderColor: '$purple',
   },
   button: {
     marginTop: '20rem',
+    borderWidth: '1rem',
+    borderColor: '$purple',
   },
 });

@@ -19,8 +19,6 @@ export default EStyleSheet.create({
     marginTop: '15rem',
   },
   textInput: {
-    height: '46rem',
-    marginBottom: '10rem',
     paddingRight: '5%',
   },
   errMsg: {
