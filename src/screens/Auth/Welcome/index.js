@@ -17,15 +17,15 @@ const Index = (props) => {
 
   //handle navigator
   React.useEffect(() => {
-    // if (!isShowOnboardingScreen) {
-    //   setTimeout(() => {
-    //     props.navigation.navigate('LoginOptions');
-    //   }, 1000);
-    // } else {
+    if (!isShowOnboardingScreen) {
+      setTimeout(() => {
+        props.navigation.navigate('LoginOptions');
+      }, 1000);
+    } else {
       setTimeout(() => {
         props.navigation.navigate('Onboarding');
       }, 1000);
-    // }
+    }
   }, []);
   return (
     <ImageBackground source={IMG_SPLASH} style={styles.image}>
