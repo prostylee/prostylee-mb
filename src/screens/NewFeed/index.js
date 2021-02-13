@@ -18,6 +18,7 @@ const NewFeed = (props) => {
   const dispatch = useDispatch();
   const newFeedList = useSelector(state => getNewFeedSelector(state));
   const topProduct = useSelector(state => getTopProduct(state));
+  console.log(newFeedList)
   useEffect(() => {
     dispatch(newFeedActions.getNewFeed({ 
       page: 0,
@@ -26,7 +27,7 @@ const NewFeed = (props) => {
     }));
     dispatch(storeActions.getTopProduct({ 
       page: 0,
-      limit: 12,
+      limit: 10,
       numberOfProducts: 3,
     }));
   }, [])
