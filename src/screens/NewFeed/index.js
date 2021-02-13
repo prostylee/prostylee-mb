@@ -14,21 +14,25 @@ import {newFeedActions, storeActions} from 'redux/reducers'
 import {getNewFeedSelector} from 'redux/selectors/newFeed'
 import {getTopProduct} from 'redux/selectors/stores'
 
+const PAGE_DEFAULT = 0
+const LIMIT_DEFAULT = 12
+const NUMBER_OF_PRODUCT = 3
+const TYPE = 'STORE'
+
 const NewFeed = (props) => {
   const dispatch = useDispatch();
   const newFeedList = useSelector(state => getNewFeedSelector(state));
   const topProduct = useSelector(state => getTopProduct(state));
-  console.log(newFeedList)
   useEffect(() => {
     dispatch(newFeedActions.getNewFeed({ 
-      page: 0,
-      limit: 12,
-      newFeedType: "STORE"
+      page: PAGE_DEFAULT,
+      limit: LIMIT_DEFAULT,
+      newFeedType: TYPE,
     }));
     dispatch(storeActions.getTopProduct({ 
-      page: 0,
-      limit: 10,
-      numberOfProducts: 3,
+      page: PAGE_DEFAULT,
+      limit: LIMIT_DEFAULT - 2,
+      numberOfProducts: NUMBER_OF_PRODUCT,
     }));
   }, [])
   return (
