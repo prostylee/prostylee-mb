@@ -65,4 +65,8 @@ export default EStyleSheet.create({
     color: '$white',
     margin: 0,
   },
+  productImageWrap: {
+    ...flexRow,
+    paddingBottom: 16,
+  }
 });

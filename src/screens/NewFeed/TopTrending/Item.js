@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import { Text } from 'react-native'
-import { ThemeView } from 'components'
+import { Text, Dimensions, ActivityIndicator } from 'react-native'
+import { ThemeView, Image } from 'components'
 import { Avatar, Button } from "react-native-paper"
 import i18n from 'i18n'
 
@@ -10,10 +10,12 @@ import { MapPin } from 'svg/common'
 
 import {follow, unfollow, like, unlike} from 'services/api/socialApi'
 
+const WIDTH = Dimensions.get('window').width
+const WIDTH_IMG = WIDTH * 0.7 / 3
 const STORE = 'STORE'
 const Item = ({ item, style }) => {
   const [followed, setFollowed] = useState(false)
-
+  const products = item?.products
   const _followPress = async () => {
     if (!followed) {
       const res = await follow({
@@ -51,6 +53,17 @@ const Item = ({ item, style }) => {
           <MapPin/>
           <Text style={styles.address}>{item?.address}</Text>
         </View>
+      </View>
+      <View  style={styles.productImageWrap}>
+        {products.length ? products.map((item, _i) => (
+          <Image
+            key={`productOfStore${item.id}`}
+            source={{ uri: item?.imageUrls[0], cache: 'reload' }}
+            resizeMode="cover"
+            style={{ height: WIDTH_IMG, width: WIDTH_IMG }}
+            PlaceholderContent={<ActivityIndicator />}
+          />
+      )) : null}
       </View>
       <Button
         mode="contained"
