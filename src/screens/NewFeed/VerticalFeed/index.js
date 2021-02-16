@@ -5,7 +5,7 @@ import styles from './styles'
 
 import FeedItem from './item'
 
-const VerticalFeed = ({newFeedList, handleLoadMore, loadMoreLoading}) => {
+const VerticalFeed = ({newFeedList, handleLoadMore, loadMoreLoading, handleRefresh, refreshing}) => {
 
    const renderFooter = () => {
     if (!loadMoreLoading) return <View style={styles.viewFooter} />
@@ -27,8 +27,8 @@ const VerticalFeed = ({newFeedList, handleLoadMore, loadMoreLoading}) => {
             /> 
           )}
         onEndReached={() => handleLoadMore()}
-        // refreshing={refreshing}
-        // onRefresh={handleRefresh}
+        refreshing={refreshing}
+        onRefresh={handleRefresh}
         ListFooterComponent={renderFooter}
         onEndReachedThreshold={0.5}
         initialNumToRender={10} 

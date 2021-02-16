@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 import {ScrollView} from 'react-native';
@@ -27,6 +27,8 @@ const TYPE = 'STORE'
 
 const NewFeed = (props) => {
   const dispatch = useDispatch();
+  const [refreshing, handleRefreshing] = useState(false)
+
   const newFeedList = useSelector(state => getNewFeedSelector(state));
   const topProduct = useSelector(state => getTopProduct(state));
   const page = useSelector(state => getPageSelector(state));
@@ -45,7 +47,8 @@ const NewFeed = (props) => {
       limit: LIMIT_DEFAULT - 2,
       numberOfProducts: NUMBER_OF_PRODUCT,
     }));
-  }, [])
+    handleRefreshing(false)
+  }, [refreshing, handleRefresh])
 
   const handleLoadMore = () => {
     if (hasLoadMore) {
@@ -56,6 +59,10 @@ const NewFeed = (props) => {
     }));
     }
   }
+
+  const handleRefresh = () => {
+    handleRefreshing(true)
+  }
   return (
     <ThemeView isFullView>
       <HeaderFeed/>
@@ -65,9 +72,11 @@ const NewFeed = (props) => {
           showsHorizontalScrollIndicator={false}
       >
         <TopTrending topProduct={topProduct}/>
-        <VerticalFeed 
+        <VerticalFeed
+          handleRefresh={handleRefresh}
           handleLoadMore={handleLoadMore} 
           newFeedList={newFeedList}
+          refreshing={refreshing}
           loadMoreLoading={loadMoreLoading}
           />
       </ScrollView>

@@ -34,11 +34,11 @@ const intialState = {
 
 export default handleActions(
   {
-    [types.SET_LOADING]: (state, {status}) => {
-      return {...state, isLoading: status};
+    [types.SET_LOADING]: (state, {payload}) => {
+      return {...state, isLoading: payload};
     },
-    [types.SET_LOAD_MORE_LOADING]: (state, {status}) => {
-      return {...state, loadMoreLoading: status};
+    [types.SET_LOAD_MORE_LOADING]: (state, {payload}) => {
+      return {...state, loadMoreLoading: payload};
     },
     [types.GET_NEW_FEED_SUCCESS]: (state, {payload}) => {
       const {totalPages} = payload

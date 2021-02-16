@@ -101,7 +101,7 @@ export default EStyleSheet.create({
     paddingVertical: 6,
   },
   viewFooter: {
-    marginBottom: 26,
+    marginBottom: 6,
   },
   viewLoadingFooter: {
     position: 'relative',
