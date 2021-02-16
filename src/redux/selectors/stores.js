@@ -12,3 +12,13 @@ export const getTopProductLoadingSelector = createSelector(
   data => data?.isLoading,
 )
 
+export const getLoadingFuturedStoresSelector = createSelector(
+  storeReducer,
+  data => data?.isLoadingFuturedStores,
+)
+
+export const listOfFuturedStoresSelector = createSelector(
+  storeReducer,
+  data => data?.listOfFuturedStores || {},
+)
+

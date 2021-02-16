@@ -8,7 +8,8 @@ export default {
   common: {
     textSeeMore: 'Xem thêm',
     textFollow: 'Theo dõi',
-    textFollowed: 'Đã theo dõi'
+    textFollowed: 'Đã theo dõi',
+    textAdvertisement: 'Quảng cáo',
   },
   headerTitle: {
     featured_store: "Cửa hàng nổi bật",

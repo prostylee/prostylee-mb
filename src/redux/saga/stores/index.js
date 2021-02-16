@@ -20,7 +20,24 @@ const getTopProduct = function* ({payload}) {
   }
 };
 
+const getListOfFuturedStores = function* ({payload}) {
+  try {
+    yield put(storeActions.setLoadingFuturedStores(true));
+    const res = yield call(getTopStore, payload);
+    if (res.ok) {
+      yield put(storeActions.getListOfFuturedStoreSuccess(res.data));
+    } else {
+      yield put(storeActions.getListOfFuturedStoreFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  }finally{
+    yield put(storeActions.setLoadingFuturedStores(false));
+  }
+};
+
 const watcher = function* () {
   yield takeLatest(storeTypes.GET_TOP_PRODUCT, getTopProduct);
+  yield takeLatest(storeTypes.GET_LIST_OF_FUTURED_STORE, getListOfFuturedStores);
 };
 export default watcher();

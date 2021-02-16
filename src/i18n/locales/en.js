@@ -8,7 +8,8 @@ export default {
   common: {
     textSeeMore: 'See more',
     textFollow: 'Follow',
-    textFollowed: 'Followed'
+    textFollowed: 'Followed',
+    textAdvertisement: 'Advertisement',
   },
   headerTitle: {
     featured_store: "Featured store",
