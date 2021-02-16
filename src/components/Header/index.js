@@ -1,9 +1,12 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import PropTypes from 'prop-types'
 
 import { StyleSheet, TouchableOpacity, View, Text, Platform } from 'react-native'
+
+import { ChevronLeft } from 'svg/common'
 
 const Header = ({ 
   title, 
@@ -12,21 +15,30 @@ const Header = ({
   leftIcon, 
   leftPress, 
   rightIcon, 
+  rightPress,
   middleComponent,
   rightComponent,
   leftComponent,
+  isDefault,
  }) => {
 
+  const navigation = useNavigation()
+
+  const _goBack = () => {
+    navigation.goBack()
+  }
   return (
     <View style={StyleSheet.flatten([styles.container, containerStyle])}>
-      {leftIcon ?
-        <TouchableOpacity onPress={leftPress}>
-          {leftIcon}
+      {leftIcon || isDefault ?
+        <TouchableOpacity 
+          style={isDefault ? styles.backStyle : {}} 
+          onPress={isDefault ? _goBack : leftPress}>
+          {isDefault ? <ChevronLeft /> : leftIcon}
         </TouchableOpacity>
         : (leftComponent ? leftComponent : null)
       }
       {title ?
-        <Text style={titleStyle}>
+        <Text style={isDefault ? styles.titleStyle : titleStyle}>
           {title}
         </Text>
         : (middleComponent ? middleComponent : null)
@@ -35,7 +47,9 @@ const Header = ({
         <TouchableOpacity onPress={rightPress}>
           {rightIcon}
         </TouchableOpacity>
-        : (rightComponent ? rightComponent : null)
+        : (rightComponent ? rightComponent : (
+          isDefault ? <Text style={styles.emptyRightStyle}></Text> : null
+        ))
       }
     </View>
   );
@@ -48,9 +62,23 @@ const styles = EStyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '$white',
+    borderBottomWidth: 1,
+    borderBottomColor: '$bgColor',
     paddingBottom: 12,
-    height: 86 + (Platform.OS === 'ios' ? 0 : 0),
-  }
+    height: 86,
+  },
+  backStyle: {
+    paddingLeft: 16,
+  },
+  titleStyle: {
+    fontWeight: '500',
+    fontSize: 16,
+    fontFamily: '$font1',
+    letterSpacing: -0.02,
+  },
+    emptyRightStyle: {
+    width: 32,
+  },
 });
 
 Header.propTypes = {
@@ -84,6 +112,7 @@ Header.defaultProps = {
   middleComponent: null,
   rightComponent: null,
   leftComponent: null,
+  isDefault: false,
 };
 
 export default Header;

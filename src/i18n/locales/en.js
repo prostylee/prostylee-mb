@@ -9,5 +9,8 @@ export default {
     textSeeMore: 'See more',
     textFollow: 'Follow',
     textFollowed: 'Followed'
+  },
+  headerTitle: {
+    featured_store: "Featured store",
   }
 };

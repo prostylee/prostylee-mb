@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
+import i18n from 'i18n'
+
 import styles from './styles'
 
-import {ThemeView} from 'components'
+import {ThemeView, Header} from 'components'
 
 import {newFeedActions, storeActions} from 'redux/reducers'
 import {
@@ -64,6 +66,10 @@ const Stores = (props) => {
 
   return (
     <ThemeView style={styles.container} isFullView>
+      <Header
+       isDefault
+       title={i18n.t('headerTitle.featured_store')}
+        />
     </ThemeView>
   )
 }

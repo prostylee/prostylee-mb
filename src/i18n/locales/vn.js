@@ -9,5 +9,8 @@ export default {
     textSeeMore: 'Xem thêm',
     textFollow: 'Theo dõi',
     textFollowed: 'Đã theo dõi'
+  },
+  headerTitle: {
+    featured_store: "Cửa hàng nổi bật",
   }
 };
