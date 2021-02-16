@@ -99,5 +99,13 @@ export default EStyleSheet.create({
     paddingHorizontal: 8,
     borderRadius: 24,
     paddingVertical: 6,
-  }
+  },
+  viewFooter: {
+    marginBottom: 26,
+  },
+  viewLoadingFooter: {
+    position: 'relative',
+    height: 40,
+    justifyContent: 'center',
+  },
 });
