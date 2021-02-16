@@ -21,7 +21,8 @@ export const actions = {
   handleLoadMoreSuccess: createAction(types.HANDLE_LOAD_MORE_SUCCESS),
   handleLoadMoreFailed: createAction(types.HANDLE_LOAD_MORE_FAILED),
 };
-
+const PAGE_INIT = 0
+const UNIT_INCREASE = 1
 const intialState = {
   isLoading: false,
   loadMoreLoading: false,
@@ -43,7 +44,7 @@ export default handleActions(
       const {totalPages} = payload
       return {
         ...state,
-        page: 0, 
+        page: PAGE_INIT, 
         newFeed: payload, 
         hasLoadMore: state.page < totalPages ? true : false,
       };
@@ -57,7 +58,7 @@ export default handleActions(
       return {
          ...state, 
         newFeed: payload,
-        page: state.page + 1,
+        page: state.page + UNIT_INCREASE,
         hasLoadMore: state.page < totalPages ? true : false,
       };
     },

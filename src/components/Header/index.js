@@ -57,8 +57,8 @@ Header.propTypes = {
   title: PropTypes.string,
   leftPress: PropTypes.func,
   rightPress: PropTypes.func,
-  leftIcon: PropTypes.func,
-  rightIcon: PropTypes.func,
+  leftIcon: PropTypes.object,
+  rightIcon: PropTypes.object,
   titleStyle: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array,
