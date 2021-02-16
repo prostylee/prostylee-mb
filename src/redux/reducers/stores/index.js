@@ -23,8 +23,8 @@ const intialState = {
 
 export default handleActions(
   {
-    [types.SET_LOADING]: (state, {status}) => {
-      return {...state, isLoading: status};
+    [types.SET_LOADING]: (state, {payload}) => {
+      return {...state, isLoading: payload};
     },
     [types.GET_TOP_PRODUCT_SUCCESS]: (state, {payload}) => {
       return {...state, topProduct: payload};

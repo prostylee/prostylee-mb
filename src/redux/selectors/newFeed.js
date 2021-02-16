@@ -26,3 +26,8 @@ export const getLoadMoreLoadingSelector = createSelector(
   newFeedState,
   data => data?.loadMoreLoading,
 )
+
+export const getNewFeedLoadingSelector = createSelector(
+  newFeedState,
+  data => data?.isLoading,
+)

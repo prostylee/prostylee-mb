@@ -17,8 +17,9 @@ import {
   getPageSelector, 
   getLimitSelector,
   getLoadMoreLoadingSelector,
+  getNewFeedLoadingSelector
 } from 'redux/selectors/newFeed'
-import {getTopProduct} from 'redux/selectors/stores'
+import {getTopProduct, getTopProductLoadingSelector} from 'redux/selectors/stores'
 
 const PAGE_DEFAULT = 0
 const LIMIT_DEFAULT = 12
@@ -35,6 +36,8 @@ const NewFeed = (props) => {
   const limit = useSelector(state => getLimitSelector(state));
   const hasLoadMore = useSelector(state => getHasLoadMoreSelector(state));
   const loadMoreLoading = useSelector(state => getLoadMoreLoadingSelector(state));
+  const newFeedLoading = useSelector(state => getNewFeedLoadingSelector(state));
+  const topProductLoading = useSelector(state => getTopProductLoadingSelector(state));
 
   useEffect(() => {
     dispatch(newFeedActions.getNewFeed({ 
@@ -63,6 +66,11 @@ const NewFeed = (props) => {
   const handleRefresh = () => {
     handleRefreshing(true)
   }
+
+  const handleLoading = () => {
+    if (!newFeedLoading && !topProductLoading) return false
+    return true
+  }
   return (
     <ThemeView isFullView>
       <HeaderFeed/>
@@ -71,8 +79,11 @@ const NewFeed = (props) => {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
       >
-        <TopTrending topProduct={topProduct}/>
+        <TopTrending 
+          loading={handleLoading()}
+          topProduct={topProduct}/>
         <VerticalFeed
+          loading={handleLoading()}
           handleRefresh={handleRefresh}
           handleLoadMore={handleLoadMore} 
           newFeedList={newFeedList}

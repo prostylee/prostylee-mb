@@ -5,8 +5,19 @@ import styles from './styles'
 
 import FeedItem from './item'
 
-const VerticalFeed = ({newFeedList, handleLoadMore, loadMoreLoading, handleRefresh, refreshing}) => {
+import {NewFeedContentLoading} from 'components/Loading/contentLoader'
 
+const VerticalFeed = ({newFeedList, handleLoadMore, loadMoreLoading, handleRefresh, refreshing, loading}) => {
+
+  if (loading) {
+    return(
+      <>
+        {[1, 2].map((item, _i) => (
+          <NewFeedContentLoading key={'newFeedLoading' + _i} />
+        ))}
+      </>
+    )
+  }
    const renderFooter = () => {
     if (!loadMoreLoading) return <View style={styles.viewFooter} />
 

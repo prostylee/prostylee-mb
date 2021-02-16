@@ -7,3 +7,8 @@ export const getTopProduct = createSelector(
   data => data?.topProduct || {},
 )
 
+export const getTopProductLoadingSelector = createSelector(
+  storeReducer,
+  data => data?.isLoading,
+)
+
