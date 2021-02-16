@@ -10,7 +10,7 @@ import Item from './Item'
 
 import styles from './styles'
 
-const TopTrending = ({ topProduct, loading }) => {
+const TopTrending = ({ topProduct, loading, navigation }) => {
 
   if (isEmpty(topProduct) || !topProduct?.content?.length) return null
 
@@ -30,7 +30,7 @@ const TopTrending = ({ topProduct, loading }) => {
           style={styles.textTitle}
           containerStyle={{ }}
           subTitle={i18n.t('common.textSeeMore')}
-          onPress={() => { }}
+          onPress={() => { navigation.navigate("Stores") }}
         />
       </Container>
       <Container fluid>

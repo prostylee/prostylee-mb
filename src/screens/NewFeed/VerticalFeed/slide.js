@@ -44,7 +44,7 @@ const Slide = React.memo(props => {
         style={styles.viewImage}
         onPress={() => {}}>
         <Image
-          source={{ uri: item, cache: 'reload' }}
+          source={{ uri: item }}
           resizeMode="cover"
           style={{ height: height, width: width }}
           PlaceholderContent={<ActivityIndicator />}

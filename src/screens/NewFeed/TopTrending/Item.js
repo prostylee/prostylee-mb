@@ -58,7 +58,7 @@ const Item = ({ item, style }) => {
         {products.length ? products.map((item, _i) => (
           <Image
             key={`productOfStore${item.id}`}
-            source={{ uri: item?.imageUrls[0], cache: 'reload' }}
+            source={{ uri: item?.imageUrls[0] }}
             resizeMode="cover"
             style={{ height: WIDTH_IMG, width: WIDTH_IMG }}
             PlaceholderContent={<ActivityIndicator />}

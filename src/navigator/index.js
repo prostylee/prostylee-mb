@@ -13,7 +13,7 @@ import {lightTheme, darkTheme} from 'theme';
 
 const Stack = createStackNavigator();
 
-import {Welcome, Onboarding, Login, SignUp, Home, LoginOptions} from 'screens';
+import {Welcome, Onboarding, Login, SignUp, Home, LoginOptions, Stores} from 'screens';
 import BottomTabs from './bottomTab';
 
 function SignedIn() {
@@ -67,6 +67,7 @@ function MainStack() {
       headerMode="none"
       animation="fade">
       <Stack.Screen name="Home" component={BottomTabs} />
+      <Stack.Screen name="Stores" component={Stores} />
     </Stack.Navigator>
   );
 }

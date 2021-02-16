@@ -1,14 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
-import {ScrollView} from 'react-native';
 import styles from './styles'
 
 import {ThemeView} from 'components'
-
-import VerticalFeed from './VerticalFeed'
-import HeaderFeed from './HeaderFeed'
-import TopTrending from './TopTrending'
 
 import {newFeedActions, storeActions} from 'redux/reducers'
 import {
@@ -26,7 +21,7 @@ const LIMIT_DEFAULT = 12
 const NUMBER_OF_PRODUCT = 3
 const TYPE = 'STORE'
 
-const NewFeed = ({navigation}) => {
+const Stores = (props) => {
   const dispatch = useDispatch();
   const [refreshing, handleRefreshing] = useState(false)
 
@@ -67,39 +62,16 @@ const NewFeed = ({navigation}) => {
     handleRefreshing(true)
   }
 
-  const handleLoading = () => {
-    if (!newFeedLoading && !topProductLoading) return false
-    return true
-  }
   return (
-    <ThemeView isFullView>
-      <HeaderFeed/>
-      <ScrollView
-          scrollEventThrottle={1}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-      >
-        <TopTrending 
-          loading={handleLoading()}
-          navigation={navigation}
-          topProduct={topProduct}/>
-        <VerticalFeed
-          loading={handleLoading()}
-          handleRefresh={handleRefresh}
-          handleLoadMore={handleLoadMore} 
-          newFeedList={newFeedList}
-          refreshing={refreshing}
-          loadMoreLoading={loadMoreLoading}
-          />
-      </ScrollView>
+    <ThemeView style={styles.container} isFullView>
     </ThemeView>
   )
 }
 
-NewFeed.defaultProps = {
+Stores.defaultProps = {
 }
 
-NewFeed.propTypes = {
+Stores.propTypes = {
 }
 
-export default NewFeed
+export default Stores
