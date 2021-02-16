@@ -27,6 +27,7 @@
     "moment": "^2.29.1",
     "native-base": "^2.15.2",
     "react": "16.13.1",
+    "react-content-loader": "^6.0.1",
     "react-native": "0.63.4",
     "react-native-code-push": "^7.0.0",
     "react-native-device-info": "^8.0.1",
