@@ -21,6 +21,7 @@ const getTopProduct = function* ({payload}) {
 const getListOfFuturedStores = function* ({payload}) {
   try {
     yield put(storeActions.setLoadingFuturedStores(true));
+    yield put(storeActions.setPageDefault());
     const res = yield call(getTopStore, payload);
     if (res.ok) {
       yield put(storeActions.getListOfFuturedStoreSuccess(res.data));

@@ -53,13 +53,13 @@ export default handleActions(
       return {...state, newFeed: {}};
     },
     [types.HANDLE_LOAD_MORE_SUCCESS]: (state, {payload}) => {
-      const {totalPages, content, size} = payload;
+      const {totalPages, content} = payload;
       payload.content = state.newFeed?.content.concat(content) || [];
       return {
         ...state,
         newFeed: payload,
         page: state.page + UNIT_INCREASE,
-        hasLoadMore: state.page < totalPages ? true : false,
+        hasLoadMore: state.page + 1 < totalPages ? true : false,
       };
     },
     [types.HANDLE_LOAD_MORE_FAILED]: (state, {payload}) => {

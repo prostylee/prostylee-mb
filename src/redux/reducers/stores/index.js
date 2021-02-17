@@ -19,10 +19,12 @@ export const types = {
     'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS',
   GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED:
     'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED',
+  SET_PAGE_DEFAULT: 'prostylee/STORE/SET_PAGE_DEFAULT',
 };
 
 export const actions = {
   setLoading: createAction(types.SET_LOADING),
+  setPageDefault: createAction(types.SET_PAGE_DEFAULT),
   getTopProduct: createAction(types.GET_TOP_PRODUCT),
   getTopProductSuccess: createAction(types.GET_TOP_PRODUCT_SUCCESS),
   getTopProductFailed: createAction(types.GET_TOP_PRODUCT_FAILED),
@@ -65,6 +67,9 @@ export default handleActions(
   {
     [types.SET_LOADING]: (state, {payload}) => {
       return {...state, isLoading: payload};
+    },
+    [types.SET_PAGE_DEFAULT]: (state, {payload}) => {
+      return {...state, page: 0};
     },
     [types.GET_TOP_PRODUCT_SUCCESS]: (state, {payload}) => {
       return {...state, topProduct: payload};
