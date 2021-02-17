@@ -1,9 +1,15 @@
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 
-const Container = ({ fluid, style, children, ...rest }) => {
+const Container = ({fluid, style, children, ...rest}) => {
   return (
-    <View style={StyleSheet.flatten([styles.container, fluid && styles.fluid, style])} {...rest}>
+    <View
+      style={StyleSheet.flatten([
+        styles.container,
+        fluid && styles.fluid,
+        style,
+      ])}
+      {...rest}>
       {children}
     </View>
   );
@@ -18,4 +24,4 @@ const styles = {
   },
 };
 
-export default Container
+export default Container;
