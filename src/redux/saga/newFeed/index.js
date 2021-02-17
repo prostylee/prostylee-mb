@@ -1,8 +1,7 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {api} from 'services';
-import {getNewFeed} from 'services/api/newFeedApi'
-import {newFeedActions, newFeedTypes, commonActions} from 'reducers';
+import {getNewFeed} from 'services/api/newFeedApi';
+import {newFeedActions, newFeedTypes} from 'reducers';
 
 const getNewFeeds = function* ({payload}) {
   try {

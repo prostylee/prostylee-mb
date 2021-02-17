@@ -1,51 +1,50 @@
-import React, { useEffect, useState } from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
-import { isEmpty } from 'lodash'
-import i18n from 'i18n'
+import React from 'react';
+import {ScrollView, View} from 'react-native';
+import {isEmpty} from 'lodash';
+import i18n from 'i18n';
 
-import { ContainerView as Container, Title } from 'components'
-import {NewFeedTrendingContentLoading} from 'components/Loading/contentLoader'
+import {ContainerView as Container, Title} from 'components';
+import {NewFeedTrendingContentLoading} from 'components/Loading/contentLoader';
 
-import Item from './Item'
+import Item from './Item';
 
-import styles from './styles'
+import styles from './styles';
 
-const TopTrending = ({ topProduct, loading, navigation }) => {
+const TopTrending = ({topProduct, loading, navigation}) => {
+  if (isEmpty(topProduct) || !topProduct?.content?.length) {
+    return null;
+  }
 
-  if (isEmpty(topProduct) || !topProduct?.content?.length) return null
-
-  const topProductList = topProduct?.content
+  const topProductList = topProduct?.content;
 
   if (loading) {
-    return(
-      <NewFeedTrendingContentLoading/>
-    )
+    return <NewFeedTrendingContentLoading />;
   }
 
   return (
     <>
-     <Container style={styles.titleContainer}>
+      <Container style={styles.titleContainer}>
         <Title
           title={i18n.t('stores.titleTopStore')}
           style={styles.textTitle}
-          containerStyle={{ }}
+          containerStyle={{}}
           subTitle={i18n.t('common.textSeeMore')}
-          onPress={() => { navigation.navigate("Stores") }}
+          onPress={() => {
+            navigation.navigate('Stores');
+          }}
         />
       </Container>
       <Container fluid>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {topProductList.map((item, index) => (
-            <View
-              key={item.id}
-              style={styles.viewContainer}>
-              <Item item={item} style={{ flex: 1 }} />
+            <View key={item.id} style={styles.viewContainer}>
+              <Item item={item} style={{flex: 1}} />
             </View>
           ))}
         </ScrollView>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default TopTrending
+export default TopTrending;

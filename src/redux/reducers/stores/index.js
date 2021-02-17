@@ -7,12 +7,18 @@ export const types = {
   GET_TOP_PRODUCT_FAILED: 'prostylee/STORE/GET_TOP_PRODUCT_FAILED',
   SET_LOADING_FUTURED_STORE: 'prostylee/STORE/SET_LOADING_FUTURED_STORE',
   GET_LIST_OF_FUTURED_STORE: 'prostylee/STORE/GET_LIST_OF_FUTURED_STORE',
-  GET_LIST_OF_FUTURED_STORE_SUCCESS: 'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_SUCCESS',
-  GET_LIST_OF_FUTURED_STORE_FAILED: 'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_FAILED',
-  SET_LOADING_LOAD_MORE_FUTURED_STORE: 'prostylee/STORE/SET_LOADING_LOAD_MORE_FUTURED_STORE',
-  GET_LIST_OF_FUTURED_STORE_LOAD_MORE: 'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_LOAD_MORE',
-  GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS: 'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS',
-  GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED: 'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED',
+  GET_LIST_OF_FUTURED_STORE_SUCCESS:
+    'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_SUCCESS',
+  GET_LIST_OF_FUTURED_STORE_FAILED:
+    'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_FAILED',
+  SET_LOADING_LOAD_MORE_FUTURED_STORE:
+    'prostylee/STORE/SET_LOADING_LOAD_MORE_FUTURED_STORE',
+  GET_LIST_OF_FUTURED_STORE_LOAD_MORE:
+    'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_LOAD_MORE',
+  GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS:
+    'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS',
+  GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED:
+    'prostylee/STORE/GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED',
 };
 
 export const actions = {
@@ -22,15 +28,27 @@ export const actions = {
   getTopProductFailed: createAction(types.GET_TOP_PRODUCT_FAILED),
   setLoadingFuturedStores: createAction(types.SET_LOADING_FUTURED_STORE),
   getListOfFuturedStore: createAction(types.GET_LIST_OF_FUTURED_STORE),
-  getListOfFuturedStoreSuccess: createAction(types.GET_LIST_OF_FUTURED_STORE_SUCCESS),
-  getListOfFuturedStoreFailed: createAction(types.GET_LIST_OF_FUTURED_STORE_FAILED),
-  setLoadingLoadMoreFuturedStores: createAction(types.SET_LOADING_LOAD_MORE_FUTURED_STORE),
-  getListOfFuturedStoresLoadMore: createAction(types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE),
-  getListOfFuturedStoresLoadMoreSuccess: createAction(types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS),
-  getListOfFuturedStoresLoadMoreFailed: createAction(types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED),
+  getListOfFuturedStoreSuccess: createAction(
+    types.GET_LIST_OF_FUTURED_STORE_SUCCESS,
+  ),
+  getListOfFuturedStoreFailed: createAction(
+    types.GET_LIST_OF_FUTURED_STORE_FAILED,
+  ),
+  setLoadingLoadMoreFuturedStores: createAction(
+    types.SET_LOADING_LOAD_MORE_FUTURED_STORE,
+  ),
+  getListOfFuturedStoresLoadMore: createAction(
+    types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE,
+  ),
+  getListOfFuturedStoresLoadMoreSuccess: createAction(
+    types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS,
+  ),
+  getListOfFuturedStoresLoadMoreFailed: createAction(
+    types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED,
+  ),
 };
-const PAGE_INIT = 0
-const UNIT_INCREASE = 1
+const PAGE_INIT = 0;
+const UNIT_INCREASE = 1;
 
 const intialState = {
   isLoading: false,
@@ -55,35 +73,36 @@ export default handleActions(
       return {...state, topProduct: {}};
     },
     [types.SET_LOADING_FUTURED_STORE]: (state, {payload}) => {
-      return {...state, isLoadingFuturedStores: payload}
+      return {...state, isLoadingFuturedStores: payload};
     },
     [types.GET_LIST_OF_FUTURED_STORE_SUCCESS]: (state, {payload}) => {
-      const {totalPages} = payload
+      const {totalPages} = payload;
       return {
-        ...state, 
+        ...state,
         page: PAGE_INIT,
         hasLoadMore: state.page < totalPages ? true : false,
-        listOfFuturedStores: payload
-      }
+        listOfFuturedStores: payload,
+      };
     },
     [types.GET_LIST_OF_FUTURED_STORE_FAILED]: (state, {payload}) => {
-      return {...state, listOfFuturedStores: {}}
+      return {...state, listOfFuturedStores: {}};
     },
     [types.SET_LOADING_LOAD_MORE_FUTURED_STORE]: (state, {payload}) => {
-      return {...state, isLoadMoreLoading: payload}
+      return {...state, isLoadMoreLoading: payload};
     },
     [types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS]: (state, {payload}) => {
-      const {totalPages, content} = payload
-      payload.content = state.listOfFuturedStores?.content.concat(content) || []
+      const {totalPages, content} = payload;
+      payload.content =
+        state.listOfFuturedStores?.content.concat(content) || [];
       return {
-        ...state, 
+        ...state,
         listOfFuturedStores: payload,
         page: state.page + UNIT_INCREASE,
         hasLoadMore: state.page + 1 < totalPages ? true : false,
-      }
+      };
     },
     [types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED]: (state, {payload}) => {
-      return {...state}
+      return {...state};
     },
   },
   intialState,

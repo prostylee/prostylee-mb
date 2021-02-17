@@ -1,14 +1,14 @@
-import {Dimensions} from 'react-native'
+import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {center,flexRow, absolute} from 'theme/style'
+import {center, flexRow} from 'theme/style';
 
-const WIDTH = Dimensions.get('window').width - 30
+const WIDTH = Dimensions.get('window').width - 30;
 export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
   },
-    headerContainer: {
+  headerContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -16,7 +16,7 @@ export default EStyleSheet.create({
   headerWrap: {
     ...flexRow,
     paddingVertical: 10,
-    width: WIDTH * 0.7
+    width: WIDTH * 0.7,
   },
   textTitle: {
     fontSize: 14,
@@ -62,7 +62,7 @@ export default EStyleSheet.create({
     color: '$purple',
   },
   textFollowed: {
-    color: '$lightGray'
+    color: '$lightGray',
   },
   productWrap: {
     padding: 6,
@@ -71,7 +71,7 @@ export default EStyleSheet.create({
     width: 90,
     height: 48,
     fontSize: 11,
-    fontFamily: '$font1', 
+    fontFamily: '$font1',
     lineHeight: 14,
     paddingTop: 8,
   },

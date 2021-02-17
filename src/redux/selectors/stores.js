@@ -1,38 +1,38 @@
-import { createSelector } from 'reselect'
+import {createSelector} from 'reselect';
 
-export const storeReducer = state => state.store
+export const storeReducer = (state) => state.store;
 
 export const getTopProduct = createSelector(
   storeReducer,
-  data => data?.topProduct || {},
-)
+  (data) => data?.topProduct || {},
+);
 
 export const getTopProductLoadingSelector = createSelector(
   storeReducer,
-  data => data?.isLoading,
-)
+  (data) => data?.isLoading,
+);
 
 export const getLoadingFuturedStoresSelector = createSelector(
   storeReducer,
-  data => data?.isLoadingFuturedStores,
-)
+  (data) => data?.isLoadingFuturedStores,
+);
 
 export const listOfFuturedStoresSelector = createSelector(
   storeReducer,
-  data => data?.listOfFuturedStores || {},
-)
+  (data) => data?.listOfFuturedStores || {},
+);
 
 export const loadMoreLoadingSelector = createSelector(
   storeReducer,
-  data => data?.isLoadMoreLoading || false,
-)
+  (data) => data?.isLoadMoreLoading || false,
+);
 
 export const hasLoadMoreSelector = createSelector(
   storeReducer,
-  data => data?.hasLoadMore || false,
-)
+  (data) => data?.hasLoadMore || false,
+);
 
 export const getPageSelector = createSelector(
   storeReducer,
-  data => data?.page,
-)
+  (data) => data?.page,
+);

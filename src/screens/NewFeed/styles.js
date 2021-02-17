@@ -1,5 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {center,flexRow} from 'theme/style'
+import {flexRow} from 'theme/style';
 
 export default EStyleSheet.create({
   container: {
@@ -17,5 +17,5 @@ export default EStyleSheet.create({
   },
   touch: {
     paddingHorizontal: 8,
-  }
+  },
 });

@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react'
-import EStyleSheet from 'react-native-extended-stylesheet';
+import React, {useRef, useState} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -7,51 +6,47 @@ import {
   FlatList,
   Dimensions,
   Text,
-} from 'react-native'
-import styles from './styles'
+} from 'react-native';
+import styles from './styles';
 
-import { ImageAnimated as Image} from 'components'
+import {ImageAnimated as Image} from 'components';
 
-const DEFAULT_IMG = require('assets/images/default.png')
-const WIDTH = Dimensions.get('window').width
+const DEFAULT_IMG = require('assets/images/default.png');
+const WIDTH = Dimensions.get('window').width;
 
-const Slide = React.memo(props => {
-  const {
-    images,
-    width,
-    height,
-  } = props
+const Slide = React.memo((props) => {
+  const {images, width, height} = props;
 
-  const flatListRef = useRef(null)
+  const flatListRef = useRef(null);
 
-  const [state, setState] = useState({ visible: false, indexCurrency: 1, })
+  const [state, setState] = useState({visible: false, indexCurrency: 1});
 
   const _getItemLayout = (data, index) => {
-    return { length: width, offset: width * index, index };
-  }
+    return {length: width, offset: width * index, index};
+  };
 
-  const onViewRef = useRef(({ viewableItems }) => {
+  const onViewRef = useRef(({viewableItems}) => {
     setState({
       ...state,
       indexCurrency: viewableItems[0] ? viewableItems[0].index : 0,
-    })
-  })
+    });
+  });
 
-  const _renderItem = ({ item }) => {
+  const _renderItem = ({item}) => {
     return (
       <TouchableOpacity
         activeOpacity={1}
         style={styles.viewImage}
         onPress={() => {}}>
         <Image
-          source={{ uri: item }}
+          source={{uri: item}}
           resizeMode="cover"
-          style={{ height: height, width: width }}
+          style={{height: height, width: width}}
           PlaceholderContent={<ActivityIndicator />}
         />
       </TouchableOpacity>
-    )
-  }
+    );
+  };
   return (
     <>
       <FlatList
@@ -72,22 +67,22 @@ const Slide = React.memo(props => {
           images.length < 1 ? (
             <Image
               source={DEFAULT_IMG}
-              style={{ height: height, width: width }}
+              style={{height: height, width: width}}
             />
           ) : null
         }
       />
-        <View style={styles.renderSlide}>
-          <Text>{state.indexCurrency + 1 + '/' + images.length}</Text>
-        </View>
+      <View style={styles.renderSlide}>
+        <Text>{state.indexCurrency + 1 + '/' + images.length}</Text>
+      </View>
     </>
-  )
-})
+  );
+});
 
 Slide.defaultProps = {
   width: WIDTH,
   height: WIDTH,
   navigationType: 'navigate',
-}
+};
 
-export default Slide
+export default Slide;

@@ -1,9 +1,8 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {center,flexRow} from 'theme/style'
-import { Dimensions } from 'react-native'
+import {flexRow} from 'theme/style';
+import {Dimensions} from 'react-native';
 
-const {width} = Dimensions.get('window')
-const WIDTH_PADDING = width - 20
+const {width} = Dimensions.get('window');
 
 export default EStyleSheet.create({
   container: {
@@ -43,5 +42,5 @@ export default EStyleSheet.create({
     backgroundColor: '#f4f5f5',
     borderRadius: 20,
     padding: 2,
-  }
-})
+  },
+});

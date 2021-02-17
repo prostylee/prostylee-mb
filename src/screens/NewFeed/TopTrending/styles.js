@@ -1,8 +1,8 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {center,flexRow} from 'theme/style'
-import {Dimensions} from 'react-native'
+import {center, flexRow} from 'theme/style';
+import {Dimensions} from 'react-native';
 
-const WIDTH = Dimensions.get('window').width
+const WIDTH = Dimensions.get('window').width;
 
 export default EStyleSheet.create({
   viewContainer: {
@@ -68,5 +68,5 @@ export default EStyleSheet.create({
   productImageWrap: {
     ...flexRow,
     paddingBottom: 16,
-  }
+  },
 });

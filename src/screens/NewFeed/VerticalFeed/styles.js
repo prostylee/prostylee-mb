@@ -1,8 +1,8 @@
-import {Dimensions} from 'react-native'
+import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {center,flexRow, absolute} from 'theme/style'
+import {center, flexRow, absolute} from 'theme/style';
 
-const WIDTH = Dimensions.get('window').width - 30
+const WIDTH = Dimensions.get('window').width - 30;
 export default EStyleSheet.create({
   container: {
     backgroundColor: '$white',
@@ -16,7 +16,7 @@ export default EStyleSheet.create({
   headerWrap: {
     ...flexRow,
     paddingVertical: 10,
-    width: WIDTH * 0.7
+    width: WIDTH * 0.7,
   },
   textTitle: {
     fontSize: 14,
@@ -56,10 +56,10 @@ export default EStyleSheet.create({
     borderWidth: 1,
     padding: 6,
     borderRadius: 8,
-    borderColor: '$lightGray'
+    borderColor: '$lightGray',
   },
   touchTextByNow: {
-    color: '$lightGray'
+    color: '$lightGray',
   },
   productName: {
     fontSize: 14,
@@ -78,7 +78,7 @@ export default EStyleSheet.create({
     color: '$purple',
   },
   textFollowed: {
-    color: '$lightGray'
+    color: '$lightGray',
   },
   discountPercent: {
     ...absolute(null, 8, 8, null),

@@ -1,8 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-
-import {api} from 'services';
-import {getTopStore} from 'services/api/storeApi'
-import {storeActions, storeTypes, commonActions} from 'reducers';
+import {getTopStore} from 'services/api/storeApi';
+import {storeActions, storeTypes} from 'reducers';
 
 const getTopProduct = function* ({payload}) {
   try {
@@ -15,7 +13,7 @@ const getTopProduct = function* ({payload}) {
     }
   } catch (e) {
     console.error(e);
-  }finally{
+  } finally {
     yield put(storeActions.setLoading(false));
   }
 };
@@ -31,7 +29,7 @@ const getListOfFuturedStores = function* ({payload}) {
     }
   } catch (e) {
     console.error(e);
-  }finally{
+  } finally {
     yield put(storeActions.setLoadingFuturedStores(false));
   }
 };
@@ -47,14 +45,20 @@ const loadMoreListOfFuturedStores = function* ({payload}) {
     }
   } catch (e) {
     console.error(e);
-  }finally{
+  } finally {
     yield put(storeActions.setLoadingLoadMoreFuturedStores(false));
   }
 };
 
 const watcher = function* () {
   yield takeLatest(storeTypes.GET_TOP_PRODUCT, getTopProduct);
-  yield takeLatest(storeTypes.GET_LIST_OF_FUTURED_STORE, getListOfFuturedStores);
-  yield takeLatest(storeTypes.GET_LIST_OF_FUTURED_STORE_LOAD_MORE, loadMoreListOfFuturedStores);
+  yield takeLatest(
+    storeTypes.GET_LIST_OF_FUTURED_STORE,
+    getListOfFuturedStores,
+  );
+  yield takeLatest(
+    storeTypes.GET_LIST_OF_FUTURED_STORE_LOAD_MORE,
+    loadMoreListOfFuturedStores,
+  );
 };
 export default watcher();
