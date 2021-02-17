@@ -78,5 +78,13 @@ export default EStyleSheet.create({
   fluidStyle: {
     borderBottomWidth: 1,
     borderBottomColor: '$bgColor',
-  }
+  },
+  viewFooter: {
+    marginBottom: 6,
+  },
+  viewLoadingFooter: {
+    position: 'relative',
+    height: 40,
+    justifyContent: 'center',
+  },
 });

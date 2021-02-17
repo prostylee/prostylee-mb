@@ -36,8 +36,25 @@ const getListOfFuturedStores = function* ({payload}) {
   }
 };
 
+const loadMoreListOfFuturedStores = function* ({payload}) {
+  try {
+    yield put(storeActions.setLoadingLoadMoreFuturedStores(true));
+    const res = yield call(getTopStore, payload);
+    if (res.ok) {
+      yield put(storeActions.getListOfFuturedStoresLoadMoreSuccess(res.data));
+    } else {
+      yield put(storeActions.getListOfFuturedStoresLoadMoreFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  }finally{
+    yield put(storeActions.setLoadingLoadMoreFuturedStores(false));
+  }
+};
+
 const watcher = function* () {
   yield takeLatest(storeTypes.GET_TOP_PRODUCT, getTopProduct);
   yield takeLatest(storeTypes.GET_LIST_OF_FUTURED_STORE, getListOfFuturedStores);
+  yield takeLatest(storeTypes.GET_LIST_OF_FUTURED_STORE_LOAD_MORE, loadMoreListOfFuturedStores);
 };
 export default watcher();

@@ -22,3 +22,17 @@ export const listOfFuturedStoresSelector = createSelector(
   data => data?.listOfFuturedStores || {},
 )
 
+export const loadMoreLoadingSelector = createSelector(
+  storeReducer,
+  data => data?.isLoadMoreLoading || false,
+)
+
+export const hasLoadMoreSelector = createSelector(
+  storeReducer,
+  data => data?.hasLoadMore || false,
+)
+
+export const getPageSelector = createSelector(
+  storeReducer,
+  data => data?.page,
+)
