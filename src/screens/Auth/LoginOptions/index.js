@@ -24,6 +24,7 @@ const IMG_BG = require('assets/images/loginBg.png');
 const IC_ZALO = require('assets/icons/zaloIcon.png');
 
 import styles from './styles';
+import SocialLogin from '../Login/SocialLogin';
 
 const Index = (props) => {
   //dispatch
@@ -67,27 +68,7 @@ const Index = (props) => {
           <Text style={styles.labelDivider}>{I18n.t('otherLoginOptions')}</Text>
           <View style={styles.line} />
         </View>
-        <View style={styles.socialLogin}>
-          <TouchableOpacity style={styles.socialBtnWrapper}>
-            <Facebook />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.socialBtnWrapper}>
-            <Google />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.socialBtnWrapper}>
-            {/* <Image
-              source={IC_ZALO}
-              resizeMode="contain"
-              style={styles.socialBtn}
-            /> */}
-            <Zalo />
-          </TouchableOpacity>
-          {Platform.OS === 'ios' && (
-            <TouchableOpacity style={styles.socialBtnWrapper}>
-              <Apple />
-            </TouchableOpacity>
-          )}
-        </View>
+        <SocialLogin />
       </View>
     </ImageBackground>
   );

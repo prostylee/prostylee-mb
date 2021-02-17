@@ -373,6 +373,8 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
+  - RNAWSCognito (4.5.10):
+    - React
   - RNCAsyncStorage (1.13.4):
     - React-Core
   - RNCMaskedView (0.1.10):
@@ -475,6 +477,7 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNAWSCognito (from `../node_modules/amazon-cognito-identity-js`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
@@ -580,6 +583,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNAWSCognito:
+    :path: "../node_modules/amazon-cognito-identity-js"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
@@ -664,6 +669,7 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
+  RNAWSCognito: 432ec2fbd055dd0db4690efa85f7fe0f3756f1dc
   RNCAsyncStorage: 44539979e1f234262d64d3ce86ec21cceb1b2c5e
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNDateTimePicker: 8a51a2216c307769e69ef827293d59549ab1ca23
@@ -685,6 +691,6 @@ SPEC CHECKSUMS:
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 01daff36dca5197cd83f36cb1cc74950982fb463
+PODFILE CHECKSUM: b870707ab4dc4b6a571d62f0b87d8d2b25359064
 
 COCOAPODS: 1.10.1

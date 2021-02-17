@@ -1,31 +1,28 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {
-  createStackNavigator,
-  CardStyleInterpolators,
-} from '@react-navigation/stack';
+import {CardStyleInterpolators, createStackNavigator,} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
-import {userSelectors, commonSelectors} from 'reducers';
-import {navigationRef} from './rootNavigator';
+import {commonSelectors, userSelectors} from 'reducers';
 
-import {lightTheme, darkTheme} from 'theme';
-
-const Stack = createStackNavigator();
-
+import {darkTheme, lightTheme} from 'theme';
 import {
-  Welcome,
-  Onboarding,
-  Login,
-  SignUpViaPhone,
-  LoginViaPhone,
-  Home,
-  LoginOptions,
-  OTPVerification,
   ForgotPassword,
+  Home,
+  Login,
+  LoginOptions,
+  LoginViaPhone,
+  Onboarding,
+  OTPVerification,
   ResetPassword,
   ResetPasswordViaMail,
+  SignUpOTPVerification,
+  SignUpViaPhone,
+  Welcome,
 } from 'screens';
+import RootNavigator from './rootNavigator';
+
+const Stack = createStackNavigator();
 
 function SignedIn() {
   return (
@@ -66,6 +63,10 @@ function SignedOut() {
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
       <Stack.Screen name="OTPVerification" component={OTPVerification} />
+      <Stack.Screen
+        name="SignUpOTPVerification"
+        component={SignUpOTPVerification}
+      />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} />
       <Stack.Screen
@@ -82,8 +83,10 @@ const App = React.forwardRef(() => {
 
   return (
     <NavigationContainer
-      ref={navigationRef}
-      theme={themeMode === 'dark' ? darkTheme : lightTheme}>
+      theme={themeMode === 'dark' ? darkTheme : lightTheme}
+      ref={(navigationRef) => {
+        RootNavigator.setTopLevelNavigator(navigationRef);
+      }}>
       <Stack.Navigator
         screenOptions={{
           gestureEnabled: true,

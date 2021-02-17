@@ -6,6 +6,7 @@ import Welcome from './Auth/Welcome';
 import Onboarding from './Auth/Onboarding';
 import LoginViaPhone from './Auth/LoginViaPhone';
 import OTPVerification from './Auth/OTPVerification';
+import SignUpOTPVerification from './Auth/SignUpOTPVerification';
 import ForgotPassword from './Auth/ForgotPassword';
 import ResetPassword from './Auth/ResetPassword';
 import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
@@ -19,6 +20,7 @@ export {
   LoginViaPhone,
   LoginOptions,
   OTPVerification,
+  SignUpOTPVerification,
   ForgotPassword,
   ResetPassword,
   ResetPasswordViaMail,

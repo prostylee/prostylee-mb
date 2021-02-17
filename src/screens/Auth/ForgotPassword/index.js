@@ -1,15 +1,10 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {
-  Container,
-  ButtonRounded,
-  TextInputBorderBottom,
-  HeaderBack,
-} from 'components';
+import {Text, View} from 'react-native';
+import {ButtonRounded, Container, HeaderBack, TextInputBorderBottom} from 'components';
 
 import _ from 'lodash';
 
-import {userActions, commonActions} from 'reducers';
+import {commonActions, userActions} from 'reducers';
 import {useDispatch} from 'react-redux';
 
 import styles from './styles';

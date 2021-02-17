@@ -4,27 +4,13 @@ import {StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import jwtDecode from 'jwt-decode';
 
-import {
-  commonActions,
-  commonSelectors,
-  userActions,
-  userSelectors,
-} from './redux/reducers';
+import {commonActions, commonSelectors, userActions, userSelectors,} from './redux/reducers';
 
 import {common, datetime} from './utils';
 
 import Navigator from './navigator';
 
-import asyncStorage from './data/asyncStorage';
-
-import {
-  ModalIndicator,
-  ModalRequireUpdate,
-  ModalNetworkWarning,
-  Colors,
-} from 'components';
-
-import * as RootNavigator from 'navigator/rootNavigator';
+import {Colors, ModalIndicator, ModalNetworkWarning,} from 'components';
 
 import NetInfo from '@react-native-community/netinfo';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -32,15 +18,19 @@ import FlashMessage from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
 // import NotificationPopup from 'react-native-push-notification-popup';
-
 import {
-  getSystemName,
+  getApplicationName,
   getDeviceId,
   getDeviceName,
+  getSystemName,
   getSystemVersion,
   getVersion,
-  getApplicationName,
 } from 'react-native-device-info';
+
+import Amplify, {Auth} from 'aws-amplify';
+import awsconfig from './config/aws-exports';
+import RootNavigator from './navigator/rootNavigator';
+Amplify.configure(awsconfig);
 
 EStyleSheet.build({
   ...Colors,

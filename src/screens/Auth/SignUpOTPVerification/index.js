@@ -12,7 +12,7 @@ import {showMessage} from 'react-native-flash-message';
 
 import styles from './styles';
 
-const TIME = 60;
+const TIME = 20;
 const CODE_LENGTH = 6;
 
 const Index = (props) => {
@@ -60,6 +60,7 @@ const Index = (props) => {
   };
 
   const onVerifyOTP = async () => {
+    console.log('onVerifyOTP ' + props.route.params.email);
     await dispatch(commonActions.toggleLoading(true));
     dispatch(
       userActions.userVerifyOTP({
@@ -75,10 +76,7 @@ const Index = (props) => {
     await dispatch(commonActions.toggleLoading(false));
     await clearInterval(intervalRef.current);
     await setTimeLeft(0);
-    props.navigation.navigate('ResetPassword', {
-      email: props.route.params.email,
-      otp: code,
-    });
+    props.navigation.navigate('Login', {index: 0});
   };
 
   const onVerifyOTPFail = async () => {
@@ -91,7 +89,7 @@ const Index = (props) => {
   const onResendOTP = async () => {
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
-      userActions.userForgotPassword({
+      userActions.resendSignUp({
         email: props.route.params.email,
         onSuccess: () => onResendOTPSuccess(),
       }),

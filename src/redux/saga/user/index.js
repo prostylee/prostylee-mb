@@ -19,37 +19,58 @@ import messaging from '@react-native-firebase/messaging';
 
 import configEnv from 'config';
 import I18n from 'i18n';
+import {Auth} from 'aws-amplify';
 
 const userSignUp = function* ({
   payload: {fullname, email, password, onSuccess},
 }) {
   try {
-    const res = yield call(authApi.userSignUp, {
-      fullName: fullname,
+    const request = {
       username: email,
       password,
-    });
+      attributes: {
+        email,
+        name: fullname,
+        // phone_number: '+84988985407',
+        // given_name: 'Giang',
+        // family_name: 'Phan',
+        // other custom attributes
+      },
+    };
+    console.log('Request ' + request);
+    const {user} = yield Auth.signUp(request);
+    console.log('Auth.signUp  ' + JSON.stringify(user));
 
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === SUCCESS) {
-      yield asyncStorage.setUserToken(res.data.data);
-      yield put(userActions.userSignUpSuccess(res.data.data));
-      yield onSuccess();
-    } else if (res.ok && res.data.status === BAD_REQUEST) {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: I18n.t('existedEmail'),
-        type: 'danger',
-      });
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: UNKNOWN_MESSAGE,
-        type: 'danger',
-      });
-    }
+    // yield asyncStorage.setUserToken(user);
+    // yield put(userActions.userSignUpSuccess(user));
+    yield onSuccess();
+
+    // const res = yield call(authApi.userSignUp, {
+    //   fullName: fullname,
+    //   username: email,
+    //   password,
+    // });
+    //
+    // // xử lý dữ liệu trả về từ api
+    // if (res.ok && res.data.status === SUCCESS) {
+    //   yield asyncStorage.setUserToken(res.data.data);
+    //   yield put(userActions.userSignUpSuccess(res.data.data));
+    //   yield onSuccess();
+    // } else if (res.ok && res.data.status === BAD_REQUEST) {
+    //   //thông báo lỗi từ api trả về
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield showMessage({
+    //     message: I18n.t('existedEmail'),
+    //     type: 'danger',
+    //   });
+    // } else {
+    //   //thông báo lỗi từ api trả về
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield showMessage({
+    //     message: UNKNOWN_MESSAGE,
+    //     type: 'danger',
+    //   });
+    // }
   } catch (e) {
     //Lỗi server api
     console.log(e);
@@ -63,32 +84,36 @@ const userSignUp = function* ({
 
 const userLogin = function* ({payload: {email, password, onSuccess}}) {
   try {
-    const res = yield call(authApi.userLogin, {
-      appClientId: configEnv.APP_CLIENT_ID,
-      appClientSecret: configEnv.APP_CLIENT_SECRET,
-      username: email,
-      password,
-    });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === SUCCESS) {
-      yield asyncStorage.setUserToken(res.data.data);
-      yield put(userActions.userLoginSuccess(res.data.data));
-      yield onSuccess();
-    } else if (res.ok && res.data.status === SESSION_EXPIRED) {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: I18n.t('incorrectEmailOrPassword'),
-        type: 'danger',
-      });
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: UNKNOWN_MESSAGE,
-        type: 'danger',
-      });
-    }
+    const user = yield Auth.signIn(email, password);
+    console.log('Auth.signIn ' + JSON.stringify(user));
+    yield put(userActions.userLoginSuccess(user));
+    yield onSuccess();
+    // const res = yield call(authApi.userLogin, {
+    //   appClientId: configEnv.APP_CLIENT_ID,
+    //   appClientSecret: configEnv.APP_CLIENT_SECRET,
+    //   username: email,
+    //   password,
+    // });
+    // // xử lý dữ liệu trả về từ api
+    // if (res.ok && res.data.status === SUCCESS) {
+    //   yield asyncStorage.setUserToken(res.data.data);
+    //   yield put(userActions.userLoginSuccess(res.data.data));
+    //   yield onSuccess();
+    // } else if (res.ok && res.data.status === SESSION_EXPIRED) {
+    //   //thông báo lỗi từ api trả về
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield showMessage({
+    //     message: I18n.t('incorrectEmailOrPassword'),
+    //     type: 'danger',
+    //   });
+    // } else {
+    //   //thông báo lỗi từ api trả về
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield showMessage({
+    //     message: UNKNOWN_MESSAGE,
+    //     type: 'danger',
+    //   });
+    // }
   } catch (e) {
     //Lỗi server api
     console.log(e);
@@ -100,6 +125,7 @@ const userLogin = function* ({payload: {email, password, onSuccess}}) {
   }
 };
 
+// TODO remove because of using Amplify, it will automatically refresh the token
 const userRefreshToken = function* ({payload: {refreshToken, onSuccess}}) {
   try {
     const res = yield call(authApi.userRefreshToken, {
@@ -139,37 +165,41 @@ const userRefreshToken = function* ({payload: {refreshToken, onSuccess}}) {
   }
 };
 
+// Used to send/ resend forgot password
 const userForgotPassword = function* ({payload: {email, onSuccess}}) {
   try {
-    const res = yield call(authApi.userForgotPassword, {
-      email,
-    });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === SUCCESS) {
-      if (res.data.data.data) {
-        yield onSuccess();
-      } else {
-        yield put(commonActions.toggleLoading(false));
-        yield showMessage({
-          message: I18n.t('unExistedEmail'),
-          type: 'danger',
-        });
-      }
-    } else if (res.ok && res.data.status === INTERNAL_SERVER_ERROR) {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: I18n.t('unExistedEmail'),
-        type: 'danger',
-      });
-    } else {
-      //thông báo lỗi từ api trả ve
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: UNKNOWN_MESSAGE,
-        type: 'danger',
-      });
-    }
+    const res = yield Auth.forgotPassword(email);
+    console.log('Auth.forgotPassword ' + res);
+    yield onSuccess();
+    // const res = yield call(authApi.userForgotPassword, {
+    //   email,
+    // });
+    // // xử lý dữ liệu trả về từ api
+    // if (res.ok && res.data.status === SUCCESS) {
+    //   if (res.data.data.data) {
+    //     yield onSuccess();
+    //   } else {
+    //     yield put(commonActions.toggleLoading(false));
+    //     yield showMessage({
+    //       message: I18n.t('unExistedEmail'),
+    //       type: 'danger',
+    //     });
+    //   }
+    // } else if (res.ok && res.data.status === INTERNAL_SERVER_ERROR) {
+    //   //thông báo lỗi từ api trả về
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield showMessage({
+    //     message: I18n.t('unExistedEmail'),
+    //     type: 'danger',
+    //   });
+    // } else {
+    //   //thông báo lỗi từ api trả ve
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield showMessage({
+    //     message: UNKNOWN_MESSAGE,
+    //     type: 'danger',
+    //   });
+    // }
   } catch (e) {
     //Lỗi server api
     console.log(e);
@@ -181,34 +211,42 @@ const userForgotPassword = function* ({payload: {email, onSuccess}}) {
   }
 };
 
-const userVerifyOTP = function* ({payload: {email, otp, onSuccess, onFail}}) {
+// After sign up need to verify email
+// TODO rename
+const userVerifyOTP = function* ({
+  payload: {email, otp, onSuccess, onFail},
+}) {
   try {
-    const res = yield call(authApi.userVerifyOTP, {
-      email,
-      otp,
-    });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === SUCCESS) {
-      if (res.data.data.data) {
-        yield onSuccess();
-      } else {
-        yield onFail();
-      }
-    } else if (res.ok && res.data.status === BAD_REQUEST) {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.error,
-        type: 'danger',
-      });
-    } else {
-      //thông báo lỗi từ api trả ve
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: UNKNOWN_MESSAGE,
-        type: 'danger',
-      });
-    }
+    const res = yield Auth.confirmSignUp(email, otp);
+    console.log('Verify successful ' + JSON.stringify(res));
+    yield onSuccess();
+
+    // const res = yield call(authApi.userVerifyOTP, {
+    //   username,
+    //   otp,
+    // });
+    // // xử lý dữ liệu trả về từ api
+    // if (res.ok && res.data.status === SUCCESS) {
+    //   if (res.data.data.data) {
+    //     yield onSuccess();
+    //   } else {
+    //     yield onFail();
+    //   }
+    // } else if (res.ok && res.data.status === BAD_REQUEST) {
+    //   //thông báo lỗi từ api trả về
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield showMessage({
+    //     message: res.data.error,
+    //     type: 'danger',
+    //   });
+    // } else {
+    //   //thông báo lỗi từ api trả ve
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield showMessage({
+    //     message: UNKNOWN_MESSAGE,
+    //     type: 'danger',
+    //   });
+    // }
   } catch (e) {
     //Lỗi server api
     console.log(e);
@@ -220,33 +258,74 @@ const userVerifyOTP = function* ({payload: {email, otp, onSuccess, onFail}}) {
   }
 };
 
+// TODO After sign up need to verify email
+const resendSignUp = function* ({payload: {email, onSuccess}}) {
+  try {
+    const res = yield Auth.resendSignUp(email);
+    console.log('Auth.resendSignUp ' + res);
+    yield onSuccess();
+  } catch (e) {
+    //Lỗi server api
+    console.log(e);
+    yield put(commonActions.toggleLoading(false));
+    yield showMessage({
+      message: UNKNOWN_MESSAGE,
+      type: 'danger',
+    });
+  }
+};
+
+// TODO rename reset password
 const userChangePassword = function* ({
   payload: {email, password, newPassword, onSuccess},
 }) {
   try {
-    const res = yield call(authApi.userChangePassword, {
-      email,
-      password,
-      newPassword,
+    const res = yield Auth.forgotPasswordSubmit(email, password, newPassword);
+    console.log('Auth.forgotPasswordSubmit ' + res);
+    yield onSuccess();
+    // const res = yield call(authApi.userChangePassword, {
+    //   email,
+    //   password,
+    //   newPassword,
+    // });
+    // // xử lý dữ liệu trả về từ api
+    // if (res.ok && res.data.status === SUCCESS) {
+    //   yield onSuccess();
+    // } else if (res.ok && res.data.status === BAD_REQUEST) {
+    //   //thông báo lỗi từ api trả về
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield showMessage({
+    //     message: res.data.error,
+    //     type: 'danger',
+    //   });
+    // } else {
+    //   //thông báo lỗi từ api trả ve
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield showMessage({
+    //     message: UNKNOWN_MESSAGE,
+    //     type: 'danger',
+    //   });
+    // }
+  } catch (e) {
+    //Lỗi server api
+    console.log(e);
+    yield put(commonActions.toggleLoading(false));
+    yield showMessage({
+      message: UNKNOWN_MESSAGE,
+      type: 'danger',
     });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === SUCCESS) {
-      yield onSuccess();
-    } else if (res.ok && res.data.status === BAD_REQUEST) {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.error,
-        type: 'danger',
-      });
-    } else {
-      //thông báo lỗi từ api trả ve
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: UNKNOWN_MESSAGE,
-        type: 'danger',
-      });
-    }
+  }
+};
+
+// TODO test
+const changePassword = function* ({
+  payload: {oldPassword, newPassword, onSuccess},
+}) {
+  try {
+    const user = yield Auth.currentAuthenticatedUser();
+    const res = yield Auth.changePassword(user, oldPassword, newPassword);
+    console.log('Auth.changePassword ' + res);
+    yield onSuccess();
   } catch (e) {
     //Lỗi server api
     console.log(e);
@@ -260,29 +339,40 @@ const userChangePassword = function* ({
 
 const userLogout = function* ({payload: {token, id}}) {
   try {
-    yield call(api.setHeadersRequest, {
-      Authorization: `${token.token_type} ${token.access_token}`,
-    });
-    const res = yield call(authApi.userLogout);
-    // xử lý dữ liệu trả về từ api
-    if (res.ok) {
-      yield asyncStorage.logOut();
-      yield put(commonActions.toggleLoading(false));
-      yield put(userActions.userLogOutSuccess());
-      yield messaging()
-        .unsubscribeFromTopic(`user_${id}`)
-        .then(() => console.log('Unsubscribed fom the topic user!'));
-      yield messaging()
-        .unsubscribeFromTopic('user_all')
-        .then(() => console.log('Unsubscribed fom the topic all!'));
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: 'Xảy ra lỗi khi đăng xuất',
-        type: 'danger',
-      });
-    }
+    yield Auth.signOut({global: true});
+    yield asyncStorage.logOut(); // TODO remove -> get from Auth.currentAuthenticatedUser();
+    yield put(commonActions.toggleLoading(false));
+    yield put(userActions.userLogOutSuccess());
+    yield messaging()
+      .unsubscribeFromTopic(`user_${id}`)
+      .then(() => console.log('Unsubscribed fom the topic user!'));
+    yield messaging()
+      .unsubscribeFromTopic('user_all')
+      .then(() => console.log('Unsubscribed fom the topic all!'));
+
+    // yield call(api.setHeadersRequest, {
+    //   Authorization: `${token.token_type} ${token.access_token}`,
+    // });
+    // const res = yield call(authApi.userLogout);
+    // // xử lý dữ liệu trả về từ api
+    // if (res.ok) {
+    //   yield asyncStorage.logOut();
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield put(userActions.userLogOutSuccess());
+    //   yield messaging()
+    //     .unsubscribeFromTopic(`user_${id}`)
+    //     .then(() => console.log('Unsubscribed fom the topic user!'));
+    //   yield messaging()
+    //     .unsubscribeFromTopic('user_all')
+    //     .then(() => console.log('Unsubscribed fom the topic all!'));
+    // } else {
+    //   //thông báo lỗi từ api trả về
+    //   yield put(commonActions.toggleLoading(false));
+    //   yield showMessage({
+    //     message: 'Xảy ra lỗi khi đăng xuất',
+    //     type: 'danger',
+    //   });
+    // }
   } catch (e) {
     //Lỗi server api
     console.log(e);
@@ -516,6 +606,7 @@ const forgotPwCheckEmailCode = function* ({payload: {email, code, onSuccess}}) {
 const watcher = function* () {
   yield takeLatest(userTypes.USER_SIGN_UP, userSignUp);
   yield takeLatest(userTypes.USER_LOGIN, userLogin);
+  yield takeLatest(userTypes.USER_RESEND_SIGN_UP, resendSignUp);
   yield takeLatest(userTypes.USER_REFRESH_TOKEN, userRefreshToken);
   yield takeLatest(userTypes.USER_FORGOT_PASSWORD, userForgotPassword);
   yield takeLatest(userTypes.USER_VERIFY_OTP, userVerifyOTP);

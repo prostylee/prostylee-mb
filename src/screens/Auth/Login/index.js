@@ -1,33 +1,23 @@
 import React from 'react';
-import {Text, View, Dimensions, Platform, TouchableOpacity} from 'react-native';
+import {Dimensions, Text, View} from 'react-native';
 
-import {
-  Container,
-  TextInputBorderBottom,
-  ButtonRounded,
-  TextButton,
-} from 'components';
-import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
-import {useKeyboard, useBackHandler} from '@react-native-community/hooks';
+import {ButtonRounded, Container, TextButton, TextInputBorderBottom,} from 'components';
+import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
+import {useBackHandler, useKeyboard} from '@react-native-community/hooks';
 
 import styles from './styles';
-import * as RootNavigator from 'navigator/rootNavigator';
 import I18n from 'i18n';
 import _ from 'lodash';
 
-import {userActions, commonActions} from 'reducers';
+import {commonActions} from 'reducers';
 import {useDispatch} from 'react-redux';
-import {
-  LogoBlack,
-  Facebook,
-  Google,
-  AppleBlack,
-  Eye,
-  Phone,
-  Zalo,
-} from 'svg/common';
+import {Eye, LogoBlack, Phone} from 'svg/common';
 
-import {emailRegex, passwordRegex, fullNameRegex} from 'utils/common';
+import {emailRegex, fullNameRegex, passwordRegex} from 'utils/common';
+import SocialLogin from './SocialLogin';
+import {listenAuth} from '../../../config/cognito-auth-listener';
+import {userActions} from '../../../redux/reducers';
+import RootNavigator from '../../../navigator/rootNavigator';
 
 const initialLayout = {width: Dimensions.get('window').width};
 
@@ -37,10 +27,9 @@ const Index = (props) => {
 
   //UseEffect
   React.useEffect(() => {
-    const tabIndex = props.route.params?.index;
-    if (tabIndex === 1) {
-      setIndex(tabIndex);
-    }
+    listenAuth(); // For debugging only
+    const tabIndex = props.route.params?.index || 0;
+    setIndex(tabIndex);
   }, []);
 
   //BackHandler handle
@@ -106,24 +95,7 @@ const Index = (props) => {
                 </Text>
                 <View style={styles.line} />
               </View>
-              <View style={styles.socialLogin}>
-                <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <Facebook />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <View style={styles.btnBordered}>
-                    <Google />
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <Zalo />
-                </TouchableOpacity>
-                {Platform.OS === 'ios' && (
-                  <TouchableOpacity style={styles.socialBtnWrapper}>
-                    <AppleBlack />
-                  </TouchableOpacity>
-                )}
-              </View>
+              <SocialLogin />
               {index === 1 && (
                 <View style={styles.privacyWrapper}>
                   <Text style={styles.noticeText}>
@@ -295,7 +267,7 @@ const LoginTab = () => {
   );
 };
 
-const SignupTab = () => {
+const SignupTab = (props) => {
   //Initial States
   const [fullname, setFullname] = React.useState('');
   const [invalidFullname, setInvalidFullname] = React.useState(false);
@@ -454,6 +426,7 @@ const SignupTab = () => {
 
   const onSignUpSuccess = async () => {
     dispatch(commonActions.toggleLoading(false));
+    RootNavigator.navigate('SignUpOTPVerification', {email});
   };
   return (
     <View style={styles.tabViewWrapper}>

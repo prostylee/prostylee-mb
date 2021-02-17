@@ -3,6 +3,7 @@ import {createAction, handleActions} from 'redux-actions';
 export const types = {
   USER_SIGN_UP: 'USER_SIGN_UP',
   USER_SIGNUP_SUCCESS: 'USER_SIGNUP_SUCCESS',
+  USER_RESEND_SIGN_UP: 'USER_RESEND_SIGN_UP',
 
   USER_LOGIN: 'USER_LOGIN',
   USER_LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS',
@@ -29,6 +30,7 @@ export const actions = {
   userLogin: createAction(types.USER_LOGIN),
   userLoginSuccess: createAction(types.USER_LOGIN_SUCCESS),
   userSignUp: createAction(types.USER_SIGN_UP),
+  resendSignUp: createAction(types.USER_RESEND_SIGN_UP),
   userSignUpSuccess: createAction(types.USER_SIGNUP_SUCCESS),
   userClearExpiredToken: createAction(types.USER_CLEAR_EXPIRED_TOKEN),
   userRefreshToken: createAction(types.USER_REFRESH_TOKEN),
@@ -60,6 +62,9 @@ export default handleActions(
       return {...state, userToken: payload};
     },
     [types.USER_SIGNUP_SUCCESS]: (state, {payload}) => {
+      return {...state, userToken: payload};
+    },
+    [types.USER_RESEND_SIGN_UP]: (state, {payload}) => {
       return {...state, userToken: payload};
     },
     [types.USER_CLEAR_EXPIRED_TOKEN]: (state, {payload}) => {
