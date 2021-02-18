@@ -16,11 +16,14 @@ const awsmobile = {
       "profile",
       "aws.cognito.signin.user.admin"
     ],
-    "redirectSignIn": "prostylee://oauth",
-    "redirectSignOut": "prostylee://signout",
+    "redirectSignIn": "prostylee://",
+    "redirectSignOut": "prostylee://",
     "responseType": "code"
   },
-  "federationTarget": "COGNITO_USER_POOLS"
+  "federationTarget": "COGNITO_USER_POOLS",
+  "aws_appsync_graphqlEndpoint": "https://khbnmit5ofep3ejorjec26xw3q.appsync-api.ap-southeast-1.amazonaws.com/graphql",
+  "aws_appsync_region": "ap-southeast-1",
+  "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS"
 };
 
 
