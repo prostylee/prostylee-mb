@@ -10,6 +10,8 @@ target 'prostylee' do
 
   pod 'RNAWSCognito', :path => '../node_modules/amazon-cognito-identity-js'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'prostyleeTests' do
     inherit! :complete
     # Pods for testing

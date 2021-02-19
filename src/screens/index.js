@@ -10,6 +10,7 @@ import SignUpOTPVerification from './Auth/SignUpOTPVerification';
 import ForgotPassword from './Auth/ForgotPassword';
 import ResetPassword from './Auth/ResetPassword';
 import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
+import UploadFile from './UploadFile';
 
 export {
   Welcome,
@@ -24,4 +25,5 @@ export {
   ForgotPassword,
   ResetPassword,
   ResetPasswordViaMail,
+  UploadFile,
 };

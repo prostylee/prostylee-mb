@@ -14,6 +14,7 @@ import {listComments} from '../../graphql/queries';
 import {onCreateComment, onDeleteComment} from '../../graphql/subscriptions';
 import {formatTime} from '../../utils/datetime';
 import {Divider, List, overlay, useTheme} from 'react-native-paper';
+import RootNavigator from '../../navigator/rootNavigator';
 
 const Index = () => {
   const theme = useTheme();
@@ -188,6 +189,8 @@ const Index = () => {
       </View>
 
       <ButtonOutlined label="Đăng Xuất Ngay" onPress={() => onSignOut()} />
+
+      <ButtonOutlined label="Upload file" onPress={() => RootNavigator.navigate('UploadFile')} />
     </View>
   );
 };

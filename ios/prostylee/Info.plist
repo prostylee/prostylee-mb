@@ -98,5 +98,14 @@
          </dict>
      </array>
 	<!-- END ADD AN ENTRY TO CFBundleURLTypes for Cognito Auth -->
+
+	<!-- Add permission for upload file -->
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>For choosing a photo.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>For taking a photo.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>For saving a photo.</string>
+
 </dict>
 </plist>

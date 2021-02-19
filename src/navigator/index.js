@@ -19,6 +19,7 @@ import {
   SignUpOTPVerification,
   SignUpViaPhone,
   Welcome,
+  UploadFile,
 } from 'screens';
 import RootNavigator from './rootNavigator';
 
@@ -37,6 +38,7 @@ function SignedIn() {
       headerMode="none"
       animation="fade">
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="UploadFile" component={UploadFile} />
     </Stack.Navigator>
   );
 }
