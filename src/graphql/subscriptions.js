@@ -5,29 +5,32 @@ export const onCreateComment = /* GraphQL */ `
   subscription OnCreateComment {
     onCreateComment {
       id
-      commentOwnerId
-      commentOwnerUsername
+      ownerId
+      owner
       targetId
       targetType
       content
+      numberOfLikes
       createdAt
       parentId
       parent {
         id
-        commentOwnerId
-        commentOwnerUsername
+        ownerId
+        owner
         targetId
         targetType
         content
+        numberOfLikes
         createdAt
         parentId
         parent {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -40,11 +43,12 @@ export const onCreateComment = /* GraphQL */ `
       childrens {
         items {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -59,29 +63,32 @@ export const onUpdateComment = /* GraphQL */ `
   subscription OnUpdateComment {
     onUpdateComment {
       id
-      commentOwnerId
-      commentOwnerUsername
+      ownerId
+      owner
       targetId
       targetType
       content
+      numberOfLikes
       createdAt
       parentId
       parent {
         id
-        commentOwnerId
-        commentOwnerUsername
+        ownerId
+        owner
         targetId
         targetType
         content
+        numberOfLikes
         createdAt
         parentId
         parent {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -94,11 +101,12 @@ export const onUpdateComment = /* GraphQL */ `
       childrens {
         items {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -113,29 +121,32 @@ export const onDeleteComment = /* GraphQL */ `
   subscription OnDeleteComment {
     onDeleteComment {
       id
-      commentOwnerId
-      commentOwnerUsername
+      ownerId
+      owner
       targetId
       targetType
       content
+      numberOfLikes
       createdAt
       parentId
       parent {
         id
-        commentOwnerId
-        commentOwnerUsername
+        ownerId
+        owner
         targetId
         targetType
         content
+        numberOfLikes
         createdAt
         parentId
         parent {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -148,11 +159,12 @@ export const onDeleteComment = /* GraphQL */ `
       childrens {
         items {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt

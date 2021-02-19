@@ -21,13 +21,13 @@ const Index = () => {
   const dispatch = useDispatch();
   const [comment, setComment] = React.useState('');
   const [comments, setComments] = React.useState([]);
-  const [currentUserId, setCurrentUserId] = React.useState('');
+  const [currentUserName, setCurrentUserName] = React.useState('');
 
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((user) => {
         // console.log('USER ' + JSON.stringify(user));
-        setCurrentUserId(user.attributes.sub);
+        setCurrentUserName(user.username);
       })
       .catch((err) => console.log(err));
 
@@ -104,11 +104,13 @@ const Index = () => {
     const resposne = await API.graphql(
       graphqlOperation(createComment, {
         input: {
-          commentOwnerId: user.attributes.sub,
-          commentOwnerUsername: user.username,
+          parentId: '0',
+          ownerId: user.attributes.sub,
+          owner: user.username,
           targetId: '1',
           targetType: 'PRODUCT',
           content: comment,
+          numberOfLikes: 0,
           createdAt: new Date().toISOString(), //"2021-02-18T15:41:16Z"
         },
       }),
@@ -131,27 +133,25 @@ const Index = () => {
     return (
       <List.Item
         title={formatTime(item.createdAt)}
-        description={item.content}
+        description={item.content + '-' + item.owner}
         left={(props) => (
           <List.Icon
             {...props}
             icon={
-              item.commentOwnerId === currentUserId
-                ? 'chevron-left'
-                : 'chevron-right'
+              item.owner === currentUserName ? 'chevron-left' : 'chevron-right'
             }
-            color={
-              item.commentOwnerId === currentUserId ? '#205da0' : '#565454'
-            }
+            color={item.owner === currentUserName ? '#205da0' : '#01ab01'}
           />
         )}
-        right={(props) => (
-          <TextButton
-            onPress={() => deleteCommentHandler(item)}
-            label={'Delete'}
-            labelStyle={styles.privacyButton}
-          />
-        )}
+        right={(props) =>
+          item.owner === currentUserName ? (
+            <TextButton
+              onPress={() => deleteCommentHandler(item)}
+              label={'Delete'}
+              labelStyle={styles.privacyButton}
+            />
+          ) : null
+        }
       />
     );
   };
@@ -176,7 +176,10 @@ const Index = () => {
 
       <View style={{height: '50%', width: '100%', padding: 20}}>
         <FlatList
-          contentContainerStyle={[ {backgroundColor: theme.colors.background}, {backgroundColor} ]}
+          contentContainerStyle={[
+            {backgroundColor: theme.colors.background},
+            {backgroundColor},
+          ]}
           ItemSeparatorComponent={() => <Divider />}
           data={comments}
           renderItem={_renderItem}

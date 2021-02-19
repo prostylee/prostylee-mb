@@ -8,29 +8,32 @@ export const createComment = /* GraphQL */ `
   ) {
     createComment(input: $input, condition: $condition) {
       id
-      commentOwnerId
-      commentOwnerUsername
+      ownerId
+      owner
       targetId
       targetType
       content
+      numberOfLikes
       createdAt
       parentId
       parent {
         id
-        commentOwnerId
-        commentOwnerUsername
+        ownerId
+        owner
         targetId
         targetType
         content
+        numberOfLikes
         createdAt
         parentId
         parent {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -43,11 +46,12 @@ export const createComment = /* GraphQL */ `
       childrens {
         items {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -65,29 +69,32 @@ export const updateComment = /* GraphQL */ `
   ) {
     updateComment(input: $input, condition: $condition) {
       id
-      commentOwnerId
-      commentOwnerUsername
+      ownerId
+      owner
       targetId
       targetType
       content
+      numberOfLikes
       createdAt
       parentId
       parent {
         id
-        commentOwnerId
-        commentOwnerUsername
+        ownerId
+        owner
         targetId
         targetType
         content
+        numberOfLikes
         createdAt
         parentId
         parent {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -100,11 +107,12 @@ export const updateComment = /* GraphQL */ `
       childrens {
         items {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -122,29 +130,32 @@ export const deleteComment = /* GraphQL */ `
   ) {
     deleteComment(input: $input, condition: $condition) {
       id
-      commentOwnerId
-      commentOwnerUsername
+      ownerId
+      owner
       targetId
       targetType
       content
+      numberOfLikes
       createdAt
       parentId
       parent {
         id
-        commentOwnerId
-        commentOwnerUsername
+        ownerId
+        owner
         targetId
         targetType
         content
+        numberOfLikes
         createdAt
         parentId
         parent {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -157,11 +168,12 @@ export const deleteComment = /* GraphQL */ `
       childrens {
         items {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt

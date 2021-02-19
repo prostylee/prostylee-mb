@@ -5,29 +5,32 @@ export const getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
       id
-      commentOwnerId
-      commentOwnerUsername
+      ownerId
+      owner
       targetId
       targetType
       content
+      numberOfLikes
       createdAt
       parentId
       parent {
         id
-        commentOwnerId
-        commentOwnerUsername
+        ownerId
+        owner
         targetId
         targetType
         content
+        numberOfLikes
         createdAt
         parentId
         parent {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -40,11 +43,12 @@ export const getComment = /* GraphQL */ `
       childrens {
         items {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
@@ -64,20 +68,22 @@ export const listComments = /* GraphQL */ `
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        commentOwnerId
-        commentOwnerUsername
+        ownerId
+        owner
         targetId
         targetType
         content
+        numberOfLikes
         createdAt
         parentId
         parent {
           id
-          commentOwnerId
-          commentOwnerUsername
+          ownerId
+          owner
           targetId
           targetType
           content
+          numberOfLikes
           createdAt
           parentId
           updatedAt
