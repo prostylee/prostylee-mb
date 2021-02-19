@@ -7,7 +7,7 @@ import {Header} from 'components';
 import {Search, Bag, FeedStore, DubHeart} from 'svg/common';
 import {Message} from 'svg/social';
 
-const HeaderFeed = ({changeTabStore, changeTabUser}) => {
+const HeaderFeed = ({changeTabStore, changeTabUser, targetType}) => {
   return (
     <Header
       leftIcon={
@@ -18,10 +18,17 @@ const HeaderFeed = ({changeTabStore, changeTabUser}) => {
       middleComponent={
         <View style={styles.midHeader}>
           <View style={styles.midBorder}>
-            <TouchableOpacity onPress={changeTabStore} style={styles.midTouch}>
+            <TouchableOpacity
+              onPress={changeTabStore}
+              style={[
+                styles.midTouch,
+                targetType === 'STORE' && styles.grayBg,
+              ]}>
               <FeedStore />
             </TouchableOpacity>
-            <TouchableOpacity onPress={changeTabUser} style={styles.midTouch}>
+            <TouchableOpacity
+              onPress={changeTabUser}
+              style={[styles.midTouch, targetType === 'USER' && styles.grayBg]}>
               <DubHeart />
             </TouchableOpacity>
           </View>

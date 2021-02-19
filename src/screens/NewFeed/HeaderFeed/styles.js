@@ -32,15 +32,18 @@ export default EStyleSheet.create({
   },
   midTouch: {
     padding: 10,
-    backgroundColor: '#333',
+    backgroundColor: '$bgColor',
     borderRadius: 50,
   },
   midBorder: {
     ...flexRow,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f4f5f5',
+    backgroundColor: '$bgColor',
     borderRadius: 20,
     padding: 2,
+  },
+  grayBg: {
+    backgroundColor: '#333',
   },
 });

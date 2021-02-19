@@ -100,6 +100,7 @@ const NewFeed = ({navigation}) => {
   return (
     <ThemeView isFullView>
       <HeaderFeed
+        targetType={targetType}
         changeTabStore={changeTabStore}
         changeTabUser={changeTabUser}
       />
