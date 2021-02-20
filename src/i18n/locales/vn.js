@@ -17,4 +17,7 @@ export default {
   dynamicUsers: {
     titleDynamicUser: 'Người dùng năng động',
   },
+  storyBoard: {
+    titleStoryBoard: 'Cảm hứng thời trang',
+  },
 };

@@ -9,6 +9,7 @@ import VerticalFeed from './VerticalFeed';
 import HeaderFeed from './HeaderFeed';
 import TopTrending from './TopTrending';
 import DynamicUsers from './DynamicUsers';
+import StoryBoard from './StoryBoard';
 
 import {
   newFeedActions,
@@ -136,6 +137,7 @@ const NewFeed = ({navigation}) => {
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
+        <StoryBoard />
         <VerticalFeed
           targetType={targetType}
           loading={handleLoading()}

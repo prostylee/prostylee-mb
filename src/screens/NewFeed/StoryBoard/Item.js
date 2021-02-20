@@ -6,24 +6,37 @@ import {View} from 'react-native';
 import i18n from 'i18n';
 
 import styles from './styles';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const WIDTH = Dimensions.get('window').width;
-const WIDTH_IMG = (WIDTH * 0.7) / 3;
+const WIDTH_IMG = 90;
+const HEIGHT_IMG = 140;
 
 const Item = ({item, style}) => {
   return (
-    <ThemeView colorSecondary style={[styles.itemContainer, style && style]}>
-      <Avatar.Image
+    <View style={[styles.itemContainer, style && style]}>
+      {/* <Avatar.Image
         source={
-          item.avatar
-            ? {uri: item.avatar}
-            : require('assets/images/default.png')
+          item.logo ? {uri: item.logo} : require('assets/images/default.png')
         }
         size={60}
         rounded
         containerStyle={styles.image}
-      />
-    </ThemeView>
+      /> */}
+      <TouchableOpacity style={styles.touchImg}>
+        <Image
+          key={`productOfStore${item.id}`}
+          source={
+            item.image
+              ? {uri: item.image}
+              : require('assets/images/default.png')
+          }
+          resizeMode="cover"
+          style={{height: HEIGHT_IMG, width: WIDTH_IMG}}
+          PlaceholderContent={<ActivityIndicator />}
+        />
+      </TouchableOpacity>
+    </View>
   );
 };
 

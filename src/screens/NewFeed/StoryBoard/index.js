@@ -15,35 +15,119 @@ const StoryBoard = ({storyBoads, loading, navigation}) => {
   //   return null;
   // }
 
-  const listDynamicUser = storyBoads?.content;
+  // const listStoryBoads = storyBoads?.content;
+  const listStoryBoads = [
+    {
+      image:
+        'https://images.squarespace-cdn.com/content/v1/5442b6cce4b0cf00d1a3bef2/1599593810676-N3UFFCGFVPP3JNARAA8N/ke17ZwdGBToddI8pDm48kIAZ5CWDgAf_tKNKdYtI7ZtZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx78nW6aw6q_OBEgbzlBDLLqtzO1m_sKf16hJRhG3A2FkHtEA23RvFjTTKzL4c-UFU/Affordable-Ethical-Fashion-Pact',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://www.bsbfashion.com/sites/default/files/sites/default/files/custom/_K9A9227_b.jpg',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://images.squarespace-cdn.com/content/v1/5442b6cce4b0cf00d1a3bef2/1599593810676-N3UFFCGFVPP3JNARAA8N/ke17ZwdGBToddI8pDm48kIAZ5CWDgAf_tKNKdYtI7ZtZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx78nW6aw6q_OBEgbzlBDLLqtzO1m_sKf16hJRhG3A2FkHtEA23RvFjTTKzL4c-UFU/Affordable-Ethical-Fashion-Pact',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://www.bsbfashion.com/sites/default/files/sites/default/files/custom/_K9A9227_b.jpg',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://images.squarespace-cdn.com/content/v1/5442b6cce4b0cf00d1a3bef2/1599593810676-N3UFFCGFVPP3JNARAA8N/ke17ZwdGBToddI8pDm48kIAZ5CWDgAf_tKNKdYtI7ZtZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx78nW6aw6q_OBEgbzlBDLLqtzO1m_sKf16hJRhG3A2FkHtEA23RvFjTTKzL4c-UFU/Affordable-Ethical-Fashion-Pact',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://www.bsbfashion.com/sites/default/files/sites/default/files/custom/_K9A9227_b.jpg',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://images.squarespace-cdn.com/content/v1/5442b6cce4b0cf00d1a3bef2/1599593810676-N3UFFCGFVPP3JNARAA8N/ke17ZwdGBToddI8pDm48kIAZ5CWDgAf_tKNKdYtI7ZtZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx78nW6aw6q_OBEgbzlBDLLqtzO1m_sKf16hJRhG3A2FkHtEA23RvFjTTKzL4c-UFU/Affordable-Ethical-Fashion-Pact',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://www.bsbfashion.com/sites/default/files/sites/default/files/custom/_K9A9227_b.jpg',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://images.squarespace-cdn.com/content/v1/5442b6cce4b0cf00d1a3bef2/1599593810676-N3UFFCGFVPP3JNARAA8N/ke17ZwdGBToddI8pDm48kIAZ5CWDgAf_tKNKdYtI7ZtZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx78nW6aw6q_OBEgbzlBDLLqtzO1m_sKf16hJRhG3A2FkHtEA23RvFjTTKzL4c-UFU/Affordable-Ethical-Fashion-Pact',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://www.bsbfashion.com/sites/default/files/sites/default/files/custom/_K9A9227_b.jpg',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://images.squarespace-cdn.com/content/v1/5442b6cce4b0cf00d1a3bef2/1599593810676-N3UFFCGFVPP3JNARAA8N/ke17ZwdGBToddI8pDm48kIAZ5CWDgAf_tKNKdYtI7ZtZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx78nW6aw6q_OBEgbzlBDLLqtzO1m_sKf16hJRhG3A2FkHtEA23RvFjTTKzL4c-UFU/Affordable-Ethical-Fashion-Pact',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://www.bsbfashion.com/sites/default/files/sites/default/files/custom/_K9A9227_b.jpg',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://images.squarespace-cdn.com/content/v1/5442b6cce4b0cf00d1a3bef2/1599593810676-N3UFFCGFVPP3JNARAA8N/ke17ZwdGBToddI8pDm48kIAZ5CWDgAf_tKNKdYtI7ZtZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx78nW6aw6q_OBEgbzlBDLLqtzO1m_sKf16hJRhG3A2FkHtEA23RvFjTTKzL4c-UFU/Affordable-Ethical-Fashion-Pact',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+    {
+      image:
+        'https://www.bsbfashion.com/sites/default/files/sites/default/files/custom/_K9A9227_b.jpg',
+      logo:
+        'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    },
+  ];
 
   if (loading) {
     return <NewFeedTrendingContentLoading />;
   }
 
   return (
-    <>
-      <Container style={styles.titleContainer}>
+    <Container style={styles.container} fluid>
+      <View style={styles.titleContainer}>
         <Title
-          title={i18n.t('dynamicUsers.titleDynamicUser')}
+          title={i18n.t('storyBoard.titleStoryBoard')}
           style={styles.textTitle}
           containerStyle={{}}
-          subTitle={i18n.t('common.textSeeMore')}
-          onPress={() => {
-            navigation.navigate('Stores');
-          }}
+          subTitle={''}
+          onPress={() => {}}
         />
-      </Container>
+      </View>
       <Container fluid>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {listDynamicUser.map((item, index) => (
+          {listStoryBoads.map((item, index) => (
             <View key={item.id} style={styles.viewContainer}>
               <Item item={item} style={{flex: 1}} />
             </View>
           ))}
         </ScrollView>
       </Container>
-    </>
+    </Container>
   );
 };
 

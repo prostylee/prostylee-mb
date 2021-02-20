@@ -17,4 +17,7 @@ export default {
   dynamicUsers: {
     titleDynamicUser: 'Dynamic User',
   },
+  storyBoard: {
+    titleStoryBoard: 'Fashion inspiration',
+  },
 };
