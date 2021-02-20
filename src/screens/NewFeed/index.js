@@ -137,7 +137,7 @@ const NewFeed = ({navigation}) => {
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
-        <StoryBoard />
+        <StoryBoard loading={handleLoading()} />
         <VerticalFeed
           targetType={targetType}
           loading={handleLoading()}

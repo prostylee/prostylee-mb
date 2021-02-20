@@ -15,14 +15,6 @@ const HEIGHT_IMG = 140;
 const Item = ({item, style}) => {
   return (
     <View style={[styles.itemContainer, style && style]}>
-      {/* <Avatar.Image
-        source={
-          item.logo ? {uri: item.logo} : require('assets/images/default.png')
-        }
-        size={60}
-        rounded
-        containerStyle={styles.image}
-      /> */}
       <TouchableOpacity style={styles.touchImg}>
         <Image
           key={`productOfStore${item.id}`}
@@ -35,6 +27,17 @@ const Item = ({item, style}) => {
           style={{height: HEIGHT_IMG, width: WIDTH_IMG}}
           PlaceholderContent={<ActivityIndicator />}
         />
+        <View style={styles.circleImg}>
+          <Avatar.Image
+            source={
+              item.logo
+                ? {uri: item.logo}
+                : require('assets/images/default.png')
+            }
+            size={26}
+            rounded
+          />
+        </View>
       </TouchableOpacity>
     </View>
   );

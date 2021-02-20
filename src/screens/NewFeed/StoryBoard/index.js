@@ -104,7 +104,7 @@ const StoryBoard = ({storyBoads, loading, navigation}) => {
   ];
 
   if (loading) {
-    return <NewFeedTrendingContentLoading />;
+    return null;
   }
 
   return (
