@@ -8,8 +8,14 @@ import {ThemeView} from 'components';
 import VerticalFeed from './VerticalFeed';
 import HeaderFeed from './HeaderFeed';
 import TopTrending from './TopTrending';
+import DynamicUsers from './DynamicUsers';
 
-import {newFeedActions, storeActions, commonActions} from 'redux/reducers';
+import {
+  newFeedActions,
+  storeActions,
+  commonActions,
+  dynamicUsersActions,
+} from 'redux/reducers';
 import {
   getNewFeedSelector,
   getHasLoadMoreSelector,
@@ -21,6 +27,10 @@ import {
   getTopProduct,
   getTopProductLoadingSelector,
 } from 'redux/selectors/stores';
+import {
+  loadingSelector,
+  listDynamicUsersSelector,
+} from 'redux/selectors/dynamicUsers';
 import {targetTypeSelector} from 'redux/selectors/common';
 
 const PAGE_DEFAULT = 0;
@@ -48,6 +58,10 @@ const NewFeed = ({navigation}) => {
   const topProductLoading = useSelector((state) =>
     getTopProductLoadingSelector(state),
   );
+  const dynamicUsersLoading = useSelector((state) => loadingSelector(state));
+  const listDynamicUsers = useSelector((state) =>
+    listDynamicUsersSelector(state),
+  );
 
   useEffect(() => {
     dispatch(
@@ -57,13 +71,23 @@ const NewFeed = ({navigation}) => {
         newFeedType: targetType,
       }),
     );
-    dispatch(
-      storeActions.getTopProduct({
-        page: PAGE_DEFAULT,
-        limit: LIMIT_DEFAULT - 2,
-        numberOfProducts: NUMBER_OF_PRODUCT,
-      }),
-    );
+    if (targetType === TYPE_STORE) {
+      dispatch(
+        storeActions.getTopProduct({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT - 2,
+          numberOfProducts: NUMBER_OF_PRODUCT,
+        }),
+      );
+    }
+    if (targetType === TYPE_USER) {
+      dispatch(
+        dynamicUsersActions.getDynamicUser({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT - 2,
+        }),
+      );
+    }
     handleRefreshing(false);
   }, [refreshing, handleRefresh, targetType]);
 
@@ -92,7 +116,7 @@ const NewFeed = ({navigation}) => {
   };
 
   const handleLoading = () => {
-    if (!newFeedLoading && !topProductLoading) {
+    if (!newFeedLoading && !topProductLoading && !dynamicUsersLoading) {
       return false;
     }
     return true;
@@ -108,11 +132,20 @@ const NewFeed = ({navigation}) => {
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
-        <TopTrending
-          loading={handleLoading()}
-          navigation={navigation}
-          topProduct={topProduct}
-        />
+        {targetType === TYPE_STORE && (
+          <TopTrending
+            loading={handleLoading()}
+            navigation={navigation}
+            topProduct={topProduct}
+          />
+        )}
+        {targetType === TYPE_USER && (
+          <DynamicUsers
+            loading={handleLoading()}
+            navigation={navigation}
+            listDynamicUsers={listDynamicUsers}
+          />
+        )}
         <VerticalFeed
           loading={handleLoading()}
           handleRefresh={handleRefresh}
