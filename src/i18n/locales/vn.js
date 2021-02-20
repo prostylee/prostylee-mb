@@ -12,6 +12,9 @@ export default {
     textAdvertisement: 'Quảng cáo',
   },
   headerTitle: {
-    featured_store: "Cửa hàng nổi bật",
-  }
+    featured_store: 'Cửa hàng nổi bật',
+  },
+  dynamicUsers: {
+    titleDynamicUser: 'Người dùng năng động',
+  },
 };

@@ -11,7 +11,6 @@ import Item from './Item';
 import styles from './styles';
 
 const DynamicUsers = ({listDynamicUsers, loading, navigation}) => {
-  console.log('listDynamicUsers', listDynamicUsers);
   if (isEmpty(listDynamicUsers) || !listDynamicUsers?.content?.length) {
     return null;
   }
@@ -26,7 +25,7 @@ const DynamicUsers = ({listDynamicUsers, loading, navigation}) => {
     <>
       <Container style={styles.titleContainer}>
         <Title
-          title={i18n.t('stores.titleTopStore')}
+          title={i18n.t('dynamicUsers.titleDynamicUser')}
           style={styles.textTitle}
           containerStyle={{}}
           subTitle={i18n.t('common.textSeeMore')}

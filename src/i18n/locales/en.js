@@ -12,6 +12,9 @@ export default {
     textAdvertisement: 'Advertisement',
   },
   headerTitle: {
-    featured_store: "Featured store",
-  }
+    featured_store: 'Featured store',
+  },
+  dynamicUsers: {
+    titleDynamicUser: 'Dynamic User',
+  },
 };
