@@ -16,8 +16,8 @@ const awsmobile = {
       "profile",
       "aws.cognito.signin.user.admin"
     ],
-    "redirectSignIn": "prostylee://",
-    "redirectSignOut": "prostylee://",
+    "redirectSignIn": "prostylee://oauth",
+    "redirectSignOut": "prostylee://signout",
     "responseType": "code"
   },
   "federationTarget": "COGNITO_USER_POOLS",

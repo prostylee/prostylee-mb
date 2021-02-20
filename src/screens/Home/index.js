@@ -37,7 +37,7 @@ const Index = () => {
       .catch((err) => console.log(err));
 
     executeListComments();
-  }, []);
+  }, [currentUserName]);
 
   const executeListComments = () => {
     dispatch(commonActions.toggleLoading(true));
@@ -46,7 +46,9 @@ const Index = () => {
         filter: {
           parentId: {eq: DEFAULT_PARENT_COMMENT_ID},
         },
+        targetType: {eq: 'PRODUCT'},
         // limit: 4,
+        // nextToken: null,
       }),
     )
       .then((result) => {
@@ -134,6 +136,7 @@ const Index = () => {
 
   //funcs
   const onSignOut = async () => {
+    await Auth.signOut({global: true});
     await dispatch(commonActions.setInitialRouteName('LoginOptions'));
     dispatch(userActions.userLogOutSuccess());
   };
@@ -161,7 +164,7 @@ const Index = () => {
           targetType: 'PRODUCT',
           content: comment,
           numberOfLikes: 0,
-          createdAt: new Date().toISOString(), //"2021-02-18T15:41:16Z"
+          createdAt: new Date().toISOString(), // "2021-02-18T15:41:16Z"
         },
       }),
     );
@@ -201,22 +204,22 @@ const Index = () => {
             color={item.owner === currentUserName ? '#205da0' : '#01ab01'}
           />
         )}
-        right={(props) =>
-          item.owner === currentUserName ? (
-            <>
+        right={(props) => (
+          <>
+            {item.owner === currentUserName ? (
               <TextButton
                 onPress={() => deleteCommentHandler(item)}
                 label={'Delete'}
                 labelStyle={styles.privacyButton}
               />
-              <TextButton
-                onPress={() => replyCommentHandler(item)}
-                label={'Reply'}
-                labelStyle={styles.privacyButton}
-              />
-            </>
-          ) : null
-        }
+            ) : null}
+            <TextButton
+              onPress={() => replyCommentHandler(item)}
+              label={'Reply'}
+              labelStyle={styles.privacyButton}
+            />
+          </>
+        )}
       />
     );
   };
