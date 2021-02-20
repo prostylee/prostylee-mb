@@ -27,6 +27,7 @@ const intialState = {
   isLoading: false,
   loadMoreLoading: false,
   newFeed: {},
+  threeFirstNewFeedItem: {},
   page: 0,
   limit: 12,
   hasLoadMore: false,
@@ -42,11 +43,16 @@ export default handleActions(
     },
     [types.GET_NEW_FEED_SUCCESS]: (state, {payload}) => {
       const {totalPages} = payload;
+      const content = payload?.content;
+      const threeFirstItem =
+        content?.length && content?.length > 3 ? content.slice(0, 3) : [];
+      const restContent = content.slice(3, state.limit);
       return {
         ...state,
         page: PAGE_INIT,
-        newFeed: payload,
+        newFeed: {...payload, content: restContent},
         hasLoadMore: state.page < totalPages ? true : false,
+        threeFirstItem: {...payload, content: threeFirstItem},
       };
     },
     [types.GET_NEW_FEED_FAILED]: (state, {payload}) => {

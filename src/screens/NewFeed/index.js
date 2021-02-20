@@ -22,6 +22,7 @@ import {
   getPageSelector,
   getLoadMoreLoadingSelector,
   getNewFeedLoadingSelector,
+  threeFirstNewFeedItemSelector,
 } from 'redux/selectors/newFeed';
 import {
   getTopProduct,
@@ -44,6 +45,9 @@ const NewFeed = ({navigation}) => {
   const [refreshing, handleRefreshing] = useState(false);
 
   const newFeedList = useSelector((state) => getNewFeedSelector(state));
+  const threeFirstNewFeedItem = useSelector((state) =>
+    threeFirstNewFeedItemSelector(state),
+  );
   const topProduct = useSelector((state) => getTopProduct(state));
   const page = useSelector((state) => getPageSelector(state));
   const hasLoadMore = useSelector((state) => getHasLoadMoreSelector(state));
@@ -132,6 +136,15 @@ const NewFeed = ({navigation}) => {
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
+        <VerticalFeed
+          loading={handleLoading()}
+          handleRefresh={handleRefresh}
+          handleLoadMore={() => {}}
+          newFeedList={threeFirstNewFeedItem}
+          refreshing={refreshing}
+          loadMoreLoading={false}
+          isFirst={true}
+        />
         {targetType === TYPE_STORE && (
           <TopTrending
             loading={handleLoading()}

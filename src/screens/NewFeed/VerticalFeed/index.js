@@ -13,7 +13,11 @@ const VerticalFeed = ({
   handleRefresh,
   refreshing,
   loading,
+  isFirst,
 }) => {
+  if (isFirst && loading) {
+    return null;
+  }
   if (loading) {
     return (
       <>
@@ -53,7 +57,9 @@ const VerticalFeed = ({
   );
 };
 
-VerticalFeed.defaultProps = {};
+VerticalFeed.defaultProps = {
+  isFirst: false,
+};
 
 VerticalFeed.propTypes = {};
 

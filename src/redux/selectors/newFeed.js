@@ -31,3 +31,8 @@ export const getNewFeedLoadingSelector = createSelector(
   newFeedState,
   (data) => data?.isLoading,
 );
+
+export const threeFirstNewFeedItemSelector = createSelector(
+  newFeedState,
+  (data) => data?.threeFirstItem || {},
+);
