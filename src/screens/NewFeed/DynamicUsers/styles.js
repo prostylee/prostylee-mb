@@ -57,6 +57,9 @@ export default EStyleSheet.create({
     borderRadius: '4rem',
     backgroundColor: '$purple',
   },
+  followedBtn: {
+    backgroundColor: '$disabled',
+  },
   followBtnBtnLabel: {
     width: '90%',
     fontFamily: '$font1',

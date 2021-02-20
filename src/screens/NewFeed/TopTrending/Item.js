@@ -74,7 +74,7 @@ const Item = ({item, style}) => {
         uppercase={false}
         disabled={followed}
         onPress={() => _followPress()}
-        style={styles.followBtn}
+        style={[styles.followBtn, followed && styles.followedBtn]}
         labelStyle={styles.followBtnBtnLabel}>
         {i18n.t('common.textFollow')}
       </Button>
