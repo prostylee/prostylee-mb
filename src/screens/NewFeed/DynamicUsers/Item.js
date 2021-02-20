@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Text, Dimensions, ActivityIndicator} from 'react-native';
-import {ThemeView, Image} from 'components';
+import {Text} from 'react-native';
+import {ThemeView} from 'components';
 import {Avatar, Button} from 'react-native-paper';
 import i18n from 'i18n';
 
@@ -10,17 +10,14 @@ import {MapPin} from 'svg/common';
 
 import {follow, unfollow} from 'services/api/socialApi';
 
-const WIDTH = Dimensions.get('window').width;
-const WIDTH_IMG = (WIDTH * 0.7) / 3;
-const STORE = 'STORE';
-const Item = ({item, style}) => {
+const Item = ({item, style, targetType}) => {
+  console.log(targetType);
   const [followed, setFollowed] = useState(false);
-  const products = item?.products;
   const _followPress = async () => {
     if (!followed) {
       const res = await follow({
         targetId: item?.id,
-        targetType: STORE,
+        targetType: targetType,
       });
       if (res.ok) {
         setFollowed(true);
@@ -28,7 +25,7 @@ const Item = ({item, style}) => {
     } else {
       const res = await unfollow({
         targetId: item?.id,
-        targetType: STORE,
+        targetType: targetType,
       });
       if (res.ok) {
         setFollowed(false);

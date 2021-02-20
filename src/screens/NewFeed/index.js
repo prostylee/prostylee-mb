@@ -137,6 +137,7 @@ const NewFeed = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
         <VerticalFeed
+          targetType={targetType}
           loading={handleLoading()}
           handleRefresh={handleRefresh}
           handleLoadMore={() => {}}
@@ -147,6 +148,7 @@ const NewFeed = ({navigation}) => {
         />
         {targetType === TYPE_STORE && (
           <TopTrending
+            targetType={targetType}
             loading={handleLoading()}
             navigation={navigation}
             topProduct={topProduct}
@@ -154,6 +156,7 @@ const NewFeed = ({navigation}) => {
         )}
         {targetType === TYPE_USER && (
           <DynamicUsers
+            targetType={targetType}
             loading={handleLoading()}
             navigation={navigation}
             listDynamicUsers={listDynamicUsers}

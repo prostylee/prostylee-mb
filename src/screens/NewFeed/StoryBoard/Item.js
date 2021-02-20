@@ -1,18 +1,22 @@
-import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { ThemeView, Text } from 'components'
-import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
-import { margin, padding, borderRadius } from '~/Theme/Configs/spacing'
-import { Avatar, useTheme } from "react-native-paper"
+import React from 'react';
+import {Dimensions, ActivityIndicator} from 'react-native';
+import {ThemeView, Image} from 'components';
+import {Avatar} from 'react-native-paper';
+import {View} from 'react-native';
+import i18n from 'i18n';
 
-const Item = ({ item, style }) => {
-  const theme = useTheme()
+import styles from './styles';
+
+const WIDTH = Dimensions.get('window').width;
+const WIDTH_IMG = (WIDTH * 0.7) / 3;
+
+const Item = ({item, style}) => {
   return (
-    <ThemeView colorSecondary style={[styles.container, style && style]}>
+    <ThemeView colorSecondary style={[styles.itemContainer, style && style]}>
       <Avatar.Image
         source={
-          item.gravatar
-            ? { uri: item.gravatar }
+          item.avatar
+            ? {uri: item.avatar}
             : require('assets/images/default.png')
         }
         size={60}
@@ -20,30 +24,7 @@ const Item = ({ item, style }) => {
         containerStyle={styles.image}
       />
     </ThemeView>
-  )
-}
+  );
+};
 
-const styles = StyleSheet.create({
-  container: {
-    borderRadius: borderRadius.large,
-    width: 135,
-    padding: padding.large,
-    alignItems: 'center',
-  },
-  image: {
-    marginBottom: margin.small + 1,
-  },
-  name: {
-    marginBottom: 2,
-    textAlign: 'center',
-  },
-  viewRating: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  textRating: {
-    marginRight: 5,
-  },
-})
-
-export default Item
+export default Item;

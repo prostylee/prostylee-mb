@@ -14,6 +14,7 @@ const VerticalFeed = ({
   refreshing,
   loading,
   isFirst,
+  targetType,
 }) => {
   if (isFirst && loading) {
     return null;
@@ -43,7 +44,11 @@ const VerticalFeed = ({
       data={newFeedList?.content || []}
       keyExtractor={(item) => `${item.id}`}
       renderItem={({item, _i}) => (
-        <FeedItem key={'newFeedItem' + _i} newFeedItem={item} />
+        <FeedItem
+          targetType={targetType}
+          key={'newFeedItem' + _i}
+          newFeedItem={item}
+        />
       )}
       onEndReached={() => handleLoadMore()}
       refreshing={refreshing}

@@ -10,7 +10,7 @@ import Item from './Item';
 
 import styles from './styles';
 
-const DynamicUsers = ({listDynamicUsers, loading, navigation}) => {
+const DynamicUsers = ({listDynamicUsers, loading, navigation, targetType}) => {
   if (isEmpty(listDynamicUsers) || !listDynamicUsers?.content?.length) {
     return null;
   }
@@ -38,7 +38,7 @@ const DynamicUsers = ({listDynamicUsers, loading, navigation}) => {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {listDynamicUser.map((item, index) => (
             <View key={item.id} style={styles.viewContainer}>
-              <Item item={item} style={{flex: 1}} />
+              <Item targetType={targetType} item={item} style={{flex: 1}} />
             </View>
           ))}
         </ScrollView>

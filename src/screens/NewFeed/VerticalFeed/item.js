@@ -15,8 +15,7 @@ import {follow, unfollow, like, unlike} from 'services/api/socialApi';
 
 import FeedSlide from './slide';
 
-const STORE = 'STORE';
-const VerticalFeedItem = ({newFeedItem}) => {
+const VerticalFeedItem = ({newFeedItem, targetType}) => {
   if (isEmpty(newFeedItem)) {
     return null;
   }
@@ -30,7 +29,7 @@ const VerticalFeedItem = ({newFeedItem}) => {
     if (!followed) {
       const res = await follow({
         targetId: newFeedItem?.id,
-        targetType: STORE,
+        targetType,
       });
       if (res.ok) {
         setFollowed(true);
@@ -38,7 +37,7 @@ const VerticalFeedItem = ({newFeedItem}) => {
     } else {
       const res = await unfollow({
         targetId: newFeedItem?.id,
-        targetType: STORE,
+        targetType,
       });
       if (res.ok) {
         setFollowed(false);
@@ -49,7 +48,7 @@ const VerticalFeedItem = ({newFeedItem}) => {
     if (!liked) {
       const res = await like({
         targetId: newFeedItem?.id,
-        targetType: STORE,
+        targetType,
       });
       if (res.ok) {
         setLiked(true);
@@ -57,7 +56,7 @@ const VerticalFeedItem = ({newFeedItem}) => {
     } else {
       const res = await unlike({
         targetId: newFeedItem?.id,
-        targetType: STORE,
+        targetType,
       });
       if (res.ok) {
         setLiked(false);

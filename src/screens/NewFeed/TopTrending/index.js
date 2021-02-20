@@ -10,7 +10,7 @@ import Item from './Item';
 
 import styles from './styles';
 
-const TopTrending = ({topProduct, loading, navigation}) => {
+const TopTrending = ({topProduct, loading, navigation, targetType}) => {
   if (isEmpty(topProduct) || !topProduct?.content?.length) {
     return null;
   }
@@ -38,7 +38,7 @@ const TopTrending = ({topProduct, loading, navigation}) => {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {topProductList.map((item, index) => (
             <View key={item.id} style={styles.viewContainer}>
-              <Item item={item} style={{flex: 1}} />
+              <Item targetType={targetType} item={item} style={{flex: 1}} />
             </View>
           ))}
         </ScrollView>
