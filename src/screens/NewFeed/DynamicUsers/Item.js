@@ -11,7 +11,6 @@ import {MapPin} from 'svg/common';
 import {follow, unfollow} from 'services/api/socialApi';
 
 const Item = ({item, style, targetType}) => {
-  console.log(targetType);
   const [followed, setFollowed] = useState(false);
   const _followPress = async () => {
     if (!followed) {
