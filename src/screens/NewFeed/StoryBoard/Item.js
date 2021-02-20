@@ -1,21 +1,27 @@
 import React from 'react';
-import {Dimensions, ActivityIndicator} from 'react-native';
-import {ThemeView, Image} from 'components';
+import {useNavigation} from '@react-navigation/native';
+import {ActivityIndicator} from 'react-native';
+import {Image} from 'components';
 import {Avatar} from 'react-native-paper';
 import {View} from 'react-native';
-import i18n from 'i18n';
 
 import styles from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const WIDTH = Dimensions.get('window').width;
 const WIDTH_IMG = 90;
 const HEIGHT_IMG = 140;
 
 const Item = ({item, style}) => {
+  const navigation = useNavigation();
+  const _onPress = () => {
+    navigation.navigate('StoryBoard');
+  };
   return (
     <View style={[styles.itemContainer, style && style]}>
-      <TouchableOpacity style={styles.touchImg}>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={_onPress}
+        style={styles.touchImg}>
         <Image
           key={`productOfStore${item.id}`}
           source={

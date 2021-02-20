@@ -13,7 +13,15 @@ import {lightTheme, darkTheme} from 'theme';
 
 const Stack = createStackNavigator();
 
-import {Welcome, Onboarding, Login, SignUp, Home, LoginOptions, Stores} from 'screens';
+import {
+  Welcome,
+  Onboarding,
+  Login,
+  SignUp,
+  LoginOptions,
+  Stores,
+  StoryBoard,
+} from 'screens';
 import BottomTabs from './bottomTab';
 
 function SignedIn() {
@@ -68,6 +76,7 @@ function MainStack() {
       animation="fade">
       <Stack.Screen name="Home" component={BottomTabs} />
       <Stack.Screen name="Stores" component={Stores} />
+      <Stack.Screen name="StoryBoard" component={StoryBoard} />
     </Stack.Navigator>
   );
 }
