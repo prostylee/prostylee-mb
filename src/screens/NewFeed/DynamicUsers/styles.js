@@ -56,7 +56,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
     borderRadius: '4rem',
     backgroundColor: '$purple',
-    marginVertical: 8,
+    marginTop: 8,
   },
   followedBtn: {
     backgroundColor: '$disabled',
