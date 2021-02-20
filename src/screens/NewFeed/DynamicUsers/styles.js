@@ -15,7 +15,7 @@ export default EStyleSheet.create({
     paddingTop: 8,
   },
   itemContainer: {
-    width: WIDTH * 0.7,
+    width: WIDTH * 0.42,
     padding: 16,
     alignItems: 'center',
   },
@@ -38,7 +38,7 @@ export default EStyleSheet.create({
     fontWeight: '500',
     lineHeight: 20,
     fontFamily: '$font1',
-    paddingTop: 8,
+    paddingTop: 16,
   },
   address: {
     fontSize: 11,
@@ -56,6 +56,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
     borderRadius: '4rem',
     backgroundColor: '$purple',
+    marginVertical: 8,
   },
   followedBtn: {
     backgroundColor: '$disabled',
