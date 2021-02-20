@@ -10,18 +10,22 @@ import {commonActions, userActions} from 'reducers';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {TextButton, TextInputBorderBottom} from '../../components';
 import {createComment, deleteComment} from '../../graphql/mutations';
-import {listComments} from '../../graphql/queries';
+import {getComment, listComments} from '../../graphql/queries';
 import {onCreateComment, onDeleteComment} from '../../graphql/subscriptions';
 import {formatTime} from '../../utils/datetime';
-import {Divider, List, overlay, useTheme} from 'react-native-paper';
+import {Divider, List, overlay, Text, useTheme} from 'react-native-paper';
 import RootNavigator from '../../navigator/rootNavigator';
+
+const DEFAULT_PARENT_COMMENT_ID = '0';
 
 const Index = () => {
   const theme = useTheme();
   const backgroundColor = overlay(2, theme.colors.surface);
   const dispatch = useDispatch();
   const [comment, setComment] = React.useState('');
+  const [parentComment, setParentComment] = React.useState('');
   const [comments, setComments] = React.useState([]);
+  const [childrenComments, setChildrenComments] = React.useState([]);
   const [currentUserName, setCurrentUserName] = React.useState('');
 
   React.useEffect(() => {
@@ -32,11 +36,19 @@ const Index = () => {
       })
       .catch((err) => console.log(err));
 
-    getComments();
+    executeListComments();
   }, []);
 
-  const getComments = () => {
-    API.graphql(graphqlOperation(listComments))
+  const executeListComments = () => {
+    dispatch(commonActions.toggleLoading(true));
+    API.graphql(
+      graphqlOperation(listComments, {
+        filter: {
+          parentId: {eq: DEFAULT_PARENT_COMMENT_ID},
+        },
+        // limit: 4,
+      }),
+    )
       .then((result) => {
         console.log('Comments ' + JSON.stringify(result));
         setComments(result.data.listComments.items);
@@ -44,6 +56,25 @@ const Index = () => {
       .catch((err) => {
         console.log(err);
       });
+    dispatch(commonActions.toggleLoading(false));
+  };
+
+  const executeGetComment = (commentId) => {
+    console.log('executeGetComment ' + commentId);
+    dispatch(commonActions.toggleLoading(true));
+    API.graphql(
+      graphqlOperation(getComment, {
+        id: commentId,
+      }),
+    )
+      .then((result) => {
+        console.log('Comment ' + JSON.stringify(result));
+        setChildrenComments(result.data.getComment.childrens.items);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    dispatch(commonActions.toggleLoading(false));
   };
 
   React.useEffect(() => {
@@ -54,9 +85,17 @@ const Index = () => {
         const addedComment = commentData.value.data.onCreateComment;
         console.log('addedComment ' + JSON.stringify(addedComment));
 
-        const updatedComments = [...comments];
-        updatedComments.push(addedComment);
-        setComments(updatedComments);
+        if (addedComment.parentId !== DEFAULT_PARENT_COMMENT_ID) {
+          console.log('NEW child');
+          const updatedComments = [...childrenComments];
+          updatedComments.push(addedComment);
+          setChildrenComments(updatedComments);
+        } else {
+          console.log('NEW root');
+          const updatedComments = [...comments];
+          updatedComments.push(addedComment);
+          setComments(updatedComments);
+        }
       },
     });
 
@@ -66,10 +105,18 @@ const Index = () => {
       next: (commentData) => {
         const deletedComment = commentData.value.data.onDeleteComment;
         console.log('deletedComment ' + JSON.stringify(deletedComment));
-        const updatedComments = comments.filter(
-          (cmt) => cmt.id !== deletedComment.id,
-        );
-        setComments(updatedComments);
+
+        if (deletedComment.parentId !== DEFAULT_PARENT_COMMENT_ID) {
+          const updatedComments = childrenComments.filter(
+            (cmt) => cmt.id !== deletedComment.id,
+          );
+          setChildrenComments(updatedComments);
+        } else {
+          const updatedComments = comments.filter(
+            (cmt) => cmt.id !== deletedComment.id,
+          );
+          setComments(updatedComments);
+        }
       },
     });
 
@@ -83,7 +130,7 @@ const Index = () => {
         deleteCommentListener.unsubscribe();
       }
     };
-  }, [comments, dispatch]);
+  }, [comments, childrenComments, dispatch]);
 
   //funcs
   const onSignOut = async () => {
@@ -102,10 +149,12 @@ const Index = () => {
     }
 
     const user = await Auth.currentAuthenticatedUser();
-    const resposne = await API.graphql(
+    const response = await API.graphql(
       graphqlOperation(createComment, {
         input: {
-          parentId: '0',
+          parentId: parentComment
+            ? parentComment.id
+            : DEFAULT_PARENT_COMMENT_ID,
           ownerId: user.attributes.sub,
           owner: user.username,
           targetId: '1',
@@ -117,16 +166,24 @@ const Index = () => {
       }),
     );
     console.log(
-      'Submit comment successfully with response' + JSON.stringify(resposne),
+      'Submit comment successfully with response' + JSON.stringify(response),
     );
     setComment('');
   };
 
-  const deleteCommentHandler = async (comment) => {
-    console.log('deleteCommentHandler ' + comment.id);
+  const replyCommentHandler = (item) => {
+    console.log('replyCommentHandler ' + JSON.stringify(item));
+    setParentComment(item);
+    executeGetComment(item.id);
+  };
+
+  const deleteCommentHandler = async (item) => {
+    console.log('deleteCommentHandler ' + item.id);
+    dispatch(commonActions.toggleLoading(true));
     const res = await API.graphql(
-      graphqlOperation(deleteComment, {input: {id: comment.id}}),
+      graphqlOperation(deleteComment, {input: {id: item.id}}),
     );
+    dispatch(commonActions.toggleLoading(false));
     console.log('Delete successfully with response ' + JSON.stringify(res));
   };
 
@@ -146,11 +203,18 @@ const Index = () => {
         )}
         right={(props) =>
           item.owner === currentUserName ? (
-            <TextButton
-              onPress={() => deleteCommentHandler(item)}
-              label={'Delete'}
-              labelStyle={styles.privacyButton}
-            />
+            <>
+              <TextButton
+                onPress={() => deleteCommentHandler(item)}
+                label={'Delete'}
+                labelStyle={styles.privacyButton}
+              />
+              <TextButton
+                onPress={() => replyCommentHandler(item)}
+                label={'Reply'}
+                labelStyle={styles.privacyButton}
+              />
+            </>
           ) : null
         }
       />
@@ -175,22 +239,64 @@ const Index = () => {
         labelStyle={styles.privacyButton}
       />
 
-      <View style={{height: '50%', width: '100%', padding: 20}}>
-        <FlatList
-          contentContainerStyle={[
-            {backgroundColor: theme.colors.background},
-            {backgroundColor},
-          ]}
-          ItemSeparatorComponent={() => <Divider />}
-          data={comments}
-          renderItem={_renderItem}
-          keyExtractor={(item, index) => `${item.id}`}
-        />
+      <View style={{height: '70%', width: '100%', padding: 20}}>
+        <View style={{flex: 1}}>
+          {comments && comments.length > 0 && (
+            <FlatList
+              contentContainerStyle={[
+                {backgroundColor: theme.colors.background},
+                {backgroundColor},
+              ]}
+              ItemSeparatorComponent={() => <Divider />}
+              data={comments}
+              renderItem={_renderItem}
+              keyExtractor={(item, index) => `${item.id}`}
+            />
+          )}
+        </View>
+
+        <View style={{flex: 1}}>
+          <View style={{paddingBottom: 20}} />
+          <TextButton
+            onPress={() => {
+              setParentComment(null);
+              setChildrenComments([]);
+            }}
+            label={'Back to parent'}
+            labelStyle={styles.privacyButton}
+          />
+
+          <Text>
+            {parentComment ? 'Parent: ' + parentComment.content : 'No parent'}
+          </Text>
+          {childrenComments && childrenComments.length > 0 && (
+            <FlatList
+              contentContainerStyle={[
+                {backgroundColor: theme.colors.background},
+                {backgroundColor},
+              ]}
+              ItemSeparatorComponent={() => <Divider />}
+              data={childrenComments}
+              renderItem={_renderItem}
+              keyExtractor={(item, index) => `${item.id}`}
+            />
+          )}
+        </View>
       </View>
 
-      <ButtonOutlined label="Đăng Xuất Ngay" onPress={() => onSignOut()} />
-
-      <ButtonOutlined label="Upload file" onPress={() => RootNavigator.navigate('UploadFile')} />
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '90%',
+        }}>
+        <ButtonOutlined label="Đăng Xuất Ngay" onPress={() => onSignOut()} />
+        <ButtonOutlined
+          label="Upload file"
+          onPress={() => RootNavigator.navigate('UploadFile')}
+        />
+      </View>
     </View>
   );
 };
