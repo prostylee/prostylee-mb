@@ -10,14 +10,13 @@ export default EStyleSheet.create({
     paddingBottom: 6,
   },
   viewContainer: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 6,
   },
   titleContainer: {
     paddingTop: 8,
     paddingHorizontal: 16,
   },
   itemContainer: {
-    padding: 6,
     alignItems: 'center',
   },
   touchImg: {
@@ -33,5 +32,8 @@ export default EStyleSheet.create({
   },
   circleImg: {
     ...absolute(null, 8, 8, null),
+  },
+  item: {
+    flex: 1,
   },
 });

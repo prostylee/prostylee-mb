@@ -103,6 +103,11 @@ const StoryBoard = ({storyBoads, loading, navigation}) => {
     },
   ];
 
+  const padStyle = (i, max) => ({
+    paddingLeft: i === 0 ? 14 : null,
+    paddingRight: i === max - 1 ? 14 : null,
+  });
+
   if (loading) {
     return null;
   }
@@ -121,8 +126,13 @@ const StoryBoard = ({storyBoads, loading, navigation}) => {
       <Container fluid>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {listStoryBoads.map((item, index) => (
-            <View key={item.id} style={styles.viewContainer}>
-              <Item item={item} style={{flex: 1}} />
+            <View
+              key={item.id}
+              style={[
+                styles.viewContainer,
+                padStyle(index, listStoryBoads.length),
+              ]}>
+              <Item item={item} style={styles.item} />
             </View>
           ))}
         </ScrollView>
