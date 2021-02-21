@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
@@ -20,6 +21,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
     return null;
   }
 
+  const navigation = useNavigation();
   const [followed, setFollowed] = useState(false);
   const [liked, setLiked] = useState(false);
 
@@ -62,6 +64,9 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
         setLiked(false);
       }
     }
+  };
+  const _navigateChat = () => {
+    navigation.navigate('Chat');
   };
   return (
     <View style={styles.container}>
@@ -114,7 +119,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
             style={styles.touchHeart}>
             <Heart color={liked ? Colors.$purple : Colors.$icon} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.touchMes}>
+          <TouchableOpacity onPress={_navigateChat} style={styles.touchMes}>
             <Message />
           </TouchableOpacity>
         </View>

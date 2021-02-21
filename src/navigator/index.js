@@ -21,6 +21,7 @@ import {
   LoginOptions,
   Stores,
   StoryBoard,
+  Chat,
 } from 'screens';
 import BottomTabs from './bottomTab';
 
@@ -77,6 +78,7 @@ function MainStack() {
       <Stack.Screen name="Home" component={BottomTabs} />
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
+      <Stack.Screen name="Chat" component={Chat} />
     </Stack.Navigator>
   );
 }

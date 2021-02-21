@@ -6,6 +6,7 @@ import Welcome from './Welcome';
 import Onboarding from './Onboarding';
 import Stores from './Stores';
 import StoryBoard from './StoryBoard';
+import Chat from './Chat';
 
 export {
   Welcome,
@@ -16,4 +17,5 @@ export {
   LoginOptions,
   Stores,
   StoryBoard,
+  Chat,
 };
