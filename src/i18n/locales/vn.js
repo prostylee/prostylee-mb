@@ -49,4 +49,5 @@ export default {
   incorrectEmailOrPassword: 'Email hoặc mật khẩu không đúng',
   existedEmail: 'Email đã tồn tại',
   unExistedEmail: 'Email chưa được đăng ký',
+  pressBackToExitApp: 'Nhấn Back để thoát',
 };

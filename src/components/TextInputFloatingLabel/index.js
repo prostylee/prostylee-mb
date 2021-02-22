@@ -15,7 +15,7 @@ const TextInputFloatingLabel = (props) => {
         keyboardType={props.keyboardType}
         onChangeTextValue={props.onChangeTextValue}
         selectionColor={props.selectionColor}
-        style={[styles.textInput, props.textInputStyle]}
+        containerStyle={[styles.textInput, props.textInputStyle]}
         secureTextEntry={props.secureTextEntry}
         maxLength={props.maxLength}
         autoFocus={props.autoFocus}

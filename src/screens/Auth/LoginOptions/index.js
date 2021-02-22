@@ -6,11 +6,13 @@ import {
   ImageBackground,
   TouchableOpacity,
   StatusBar,
+  BackHandler,
+  ToastAndroid,
 } from 'react-native';
 
 import {useBackHandler} from '@react-native-community/hooks';
 
-import {Image, ButtonRounded} from 'components';
+import {ButtonRounded} from 'components';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
 import {LogoWhite, Facebook, Google, Apple, Zalo} from 'svg/common';
@@ -19,9 +21,6 @@ import I18n from 'i18n';
 
 //IMG
 const IMG_BG = require('assets/images/loginBg.png');
-
-//ICON
-const IC_ZALO = require('assets/icons/zaloIcon.png');
 
 import styles from './styles';
 
@@ -35,8 +34,22 @@ const Index = (props) => {
   }, []);
 
   //BackHandler handle
+  let currentCount = 0;
   useBackHandler(() => {
-    return true;
+    if (currentCount < 1) {
+      currentCount += 1;
+      ToastAndroid.showWithGravity(
+        I18n.t('pressBackToExitApp'),
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+    } else {
+      // exit the app here using
+      BackHandler.exitApp();
+    }
+    setTimeout(() => {
+      currentCount = 0;
+    }, 2000);
   });
 
   const onLogin = () => {
@@ -75,11 +88,6 @@ const Index = (props) => {
             <Google />
           </TouchableOpacity>
           <TouchableOpacity style={styles.socialBtnWrapper}>
-            {/* <Image
-              source={IC_ZALO}
-              resizeMode="contain"
-              style={styles.socialBtn}
-            /> */}
             <Zalo />
           </TouchableOpacity>
           {Platform.OS === 'ios' && (
