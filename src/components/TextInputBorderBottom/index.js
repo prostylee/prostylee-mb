@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, View, TouchableOpacity, Image, Text} from 'react-native';
+import {TextInput, View, TouchableOpacity, Text} from 'react-native';
 import styles from './styles';
 
 const TextInputBorderBottom = ({

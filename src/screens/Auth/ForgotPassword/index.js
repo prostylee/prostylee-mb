@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import {
   Container,
   ButtonRounded,
-  TextInputBorderBottom,
+  TextInputFloatingLabel,
   HeaderBack,
 } from 'components';
 
@@ -96,11 +96,10 @@ const Index = (props) => {
             onBack={() => onGoBack()}
           />
           <View style={styles.form}>
-            <Text style={styles.label}>{I18n.t('emailOrPhone')}</Text>
-            <TextInputBorderBottom
-              hint=""
+            <TextInputFloatingLabel
+              placeholder={I18n.t('emailOrPhone')}
               value={email}
-              onChangeText={(text) => onChangeEmail(text)}
+              onChangeTextValue={(text) => onChangeEmail(text)}
               textInputStyle={styles.textInput}
               autoFocus={true}
               keyboardType="email-address"

@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import {
   Container,
   ButtonRounded,
-  TextInputBorderBottom,
+  TextInputFloatingLabel,
   HeaderBack,
 } from 'components';
 
@@ -100,10 +100,10 @@ const Index = (props) => {
         <View style={styles.mainWrapper}>
           <HeaderBack title={I18n.t('resetPw')} onBack={() => onGoBack()} />
           <View style={styles.form}>
-            <TextInputBorderBottom
-              hint={I18n.t('yourNewPw')}
+            <TextInputFloatingLabel
+              placeholder={I18n.t('yourNewPw')}
               value={password}
-              onChangeText={(text) => onChangePassword(text)}
+              onChangeTextValue={(text) => onChangePassword(text)}
               textInputStyle={styles.textInput}
               autoFocus={true}
               icon={<Eye />}

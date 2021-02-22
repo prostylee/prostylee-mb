@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import {
   ContainerWithoutScrollView,
   ButtonRounded,
-  TextInputBorderBottom,
+  TextInputFloatingLabel,
   HeaderBack,
 } from 'components';
 
@@ -33,11 +33,10 @@ const Index = (props) => {
             onBack={() => onGoBack()}
           />
           <View style={styles.form}>
-            <Text style={styles.label}>{I18n.t('yourPhoneLabel')}</Text>
-            <TextInputBorderBottom
-              hint=""
+            <TextInputFloatingLabel
+              placeholder={I18n.t('yourPhoneLabel')}
               value={phone}
-              onChangeText={(text) => onChangePhone(text)}
+              onChangeTextValue={(text) => onChangePhone(text)}
               textInputStyle={styles.textInput}
               autoFocus={true}
               keyboardType="phone-pad"

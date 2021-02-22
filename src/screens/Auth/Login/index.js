@@ -3,9 +3,9 @@ import {Text, View, Dimensions, Platform, TouchableOpacity} from 'react-native';
 
 import {
   Container,
-  TextInputBorderBottom,
   ButtonRounded,
   TextButton,
+  TextInputFloatingLabel,
 } from 'components';
 import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
 import {useKeyboard, useBackHandler} from '@react-native-community/hooks';
@@ -248,10 +248,10 @@ const LoginTab = () => {
   return (
     <View style={styles.tabViewWrapper}>
       <View style={styles.form}>
-        <TextInputBorderBottom
-          hint={I18n.t('email')}
+        <TextInputFloatingLabel
           value={email}
-          onChangeText={(text) => onChangeEmail(text)}
+          placeholder={I18n.t('email')}
+          onChangeTextValue={(text) => onChangeEmail(text)}
           textInputStyle={styles.textInput}
           keyboardType="email-address"
           onBlur={() => onBlurEmailInput()}
@@ -259,10 +259,10 @@ const LoginTab = () => {
         {isShowErrMsg && invalidEmail && (
           <Text style={styles.errMsg}>{errEmailMsg}</Text>
         )}
-        <TextInputBorderBottom
-          hint={I18n.t('password')}
+        <TextInputFloatingLabel
           value={password}
-          onChangeText={(text) => onChangePassword(text)}
+          placeholder={I18n.t('password')}
+          onChangeTextValue={(text) => onChangePassword(text)}
           textInputStyle={styles.textInput}
           icon={<Eye />}
           secureTextEntry={isVisiblePw}
@@ -458,20 +458,20 @@ const SignupTab = () => {
   return (
     <View style={styles.tabViewWrapper}>
       <View style={styles.form}>
-        <TextInputBorderBottom
-          hint={I18n.t('fullname')}
+        <TextInputFloatingLabel
+          placeholder={I18n.t('fullname')}
           value={fullname}
-          onChangeText={(text) => onChangeFullname(text)}
+          onChangeTextValue={(text) => onChangeFullname(text)}
           textInputStyle={styles.textInput}
           onBlur={() => onBlurFullNameInput()}
         />
         {isShowFullNameErrMsg && invalidFullname && (
           <Text style={styles.errMsg}>{errFullnameMsg}</Text>
         )}
-        <TextInputBorderBottom
-          hint={I18n.t('email')}
+        <TextInputFloatingLabel
+          placeholder={I18n.t('email')}
           value={email}
-          onChangeText={(text) => onChangeEmail(text)}
+          onChangeTextValue={(text) => onChangeEmail(text)}
           textInputStyle={styles.textInput}
           keyboardType="email-address"
           onBlur={() => onBlurEmailInput()}
@@ -479,10 +479,10 @@ const SignupTab = () => {
         {isShowEmailErrMsg && invalidEmail && (
           <Text style={styles.errMsg}>{errEmailMsg}</Text>
         )}
-        <TextInputBorderBottom
-          hint={I18n.t('password')}
+        <TextInputFloatingLabel
+          placeholder={I18n.t('password')}
           value={password}
-          onChangeText={(text) => onChangePassword(text)}
+          onChangeTextValue={(text) => onChangePassword(text)}
           textInputStyle={styles.textInput}
           icon={<Eye />}
           secureTextEntry={isVisiblePw}

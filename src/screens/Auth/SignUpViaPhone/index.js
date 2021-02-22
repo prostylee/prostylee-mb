@@ -3,9 +3,8 @@ import {View, Text, Platform, TouchableOpacity} from 'react-native';
 import {
   ContainerWithoutScrollView,
   ButtonRounded,
-  TextInputBorderBottom,
+  TextInputFloatingLabel,
   HeaderBack,
-  Image,
   TextButton,
 } from 'components';
 
@@ -16,9 +15,6 @@ import I18n from 'i18n';
 import styles from './styles';
 
 import {Facebook, Google, AppleBlack, Zalo} from 'svg/common';
-
-//ICONS
-const IC_ZALO = require('assets/icons/zaloIcon.png');
 
 const Index = (props) => {
   //State
@@ -45,18 +41,17 @@ const Index = (props) => {
             onBack={() => onGoBack()}
           />
           <View style={styles.form}>
-            {/* <Text style={styles.label}>Số điện thoại của bạn</Text> */}
-            <TextInputBorderBottom
-              hint={I18n.t('fullname')}
+            <TextInputFloatingLabel
+              placeholder={I18n.t('fullname')}
               value={phone}
-              onChangeText={(text) => onChangePhone(text)}
+              onChangeTextValue={(text) => onChangePhone(text)}
               style={styles.textInput}
               autoFocus={true}
             />
-            <TextInputBorderBottom
-              hint={I18n.t('yourPhone')}
+            <TextInputFloatingLabel
+              placeholder={I18n.t('yourPhone')}
               value={phone}
-              onChangeText={(text) => onChangePhone(text)}
+              onChangeTextValue={(text) => onChangePhone(text)}
               style={styles.textInput}
               autoFocus={true}
               keyboardType="phone-pad"
