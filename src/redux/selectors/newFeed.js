@@ -36,3 +36,13 @@ export const threeFirstNewFeedItemSelector = createSelector(
   newFeedState,
   (data) => data?.threeFirstItem || {},
 );
+
+export const getStoriesLoading = createSelector(
+  newFeedState,
+  (data) => data?.storiesLoading,
+);
+
+export const getStories = createSelector(
+  newFeedState,
+  (data) => data?.stories || {},
+);

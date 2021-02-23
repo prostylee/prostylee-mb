@@ -10,8 +10,9 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const WIDTH_IMG = 90;
 const HEIGHT_IMG = 140;
+const TYPE_STORE = 'STORE';
 
-const Item = ({item, style}) => {
+const Item = ({item, style, targetType}) => {
   const navigation = useNavigation();
   const _onPress = () => {
     navigation.navigate('StoryBoard');
@@ -36,8 +37,8 @@ const Item = ({item, style}) => {
         <View style={styles.circleImg}>
           <Avatar.Image
             source={
-              item.logo
-                ? {uri: item.logo}
+              item.logoUrl || item.avatar
+                ? {uri: targetType === TYPE_STORE ? item.logoUrl : item.avatar}
                 : require('assets/images/default.png')
             }
             size={26}

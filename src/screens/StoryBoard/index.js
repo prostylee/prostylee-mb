@@ -1,13 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ThemeView} from 'components';
 
 import Stories from './Stories';
 
 const StoryBoard = ({navigation}) => {
-  const insets = useSafeAreaInsets();
-  console.log(insets);
   const listStoryBoads = [
     {
       image:

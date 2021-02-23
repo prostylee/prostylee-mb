@@ -1,6 +1,10 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {getNewFeed} from 'services/api/newFeedApi';
+import {
+  getNewFeed,
+  getStoriesByStore,
+  getStoriesByUser,
+} from 'services/api/newFeedApi';
 import {newFeedActions, newFeedTypes} from 'reducers';
 
 const getNewFeeds = function* ({payload}) {
@@ -35,8 +39,42 @@ const getLoadMoreNewFeed = function* ({payload}) {
   }
 };
 
+const getStoriesByStores = function* ({payload}) {
+  try {
+    yield put(newFeedActions.setLoadingStories(false));
+    const res = yield call(getStoriesByStore, payload);
+    if (res.ok) {
+      yield put(newFeedActions.getStoriesByStoreSuccess(res.data));
+    } else {
+      yield put(newFeedActions.getStoriesByStoreFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(newFeedActions.setLoadingStories(false));
+  }
+};
+
+const getStoriesByUsers = function* ({payload}) {
+  try {
+    yield put(newFeedActions.setLoadingStories(false));
+    const res = yield call(getStoriesByUser, payload);
+    if (res.ok) {
+      yield put(newFeedActions.getStoriesByUserSuccess(res.data));
+    } else {
+      yield put(newFeedActions.getStoriesByUserFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(newFeedActions.setLoadingStories(false));
+  }
+};
+
 const watcher = function* () {
   yield takeLatest(newFeedTypes.GET_NEW_FEED, getNewFeeds);
   yield takeLatest(newFeedTypes.HANDLE_LOAD_MORE, getLoadMoreNewFeed);
+  yield takeLatest(newFeedTypes.GET_STORIES_BY_STORE, getStoriesByStores);
+  yield takeLatest(newFeedTypes.GET_STORIES_BY_USER, getStoriesByUsers);
 };
 export default watcher();

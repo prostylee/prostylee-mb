@@ -9,6 +9,14 @@ export const types = {
   HANDLE_LOAD_MORE: 'prostylee/NEW_FEED/HANDLE_LOAD_MORE',
   HANDLE_LOAD_MORE_SUCCESS: 'prostylee/NEW_FEED/HANDLE_LOAD_MORE_SUCCESS',
   HANDLE_LOAD_MORE_FAILED: 'prostylee/NEW_FEED/HANDLE_LOAD_MORE_FAILED',
+  GET_STORIES_BY_STORE: 'prostylee/NEW_FEED/GET_STORIES_BY_STORE',
+  SET_LOADING_STORIES: 'prostylee/NEW_FEED/SET_LOADING_STORIES',
+  GET_STORIES_BY_STORE_SUCCESS:
+    'prostylee/NEW_FEED/GET_STORIES_BY_STORE_SUCCESS',
+  GET_STORIES_BY_STORE_FAILED: 'prostylee/NEW_FEED/GET_STORIES_BY_STORE_FAILED',
+  GET_STORIES_BY_USER: 'prostylee/NEW_FEED/GET_STORIES_BY_USER',
+  GET_STORIES_BY_USER_SUCCESS: 'prostylee/NEW_FEED/GET_STORIES_BY_USER_SUCCESS',
+  GET_STORIES_BY_USER_FAILED: 'prostylee/NEW_FEED/GET_STORIES_BY_USER_FAILED',
 };
 
 export const actions = {
@@ -20,14 +28,23 @@ export const actions = {
   handleLoadMore: createAction(types.HANDLE_LOAD_MORE),
   handleLoadMoreSuccess: createAction(types.HANDLE_LOAD_MORE_SUCCESS),
   handleLoadMoreFailed: createAction(types.HANDLE_LOAD_MORE_FAILED),
+  getStoriesByStore: createAction(types.GET_STORIES_BY_STORE),
+  getStoriesByStoreSuccess: createAction(types.GET_STORIES_BY_STORE_SUCCESS),
+  getStoriesByStoreFailed: createAction(types.GET_STORIES_BY_STORE_FAILED),
+  setLoadingStories: createAction(types.SET_LOADING_STORIES),
+  getStoriesByUser: createAction(types.GET_STORIES_BY_USER),
+  getStoriesByUserSuccess: createAction(types.GET_STORIES_BY_USER_SUCCESS),
+  getStoriesByUserFailed: createAction(types.GET_STORIES_BY_USER_FAILED),
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
 const intialState = {
   isLoading: false,
+  storiesLoading: false,
   loadMoreLoading: false,
   newFeed: {},
   threeFirstNewFeedItem: {},
+  stories: {},
   page: 0,
   limit: 12,
   hasLoadMore: false,
@@ -40,6 +57,9 @@ export default handleActions(
     },
     [types.SET_LOAD_MORE_LOADING]: (state, {payload}) => {
       return {...state, loadMoreLoading: payload};
+    },
+    [types.SET_LOADING_STORIES]: (state, {payload}) => {
+      return {...state, storiesLoading: payload};
     },
     [types.GET_NEW_FEED_SUCCESS]: (state, {payload}) => {
       const {totalPages} = payload;
@@ -70,6 +90,18 @@ export default handleActions(
     },
     [types.HANDLE_LOAD_MORE_FAILED]: (state, {payload}) => {
       return {...state};
+    },
+    [types.GET_STORIES_BY_STORE_SUCCESS]: (state, {payload}) => {
+      return {...state, stories: payload};
+    },
+    [types.GET_STORIES_BY_STORE_FAILED]: (state, {payload}) => {
+      return {...state, stories: {}};
+    },
+    [types.GET_STORIES_BY_USER_SUCCESS]: (state, {payload}) => {
+      return {...state, stories: payload};
+    },
+    [types.GET_STORIES_BY_USER_FAILED]: (state, {payload}) => {
+      return {...state, stories: {}};
     },
   },
   intialState,

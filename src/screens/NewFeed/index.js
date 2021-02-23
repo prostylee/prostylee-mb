@@ -24,6 +24,8 @@ import {
   getLoadMoreLoadingSelector,
   getNewFeedLoadingSelector,
   threeFirstNewFeedItemSelector,
+  getStoriesLoading,
+  getStories,
 } from 'redux/selectors/newFeed';
 import {
   getTopProduct,
@@ -67,6 +69,8 @@ const NewFeed = ({navigation}) => {
   const listDynamicUsers = useSelector((state) =>
     listDynamicUsersSelector(state),
   );
+  const storiesLoading = useSelector((state) => getStoriesLoading(state));
+  const stories = useSelector((state) => getStories(state));
 
   useEffect(() => {
     dispatch(
@@ -84,12 +88,22 @@ const NewFeed = ({navigation}) => {
           numberOfProducts: NUMBER_OF_PRODUCT,
         }),
       );
+      dispatch(
+        newFeedActions.getStoriesByStore({
+          page: PAGE_DEFAULT,
+        }),
+      );
     }
     if (targetType === TYPE_USER) {
       dispatch(
         dynamicUsersActions.getDynamicUser({
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT - 2,
+        }),
+      );
+      dispatch(
+        newFeedActions.getStoriesByUser({
+          page: PAGE_DEFAULT,
         }),
       );
     }
@@ -121,7 +135,12 @@ const NewFeed = ({navigation}) => {
   };
 
   const handleLoading = () => {
-    if (!newFeedLoading && !topProductLoading && !dynamicUsersLoading) {
+    if (
+      !newFeedLoading &&
+      !topProductLoading &&
+      !dynamicUsersLoading &&
+      !storiesLoading
+    ) {
       return false;
     }
     return true;
@@ -137,7 +156,11 @@ const NewFeed = ({navigation}) => {
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
-        <StoryBoard loading={handleLoading()} />
+        <StoryBoard
+          targetType={targetType}
+          stories={stories}
+          loading={handleLoading()}
+        />
         <VerticalFeed
           targetType={targetType}
           loading={handleLoading()}
