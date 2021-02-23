@@ -4,7 +4,7 @@ import {View, Animated, StyleSheet, Platform, Dimensions} from 'react-native';
 
 import styles from './styles';
 
-import Story from '../Story';
+import Story from '../Story/story';
 
 const {width} = Dimensions.get('window');
 const perspective = width;
