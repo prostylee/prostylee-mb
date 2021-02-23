@@ -6,7 +6,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: '3%',
-    paddingBottom: '8rem',
+    paddingVertical: '8rem',
     borderBottomWidth: '0.5rem',
     borderColor: '$line',
   },
