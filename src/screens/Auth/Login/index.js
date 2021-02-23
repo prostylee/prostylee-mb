@@ -161,8 +161,12 @@ const LoginTab = () => {
   const [invalidPassword, setInvalidPassword] = React.useState(false);
   const [errPasswordMsg, setErrPasswordMsg] = React.useState('');
   const [disabledLoginBtn, setDisabledLoginBtn] = React.useState(false);
-  const [isVisiblePw, setVisiblePw] = React.useState(true);
   const [isShowErrMsg, toggleShowErrMsg] = React.useState(false);
+  const [isFocusEmailInput, setFocusEmailInput] = React.useState(false);
+  const [isFocusPasswordInput, setFocusPasswordInput] = React.useState(false);
+  const [isShowPasswordErrMsg, toggleShowPasswordErrMsg] = React.useState(
+    false,
+  );
 
   //useEffect
   React.useEffect(() => {
@@ -209,12 +213,45 @@ const LoginTab = () => {
     if (invalidEmail) {
       toggleShowErrMsg(true);
     }
+    setFocusEmailInput(false);
+  };
+
+  const onFocusEmailInput = () => {
+    setFocusEmailInput(true);
+  };
+
+  const onFocusPasswordInput = () => {
+    setFocusPasswordInput(true);
+  };
+
+  const onBlurPasswordInput = () => {
+    if (invalidPassword) {
+      toggleShowPasswordErrMsg(true);
+    }
+    setFocusPasswordInput(false);
   };
 
   const onChangePassword = async (value) => {
-    setPassword(value);
-    setInvalidPassword(false);
-    setErrPasswordMsg('');
+    if (!_.isEmpty(value)) {
+      //nếu textInput có giá trị khác rỗng
+      if (passwordRegex.test(value) === false) {
+        setPassword(value);
+        setInvalidPassword(true);
+        setErrPasswordMsg(I18n.t('invalidPassword'));
+        toggleShowPasswordErrMsg(false);
+        return false;
+      } else {
+        //email hợp lệ
+        setPassword(value);
+        setInvalidPassword(false);
+        setErrPasswordMsg('');
+      }
+    } else {
+      //nếu textInput rỗng
+      setPassword(value);
+      setInvalidPassword(false);
+      setErrPasswordMsg('');
+    }
   };
 
   //handle funcs
@@ -223,10 +260,6 @@ const LoginTab = () => {
   };
   const onForgotPw = () => {
     RootNavigator.navigate('ForgotPassword');
-  };
-
-  const onTogglePasswordVisibility = () => {
-    setVisiblePw(!isVisiblePw);
   };
 
   //handle User login
@@ -251,10 +284,11 @@ const LoginTab = () => {
         <TextInputFloatingLabel
           value={email}
           placeholder={I18n.t('email')}
-          onChangeTextValue={(text) => onChangeEmail(text)}
-          textInputStyle={styles.textInput}
+          onChangeText={(text) => onChangeEmail(text)}
           keyboardType="email-address"
           onBlur={() => onBlurEmailInput()}
+          onFocus={() => onFocusEmailInput()}
+          isFocused={isFocusEmailInput}
         />
         {isShowErrMsg && invalidEmail && (
           <Text style={styles.errMsg}>{errEmailMsg}</Text>
@@ -262,13 +296,17 @@ const LoginTab = () => {
         <TextInputFloatingLabel
           value={password}
           placeholder={I18n.t('password')}
-          onChangeTextValue={(text) => onChangePassword(text)}
-          textInputStyle={styles.textInput}
-          icon={<Eye />}
-          secureTextEntry={isVisiblePw}
-          onPressIcon={() => onTogglePasswordVisibility()}
+          onChangeText={(text) => onChangePassword(text)}
+          iconShow={<Eye />}
+          iconHide={<Eye />}
+          secureTextEntry={true}
+          onBlur={() => onBlurPasswordInput()}
+          onFocus={() => onFocusPasswordInput()}
+          isFocused={isFocusPasswordInput}
         />
-        {invalidPassword && <Text style={styles.errMsg}>{errPasswordMsg}</Text>}
+        {isShowPasswordErrMsg && invalidPassword && (
+          <Text style={styles.errMsg}>{errPasswordMsg}</Text>
+        )}
         <View style={styles.btnWrapper}>
           <ButtonRounded
             onPress={() => onLogin()}
@@ -278,8 +316,9 @@ const LoginTab = () => {
         </View>
         <View style={styles.btnWrapper}>
           <TextButton
+            icon={({size, color}) => <Phone />}
             onPress={() => onLoginWithPhone()}
-            labelStyle={styles.textBtnLabel}
+            labelStyle={styles.iconTextLabel}
             label={I18n.t('loginWithPhone')}
           />
         </View>
@@ -307,7 +346,6 @@ const SignupTab = () => {
   const [invalidPassword, setInvalidPassword] = React.useState(false);
   const [errPasswordMsg, setErrPasswordMsg] = React.useState('');
   const [disabledSignUpBtn, setDisabledSignUpBtn] = React.useState(false);
-  const [isVisiblePw, setVisiblePw] = React.useState(true);
   const [isShowFullNameErrMsg, toggleShowFullNameErrMsg] = React.useState(
     false,
   );
@@ -315,6 +353,9 @@ const SignupTab = () => {
   const [isShowPasswordErrMsg, toggleShowPasswordErrMsg] = React.useState(
     false,
   );
+  const [isFocusFullNameInput, setFocusFullNameInput] = React.useState(false);
+  const [isFocusEmailInput, setFocusEmailInput] = React.useState(false);
+  const [isFocusPasswordInput, setFocusPasswordInput] = React.useState(false);
 
   //useEffect
   React.useEffect(() => {
@@ -370,6 +411,11 @@ const SignupTab = () => {
     if (invalidFullname) {
       toggleShowFullNameErrMsg(true);
     }
+    setFocusFullNameInput(false);
+  };
+
+  const onFocusFullNameInput = () => {
+    setFocusFullNameInput(true);
   };
 
   const onChangeEmail = async (value) => {
@@ -399,6 +445,11 @@ const SignupTab = () => {
     if (invalidEmail) {
       toggleShowEmailErrMsg(true);
     }
+    setFocusEmailInput(false);
+  };
+
+  const onFocusEmailInput = () => {
+    setFocusEmailInput(true);
   };
 
   const onChangePassword = async (value) => {
@@ -428,17 +479,17 @@ const SignupTab = () => {
     if (invalidPassword) {
       toggleShowPasswordErrMsg(true);
     }
+    setFocusPasswordInput(false);
+  };
+
+  const onFocusPasswordInput = () => {
+    setFocusPasswordInput(true);
   };
 
   //handle funcs
   const onSignUpWithPhone = () => {
     RootNavigator.navigate('SignUpViaPhone');
   };
-
-  const onTogglePasswordVisibility = () => {
-    setVisiblePw(!isVisiblePw);
-  };
-
   //handle User login
   const onSignUp = async () => {
     await dispatch(commonActions.toggleLoading(true));
@@ -461,9 +512,11 @@ const SignupTab = () => {
         <TextInputFloatingLabel
           placeholder={I18n.t('fullname')}
           value={fullname}
-          onChangeTextValue={(text) => onChangeFullname(text)}
+          onChangeText={(text) => onChangeFullname(text)}
           textInputStyle={styles.textInput}
           onBlur={() => onBlurFullNameInput()}
+          onFocus={() => onFocusFullNameInput()}
+          isFocused={isFocusFullNameInput}
         />
         {isShowFullNameErrMsg && invalidFullname && (
           <Text style={styles.errMsg}>{errFullnameMsg}</Text>
@@ -471,10 +524,12 @@ const SignupTab = () => {
         <TextInputFloatingLabel
           placeholder={I18n.t('email')}
           value={email}
-          onChangeTextValue={(text) => onChangeEmail(text)}
+          onChangeText={(text) => onChangeEmail(text)}
           textInputStyle={styles.textInput}
           keyboardType="email-address"
           onBlur={() => onBlurEmailInput()}
+          onFocus={() => onFocusEmailInput()}
+          isFocused={isFocusEmailInput}
         />
         {isShowEmailErrMsg && invalidEmail && (
           <Text style={styles.errMsg}>{errEmailMsg}</Text>
@@ -482,12 +537,14 @@ const SignupTab = () => {
         <TextInputFloatingLabel
           placeholder={I18n.t('password')}
           value={password}
-          onChangeTextValue={(text) => onChangePassword(text)}
+          onChangeText={(text) => onChangePassword(text)}
           textInputStyle={styles.textInput}
-          icon={<Eye />}
-          secureTextEntry={isVisiblePw}
-          onPressIcon={() => onTogglePasswordVisibility()}
+          iconShow={<Eye />}
+          iconHide={<Eye />}
+          secureTextEntry={true}
           onBlur={() => onBlurPasswordInput()}
+          onFocus={() => onFocusPasswordInput()}
+          isFocused={isFocusPasswordInput}
         />
         {isShowPasswordErrMsg && invalidPassword && (
           <Text style={styles.errMsg}>{errPasswordMsg}</Text>

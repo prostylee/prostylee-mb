@@ -1,35 +1,43 @@
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 
-import FloatLabelTextInput from 'react-native-floating-label-text-input';
+import {FloatingLabelInput} from 'react-native-floating-label-input';
 import styles from './styles';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 const TextInputFloatingLabel = (props) => {
   return (
-    <View style={[styles.container, props.style]}>
-      <FloatLabelTextInput
-        placeholder={props.placeholder}
+    <View>
+      <FloatingLabelInput
+        ref={props.ref}
+        label={props.placeholder}
         value={props.value}
         onFocus={props.onFocus}
+        isFocused={props.isFocused}
         onBlur={props.onBlur}
+        staticLabel={props.staticLabel}
         keyboardType={props.keyboardType}
-        onChangeTextValue={props.onChangeTextValue}
+        onChangeText={props.onChangeText}
         selectionColor={props.selectionColor}
-        containerStyle={[styles.textInput, props.textInputStyle]}
-        secureTextEntry={props.secureTextEntry}
+        isPassword={props.secureTextEntry}
         maxLength={props.maxLength}
         autoFocus={props.autoFocus}
         editable={props.editable}
+        containerStyles={
+          props.isFocused ? styles.containerStylesFocus : styles.containerStyles
+        }
+        customLabelStyles={{
+          colorFocused: EStyleSheet.value('$lightGray'),
+          fontSizeFocused: EStyleSheet.value('$normalText'),
+        }}
+        labelStyles={styles.labelStyles}
+        inputStyles={styles.textInput}
+        rightComponent={
+          props.unit ? <Text style={styles.unitText}>{props.unit}</Text> : null
+        }
+        customShowPasswordComponent={props.iconShow}
+        customHidePasswordComponent={props.iconHide}
       />
-      {props.icon ? (
-        <TouchableOpacity
-          style={styles.wrapperIcon}
-          onPress={props.onPressIcon}
-          disabled={props.disablePressIcon}>
-          {props.icon}
-        </TouchableOpacity>
-      ) : null}
-      {props.unit ? <Text style={styles.unitText}>{props.unit}</Text> : null}
     </View>
   );
 };
@@ -37,7 +45,10 @@ const TextInputFloatingLabel = (props) => {
 TextInputFloatingLabel.defaultProps = {
   selectionColor: '#823FFD',
   secureTextEntry: false,
+  autoFocus: false,
   disablePressIcon: false,
+  staticLabel: false,
+  isFocused: false,
 };
 
 export default TextInputFloatingLabel;

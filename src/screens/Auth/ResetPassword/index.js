@@ -23,7 +23,7 @@ const Index = (props) => {
   const [invalidPassword, setInvalidPassword] = React.useState(false);
   const [errPasswordMsg, setErrPasswordMsg] = React.useState('');
   const [disabledBtn, setDisabledBtn] = React.useState(false);
-  const [isVisiblePw, setVisiblePw] = React.useState(true);
+  const [isFocusPasswordInput, setFocusPasswordInput] = React.useState(true);
   const [isShowErrMsg, toggleShowErrMsg] = React.useState(true);
 
   //useEffect
@@ -71,10 +71,11 @@ const Index = (props) => {
     if (invalidPassword) {
       toggleShowErrMsg(true);
     }
+    setFocusPasswordInput(false);
   };
 
-  const onTogglePasswordVisibility = () => {
-    setVisiblePw(!isVisiblePw);
+  const onFocusPasswordInput = () => {
+    setFocusPasswordInput(true);
   };
 
   const onUpdateNewPassword = async () => {
@@ -103,23 +104,25 @@ const Index = (props) => {
             <TextInputFloatingLabel
               placeholder={I18n.t('yourNewPw')}
               value={password}
-              onChangeTextValue={(text) => onChangePassword(text)}
-              textInputStyle={styles.textInput}
+              onChangeText={(text) => onChangePassword(text)}
               autoFocus={true}
-              icon={<Eye />}
-              secureTextEntry={isVisiblePw}
-              onPressIcon={() => onTogglePasswordVisibility()}
+              iconShow={<Eye />}
+              iconHide={<Eye />}
+              secureTextEntry={true}
               onBlur={() => onBlurPasswordInput()}
+              onFocus={() => onFocusPasswordInput()}
+              isFocused={isFocusPasswordInput}
             />
             {isShowErrMsg && invalidPassword && (
               <Text style={styles.errMsg}>{errPasswordMsg}</Text>
             )}
-            <ButtonRounded
-              label={I18n.t('next')}
-              style={styles.button}
-              onPress={() => onUpdateNewPassword()}
-              disabled={disabledBtn}
-            />
+            <View style={styles.btnWrapper}>
+              <ButtonRounded
+                label={I18n.t('next')}
+                onPress={() => onUpdateNewPassword()}
+                disabled={disabledBtn}
+              />
+            </View>
           </View>
         </View>
       </Container>

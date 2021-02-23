@@ -49,7 +49,8 @@ const Index = (props) => {
     }
     setTimeout(() => {
       currentCount = 0;
-    }, 2000);
+    }, 4000);
+    return true;
   });
 
   const onLogin = () => {

@@ -20,7 +20,7 @@ export default EStyleSheet.create({
     color: '$lightGray',
     fontSize: '$normalText',
   },
-  button: {
+  btnWrapper: {
     marginTop: '15rem',
   },
 });

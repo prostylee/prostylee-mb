@@ -15,11 +15,8 @@ export default EStyleSheet.create({
     paddingHorizontal: '6%',
     marginTop: '20rem',
   },
-  button: {
+  btnWrapper: {
     marginTop: '15rem',
-  },
-  textInput: {
-    paddingRight: '5%',
   },
   errMsg: {
     fontFamily: '$font1',

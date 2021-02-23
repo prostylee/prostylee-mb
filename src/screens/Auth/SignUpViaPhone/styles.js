@@ -24,7 +24,7 @@ export default EStyleSheet.create({
   textInput: {
     marginBottom: '10rem',
   },
-  button: {
+  btnWrapper: {
     marginTop: '15rem',
   },
   divider: {

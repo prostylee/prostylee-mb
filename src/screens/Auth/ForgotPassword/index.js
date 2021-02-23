@@ -23,6 +23,7 @@ const Index = (props) => {
   const [errEmailMsg, setErrEmailMsg] = React.useState('');
   const [disabledBtn, setDisabledBtn] = React.useState(false);
   const [isShowErrMsg, toggleShowErrMsg] = React.useState(false);
+  const [isFocusEmailInput, setFocusEmailInput] = React.useState(true);
 
   //useEffect
   React.useEffect(() => {
@@ -65,6 +66,11 @@ const Index = (props) => {
     if (invalidEmail) {
       toggleShowErrMsg(true);
     }
+    setFocusEmailInput(false);
+  };
+
+  const onFocusEmailInput = () => {
+    setFocusEmailInput(true);
   };
 
   //handle User login
@@ -99,11 +105,12 @@ const Index = (props) => {
             <TextInputFloatingLabel
               placeholder={I18n.t('emailOrPhone')}
               value={email}
-              onChangeTextValue={(text) => onChangeEmail(text)}
-              textInputStyle={styles.textInput}
+              onChangeText={(text) => onChangeEmail(text)}
               autoFocus={true}
               keyboardType="email-address"
               onBlur={() => onBlurEmailInput()}
+              onFocus={() => onFocusEmailInput()}
+              isFocused={isFocusEmailInput}
             />
             {isShowErrMsg && invalidEmail && (
               <Text style={styles.errMsg}>{errEmailMsg}</Text>
@@ -111,7 +118,6 @@ const Index = (props) => {
             <View style={styles.btnWrapper}>
               <ButtonRounded
                 label={I18n.t('next')}
-                style={styles.button}
                 onPress={() => onSubmitEmail()}
                 disabled={disabledBtn}
               />

@@ -14,13 +14,34 @@ import I18n from 'i18n';
 const Index = (props) => {
   //State
   const [phone, setPhone] = React.useState('');
+  const [isFocusPhoneInput, setFocusPhoneInput] = React.useState(true);
+
+  //input ref
+  const inputRef = React.useRef(null);
+
+  //back
   const onGoBack = () => {
     props.navigation.goBack();
   };
 
+  //useEffect
+  React.useEffect(() => {
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 1000);
+  }, []);
+
   //input
   const onChangePhone = (text) => {
     setPhone(text);
+  };
+
+  const onBlurPhoneInput = () => {
+    setFocusPhoneInput(false);
+  };
+
+  const onFocusPhoneInput = () => {
+    setFocusPhoneInput(true);
   };
 
   const onVerifyOTP = () => {};
@@ -34,18 +55,23 @@ const Index = (props) => {
           />
           <View style={styles.form}>
             <TextInputFloatingLabel
+              ref={inputRef}
               placeholder={I18n.t('yourPhoneLabel')}
               value={phone}
-              onChangeTextValue={(text) => onChangePhone(text)}
-              textInputStyle={styles.textInput}
-              autoFocus={true}
+              onChangeText={(text) => onChangePhone(text)}
               keyboardType="phone-pad"
+              autoFocus={true}
+              onBlur={() => onBlurPhoneInput()}
+              onFocus={() => onFocusPhoneInput()}
+              isFocused={isFocusPhoneInput}
             />
-            <ButtonRounded
-              label={I18n.t('sendVerificationCode')}
-              style={styles.button}
-              onPress={() => onVerifyOTP()}
-            />
+            <View style={styles.btnWrapper}>
+              <ButtonRounded
+                label={I18n.t('sendVerificationCode')}
+                onPress={() => onVerifyOTP()}
+                disabled={true}
+              />
+            </View>
           </View>
         </View>
       </ContainerWithoutScrollView>
