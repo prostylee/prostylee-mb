@@ -66,6 +66,7 @@ export default EStyleSheet.create({
     fontWeight: '500',
     lineHeight: 20,
     fontFamily: '$font1',
+    width: WIDTH * 0.75,
   },
   price: {
     color: '$lightGray',
@@ -107,5 +108,11 @@ export default EStyleSheet.create({
     position: 'relative',
     height: 40,
     justifyContent: 'center',
+  },
+  isAdvertising: {
+    color: '$lightGray',
+    fontSize: 11,
+    lineHeight: 16,
+    marginLeft: 10,
   },
 });

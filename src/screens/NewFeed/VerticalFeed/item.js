@@ -16,6 +16,8 @@ import {follow, unfollow, like, unlike} from 'services/api/socialApi';
 
 import FeedSlide from './slide';
 
+import {currencyFormat} from 'utils/currency';
+
 const VerticalFeedItem = ({newFeedItem, targetType}) => {
   if (isEmpty(newFeedItem)) {
     return null;
@@ -26,6 +28,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
   const [liked, setLiked] = useState(false);
 
   const disCountPer = newFeedItem?.priceSale / newFeedItem?.price;
+  const productOwnerResponse = newFeedItem?.productOwnerResponse;
 
   const _followPress = async () => {
     if (!followed) {
@@ -75,13 +78,19 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
           <Avatar.Image
             size={32}
             source={{
-              uri:
-                'https://www.iphonehacks.com/wp-content/uploads/2020/07/ios-14-home-screen-widgets-alt.png',
+              uri: productOwnerResponse.logoUrl,
             }}
           />
-          <Text numberOfLines={1} style={styles.textTitle}>
-            {newFeedItem?.name}
-          </Text>
+          <View>
+            <Text numberOfLines={1} style={styles.textTitle}>
+              {productOwnerResponse?.name}
+            </Text>
+            {newFeedItem?.isAdvertising && (
+              <Text style={styles.isAdvertising}>
+                {i18n.t('common.textAdvertisement')}
+              </Text>
+            )}
+          </View>
         </View>
         <TouchableOpacity
           onPress={() => _followPress()}
@@ -105,8 +114,10 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
       </View>
       <ContainerView fluid style={styles.description}>
         <View style={styles.wrapInfo}>
-          <Text style={styles.productName}>Áo khoác blazer Nữ tay dài</Text>
-          <Text style={styles.price}>1000000 đ</Text>
+          <Text style={styles.productName}>{newFeedItem.name}</Text>
+          <Text style={styles.price}>
+            {currencyFormat(newFeedItem.priceSale, 'đ')}
+          </Text>
         </View>
         <TouchableOpacity style={styles.touchBuyNow}>
           <Text style={styles.touchTextByNow}>Mua ngay</Text>
