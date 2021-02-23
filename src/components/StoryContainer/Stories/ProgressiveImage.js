@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, Animated} from 'react-native';
 
+import {absolute} from 'theme/style';
+
 const ProgressiveImage = (props) => {
   const thumbnailAnimated = new Animated.Value(0);
 
@@ -39,14 +41,10 @@ const ProgressiveImage = (props) => {
 
 const styles = StyleSheet.create({
   imageOverlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    top: 0,
+    ...absolute(0, 0, 0, 0),
   },
   container: {
-    backgroundColor: '#e1e4e8',
+    marginTop: -14,
   },
 });
 
