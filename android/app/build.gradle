@@ -192,6 +192,9 @@ android {
 
         }
     }
+    // lintOptions {
+    //     checkReleaseBuilds false
+    // }
 }
 
 dependencies {
@@ -237,7 +240,11 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '6.2.1'
+    gradleVersion = '6.5.1'
+}
+
+task prepareKotlinBuildScriptModel {
+
 }
 
 

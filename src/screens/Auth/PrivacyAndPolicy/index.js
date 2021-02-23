@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Container, HeaderBack} from 'components';
+import {ContainerWithoutScrollView, HeaderBack} from 'components';
 
 import styles from './styles';
 
@@ -13,14 +13,17 @@ const Index = (props) => {
 
   return (
     <View style={styles.container}>
-      <HeaderBack title={props.route.params.title} onBack={() => onGoBack()} />
-      <Container>
+      <ContainerWithoutScrollView>
+        <HeaderBack
+          title={props.route.params.title}
+          onBack={() => onGoBack()}
+        />
         <View style={styles.mainWrapper}>
           {props.route.params?.url && (
             <AutoHeightWebView
               originWhitelist={['*']}
               source={{
-                url: props.route.params.url,
+                uri: props.route.params.url,
               }}
               style={styles.webview}
               viewportContent={
@@ -29,7 +32,7 @@ const Index = (props) => {
             />
           )}
         </View>
-      </Container>
+      </ContainerWithoutScrollView>
     </View>
   );
 };
