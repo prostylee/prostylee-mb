@@ -16,20 +16,10 @@ const Index = (props) => {
   const [phone, setPhone] = React.useState('');
   const [isFocusPhoneInput, setFocusPhoneInput] = React.useState(true);
 
-  //input ref
-  const inputRef = React.useRef(null);
-
   //back
   const onGoBack = () => {
     props.navigation.goBack();
   };
-
-  //useEffect
-  React.useEffect(() => {
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 1000);
-  }, []);
 
   //input
   const onChangePhone = (text) => {
@@ -55,7 +45,6 @@ const Index = (props) => {
           />
           <View style={styles.form}>
             <TextInputFloatingLabel
-              ref={inputRef}
               placeholder={I18n.t('yourPhoneLabel')}
               value={phone}
               onChangeText={(text) => onChangePhone(text)}

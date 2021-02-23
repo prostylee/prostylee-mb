@@ -25,6 +25,7 @@ import {
   ForgotPassword,
   ResetPassword,
   ResetPasswordViaMail,
+  PrivacyAndPolicy,
 } from 'screens';
 
 function SignedIn() {
@@ -68,6 +69,7 @@ function SignedOut() {
       <Stack.Screen name="OTPVerification" component={OTPVerification} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} />
+      <Stack.Screen name="PrivacyAndPolicy" component={PrivacyAndPolicy} />
       <Stack.Screen
         name="ResetPasswordViaMail"
         component={ResetPasswordViaMail}

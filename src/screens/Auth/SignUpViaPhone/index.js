@@ -1,11 +1,12 @@
 import React from 'react';
-import {View, Text, Platform, TouchableOpacity} from 'react-native';
+import {View, Text} from 'react-native';
 import {
   Container,
   ButtonRounded,
   TextInputFloatingLabel,
   HeaderBack,
   TextButton,
+  SocialLogin,
 } from 'components';
 
 import {useKeyboard} from '@react-native-community/hooks';
@@ -13,8 +14,7 @@ import {useKeyboard} from '@react-native-community/hooks';
 import I18n from 'i18n';
 
 import styles from './styles';
-
-import {Facebook, Google, AppleBlack, Zalo} from 'svg/common';
+import envConfig from 'config';
 
 const Index = (props) => {
   //State
@@ -56,8 +56,20 @@ const Index = (props) => {
 
   //submit
   const onSignUp = () => {};
-  const onGoToTerms = () => {};
-  const onGoToPrivacy = () => {};
+
+  //handle funcs
+  const onGoToTerms = () => {
+    props.navigation.navigate('PrivacyAndPolicy', {
+      url: envConfig.termOfUseURL,
+      title: I18n.t('termOfUse'),
+    });
+  };
+  const onGoToPrivacy = () => {
+    props.navigation.navigate('PrivacyAndPolicy', {
+      url: envConfig.privacyPolicyURL,
+      title: I18n.t('privacyPolicy'),
+    });
+  };
   return (
     <View style={styles.container}>
       <Container>
@@ -95,31 +107,7 @@ const Index = (props) => {
           </View>
           {!keyboard.keyboardShown && (
             <View>
-              <View style={styles.divider}>
-                <View style={styles.line} />
-                <Text style={styles.labelDivider}>
-                  {I18n.t('otherLoginOptions')}
-                </Text>
-                <View style={styles.line} />
-              </View>
-              <View style={styles.socialLogin}>
-                <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <Facebook />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <View style={styles.btnBordered}>
-                    <Google />
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <Zalo />
-                </TouchableOpacity>
-                {Platform.OS === 'ios' && (
-                  <TouchableOpacity style={styles.socialBtnWrapper}>
-                    <AppleBlack />
-                  </TouchableOpacity>
-                )}
-              </View>
+              <SocialLogin />
 
               <View style={styles.privacyWrapper}>
                 <Text style={styles.noticeText}>

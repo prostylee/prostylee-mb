@@ -12,7 +12,7 @@ import {
 
 import {useBackHandler} from '@react-native-community/hooks';
 
-import {ButtonRounded} from 'components';
+import {ButtonRounded, SocialLogin} from 'components';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
 import {LogoWhite, Facebook, Google, Apple, Zalo} from 'svg/common';

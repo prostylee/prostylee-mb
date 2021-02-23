@@ -33,6 +33,7 @@ const userSignUp = function* ({
     // xử lý dữ liệu trả về từ api
     if (res.ok && res.data.status === SUCCESS) {
       yield asyncStorage.setUserToken(res.data.data);
+      yield asyncStorage.setUserName({username: email});
       yield put(userActions.userSignUpSuccess(res.data.data));
       yield onSuccess();
     } else if (res.ok && res.data.status === BAD_REQUEST) {
@@ -72,6 +73,7 @@ const userLogin = function* ({payload: {email, password, onSuccess}}) {
     // xử lý dữ liệu trả về từ api
     if (res.ok && res.data.status === SUCCESS) {
       yield asyncStorage.setUserToken(res.data.data);
+      yield asyncStorage.setUserName({username: email});
       yield put(userActions.userLoginSuccess(res.data.data));
       yield onSuccess();
     } else if (res.ok && res.data.status === SESSION_EXPIRED) {
