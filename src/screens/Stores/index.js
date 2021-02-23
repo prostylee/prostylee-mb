@@ -87,8 +87,6 @@ const Stores = (props) => {
           <StoreItem key={'stores' + index} storeItem={item} />
         )}
         onEndReached={() => handleLoadMore()}
-        // refreshing={refreshing}
-        // onRefresh={handleRefresh}
         ListFooterComponent={renderFooter}
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
