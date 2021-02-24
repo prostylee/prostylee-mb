@@ -5,6 +5,7 @@ export const types = {
   GET_NEW_FEED: 'prostylee/NEW_FEED/GET_NEW_FEED',
   GET_NEW_FEED_SUCCESS: 'prostylee/NEW_FEED/GET_NEW_SUCCESS',
   GET_NEW_FEED_FAILED: 'prostylee/NEW_FEED/GET_NEW_FEED_FAILED',
+  RESET_NEW_FEED_PAGE: 'prostylee/NEW_FEED/RESET_NEW_FEED_PAGE',
   SET_LOAD_MORE_LOADING: 'prostylee/NEW_FEED/SET_LOAD_MORE_LOADING',
   HANDLE_LOAD_MORE: 'prostylee/NEW_FEED/HANDLE_LOAD_MORE',
   HANDLE_LOAD_MORE_SUCCESS: 'prostylee/NEW_FEED/HANDLE_LOAD_MORE_SUCCESS',
@@ -24,6 +25,7 @@ export const actions = {
   getNewFeed: createAction(types.GET_NEW_FEED),
   getNewFeedSuccess: createAction(types.GET_NEW_FEED_SUCCESS),
   getNewFeedFailed: createAction(types.GET_NEW_FEED_FAILED),
+  resetPage: createAction(types.RESET_NEW_FEED_PAGE),
   handleLoadMoreLoading: createAction(types.SET_LOAD_MORE_LOADING),
   handleLoadMore: createAction(types.HANDLE_LOAD_MORE),
   handleLoadMoreSuccess: createAction(types.HANDLE_LOAD_MORE_SUCCESS),
@@ -59,6 +61,9 @@ export default handleActions(
       return {...state, loadMoreLoading: payload};
     },
     [types.SET_LOADING_STORIES]: (state, {payload}) => {
+      return {...state, page: 0};
+    },
+    [types.RESET_NEW_FEED_PAGE]: (state, {payload}) => {
       return {...state, storiesLoading: payload};
     },
     [types.GET_NEW_FEED_SUCCESS]: (state, {payload}) => {

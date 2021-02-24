@@ -20,6 +20,5 @@ export default EStyleSheet.create({
   },
   loading: {
     flex: 1,
-    marginTop: 20,
   },
 });

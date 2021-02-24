@@ -78,6 +78,7 @@ const NewFeed = ({navigation}) => {
   const stories = useSelector((state) => getStories(state));
 
   useEffect(() => {
+    dispatch(newFeedActions.resetPage());
     dispatch(
       newFeedActions.getNewFeed({
         page: PAGE_DEFAULT,
@@ -151,16 +152,16 @@ const NewFeed = ({navigation}) => {
     return true;
   };
 
-  if (handleLoading()) {
+  const LoadingComponent = () => {
     return (
       <View style={styles.loading}>
         <NewFeedTrendingContentLoading />
-        {[1, 2, 3].map((item, _i) => (
+        {[1, 2].map((item, _i) => (
           <NewFeedContentLoading key={'newFeedLoading' + _i} />
         ))}
       </View>
     );
-  }
+  };
   return (
     <ThemeView isFullView>
       <HeaderFeed
@@ -168,47 +169,51 @@ const NewFeed = ({navigation}) => {
         changeTabStore={changeTabStore}
         changeTabUser={changeTabUser}
       />
-      <ScrollView
-        scrollEventThrottle={1}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}>
-        <StoryBoard
-          targetType={targetType}
-          stories={stories}
-          loading={handleLoading()}
-        />
-        <VerticalFeed
-          targetType={targetType}
-          handleRefresh={handleRefresh}
-          handleLoadMore={() => {}}
-          newFeedList={threeFirstNewFeedItem}
-          refreshing={refreshing}
-          loadMoreLoading={false}
-          isFirst={true}
-        />
-        {targetType === TYPE_STORE && (
-          <TopTrending
+      {handleLoading() ? (
+        <LoadingComponent />
+      ) : (
+        <ScrollView
+          scrollEventThrottle={1}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}>
+          <StoryBoard
             targetType={targetType}
-            navigation={navigation}
-            topProduct={topProduct}
+            stories={stories}
+            loading={handleLoading()}
           />
-        )}
-        {targetType === TYPE_USER && (
-          <DynamicUsers
+          <VerticalFeed
             targetType={targetType}
-            navigation={navigation}
-            listDynamicUsers={listDynamicUsers}
+            handleRefresh={handleRefresh}
+            handleLoadMore={() => {}}
+            newFeedList={threeFirstNewFeedItem}
+            refreshing={refreshing}
+            loadMoreLoading={false}
+            isFirst={true}
           />
-        )}
-        <VerticalFeed
-          loading={handleLoading()}
-          handleRefresh={handleRefresh}
-          handleLoadMore={handleLoadMore}
-          newFeedList={newFeedList}
-          refreshing={refreshing}
-          loadMoreLoading={loadMoreLoading}
-        />
-      </ScrollView>
+          {targetType === TYPE_STORE && (
+            <TopTrending
+              targetType={targetType}
+              navigation={navigation}
+              topProduct={topProduct}
+            />
+          )}
+          {targetType === TYPE_USER && (
+            <DynamicUsers
+              targetType={targetType}
+              navigation={navigation}
+              listDynamicUsers={listDynamicUsers}
+            />
+          )}
+          <VerticalFeed
+            loading={handleLoading()}
+            handleRefresh={handleRefresh}
+            handleLoadMore={handleLoadMore}
+            newFeedList={newFeedList}
+            refreshing={refreshing}
+            loadMoreLoading={loadMoreLoading}
+          />
+        </ScrollView>
+      )}
     </ThemeView>
   );
 };
