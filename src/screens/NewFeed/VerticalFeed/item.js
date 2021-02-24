@@ -36,7 +36,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
         targetId: newFeedItem?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === 200) {
         setFollowed(true);
       }
     } else {
@@ -44,7 +44,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
         targetId: newFeedItem?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === 200) {
         setFollowed(false);
       }
     }
@@ -55,7 +55,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
         targetId: newFeedItem?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === 200) {
         setLiked(true);
       }
     } else {
@@ -63,7 +63,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
         targetId: newFeedItem?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === 200) {
         setLiked(false);
       }
     }

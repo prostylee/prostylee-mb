@@ -21,7 +21,7 @@ const Item = ({item, style, targetType}) => {
         targetId: item?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === 200) {
         setFollowed(true);
       }
     } else {
@@ -29,7 +29,7 @@ const Item = ({item, style, targetType}) => {
         targetId: item?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === 200) {
         setFollowed(false);
       }
     }

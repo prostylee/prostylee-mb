@@ -29,7 +29,7 @@ const StoreItem = ({storeItem}) => {
         targetId: storeItem?.id,
         targetType: STORE,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === 200) {
         setFollowed(true);
       }
     } else {
@@ -37,7 +37,7 @@ const StoreItem = ({storeItem}) => {
         targetId: storeItem?.id,
         targetType: STORE,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === 200) {
         setFollowed(false);
       }
     }
