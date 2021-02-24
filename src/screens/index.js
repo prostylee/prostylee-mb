@@ -1,5 +1,4 @@
 import Home from './Home';
-import SignUp from './SignUp';
 import Stores from './Stores';
 import StoryBoard from './StoryBoard';
 import Chat from './Chat';
@@ -20,7 +19,6 @@ export {
   Onboarding,
   Home,
   Login,
-  SignUp,
   Stores,
   StoryBoard,
   Chat,
