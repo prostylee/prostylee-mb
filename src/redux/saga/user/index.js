@@ -1,6 +1,7 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {api, authApi} from 'services';
+import {api as configApi} from 'services/config';
 import {userActions, userTypes, commonActions} from 'reducers';
 
 import {showMessage} from 'react-native-flash-message';
@@ -10,7 +11,6 @@ import {
   SUCCESS,
   BAD_REQUEST,
   SESSION_EXPIRED,
-  NOT_FOUND,
   INTERNAL_SERVER_ERROR,
 } from 'constants';
 import asyncStorage from 'data/asyncStorage';
@@ -71,10 +71,15 @@ const userLogin = function* ({payload: {email, password, onSuccess}}) {
       password,
     });
     // xử lý dữ liệu trả về từ api
+    console.log(configApi);
     if (res.ok && res.data.status === SUCCESS) {
       yield asyncStorage.setUserToken(res.data.data);
       yield asyncStorage.setUserName({username: email});
       yield put(userActions.userLoginSuccess(res.data.data));
+      configApi.setHeader(
+        'Authorization',
+        'Bearer ' + res.data.data.accessToken,
+      );
       yield onSuccess();
     } else if (res.ok && res.data.status === SESSION_EXPIRED) {
       //thông báo lỗi từ api trả về

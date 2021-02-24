@@ -6,8 +6,8 @@ const getTopProduct = function* ({payload}) {
   try {
     yield put(storeActions.setLoading(true));
     const res = yield call(getTopStore, payload);
-    if (res.ok) {
-      yield put(storeActions.getTopProductSuccess(res.data));
+    if (res.ok && res.data.status === 200 && !res.data.error) {
+      yield put(storeActions.getTopProductSuccess(res.data.data));
     } else {
       yield put(storeActions.getTopProductFailed());
     }
@@ -23,8 +23,8 @@ const getListOfFuturedStores = function* ({payload}) {
     yield put(storeActions.setLoadingFuturedStores(true));
     yield put(storeActions.setPageDefault());
     const res = yield call(getTopStore, payload);
-    if (res.ok) {
-      yield put(storeActions.getListOfFuturedStoreSuccess(res.data));
+    if (res.ok && res.data.status === 200 && !res.data.error) {
+      yield put(storeActions.getListOfFuturedStoreSuccess(res.data.data));
     } else {
       yield put(storeActions.getListOfFuturedStoreFailed());
     }
@@ -39,8 +39,10 @@ const loadMoreListOfFuturedStores = function* ({payload}) {
   try {
     yield put(storeActions.setLoadingLoadMoreFuturedStores(true));
     const res = yield call(getTopStore, payload);
-    if (res.ok) {
-      yield put(storeActions.getListOfFuturedStoresLoadMoreSuccess(res.data));
+    if (res.ok && res.data.status === 200 && !res.data.error) {
+      yield put(
+        storeActions.getListOfFuturedStoresLoadMoreSuccess(res.data.data),
+      );
     } else {
       yield put(storeActions.getListOfFuturedStoresLoadMoreFailed());
     }

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Text} from 'react-native';
-import {ThemeView, View} from 'components';
+import {Text, View} from 'react-native';
+import {ThemeView} from 'components';
 import {Avatar, Button} from 'react-native-paper';
 import i18n from 'i18n';
 
