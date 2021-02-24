@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import {Text} from 'react-native';
-import {ThemeView} from 'components';
+import {ThemeView, View} from 'components';
 import {Avatar, Button} from 'react-native-paper';
 import i18n from 'i18n';
 
 import styles from './styles';
-import {View} from 'native-base';
 import {MapPin} from 'svg/common';
 
 import {follow, unfollow} from 'services/api/socialApi';
