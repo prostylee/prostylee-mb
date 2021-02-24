@@ -16,6 +16,8 @@ import {follow, unfollow, like, unlike} from 'services/api/socialApi';
 
 import FeedSlide from './slide';
 
+import {SUCCESS} from 'constants';
+
 import {currencyFormat} from 'utils/currency';
 
 const VerticalFeedItem = ({newFeedItem, targetType}) => {
@@ -36,7 +38,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
         targetId: newFeedItem?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === SUCCESS) {
         setFollowed(true);
       }
     } else {
@@ -44,7 +46,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
         targetId: newFeedItem?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === SUCCESS) {
         setFollowed(false);
       }
     }
@@ -55,7 +57,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
         targetId: newFeedItem?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === SUCCESS) {
         setLiked(true);
       }
     } else {
@@ -63,7 +65,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
         targetId: newFeedItem?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === SUCCESS) {
         setLiked(false);
       }
     }

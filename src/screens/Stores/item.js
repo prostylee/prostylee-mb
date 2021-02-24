@@ -13,6 +13,8 @@ import {follow, unfollow} from 'services/api/socialApi';
 
 import ProductOfStore from './products';
 
+import {SUCCESS} from 'constants';
+
 const STORE = 'STORE';
 const StoreItem = ({storeItem}) => {
   if (isEmpty(storeItem) || !storeItem.products.length) {
@@ -29,7 +31,7 @@ const StoreItem = ({storeItem}) => {
         targetId: storeItem?.id,
         targetType: STORE,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === SUCCESS) {
         setFollowed(true);
       }
     } else {
@@ -37,7 +39,7 @@ const StoreItem = ({storeItem}) => {
         targetId: storeItem?.id,
         targetType: STORE,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === SUCCESS) {
         setFollowed(false);
       }
     }

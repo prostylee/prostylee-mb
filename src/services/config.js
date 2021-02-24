@@ -17,6 +17,7 @@ export const api = apisauce.create({
 
 export async function _fetch(method, path, data) {
   return api[method](path, data).then((res) => {
+    console.log(res);
     let response;
     if (res && res.status === SUCCESS) {
       response = {

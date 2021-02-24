@@ -39,10 +39,6 @@ const Stores = (props) => {
   const hasLoadMore = useSelector((state) => hasLoadMoreSelector(state));
   const page = useSelector((state) => getPageSelector(state));
 
-  if (isEmpty(listOfFuturedStores)) {
-    return null;
-  }
-
   const listData = listOfFuturedStores?.content || [];
 
   useEffect(() => {

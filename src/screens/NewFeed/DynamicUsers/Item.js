@@ -9,6 +9,8 @@ import {MapPin} from 'svg/common';
 
 import {follow, unfollow} from 'services/api/socialApi';
 
+import {SUCCESS} from 'constants';
+
 const Item = ({item, style, targetType}) => {
   const [followed, setFollowed] = useState(false);
   const _followPress = async () => {
@@ -17,7 +19,7 @@ const Item = ({item, style, targetType}) => {
         targetId: item?.id,
         targetType: targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === SUCCESS) {
         setFollowed(true);
       }
     } else {
@@ -25,7 +27,7 @@ const Item = ({item, style, targetType}) => {
         targetId: item?.id,
         targetType: targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === SUCCESS) {
         setFollowed(false);
       }
     }

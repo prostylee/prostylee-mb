@@ -9,6 +9,8 @@ import {MapPin} from 'svg/common';
 
 import {follow, unfollow} from 'services/api/socialApi';
 
+import {SUCCESS} from 'constants';
+
 const WIDTH = Dimensions.get('window').width;
 const WIDTH_IMG = (WIDTH * 0.7) / 3;
 
@@ -21,7 +23,7 @@ const Item = ({item, style, targetType}) => {
         targetId: item?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === SUCCESS) {
         setFollowed(true);
       }
     } else {
@@ -29,7 +31,7 @@ const Item = ({item, style, targetType}) => {
         targetId: item?.id,
         targetType,
       });
-      if (res.ok) {
+      if (res.ok && res.data.status === SUCCESS) {
         setFollowed(false);
       }
     }
