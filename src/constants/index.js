@@ -1,3 +1,5 @@
+import I18n from 'i18n';
+
 //API STATUS
 export const SUCCESS = 200;
 export const BAD_REQUEST = 400;
@@ -15,6 +17,6 @@ export const PUT = 'put';
 export const DELETE = 'delete';
 
 //ERROR MESSAGE
-export const UNKNOWN_MESSAGE = 'Đã xảy ra lỗi, vui lòng thử lại sau';
-export const DISCONNECT = 'Không có kết nối mạng';
-export const SESSION_EXPIRED_MESSAGE = 'Phiên đăng nhập hết hạn';
+export const UNKNOWN_MESSAGE = I18n.t('unknownMessage');
+export const DISCONNECT = I18n.t('disconnected');
+export const SESSION_EXPIRED_MESSAGE = I18n.t('sessionExpiredMessage');

@@ -57,3 +57,8 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+android/app/release/app-release.apk
+*.apk
+yarn.lock
+ios/Podfile.lock
+package-lock.json

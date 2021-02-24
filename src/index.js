@@ -2,10 +2,16 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
+import jwtDecode from 'jwt-decode';
 
-import {commonActions, commonSelectors, userActions} from './redux/reducers';
+import {
+  commonActions,
+  commonSelectors,
+  userActions,
+  userSelectors,
+} from './redux/reducers';
 
-import {common} from './utils';
+import {common, datetime} from './utils';
 
 import Navigator from './navigator';
 
@@ -84,6 +90,7 @@ const Index = () => {
   // );
 
   const isLoading = useSelector((state) => commonSelectors.getLoading(state));
+  const userToken = useSelector((state) => userSelectors.getUserToken(state));
 
   //other functions
   const getDeviceInfo = async () => {
@@ -180,11 +187,41 @@ const Index = () => {
   };
 
   const onCheckLoginSession = async () => {
-    await dispatch(commonActions.toggleLoading(false));
+    await dispatch(commonActions.toggleLoading(true));
+    if (userToken) {
+      let accessToken = await jwtDecode(userToken.accessToken);
+      let refreshToken = await jwtDecode(userToken.refreshToken);
+      let isAccessTokenExpired = await datetime.checkExpiredDate(
+        accessToken.exp,
+      );
+      let isRefreshTokenExpired = await datetime.checkExpiredDate(
+        refreshToken.exp,
+      );
+      if (isAccessTokenExpired && isRefreshTokenExpired) {
+        //accessToken && refreshToken expired
+        dispatch(userActions.userClearExpiredToken());
+        RootNavigator.navigate('LoginOptions');
+        dispatch(commonActions.toggleLoading(false));
+      } else if (isAccessTokenExpired && !isRefreshTokenExpired) {
+        //refresh token valid
+        //get new access token
+        dispatch(
+          userActions.userRefreshToken({
+            refreshToken: userToken.refreshToken,
+            onSuccess: () => onUserRefreshTokenSuccess(),
+          }),
+        );
+      } else {
+        //accessToken valid
+        dispatch(commonActions.toggleLoading(false));
+      }
+    } else {
+      dispatch(commonActions.toggleLoading(false));
+    }
   };
 
-  const onFinishedGetUserInfo = async (data) => {
-    await dispatch(commonActions.toggleLoading(false));
+  const onUserRefreshTokenSuccess = async () => {
+    dispatch(commonActions.toggleLoading(false));
   };
 
   //firebase Message

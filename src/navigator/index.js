@@ -17,53 +17,22 @@ import {
   Welcome,
   Onboarding,
   Login,
-  SignUp,
+  SignUpViaPhone,
+  LoginViaPhone,
   LoginOptions,
+  OTPVerification,
+  ForgotPassword,
+  ResetPassword,
+  ResetPasswordViaMail,
+  PrivacyAndPolicy,
   Stores,
   StoryBoard,
   Chat,
 } from 'screens';
+
 import BottomTabs from './bottomTab';
 
 function SignedIn() {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        gestureEnabled: true,
-        gestureDirection: 'horizontal',
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-      }}
-      initialRouteName="Home"
-      mode="card"
-      headerMode="none"
-      animation="fade">
-      <Stack.Screen name="Home" component={BottomTabs} />
-    </Stack.Navigator>
-  );
-}
-
-function SignedOut() {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        gestureEnabled: false,
-        gestureDirection: 'horizontal',
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-      }}
-      initialRouteName="Welcome"
-      mode="card"
-      headerMode="none"
-      animation="fade">
-      <Stack.Screen name="LoginOptions" component={LoginOptions} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="SignUp" component={SignUp} />
-      <Stack.Screen name="Welcome" component={Welcome} />
-      <Stack.Screen name="Onboarding" component={Onboarding} />
-    </Stack.Navigator>
-  );
-}
-
-function MainStack() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -83,8 +52,41 @@ function MainStack() {
   );
 }
 
+function SignedOut() {
+  const initialRouteName = useSelector((state) =>
+    commonSelectors.getInitialRouteName(state),
+  );
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        gestureEnabled: false,
+        gestureDirection: 'horizontal',
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}
+      initialRouteName={initialRouteName}
+      mode="card"
+      headerMode="none"
+      animation="fade">
+      <Stack.Screen name="LoginOptions" component={LoginOptions} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="SignUpViaPhone" component={SignUpViaPhone} />
+      <Stack.Screen name="LoginViaPhone" component={LoginViaPhone} />
+      <Stack.Screen name="Welcome" component={Welcome} />
+      <Stack.Screen name="Onboarding" component={Onboarding} />
+      <Stack.Screen name="OTPVerification" component={OTPVerification} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen name="ResetPassword" component={ResetPassword} />
+      <Stack.Screen name="PrivacyAndPolicy" component={PrivacyAndPolicy} />
+      <Stack.Screen
+        name="ResetPasswordViaMail"
+        component={ResetPasswordViaMail}
+      />
+    </Stack.Navigator>
+  );
+}
+
 const App = React.forwardRef(() => {
-  const user = useSelector((state) => userSelectors.getUser(state));
+  const userToken = useSelector((state) => userSelectors.getUserToken(state));
   const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
 
   return (
@@ -100,8 +102,8 @@ const App = React.forwardRef(() => {
         mode="card"
         headerMode="none"
         animation="fade">
-        {user === null ? (
-          <Stack.Screen name="SignedOut" component={MainStack} />
+        {userToken === null ? (
+          <Stack.Screen name="SignedOut" component={SignedOut} />
         ) : (
           <Stack.Screen name="SignedIn" component={SignedIn} />
         )}

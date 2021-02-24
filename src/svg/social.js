@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, {Path, Circle} from 'react-native-svg';
+import Svg, {Path} from 'react-native-svg';
 
 export const Heart = ({width = 24, height = 24, color = '#9B9B9B'}) => {
   return (

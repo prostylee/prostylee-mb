@@ -31,6 +31,7 @@ const TextInputRounded = ({
   onFocus,
   autoFocus,
   inputRef,
+  onBlur,
 }) => (
   <View style={[styles.container, style]}>
     <TextInput
@@ -52,6 +53,7 @@ const TextInputRounded = ({
       editable={editable === false ? false : true}
       multiline={multiline}
       autoFocus={autoFocus}
+      onBlur={onBlur}
     />
     {icon ? (
       <View style={styles.wrapperIcon}>

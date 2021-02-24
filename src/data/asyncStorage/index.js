@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const KEY_USER_NAME = '@userName';
 const KEY_USER_DATA = '@userData';
 const KEY_DEVICE_INFO = '@deviceInfo';
 const KEY_USER_TOKEN = '@userToken';
@@ -13,6 +14,14 @@ export default class LocalDB {
     return AsyncStorage.getItem(KEY_USER_TOKEN).then((json) =>
       JSON.parse(json),
     );
+  }
+
+  static async setUserName(userData) {
+    await AsyncStorage.setItem(KEY_USER_NAME, JSON.stringify(userData));
+  }
+
+  static async getUserName() {
+    return AsyncStorage.getItem(KEY_USER_NAME).then((json) => JSON.parse(json));
   }
 
   static async setUserData(userData) {
