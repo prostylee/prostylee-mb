@@ -15,7 +15,7 @@ import ProductOfStore from './products';
 
 const STORE = 'STORE';
 const StoreItem = ({storeItem}) => {
-  if (isEmpty(storeItem)) {
+  if (isEmpty(storeItem) || !storeItem.products.length) {
     return null;
   }
 
