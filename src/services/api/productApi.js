@@ -1,5 +1,5 @@
 import {_fetch} from '../config';
-import {POST, GET, PUT, DELETE} from 'constants';
+import {POST} from 'constants';
 
 //PRODUCT API
 export const getProducts = (payload) => {

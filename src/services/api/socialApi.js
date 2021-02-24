@@ -1,5 +1,5 @@
-import {_fetch, api} from '../config';
-import {POST, GET, PUT, DELETE} from 'constants';
+import {_fetch} from '../config';
+import {POST, PUT} from 'constants';
 
 export const follow = (payload) => {
   return _fetch(POST, '/user-followers/follow', payload);
