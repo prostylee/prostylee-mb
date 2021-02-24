@@ -1,5 +1,4 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-
 import {
   getNewFeed,
   getStoriesByStore,
@@ -11,8 +10,8 @@ const getNewFeeds = function* ({payload}) {
   try {
     yield put(newFeedActions.setLoading(true));
     const res = yield call(getNewFeed, payload);
-    if (res.ok) {
-      yield put(newFeedActions.getNewFeedSuccess(res.data));
+    if (res.ok && res.data.status === 200 && !res.data.error) {
+      yield put(newFeedActions.getNewFeedSuccess(res.data.data));
     } else {
       yield put(newFeedActions.getNewFeedFailed());
     }
@@ -27,8 +26,8 @@ const getLoadMoreNewFeed = function* ({payload}) {
   try {
     yield put(newFeedActions.handleLoadMoreLoading(true));
     const res = yield call(getNewFeed, payload);
-    if (res.ok) {
-      yield put(newFeedActions.handleLoadMoreSuccess(res.data));
+    if (res.ok && res.data.status === 200 && !res.data.error) {
+      yield put(newFeedActions.handleLoadMoreSuccess(res.data.data));
     } else {
       yield put(newFeedActions.handleLoadMoreFailed());
     }
@@ -43,8 +42,8 @@ const getStoriesByStores = function* ({payload}) {
   try {
     yield put(newFeedActions.setLoadingStories(false));
     const res = yield call(getStoriesByStore, payload);
-    if (res.ok) {
-      yield put(newFeedActions.getStoriesByStoreSuccess(res.data));
+    if (res.ok && res.data.status === 200 && !res.data.error) {
+      yield put(newFeedActions.getStoriesByStoreSuccess(res.data.data));
     } else {
       yield put(newFeedActions.getStoriesByStoreFailed());
     }
@@ -59,8 +58,8 @@ const getStoriesByUsers = function* ({payload}) {
   try {
     yield put(newFeedActions.setLoadingStories(false));
     const res = yield call(getStoriesByUser, payload);
-    if (res.ok) {
-      yield put(newFeedActions.getStoriesByUserSuccess(res.data));
+    if (res.ok && res.data.status === 200 && !res.data.error) {
+      yield put(newFeedActions.getStoriesByUserSuccess(res.data.data));
     } else {
       yield put(newFeedActions.getStoriesByUserFailed());
     }
