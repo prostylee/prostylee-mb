@@ -88,7 +88,6 @@ function SignedOut() {
 const App = React.forwardRef(() => {
   const userToken = useSelector((state) => userSelectors.getUserToken(state));
   const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
-  console.log(userToken);
   return (
     <NavigationContainer
       ref={navigationRef}

@@ -4,8 +4,6 @@ import styles from './styles';
 
 import FeedItem from './item';
 
-import {NewFeedContentLoading} from 'components/Loading/contentLoader';
-
 const VerticalFeed = ({
   newFeedList,
   handleLoadMore,
@@ -19,15 +17,7 @@ const VerticalFeed = ({
   if (isFirst && loading) {
     return null;
   }
-  if (loading) {
-    return (
-      <>
-        {[1, 2].map((item, _i) => (
-          <NewFeedContentLoading key={'newFeedLoading' + _i} />
-        ))}
-      </>
-    );
-  }
+
   const renderFooter = () => {
     if (!loadMoreLoading) {
       return <View style={styles.viewFooter} />;

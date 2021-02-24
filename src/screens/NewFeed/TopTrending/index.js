@@ -4,22 +4,17 @@ import {isEmpty} from 'lodash';
 import i18n from 'i18n';
 
 import {ContainerView as Container, Title} from 'components';
-import {NewFeedTrendingContentLoading} from 'components/Loading/contentLoader';
 
 import Item from './Item';
 
 import styles from './styles';
 
-const TopTrending = ({topProduct, loading, navigation, targetType}) => {
+const TopTrending = ({topProduct, navigation, targetType}) => {
   if (isEmpty(topProduct) || !topProduct?.content?.length) {
     return null;
   }
 
   const topProductList = topProduct?.content;
-
-  if (loading) {
-    return <NewFeedTrendingContentLoading />;
-  }
 
   return (
     <>

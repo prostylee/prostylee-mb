@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {ScrollView} from 'react-native';
-
+import {ScrollView, View} from 'react-native';
+import styles from './styles';
 import {ThemeView} from 'components';
 
 import VerticalFeed from './VerticalFeed';
@@ -10,6 +10,11 @@ import HeaderFeed from './HeaderFeed';
 import TopTrending from './TopTrending';
 import DynamicUsers from './DynamicUsers';
 import StoryBoard from './StoryBoard';
+
+import {
+  NewFeedTrendingContentLoading,
+  NewFeedContentLoading,
+} from 'components/Loading/contentLoader';
 
 import {
   newFeedActions,
@@ -145,6 +150,17 @@ const NewFeed = ({navigation}) => {
     }
     return true;
   };
+
+  if (handleLoading()) {
+    return (
+      <View style={styles.loading}>
+        <NewFeedTrendingContentLoading />
+        {[1, 2, 3].map((item, _i) => (
+          <NewFeedContentLoading key={'newFeedLoading' + _i} />
+        ))}
+      </View>
+    );
+  }
   return (
     <ThemeView isFullView>
       <HeaderFeed
@@ -163,7 +179,6 @@ const NewFeed = ({navigation}) => {
         />
         <VerticalFeed
           targetType={targetType}
-          loading={handleLoading()}
           handleRefresh={handleRefresh}
           handleLoadMore={() => {}}
           newFeedList={threeFirstNewFeedItem}
@@ -174,7 +189,6 @@ const NewFeed = ({navigation}) => {
         {targetType === TYPE_STORE && (
           <TopTrending
             targetType={targetType}
-            loading={handleLoading()}
             navigation={navigation}
             topProduct={topProduct}
           />
@@ -182,7 +196,6 @@ const NewFeed = ({navigation}) => {
         {targetType === TYPE_USER && (
           <DynamicUsers
             targetType={targetType}
-            loading={handleLoading()}
             navigation={navigation}
             listDynamicUsers={listDynamicUsers}
           />

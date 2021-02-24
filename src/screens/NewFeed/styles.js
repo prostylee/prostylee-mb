@@ -18,4 +18,8 @@ export default EStyleSheet.create({
   touch: {
     paddingHorizontal: 8,
   },
+  loading: {
+    flex: 1,
+    marginTop: 20,
+  },
 });

@@ -4,22 +4,21 @@ import {isEmpty} from 'lodash';
 import i18n from 'i18n';
 
 import {ContainerView as Container, Title} from 'components';
-import {NewFeedTrendingContentLoading} from 'components/Loading/contentLoader';
 
 import Item from './Item';
 
 import styles from './styles';
 
-const DynamicUsers = ({listDynamicUsers, loading, navigation, targetType}) => {
-  if (isEmpty(listDynamicUsers) || !listDynamicUsers?.content?.length) {
+const DynamicUsers = ({listDynamicUsers, navigation, targetType}) => {
+  if (
+    !listDynamicUsers ||
+    isEmpty(listDynamicUsers) ||
+    !listDynamicUsers?.content?.length
+  ) {
     return null;
   }
 
   const listDynamicUser = listDynamicUsers?.content;
-
-  if (loading) {
-    return <NewFeedTrendingContentLoading />;
-  }
 
   return (
     <>
