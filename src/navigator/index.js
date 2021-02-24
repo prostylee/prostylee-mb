@@ -88,7 +88,7 @@ function SignedOut() {
 const App = React.forwardRef(() => {
   const userToken = useSelector((state) => userSelectors.getUserToken(state));
   const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
-
+  console.log(userToken);
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -102,7 +102,7 @@ const App = React.forwardRef(() => {
         mode="card"
         headerMode="none"
         animation="fade">
-        {userToken === null ? (
+        {!userToken ? (
           <Stack.Screen name="SignedOut" component={SignedOut} />
         ) : (
           <Stack.Screen name="SignedIn" component={SignedIn} />
