@@ -1,14 +1,5 @@
 import React from 'react';
-import Svg, {
-  Path,
-  Circle,
-  Rect,
-  Pattern,
-  Defs,
-  Image,
-  ClipPath,
-  G,
-} from 'react-native-svg';
+import Svg, {Path, Circle, Rect} from 'react-native-svg';
 
 export const Search = ({width = 24, height = 24, color = '#8B9399'}) => {
   return (
@@ -564,4 +555,3 @@ export const LogoSplash = () => {
     </Svg>
   );
 };
-
