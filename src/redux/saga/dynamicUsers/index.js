@@ -1,12 +1,13 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {getDynamicUsers} from 'services/api/dynamicUsersApi';
 import {dynamicUsersActions, dynamicUsersTypes} from 'reducers';
+import {SUCCESS} from 'constants';
 
 const getListDynamicUsers = function* ({payload}) {
   try {
     yield put(dynamicUsersActions.setLoading(true));
     const res = yield call(getDynamicUsers, payload);
-    if (res.ok && res.data.status === 200 && !res.data.error) {
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(dynamicUsersActions.getDynamicUserSuccess(res.data.data));
     } else {
       yield put(dynamicUsersActions.getDynamicUserFail());

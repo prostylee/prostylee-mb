@@ -6,11 +6,13 @@ import {
 } from 'services/api/newFeedApi';
 import {newFeedActions, newFeedTypes} from 'reducers';
 
+import {SUCCESS} from 'constants';
+
 const getNewFeeds = function* ({payload}) {
   try {
     yield put(newFeedActions.setLoading(true));
     const res = yield call(getNewFeed, payload);
-    if (res.ok && res.data.status === 200 && !res.data.error) {
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(newFeedActions.getNewFeedSuccess(res.data.data));
     } else {
       yield put(newFeedActions.getNewFeedFailed());
@@ -26,7 +28,7 @@ const getLoadMoreNewFeed = function* ({payload}) {
   try {
     yield put(newFeedActions.handleLoadMoreLoading(true));
     const res = yield call(getNewFeed, payload);
-    if (res.ok && res.data.status === 200 && !res.data.error) {
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(newFeedActions.handleLoadMoreSuccess(res.data.data));
     } else {
       yield put(newFeedActions.handleLoadMoreFailed());
@@ -42,7 +44,7 @@ const getStoriesByStores = function* ({payload}) {
   try {
     yield put(newFeedActions.setLoadingStories(false));
     const res = yield call(getStoriesByStore, payload);
-    if (res.ok && res.data.status === 200 && !res.data.error) {
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(newFeedActions.getStoriesByStoreSuccess(res.data.data));
     } else {
       yield put(newFeedActions.getStoriesByStoreFailed());
@@ -58,7 +60,7 @@ const getStoriesByUsers = function* ({payload}) {
   try {
     yield put(newFeedActions.setLoadingStories(false));
     const res = yield call(getStoriesByUser, payload);
-    if (res.ok && res.data.status === 200 && !res.data.error) {
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(newFeedActions.getStoriesByUserSuccess(res.data.data));
     } else {
       yield put(newFeedActions.getStoriesByUserFailed());
