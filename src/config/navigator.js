@@ -1,15 +1,15 @@
 export const bottomTabs = {
   newFeed: 'NewFeed',
-  shop: "ProductCategory",
-  account: "Account"
-}
+  shop: 'ProductCategory',
+  account: 'Account',
+};
 
 export const tabsSetting = {
   configs: {
-    initialRouteName: bottomTabs['newFeed'],
+    initialRouteName: bottomTabs.newFeed,
     tabBarColor: '#ffffff',
     activeColor: '#823FFD',
-    inactiveColor: 'gray'
+    inactiveColor: 'gray',
   },
   tabsNavigator: [
     {
@@ -19,26 +19,26 @@ export const tabsSetting = {
       },
       name: {
         vi: 'New Feed',
-        en: 'New Feed'
+        en: 'New Feed',
       },
-      screen: bottomTabs['newFeed'],
+      screen: bottomTabs.newFeed,
       option: {
-        tabBarIcon: 'NewFeedTab'
-      }
+        tabBarIcon: 'NewFeedTab',
+      },
     },
-     {
+    {
       title: {
         vi: '',
         en: '',
       },
       name: {
         vi: 'Cửa hàng',
-        en: 'Store'
+        en: 'Store',
       },
-      screen: bottomTabs['newFeed'],
+      screen: bottomTabs.newFeed,
       option: {
-        tabBarIcon: 'StoreTab'
-      }
+        tabBarIcon: 'StoreTab',
+      },
     },
     {
       title: {
@@ -50,10 +50,10 @@ export const tabsSetting = {
         en: 'Post News',
       },
       isTurnOfLabel: true,
-      screen: bottomTabs['newFeed'],
+      screen: bottomTabs.newFeed,
       option: {
-        tabBarIcon: 'MainTab'
-      }
+        tabBarIcon: 'MainTab',
+      },
     },
     {
       title: {
@@ -62,12 +62,12 @@ export const tabsSetting = {
       },
       name: {
         vi: 'Thông báo',
-        en: 'Notification'
+        en: 'Notification',
       },
-      screen: bottomTabs['newFeed'],
+      screen: bottomTabs.newFeed,
       option: {
-        tabBarIcon: 'NotifTab'
-      }
+        tabBarIcon: 'NotifTab',
+      },
     },
     {
       title: {
@@ -76,12 +76,12 @@ export const tabsSetting = {
       },
       name: {
         vi: 'Tài khoản',
-        en: 'Account'
+        en: 'Account',
       },
-      screen: bottomTabs['newFeed'],
+      screen: bottomTabs.account,
       option: {
-        tabBarIcon: 'AccountTab'
-      }
+        tabBarIcon: 'AccountTab',
+      },
     },
-  ]
-}
+  ],
+};
