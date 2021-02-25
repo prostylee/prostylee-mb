@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {
   createStackNavigator,
@@ -9,7 +9,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {userSelectors, commonSelectors} from 'reducers';
 import {navigationRef} from './rootNavigator';
 
+import {isEmpty} from 'lodash';
+
 import {lightTheme, darkTheme} from 'theme';
+
+import {api as configApi} from 'services/config';
 
 const Stack = createStackNavigator();
 
@@ -88,6 +92,11 @@ function SignedOut() {
 const App = React.forwardRef(() => {
   const userToken = useSelector((state) => userSelectors.getUserToken(state));
   const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
+  useEffect(() => {
+    if (!isEmpty(userToken)) {
+      configApi.setHeader('Authorization', 'Bearer ' + userToken.accessToken);
+    }
+  }, [userToken]);
   return (
     <NavigationContainer
       ref={navigationRef}
