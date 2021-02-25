@@ -62,8 +62,8 @@ const styles = EStyleSheet.create({
     backgroundColor: '$white',
     borderBottomWidth: 1,
     borderBottomColor: '$bgColor',
-    paddingBottom: 12,
-    height: 86,
+    paddingBottom: '12rem',
+    height: Platform.OS === 'android' ? '56rem' : '78rem',
   },
   backStyle: {
     paddingLeft: 16,
@@ -73,9 +73,6 @@ const styles = EStyleSheet.create({
     fontSize: 16,
     fontFamily: '$font1',
     letterSpacing: -0.02,
-  },
-  emptyRightStyle: {
-    width: 32,
   },
 });
 
