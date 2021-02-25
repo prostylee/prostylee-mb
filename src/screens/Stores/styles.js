@@ -86,5 +86,6 @@ export default EStyleSheet.create({
     position: 'relative',
     height: 40,
     justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -2,14 +2,13 @@
 import React, {useEffect} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {isEmpty} from 'lodash';
 import i18n from 'i18n';
 
 import styles from './styles';
 
 import StoreItem from './item';
 
-import {ThemeView, Header} from 'components';
+import {ThemeView, Header, Colors} from 'components';
 
 import {storeActions} from 'redux/reducers';
 
@@ -68,7 +67,7 @@ const Stores = (props) => {
 
     return (
       <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-        <ActivityIndicator animating size="small" />
+        <ActivityIndicator animating color={Colors.$purple} size="small" />
       </View>
     );
   };

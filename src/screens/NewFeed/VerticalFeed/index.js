@@ -2,6 +2,8 @@ import React from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 import styles from './styles';
 
+import {Colors} from 'components';
+
 import FeedItem from './item';
 
 const VerticalFeed = ({
@@ -25,7 +27,7 @@ const VerticalFeed = ({
 
     return (
       <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-        <ActivityIndicator animating size="small" />
+        <ActivityIndicator animating color={Colors.$purple} size="small" />
       </View>
     );
   };
