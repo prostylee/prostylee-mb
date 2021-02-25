@@ -22,8 +22,7 @@ import {
   getPageSelector,
 } from 'redux/selectors/stores';
 
-const PAGE_DEFAULT = 0;
-const LIMIT_DEFAULT = 12;
+import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 
 const Stores = (props) => {
   const dispatch = useDispatch();

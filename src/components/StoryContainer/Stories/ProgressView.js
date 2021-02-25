@@ -28,7 +28,6 @@ function ProgressView(props) {
       setProgressIndex(progressIndex);
     }
   }
-
   return (
     <View style={styles.parent}>
       <FlatList
@@ -38,7 +37,7 @@ function ProgressView(props) {
         showsHorizontalScrollIndicator={false}
         legacyImplementation={false}
         data={props.images}
-        ItemSeparatorComponent={() => <View style={{marginLeft: 4}} />}
+        ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
         renderItem={({item, index}) => (
           <ProgressItem
             enableProgress={props.enableProgress}
@@ -76,7 +75,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: '3%',
     paddingRight: '3%',
-    paddingTop: '5%',
-    paddingBottom: '4%',
+    paddingTop: '2%',
+    paddingBottom: '2%',
+  },
+  itemSeparator: {
+    marginLeft: 4,
   },
 });

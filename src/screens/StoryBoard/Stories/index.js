@@ -5,12 +5,17 @@ import {View, Animated, StyleSheet, Platform, Dimensions} from 'react-native';
 import styles from './styles';
 
 import Story from '../Story/story';
+import StoryHeader from './header';
+import StoryFooterAction from './actionFooter';
+
+import {TYPE_STORE} from 'constants';
 
 const {width} = Dimensions.get('window');
 const perspective = width;
 const angle = Math.atan(perspective / (width / 2));
 const ratio = Platform.OS === 'ios' ? 2 : 1.2;
-const Stories = ({stories}) => {
+
+const Stories = ({stories, navigation, targetType}) => {
   if (!stories.length) {
     return null;
   }
@@ -58,28 +63,29 @@ const Stories = ({stories}) => {
     };
   };
 
-  const getMaskStyle = (index) => {
-    const offset = index * width;
-    const inputRange = [offset - width, offset, offset + width];
-    const opacity = x.interpolate({
-      inputRange,
-      outputRange: [0.75, 0, 0.75],
-      extrapolate: 'clamp',
-    });
-    return {
-      backgroundColor: 'black',
-      ...StyleSheet.absoluteFillObject,
-      opacity,
-    };
+  const _close = () => {
+    navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
       {stories.map((story, i) => {
+        let name = null;
+        let imgUrl = null;
+        if (targetType === TYPE_STORE) {
+          const storyTypeRes = story.storeForStoryResponse;
+          imgUrl = storyTypeRes?.logoUrl;
+          name = storyTypeRes.name;
+        } else {
+          const storyTypeRes = story.userForStoryResponse;
+          imgUrl = storyTypeRes?.avatar;
+          name = storyTypeRes.fullName;
+        }
         return (
           <Animated.View style={getStyle(i)} key={'storyboard' + i}>
+            <StoryHeader name={name} imgUrl={imgUrl} onPress={_close} />
             <Story story={story} />
-            <Animated.View style={getMaskStyle(i)} />
+            <StoryFooterAction />
           </Animated.View>
         );
       })}

@@ -42,11 +42,13 @@ import {
 } from 'redux/selectors/dynamicUsers';
 import {targetTypeSelector} from 'redux/selectors/common';
 
-const PAGE_DEFAULT = 0;
-const LIMIT_DEFAULT = 12;
-const NUMBER_OF_PRODUCT = 3;
-const TYPE_STORE = 'STORE';
-const TYPE_USER = 'USER';
+import {
+  TYPE_STORE,
+  TYPE_USER,
+  PAGE_DEFAULT,
+  LIMIT_DEFAULT,
+  NUMBER_OF_PRODUCT,
+} from 'constants';
 
 const NewFeed = ({navigation}) => {
   const dispatch = useDispatch();

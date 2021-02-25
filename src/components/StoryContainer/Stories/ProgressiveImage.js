@@ -1,50 +1,31 @@
 import React from 'react';
-import {View, StyleSheet, Animated} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {StyleSheet, ActivityIndicator, Dimensions} from 'react-native';
+import {Image} from 'components';
 
-import {absolute} from 'theme/style';
-
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 const ProgressiveImage = (props) => {
-  const thumbnailAnimated = new Animated.Value(0);
-
-  const imageAnimated = new Animated.Value(0);
-  const handleThumbnailLoad = () => {
-    Animated.timing(thumbnailAnimated, {
-      toValue: 1,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const onImageLoad = () => {
-    Animated.timing(imageAnimated, {
-      toValue: 1,
-      useNativeDriver: false,
-    }).start();
-  };
-  const {thumbnailSource, source, style, ...rest} = props;
+  const insets = useSafeAreaInsets();
+  const marSafeArea = (ins) => ({
+    marginTop: -ins.top,
+  });
+  const {thumbnailSource} = props;
   return (
-    <View style={styles.container}>
-      <Animated.Image
-        {...rest}
-        source={thumbnailSource}
-        style={[style, {opacity: thumbnailAnimated}]}
-        onLoad={handleThumbnailLoad}
-      />
-      <Animated.Image
-        {...props}
-        source={source}
-        style={[styles.imageOverlay, {opacity: imageAnimated}, style]}
-        onLoad={onImageLoad}
-      />
-    </View>
+    <Image
+      source={thumbnailSource}
+      resizeMode="cover"
+      style={[styles.image, marSafeArea(insets)]}
+      PlaceholderContent={<ActivityIndicator />}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  imageOverlay: {
-    ...absolute(0, 0, 0, 0),
-  },
-  container: {
-    marginTop: -14,
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    width: WIDTH,
+    height: HEIGHT,
   },
 });
 
