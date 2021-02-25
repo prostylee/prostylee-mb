@@ -12,6 +12,8 @@ import {ThemeView, Header, Colors} from 'components';
 
 import {storeActions} from 'redux/reducers';
 
+import {StoreLoading} from 'components/Loading/contentLoader';
+
 import {
   getLoadingFuturedStoresSelector,
   listOfFuturedStoresSelector,
@@ -75,19 +77,27 @@ const Stores = (props) => {
   return (
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('headerTitle.featured_store')} />
-      <FlatList
-        data={listData}
-        keyExtractor={(item) => `${item.id}`}
-        renderItem={({item, index}) => (
-          <StoreItem key={'stores' + index} storeItem={item} />
-        )}
-        onEndReached={() => handleLoadMore()}
-        ListFooterComponent={renderFooter}
-        onEndReachedThreshold={0.5}
-        initialNumToRender={10}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      />
+      {loading ? (
+        <>
+          {[1, 2, 3, 4].map((item, _i) => {
+            return <StoreLoading key={'storeLoading' + _i} />;
+          })}
+        </>
+      ) : (
+        <FlatList
+          data={listData}
+          keyExtractor={(item) => `${item.id}`}
+          renderItem={({item, index}) => (
+            <StoreItem key={'stores' + index} storeItem={item} />
+          )}
+          onEndReached={() => handleLoadMore()}
+          ListFooterComponent={renderFooter}
+          onEndReachedThreshold={0.5}
+          initialNumToRender={10}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
     </ThemeView>
   );
 };

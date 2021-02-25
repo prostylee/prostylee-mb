@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, View, StyleSheet} from 'react-native';
+import {Dimensions, View, StyleSheet, Platform} from 'react-native';
 import ContentLoader, {Rect} from 'react-content-loader/native';
 
 const deviceWidth = Dimensions.get('window').width;
@@ -66,6 +66,36 @@ export const NewFeedTrendingContentLoading = ({
   );
 };
 
+export const StoreLoading = ({
+  width,
+  height,
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([styles.container, style])}>
+      <ContentLoader
+        height={height}
+        width={width}
+        speed={speed}
+        viewBox="0 0 380 150"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect x="18" y="4" rx="50" ry="50" width="32" height="32" />
+        <Rect x="80%" y="8" rx="4" ry="4" width="15%" height="4" />
+        <Rect x="18%" y="8" rx="4" ry="4" width="40%" height="5" />
+        <Rect x="18%" y="25" rx="4" ry="4" width="20%" height="4" />
+        <Rect x="25" y="50" rx="0" ry="0" width="72" height="83" />
+        <Rect x="76%" y="50" rx="0" ry="0" width="72" height="83" />
+        <Rect x="113" y="50" rx="0" ry="0" width="72" height="83" />
+        <Rect x="200" y="50" rx="0" ry="0" width="72" height="83" />
+      </ContentLoader>
+    </View>
+  );
+};
+
 NewFeedContentLoading.defaultProps = {
   height: 190,
   width: deviceWidth,
@@ -76,7 +106,16 @@ NewFeedContentLoading.defaultProps = {
 };
 
 NewFeedTrendingContentLoading.defaultProps = {
-  height: 250,
+  height: Platform.OS === 'android' ? 200 : 250,
+  width: deviceWidth,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+
+StoreLoading.defaultProps = {
+  height: Platform.OS === 'android' ? 160 : 170,
   width: deviceWidth,
   backgroundColor: '#d9d9d9',
   foregroundColor: '#ecebeb',
