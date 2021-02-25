@@ -16,3 +16,11 @@ export const like = (payload) => {
 export const unlike = (payload) => {
   return _fetch(PUT, '/user-followers/unlike', payload);
 };
+
+export const loadListLiked = (payload) => {
+  return _fetch(POST, '/user-followers​/loadStatusFollow', payload);
+};
+
+export const loadListFlollowed = (payload) => {
+  return _fetch(POST, '/user-likes/loadStatusLike', payload);
+};
