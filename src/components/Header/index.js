@@ -74,6 +74,9 @@ const styles = EStyleSheet.create({
     fontFamily: '$font1',
     letterSpacing: -0.02,
   },
+  emptyRightStyle: {
+    width: 32,
+  },
 });
 
 Header.propTypes = {

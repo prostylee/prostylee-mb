@@ -17,7 +17,7 @@ const Container = ({fluid, style, children, ...rest}) => {
 
 const styles = {
   container: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
   },
   fluid: {
     paddingHorizontal: 0,
