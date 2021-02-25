@@ -63,7 +63,7 @@ const styles = EStyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '$bgColor',
     paddingBottom: '12rem',
-    height: Platform.OS === 'android' ? '56rem' : '78rem',
+    height: Platform.OS === 'android' ? '78rem' : '80rem',
   },
   backStyle: {
     paddingLeft: 16,

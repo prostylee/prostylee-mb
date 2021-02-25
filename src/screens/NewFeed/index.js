@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, View, StatusBar, Platform} from 'react-native';
 import styles from './styles';
 import {ThemeView} from 'components';
 
@@ -164,6 +164,9 @@ const NewFeed = ({navigation}) => {
   };
   return (
     <ThemeView isFullView>
+      {Platform.OS === 'android' && (
+        <StatusBar barStyle="dark-content" translucent backgroundColor="#FFF" />
+      )}
       <HeaderFeed
         targetType={targetType}
         changeTabStore={changeTabStore}
