@@ -13,7 +13,11 @@ const StoryBoard = ({navigation}) => {
   const targetType = useSelector((state) => targetTypeSelector(state));
   return (
     <ThemeView isFullView>
-      <Stories targetType={targetType} stories={stories?.content || []} />
+      <Stories
+        navigation={navigation}
+        targetType={targetType}
+        stories={stories?.content || []}
+      />
     </ThemeView>
   );
 };
