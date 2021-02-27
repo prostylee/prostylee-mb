@@ -31,11 +31,6 @@ export default EStyleSheet.create({
     marginBottom: '20rem',
     textAlign: 'center',
   },
-  button: {
-    marginTop: '30rem',
-    marginBottom: '20rem',
-    width: '100%',
-  },
   cellStyle: {
     borderBottomWidth: 1,
     borderColor: '$lightGray',
@@ -52,6 +47,10 @@ export default EStyleSheet.create({
     fontFamily: '$font1',
     color: '$black500',
     fontSize: '$maxText',
+  },
+  btnWrapper: {
+    marginHorizontal: '6%',
+    marginVertical: '15rem',
   },
   labelTextButton: {
     color: '$primaryBlue',

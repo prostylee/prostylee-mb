@@ -131,21 +131,22 @@ const Index = (props) => {
               value={code}
               onTextChange={(value) => onChangeCode(value)}
             />
+          </View>
+          <View style={styles.btnWrapper}>
             <ButtonRounded
               label={I18n.t('next')}
-              style={styles.button}
               onPress={() => onVerifyOTP()}
               disabled={isDisabledBtn}
             />
           </View>
-          <View style={styles.btnWrapper}>
-            <TextButton
-              label={I18n.t('resendOTP')}
-              labelStyle={styles.labelTextButton}
-              onPress={() => onResendOTP()}
-              disabled={timeLeft > 0}
-            />
-          </View>
+
+          <TextButton
+            label={I18n.t('resendOTP')}
+            labelStyle={styles.labelTextButton}
+            onPress={() => onResendOTP()}
+            disabled={timeLeft > 0}
+          />
+
           {timeLeft > 0 && (
             <Text style={styles.countDown}>{`(${I18n.t(
               'after',

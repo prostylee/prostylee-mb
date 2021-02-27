@@ -70,7 +70,9 @@ const Index = (props) => {
   };
 
   const onFocusEmailInput = () => {
-    setFocusEmailInput(true);
+    setTimeout(() => {
+      setFocusEmailInput(true);
+    }, 300);
   };
 
   //handle User login
@@ -108,8 +110,8 @@ const Index = (props) => {
               onChangeText={(text) => onChangeEmail(text)}
               autoFocus={true}
               keyboardType="email-address"
-              onBlur={() => onBlurEmailInput()}
-              onFocus={() => onFocusEmailInput()}
+              onBlur={onBlurEmailInput}
+              onFocus={onFocusEmailInput}
               isFocused={isFocusEmailInput}
             />
             {isShowErrMsg && invalidEmail && (

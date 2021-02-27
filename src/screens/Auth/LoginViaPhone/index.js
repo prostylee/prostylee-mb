@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import {
-  ContainerWithoutScrollView,
+  Container,
   ButtonRounded,
   TextInputFloatingLabel,
   HeaderBack,
@@ -37,7 +37,7 @@ const Index = (props) => {
   const onVerifyOTP = () => {};
   return (
     <View style={styles.container}>
-      <ContainerWithoutScrollView>
+      <Container>
         <View style={styles.mainWrapper}>
           <HeaderBack
             title={I18n.t('loginWithPhone')}
@@ -63,7 +63,7 @@ const Index = (props) => {
             </View>
           </View>
         </View>
-      </ContainerWithoutScrollView>
+      </Container>
     </View>
   );
 };
