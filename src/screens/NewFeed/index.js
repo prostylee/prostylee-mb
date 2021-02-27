@@ -10,6 +10,7 @@ import HeaderFeed from './HeaderFeed';
 import TopTrending from './TopTrending';
 import DynamicUsers from './DynamicUsers';
 import StoryBoard from './StoryBoard';
+import InstagramStories from './InstagramStories';
 
 import {
   NewFeedTrendingContentLoading,
@@ -181,6 +182,11 @@ const NewFeed = ({navigation}) => {
           scrollEventThrottle={1}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
+          <InstagramStories
+            targetType={targetType}
+            stories={stories}
+            loading={handleLoading()}
+          />
           <StoryBoard
             targetType={targetType}
             stories={stories}
