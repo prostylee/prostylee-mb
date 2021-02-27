@@ -18,6 +18,12 @@ export const types = {
   GET_STORIES_BY_USER: 'prostylee/NEW_FEED/GET_STORIES_BY_USER',
   GET_STORIES_BY_USER_SUCCESS: 'prostylee/NEW_FEED/GET_STORIES_BY_USER_SUCCESS',
   GET_STORIES_BY_USER_FAILED: 'prostylee/NEW_FEED/GET_STORIES_BY_USER_FAILED',
+
+  GET_PRODUCT_OF_STORIES: 'prostylee/NEW_FEED/GET_PRODUCT_OF_STORIES',
+  GET_PRODUCT_OF_STORIES_SUCCESS:
+    'prostylee/NEW_FEED/GET_PRODUCT_OF_STORIES_SUCCESS',
+  GET_PRODUCT_OF_STORIES_FAILED:
+    'prostylee/NEW_FEED/GET_PRODUCT_OF_STORIES_FAILED',
 };
 
 export const actions = {
@@ -37,6 +43,10 @@ export const actions = {
   getStoriesByUser: createAction(types.GET_STORIES_BY_USER),
   getStoriesByUserSuccess: createAction(types.GET_STORIES_BY_USER_SUCCESS),
   getStoriesByUserFailed: createAction(types.GET_STORIES_BY_USER_FAILED),
+
+  getProductOfStory: createAction(types.GET_PRODUCT_OF_STORIES),
+  getProductOfStorySuccess: createAction(types.GET_PRODUCT_OF_STORIES_SUCCESS),
+  getProductOfStoryFailed: createAction(types.GET_PRODUCT_OF_STORIES_FAILED),
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -44,9 +54,11 @@ const intialState = {
   isLoading: false,
   storiesLoading: false,
   loadMoreLoading: false,
+  stories: {},
   newFeed: {},
   threeFirstNewFeedItem: {},
-  stories: {},
+  productOfStory: {},
+  storeOfStory: {},
   page: 0,
   limit: 12,
   hasLoadMore: false,
@@ -107,6 +119,12 @@ export default handleActions(
     },
     [types.GET_STORIES_BY_USER_FAILED]: (state, {payload}) => {
       return {...state, stories: {}};
+    },
+    [types.GET_PRODUCT_OF_STORIES_SUCCESS]: (state, {payload}) => {
+      return {...state, productOfStory: payload};
+    },
+    [types.GET_PRODUCT_OF_STORIES_FAILED]: (state, {payload}) => {
+      return {...state, productOfStory: {}};
     },
   },
   intialState,

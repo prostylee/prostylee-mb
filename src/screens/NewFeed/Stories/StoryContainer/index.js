@@ -151,7 +151,9 @@ const StoryContainer = (props) => {
             onClosePress={props.onClose}
           />
 
-          {isReadMore && <StoryFooter openChatModal={openChatModal} />}
+          {isReadMore && (
+            <StoryFooter story={user} openChatModal={openChatModal} />
+          )}
 
           <ProgressArray
             next={nextStory}
