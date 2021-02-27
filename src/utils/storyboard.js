@@ -27,6 +27,7 @@ export const convertStoriesData = (stories, targetType) => {
       deletedAt,
       username: name,
       profile: logo,
+      product: targetType === TYPE_STORE && story?.product ? story.product : {},
       productId: targetType === TYPE_STORE ? story.productId : null,
       storeId: targetType === TYPE_USER ? story.storeId : null,
       stories: listImageStory.map((url, i) => ({
