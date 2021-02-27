@@ -19,7 +19,6 @@ const VerticalFeed = ({
   if (isFirst && loading) {
     return null;
   }
-  console.log(targetType);
   const renderFooter = () => {
     if (!loadMoreLoading) {
       return <View style={styles.viewFooter} />;

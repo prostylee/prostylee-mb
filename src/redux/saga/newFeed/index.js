@@ -5,6 +5,7 @@ import {
   getStoriesByUser,
 } from 'services/api/newFeedApi';
 import {getProductById} from 'services/api/productApi';
+import {getStoreById} from 'services/api/storeApi';
 import {newFeedActions, newFeedTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
@@ -77,7 +78,22 @@ const getStoriesByUsers = function* ({payload}) {
     yield put(newFeedActions.setLoadingStories(false));
     const res = yield call(getStoriesByUser, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      yield put(newFeedActions.getStoriesByUserSuccess(res.data.data));
+      let storyData = res.data.data;
+      let contentWithStore = [];
+      for (const story of storyData.content) {
+        const storeId = story.storeId;
+        if (storeId) {
+          const productRes = yield call(getStoreById, storeId);
+          if (productRes.ok && productRes.data.status === SUCCESS) {
+            contentWithStore.push({
+              ...story,
+              store: productRes.data.data,
+            });
+          }
+        }
+      }
+      storyData.content = contentWithStore;
+      yield put(newFeedActions.getStoriesByUserSuccess(storyData));
     } else {
       yield put(newFeedActions.getStoriesByUserFailed());
     }

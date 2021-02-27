@@ -23,6 +23,7 @@ const WIDTH_IMG = 48;
 const WIDTH = Dimensions.get('window').width;
 const Footer = ({openChatModal, story, targetType}) => {
   const product = story?.product || {};
+  const store = story?.store || {};
   return (
     <>
       <View style={styles.storyAction}>
@@ -66,6 +67,14 @@ const Footer = ({openChatModal, story, targetType}) => {
           <TouchableOpacity style={styles.viewLike}>
             <HeartStroke />
           </TouchableOpacity>
+        </View>
+      )}
+      {targetType === TYPE_USER && (
+        <View style={styles.storeContainer}>
+          <View style={styles.storeContent}>
+            <Text>Diesel Clothing Store</Text>
+          </View>
+          <View style={styles.contentRight} />
         </View>
       )}
     </>
@@ -124,6 +133,16 @@ const styles = EStyleSheet.create({
   viewLike: {
     ...absolute(null, 0, null, 0),
     padding: 6,
+  },
+  storeContainer: {
+    ...absolute(null, 50, 16, 0),
+  },
+  storeContent: {
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    height: 30,
+  },
+  contentRight: {
+    width: 20,
   },
 });
 
