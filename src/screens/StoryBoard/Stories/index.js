@@ -63,6 +63,21 @@ const Stories = ({stories, navigation, targetType}) => {
     };
   };
 
+  const getMaskStyle = (index) => {
+    const offset = index * width;
+    const inputRange = [offset - width, offset, offset + width];
+    const opacity = x.interpolate({
+      inputRange,
+      outputRange: [0.75, 0, 0.75],
+      extrapolate: 'clamp',
+    });
+    return {
+      backgroundColor: 'black',
+      ...StyleSheet.absoluteFillObject,
+      opacity,
+    };
+  };
+
   const _close = () => {
     navigation.goBack();
   };
@@ -86,6 +101,7 @@ const Stories = ({stories, navigation, targetType}) => {
             <StoryHeader name={name} imgUrl={imgUrl} onPress={_close} />
             <Story story={story} />
             <StoryFooterAction />
+            <Animated.View style={getMaskStyle(i)} />
           </Animated.View>
         );
       })}
