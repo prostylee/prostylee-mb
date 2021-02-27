@@ -34,7 +34,7 @@ const VerticalFeed = ({
   return (
     <FlatList
       data={newFeedList?.content || []}
-      keyExtractor={(item) => `${item?.id}`}
+      keyExtractor={(item) => 'newFeedkeyExtractor' + targetType + item.id}
       renderItem={({item, index}) => (
         <FeedItem
           targetType={targetType}

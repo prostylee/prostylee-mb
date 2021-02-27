@@ -94,6 +94,7 @@ const Stories = ({stories, loading, targetType}) => {
               onStoryNext={onStoryNext}
               onStoryPrevious={onStoryPrevious}
               user={item}
+              targetType={targetType}
               isNewStory={index !== currentUserIndex}
             />
           ))}

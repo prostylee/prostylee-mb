@@ -152,7 +152,11 @@ const StoryContainer = (props) => {
           />
 
           {isReadMore && (
-            <StoryFooter story={user} openChatModal={openChatModal} />
+            <StoryFooter
+              story={user}
+              targetType={props.targetType}
+              openChatModal={openChatModal}
+            />
           )}
 
           <ProgressArray
