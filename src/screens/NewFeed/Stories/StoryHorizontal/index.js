@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, View, TouchableOpacity} from 'react-native';
 import i18n from 'i18n';
 
 import {ContainerView as Container, Title} from 'components';
@@ -8,7 +8,7 @@ import Item from './Item';
 
 import styles from './styles';
 
-const StoryHorizontal = ({stories, loading, targetType}) => {
+const StoryHorizontal = ({stories, loading, targetType, onPress}) => {
   const listStoryBoads = stories?.content.map((story, i) => ({
     image: story?.storySmallImageUrls[0],
     ...story.storeForStoryResponse,
@@ -38,14 +38,15 @@ const StoryHorizontal = ({stories, loading, targetType}) => {
       <Container fluid>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {listStoryBoads.map((item, index) => (
-            <View
+            <TouchableOpacity
+              onPress={() => onPress(index)}
               key={item.id}
               style={[
                 styles.viewContainer,
                 padStyle(index, listStoryBoads.length),
               ]}>
               <Item targetType={targetType} item={item} style={styles.item} />
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </Container>

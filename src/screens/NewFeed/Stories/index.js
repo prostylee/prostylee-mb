@@ -12,6 +12,7 @@ import {isEmpty} from 'lodash';
 import {CubeNavigationHorizontal} from 'react-native-3dcube-navigation';
 import AllStories from './constants/AllStories';
 import StoryContainer from './StoryContainer';
+import StoryHorizontal from './StoryHorizontal';
 
 const Stories = ({stories, loading, targetType}) => {
   const [isModelOpen, setModel] = useState(false);
@@ -19,9 +20,9 @@ const Stories = ({stories, loading, targetType}) => {
   const [currentScrollValue, setCurrentScrollValue] = useState(0);
   const modalScroll = useRef(null);
 
-  // if (isEmpty(stories) || !stories?.content?.length || loading) {
-  //   return null;
-  // }
+  if (isEmpty(stories) || !stories?.content?.length || loading) {
+    return null;
+  }
 
   const onStorySelect = (index) => {
     setCurrentUserIndex(index);
@@ -82,6 +83,12 @@ const Stories = ({stories, loading, targetType}) => {
             <Text style={styles.title}>{item.title}</Text>
           </TouchableOpacity>
         )}
+      />
+      <StoryHorizontal
+        onPress={onStorySelect}
+        targetType={targetType}
+        stories={stories}
+        loading={loading}
       />
       <Modal
         animationType="slide"
