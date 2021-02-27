@@ -1,18 +1,12 @@
 import React, {useRef, useState} from 'react';
-import {
-  FlatList,
-  Image,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Modal, StyleSheet, View} from 'react-native';
 import {isEmpty} from 'lodash';
 import {CubeNavigationHorizontal} from 'react-native-3dcube-navigation';
-import AllStories from './constants/AllStories';
+// import AllStories from './constants/AllStories';
 import StoryContainer from './StoryContainer';
 import StoryHorizontal from './StoryHorizontal';
+
+import {convertStoriesData} from 'utils/storyboard';
 
 const Stories = ({stories, loading, targetType}) => {
   const [isModelOpen, setModel] = useState(false);
@@ -23,6 +17,8 @@ const Stories = ({stories, loading, targetType}) => {
   if (isEmpty(stories) || !stories?.content?.length || loading) {
     return null;
   }
+
+  const AllStories = convertStoriesData(stories.content, targetType);
 
   const onStorySelect = (index) => {
     setCurrentUserIndex(index);
@@ -70,20 +66,6 @@ const Stories = ({stories, loading, targetType}) => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={AllStories}
-        horizontal
-        renderItem={({item, index}) => (
-          <TouchableOpacity onPress={() => onStorySelect(index)}>
-            <Image
-              style={styles.circle}
-              source={{uri: item.profile}}
-              isHorizontal
-            />
-            <Text style={styles.title}>{item.title}</Text>
-          </TouchableOpacity>
-        )}
-      />
       <StoryHorizontal
         onPress={onStorySelect}
         targetType={targetType}
@@ -107,6 +89,7 @@ const Stories = ({stories, loading, targetType}) => {
           style={styles.container}>
           {AllStories.map((item, index) => (
             <StoryContainer
+              key={'storyContainer' + index}
               onClose={onStoryClose}
               onStoryNext={onStoryNext}
               onStoryPrevious={onStoryPrevious}
@@ -124,7 +107,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    paddingVertical: 50,
     backgroundColor: 'rgba(255,255,255,255)',
   },
   circle: {
