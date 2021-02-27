@@ -8,6 +8,7 @@ import {
 } from 'components';
 
 import _ from 'lodash';
+import {useKeyboard} from '@react-native-community/hooks';
 
 import {userActions, commonActions} from 'reducers';
 import {useDispatch} from 'react-redux';
@@ -22,8 +23,9 @@ const Index = (props) => {
   const [invalidEmail, setInvalidEmail] = React.useState(false);
   const [errEmailMsg, setErrEmailMsg] = React.useState('');
   const [disabledBtn, setDisabledBtn] = React.useState(false);
-  const [isShowErrMsg, toggleShowErrMsg] = React.useState(false);
-  const [isFocusEmailInput, setFocusEmailInput] = React.useState(true);
+
+  //keyboard
+  const keyboard = useKeyboard();
 
   //useEffect
   React.useEffect(() => {
@@ -62,19 +64,6 @@ const Index = (props) => {
     }
   };
 
-  const onBlurEmailInput = () => {
-    if (invalidEmail) {
-      toggleShowErrMsg(true);
-    }
-    setFocusEmailInput(false);
-  };
-
-  const onFocusEmailInput = () => {
-    setTimeout(() => {
-      setFocusEmailInput(true);
-    }, 300);
-  };
-
   //handle User login
   const onSubmitEmail = async () => {
     await dispatch(commonActions.toggleLoading(true));
@@ -110,11 +99,9 @@ const Index = (props) => {
               onChangeText={(text) => onChangeEmail(text)}
               autoFocus={true}
               keyboardType="email-address"
-              onBlur={onBlurEmailInput}
-              onFocus={onFocusEmailInput}
-              isFocused={isFocusEmailInput}
+              isFocused={keyboard.keyboardShown ? true : false}
             />
-            {isShowErrMsg && invalidEmail && (
+            {!keyboard.keyboardShown && invalidEmail && (
               <Text style={styles.errMsg}>{errEmailMsg}</Text>
             )}
             <View style={styles.btnWrapper}>
