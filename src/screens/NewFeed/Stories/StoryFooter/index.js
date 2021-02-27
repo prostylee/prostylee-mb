@@ -23,7 +23,6 @@ const WIDTH_IMG = 48;
 const WIDTH = Dimensions.get('window').width;
 const Footer = ({openChatModal, story, targetType}) => {
   const product = story?.product || {};
-  console.log(product);
   return (
     <>
       <View style={styles.storyAction}>

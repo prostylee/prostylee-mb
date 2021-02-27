@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {Animated, StyleSheet} from 'react-native';
 import ProgressBar from '../ProgressBar';
+import {STORY_DURATION} from 'constants';
 
 const ProgressArray = (props) => {
   const opacity = useRef(new Animated.Value(1)).current;
@@ -26,7 +27,7 @@ const ProgressArray = (props) => {
       {props.length.map((i, index) => (
         <ProgressBar
           index={index}
-          duration={props.duration || 3}
+          duration={STORY_DURATION}
           isNewStory={props.isNewStory}
           currentIndex={props.currentIndex}
           next={props.next}
