@@ -59,7 +59,7 @@ const Item = ({item, style, targetType}) => {
         {products.length
           ? products.map((item, _i) => (
               <Image
-                key={`productOfStore${item.id}`}
+                key={'productOfStore' + targetType + _i}
                 source={{
                   uri: item?.imageUrls?.length ? item.imageUrls[0] : null,
                 }}

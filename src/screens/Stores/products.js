@@ -23,7 +23,7 @@ const StoresProducts = ({products}) => {
             },
           ]}>
           <Image
-            key={`productOfStore${item.id}`}
+            key={`productOfStore${index}`}
             source={
               item?.imageUrls?.length
                 ? {uri: item?.imageUrls[0]}

@@ -32,7 +32,9 @@ const TopTrending = ({topProduct, navigation, targetType}) => {
       <Container fluid>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {topProductList.map((item, index) => (
-            <View key={item.id} style={styles.viewContainer}>
+            <View
+              key={'topProductList' + targetType + index}
+              style={styles.viewContainer}>
               <Item targetType={targetType} item={item} style={{flex: 1}} />
             </View>
           ))}

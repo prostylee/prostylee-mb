@@ -46,7 +46,22 @@ const getStoriesByStores = function* ({payload}) {
     yield put(newFeedActions.setLoadingStories(false));
     const res = yield call(getStoriesByStore, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      yield put(newFeedActions.getStoriesByStoreSuccess(res.data.data));
+      let storyData = res.data.data;
+      let contentWithPoduct = [];
+      for (const story of storyData.content) {
+        const productId = story.productId;
+        if (productId) {
+          const productRes = yield call(getProductById, productId);
+          if (productRes.ok && productRes.data.status === SUCCESS) {
+            contentWithPoduct.push({
+              ...story,
+              product: productRes.data.data,
+            });
+          }
+        }
+      }
+      storyData.content = contentWithPoduct;
+      yield put(newFeedActions.getStoriesByStoreSuccess(storyData));
     } else {
       yield put(newFeedActions.getStoriesByStoreFailed());
     }

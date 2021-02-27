@@ -97,7 +97,9 @@ const Stories = ({stories, navigation, targetType}) => {
           name = storyTypeRes.fullName;
         }
         return (
-          <Animated.View style={getStyle(i)} key={'storyboard' + i}>
+          <Animated.View
+            style={getStyle(i)}
+            key={'storyboard' + targetType + i}>
             <StoryHeader name={name} imgUrl={imgUrl} onPress={_close} />
             <Story story={story} />
             <StoryFooterAction />

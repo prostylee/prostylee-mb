@@ -36,7 +36,9 @@ const DynamicUsers = ({listDynamicUsers, navigation, targetType}) => {
       <Container fluid>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {listDynamicUser.map((item, index) => (
-            <View key={item.id} style={styles.viewContainer}>
+            <View
+              key={'listDynamicUser' + targetType + index}
+              style={styles.viewContainer}>
               <Item targetType={targetType} item={item} style={{flex: 1}} />
             </View>
           ))}

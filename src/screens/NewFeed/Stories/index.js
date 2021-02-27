@@ -89,7 +89,7 @@ const Stories = ({stories, loading, targetType}) => {
           style={styles.container}>
           {AllStories.map((item, index) => (
             <StoryContainer
-              key={'storyContainer' + index}
+              key={'storyContainer' + targetType + index}
               onClose={onStoryClose}
               onStoryNext={onStoryNext}
               onStoryPrevious={onStoryPrevious}

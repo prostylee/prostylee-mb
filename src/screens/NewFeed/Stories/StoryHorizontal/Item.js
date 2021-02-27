@@ -15,7 +15,7 @@ const Item = ({item, style, targetType}) => {
     <View style={[styles.itemContainer, style && style]}>
       <View style={styles.touchImg}>
         <Image
-          key={`productOfStore${item.id}`}
+          key={'productOfStore' + targetType + item.id}
           source={
             item.image
               ? {uri: item.image}

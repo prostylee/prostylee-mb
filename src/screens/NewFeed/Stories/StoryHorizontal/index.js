@@ -40,7 +40,7 @@ const StoryHorizontal = ({stories, loading, targetType, onPress}) => {
           {listStoryBoads.map((item, index) => (
             <TouchableOpacity
               onPress={() => onPress(index)}
-              key={item.id}
+              key={'listStoryBoads' + targetType + index}
               style={[
                 styles.viewContainer,
                 padStyle(index, listStoryBoads.length),
