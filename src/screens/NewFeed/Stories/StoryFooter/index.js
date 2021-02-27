@@ -4,14 +4,14 @@ import {HeartSolid, ChatSolid, ArrowSolid} from 'svg/common';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {absolute} from 'theme/style';
 
-const Footer = (props) => {
+const Footer = ({openChatModal}) => {
   return (
     <View style={styles.storyAction}>
       <TouchableOpacity style={styles.touch}>
         <ArrowSolid />
       </TouchableOpacity>
       <View style={styles.line} />
-      <TouchableOpacity style={styles.touch}>
+      <TouchableOpacity onPress={openChatModal} style={styles.touch}>
         <ChatSolid />
       </TouchableOpacity>
       <View style={styles.line} />

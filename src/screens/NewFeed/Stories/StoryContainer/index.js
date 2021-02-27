@@ -6,12 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Text,
 } from 'react-native';
 import Modal from 'react-native-modalbox';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Story from '../Story';
 import HeaderView from '../HeaderView';
-import Readmore from '../StoryFooter';
+import StoryFooter from '../StoryFooter';
 import ProgressArray from '../ProgressArray';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -74,11 +75,11 @@ const StoryContainer = (props) => {
     setIsPause(result);
   };
 
-  const onReadMoreOpen = () => {
+  const openChatModal = () => {
     setIsPause(true);
     setModel(true);
   };
-  const onReadMoreClose = () => {
+  const closeChatModal = () => {
     setIsPause(false);
     setModel(false);
   };
@@ -150,7 +151,7 @@ const StoryContainer = (props) => {
             onClosePress={props.onClose}
           />
 
-          {isReadMore && <Readmore onReadMore={onReadMoreOpen} />}
+          {isReadMore && <StoryFooter openChatModal={openChatModal} />}
 
           <ProgressArray
             next={nextStory}
@@ -170,9 +171,9 @@ const StoryContainer = (props) => {
           style={styles.modal}
           position="bottom"
           isOpen={isModelOpen}
-          onClosed={onReadMoreClose}>
+          onClosed={closeChatModal}>
           <View style={styles.bar} />
-          {/* <WebView source={{uri: 'https://www.google.com'}} /> */}
+          <Text>Chat</Text>
         </Modal>
       </TouchableOpacity>
     </GestureRecognizer>
