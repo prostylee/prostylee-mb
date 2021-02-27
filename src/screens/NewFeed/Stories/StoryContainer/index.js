@@ -11,7 +11,7 @@ import Modal from 'react-native-modalbox';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Story from '../Story';
 import HeaderView from '../HeaderView';
-import Readmore from '../Readmore';
+import Readmore from '../StoryFooter';
 import ProgressArray from '../ProgressArray';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
