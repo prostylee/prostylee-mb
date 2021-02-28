@@ -31,17 +31,20 @@ const Stories = ({stories, navigation, targetType}) => {
       inputRange,
       outputRange: [width / ratio, -width / ratio],
       extrapolate: 'clamp',
+      useNativeDriver: true,
     });
     const rotateY = x.interpolate({
       inputRange,
       outputRange: [`${angle}rad`, `-${angle}rad`],
       extrapolate: 'clamp',
+      useNativeDriver: true,
     });
 
     const translateX1 = x.interpolate({
       inputRange,
       outputRange: [width / 2, -width / 2],
       extrapolate: 'clamp',
+      useNativeDriver: true,
     });
 
     const extra = width / ratio / Math.cos(angle / 2) - width / ratio;
@@ -49,6 +52,7 @@ const Stories = ({stories, navigation, targetType}) => {
       inputRange,
       outputRange: [-extra, extra],
       extrapolate: 'clamp',
+      useNativeDriver: true,
     });
 
     return {
@@ -70,6 +74,7 @@ const Stories = ({stories, navigation, targetType}) => {
       inputRange,
       outputRange: [0.75, 0, 0.75],
       extrapolate: 'clamp',
+      useNativeDriver: true,
     });
     return {
       backgroundColor: 'black',
@@ -122,7 +127,7 @@ const Stories = ({stories, navigation, targetType}) => {
               },
             },
           ],
-          {useNativeDriver: true},
+          {useNativeDriver: false},
         )}
         decelerationRate={0.99}
         horizontal

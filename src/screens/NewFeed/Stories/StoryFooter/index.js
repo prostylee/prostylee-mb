@@ -69,14 +69,14 @@ const Footer = ({openChatModal, story, targetType}) => {
           </TouchableOpacity>
         </View>
       )}
-      {targetType === TYPE_USER && (
+      {/* {targetType === TYPE_USER && (
         <View style={styles.storeContainer}>
           <View style={styles.storeContent}>
             <Text>Diesel Clothing Store</Text>
           </View>
           <View style={styles.contentRight} />
         </View>
-      )}
+      )} */}
     </>
   );
 };
