@@ -86,6 +86,7 @@ const Stories = ({stories, loading, targetType}) => {
         <CubeNavigationHorizontal
           callBackAfterSwipe={(g) => onScrollChange(g)}
           ref={modalScroll}
+          animated={true}
           style={styles.container}>
           {AllStories.map((item, index) => (
             <StoryContainer

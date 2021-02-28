@@ -11,13 +11,13 @@ const ProgressArray = (props) => {
       Animated.timing(opacity, {
         toValue: 0,
         timing: 300,
-        useNativeDriver: false,
+        useNativeDriver: true,
       }).start();
     } else {
       Animated.timing(opacity, {
         toValue: 1,
         timing: 300,
-        useNativeDriver: false,
+        useNativeDriver: true,
       }).start();
     }
   }, [opacity, props.pause]);
@@ -26,6 +26,7 @@ const ProgressArray = (props) => {
     <Animated.View style={[styles.progressBarArray, {opacity}]}>
       {props.length.map((i, index) => (
         <ProgressBar
+          key={'progressBar' + index}
           index={index}
           duration={STORY_DURATION}
           isNewStory={props.isNewStory}
