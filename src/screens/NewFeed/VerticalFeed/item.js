@@ -1,35 +1,125 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {View, Text, TouchableOpacity} from 'react-native'
-import styles from './styles'
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {View, Text, TouchableOpacity} from 'react-native';
+import styles from './styles';
+import i18n from 'i18n';
+import {isEmpty} from 'lodash';
 
-import {Avatar} from 'react-native-paper'
+import {Avatar} from 'react-native-paper';
 
-import {ContainerView} from 'components'
+import {ContainerView, Colors} from 'components';
 
 import {Heart, Message, More} from 'svg/social';
 
+import {follow, unfollow, like, unlike} from 'services/api/socialApi';
+
 import FeedSlide from './slide';
 
-const VerticalFeedItem = ({newFeedItem}) => {
+import {SUCCESS} from 'constants';
+
+import {currencyFormat} from 'utils/currency';
+
+const VerticalFeedItem = ({newFeedItem, targetType}) => {
+  if (isEmpty(newFeedItem)) {
+    return null;
+  }
+
+  const navigation = useNavigation();
+  const [followed, setFollowed] = useState(false);
+  const [liked, setLiked] = useState(false);
+
+  const disCountPer = newFeedItem?.priceSale / newFeedItem?.price;
+  const productOwnerResponse = newFeedItem?.productOwnerResponse;
+
+  const _followPress = async () => {
+    if (!followed) {
+      const res = await follow({
+        targetId: newFeedItem?.id,
+        targetType,
+      });
+      if (res.ok && res.data.status === SUCCESS) {
+        setFollowed(true);
+      }
+    } else {
+      const res = await unfollow({
+        targetId: newFeedItem?.id,
+        targetType,
+      });
+      if (res.ok && res.data.status === SUCCESS) {
+        setFollowed(false);
+      }
+    }
+  };
+  const _likePress = async () => {
+    if (!liked) {
+      const res = await like({
+        targetId: newFeedItem?.id,
+        targetType,
+      });
+      if (res.ok && res.data.status === SUCCESS) {
+        setLiked(true);
+      }
+    } else {
+      const res = await unlike({
+        targetId: newFeedItem?.id,
+        targetType,
+      });
+      if (res.ok && res.data.status === SUCCESS) {
+        setLiked(false);
+      }
+    }
+  };
+  const _navigateChat = () => {
+    navigation.navigate('Chat');
+  };
   return (
     <View style={styles.container}>
       <ContainerView style={styles.headerContainer}>
         <View style={styles.headerWrap}>
-          <Avatar.Image 
-            size={32} 
-            source={{uri: 'https://www.iphonehacks.com/wp-content/uploads/2020/07/ios-14-home-screen-widgets-alt.png'}} />
-          <Text numberOfLines={1} style={styles.textTitle}>{newFeedItem?.name}</Text>
+          <Avatar.Image
+            size={32}
+            source={{
+              uri: productOwnerResponse.logoUrl,
+            }}
+          />
+          <View>
+            <Text numberOfLines={1} style={styles.textTitle}>
+              {productOwnerResponse?.name}
+            </Text>
+            {newFeedItem?.isAdvertising && (
+              <Text style={styles.isAdvertising}>
+                {i18n.t('common.textAdvertisement')}
+              </Text>
+            )}
+          </View>
         </View>
-        <TouchableOpacity style={styles.wrapFollow}>
-          <Text>Follow</Text>
+        <TouchableOpacity
+          onPress={() => _followPress()}
+          style={styles.wrapFollow}>
+          <Text style={!followed ? styles.textFollow : styles.textFollowed}>
+            {!followed
+              ? i18n.t('common.textFollow')
+              : i18n.t('common.textFollowed')}
+          </Text>
         </TouchableOpacity>
       </ContainerView>
-      <FeedSlide images= {newFeedItem?.imageUrls || []}/>
+      <View style={styles.slideWrap}>
+        <FeedSlide images={newFeedItem?.imageUrls || []} />
+        {disCountPer !== 1 && (
+          <View style={styles.discountPercent}>
+            <Text style={styles.textDiscount}>{`Giảm ${Math.floor(
+              disCountPer * 100,
+            )} %`}</Text>
+          </View>
+        )}
+      </View>
       <ContainerView fluid style={styles.description}>
         <View style={styles.wrapInfo}>
-          <Text style={styles.productName}>Áo khoác blazer Nữ tay dài</Text>
-          <Text style={styles.price}>1000000 đ</Text>
+          <Text style={styles.productName}>{newFeedItem.name}</Text>
+          <Text style={styles.price}>
+            {currencyFormat(newFeedItem.priceSale, 'đ')}
+          </Text>
         </View>
         <TouchableOpacity style={styles.touchBuyNow}>
           <Text style={styles.touchTextByNow}>Mua ngay</Text>
@@ -37,25 +127,25 @@ const VerticalFeedItem = ({newFeedItem}) => {
       </ContainerView>
       <ContainerView style={styles.socialActionWrap}>
         <View style={styles.postAction}>
-          <TouchableOpacity style={styles.touchHeart}>
-            <Heart/>
+          <TouchableOpacity
+            onPress={() => _likePress()}
+            style={styles.touchHeart}>
+            <Heart color={liked ? Colors.$purple : Colors.$icon} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.touchMes}>
-            <Message/>
+          <TouchableOpacity onPress={_navigateChat} style={styles.touchMes}>
+            <Message />
           </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.touchOption}>
-          <More/>
+          <More />
         </TouchableOpacity>
       </ContainerView>
     </View>
-  )
-}
+  );
+};
 
-VerticalFeedItem.defaultProps = {
-}
+VerticalFeedItem.defaultProps = {};
 
-VerticalFeedItem.propTypes = {
-}
+VerticalFeedItem.propTypes = {};
 
-export default VerticalFeedItem
+export default VerticalFeedItem;

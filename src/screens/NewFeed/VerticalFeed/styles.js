@@ -1,8 +1,8 @@
-import {Dimensions} from 'react-native'
+import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {center,flexRow} from 'theme/style'
+import {center, flexRow, absolute} from 'theme/style';
 
-const WIDTH = Dimensions.get('window').width - 30
+const WIDTH = Dimensions.get('window').width - 30;
 export default EStyleSheet.create({
   container: {
     backgroundColor: '$white',
@@ -16,12 +16,14 @@ export default EStyleSheet.create({
   headerWrap: {
     ...flexRow,
     paddingVertical: 10,
-    width: WIDTH * 0.7
+    width: WIDTH * 0.7,
   },
   textTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 20,
+    fontFamily: '$font1',
     paddingLeft: 10,
-    fontSize: '$mediumText',
-    fontSize: '$largeText'
   },
   wrapFollow: {
     ...center,
@@ -54,140 +56,63 @@ export default EStyleSheet.create({
     borderWidth: 1,
     padding: 6,
     borderRadius: 8,
-    borderColor: '#8B9399'
+    borderColor: '$lightGray',
   },
   touchTextByNow: {
-    color: '#8B9399'
+    color: '$lightGray',
   },
   productName: {
-    fontSize: '$mediumText',
-    fontSize: '$largeText'
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 20,
+    fontFamily: '$font1',
+    width: WIDTH * 0.75,
   },
   price: {
-    color: '#8B9399',
+    color: '$lightGray',
     lineHeight: 24,
+    fontSize: 14,
+    fontWeight: '500',
+    fontFamily: '$font1',
   },
-
-
-
-
-
-  mainWrapper: {
-    flex: 1,
+  textFollow: {
+    color: '$purple',
+  },
+  textFollowed: {
+    color: '$lightGray',
+  },
+  discountPercent: {
+    ...absolute(null, 8, 8, null),
+    padding: 6,
+    borderRadius: 4,
+    backgroundColor: '$red',
+  },
+  textDiscount: {
+    color: '$white',
+    lineHeight: 18,
+    fontSize: 14,
+    fontWeight: '500',
+    fontFamily: '$font1',
+  },
+  renderSlide: {
+    ...absolute(null, 8, null, 8),
     backgroundColor: '$white',
-    paddingHorizontal: '4%',
+    paddingHorizontal: 8,
+    borderRadius: 24,
+    paddingVertical: 6,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: '10rem',
+  viewFooter: {
+    marginBottom: 6,
   },
-  addressWrapper: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  iconLocation: {
-    width: '15rem',
-    height: '15rem',
-    marginRight: '8rem',
-    '@media ios': {
-      tintColor: '$lightGray',
-    },
-  },
-  address: {
-    fontSize: '$mediumText',
-    color: '$black',
-    fontWeight: 'bold',
-  },
-  controlWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  btnIconWrapper: {
-    width: '22rem',
-    height: '22rem',
-    marginLeft: '8rem',
+  viewLoadingFooter: {
+    position: 'relative',
+    height: 40,
     justifyContent: 'center',
-    alignItems: 'center',
   },
-  headerIcon: {
-    width: '16rem',
-    height: '16rem',
-    '@media ios': {
-      tintColor: '$lightGray',
-    },
-  },
-  wrapperSearchBox: {
-    zIndex: 999,
-  },
-  searchBox: {
-    borderWidth: 0,
-    backgroundColor: '$bgColor',
-    borderRadius: '15rem',
-  },
-  sliderWrapper: {
-    marginTop: '10rem',
-  },
-  sliderDotContainer: {
-    position: 'absolute',
-    bottom: 0,
-    padding: 0,
-    alignItems: 'center',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    paddingVertical: '10rem',
-  },
-  sliderDot: {
-    width: '10rem',
-    height: '10rem',
-    borderRadius: '5rem',
-    marginHorizontal: 0,
-    padding: 0,
-    margin: 0,
-    backgroundColor: '$lightGray',
-  },
-  sliderImage: {
-    borderRadius: '10rem',
-    width: '97%',
-  },
-  friendhubContainer: {
-    backgroundColor: '$organ',
-  },
-  friendWrapper: {
-    width: '130rem',
-    height: '150rem',
-    marginRight: '20rem',
-    paddingVertical: '8rem',
-  },
-  friendAvatarWrapper: {
-    flex: 1,
-    borderRadius: '25rem',
-  },
-  friendAvatar: {
-    flex: 1,
-    width: null,
-    height: null,
-    borderRadius: '25rem',
-  },
-  friendInfo: {
-    paddingTop: '8rem',
-    paddingHorizontal: '5%',
-  },
-  friendInfoText: {
-    fontSize: '$mediumText',
-    color: '$gray',
-    lineHeight: '18rem',
-    textAlign: 'center',
-  },
-  viewAllWrapper: {
-    width: '130rem',
-    height: '150rem',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  viewAllText: {
-    fontSize: '$largeText',
-    color: '$gray',
+  isAdvertising: {
+    color: '$lightGray',
+    fontSize: 11,
+    lineHeight: 16,
+    marginLeft: 10,
   },
 });

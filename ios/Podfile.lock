@@ -394,7 +394,7 @@ PODS:
     - Firebase/Messaging (~> 7.5.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (1.9.0):
+  - RNGestureHandler (1.10.2):
     - React-Core
   - RNI18n (2.0.15):
     - React
@@ -413,7 +413,7 @@ PODS:
     - React-Core
   - RNSVG (12.1.0):
     - React
-  - RNVectorIcons (8.0.0):
+  - RNVectorIcons (8.1.0):
     - React-Core
   - SDWebImage (5.10.3):
     - SDWebImage/Core (= 5.10.3)
@@ -677,13 +677,13 @@ SPEC CHECKSUMS:
   RNFastImage: d4870d58f5936111c56218dbd7fcfc18e65b58ff
   RNFBApp: 6664dfccd0c93a194767e1c64af14a08074a087d
   RNFBMessaging: cc62fb3f75f771cf1b1a852a3e15df27343e3a94
-  RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
+  RNGestureHandler: e66feb0fda7da74ea6a3094656b3c1efe05f5c07
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNImageCropPicker: 08ba3a2e2f4f8833d606f01906c371e382c4dea9
   RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
   RNScreens: b6c9607e6fe47c1b6e2f1910d2acd46dd7ecea3a
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
-  RNVectorIcons: f67a1abce2ec73e62fe4606e8110e95a832bc859
+  RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   SDWebImage: e378178472b735e84b007bfb55514c97948a0598
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9

@@ -2,6 +2,24 @@ export default {
   test: 'Xin chào!',
   confirm: 'Đồng ý',
   cancel: 'Huỷ',
+  stores: {
+    titleTopStore: 'Cửa hàng nổi bật',
+  },
+  common: {
+    textSeeMore: 'Xem thêm',
+    textFollow: 'Theo dõi',
+    textFollowed: 'Đã theo dõi',
+    textAdvertisement: 'Quảng cáo',
+  },
+  headerTitle: {
+    featured_store: 'Cửa hàng nổi bật',
+  },
+  dynamicUsers: {
+    titleDynamicUser: 'Người dùng năng động',
+  },
+  storyBoard: {
+    titleStoryBoard: 'Cảm hứng thời trang',
+  },
   titleOnboarding1: 'Cộng đồng thời trang lớn nhất Việt Nam',
   contentOnboarding1:
     'Cập nhật xu hướng, chia sẻ những bức ảnh thời trang đẹp nhất của bạn với cộng đồng của chúng tôi.',

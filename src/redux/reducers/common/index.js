@@ -4,6 +4,7 @@ export const types = {
   UPDATE_NETWORK_STATUS: 'UPDATE_NETWORK_STATUS',
   TOGGLE_LOADING: 'TOGGLE_LOADING',
   TOGGLE_THEME_MODE: 'TOGGLE_THEME_MODE',
+  TOGGLE_TARGET_TYPE: 'TOGGLE_TARGET_TYPE',
   SHOW_ONBOARDING_SCREEN: 'SHOW_ONBOARDING_SCREEN',
   SET_INITIAL_ROUTE_NAME: 'SET_INITIAL_ROUTE_NAME',
 };
@@ -12,6 +13,7 @@ export const actions = {
   updateNetworkStatus: createAction(types.UPDATE_NETWORK_STATUS),
   toggleLoading: createAction(types.TOGGLE_LOADING),
   toggleThemeMode: createAction(types.TOGGLE_THEME_MODE),
+  toggleTargetType: createAction(types.TOGGLE_TARGET_TYPE),
   showOnboardingScreen: createAction(types.SHOW_ONBOARDING_SCREEN),
   setInitialRouteName: createAction(types.SET_INITIAL_ROUTE_NAME),
 };
@@ -24,11 +26,12 @@ export const selectors = {
   getInitialRouteName: (state) => state.common.initialRouteName,
 };
 
-const defaultState = {
+const intialState = {
   networkStatus: true,
   isLoading: false,
   isShowOnboardingScreen: true,
   themeMode: 'light',
+  targetType: 'STORE',
   initialRouteName: 'Welcome',
 };
 
@@ -40,6 +43,9 @@ export default handleActions(
     [types.TOGGLE_LOADING]: (state, {payload}) => {
       return {...state, isLoading: payload};
     },
+    [types.TOGGLE_TARGET_TYPE]: (state, {payload}) => {
+      return {...state, targetType: payload};
+    },
     [types.SHOW_ONBOARDING_SCREEN]: (state, {payload}) => {
       return {...state, isShowOnboardingScreen: payload};
     },
@@ -47,5 +53,5 @@ export default handleActions(
       return {...state, initialRouteName: payload};
     },
   },
-  defaultState,
+  intialState,
 );

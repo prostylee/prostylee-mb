@@ -1,4 +1,7 @@
 import Home from './Home';
+import Stores from './Stores';
+import StoryBoard from './StoryBoard';
+import Chat from './Chat';
 import Login from './Auth/Login';
 import SignUpViaPhone from './Auth/SignUpViaPhone';
 import LoginOptions from './Auth/LoginOptions';
@@ -16,6 +19,9 @@ export {
   Onboarding,
   Home,
   Login,
+  Stores,
+  StoryBoard,
+  Chat,
   SignUpViaPhone,
   LoginViaPhone,
   LoginOptions,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {
   createStackNavigator,
@@ -9,7 +9,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {userSelectors, commonSelectors} from 'reducers';
 import {navigationRef} from './rootNavigator';
 
+import {isEmpty} from 'lodash';
+
 import {lightTheme, darkTheme} from 'theme';
+
+import {api as configApi} from 'services/config';
 
 const Stack = createStackNavigator();
 
@@ -19,14 +23,18 @@ import {
   Login,
   SignUpViaPhone,
   LoginViaPhone,
-  Home,
   LoginOptions,
   OTPVerification,
   ForgotPassword,
   ResetPassword,
   ResetPasswordViaMail,
   PrivacyAndPolicy,
+  Stores,
+  StoryBoard,
+  Chat,
 } from 'screens';
+
+import BottomTabs from './bottomTab';
 
 function SignedIn() {
   return (
@@ -40,7 +48,10 @@ function SignedIn() {
       mode="card"
       headerMode="none"
       animation="fade">
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Home" component={BottomTabs} />
+      <Stack.Screen name="Stores" component={Stores} />
+      <Stack.Screen name="StoryBoard" component={StoryBoard} />
+      <Stack.Screen name="Chat" component={Chat} />
     </Stack.Navigator>
   );
 }
@@ -81,7 +92,11 @@ function SignedOut() {
 const App = React.forwardRef(() => {
   const userToken = useSelector((state) => userSelectors.getUserToken(state));
   const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
-
+  useEffect(() => {
+    if (!isEmpty(userToken)) {
+      configApi.setHeader('Authorization', 'Bearer ' + userToken.accessToken);
+    }
+  }, [userToken]);
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -95,7 +110,7 @@ const App = React.forwardRef(() => {
         mode="card"
         headerMode="none"
         animation="fade">
-        {userToken === null ? (
+        {!userToken ? (
           <Stack.Screen name="SignedOut" component={SignedOut} />
         ) : (
           <Stack.Screen name="SignedIn" component={SignedIn} />

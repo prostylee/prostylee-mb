@@ -1,12 +1,8 @@
 import apisauce from 'apisauce';
 
 import configEnv from 'config';
-import {
-  TIME_OUT,
-  SUCCESS,
-  INTERNAL_SERVER_ERROR,
-  UNKNOWN_MESSAGE,
-} from 'constants';
+
+import {TIME_OUT, SUCCESS} from 'constants';
 
 var config = {
   url: configEnv.api_url,

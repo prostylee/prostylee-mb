@@ -1,5 +1,5 @@
 import {_fetch} from '../config';
-import {POST, GET, PUT, DELETE} from 'constants';
+import {POST, PUT} from 'constants';
 
 //AUTH API
 export const userSignUp = (payload) => {

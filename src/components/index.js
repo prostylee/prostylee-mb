@@ -25,6 +25,7 @@ import ThemeView from './ThemeView';
 import ImageAnimated from './Image/imageAnimated';
 import ContainerView from './ContainerView';
 import Header from './Header';
+import Title from './Title';
 import TextInputFloatingLabel from './TextInputFloatingLabel';
 import SocialLogin from './SocialLogin';
 export {
@@ -55,6 +56,7 @@ export {
   ImageAnimated,
   ContainerView,
   Header,
+  Title,
   TextInputFloatingLabel,
   SocialLogin,
 };

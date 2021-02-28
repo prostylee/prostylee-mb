@@ -1,35 +1,62 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {View, Text, TouchableOpacity, FlatList} from 'react-native'
-import styles from './styles'
+import React from 'react';
+import {View, ActivityIndicator, FlatList} from 'react-native';
+import styles from './styles';
 
-import FeedItem from './item'
+import {Colors} from 'components';
 
-const VerticalFeed = ({newFeedList}) => {
+import FeedItem from './item';
+
+const VerticalFeed = ({
+  newFeedList,
+  handleLoadMore,
+  loadMoreLoading,
+  handleRefresh,
+  refreshing,
+  loading,
+  isFirst,
+  targetType,
+}) => {
+  if (isFirst && loading) {
+    return null;
+  }
+  const renderFooter = () => {
+    if (!loadMoreLoading) {
+      return <View style={styles.viewFooter} />;
+    }
+
+    return (
+      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+        <ActivityIndicator animating color={Colors.$purple} size="small" />
+      </View>
+    );
+  };
   return (
     <FlatList
-        data={newFeedList?.content || []}
-        keyExtractor={item => `${item.id}`}
-        renderItem={({ item, index }) => (
-            <FeedItem
-              key = {'newFeedItem' + item.id}
-              newFeedItem={item}
-            /> 
-          )}
-        onEndReachedThreshold={0.5}
-        initialNumToRender={10} 
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-    >
-      
-    </FlatList>
-  )
-}
+      data={newFeedList?.content || []}
+      keyExtractor={(item) => 'newFeedkeyExtractor' + targetType + item.id}
+      renderItem={({item, index}) => (
+        <FeedItem
+          targetType={targetType}
+          key={'newFeedItem' + targetType + index}
+          newFeedItem={item}
+        />
+      )}
+      onEndReached={() => handleLoadMore()}
+      refreshing={refreshing}
+      onRefresh={handleRefresh}
+      ListFooterComponent={renderFooter}
+      onEndReachedThreshold={0.5}
+      initialNumToRender={10}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+    />
+  );
+};
 
 VerticalFeed.defaultProps = {
-}
+  isFirst: false,
+};
 
-VerticalFeed.propTypes = {
-}
+VerticalFeed.propTypes = {};
 
-export default VerticalFeed
+export default VerticalFeed;
