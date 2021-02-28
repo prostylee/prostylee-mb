@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, Text} from 'react-native';
 
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import styles from './styles';
@@ -9,6 +9,7 @@ const TextInputFloatingLabel = (props) => {
   return (
     <View>
       <FloatingLabelInput
+        {...props}
         ref={props.ref}
         label={props.placeholder}
         value={props.value}
