@@ -18,9 +18,9 @@ export const unlike = (payload) => {
 };
 
 export const loadListLiked = (payload) => {
-  return _fetch(POST, '/user-followers​/loadStatusFollow', payload);
+  return _fetch(POST, '/user-followers​/load-status-follow', payload);
 };
 
 export const loadListFlollowed = (payload) => {
-  return _fetch(POST, '/user-likes/loadStatusLike', payload);
+  return _fetch(POST, '/user-likes/load-status-like', payload);
 };
