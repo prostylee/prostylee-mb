@@ -73,7 +73,9 @@ const Slide = React.memo((props) => {
         }
       />
       <View style={styles.renderSlide}>
-        <Text>{state.indexCurrency + 1 + '/' + images.length}</Text>
+        <Text>
+          {(images.length ? state.indexCurrency + 1 : 0) + '/' + images.length}
+        </Text>
       </View>
     </>
   );

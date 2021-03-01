@@ -60,9 +60,11 @@ const Item = ({item, style, targetType}) => {
           ? products.map((item, _i) => (
               <Image
                 key={'productOfStore' + targetType + _i}
-                source={{
-                  uri: item?.imageUrls?.length ? item.imageUrls[0] : null,
-                }}
+                source={
+                  item?.imageUrls?.length
+                    ? {uri: item.imageUrls[0]}
+                    : require('assets/images/default.png')
+                }
                 resizeMode="cover"
                 style={{height: WIDTH_IMG, width: WIDTH_IMG}}
                 PlaceholderContent={<ActivityIndicator />}
