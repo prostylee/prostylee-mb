@@ -10,11 +10,11 @@ export const unfollow = (payload) => {
 };
 
 export const like = (payload) => {
-  return _fetch(PUT, '/user-likes/like', payload);
+  return _fetch(POST, '/user-likes/like', payload);
 };
 
 export const unlike = (payload) => {
-  return _fetch(PUT, '/user-followers/unlike', payload);
+  return _fetch(PUT, '/user-likes/unlike', payload);
 };
 
 export const loadListLiked = (payload) => {
