@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
@@ -11,8 +11,15 @@ import {Avatar} from 'react-native-paper';
 import {ContainerView, Colors} from 'components';
 
 import {Heart, Message, More} from 'svg/social';
+import {HeartSolid} from 'svg/common';
 
-import {follow, unfollow, like, unlike} from 'services/api/socialApi';
+import {
+  follow,
+  unfollow,
+  like,
+  unlike,
+  // loadListLiked,
+} from 'services/api/socialApi';
 
 import FeedSlide from './slide';
 
@@ -32,6 +39,18 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
   const disCountPer = newFeedItem?.priceSale / newFeedItem?.price;
   const productOwnerResponse = newFeedItem?.productOwnerResponse;
 
+  // useEffect(() => {
+  //   // checkStatusLike();
+  // }, []);
+
+  // const checkStatusLike = async () => {
+  //   try {
+  //     const res = await loadListLiked(1);
+  //     console.log('res', res);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const _followPress = async () => {
     if (!followed) {
       const res = await follow({
@@ -130,7 +149,11 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
           <TouchableOpacity
             onPress={() => _likePress()}
             style={styles.touchHeart}>
-            <Heart color={liked ? Colors.$purple : Colors.$icon} />
+            {liked ? (
+              <HeartSolid color={Colors.$purple} />
+            ) : (
+              <Heart color={Colors.$icon} />
+            )}
           </TouchableOpacity>
           <TouchableOpacity onPress={_navigateChat} style={styles.touchMes}>
             <Message />
