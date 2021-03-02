@@ -23,9 +23,20 @@ const Index = (props) => {
   const [invalidEmail, setInvalidEmail] = React.useState(false);
   const [errEmailMsg, setErrEmailMsg] = React.useState('');
   const [disabledBtn, setDisabledBtn] = React.useState(false);
+  const [isFocused, setIsFocused] = React.useState(false);
+
+  //Ref
+  const inputRef = React.useRef(null);
 
   //keyboard
   const keyboard = useKeyboard();
+
+  //useEffect
+  React.useEffect(() => {
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 1000);
+  }, []);
 
   //useEffect
   React.useEffect(() => {
@@ -48,7 +59,7 @@ const Index = (props) => {
         setEmail(value);
         setInvalidEmail(true);
         setErrEmailMsg(I18n.t('invalidEmail'));
-        toggleShowErrMsg(false);
+        // toggleShowErrMsg(false);
         return false;
       } else {
         //email hợp lệ
@@ -62,6 +73,15 @@ const Index = (props) => {
       setInvalidEmail(false);
       setErrEmailMsg('');
     }
+  };
+
+  //Focus Input
+  const onFocusInput = () => {
+    setIsFocused(true);
+  };
+  //Blur Input
+  const onBlurInput = () => {
+    setIsFocused(false);
   };
 
   //handle User login
@@ -94,12 +114,15 @@ const Index = (props) => {
           />
           <View style={styles.form}>
             <TextInputFloatingLabel
+              ref={inputRef}
               placeholder={I18n.t('emailOrPhone')}
               value={email}
               onChangeText={(text) => onChangeEmail(text)}
-              autoFocus={true}
               keyboardType="email-address"
-              isFocused={keyboard.keyboardShown ? true : false}
+              autoFocus={true}
+              isFocused={isFocused}
+              onFocus={onFocusInput}
+              onBlur={onBlurInput}
             />
             {!keyboard.keyboardShown && invalidEmail && (
               <Text style={styles.errMsg}>{errEmailMsg}</Text>
