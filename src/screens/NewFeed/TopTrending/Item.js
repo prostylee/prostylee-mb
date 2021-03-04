@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {Text, Dimensions, ActivityIndicator, View} from 'react-native';
 import {ThemeView, Image} from 'components';
@@ -12,7 +13,7 @@ import {follow, unfollow} from 'services/api/socialApi';
 import {SUCCESS} from 'constants';
 
 const WIDTH = Dimensions.get('window').width;
-const WIDTH_IMG = (WIDTH * 0.7) / 3;
+const WIDTH_IMG = (WIDTH * 0.7) / 3 - 1;
 
 const Item = ({item, style, targetType}) => {
   const [followed, setFollowed] = useState(false);
@@ -66,7 +67,11 @@ const Item = ({item, style, targetType}) => {
                     : require('assets/images/default.png')
                 }
                 resizeMode="cover"
-                style={{height: WIDTH_IMG, width: WIDTH_IMG}}
+                style={{
+                  height: WIDTH_IMG,
+                  width: WIDTH_IMG,
+                  marginHorizontal: 1,
+                }}
                 PlaceholderContent={<ActivityIndicator />}
               />
             ))
