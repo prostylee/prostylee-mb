@@ -137,10 +137,12 @@ const NewFeed = ({navigation}) => {
   };
 
   const changeTabStore = () => {
+    dispatch(newFeedActions.setLoading(true));
     dispatch(commonActions.toggleTargetType(TYPE_STORE));
   };
 
   const changeTabUser = () => {
+    dispatch(newFeedActions.setLoading(true));
     dispatch(commonActions.toggleTargetType(TYPE_USER));
   };
 
