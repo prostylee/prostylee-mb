@@ -176,36 +176,55 @@ const Index = () => {
     );
   };
 
+  const extractTokens = (userToken) => {
+    if (userToken) {
+      return {
+        accessToken: userToken.signInUserSession.accessToken.jwtToken,
+        refreshToken: userToken.signInUserSession.refreshToken.token,
+        idToken: userToken.signInUserSession.idToken.jwtToken,
+      };
+    }
+    return null;
+  };
+
   const onCheckLoginSession = async () => {
     await dispatch(commonActions.toggleLoading(true));
-    if (userToken) {
-      let accessToken = await jwtDecode(userToken.accessToken);
-      let refreshToken = await jwtDecode(userToken.refreshToken);
-      let isAccessTokenExpired = await datetime.checkExpiredDate(
-        accessToken.exp,
-      );
-      let isRefreshTokenExpired = await datetime.checkExpiredDate(
-        refreshToken.exp,
-      );
-      if (isAccessTokenExpired && isRefreshTokenExpired) {
-        //accessToken && refreshToken expired
-        dispatch(userActions.userClearExpiredToken());
-        RootNavigator.navigate('LoginOptions');
-        dispatch(commonActions.toggleLoading(false));
-      } else if (isAccessTokenExpired && !isRefreshTokenExpired) {
-        //refresh token valid
-        //get new access token
-        dispatch(
-          userActions.userRefreshToken({
-            refreshToken: userToken.refreshToken,
-            onSuccess: () => onUserRefreshTokenSuccess(),
-          }),
+    try {
+
+      const tokens = extractTokens(userToken);
+      console.log('onCheckLoginSession ' + JSON.stringify(tokens));
+      if (tokens) {
+        let accessToken = await jwtDecode(tokens.accessToken);
+        let refreshToken = await jwtDecode(tokens.refreshToken);
+        let isAccessTokenExpired = await datetime.checkExpiredDate(
+          accessToken.exp,
         );
+        let isRefreshTokenExpired = await datetime.checkExpiredDate(
+          refreshToken.exp,
+        );
+        if (isAccessTokenExpired && isRefreshTokenExpired) {
+          //accessToken && refreshToken expired
+          dispatch(userActions.userClearExpiredToken());
+          RootNavigator.navigate('LoginOptions');
+          dispatch(commonActions.toggleLoading(false));
+        } else if (isAccessTokenExpired && !isRefreshTokenExpired) {
+          //refresh token valid
+          //get new access token
+          dispatch(
+            userActions.userRefreshToken({
+              refreshToken: tokens.refreshToken,
+              onSuccess: () => onUserRefreshTokenSuccess(),
+            }),
+          );
+        } else {
+          //accessToken valid
+          dispatch(commonActions.toggleLoading(false));
+        }
       } else {
-        //accessToken valid
         dispatch(commonActions.toggleLoading(false));
       }
-    } else {
+    } catch (e) {
+      console.log(e);
       dispatch(commonActions.toggleLoading(false));
     }
   };

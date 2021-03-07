@@ -10,9 +10,9 @@ export default class LocalDB {
   }
 
   static async getUserToken() {
-    return AsyncStorage.getItem(KEY_USER_TOKEN).then((json) =>
-      JSON.parse(json),
-    );
+    return AsyncStorage.getItem(KEY_USER_TOKEN).then((json) => {
+      return JSON.parse(json);
+    });
   }
 
   static async setUserData(userData) {

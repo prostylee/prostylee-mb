@@ -27,6 +27,7 @@ const Index = () => {
   const [comments, setComments] = React.useState([]);
   const [childrenComments, setChildrenComments] = React.useState([]);
   const [currentUserName, setCurrentUserName] = React.useState('');
+  const [currentCommentListener, setCurrentCommentListener] = React.useState(null);
 
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
@@ -37,6 +38,7 @@ const Index = () => {
       .catch((err) => console.log(err));
 
     executeListComments();
+    subscribeOnComment(DEFAULT_PARENT_COMMENT_ID);
   }, [currentUserName]);
 
   const executeListComments = () => {
@@ -48,7 +50,7 @@ const Index = () => {
         },
         targetType: {eq: 'PRODUCT'},
         // limit: 4,
-        // nextToken: null,
+        nextToken: null,
       }),
     )
       .then((result) => {
@@ -79,9 +81,11 @@ const Index = () => {
     dispatch(commonActions.toggleLoading(false));
   };
 
-  React.useEffect(() => {
+  const subscribeOnComment = (commentId) => {
+    console.log('subscribeOnComment ' + commentId);
+    unsubscribeOnComment();
     const createCommentListener = API.graphql(
-      graphqlOperation(onCreateComment),
+      graphqlOperation(onCreateComment, {parentId: commentId}),
     ).subscribe({
       next: (commentData) => {
         const addedComment = commentData.value.data.onCreateComment;
@@ -101,38 +105,74 @@ const Index = () => {
       },
     });
 
-    const deleteCommentListener = API.graphql(
-      graphqlOperation(onDeleteComment),
-    ).subscribe({
-      next: (commentData) => {
-        const deletedComment = commentData.value.data.onDeleteComment;
-        console.log('deletedComment ' + JSON.stringify(deletedComment));
+    setCurrentCommentListener(createCommentListener);
+  };
 
-        if (deletedComment.parentId !== DEFAULT_PARENT_COMMENT_ID) {
-          const updatedComments = childrenComments.filter(
-            (cmt) => cmt.id !== deletedComment.id,
-          );
-          setChildrenComments(updatedComments);
-        } else {
-          const updatedComments = comments.filter(
-            (cmt) => cmt.id !== deletedComment.id,
-          );
-          setComments(updatedComments);
+  const unsubscribeOnComment = () => {
+    console.log('unsubscribeOnComment');
+    if (currentCommentListener) {
+      currentCommentListener.unsubscribe();
+      setCurrentCommentListener(null);
+    }
+  };
+
+  const listener = () => {
+    React.useEffect(() => {
+      const createCommentListener = API.graphql(
+        graphqlOperation(onCreateComment),
+      ).subscribe({
+        next: (commentData) => {
+          const addedComment = commentData.value.data.onCreateComment;
+          console.log('addedComment ' + JSON.stringify(addedComment));
+
+          if (addedComment.parentId !== DEFAULT_PARENT_COMMENT_ID) {
+            console.log('NEW child');
+            const updatedComments = [...childrenComments];
+            updatedComments.push(addedComment);
+            setChildrenComments(updatedComments);
+          } else {
+            console.log('NEW root');
+            const updatedComments = [...comments];
+            updatedComments.push(addedComment);
+            setComments(updatedComments);
+          }
+        },
+      });
+
+      const deleteCommentListener = API.graphql(
+        graphqlOperation(onDeleteComment),
+      ).subscribe({
+        next: (commentData) => {
+          const deletedComment = commentData.value.data.onDeleteComment;
+          console.log('deletedComment ' + JSON.stringify(deletedComment));
+
+          if (deletedComment.parentId !== DEFAULT_PARENT_COMMENT_ID) {
+            const updatedComments = childrenComments.filter(
+              (cmt) => cmt.id !== deletedComment.id,
+            );
+            setChildrenComments(updatedComments);
+          } else {
+            const updatedComments = comments.filter(
+              (cmt) => cmt.id !== deletedComment.id,
+            );
+            setComments(updatedComments);
+          }
+        },
+      });
+
+      dispatch(commonActions.toggleLoading(false));
+
+      return () => {
+        if (createCommentListener) {
+          createCommentListener.unsubscribe();
         }
-      },
-    });
+        if (deleteCommentListener) {
+          deleteCommentListener.unsubscribe();
+        }
+      };
+    }, [comments, childrenComments, dispatch]);
+  };
 
-    dispatch(commonActions.toggleLoading(false));
-
-    return () => {
-      if (createCommentListener) {
-        createCommentListener.unsubscribe();
-      }
-      if (deleteCommentListener) {
-        deleteCommentListener.unsubscribe();
-      }
-    };
-  }, [comments, childrenComments, dispatch]);
 
   //funcs
   const onSignOut = async () => {
@@ -176,8 +216,16 @@ const Index = () => {
 
   const replyCommentHandler = (item) => {
     console.log('replyCommentHandler ' + JSON.stringify(item));
+    subscribeOnComment(item.id);
     setParentComment(item);
     executeGetComment(item.id);
+  };
+
+  const backToParent = () => {
+    unsubscribeOnComment();
+    // subscribeOnComment(DEFAULT_PARENT_COMMENT_ID);
+    setParentComment(null);
+    setChildrenComments([]);
   };
 
   const deleteCommentHandler = async (item) => {
@@ -261,10 +309,7 @@ const Index = () => {
         <View style={{flex: 1}}>
           <View style={{paddingBottom: 20}} />
           <TextButton
-            onPress={() => {
-              setParentComment(null);
-              setChildrenComments([]);
-            }}
+            onPress={backToParent}
             label={'Back to parent'}
             labelStyle={styles.privacyButton}
           />
