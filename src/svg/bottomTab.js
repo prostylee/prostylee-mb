@@ -18,20 +18,9 @@ export const NewFeedTab = ({width = 24, height = 24, color = '#9B9B9B'}) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
       <Path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M3 9L12 2L21 9V20C21 21.1046 20.1046 22 19 22H5C3.89543 22 3 21.1046 3 20V9Z"
+        d="M2 21V11.4419C2 10.5305 2.41427 9.66858 3.12592 9.09927L10.7506 2.99951C11.481 2.41516 12.519 2.41516 13.2494 2.99951L20.8741 9.09927C21.5857 9.66858 22 10.5305 22 11.4419V21C22 21.5523 21.5523 22 21 22H16C15.4477 22 15 21.5523 15 21V17C15 16.4477 14.5523 16 14 16H10C9.44772 16 9 16.4477 9 17V21C9 21.5523 8.55228 22 8 22H3C2.44772 22 2 21.5523 2 21Z"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <Path
-        d="M9 22V12H15V22"
-        stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke-width="1.5"
       />
     </Svg>
   );
