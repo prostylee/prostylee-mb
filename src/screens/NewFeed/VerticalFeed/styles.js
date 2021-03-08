@@ -25,6 +25,13 @@ export default EStyleSheet.create({
     fontFamily: '$font1',
     paddingLeft: 10,
   },
+  textLike: {
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 20,
+    fontFamily: '$font1',
+    paddingRight: 2,
+  },
   wrapFollow: {
     ...center,
   },
@@ -36,6 +43,7 @@ export default EStyleSheet.create({
   },
   postAction: {
     ...flexRow,
+    alignItems: 'center',
   },
   touchHeart: {
     paddingRight: 8,

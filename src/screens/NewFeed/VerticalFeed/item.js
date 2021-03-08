@@ -18,7 +18,7 @@ import {
   unfollow,
   like,
   unlike,
-  // loadListLiked,
+  countLike,
 } from 'services/api/socialApi';
 
 import FeedSlide from './slide';
@@ -35,22 +35,27 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
   const navigation = useNavigation();
   const [followed, setFollowed] = useState(false);
   const [liked, setLiked] = useState(false);
+  const [countsLike, setCountLike] = useState(undefined);
 
   const disCountPer = newFeedItem?.priceSale / newFeedItem?.price;
   const productOwnerResponse = newFeedItem?.productOwnerResponse;
 
-  // useEffect(() => {
-  //   // checkStatusLike();
-  // }, []);
-
-  // const checkStatusLike = async () => {
-  //   try {
-  //     const res = await loadListLiked(1);
-  //     console.log('res', res);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  useEffect(() => {
+    constLike();
+  }, []);
+  const constLike = async () => {
+    try {
+      const res = await countLike({
+        targetId: newFeedItem?.id,
+        targetType: targetType,
+      });
+      if (res.ok && res.data.status === SUCCESS) {
+        setCountLike(res.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const _followPress = async () => {
     if (!followed) {
       const res = await follow({
@@ -155,6 +160,11 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
               <Heart color={Colors.$icon} />
             )}
           </TouchableOpacity>
+          {countsLike && (
+            <Text style={[{color: Colors.$icon}, styles.textLike]}>
+              {countsLike}
+            </Text>
+          )}
           <TouchableOpacity onPress={_navigateChat} style={styles.touchMes}>
             <Message />
           </TouchableOpacity>

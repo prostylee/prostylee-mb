@@ -1,5 +1,5 @@
 import {_fetch} from '../config';
-import {POST, PUT} from 'constants';
+import {POST, PUT, GET} from 'constants';
 
 export const follow = (payload) => {
   return _fetch(POST, '/user-followers/follow', payload);
@@ -23,4 +23,8 @@ export const loadListLiked = (payload) => {
 
 export const loadListFlollowed = (payload) => {
   return _fetch(POST, '/user-likes/load-status-like', payload);
+};
+
+export const countLike = (payload) => {
+  return _fetch(GET, '/user-likes/count', payload);
 };
