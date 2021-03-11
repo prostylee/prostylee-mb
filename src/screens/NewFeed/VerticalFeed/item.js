@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -129,7 +130,10 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
         </TouchableOpacity>
       </ContainerView>
       <View style={styles.slideWrap}>
-        <FeedSlide images={newFeedItem?.imageUrls || []} />
+        <FeedSlide
+          targetType={targetType}
+          images={newFeedItem?.imageUrls || []}
+        />
         {disCountPer !== 1 && (
           <View style={styles.discountPercent}>
             <Text style={styles.textDiscount}>{`Giảm ${Math.floor(
