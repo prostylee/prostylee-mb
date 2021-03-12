@@ -53,6 +53,7 @@ export const tabsSetting = {
       screen: bottomTabs.newFeed,
       option: {
         tabBarIcon: 'MainTab',
+        tabBarIconFocused: 'MainTabFocused',
       },
     },
     {
