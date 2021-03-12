@@ -9,12 +9,15 @@ import {tabsSetting} from 'config/navigator';
 
 import * as TabsIcon from 'svg/bottomTab';
 
-const SpecialIcon = (props) => {
-  return <View style={styles.specialIcon}>{props.children}</View>;
-};
+import {commonSelectors, commonActions} from 'reducers';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 const BottomTabs = (props) => {
+  const dispatch = useDispatch();
+  const isFocusedMainTab = useSelector((state) =>
+    commonSelectors.isFocusedMainTab(state),
+  );
   const lang = 'en';
 
   const backBehavior = 'initialRoute';
@@ -25,6 +28,15 @@ const BottomTabs = (props) => {
     inactiveColor,
   } = tabsSetting.configs;
   const {tabsNavigator} = tabsSetting;
+
+  const SpecialIcon = ({children}) => {
+    return (
+      <View
+        style={isFocusedMainTab ? styles.focusedIcon : styles.inFocusedIcon}>
+        {children}
+      </View>
+    );
+  };
 
   return (
     <Tab.Navigator
@@ -46,12 +58,23 @@ const BottomTabs = (props) => {
             key={'tabs' + tab.screen}
             name={tab.name[lang]}
             component={screens[tab.screen]}
+            listeners={{
+              tabPress: (e) => {
+                // Prevent default action
+                dispatch(commonActions.toggleFocusMainTab(!isFocusedMainTab));
+                _i === 2 && e.preventDefault();
+                _i === 2 && console.log('-----ONPRESSED POST SCREEN------');
+              },
+            }}
             options={{
               tabBarIcon: ({color}) => {
                 if (tab?.isTurnOfLabel) {
+                  let MainTabIcon = isFocusedMainTab
+                    ? TabsIcon[tab.option.tabBarIconFocused]
+                    : TabsIcon[tab.option.tabBarIcon];
                   return (
                     <SpecialIcon>
-                      <TabBarIcon />
+                      <MainTabIcon />
                     </SpecialIcon>
                   );
                 }
@@ -68,7 +91,10 @@ const BottomTabs = (props) => {
 };
 
 const styles = EStyleSheet.create({
-  specialIcon: {
+  focusedIcon: {
+    marginBottom: -15,
+  },
+  inFocusedIcon: {
     marginBottom: -35,
   },
 });
