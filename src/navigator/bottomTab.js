@@ -61,7 +61,8 @@ const BottomTabs = (props) => {
             listeners={{
               tabPress: (e) => {
                 // Prevent default action
-                dispatch(commonActions.toggleFocusMainTab(!isFocusedMainTab));
+                _i === 2 &&
+                  dispatch(commonActions.toggleFocusMainTab(!isFocusedMainTab));
                 _i === 2 && e.preventDefault();
                 _i === 2 && console.log('-----ONPRESSED POST SCREEN------');
               },
