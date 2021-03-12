@@ -28,6 +28,8 @@ import Header from './Header';
 import Title from './Title';
 import TextInputFloatingLabel from './TextInputFloatingLabel';
 import SocialLogin from './SocialLogin';
+import HeaderAnimated from './Header/animated';
+
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -59,4 +61,5 @@ export {
   Title,
   TextInputFloatingLabel,
   SocialLogin,
+  HeaderAnimated,
 };
