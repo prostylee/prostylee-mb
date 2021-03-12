@@ -13,6 +13,7 @@ import ForgotPassword from './Auth/ForgotPassword';
 import ResetPassword from './Auth/ResetPassword';
 import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
 import PrivacyAndPolicy from './Auth/PrivacyAndPolicy';
+import UserProfile from './UserProfile';
 
 export {
   Welcome,
@@ -30,4 +31,5 @@ export {
   ResetPassword,
   ResetPasswordViaMail,
   PrivacyAndPolicy,
+  UserProfile,
 };

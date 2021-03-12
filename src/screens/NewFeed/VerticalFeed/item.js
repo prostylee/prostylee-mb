@@ -98,10 +98,13 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
   const _navigateChat = () => {
     navigation.navigate('Chat');
   };
+  const _showProfile = () => {
+    navigation.navigate('UserProfile');
+  };
   return (
     <View style={styles.container}>
       <ContainerView style={styles.headerContainer}>
-        <View style={styles.headerWrap}>
+        <TouchableOpacity onPress={_showProfile} style={styles.headerWrap}>
           <Avatar.Image
             size={32}
             source={{
@@ -118,7 +121,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
               </Text>
             )}
           </View>
-        </View>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => _followPress()}
           style={styles.wrapFollow}>
