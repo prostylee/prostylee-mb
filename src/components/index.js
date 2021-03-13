@@ -29,6 +29,7 @@ import Title from './Title';
 import TextInputFloatingLabel from './TextInputFloatingLabel';
 import SocialLogin from './SocialLogin';
 import HeaderAnimated from './Header/animated';
+import ImageBackground from './ImageBackground';
 
 export {
   ContainerWithoutScrollView,
@@ -62,4 +63,5 @@ export {
   TextInputFloatingLabel,
   SocialLogin,
   HeaderAnimated,
+  ImageBackground,
 };

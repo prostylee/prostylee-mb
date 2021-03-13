@@ -10,6 +10,8 @@ import {Avatar} from 'react-native-paper';
 
 import styles from './styles';
 
+import InfoView from './InfoView';
+
 import {ThemeView, HeaderAnimated} from 'components';
 
 import {ChevronLeft} from 'svg/common';
@@ -68,8 +70,9 @@ const UserProfile = ({navigation}) => {
         onScroll={onScrollEvent}
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      />
+        showsHorizontalScrollIndicator={false}>
+        <InfoView />
+      </Animated.ScrollView>
     </ThemeView>
   );
 };
