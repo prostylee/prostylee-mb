@@ -11,6 +11,7 @@ import {Avatar} from 'react-native-paper';
 import styles from './styles';
 
 import InfoView from './InfoView';
+import ProfileTab from './ProfileTab';
 
 import {ThemeView, HeaderAnimated} from 'components';
 
@@ -72,6 +73,7 @@ const UserProfile = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
         <InfoView />
+        <ProfileTab />
       </Animated.ScrollView>
     </ThemeView>
   );
