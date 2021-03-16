@@ -23,6 +23,11 @@ const HeaderAnimated = ({
     outputRange: ['transparent', '#fff'],
     extrapolate: 'clamp',
   });
+  const borderBottomColor = scrollAnimated.interpolate({
+    inputRange: [0, heightShow ? heightShow : HEIGHT_HEADER],
+    outputRange: ['transparent', '#F4F5F5'],
+    extrapolate: 'clamp',
+  });
   const opacity = scrollAnimated.interpolate({
     inputRange: [0, heightShow ? heightShow : HEIGHT_HEADER],
     outputRange: [0, 1],
@@ -34,6 +39,7 @@ const HeaderAnimated = ({
       style={{
         ...styles.container(WIDTH_HEADER, HEIGHT_HEADER),
         backgroundColor: headerColor,
+        borderBottomColor,
       }}>
       <View
         style={{
@@ -61,7 +67,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     position: 'absolute',
     borderBottomWidth: 1,
-    borderBottomColor: '#F4F5F5',
     zIndex: 100,
   }),
   content: {

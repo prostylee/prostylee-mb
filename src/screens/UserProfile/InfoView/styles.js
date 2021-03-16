@@ -3,19 +3,19 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import {absoluteCenter, absolute, center, flexRow} from 'theme/style';
 import {IMG_STATUS} from 'constants';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 const widthCenter = width / 2 - 40;
 
 export default EStyleSheet.create({
   viewBg: {
-    height: width * IMG_STATUS,
+    height: height * 0.48,
   },
   overlay: {
     ...absoluteCenter,
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   viewInfo: {
-    ...absolute((width * IMG_STATUS) / 2.5, 0, 0, 0),
+    ...absolute((width * IMG_STATUS) / 3.6, 0, 0, 0),
     backgroundColor: '$white',
     borderBottomWidth: 1,
     borderBottomColor: '$line',
@@ -27,7 +27,7 @@ export default EStyleSheet.create({
     ...absolute(-40, null, widthCenter, widthCenter),
   },
   viewArea: {
-    marginTop: 60,
+    marginTop: 56,
   },
   textName: {
     fontSize: 16,
