@@ -170,7 +170,7 @@ const SignupTab = () => {
   const onSignUpWithPhone = () => {
     RootNavigator.navigate('SignUpViaPhone');
   };
-  //handle User login
+  //handle User signIn
   const onSignUp = async () => {
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(

@@ -16,6 +16,7 @@ import {useDispatch} from 'react-redux';
 import styles from './styles';
 
 import I18n from 'i18n';
+import {emailRegex} from 'utils/common';
 
 const Index = (props) => {
   //Initial States
@@ -52,10 +53,9 @@ const Index = (props) => {
 
   //textInput
   const onChangeEmail = async (value) => {
-    let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
-      if (reg.test(value) === false) {
+      if (emailRegex.test(value) === false) {
         setEmail(value);
         setInvalidEmail(true);
         setErrEmailMsg(I18n.t('invalidEmail'));
@@ -84,7 +84,7 @@ const Index = (props) => {
     setIsFocused(false);
   };
 
-  //handle User login
+  //handle User signIn
   const onSubmitEmail = async () => {
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(

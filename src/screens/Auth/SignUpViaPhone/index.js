@@ -6,7 +6,7 @@ import {
   TextInputFloatingLabel,
   HeaderBack,
   TextButton,
-  SocialLogin,
+  SocialSignIn,
 } from 'components';
 
 import {useKeyboard} from '@react-native-community/hooks';
@@ -107,7 +107,7 @@ const Index = (props) => {
           </View>
           {!keyboard.keyboardShown && (
             <View>
-              <SocialLogin />
+              <SocialSignIn />
 
               <View style={styles.privacyWrapper}>
                 <Text style={styles.noticeText}>

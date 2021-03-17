@@ -18,6 +18,7 @@ import {showMessage} from 'react-native-flash-message';
 import styles from './styles';
 
 const TIME = 60;
+const OTP_CODE_LENGTH = 5;
 
 const Index = (props) => {
   //State
@@ -56,7 +57,7 @@ const Index = (props) => {
   //input
   const onChangeCode = (text) => {
     setCode(text);
-    if (text.length === 5) {
+    if (text.length === OTP_CODE_LENGTH) {
       setDisabledBtn(false);
     } else {
       setDisabledBtn(true);

@@ -73,7 +73,7 @@ export default EStyleSheet.create({
     color: '$lightGray',
     marginHorizontal: '5rem',
   },
-  socialLogin: {
+  socialSignIn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

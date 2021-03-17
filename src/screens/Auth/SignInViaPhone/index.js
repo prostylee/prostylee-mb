@@ -58,7 +58,7 @@ const Index = (props) => {
       <Container>
         <View style={styles.mainWrapper}>
           <HeaderBack
-            title={I18n.t('loginWithPhone')}
+            title={I18n.t('signInWithPhone')}
             onBack={() => onGoBack()}
           />
           <View style={styles.form}>

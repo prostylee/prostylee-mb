@@ -4,6 +4,7 @@ import {View, Text} from 'react-native';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import styles from './styles';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import PropTypes from 'prop-types';
 
 const TextInputFloatingLabel = (props) => {
   return (
@@ -12,18 +13,7 @@ const TextInputFloatingLabel = (props) => {
         {...props}
         ref={props.ref}
         label={props.placeholder}
-        value={props.value}
-        onFocus={props.onFocus}
-        isFocused={props.isFocused}
-        onBlur={props.onBlur}
-        staticLabel={props.staticLabel}
-        keyboardType={props.keyboardType}
-        onChangeText={props.onChangeText}
-        selectionColor={props.selectionColor}
         isPassword={props.secureTextEntry}
-        maxLength={props.maxLength}
-        autoFocus={props.autoFocus}
-        editable={props.editable}
         containerStyles={
           props.isFocused ? styles.containerStylesFocus : styles.containerStyles
         }
@@ -50,6 +40,21 @@ TextInputFloatingLabel.defaultProps = {
   disablePressIcon: false,
   staticLabel: false,
   isFocused: false,
+};
+
+TextInputFloatingLabel.propTypes = {
+  selectionColor: PropTypes.string,
+  unit: PropTypes.string,
+  secureTextEntry: PropTypes.bool,
+  autoFocus: PropTypes.bool,
+  disablePressIcon: PropTypes.bool,
+  staticLabel: PropTypes.bool,
+  isFocused: PropTypes.bool,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  onChangeText: PropTypes.func,
 };
 
 export default TextInputFloatingLabel;

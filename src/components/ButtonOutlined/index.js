@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Button} from 'react-native-paper';
+import PropTypes from 'prop-types';
 
 import styles from './styles';
 
@@ -26,6 +27,14 @@ ButtonOutlined.defaultProps = {
   disabled: false,
   uppercase: false,
   color: '#fff',
+};
+
+ButtonOutlined.propTypes = {
+  mode: PropTypes.string,
+  loading: PropTypes.bool,
+  disabled: PropTypes.bool,
+  uppercase: PropTypes.bool,
+  color: PropTypes.string,
 };
 
 export default ButtonOutlined;
