@@ -14,6 +14,8 @@ import {
   ImageAnimated as Image,
 } from 'components';
 
+import ProductItem from 'components/ProductItem';
+
 import styles from './styles';
 
 const {width} = Dimensions.get('window');
@@ -22,23 +24,33 @@ const data = [
   {
     img:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
+    name: 'Áo nỉ hoodie trơn đủ màu unisex',
+    price: 9900000,
   },
   {
     img:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
+    name: 'Áo nỉ hoodie trơn đủ màu unisex',
+    price: 9900000,
   },
   {
     img:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
+    name: 'Áo nỉ hoodie trơn đủ màu unisex',
+    price: 9900000,
   },
   {
     img:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
+    name: 'Áo nỉ hoodie trơn đủ màu unisex',
+    price: 9900000,
   },
 
   {
     img:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
+    name: 'Áo nỉ hoodie trơn đủ màu unisex',
+    price: 9900000,
   },
 ];
 
@@ -67,19 +79,7 @@ const StoreTab = ({column, wImage, hImage}) => {
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         keyExtractor={(item, index) => 'profileMeTab' + index}
         data={data}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            activeOpacity={1}
-            style={styles.viewImage}
-            onPress={() => {}}>
-            <Image
-              source={{uri: item.img}}
-              resizeMode="cover"
-              style={{height: wImage, width: hImage, borderRadius: 4}}
-              PlaceholderContent={<ActivityIndicator />}
-            />
-          </TouchableOpacity>
-        )}
+        renderItem={({item}) => <ProductItem item={item} />}
         // onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
