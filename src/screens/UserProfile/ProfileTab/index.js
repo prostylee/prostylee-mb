@@ -18,8 +18,8 @@ const ProfileTab = (props) => {
   const [index, setIndex] = useState(0);
 
   const [routes] = useState([
-    {key: 'me', title: 'Me'},
-    {key: 'store', title: 'Store'},
+    {key: 'me', title: ''},
+    {key: 'store', title: ''},
   ]);
 
   const renderScene = SceneMap({

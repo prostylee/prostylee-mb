@@ -27,6 +27,10 @@ export const types = {
   GET_DYNAMIC_USERS: 'GET_DYNAMIC_USERS',
   GET_DYNAMIC_USERS_SUCCESS: 'GET_DYNAMIC_USERS_SUCCESS',
   GET_DYNAMIC_USERS_FAIL: 'GET_DYNAMIC_USERS_FAIL',
+
+  GET_PROFILE: 'GET_PROFILE',
+  GET_PROFILE_SUCCESS: 'GET_PROFILE_SUCCESS',
+  GET_PROFILE_FAIL: 'GET_DYNAMIC_USERS_FAIL',
 };
 
 export const actions = {
@@ -49,6 +53,9 @@ export const actions = {
   getDynamicUser: createAction(types.GET_DYNAMIC_USERS),
   getDynamicUserSuccess: createAction(types.GET_DYNAMIC_USERS_SUCCESS),
   getDynamicUserFail: createAction(types.GET_DYNAMIC_USERS_FAIL),
+  getProfile: createAction(types.GET_PROFILE),
+  getProfileSuccess: createAction(types.GET_PROFILE_SUCCESS),
+  getProfileFail: createAction(types.GET_DYNAMIC_USERS_FAIL),
 };
 
 export const selectors = {
@@ -60,6 +67,7 @@ const defaultState = {
   user: null,
   dynamicUsers: {},
   userToken: null,
+  profile: null,
 };
 
 export default handleActions(
@@ -96,6 +104,12 @@ export default handleActions(
     },
     [types.GET_DYNAMIC_USERS_FAIL]: (state, {payload}) => {
       return {...state, isLoading: false, dynamicUsers: {}};
+    },
+    [types.GET_PROFILE_SUCCESS]: (state, {payload}) => {
+      return {...state, profile: payload};
+    },
+    [types.GET_DYNAMIC_USERS_FAIL]: (state, {payload}) => {
+      return {...state, profile: null};
     },
   },
   defaultState,
