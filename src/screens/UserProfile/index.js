@@ -21,13 +21,14 @@ import {ThemeView, HeaderAnimated} from 'components';
 import {ChevronLeft} from 'svg/common';
 import {More, Message} from 'svg/social';
 
-import {profileSelector} from 'redux/selectors/user';
+import {profileSelector, statisticsSelector} from 'redux/selectors/user';
 
-const {width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 const UserProfile = ({navigation}) => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => profileSelector(state));
+  const statistics = useSelector((state) => statisticsSelector(state));
   /*Animated*/
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -38,6 +39,7 @@ const UserProfile = ({navigation}) => {
 
   useEffect(() => {
     dispatch(userActions.getProfile(1));
+    dispatch(userActions.getStatistics(1));
   }, [dispatch]);
 
   const leftPress = () => {
@@ -56,10 +58,14 @@ const UserProfile = ({navigation}) => {
           <Touch onPress={scrollProfile} style={styles.mid}>
             <Avatar.Image
               size={24}
-              source={require('assets/images/default.png')}
+              source={
+                profile?.avatar
+                  ? {uri: profile?.avatar}
+                  : require('assets/images/default.png')
+              }
             />
             <Text numberOfLines={1} style={styles.textTitle}>
-              Alyssa Gardner
+              {profile?.fullName}
             </Text>
           </Touch>
         }
@@ -73,7 +79,7 @@ const UserProfile = ({navigation}) => {
             </Touch>
           </View>
         }
-        heightShow={width}
+        heightShow={height * 0.35}
         Animated={Animated}
         navigation={navigation}
         scrollAnimated={scrollAnimated}
@@ -83,7 +89,7 @@ const UserProfile = ({navigation}) => {
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
-        <InfoView profile={profile} />
+        <InfoView statistics={statistics} profile={profile} />
         <ProfileTab />
       </Animated.ScrollView>
     </ThemeView>

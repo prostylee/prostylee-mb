@@ -31,6 +31,10 @@ export const types = {
   GET_PROFILE: 'GET_PROFILE',
   GET_PROFILE_SUCCESS: 'GET_PROFILE_SUCCESS',
   GET_PROFILE_FAIL: 'GET_PROFILE_FAIL',
+
+  GET_STATISTICS: 'GET_STATISTICS',
+  GET_STATISTICS_SUCCESS: 'GET_STATISTICS_SUCCESS',
+  GET_STATISTICS_FAIL: 'GET_STATISTICS_FAIL',
 };
 
 export const actions = {
@@ -56,6 +60,9 @@ export const actions = {
   getProfile: createAction(types.GET_PROFILE),
   getProfileSuccess: createAction(types.GET_PROFILE_SUCCESS),
   getProfileFail: createAction(types.GET_PROFILE_FAIL),
+  getStatistics: createAction(types.GET_STATISTICS),
+  getStatisticsSuccess: createAction(types.GET_STATISTICS_SUCCESS),
+  getStatisticsFail: createAction(types.GET_STATISTICS_FAIL),
 };
 
 export const selectors = {
@@ -68,6 +75,7 @@ const defaultState = {
   dynamicUsers: {},
   userToken: null,
   profile: null,
+  statistics: null,
 };
 
 export default handleActions(
@@ -110,6 +118,12 @@ export default handleActions(
     },
     [types.GET_PROFILE_FAIL]: (state, {payload}) => {
       return {...state, profile: null};
+    },
+    [types.GET_STATISTICS_SUCCESS]: (state, {payload}) => {
+      return {...state, statistics: payload};
+    },
+    [types.GET_STATISTICS_FAIL]: (state, {payload}) => {
+      return {...state, statistics: null};
     },
   },
   defaultState,

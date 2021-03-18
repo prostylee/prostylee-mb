@@ -10,6 +10,9 @@ export default {
     textFollow: 'Theo dõi',
     textFollowed: 'Đã theo dõi',
     textAdvertisement: 'Quảng cáo',
+    textFollower: 'Người theo dõi',
+    textFollowing: 'Đang theo dõi',
+    textPost: 'Bài đăng',
   },
   headerTitle: {
     featured_store: 'Cửa hàng nổi bật',

@@ -76,4 +76,7 @@ export default EStyleSheet.create({
     paddingVertical: 8,
     marginRight: 16,
   },
+  followedBtn: {
+    backgroundColor: '$disabled',
+  },
 });

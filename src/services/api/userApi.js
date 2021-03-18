@@ -8,3 +8,7 @@ export const getProfile = (id) => {
 export const getPostOfProfile = (payload) => {
   return _fetch(GET, '/posts', payload);
 };
+
+export const getStatistics = (id) => {
+  return _fetch(GET, '/statistics/user-activities/' + id);
+};
