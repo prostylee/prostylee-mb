@@ -30,7 +30,7 @@ export const types = {
 
   GET_PROFILE: 'GET_PROFILE',
   GET_PROFILE_SUCCESS: 'GET_PROFILE_SUCCESS',
-  GET_PROFILE_FAIL: 'GET_DYNAMIC_USERS_FAIL',
+  GET_PROFILE_FAIL: 'GET_PROFILE_FAIL',
 };
 
 export const actions = {
@@ -55,7 +55,7 @@ export const actions = {
   getDynamicUserFail: createAction(types.GET_DYNAMIC_USERS_FAIL),
   getProfile: createAction(types.GET_PROFILE),
   getProfileSuccess: createAction(types.GET_PROFILE_SUCCESS),
-  getProfileFail: createAction(types.GET_DYNAMIC_USERS_FAIL),
+  getProfileFail: createAction(types.GET_PROFILE_FAIL),
 };
 
 export const selectors = {
@@ -108,7 +108,7 @@ export default handleActions(
     [types.GET_PROFILE_SUCCESS]: (state, {payload}) => {
       return {...state, profile: payload};
     },
-    [types.GET_DYNAMIC_USERS_FAIL]: (state, {payload}) => {
+    [types.GET_PROFILE_FAIL]: (state, {payload}) => {
       return {...state, profile: null};
     },
   },

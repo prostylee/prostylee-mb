@@ -1,19 +1,17 @@
 import React, {useState} from 'react';
 import i18n from 'i18n';
-import {TouchableOpacity, Dimensions, View, Text} from 'react-native';
+import {TouchableOpacity, View, Text} from 'react-native';
 import {Avatar, Button} from 'react-native-paper';
 
 import styles from './styles';
 
-import {ThemeView, ImageBackground, Colors} from 'components';
+import {ImageBackground, Colors} from 'components';
 
-import {More, Message} from 'svg/social';
-
-const {width} = Dimensions.get('window');
+import {Message} from 'svg/social';
 
 const URL =
   'https://img.faballey.com/images/trendnew20/stripeswiped/stripeswiped1.jpg';
-const InfoView = (props) => {
+const InfoView = ({profile}) => {
   const [followed, setFollowed] = useState(false);
   const _followPress = () => {};
   return (
@@ -24,7 +22,7 @@ const InfoView = (props) => {
           <Avatar.Image size={80} source={{uri: URL}} />
         </View>
         <View style={styles.viewArea}>
-          <Text style={styles.textName}>Alyssa Gardner</Text>
+          <Text style={styles.textName}>{profile?.fullName}</Text>
           <Text style={styles.textDescription}>
             I’m only a morning person on Christmas morning You are not just a
             Follower. 📚 Bookaholic - ✈️ Travelholic

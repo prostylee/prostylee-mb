@@ -8,6 +8,7 @@ import newFeedApi from './api/newFeedApi';
 import storeApi from './api/storeApi';
 import socialApi from './api/socialApi';
 import dynamicUsersApi from './api/dynamicUsersApi';
+import userApi from './api/userApi';
 export {
   api,
   authApi,
@@ -16,4 +17,5 @@ export {
   storeApi,
   socialApi,
   dynamicUsersApi,
+  userApi,
 };

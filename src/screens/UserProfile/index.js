@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {
   Animated,
   TouchableOpacity as Touch,
@@ -7,20 +7,27 @@ import {
   Text,
 } from 'react-native';
 import {Avatar} from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
 
 import styles from './styles';
 
 import InfoView from './InfoView';
 import ProfileTab from './ProfileTab';
 
+import {userActions} from 'reducers';
+
 import {ThemeView, HeaderAnimated} from 'components';
 
 import {ChevronLeft} from 'svg/common';
 import {More, Message} from 'svg/social';
 
+import {profileSelector} from 'redux/selectors/user';
+
 const {width} = Dimensions.get('window');
 
 const UserProfile = ({navigation}) => {
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => profileSelector(state));
   /*Animated*/
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -28,6 +35,10 @@ const UserProfile = ({navigation}) => {
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
+
+  useEffect(() => {
+    dispatch(userActions.getProfile(1));
+  }, [dispatch]);
 
   const leftPress = () => {
     navigation.goBack();
@@ -72,7 +83,7 @@ const UserProfile = ({navigation}) => {
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
-        <InfoView />
+        <InfoView profile={profile} />
         <ProfileTab />
       </Animated.ScrollView>
     </ThemeView>

@@ -3,6 +3,7 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {api, authApi} from 'services';
 import {api as configApi} from 'services/config';
 import {userActions, userTypes, commonActions} from 'reducers';
+import {getProfile} from 'services/api/userApi';
 
 import {showMessage} from 'react-native-flash-message';
 import {
@@ -262,6 +263,20 @@ const userChangePassword = function* ({
       message: UNKNOWN_MESSAGE,
       type: 'danger',
     });
+  }
+};
+
+const fetchProfile = function* ({payload}) {
+  try {
+    const res = yield call(getProfile, payload);
+    console.log(res);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.getProfileSuccess(res.data.data));
+    } else {
+      yield put(userActions.getProfileFail());
+    }
+  } catch (e) {
+    console.error(e);
   }
 };
 
@@ -527,6 +542,7 @@ const watcher = function* () {
   yield takeLatest(userTypes.USER_FORGOT_PASSWORD, userForgotPassword);
   yield takeLatest(userTypes.USER_VERIFY_OTP, userVerifyOTP);
   yield takeLatest(userTypes.USER_CHANGE_PASSWORD, userChangePassword);
+  yield takeLatest(userTypes.GET_PROFILE, fetchProfile);
   // yield takeLatest(userTypes.GET_USER_INFO, getUserInfo);
   // yield takeLatest(userTypes.USER_LOGOUT, userLogout);
 };
