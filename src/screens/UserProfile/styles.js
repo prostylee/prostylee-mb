@@ -1,13 +1,10 @@
-import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {flexRow, center} from 'theme/style';
-
-const {width} = Dimensions.get('window');
 
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '$white',
+    backgroundColor: '$bgColor',
   },
   leftTouch: {
     paddingLeft: 20,

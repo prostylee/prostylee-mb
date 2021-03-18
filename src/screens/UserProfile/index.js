@@ -13,6 +13,7 @@ import styles from './styles';
 
 import InfoView from './InfoView';
 import ProfileTab from './ProfileTab';
+import SwitchBottom from './SwitchBottom';
 
 import {userActions} from 'reducers';
 
@@ -94,6 +95,7 @@ const UserProfile = ({navigation}) => {
         <InfoView statistics={statistics} profile={profile} />
         <ProfileTab />
       </Animated.ScrollView>
+      <SwitchBottom />
     </ThemeView>
   );
 };
