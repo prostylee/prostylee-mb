@@ -8,42 +8,24 @@ import {
   Dimensions,
 } from 'react-native';
 
+import {useSelector} from 'react-redux';
+
 import {
   ContainerView as Container,
   Colors,
   ImageAnimated as Image,
 } from 'components';
 
+import {postOfUserSlector} from 'redux/selectors/user';
+
 import styles from './styles';
 
 const {width} = Dimensions.get('window');
 
-const data = [
-  {
-    img:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
-  },
-  {
-    img:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
-  },
-  {
-    img:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
-  },
-  {
-    img:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
-  },
-
-  {
-    img:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
-  },
-];
-
 const MeTab = ({column, wImage, hImage}) => {
   const loadMoreLoading = false;
+
+  const postOfUser = useSelector((state) => postOfUserSlector(state));
 
   const renderFooter = () => {
     if (!loadMoreLoading) {
@@ -66,14 +48,14 @@ const MeTab = ({column, wImage, hImage}) => {
         columnWrapperStyle={styles.viewCol}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         keyExtractor={(item, index) => 'profileMeTab' + index}
-        data={data}
+        data={postOfUser?.postImages || []}
         renderItem={({item}) => (
           <TouchableOpacity
             activeOpacity={1}
             style={styles.viewImage}
             onPress={() => {}}>
             <Image
-              source={{uri: item.img}}
+              source={{uri: item.url}}
               resizeMode="cover"
               style={{height: wImage, width: hImage, borderRadius: 4}}
               PlaceholderContent={<ActivityIndicator />}

@@ -11,3 +11,8 @@ export const statisticsSelector = createSelector(
   userReducer,
   (data) => data?.statistics || null,
 );
+
+export const postOfUserSlector = createSelector(
+  userReducer,
+  (data) => data?.postsOfUser || null,
+);

@@ -29,6 +29,7 @@ const UserProfile = ({navigation}) => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => profileSelector(state));
   const statistics = useSelector((state) => statisticsSelector(state));
+
   /*Animated*/
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -40,6 +41,7 @@ const UserProfile = ({navigation}) => {
   useEffect(() => {
     dispatch(userActions.getProfile(1));
     dispatch(userActions.getStatistics(1));
+    dispatch(userActions.getUserPost(1));
   }, [dispatch]);
 
   const leftPress = () => {

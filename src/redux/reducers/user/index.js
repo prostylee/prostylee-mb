@@ -35,6 +35,10 @@ export const types = {
   GET_STATISTICS: 'GET_STATISTICS',
   GET_STATISTICS_SUCCESS: 'GET_STATISTICS_SUCCESS',
   GET_STATISTICS_FAIL: 'GET_STATISTICS_FAIL',
+
+  GET_POSTS_OF_USER: 'GET_POSTS_OF_USER',
+  GET_POSTS_OF_USER_SUCCESS: 'GET_POSTS_OF_USER_SUCCESS',
+  GET_POSTS_OF_USER_FAIL: 'GET_POSTS_OF_USER_FAIL',
 };
 
 export const actions = {
@@ -63,6 +67,9 @@ export const actions = {
   getStatistics: createAction(types.GET_STATISTICS),
   getStatisticsSuccess: createAction(types.GET_STATISTICS_SUCCESS),
   getStatisticsFail: createAction(types.GET_STATISTICS_FAIL),
+  getUserPost: createAction(types.GET_POSTS_OF_USER),
+  getUserPostSuccess: createAction(types.GET_POSTS_OF_USER_SUCCESS),
+  getUserPostFail: createAction(types.GET_POSTS_OF_USER_FAIL),
 };
 
 export const selectors = {
@@ -76,6 +83,7 @@ const defaultState = {
   userToken: null,
   profile: null,
   statistics: null,
+  postsOfUser: null,
 };
 
 export default handleActions(
@@ -124,6 +132,12 @@ export default handleActions(
     },
     [types.GET_STATISTICS_FAIL]: (state, {payload}) => {
       return {...state, statistics: null};
+    },
+    [types.GET_POSTS_OF_USER_SUCCESS]: (state, {payload}) => {
+      return {...state, postsOfUser: payload};
+    },
+    [types.GET_POSTS_OF_USER_FAIL]: (state, {payload}) => {
+      return {...state, postsOfUser: null};
     },
   },
   defaultState,

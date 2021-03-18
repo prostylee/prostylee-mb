@@ -3,7 +3,7 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {api, authApi} from 'services';
 import {api as configApi} from 'services/config';
 import {userActions, userTypes, commonActions} from 'reducers';
-import {getProfile, getStatistics} from 'services/api/userApi';
+import {getProfile, getStatistics, getUsesPost} from 'services/api/userApi';
 
 import {showMessage} from 'react-native-flash-message';
 import {
@@ -292,6 +292,19 @@ const getStatisticsOfUser = function* ({payload}) {
   }
 };
 
+const getPostsOfUser = function* ({payload}) {
+  try {
+    const res = yield call(getUsesPost, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.getUserPostSuccess(res.data.data));
+    } else {
+      yield put(userActions.getUserPostFail());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 const userLogout = function* ({payload: {token, id}}) {
   try {
     yield call(api.setHeadersRequest, {
@@ -556,6 +569,7 @@ const watcher = function* () {
   yield takeLatest(userTypes.USER_CHANGE_PASSWORD, userChangePassword);
   yield takeLatest(userTypes.GET_PROFILE, fetchProfile);
   yield takeLatest(userTypes.GET_STATISTICS, getStatisticsOfUser);
+  yield takeLatest(userTypes.GET_POSTS_OF_USER, getPostsOfUser);
   // yield takeLatest(userTypes.GET_USER_INFO, getUserInfo);
   // yield takeLatest(userTypes.USER_LOGOUT, userLogout);
 };

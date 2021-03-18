@@ -12,3 +12,7 @@ export const getPostOfProfile = (payload) => {
 export const getStatistics = (id) => {
   return _fetch(GET, '/statistics/user-activities/' + id);
 };
+
+export const getUsesPost = (id) => {
+  return _fetch(GET, '/posts/' + id);
+};
