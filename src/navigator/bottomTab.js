@@ -3,8 +3,6 @@ import {View} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import I18n from 'i18n';
-
 import * as screens from './tabNavigators';
 
 import {tabsSetting} from 'config/navigator';
@@ -20,7 +18,6 @@ const BottomTabs = (props) => {
   const isFocusedMainTab = useSelector((state) =>
     commonSelectors.isFocusedMainTab(state),
   );
-  const lang = I18n.locale;
 
   const backBehavior = 'initialRoute';
   const {
@@ -58,7 +55,7 @@ const BottomTabs = (props) => {
         return (
           <Tab.Screen
             key={'tabs' + tab.screen}
-            name={tab.name[lang]}
+            name={tab.name}
             component={screens[tab.screen]}
             listeners={{
               tabPress: (e) => {
@@ -83,7 +80,7 @@ const BottomTabs = (props) => {
                 return <TabBarIcon color={color} size={28} />;
               },
               tabBarColor,
-              title: tab?.isTurnOfLabel ? '' : tab.name[lang],
+              title: tab?.isTurnOfLabel ? '' : tab.name,
             }}
           />
         );
