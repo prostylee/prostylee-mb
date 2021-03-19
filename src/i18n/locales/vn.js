@@ -11,6 +11,13 @@ export default {
     textFollowed: 'Đã theo dõi',
     textAdvertisement: 'Quảng cáo',
   },
+  bottomTab: {
+    newFeed: 'Trang chủ',
+    store: 'Cửa hàng',
+    notification: 'Thông báo',
+    account: 'Tài khoản',
+    post: 'Bài đăng',
+  },
   headerTitle: {
     featured_store: 'Cửa hàng nổi bật',
   },
