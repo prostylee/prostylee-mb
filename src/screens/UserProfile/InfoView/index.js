@@ -93,7 +93,7 @@ const InfoView = ({profile, statistics}) => {
             <Text>{i18n.t('common.textFollowing')}</Text>
           </View>
           <View style={styles.viewSection}>
-            <Text style={styles.textTitle}>{statistics?.productPosts}</Text>
+            <Text style={styles.textTitle}>{statistics?.posts}</Text>
             <Text>{i18n.t('common.textPost')}</Text>
           </View>
         </View>
