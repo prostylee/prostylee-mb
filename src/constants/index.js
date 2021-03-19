@@ -32,3 +32,6 @@ export const NUMBER_OF_PRODUCT = 3;
 
 //Story
 export const STORY_DURATION = 15;
+
+//NEW FEED
+export const FIRST_SLICE_ITEM = 3;

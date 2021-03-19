@@ -14,11 +14,11 @@ export const tabsSetting = {
   tabsNavigator: [
     {
       title: {
-        vi: '',
+        vn: '',
         en: '',
       },
       name: {
-        vi: 'New Feed',
+        vn: 'Trang chủ',
         en: 'New Feed',
       },
       screen: bottomTabs.newFeed,
@@ -28,11 +28,11 @@ export const tabsSetting = {
     },
     {
       title: {
-        vi: '',
+        vn: '',
         en: '',
       },
       name: {
-        vi: 'Cửa hàng',
+        vn: 'Cửa hàng',
         en: 'Store',
       },
       screen: bottomTabs.newFeed,
@@ -42,11 +42,11 @@ export const tabsSetting = {
     },
     {
       title: {
-        vi: '',
+        vn: '',
         en: '',
       },
       name: {
-        vi: 'Post News',
+        vn: 'Post News',
         en: 'Post News',
       },
       isTurnOfLabel: true,
@@ -58,11 +58,11 @@ export const tabsSetting = {
     },
     {
       title: {
-        vi: '',
+        vn: '',
         en: '',
       },
       name: {
-        vi: 'Thông báo',
+        vn: 'Thông báo',
         en: 'Notification',
       },
       screen: bottomTabs.newFeed,
@@ -72,11 +72,11 @@ export const tabsSetting = {
     },
     {
       title: {
-        vi: '',
+        vn: '',
         en: '',
       },
       name: {
-        vi: 'Tài khoản',
+        vn: 'Tài khoản',
         en: 'Account',
       },
       screen: bottomTabs.account,

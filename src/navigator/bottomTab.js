@@ -3,6 +3,8 @@ import {View} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+import I18n from 'i18n';
+
 import * as screens from './tabNavigators';
 
 import {tabsSetting} from 'config/navigator';
@@ -18,7 +20,7 @@ const BottomTabs = (props) => {
   const isFocusedMainTab = useSelector((state) =>
     commonSelectors.isFocusedMainTab(state),
   );
-  const lang = 'en';
+  const lang = I18n.locale;
 
   const backBehavior = 'initialRoute';
   const {
