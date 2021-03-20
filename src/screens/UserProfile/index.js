@@ -17,7 +17,7 @@ import SwitchBottom from './SwitchBottom';
 
 import {userActions} from 'reducers';
 
-import {ThemeView, HeaderAnimated} from 'components';
+import {ThemeView, HeaderAnimated, Colors} from 'components';
 
 import {ChevronLeft} from 'svg/common';
 import {More, Message} from 'svg/social';
@@ -27,6 +27,7 @@ import {profileSelector, statisticsSelector} from 'redux/selectors/user';
 import {PAGE_DEFAULT} from 'constants';
 
 const {height} = Dimensions.get('window');
+const heightShow = height * 0.35;
 
 const UserProfile = ({navigation}) => {
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const UserProfile = ({navigation}) => {
       <HeaderAnimated
         leftComponent={
           <Touch style={styles.leftTouch} onPress={leftPress}>
-            <ChevronLeft />
+            <ChevronLeft color={Colors.$icon} />
           </Touch>
         }
         midComponent={
@@ -97,7 +98,7 @@ const UserProfile = ({navigation}) => {
             </Touch>
           </View>
         }
-        heightShow={height * 0.35}
+        heightShow={heightShow}
         Animated={Animated}
         navigation={navigation}
         scrollAnimated={scrollAnimated}
