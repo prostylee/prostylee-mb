@@ -13,6 +13,8 @@ export const getStatistics = (id) => {
   return _fetch(GET, '/statistics/user-activities/' + id);
 };
 
-export const getUsesPost = (id) => {
-  return _fetch(GET, '/posts/' + id);
+export const getUserPost = (payload) => {
+  return _fetch(GET, '/posts', {
+    params: payload,
+  });
 };

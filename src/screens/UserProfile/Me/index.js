@@ -48,14 +48,18 @@ const MeTab = ({column, wImage, hImage}) => {
         columnWrapperStyle={styles.viewCol}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         keyExtractor={(item, index) => 'profileMeTab' + index}
-        data={postOfUser?.postImages || []}
+        data={postOfUser?.content || []}
         renderItem={({item}) => (
           <TouchableOpacity
             activeOpacity={1}
             style={styles.viewImage}
             onPress={() => {}}>
             <Image
-              source={{uri: item.url}}
+              source={
+                item?.imageUrls.length
+                  ? {uri: item?.imageUrls[0]}
+                  : require('assets/images/default.png')
+              }
               resizeMode="cover"
               style={{height: wImage, width: hImage, borderRadius: 4}}
               PlaceholderContent={<ActivityIndicator />}

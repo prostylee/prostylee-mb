@@ -3,7 +3,7 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {api, authApi} from 'services';
 import {api as configApi} from 'services/config';
 import {userActions, userTypes, commonActions} from 'reducers';
-import {getProfile, getStatistics, getUsesPost} from 'services/api/userApi';
+import {getProfile, getStatistics, getUserPost} from 'services/api/userApi';
 
 import {showMessage} from 'react-native-flash-message';
 import {
@@ -294,7 +294,7 @@ const getStatisticsOfUser = function* ({payload}) {
 
 const getPostsOfUser = function* ({payload}) {
   try {
-    const res = yield call(getUsesPost, payload);
+    const res = yield call(getUserPost, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(userActions.getUserPostSuccess(res.data.data));
     } else {

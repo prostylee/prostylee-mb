@@ -24,6 +24,8 @@ import {More, Message} from 'svg/social';
 
 import {profileSelector, statisticsSelector} from 'redux/selectors/user';
 
+import {PAGE_DEFAULT} from 'constants';
+
 const {height} = Dimensions.get('window');
 
 const UserProfile = ({navigation}) => {
@@ -42,7 +44,13 @@ const UserProfile = ({navigation}) => {
   useEffect(() => {
     dispatch(userActions.getProfile(1));
     dispatch(userActions.getStatistics(1));
-    dispatch(userActions.getUserPost(1));
+    dispatch(
+      userActions.getUserPost({
+        page: PAGE_DEFAULT,
+        limit: PAGE_DEFAULT,
+        userId: 3,
+      }),
+    );
   }, [dispatch]);
 
   const leftPress = () => {
