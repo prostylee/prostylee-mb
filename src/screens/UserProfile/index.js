@@ -80,13 +80,14 @@ const UserProfile = ({navigation}) => {
     navigation.navigate('Chat');
   };
 
-  const morePress = () => {
+  const morePress = () => {};
+
+  const scrollProfile = () => {
     scrollRef.current?.scrollTo({
       y: 0,
       animated: true,
     });
   };
-  const scrollProfile = () => {};
   return (
     <ThemeView style={styles.container} isFullView>
       <HeaderAnimated
