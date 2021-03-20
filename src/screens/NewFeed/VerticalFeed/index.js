@@ -17,6 +17,7 @@ const VerticalFeed = ({
   refreshing,
   loading,
   isFirst,
+  isProfile,
 }) => {
   const targetType = useSelector((state) => targetTypeSelector(state));
   if (isFirst && loading) {
@@ -39,6 +40,7 @@ const VerticalFeed = ({
       keyExtractor={(item, index) => 'newFeedkeyExtractor' + targetType + index}
       renderItem={({item, index}) => (
         <FeedItem
+          isProfile={isProfile}
           targetType={targetType}
           key={'newFeedItem' + targetType + index}
           newFeedItem={item}
@@ -58,6 +60,7 @@ const VerticalFeed = ({
 
 VerticalFeed.defaultProps = {
   isFirst: false,
+  isProfile: false,
 };
 
 VerticalFeed.propTypes = {};

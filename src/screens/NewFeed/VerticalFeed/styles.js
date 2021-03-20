@@ -18,6 +18,9 @@ export default EStyleSheet.create({
     paddingVertical: 10,
     width: WIDTH * 0.7,
   },
+  alignCenter: {
+    alignItems: 'center',
+  },
   textTitle: {
     fontSize: 14,
     fontWeight: '500',

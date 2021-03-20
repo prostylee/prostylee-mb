@@ -28,7 +28,9 @@ import {SUCCESS} from 'constants';
 
 import {currencyFormat} from 'utils/currency';
 
-const VerticalFeedItem = ({newFeedItem, targetType}) => {
+import {TYPE_STORE} from 'constants';
+
+const VerticalFeedItem = ({newFeedItem, targetType, isProfile}) => {
   if (isEmpty(newFeedItem)) {
     return null;
   }
@@ -40,6 +42,14 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
 
   const disCountPer = newFeedItem?.priceSale / newFeedItem?.price;
   const productOwnerResponse = newFeedItem?.productOwnerResponse;
+  const userResponseLite = isProfile ? newFeedItem?.userResponseLite : null;
+
+  const urlImage = userResponseLite
+    ? userResponseLite.avatar
+    : productOwnerResponse.logoUrl;
+  const name = userResponseLite
+    ? userResponseLite?.fullName
+    : productOwnerResponse?.name;
 
   useEffect(() => {
     constLike();
@@ -104,16 +114,18 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
   return (
     <View style={styles.container}>
       <ContainerView style={styles.headerContainer}>
-        <TouchableOpacity onPress={_showProfile} style={styles.headerWrap}>
+        <TouchableOpacity
+          onPress={_showProfile}
+          style={[styles.headerWrap, isProfile && styles.alignCenter]}>
           <Avatar.Image
             size={32}
             source={{
-              uri: productOwnerResponse.logoUrl,
+              uri: urlImage,
             }}
           />
           <View>
             <Text numberOfLines={1} style={styles.textTitle}>
-              {productOwnerResponse?.name}
+              {name}
             </Text>
             {newFeedItem?.isAdvertising && (
               <Text style={styles.isAdvertising}>
@@ -137,7 +149,7 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
           targetType={targetType}
           images={newFeedItem?.imageUrls || []}
         />
-        {disCountPer !== 1 && (
+        {disCountPer !== 1 && targetType === TYPE_STORE && (
           <View style={styles.discountPercent}>
             <Text style={styles.textDiscount}>{`Giảm ${Math.floor(
               disCountPer * 100,
@@ -145,17 +157,19 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
           </View>
         )}
       </View>
-      <ContainerView fluid style={styles.description}>
-        <View style={styles.wrapInfo}>
-          <Text style={styles.productName}>{newFeedItem.name}</Text>
-          <Text style={styles.price}>
-            {currencyFormat(newFeedItem.priceSale, 'đ')}
-          </Text>
-        </View>
-        <TouchableOpacity style={styles.touchBuyNow}>
-          <Text style={styles.touchTextByNow}>Mua ngay</Text>
-        </TouchableOpacity>
-      </ContainerView>
+      {targetType === TYPE_STORE && (
+        <ContainerView fluid style={styles.description}>
+          <View style={styles.wrapInfo}>
+            <Text style={styles.productName}>{newFeedItem.name}</Text>
+            <Text style={styles.price}>
+              {currencyFormat(newFeedItem.priceSale, 'đ')}
+            </Text>
+          </View>
+          <TouchableOpacity style={styles.touchBuyNow}>
+            <Text style={styles.touchTextByNow}>Mua ngay</Text>
+          </TouchableOpacity>
+        </ContainerView>
+      )}
       <ContainerView style={styles.socialActionWrap}>
         <View style={styles.postAction}>
           <TouchableOpacity
