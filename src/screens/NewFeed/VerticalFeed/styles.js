@@ -126,4 +126,19 @@ export default EStyleSheet.create({
     lineHeight: 16,
     marginLeft: 10,
   },
+  viewTagStore: {
+    ...absolute(null, 8, 8, null),
+    ...flexRow,
+    ...center,
+    padding: 8,
+    borderRadius: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  textTagName: {
+    color: '$white',
+    fontSize: 14,
+    fontWeight: '500',
+    fontFamily: '$font1',
+    paddingLeft: 8,
+  },
 });

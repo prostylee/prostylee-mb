@@ -28,7 +28,9 @@ import {SUCCESS} from 'constants';
 
 import {currencyFormat} from 'utils/currency';
 
-import {TYPE_STORE} from 'constants';
+import {TYPE_STORE, TYPE_USER} from 'constants';
+
+import {Store} from 'svg/common';
 
 const VerticalFeedItem = ({newFeedItem, targetType, isProfile}) => {
   if (isEmpty(newFeedItem)) {
@@ -43,6 +45,7 @@ const VerticalFeedItem = ({newFeedItem, targetType, isProfile}) => {
   const disCountPer = newFeedItem?.priceSale / newFeedItem?.price;
   const productOwnerResponse = newFeedItem?.productOwnerResponse;
   const userResponseLite = isProfile ? newFeedItem?.userResponseLite : null;
+  const storeResponseLite = isProfile ? newFeedItem?.storeResponseLite : null;
 
   const urlImage = userResponseLite
     ? userResponseLite.avatar
@@ -111,6 +114,9 @@ const VerticalFeedItem = ({newFeedItem, targetType, isProfile}) => {
   const _showProfile = () => {
     navigation.navigate('UserProfile');
   };
+  const navigateStore = () => {
+    navigation.navigate('Stores');
+  };
   return (
     <View style={styles.container}>
       <ContainerView style={styles.headerContainer}>
@@ -155,6 +161,12 @@ const VerticalFeedItem = ({newFeedItem, targetType, isProfile}) => {
               disCountPer * 100,
             )} %`}</Text>
           </View>
+        )}
+        {storeResponseLite && targetType === TYPE_USER && (
+          <TouchableOpacity onPress={navigateStore} style={styles.viewTagStore}>
+            <Store />
+            <Text style={styles.textTagName}>Diesel Clothing Store</Text>
+          </TouchableOpacity>
         )}
       </View>
       {targetType === TYPE_STORE && (
