@@ -1,64 +1,14 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {View, FlatList, ActivityIndicator, Dimensions} from 'react-native';
 
-import {ContainerView as Container, Colors} from 'components';
+import GridView from './gridView';
+import FullView from './fullView';
 
-import ProductItem from 'components/ProductItem';
+import {isFullViewSelector} from 'redux/selectors/common';
 
-import {productByUserSelector} from 'redux/selectors/user';
-
-import styles from './styles';
-
-const {width} = Dimensions.get('window');
-
-const StoreTab = ({column, wImage, hImage}) => {
-  const loadMoreLoading = false;
-
-  const productByUser = useSelector((state) => productByUserSelector(state));
-
-  console.log(productByUser);
-
-  const renderFooter = () => {
-    if (!loadMoreLoading) {
-      return <View style={styles.viewFooter} />;
-    }
-
-    return (
-      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-        <ActivityIndicator animating color={Colors.$purple} size="small" />
-      </View>
-    );
-  };
-  return (
-    <Container fluid style={styles.container}>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        key={column}
-        numColumns={column}
-        columnWrapperStyle={styles.viewCol}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        keyExtractor={(item, index) => 'profileMeTab' + index}
-        data={productByUser?.content || []}
-        renderItem={({item}) => <ProductItem item={item} />}
-        // onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.5}
-        initialNumToRender={10}
-        ListFooterComponent={renderFooter}
-        // refreshing={refreshing}
-        // onRefresh={handleRefresh}
-      />
-    </Container>
-  );
+const StoreTab = () => {
+  const isFullView = useSelector((state) => isFullViewSelector(state));
+  return isFullView ? <FullView /> : <GridView />;
 };
-
-StoreTab.defaultProps = {
-  column: 2,
-  wImage: (width - 48) / 2,
-  hImage: (width - 48) / 2,
-};
-
-StoreTab.propTypes = {};
 
 export default StoreTab;

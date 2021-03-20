@@ -5,6 +5,7 @@ export const types = {
   TOGGLE_LOADING: 'TOGGLE_LOADING',
   TOGGLE_THEME_MODE: 'TOGGLE_THEME_MODE',
   TOGGLE_TARGET_TYPE: 'TOGGLE_TARGET_TYPE',
+  TOGGLE_VIEW_MODE: 'TOGGLE_VIEW_MODE',
   SHOW_ONBOARDING_SCREEN: 'SHOW_ONBOARDING_SCREEN',
   SET_INITIAL_ROUTE_NAME: 'SET_INITIAL_ROUTE_NAME',
 };
@@ -14,6 +15,7 @@ export const actions = {
   toggleLoading: createAction(types.TOGGLE_LOADING),
   toggleThemeMode: createAction(types.TOGGLE_THEME_MODE),
   toggleTargetType: createAction(types.TOGGLE_TARGET_TYPE),
+  toggleViewMode: createAction(types.TOGGLE_VIEW_MODE),
   showOnboardingScreen: createAction(types.SHOW_ONBOARDING_SCREEN),
   setInitialRouteName: createAction(types.SET_INITIAL_ROUTE_NAME),
 };
@@ -33,6 +35,7 @@ const intialState = {
   themeMode: 'light',
   targetType: 'STORE',
   initialRouteName: 'Welcome',
+  isFullView: false,
 };
 
 export default handleActions(
@@ -51,6 +54,9 @@ export default handleActions(
     },
     [types.SET_INITIAL_ROUTE_NAME]: (state, {payload}) => {
       return {...state, initialRouteName: payload};
+    },
+    [types.TOGGLE_VIEW_MODE]: (state, {payload}) => {
+      return {...state, isFullView: payload};
     },
   },
   intialState,
