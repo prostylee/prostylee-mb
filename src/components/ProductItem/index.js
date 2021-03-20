@@ -27,14 +27,20 @@ const ProductItem = ({wImage, item}) => {
       style={styles.viewImage}
       onPress={() => {}}>
       <Image
-        source={{uri: item.img}}
+        source={
+          item?.imageUrls.length
+            ? {uri: item?.imageUrls[0]}
+            : require('assets/images/default.png')
+        }
         resizeMode="cover"
         style={{height: wImage * IMG_RATIO, width: wImage, borderRadius: 4}}
         PlaceholderContent={<ActivityIndicator />}
       />
       <View style={styles.info}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.price}>{currencyFormat(item.price, 'đ')}</Text>
+        <Text numberOfLines={2} style={styles.name}>
+          {item.name}
+        </Text>
+        <Text style={styles.price}>{currencyFormat(item?.priceSale, 'đ')}</Text>
         <TouchableOpacity style={styles.likeIcon}>
           <Heart />
         </TouchableOpacity>

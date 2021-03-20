@@ -1,61 +1,23 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  View,
-  FlatList,
-  ActivityIndicator,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import {useSelector} from 'react-redux';
+import {View, FlatList, ActivityIndicator, Dimensions} from 'react-native';
 
-import {
-  ContainerView as Container,
-  Colors,
-  ImageAnimated as Image,
-} from 'components';
+import {ContainerView as Container, Colors} from 'components';
 
 import ProductItem from 'components/ProductItem';
+
+import {productByUserSelector} from 'redux/selectors/user';
 
 import styles from './styles';
 
 const {width} = Dimensions.get('window');
 
-const data = [
-  {
-    img:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
-    name: 'Áo nỉ hoodie trơn đủ màu unisex',
-    price: 9900000,
-  },
-  {
-    img:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
-    name: 'Áo nỉ hoodie trơn đủ màu unisex',
-    price: 9900000,
-  },
-  {
-    img:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
-    name: 'Áo nỉ hoodie trơn đủ màu unisex',
-    price: 9900000,
-  },
-  {
-    img:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
-    name: 'Áo nỉ hoodie trơn đủ màu unisex',
-    price: 9900000,
-  },
-
-  {
-    img:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU8KWxUV3Zf1Suk3SJqJaDIkJAzH4yeFdLQg&usqp=CAU',
-    name: 'Áo nỉ hoodie trơn đủ màu unisex',
-    price: 9900000,
-  },
-];
-
 const StoreTab = ({column, wImage, hImage}) => {
   const loadMoreLoading = false;
+
+  const productByUser = useSelector((state) => productByUserSelector(state));
+
+  console.log(productByUser);
 
   const renderFooter = () => {
     if (!loadMoreLoading) {
@@ -78,7 +40,7 @@ const StoreTab = ({column, wImage, hImage}) => {
         columnWrapperStyle={styles.viewCol}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         keyExtractor={(item, index) => 'profileMeTab' + index}
-        data={data}
+        data={productByUser?.content || []}
         renderItem={({item}) => <ProductItem item={item} />}
         // onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}

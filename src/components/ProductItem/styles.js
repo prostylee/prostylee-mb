@@ -15,6 +15,8 @@ export default EStyleSheet.create({
   name: {
     fontSize: 13,
     fontFamily: '$font1',
+    width: '90%',
+    height: 38,
   },
   price: {
     lineHeight: 24,

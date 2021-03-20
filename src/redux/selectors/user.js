@@ -16,3 +16,8 @@ export const postOfUserSlector = createSelector(
   userReducer,
   (data) => data?.postsOfUser || null,
 );
+
+export const productByUserSelector = createSelector(
+  userReducer,
+  (data) => data?.productsByUser || null,
+);

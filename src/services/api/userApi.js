@@ -18,3 +18,9 @@ export const getUserPost = (payload) => {
     params: payload,
   });
 };
+
+export const getProductsByUser = (payload) => {
+  return _fetch(GET, '/products', {
+    params: payload,
+  });
+};

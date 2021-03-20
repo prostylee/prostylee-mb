@@ -39,6 +39,10 @@ export const types = {
   GET_POSTS_OF_USER: 'GET_POSTS_OF_USER',
   GET_POSTS_OF_USER_SUCCESS: 'GET_POSTS_OF_USER_SUCCESS',
   GET_POSTS_OF_USER_FAIL: 'GET_POSTS_OF_USER_FAIL',
+
+  GET_PRODUCT_BY_USER: 'GET_PRODUCT_BY_USER',
+  GET_PRODUCT_BY_USER_SUCCESS: 'GET_PRODUCT_BY_USER_SUCCESS',
+  GET_PRODUCT_BY_USER_FAIL: 'GET_PRODUCT_BY_USER_FAIL',
 };
 
 export const actions = {
@@ -70,6 +74,9 @@ export const actions = {
   getUserPost: createAction(types.GET_POSTS_OF_USER),
   getUserPostSuccess: createAction(types.GET_POSTS_OF_USER_SUCCESS),
   getUserPostFail: createAction(types.GET_POSTS_OF_USER_FAIL),
+  getProductByUser: createAction(types.GET_PRODUCT_BY_USER),
+  getProductByUserSuccess: createAction(types.GET_PRODUCT_BY_USER_SUCCESS),
+  getProductByUserFail: createAction(types.GET_PRODUCT_BY_USER_FAIL),
 };
 
 export const selectors = {
@@ -84,6 +91,7 @@ const defaultState = {
   profile: null,
   statistics: null,
   postsOfUser: null,
+  productsByUser: null,
 };
 
 export default handleActions(
@@ -138,6 +146,12 @@ export default handleActions(
     },
     [types.GET_POSTS_OF_USER_FAIL]: (state, {payload}) => {
       return {...state, postsOfUser: null};
+    },
+    [types.GET_PRODUCT_BY_USER_SUCCESS]: (state, {payload}) => {
+      return {...state, productsByUser: payload};
+    },
+    [types.GET_PRODUCT_BY_USER_FAIL]: (state, {payload}) => {
+      return {...state, productsByUser: null};
     },
   },
   defaultState,

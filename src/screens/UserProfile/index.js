@@ -51,6 +51,13 @@ const UserProfile = ({navigation}) => {
         userId: 3,
       }),
     );
+    dispatch(
+      userActions.getProductByUser({
+        page: PAGE_DEFAULT,
+        limit: PAGE_DEFAULT,
+        userId: 3,
+      }),
+    );
   }, [dispatch]);
 
   const leftPress = () => {
