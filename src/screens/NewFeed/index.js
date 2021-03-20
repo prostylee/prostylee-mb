@@ -172,6 +172,7 @@ const NewFeed = ({navigation}) => {
       </View>
     );
   };
+
   return (
     <ThemeView isFullView>
       {Platform.OS === 'android' && (
@@ -221,6 +222,7 @@ const NewFeed = ({navigation}) => {
             />
           )}
           <VerticalFeed
+            targetType={targetType}
             loading={handleLoading()}
             handleRefresh={() => {}}
             handleLoadMore={handleLoadMore}
