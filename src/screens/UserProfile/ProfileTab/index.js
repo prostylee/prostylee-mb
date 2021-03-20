@@ -22,10 +22,14 @@ const ProfileTab = (props) => {
     {key: 'store', title: ''},
   ]);
 
-  const renderScene = SceneMap({
-    me: MeTab,
-    store: StoreTab,
-  });
+  const renderScene = ({route, jumpTo}) => {
+    switch (route.key) {
+      case 'me':
+        return <MeTab index={index} jumpTo={jumpTo} />;
+      case 'store':
+        return <StoreTab index={index} jumpTo={jumpTo} />;
+    }
+  };
 
   const renderTabBar = (props) => (
     <TabBar
