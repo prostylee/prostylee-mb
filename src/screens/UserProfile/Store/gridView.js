@@ -40,12 +40,9 @@ const GridView = ({column, wImage, hImage}) => {
         keyExtractor={(item, index) => 'profileMeTab' + index}
         data={productByUser?.content || []}
         renderItem={({item}) => <ProductItem item={item} />}
-        // onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
         ListFooterComponent={renderFooter}
-        // refreshing={refreshing}
-        // onRefresh={handleRefresh}
       />
     </Container>
   );
