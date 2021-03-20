@@ -31,6 +31,7 @@ const heightShow = height * 0.35;
 
 const UserProfile = ({navigation}) => {
   const dispatch = useDispatch();
+  const scrollRef = useRef();
   const profile = useSelector((state) => profileSelector(state));
   const statistics = useSelector((state) => statisticsSelector(state));
 
@@ -41,6 +42,16 @@ const UserProfile = ({navigation}) => {
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
+  const opacity = scrollAnimated.interpolate({
+    inputRange: [0, heightShow],
+    outputRange: [0, 1],
+    extrapolate: 'clamp',
+  });
+  const marginTop = scrollAnimated.interpolate({
+    inputRange: [0, heightShow * 0.2, heightShow],
+    outputRange: [-30, 0, 0],
+    extrapolate: 'clamp',
+  });
 
   useEffect(() => {
     dispatch(userActions.getProfile(1));
@@ -63,6 +74,17 @@ const UserProfile = ({navigation}) => {
 
   const leftPress = () => {
     navigation.goBack();
+  };
+
+  const messagePress = () => {
+    navigation.navigate('Chat');
+  };
+
+  const morePress = () => {
+    scrollRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
   };
   const scrollProfile = () => {};
   return (
@@ -90,10 +112,12 @@ const UserProfile = ({navigation}) => {
         }
         rightComponent={
           <View style={styles.rightView}>
-            <Touch style={styles.touchRight} onPress={leftPress}>
-              <Message />
-            </Touch>
-            <Touch style={styles.touchRight} onPress={leftPress}>
+            <Animated.View style={{opacity, marginTop}}>
+              <Touch style={styles.touchRight} onPress={messagePress}>
+                <Message />
+              </Touch>
+            </Animated.View>
+            <Touch style={styles.touchRight} onPress={morePress}>
               <More />
             </Touch>
           </View>
@@ -104,6 +128,7 @@ const UserProfile = ({navigation}) => {
         scrollAnimated={scrollAnimated}
       />
       <Animated.ScrollView
+        ref={scrollRef}
         onScroll={onScrollEvent}
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
