@@ -169,19 +169,19 @@ const VerticalFeedItem = ({newFeedItem, targetType, isProfile}) => {
           </TouchableOpacity>
         )}
       </View>
-      {targetType === TYPE_STORE && (
+      {targetType === TYPE_STORE ? (
         <ContainerView fluid style={styles.description}>
           <View style={styles.wrapInfo}>
-            <Text style={styles.productName}>{newFeedItem.name}</Text>
+            <Text style={styles.productName}>{newFeedItem?.name}</Text>
             <Text style={styles.price}>
-              {currencyFormat(newFeedItem.priceSale, 'đ')}
+              {currencyFormat(newFeedItem?.priceSale || 0, 'đ')}
             </Text>
           </View>
           <TouchableOpacity style={styles.touchBuyNow}>
             <Text style={styles.touchTextByNow}>Mua ngay</Text>
           </TouchableOpacity>
         </ContainerView>
-      )}
+      ) : null}
       <ContainerView style={styles.socialActionWrap}>
         <View style={styles.postAction}>
           <TouchableOpacity

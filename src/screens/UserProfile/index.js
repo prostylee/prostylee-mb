@@ -2,9 +2,9 @@ import React, {useRef, useEffect} from 'react';
 import {
   Animated,
   TouchableOpacity as Touch,
-  Dimensions,
   View,
   Text,
+  Platform,
 } from 'react-native';
 import {Avatar} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
@@ -26,8 +26,7 @@ import {profileSelector, statisticsSelector} from 'redux/selectors/user';
 
 import {PAGE_DEFAULT} from 'constants';
 
-const {height} = Dimensions.get('window');
-const heightShow = height * 0.35;
+const heightShow = Platform.OS === 'ios' ? 280 : 300;
 
 const UserProfile = ({navigation}) => {
   const dispatch = useDispatch();

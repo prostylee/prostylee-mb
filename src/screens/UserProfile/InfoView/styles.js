@@ -1,14 +1,14 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {absoluteCenter, absolute, center, flexRow} from 'theme/style';
 import {IMG_STATUS} from 'constants';
 
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 const widthCenter = width / 2 - 40;
 
 export default EStyleSheet.create({
   viewBg: {
-    height: height * 0.48,
+    height: Platform.OS === 'ios' ? 420 : 400,
   },
   overlay: {
     ...absoluteCenter,
@@ -58,6 +58,8 @@ export default EStyleSheet.create({
   followBtn: {
     height: '28rem',
     backgroundColor: '$purple',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   statisticalView: {
     ...flexRow,
