@@ -239,9 +239,9 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '6.5.1'
-}
+// task wrapper(type: Wrapper) {
+//     gradleVersion = '6.5.1'
+// }
 
 task prepareKotlinBuildScriptModel {
 

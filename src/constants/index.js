@@ -34,6 +34,8 @@ export const NUMBER_OF_PRODUCT = 3;
 export const STORY_DURATION = 15;
 
 //IMG SIZE
-
 export const IMG_STATUS = 5 / 4;
 export const IMG_PRODUCT = 3 / 2;
+
+//NEW FEED
+export const FIRST_SLICE_ITEM = 3;

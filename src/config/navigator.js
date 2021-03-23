@@ -1,3 +1,5 @@
+import i18n from 'i18n';
+
 export const bottomTabs = {
   newFeed: 'NewFeed',
   shop: 'ProductCategory',
@@ -13,14 +15,8 @@ export const tabsSetting = {
   },
   tabsNavigator: [
     {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'New Feed',
-        en: 'New Feed',
-      },
+      title: '',
+      name: i18n.t('bottomTab.newFeed'),
       screen: bottomTabs.newFeed,
       option: {
         tabBarIcon: 'NewFeedTab',
@@ -28,14 +24,8 @@ export const tabsSetting = {
       },
     },
     {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Cửa hàng',
-        en: 'Store',
-      },
+      title: '',
+      name: i18n.t('bottomTab.store'),
       screen: bottomTabs.newFeed,
       option: {
         tabBarIcon: 'StoreTab',
@@ -43,14 +33,8 @@ export const tabsSetting = {
       },
     },
     {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Post News',
-        en: 'Post News',
-      },
+      title: '',
+      name: i18n.t('bottomTab.post'),
       isTurnOfLabel: true,
       screen: bottomTabs.newFeed,
       option: {
@@ -59,14 +43,8 @@ export const tabsSetting = {
       },
     },
     {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Thông báo',
-        en: 'Notification',
-      },
+      title: '',
+      name: i18n.t('bottomTab.notification'),
       screen: bottomTabs.newFeed,
       option: {
         tabBarIcon: 'NotifTab',
@@ -74,14 +52,8 @@ export const tabsSetting = {
       },
     },
     {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Tài khoản',
-        en: 'Account',
-      },
+      title: '',
+      name: i18n.t('bottomTab.account'),
       screen: bottomTabs.account,
       option: {
         tabBarIcon: 'AccountTab',

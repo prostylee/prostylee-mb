@@ -9,6 +9,7 @@ import {
 import styles from './styles';
 
 import Modal from 'react-native-modal';
+import PropTypes from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
 
 const IC_GALLERY = require('assets/icons/gallery.png');
@@ -96,6 +97,13 @@ const ModalImagePicker = (props) => {
       </SafeAreaView>
     </Modal>
   );
+};
+
+ModalImagePicker.propTypes = {
+  visible: PropTypes.bool,
+  cropping: PropTypes.bool,
+  onCancel: PropTypes.func,
+  onGetValue: PropTypes.func,
 };
 
 export default ModalImagePicker;

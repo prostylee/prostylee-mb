@@ -30,8 +30,8 @@ export const types = {
 };
 
 export const actions = {
-  userLogin: createAction(types.USER_LOGIN),
-  userLoginSuccess: createAction(types.USER_LOGIN_SUCCESS),
+  userSignIn: createAction(types.USER_LOGIN),
+  userSignInSuccess: createAction(types.USER_LOGIN_SUCCESS),
   userSignUp: createAction(types.USER_SIGN_UP),
   userSignUpSuccess: createAction(types.USER_SIGNUP_SUCCESS),
   userClearExpiredToken: createAction(types.USER_CLEAR_EXPIRED_TOKEN),
