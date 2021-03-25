@@ -12,7 +12,6 @@ import OTPVerification from './Auth/OTPVerification';
 import ForgotPassword from './Auth/ForgotPassword';
 import ResetPassword from './Auth/ResetPassword';
 import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
-import PrivacyAndPolicy from './Auth/PrivacyAndPolicy';
 import UserProfile from './UserProfile';
 import SimpleWebView from './Auth/SimpleWebView';
 
@@ -31,7 +30,6 @@ export {
   ForgotPassword,
   ResetPassword,
   ResetPasswordViaMail,
-  PrivacyAndPolicy,
   UserProfile,
   SimpleWebView,
 };

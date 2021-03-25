@@ -27,7 +27,7 @@ import ContainerView from './ContainerView';
 import Header from './Header';
 import Title from './Title';
 import TextInputFloatingLabel from './TextInputFloatingLabel';
-import SocialLogin from './SocialLogin';
+import SocialSignIn from './SocialSignIn';
 import HeaderAnimated from './Header/animated';
 import ImageBackground from './ImageBackground';
 
@@ -61,7 +61,7 @@ export {
   Header,
   Title,
   TextInputFloatingLabel,
-  SocialLogin,
+  SocialSignIn,
   HeaderAnimated,
   ImageBackground,
 };
