@@ -134,7 +134,7 @@ const Index = () => {
         }, 300);
       } else {
         console.log('APP IS UP TO DATE');
-        onCheckLoginSession();
+        onCheckSignInSession();
       }
     } catch (err) {
       console.log(err);
@@ -152,11 +152,11 @@ const Index = () => {
         break;
       case codePush.SyncStatus.UP_TO_DATE:
         console.log('Up-to-date.');
-        onCheckLoginSession();
+        onCheckSignInSession();
         break;
       case codePush.SyncStatus.UPDATE_INSTALLED:
         console.log('Update installed.');
-        onCheckLoginSession();
+        onCheckSignInSession();
         break;
       default:
         dispatch(commonActions.toggleLoading(false));
@@ -186,37 +186,44 @@ const Index = () => {
     );
   };
 
-  const onCheckLoginSession = async () => {
-    await dispatch(commonActions.toggleLoading(true));
-    if (userToken) {
-      let accessToken = await jwtDecode(userToken.accessToken);
-      let refreshToken = await jwtDecode(userToken.refreshToken);
-      let isAccessTokenExpired = await datetime.checkExpiredDate(
-        accessToken.exp,
-      );
-      let isRefreshTokenExpired = await datetime.checkExpiredDate(
-        refreshToken.exp,
-      );
-      if (isAccessTokenExpired && isRefreshTokenExpired) {
-        //accessToken && refreshToken expired
-        dispatch(userActions.userClearExpiredToken());
-        RootNavigator.navigate('LoginOptions');
-        dispatch(commonActions.toggleLoading(false));
-      } else if (isAccessTokenExpired && !isRefreshTokenExpired) {
-        //refresh token valid
-        //get new access token
-        dispatch(
-          userActions.userRefreshToken({
-            refreshToken: userToken.refreshToken,
-            onSuccess: () => onUserRefreshTokenSuccess(),
-          }),
+  const onCheckSignInSession = async () => {
+    try {
+      await dispatch(commonActions.toggleLoading(true));
+      if (userToken) {
+        let accessToken = await jwtDecode(userToken.accessToken);
+        let refreshToken = await jwtDecode(userToken.refreshToken);
+        let isAccessTokenExpired = await datetime.checkExpiredDate(
+          accessToken.exp,
         );
+        let isRefreshTokenExpired = await datetime.checkExpiredDate(
+          refreshToken.exp,
+        );
+        if (isAccessTokenExpired && isRefreshTokenExpired) {
+          //accessToken && refreshToken expired
+          dispatch(userActions.userClearExpiredToken());
+          RootNavigator.navigate('SignInOptions');
+          dispatch(commonActions.toggleLoading(false));
+        } else if (isAccessTokenExpired && !isRefreshTokenExpired) {
+          //refresh token valid
+          //get new access token
+          dispatch(
+            userActions.userRefreshToken({
+              refreshToken: userToken.refreshToken,
+              onSuccess: () => onUserRefreshTokenSuccess(),
+            }),
+          );
+        } else {
+          //accessToken valid
+          dispatch(commonActions.toggleLoading(false));
+        }
       } else {
-        //accessToken valid
         dispatch(commonActions.toggleLoading(false));
       }
-    } else {
+    } catch (err) {
+      //unexpected error => clear token, navigate to sign in screen
+      dispatch(userActions.userClearExpiredToken());
       dispatch(commonActions.toggleLoading(false));
+      RootNavigator.navigate('SignInOptions');
     }
   };
 

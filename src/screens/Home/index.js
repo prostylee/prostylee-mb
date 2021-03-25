@@ -13,7 +13,7 @@ const Index = () => {
 
   //funcs
   const onSignOut = async () => {
-    await dispatch(commonActions.setInitialRouteName('LoginOptions'));
+    await dispatch(commonActions.setInitialRouteName('SignInOptions'));
     dispatch(userActions.userLogOutSuccess());
   };
   return (

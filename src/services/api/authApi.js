@@ -7,7 +7,7 @@ export const userSignUp = (payload) => {
   return _fetch(POST, '/auth/sign-up', payload);
 };
 
-export const userLogin = (payload) => {
+export const userSignIn = (payload) => {
   return _fetch(POST, '/auth/sign-in', payload);
 };
 

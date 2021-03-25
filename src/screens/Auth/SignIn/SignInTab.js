@@ -16,7 +16,7 @@ import {emailRegex, passwordRegex} from 'utils/common';
 
 import asyncStorage from 'data/asyncStorage';
 
-const LoginTab = () => {
+const SignInTab = () => {
   //Initial States
   const [email, setEmail] = React.useState('');
   const [invalidEmail, setInvalidEmail] = React.useState(false);
@@ -24,7 +24,7 @@ const LoginTab = () => {
   const [password, setPassword] = React.useState('');
   const [invalidPassword, setInvalidPassword] = React.useState(false);
   const [errPasswordMsg, setErrPasswordMsg] = React.useState('');
-  const [disabledLoginBtn, setDisabledLoginBtn] = React.useState(false);
+  const [disabledSignInBtn, setDisabledSignInBtn] = React.useState(false);
   const [isShowErrMsg, toggleShowErrMsg] = React.useState(false);
   const [isFocusEmailInput, setFocusEmailInput] = React.useState(false);
   const [isFocusPasswordInput, setFocusPasswordInput] = React.useState(false);
@@ -49,9 +49,9 @@ const LoginTab = () => {
       _.isEmpty(email) ||
       _.isEmpty(password)
     ) {
-      setDisabledLoginBtn(true);
+      setDisabledSignInBtn(true);
     } else {
-      setDisabledLoginBtn(false);
+      setDisabledSignInBtn(false);
     }
   }, [invalidEmail, invalidPassword, email, password]);
 
@@ -128,26 +128,26 @@ const LoginTab = () => {
   };
 
   //handle funcs
-  const onLoginWithPhone = () => {
-    RootNavigator.navigate('LoginViaPhone');
+  const onSignInWithPhone = () => {
+    RootNavigator.navigate('SignInViaPhone');
   };
   const onForgotPw = () => {
     RootNavigator.navigate('ForgotPassword');
   };
 
-  //handle User login
-  const onLogin = async () => {
+  //handle User signIn
+  const onSignIn = async () => {
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
-      userActions.userLogin({
+      userActions.userSignIn({
         email,
         password,
-        onSuccess: () => onLoginSuccess(),
+        onSuccess: () => onSignInSuccess(),
       }),
     );
   };
 
-  const onLoginSuccess = async () => {
+  const onSignInSuccess = async () => {
     dispatch(commonActions.toggleLoading(false));
   };
 
@@ -182,17 +182,17 @@ const LoginTab = () => {
         )}
         <View style={styles.btnWrapper}>
           <ButtonRounded
-            onPress={() => onLogin()}
-            label={I18n.t('login')}
-            disabled={disabledLoginBtn}
+            onPress={() => onSignIn()}
+            label={I18n.t('signIn')}
+            disabled={disabledSignInBtn}
           />
         </View>
         <View style={styles.btnWrapper}>
           <TextButton
             icon={({size, color}) => <Phone />}
-            onPress={() => onLoginWithPhone()}
+            onPress={() => onSignInWithPhone()}
             labelStyle={styles.iconTextLabel}
-            label={I18n.t('loginWithPhone')}
+            label={I18n.t('signInWithPhone')}
           />
         </View>
         <View>
@@ -207,4 +207,4 @@ const LoginTab = () => {
   );
 };
 
-export default LoginTab;
+export default SignInTab;

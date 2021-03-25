@@ -8,6 +8,7 @@ import {
 } from 'components';
 
 import _ from 'lodash';
+import {useKeyboard} from '@react-native-community/hooks';
 
 import {userActions, commonActions} from 'reducers';
 import {useDispatch} from 'react-redux';
@@ -15,6 +16,7 @@ import {useDispatch} from 'react-redux';
 import styles from './styles';
 
 import I18n from 'i18n';
+import {emailRegex} from 'utils/common';
 
 const Index = (props) => {
   //Initial States
@@ -22,8 +24,20 @@ const Index = (props) => {
   const [invalidEmail, setInvalidEmail] = React.useState(false);
   const [errEmailMsg, setErrEmailMsg] = React.useState('');
   const [disabledBtn, setDisabledBtn] = React.useState(false);
-  const [isShowErrMsg, toggleShowErrMsg] = React.useState(false);
-  const [isFocusEmailInput, setFocusEmailInput] = React.useState(true);
+  const [isFocused, setIsFocused] = React.useState(false);
+
+  //Ref
+  const inputRef = React.useRef(null);
+
+  //keyboard
+  const keyboard = useKeyboard();
+
+  //useEffect
+  React.useEffect(() => {
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 1000);
+  }, []);
 
   //useEffect
   React.useEffect(() => {
@@ -39,14 +53,13 @@ const Index = (props) => {
 
   //textInput
   const onChangeEmail = async (value) => {
-    let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
-      if (reg.test(value) === false) {
+      if (emailRegex.test(value) === false) {
         setEmail(value);
         setInvalidEmail(true);
         setErrEmailMsg(I18n.t('invalidEmail'));
-        toggleShowErrMsg(false);
+        // toggleShowErrMsg(false);
         return false;
       } else {
         //email hợp lệ
@@ -62,18 +75,16 @@ const Index = (props) => {
     }
   };
 
-  const onBlurEmailInput = () => {
-    if (invalidEmail) {
-      toggleShowErrMsg(true);
-    }
-    setFocusEmailInput(false);
+  //Focus Input
+  const onFocusInput = () => {
+    setIsFocused(true);
+  };
+  //Blur Input
+  const onBlurInput = () => {
+    setIsFocused(false);
   };
 
-  const onFocusEmailInput = () => {
-    setFocusEmailInput(true);
-  };
-
-  //handle User login
+  //handle User signIn
   const onSubmitEmail = async () => {
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
@@ -103,16 +114,17 @@ const Index = (props) => {
           />
           <View style={styles.form}>
             <TextInputFloatingLabel
+              ref={inputRef}
               placeholder={I18n.t('emailOrPhone')}
               value={email}
               onChangeText={(text) => onChangeEmail(text)}
-              autoFocus={true}
               keyboardType="email-address"
-              onBlur={() => onBlurEmailInput()}
-              onFocus={() => onFocusEmailInput()}
-              isFocused={isFocusEmailInput}
+              autoFocus={true}
+              isFocused={isFocused}
+              onFocus={onFocusInput}
+              onBlur={onBlurInput}
             />
-            {isShowErrMsg && invalidEmail && (
+            {!keyboard.keyboardShown && invalidEmail && (
               <Text style={styles.errMsg}>{errEmailMsg}</Text>
             )}
             <View style={styles.btnWrapper}>

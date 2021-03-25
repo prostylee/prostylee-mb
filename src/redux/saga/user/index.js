@@ -68,9 +68,9 @@ const userSignUp = function* ({
   }
 };
 
-const userLogin = function* ({payload: {email, password, onSuccess}}) {
+const userSignIn = function* ({payload: {email, password, onSuccess}}) {
   try {
-    const res = yield call(authApi.userLogin, {
+    const res = yield call(authApi.userSignIn, {
       appClientId: configEnv.APP_CLIENT_ID,
       appClientSecret: configEnv.APP_CLIENT_SECRET,
       username: email,
@@ -81,7 +81,7 @@ const userLogin = function* ({payload: {email, password, onSuccess}}) {
     if (res.ok && res.data.status === SUCCESS) {
       yield asyncStorage.setUserToken(res.data.data);
       yield asyncStorage.setUserName({username: email});
-      yield put(userActions.userLoginSuccess(res.data.data));
+      yield put(userActions.userSignInSuccess(res.data.data));
       configApi.setHeader(
         'Authorization',
         'Bearer ' + res.data.data.accessToken,
@@ -581,7 +581,7 @@ const forgotPwCheckEmailCode = function* ({payload: {email, code, onSuccess}}) {
 
 const watcher = function* () {
   yield takeLatest(userTypes.USER_SIGN_UP, userSignUp);
-  yield takeLatest(userTypes.USER_LOGIN, userLogin);
+  yield takeLatest(userTypes.USER_LOGIN, userSignIn);
   yield takeLatest(userTypes.USER_REFRESH_TOKEN, userRefreshToken);
   yield takeLatest(userTypes.USER_FORGOT_PASSWORD, userForgotPassword);
   yield takeLatest(userTypes.USER_VERIFY_OTP, userVerifyOTP);

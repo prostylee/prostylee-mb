@@ -44,7 +44,7 @@ const Index = (props) => {
 
   //input
   const onChangePassword = async (value) => {
-    let reg = /^.{4,50}$/;
+    let reg = /^.{4,30}$/;
     if (!_.isEmpty(value)) {
       //nếu textInput có giá trị khác rỗng
       if (reg.test(value) === false) {
@@ -80,7 +80,6 @@ const Index = (props) => {
 
   const onUpdateNewPassword = async () => {
     await dispatch(commonActions.toggleLoading(true));
-    console.log(props.route);
     dispatch(
       userActions.userChangePassword({
         email: props.route.params.email,

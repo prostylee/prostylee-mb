@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Dimensions,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import {TINT_GRAY} from '../Utils/colors';
 import ArrowNavigator from './ArrowNavigator';
 import {DEFAULT_DURATION} from '../Utils/constant';
@@ -25,12 +26,18 @@ const StoryContainer = (props) => {
   }, [progressIndex, props.enableProgress]);
 
   useEffect(() => {
-    let listener1 = Keyboard.addListener('keyboardDidShow', onShowKeyboard);
-    let listener2 = Keyboard.addListener('keyboardDidHide', onHideKeyboard);
+    let showKeyBoardListener = Keyboard.addListener(
+      'keyboardDidShow',
+      onShowKeyboard,
+    );
+    let hideKeyBoardListener = Keyboard.addListener(
+      'keyboardDidHide',
+      onHideKeyboard,
+    );
 
     return () => {
-      listener1.remove();
-      listener2.remove();
+      showKeyBoardListener.remove();
+      hideKeyBoardListener.remove();
     };
   }, [onHideKeyboard, onShowKeyboard]);
 
@@ -114,6 +121,10 @@ const StoryContainer = (props) => {
 };
 
 export default StoryContainer;
+
+StoryContainer.propTypes = {
+  enableProgress: PropTypes.bool,
+};
 
 const styles = StyleSheet.create({
   parentView: {

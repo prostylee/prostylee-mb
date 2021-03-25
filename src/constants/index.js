@@ -37,3 +37,5 @@ export const STORY_DURATION = 15;
 export const IMG_STATUS = 5 / 4;
 export const IMG_PRODUCT = 3 / 2;
 export const IMG_RATIO = 4 / 3;
+//NEW FEED
+export const FIRST_SLICE_ITEM = 3;
