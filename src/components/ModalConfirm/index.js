@@ -5,6 +5,7 @@ import styles from './styles';
 import i18n from 'i18n';
 
 import Modal from 'react-native-modal';
+import PropTypes from 'prop-types';
 
 const ModalConfirm = ({
   onCancel,
@@ -45,6 +46,16 @@ const ModalConfirm = ({
       </View>
     </Modal>
   );
+};
+
+ModalConfirm.propTypes = {
+  title: PropTypes.string,
+  visible: PropTypes.bool,
+  message: PropTypes.string,
+  confirmTitle: PropTypes.string,
+  cancelTitle: PropTypes.string,
+  onCancel: PropTypes.func,
+  onConfirm: PropTypes.func,
 };
 
 export default ModalConfirm;

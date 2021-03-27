@@ -8,6 +8,7 @@ export const types = {
   TOGGLE_VIEW_MODE: 'TOGGLE_VIEW_MODE',
   SHOW_ONBOARDING_SCREEN: 'SHOW_ONBOARDING_SCREEN',
   SET_INITIAL_ROUTE_NAME: 'SET_INITIAL_ROUTE_NAME',
+  TOGGLE_FOCUS_MAIN_TAB: 'TOGGLE_FOCUS_MAIN_TAB',
 };
 
 export const actions = {
@@ -18,6 +19,7 @@ export const actions = {
   toggleViewMode: createAction(types.TOGGLE_VIEW_MODE),
   showOnboardingScreen: createAction(types.SHOW_ONBOARDING_SCREEN),
   setInitialRouteName: createAction(types.SET_INITIAL_ROUTE_NAME),
+  toggleFocusMainTab: createAction(types.TOGGLE_FOCUS_MAIN_TAB),
 };
 
 export const selectors = {
@@ -26,11 +28,13 @@ export const selectors = {
   getThemeMode: (state) => state.common.themeMode,
   showOnboardingScreen: (state) => state.common.isShowOnboardingScreen,
   getInitialRouteName: (state) => state.common.initialRouteName,
+  isFocusedMainTab: (state) => state.common.isFocusedMainTab,
 };
 
 const intialState = {
   networkStatus: true,
   isLoading: false,
+  isFocusedMainTab: false,
   isShowOnboardingScreen: true,
   themeMode: 'light',
   targetType: 'STORE',
@@ -40,6 +44,9 @@ const intialState = {
 
 export default handleActions(
   {
+    [types.TOGGLE_FOCUS_MAIN_TAB]: (state, {payload}) => {
+      return {...state, isFocusedMainTab: payload};
+    },
     [types.UPDATE_NETWORK_STATUS]: (state, {payload}) => {
       return {...state, networkStatus: payload};
     },

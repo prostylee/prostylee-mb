@@ -2,34 +2,34 @@ import Home from './Home';
 import Stores from './Stores';
 import StoryBoard from './StoryBoard';
 import Chat from './Chat';
-import Login from './Auth/Login';
+import SignIn from './Auth/SignIn';
 import SignUpViaPhone from './Auth/SignUpViaPhone';
-import LoginOptions from './Auth/LoginOptions';
+import SignInOptions from './Auth/SignInOptions';
 import Welcome from './Auth/Welcome';
 import Onboarding from './Auth/Onboarding';
-import LoginViaPhone from './Auth/LoginViaPhone';
+import SignInViaPhone from './Auth/SignInViaPhone';
 import OTPVerification from './Auth/OTPVerification';
 import ForgotPassword from './Auth/ForgotPassword';
 import ResetPassword from './Auth/ResetPassword';
 import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
-import PrivacyAndPolicy from './Auth/PrivacyAndPolicy';
+import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 
 export {
   Welcome,
   Onboarding,
   Home,
-  Login,
+  SignIn,
   Stores,
   StoryBoard,
   Chat,
   SignUpViaPhone,
-  LoginViaPhone,
-  LoginOptions,
+  SignInViaPhone,
+  SignInOptions,
   OTPVerification,
   ForgotPassword,
   ResetPassword,
   ResetPasswordViaMail,
-  PrivacyAndPolicy,
+  SimpleWebView,
   UserProfile,
 };

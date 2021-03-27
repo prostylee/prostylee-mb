@@ -20,15 +20,15 @@ const Stack = createStackNavigator();
 import {
   Welcome,
   Onboarding,
-  Login,
+  SignIn,
   SignUpViaPhone,
-  LoginViaPhone,
-  LoginOptions,
+  SignInViaPhone,
+  SignInOptions,
   OTPVerification,
   ForgotPassword,
   ResetPassword,
   ResetPasswordViaMail,
-  PrivacyAndPolicy,
+  SimpleWebView,
   Stores,
   StoryBoard,
   Chat,
@@ -73,16 +73,16 @@ function SignedOut() {
       mode="card"
       headerMode="none"
       animation="fade">
-      <Stack.Screen name="LoginOptions" component={LoginOptions} />
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="SignInOptions" component={SignInOptions} />
+      <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="SignUpViaPhone" component={SignUpViaPhone} />
-      <Stack.Screen name="LoginViaPhone" component={LoginViaPhone} />
+      <Stack.Screen name="SignInViaPhone" component={SignInViaPhone} />
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
       <Stack.Screen name="OTPVerification" component={OTPVerification} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} />
-      <Stack.Screen name="PrivacyAndPolicy" component={PrivacyAndPolicy} />
+      <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
       <Stack.Screen
         name="ResetPasswordViaMail"
         component={ResetPasswordViaMail}

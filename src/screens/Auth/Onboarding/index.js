@@ -47,7 +47,7 @@ const Index = (props) => {
       flatListRef.current.scrollToIndex({animated: true, index: index + 1});
     } else {
       await dispatch(commonActions.showOnboardingScreen(false));
-      props.navigation.navigate('LoginOptions');
+      props.navigation.navigate('SignInOptions');
     }
   };
 

@@ -6,66 +6,42 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import styles from './styles';
 
-const TextInputRounded = ({
-  value,
-  style,
-  hint,
-  placeholderTextColor,
-  onChangeText,
-  defaultValue,
-  secureTextEntry,
-  keyboardType,
-  autoCapitalize,
-  returnKeyType,
-  blurOnSubmit,
-  onSubmitEditing,
-  textInputStyle,
-  editable,
-  icon,
-  unit,
-  multiline,
-  onPressIcon,
-  disablePressIcon,
-  onFocus,
-  autoFocus,
-  inputRef,
-  onBlur,
-}) => (
-  <View style={[styles.container, style]}>
+const TextInputRounded = (props) => (
+  <View style={[styles.container, props.style]}>
     <TextInput
-      ref={inputRef}
+      {...props}
+      ref={props.inputRef}
       underlineColorAndroid="transparent"
-      style={[styles.textInput, textInputStyle]}
-      placeholder={hint}
-      placeholderTextColor={placeholderTextColor}
-      onChangeText={onChangeText}
-      defaultValue={defaultValue}
-      secureTextEntry={secureTextEntry}
-      keyboardType={keyboardType}
-      autoCapitalize={autoCapitalize}
-      value={value}
-      returnKeyType={returnKeyType}
-      blurOnSubmit={blurOnSubmit}
-      onSubmitEditing={onSubmitEditing}
-      onFocus={onFocus}
-      editable={editable === false ? false : true}
-      multiline={multiline}
-      autoFocus={autoFocus}
-      onBlur={onBlur}
+      style={[styles.textInput, props.textInputStyle]}
+      placeholder={props.hint}
     />
-    {icon ? (
+    {props.icon ? (
       <View style={styles.wrapperIcon}>
         <TouchableWithoutFeedback
-          onPress={onPressIcon}
-          disabled={disablePressIcon === false ? false : true}>
-          <Image source={icon} style={styles.icon} resizeMode="contain" />
+          onPress={props.onPressIcon}
+          disabled={props.disablePressIcon}>
+          <Image source={props.icon} style={styles.icon} resizeMode="contain" />
         </TouchableWithoutFeedback>
       </View>
     ) : null}
-    {unit ? <Text style={styles.unitText}>{unit}</Text> : null}
+    {props.unit ? <Text style={styles.unitText}>{props.unit}</Text> : null}
   </View>
 );
+
+TextInputRounded.defaultProps = {
+  secureTextEntry: false,
+  autoFocus: false,
+  disablePressIcon: false,
+  isFocused: false,
+};
+
+TextInputRounded.propTypes = {
+  placeholderTextColor: PropTypes.string,
+  unit: PropTypes.string,
+  disablePressIcon: PropTypes.bool,
+};
 
 export default TextInputRounded;

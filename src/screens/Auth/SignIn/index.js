@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, Dimensions} from 'react-native';
 
-import {Container, TextButton, SocialLogin} from 'components';
+import {Container, TextButton, SocialSignIn} from 'components';
 import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
 import {useKeyboard, useBackHandler} from '@react-native-community/hooks';
 
@@ -12,7 +12,7 @@ import {LogoBlack} from 'svg/common';
 
 import envConfig from 'config';
 
-import LoginTab from './LoginTab';
+import SignInTab from './SignInTab';
 import SignUpTab from './SignUpTab';
 
 const initialLayout = {width: Dimensions.get('window').width};
@@ -31,7 +31,7 @@ const Index = (props) => {
 
   //BackHandler handle
   useBackHandler(() => {
-    if (props.route.name === 'Login') {
+    if (props.route.name === 'SignIn') {
       props.navigation.goBack();
       return true;
     }
@@ -39,26 +39,26 @@ const Index = (props) => {
 
   //initial Tabs
   const [routes] = React.useState([
-    {key: 'login', title: I18n.t('login')},
+    {key: 'signIn', title: I18n.t('signIn')},
     {key: 'signup', title: I18n.t('signUp')},
   ]);
 
   //handle funcs
   const onGoToTerms = () => {
-    props.navigation.navigate('PrivacyAndPolicy', {
+    props.navigation.navigate('SimpleWebView', {
       url: envConfig.termOfUseURL,
       title: I18n.t('termOfUse'),
     });
   };
   const onGoToPrivacy = () => {
-    props.navigation.navigate('PrivacyAndPolicy', {
+    props.navigation.navigate('SimpleWebView', {
       url: envConfig.privacyPolicyURL,
       title: I18n.t('privacyPolicy'),
     });
   };
 
   const renderScene = SceneMap({
-    login: LoginTab,
+    signIn: SignInTab,
     signup: SignUpTab,
   });
 
@@ -95,7 +95,7 @@ const Index = (props) => {
           />
           {!keyboard.keyboardShown && (
             <View>
-              <SocialLogin />
+              <SocialSignIn useWhiteAppleIcon={false} />
               {index === 1 && (
                 <View style={styles.privacyWrapper}>
                   <Text style={styles.noticeText}>

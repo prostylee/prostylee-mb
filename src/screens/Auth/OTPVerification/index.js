@@ -18,6 +18,7 @@ import {showMessage} from 'react-native-flash-message';
 import styles from './styles';
 
 const TIME = 60;
+const OTP_CODE_LENGTH = 5;
 
 const Index = (props) => {
   //State
@@ -56,7 +57,7 @@ const Index = (props) => {
   //input
   const onChangeCode = (text) => {
     setCode(text);
-    if (text.length === 5) {
+    if (text.length === OTP_CODE_LENGTH) {
       setDisabledBtn(false);
     } else {
       setDisabledBtn(true);
@@ -131,21 +132,22 @@ const Index = (props) => {
               value={code}
               onTextChange={(value) => onChangeCode(value)}
             />
+          </View>
+          <View style={styles.btnWrapper}>
             <ButtonRounded
               label={I18n.t('next')}
-              style={styles.button}
               onPress={() => onVerifyOTP()}
               disabled={isDisabledBtn}
             />
           </View>
-          <View style={styles.btnWrapper}>
-            <TextButton
-              label={I18n.t('resendOTP')}
-              labelStyle={styles.labelTextButton}
-              onPress={() => onResendOTP()}
-              disabled={timeLeft > 0}
-            />
-          </View>
+
+          <TextButton
+            label={I18n.t('resendOTP')}
+            labelStyle={styles.labelTextButton}
+            onPress={() => onResendOTP()}
+            disabled={timeLeft > 0}
+          />
+
           {timeLeft > 0 && (
             <Text style={styles.countDown}>{`(${I18n.t(
               'after',
