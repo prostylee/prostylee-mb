@@ -55,6 +55,8 @@ const VerticalFeedItem = ({newFeedItem, targetType}) => {
     if (!liked) {
       const res = await like({
         targetId: newFeedItem?.id,
+        customFieldId1: newFeedItem?.categoryId,
+        customFieldId2: newFeedItem?.storeId,
         targetType,
       });
       if (res.ok && res.data.status === SUCCESS) {
