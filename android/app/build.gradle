@@ -125,6 +125,7 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
+    ndkVersion "22.0.7026061"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -136,7 +137,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -190,6 +192,9 @@ android {
 
         }
     }
+    // lintOptions {
+    //     checkReleaseBuilds false
+    // }
 }
 
 dependencies {
@@ -200,6 +205,8 @@ dependencies {
     //firebase
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation project(path: ":@react-native-firebase_messaging")
+
+    implementation 'com.android.support:multidex:2.0.1'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
@@ -231,5 +238,14 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+// task wrapper(type: Wrapper) {
+//     gradleVersion = '6.5.1'
+// }
+
+task prepareKotlinBuildScriptModel {
+
+}
+
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

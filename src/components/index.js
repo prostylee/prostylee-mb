@@ -19,9 +19,19 @@ import RnActionSheet from './RnActionSheet';
 import Image from './Image';
 import Colors from './Colors';
 import ModalImagePicker from './ModalImagePicker';
+import TextButton from './TextButton';
+import ButtonOutlined from './ButtonOutlined';
+import ThemeView from './ThemeView';
+import ImageAnimated from './Image/imageAnimated';
+import ContainerView from './ContainerView';
+import Header from './Header';
+import Title from './Title';
+import TextInputFloatingLabel from './TextInputFloatingLabel';
+import SocialSignIn from './SocialSignIn';
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
+  TextButton,
   ModalIndicator,
   RnRadioSelect,
   SearchBox,
@@ -41,4 +51,12 @@ export {
   RnActionSheet,
   ModalImagePicker,
   Colors,
+  ButtonOutlined,
+  ThemeView,
+  ImageAnimated,
+  ContainerView,
+  Header,
+  Title,
+  TextInputFloatingLabel,
+  SocialSignIn,
 };

@@ -6,6 +6,12 @@
     "plugins": [
       ["@babel/plugin-proposal-decorators", { "legacy" : true }],
       [
+        "babel-plugin-inline-import",
+        {
+          "extensions": [".svg"]
+        }
+      ],
+      [
         "module-resolver",
         {
           "root": ["./src"],
@@ -21,7 +27,8 @@
             "services": "./src/services",
             "i18n": "./src/i18n",
             "theme": "./src/theme",
-            "contants": "./src/contants"
+            "contants": "./src/contants",
+            "svg": "./src/svg"
           }
         }
       ]

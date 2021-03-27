@@ -1,24 +1,27 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {connect} from 'react-redux';
 
-export class Login extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+import styles from './styles';
 
-  render() {
-    return (
-      <View>
-        <Text> LOGIN </Text>
-      </View>
-    );
-  }
-}
+import {ButtonOutlined} from 'components';
 
-const mapStateToProps = (state) => ({});
+import {useDispatch} from 'react-redux';
+import {userActions, commonActions} from 'reducers';
 
-const mapDispatchToProps = {};
+const Index = () => {
+  const dispatch = useDispatch();
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+  //funcs
+  const onSignOut = async () => {
+    await dispatch(commonActions.setInitialRouteName('SignInOptions'));
+    dispatch(userActions.userLogOutSuccess());
+  };
+  return (
+    <View style={styles.container}>
+      <Text>HOME SCREEN</Text>
+      <ButtonOutlined label="Đăng Xuất Ngay" onPress={() => onSignOut()} />
+    </View>
+  );
+};
+
+export default Index;

@@ -4,8 +4,8 @@ import {
   View,
   StatusBar,
   KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 import styles from './styles';
 
@@ -17,21 +17,37 @@ const ContainerWithoutScrollView = ({
   safeAreaBottomStyle,
   barStyle,
   bgStatusBar,
+  translucent,
 }) => (
   <KeyboardAvoidingView style={styles.wrapper}>
     <View style={[styles.container, style]}>
       <SafeAreaView style={[styles.safeAreaTopStyle, safeAreaTopStyle]} />
-      {Platform.OS === 'ios' && (
-        <StatusBar
-          barStyle={barStyle || 'dark-content'}
-          hidden={hidden || false}
-          backgroundColor={bgStatusBar || '#fff'}
-        />
-      )}
+
+      <StatusBar
+        barStyle={barStyle}
+        hidden={hidden}
+        backgroundColor={bgStatusBar}
+        translucent={translucent}
+      />
+
       {children}
       <SafeAreaView style={[styles.safeAreaBottomStyle, safeAreaBottomStyle]} />
     </View>
   </KeyboardAvoidingView>
 );
+
+ContainerWithoutScrollView.defaultProps = {
+  barStyle: 'dark-content',
+  translucent: true,
+  hidden: false,
+  bgStatusBar: '#fff',
+};
+
+ContainerWithoutScrollView.propTypes = {
+  translucent: PropTypes.bool,
+  hidden: PropTypes.bool,
+  barStyle: PropTypes.string,
+  bgStatusBar: PropTypes.string,
+};
 
 export default ContainerWithoutScrollView;

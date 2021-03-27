@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {
   createStackNavigator,
@@ -9,11 +9,32 @@ import {NavigationContainer} from '@react-navigation/native';
 import {userSelectors, commonSelectors} from 'reducers';
 import {navigationRef} from './rootNavigator';
 
+import {isEmpty} from 'lodash';
+
 import {lightTheme, darkTheme} from 'theme';
+
+import {api as configApi} from 'services/config';
 
 const Stack = createStackNavigator();
 
-import {Welcome, Onboarding, Login, SignUp, Home, LoginOptions} from 'screens';
+import {
+  Welcome,
+  Onboarding,
+  SignIn,
+  SignUpViaPhone,
+  SignInViaPhone,
+  SignInOptions,
+  OTPVerification,
+  ForgotPassword,
+  ResetPassword,
+  ResetPasswordViaMail,
+  SimpleWebView,
+  Stores,
+  StoryBoard,
+  Chat,
+} from 'screens';
+
+import BottomTabs from './bottomTab';
 
 function SignedIn() {
   return (
@@ -27,12 +48,18 @@ function SignedIn() {
       mode="card"
       headerMode="none"
       animation="fade">
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Home" component={BottomTabs} />
+      <Stack.Screen name="Stores" component={Stores} />
+      <Stack.Screen name="StoryBoard" component={StoryBoard} />
+      <Stack.Screen name="Chat" component={Chat} />
     </Stack.Navigator>
   );
 }
 
 function SignedOut() {
+  const initialRouteName = useSelector((state) =>
+    commonSelectors.getInitialRouteName(state),
+  );
   return (
     <Stack.Navigator
       screenOptions={{
@@ -40,23 +67,36 @@ function SignedOut() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Welcome"
+      initialRouteName={initialRouteName}
       mode="card"
       headerMode="none"
       animation="fade">
-      <Stack.Screen name="LoginOptions" component={LoginOptions} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="SignInOptions" component={SignInOptions} />
+      <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="SignUpViaPhone" component={SignUpViaPhone} />
+      <Stack.Screen name="SignInViaPhone" component={SignInViaPhone} />
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
+      <Stack.Screen name="OTPVerification" component={OTPVerification} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen name="ResetPassword" component={ResetPassword} />
+      <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
+      <Stack.Screen
+        name="ResetPasswordViaMail"
+        component={ResetPasswordViaMail}
+      />
     </Stack.Navigator>
   );
 }
 
 const App = React.forwardRef(() => {
-  const user = useSelector((state) => userSelectors.getUser(state));
+  const userToken = useSelector((state) => userSelectors.getUserToken(state));
   const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
-
+  useEffect(() => {
+    if (!isEmpty(userToken)) {
+      configApi.setHeader('Authorization', 'Bearer ' + userToken.accessToken);
+    }
+  }, [userToken]);
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -70,7 +110,7 @@ const App = React.forwardRef(() => {
         mode="card"
         headerMode="none"
         animation="fade">
-        {user === null ? (
+        {!userToken ? (
           <Stack.Screen name="SignedOut" component={SignedOut} />
         ) : (
           <Stack.Screen name="SignedIn" component={SignedIn} />
