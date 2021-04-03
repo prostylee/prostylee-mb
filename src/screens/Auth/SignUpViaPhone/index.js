@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text} from 'react-native';
 import {
   Container,
@@ -15,14 +15,15 @@ import I18n from 'i18n';
 
 import styles from './styles';
 import envConfig from 'config';
+import _ from 'lodash';
+import {fullNameRegex} from '../../../utils/common';
 
 const Index = (props) => {
-  //State
-  const [fullname, setFullName] = React.useState('');
-  const [phone, setPhone] = React.useState('');
-  const [isFocusFullNameInput, setFocusFullNameInput] = React.useState(true);
-  const [isFocusPhoneInput, setFocusPhoneInput] = React.useState(false);
-  //Back
+
+  const [fullname, setFullname] = useState({value: '', error: ''});
+  const [phone, setPhone] = useState({value: '', error: ''});
+  const [disabledSignUpBtn, setDisabledSignUpBtn] = useState(true);
+
   const onGoBack = () => {
     props.navigation.goBack();
   };
@@ -31,30 +32,29 @@ const Index = (props) => {
   const keyboard = useKeyboard();
 
   //input
-  const onChangeFullname = (text) => {
-    setFullName(text);
+  const onChangeFullname = (value) => {
+    if (_.isEmpty(value)) {
+      setFullname({
+        value: '',
+        error: I18n.t('validation.required', {field: I18n.t('user.name')}),
+      });
+      setDisabledSignUpBtn(true);
+    } else if (fullNameRegex.test(value) === false) {
+      setFullname({
+        value: value,
+        error: I18n.t('validation.invalid', {field: I18n.t('user.name')}),
+      });
+      setDisabledSignUpBtn(true);
+    } else {
+      setFullname({value: value, error: ''});
+      setDisabledSignUpBtn(false);
+    }
   };
-  const onChangePhone = (text) => {
-    setPhone(text);
+  const onChangePhone = (value) => {
+    setPhone({value: value, error: ''}); // TODO validate phone number
+    setDisabledSignUpBtn(false);
   };
 
-  const onBlurFullNameInput = () => {
-    setFocusFullNameInput(false);
-  };
-
-  const onFocusFullNameInput = () => {
-    setFocusFullNameInput(true);
-  };
-
-  const onBlurPhoneInput = () => {
-    setFocusPhoneInput(false);
-  };
-
-  const onFocusPhoneInput = () => {
-    setFocusPhoneInput(true);
-  };
-
-  //submit
   const onSignUp = () => {};
 
   //handle funcs
@@ -64,12 +64,14 @@ const Index = (props) => {
       title: I18n.t('termOfUse'),
     });
   };
+
   const onGoToPrivacy = () => {
     props.navigation.navigate('PrivacyAndPolicy', {
       url: envConfig.privacyPolicyURL,
       title: I18n.t('privacyPolicy'),
     });
   };
+
   return (
     <View style={styles.container}>
       <Container>
@@ -80,27 +82,26 @@ const Index = (props) => {
           />
           <View style={styles.form}>
             <TextInputFloatingLabel
-              placeholder={I18n.t('fullname')}
-              value={fullname}
-              onChangeText={(text) => onChangeFullname(text)}
-              autoFocus={true}
-              onBlur={() => onBlurFullNameInput()}
-              onFocus={() => onFocusFullNameInput()}
-              isFocused={isFocusFullNameInput}
+              label={I18n.t('fullname')}
+              value={fullname.value}
+              onChangeText={onChangeFullname}
+              error={!!fullname.error}
+              errorText={fullname.error}
             />
+
             <TextInputFloatingLabel
-              placeholder={I18n.t('yourPhone')}
-              value={phone}
+              label={I18n.t('yourPhoneLabel')}
+              value={phone.value}
               onChangeText={(text) => onChangePhone(text)}
               keyboardType="phone-pad"
-              onBlur={() => onBlurPhoneInput()}
-              onFocus={() => onFocusPhoneInput()}
-              isFocused={isFocusPhoneInput}
+              error={!!phone.error}
+              errorText={phone.error}
             />
+
             <View style={styles.btnWrapper}>
               <ButtonRounded
                 label={I18n.t('signUp')}
-                disabled={true}
+                disabled={disabledSignUpBtn}
                 onPress={() => onSignUp()}
               />
             </View>

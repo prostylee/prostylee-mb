@@ -18,7 +18,7 @@ import {showMessage} from 'react-native-flash-message';
 import styles from './styles';
 
 const TIME = 60;
-const OTP_CODE_LENGTH = 5;
+const OTP_CODE_LENGTH = 6;
 
 const Index = (props) => {
   //State
@@ -125,8 +125,8 @@ const Index = (props) => {
               cellStyleFocused={styles.cellStyleFocused}
               textStyle={styles.textStyle}
               textStyleFocused={styles.textStyleFocused}
-              cellSpacing={25}
-              codeLength={5}
+              cellSpacing={8}
+              codeLength={OTP_CODE_LENGTH}
               autoFocus={true}
               onFulfill={() => {}}
               value={code}

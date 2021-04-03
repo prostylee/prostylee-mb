@@ -1,35 +1,40 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Text, View} from 'react-native';
-import {ButtonRounded, HeaderBack, TextButton,} from 'components';
+import {
+  ButtonRounded,
+  ContainerWithoutScrollView,
+  HeaderBack,
+  TextButton,
+} from 'components';
 
 import I18n from 'i18n';
-import _ from 'lodash';
 
+import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {commonActions, userActions} from 'reducers';
 import {useDispatch} from 'react-redux';
 
-import styles from './styles';
-import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
-import {passwordRegex} from '../../../utils/common';
 import {showMessage} from 'react-native-flash-message';
-import SecureInput from '../../../components/SecureInput';
-import {ContainerWithoutScrollView} from '../../../components';
+
+import styles from './styles';
+import RootNavigator from '../../../navigator/rootNavigator';
 
 const TIME = 10; // TODO 60
 const CODE_LENGTH = 6;
 
 const Index = (props) => {
-  const [code, setCode] = useState({value: '', error: ''});
-  const [password, setPassword] = useState({value: '', error: ''});
+  //State
+  const [code, setCode] = React.useState('');
+  const [isDisabledBtn, setDisabledBtn] = React.useState(true);
   const [timeLeft, setTimeLeft] = React.useState(TIME);
 
-  const dispatch = useDispatch();
-
-  const onGoBack = () => {
-    props.navigation.goBack();
-  };
-
+  //Ref
+  const inputRef = React.useRef(null);
   const intervalRef = React.useRef(null);
+
+  React.useEffect(() => {
+    inputRef.current.focus();
+  });
+
   React.useEffect(() => {
     // exit early when we reach 0
     if (!timeLeft) {
@@ -42,56 +47,64 @@ const Index = (props) => {
     return () => clearInterval(intervalRef.current);
   }, [timeLeft]);
 
-  const onChangePassword = async (value) => {
-    if (_.isEmpty(value)) {
-      setPassword({
-        value: '',
-        error: I18n.t('validation.required', {field: I18n.t('user.password')}),
-      });
-    } else if (passwordRegex.test(value) === false) {
-      setPassword({
-        value: value,
-        error: I18n.t('validation.invalid', {field: I18n.t('user.password')}),
-      });
+  //dispatch
+  const dispatch = useDispatch();
+
+  //Back
+  const onGoBack = () => {
+    props.navigation.goBack();
+  };
+
+  //input
+  const onChangeCode = (text) => {
+    setCode(text);
+    if (text.length === CODE_LENGTH) {
+      setDisabledBtn(false);
     } else {
-      setPassword({value: value, error: ''});
+      setDisabledBtn(true);
     }
   };
 
-  const onChangeCode = (value) => {
-    setCode({value: value, error: ''});
-  };
-
-  const onUpdateNewPassword = async () => {
-    console.log('onUpdateNewPassword: ' + code.value);
+  const onVerifyOTP = async () => {
+    console.log('onVerifyOTP ' + props.route.params.email);
     await dispatch(commonActions.toggleLoading(true));
     dispatch(
-      userActions.userChangePassword({
+      userActions.userVerifyOTP({
         email: props.route.params.email,
-        password: code.value,
-        newPassword: password.value,
-        onSuccess: () => onUpdateNewPasswordSuccess(),
+        otp: code,
+        onSuccess: () => onVerifyOTPSuccess(),
+        onFail: () => onVerifyOTPFail(),
       }),
     );
   };
 
-  const onUpdateNewPasswordSuccess = async () => {
+  const onVerifyOTPSuccess = async () => {
     await dispatch(commonActions.toggleLoading(false));
-    props.navigation.navigate('ResetPasswordViaMail');
+    await clearInterval(intervalRef.current);
+    await setTimeLeft(0);
+    RootNavigator.navigate('SignIn', {index: 0});
   };
 
-  const onResendPassword = async () => {
-    console.log('onResendPassword ' + props.route.params.email);
+  const onVerifyOTPFail = async () => {
+    await dispatch(commonActions.toggleLoading(false));
+    showMessage({
+      message: I18n.t('invalidOTP'),
+      type: 'danger',
+    });
+  };
+
+  const onResendOTP = async () => {
+    console.log('onResendOTP ' + props.route.params.email);
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
-      userActions.userForgotPassword({
+      userActions.resendOtpSignUp({
         email: props.route.params.email,
-        onSuccess: () => onUserForgotPasswordSuccess(),
+        onSuccess: () => onResendOTPSuccess(),
       }),
     );
   };
 
-  const onUserForgotPasswordSuccess = async () => {
+  const onResendOTPSuccess = async () => {
     console.log('onResendOTPSuccess ' + props.route.params.email);
     await dispatch(commonActions.toggleLoading(false));
     showMessage({
@@ -101,22 +114,16 @@ const Index = (props) => {
     setTimeLeft(TIME);
   };
 
-  const isDisabledButton = () => {
-    return !code.value || code.error || !password.value || password.error;
-  };
-
   return (
     <View style={styles.container}>
       <ContainerWithoutScrollView>
         <View style={styles.mainWrapper}>
-          <HeaderBack title={I18n.t('resetPw')} onBack={() => onGoBack()} />
-
+          <HeaderBack title={I18n.t('enterOTP')} onBack={() => onGoBack()} />
           <View style={styles.form}>
             <Text style={styles.label}>{I18n.t('otpSent')}</Text>
             <Text style={styles.phone}>{props.route.params.email}</Text>
-
-            <Text style={{alignSelf: 'flex-start', marginTop: 10, marginBottom: 10, marginLeft: 12}}>{I18n.t('enterOTP')}</Text>
             <SmoothPinCodeInput
+              ref={inputRef}
               cellStyle={styles.cellStyle}
               cellStyleFocused={styles.cellStyleFocused}
               textStyle={styles.textStyle}
@@ -125,31 +132,21 @@ const Index = (props) => {
               codeLength={CODE_LENGTH}
               autoFocus={true}
               onFulfill={() => {}}
-              value={code.value}
+              value={code}
               onTextChange={(value) => onChangeCode(value)}
             />
-
-            <SecureInput
-              label={I18n.t('yourNewPw')}
-              value={password.value}
-              onChangeText={onChangePassword}
-              error={!!password.error}
-              errorText={password.error}
-            />
-
             <ButtonRounded
               label={I18n.t('next')}
               style={styles.button}
-              onPress={() => onUpdateNewPassword()}
-              disabled={isDisabledButton()}
+              onPress={() => onVerifyOTP()}
+              disabled={isDisabledBtn}
             />
-
           </View>
           <View style={styles.btnWrapper}>
             <TextButton
               label={I18n.t('resendOTP')}
               labelStyle={styles.labelTextButton}
-              onPress={() => onResendPassword()}
+              onPress={() => onResendOTP()}
               disabled={timeLeft > 0}
             />
           </View>

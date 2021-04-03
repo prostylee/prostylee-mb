@@ -27,7 +27,7 @@ import ContainerView from './ContainerView';
 import Header from './Header';
 import Title from './Title';
 import TextInputFloatingLabel from './TextInputFloatingLabel';
-import SocialSignIn from './SocialSignIn';
+import SocialSignIn from '../screens/Auth/SocialSignIn';
 export {
   ContainerWithoutScrollView,
   ButtonRounded,

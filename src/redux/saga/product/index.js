@@ -1,6 +1,6 @@
 import {call, select, put, takeLatest, delay} from 'redux-saga/effects';
 
-import {api, productApi} from 'services';
+import {productApi} from 'services';
 import {
   productActions,
   productTypes,
@@ -11,7 +11,7 @@ import {
 
 import {showMessage} from 'react-native-flash-message';
 import * as CONTANTS from 'constants';
-import asyncStorage from 'data/asyncStorage';
+import authService from '../../../services/authService';
 
 const getProducts = function* ({payload: {token, isRefresh}}) {
   try {
@@ -24,9 +24,6 @@ const getProducts = function* ({payload: {token, isRefresh}}) {
       const currentPage = yield select(productSelectors.getCurrentPageProduct);
       page = currentPage + 1;
     }
-    yield call(api.setHeadersRequest, {
-      Authorization: `${token.token_type} ${token.access_token}`,
-    });
     const res = yield call(productApi.getProducts, page);
 
     // xử lý dữ liệu trả về từ api
@@ -47,7 +44,7 @@ const getProducts = function* ({payload: {token, isRefresh}}) {
         message: CONTANTS.SESSION_EXPIRED_MESSAGE,
         type: 'danger',
       });
-      yield asyncStorage.logOut();
+      yield authService.logOut();
       yield put(userActions.userLogOutSuccess());
     } else {
       //thông báo lỗi từ api trả về

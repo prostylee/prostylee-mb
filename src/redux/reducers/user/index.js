@@ -2,16 +2,13 @@ import {createAction, handleActions} from 'redux-actions';
 
 export const types = {
   USER_SIGN_UP: 'USER_SIGN_UP',
+  USER_RESEND_OTP_SIGN_UP: 'USER_RESEND_OTP_SIGN_UP',
   USER_SIGNUP_SUCCESS: 'USER_SIGNUP_SUCCESS',
 
   USER_LOGIN: 'USER_LOGIN',
   USER_LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS',
 
   USER_CLEAR_EXPIRED_TOKEN: 'USER_CLEAR_EXPIRED_TOKEN',
-
-  USER_REFRESH_TOKEN: 'USER_REFRESH_TOKEN',
-  USER_REFRESH_TOKEN_SUCCESS: 'USER_REFRESH_TOKEN_SUCCESS',
-  USER_REFRESH_TOKEN_FAIL: 'USER_REFRESH_TOKEN_FAIL',
 
   USER_FORGOT_PASSWORD: 'USER_FORGOT_PASSWORD',
   USER_VERIFY_OTP: 'USER_VERIFY_OTP',
@@ -33,11 +30,9 @@ export const actions = {
   userSignIn: createAction(types.USER_LOGIN),
   userSignInSuccess: createAction(types.USER_LOGIN_SUCCESS),
   userSignUp: createAction(types.USER_SIGN_UP),
+  resendOtpSignUp: createAction(types.USER_RESEND_OTP_SIGN_UP),
   userSignUpSuccess: createAction(types.USER_SIGNUP_SUCCESS),
   userClearExpiredToken: createAction(types.USER_CLEAR_EXPIRED_TOKEN),
-  userRefreshToken: createAction(types.USER_REFRESH_TOKEN),
-  userRefreshTokenSuccess: createAction(types.USER_REFRESH_TOKEN_SUCCESS),
-  userRefreshTokenFail: createAction(types.USER_REFRESH_TOKEN_FAIL),
   userForgotPassword: createAction(types.USER_FORGOT_PASSWORD),
   userVerifyOTP: createAction(types.USER_VERIFY_OTP),
   userChangePassword: createAction(types.USER_CHANGE_PASSWORD),
@@ -70,13 +65,10 @@ export default handleActions(
     [types.USER_SIGNUP_SUCCESS]: (state, {payload}) => {
       return {...state, userToken: payload};
     },
-    [types.USER_CLEAR_EXPIRED_TOKEN]: (state, {payload}) => {
-      return {...state, userToken: null};
-    },
-    [types.USER_REFRESH_TOKEN_SUCCESS]: (state, {payload}) => {
+    [types.USER_RESEND_OTP_SIGN_UP]: (state, {payload}) => {
       return {...state, userToken: payload};
     },
-    [types.USER_REFRESH_TOKEN_FAIL]: (state, {payload}) => {
+    [types.USER_CLEAR_EXPIRED_TOKEN]: (state, {payload}) => {
       return {...state, userToken: null};
     },
     [types.GET_USER_INFO_SUCCESS]: (state, {payload}) => {

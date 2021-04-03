@@ -1,129 +1,77 @@
-import React from 'react';
-import {Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {View} from 'react-native';
 
 import {ButtonRounded, TextButton, TextInputFloatingLabel} from 'components';
 
 import styles from './styles';
-import * as RootNavigator from 'navigator/rootNavigator';
 import I18n from 'i18n';
 import _ from 'lodash';
 
-import {userActions, commonActions} from 'reducers';
+import {commonActions, userActions} from 'reducers';
 import {useDispatch} from 'react-redux';
-import {Eye, EyeShow, Phone} from 'svg/common';
+import {Phone} from 'svg/common';
 
 import {emailRegex, passwordRegex} from 'utils/common';
 
-import asyncStorage from 'data/asyncStorage';
+import RootNavigator from '../../../navigator/rootNavigator';
+import SecureInput from '../../../components/SecureInput';
+import {showMessage} from 'react-native-flash-message';
+import {UNKNOWN_MESSAGE} from 'constants';
+import authService from '../../../services/authService';
 
 const SignInTab = () => {
-  //Initial States
-  const [email, setEmail] = React.useState('');
-  const [invalidEmail, setInvalidEmail] = React.useState(false);
-  const [errEmailMsg, setErrEmailMsg] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [invalidPassword, setInvalidPassword] = React.useState(false);
-  const [errPasswordMsg, setErrPasswordMsg] = React.useState('');
-  const [disabledSignInBtn, setDisabledSignInBtn] = React.useState(false);
-  const [isShowErrMsg, toggleShowErrMsg] = React.useState(false);
-  const [isFocusEmailInput, setFocusEmailInput] = React.useState(false);
-  const [isFocusPasswordInput, setFocusPasswordInput] = React.useState(false);
-  const [isShowPasswordErrMsg, toggleShowPasswordErrMsg] = React.useState(
-    false,
-  );
+
+  const [email, setEmail] = useState({value: '', error: ''});
+  const [password, setPassword] = useState({value: '', error: ''});
 
   //useEffect
   React.useEffect(() => {
     async function getUserName() {
-      let data = await asyncStorage.getUserName();
-      setEmail(data.username);
+      let data = await authService.getUserName();
+      if (data) {
+        setEmail({value: data.username, error: ''});
+      }
     }
+
     getUserName();
   }, []);
-
-  //useEffect
-  React.useEffect(() => {
-    if (
-      invalidEmail ||
-      invalidPassword ||
-      _.isEmpty(email) ||
-      _.isEmpty(password)
-    ) {
-      setDisabledSignInBtn(true);
-    } else {
-      setDisabledSignInBtn(false);
-    }
-  }, [invalidEmail, invalidPassword, email, password]);
 
   //Dispatch Redux
   const dispatch = useDispatch();
 
-  //textInput
   const onChangeEmail = async (value) => {
-    if (!_.isEmpty(value)) {
-      //nếu textInput có giá trị khác rỗng
-      if (emailRegex.test(value) === false) {
-        setEmail(value);
-        setInvalidEmail(true);
-        setErrEmailMsg(I18n.t('invalidEmail'));
-        toggleShowErrMsg(false);
-        return false;
-      } else {
-        //email hợp lệ
-        setEmail(value.toLowerCase());
-        setInvalidEmail(false);
-        setErrEmailMsg('');
-      }
+    if (_.isEmpty(value)) {
+      setEmail({
+        value: '',
+        error: I18n.t('validation.required', {field: I18n.t('user.email')}),
+      });
+    } else if (emailRegex.test(value) === false) {
+      setEmail({
+        value: value,
+        error: I18n.t('validation.invalid', {field: I18n.t('user.email')}),
+      });
     } else {
-      //nếu textInput rỗng
-      setEmail(value);
-      setInvalidEmail(false);
-      setErrEmailMsg('');
+      setEmail({value: value.toLowerCase(), error: ''});
     }
   };
 
-  const onBlurEmailInput = () => {
-    if (invalidEmail) {
-      toggleShowErrMsg(true);
-    }
-    setFocusEmailInput(false);
-  };
-
-  const onFocusEmailInput = () => {
-    setFocusEmailInput(true);
-  };
-
-  const onFocusPasswordInput = () => {
-    setFocusPasswordInput(true);
-  };
-
-  const onBlurPasswordInput = () => {
-    if (invalidPassword) {
-      toggleShowPasswordErrMsg(true);
-    }
-    setFocusPasswordInput(false);
+  const isDisabledButton = () => {
+    return !email.value || email.error || !password.value || password.error;
   };
 
   const onChangePassword = async (value) => {
-    if (!_.isEmpty(value)) {
-      //nếu textInput có giá trị khác rỗng
-      if (passwordRegex.test(value) === false) {
-        setPassword(value);
-        setInvalidPassword(true);
-        setErrPasswordMsg(I18n.t('invalidPassword'));
-        toggleShowPasswordErrMsg(false);
-        return false;
-      } else {
-        //email hợp lệ
-        setPassword(value);
-        setInvalidPassword(false);
-        setErrPasswordMsg('');
-      }
+    if (_.isEmpty(value)) {
+      setPassword({
+        value: '',
+        error: I18n.t('validation.required', {field: I18n.t('user.password')}),
+      });
+    } else if (passwordRegex.test(value) === false) {
+      setPassword({
+        value: value,
+        error: I18n.t('validation.invalid', {field: I18n.t('user.password')}),
+      });
     } else {
-      //nếu textInput rỗng
-      setPassword(value);
-      setInvalidPassword(false);
-      setErrPasswordMsg('');
+      setPassword({value: value, error: ''});
     }
   };
 
@@ -131,6 +79,7 @@ const SignInTab = () => {
   const onSignInWithPhone = () => {
     RootNavigator.navigate('SignInViaPhone');
   };
+
   const onForgotPw = () => {
     RootNavigator.navigate('ForgotPassword');
   };
@@ -140,11 +89,30 @@ const SignInTab = () => {
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
       userActions.userSignIn({
-        email,
-        password,
+        email: email.value,
+        password: password.value,
         onSuccess: () => onSignInSuccess(),
+        onFail: (errorCode) => onSignInFail(errorCode),
       }),
     );
+  };
+
+  const onSignInFail = (errorCode) => {
+    dispatch(commonActions.toggleLoading(false));
+    let errorMessage = UNKNOWN_MESSAGE;
+    if (errorCode === 'UserNotConfirmedException') {
+      RootNavigator.navigate('SignUpOTPVerification', {email: email.value});
+      errorMessage = I18n.t('userNeedToVerify');
+    } else if (
+      errorCode === 'UserNotFoundException' ||
+      errorCode === 'NotAuthorizedException'
+    ) {
+      errorMessage = I18n.t('incorrectEmailOrPassword');
+    }
+    showMessage({
+      message: errorMessage,
+      type: 'danger',
+    });
   };
 
   const onSignInSuccess = async () => {
@@ -155,49 +123,41 @@ const SignInTab = () => {
     <View style={styles.tabViewWrapper}>
       <View style={styles.form}>
         <TextInputFloatingLabel
-          value={email}
-          placeholder={I18n.t('email')}
-          onChangeText={(text) => onChangeEmail(text)}
-          keyboardType="email-address"
-          onBlur={() => onBlurEmailInput()}
-          onFocus={() => onFocusEmailInput()}
-          isFocused={isFocusEmailInput}
+          label={I18n.t('email')}
+          value={email.value}
+          onChangeText={onChangeEmail}
+          error={!!email.error}
+          errorText={email.error}
         />
-        {isShowErrMsg && invalidEmail && (
-          <Text style={styles.errMsg}>{errEmailMsg}</Text>
-        )}
-        <TextInputFloatingLabel
-          value={password}
-          placeholder={I18n.t('password')}
-          onChangeText={(text) => onChangePassword(text)}
-          iconShow={<EyeShow />}
-          iconHide={<Eye />}
-          secureTextEntry={true}
-          onBlur={() => onBlurPasswordInput()}
-          onFocus={() => onFocusPasswordInput()}
-          isFocused={isFocusPasswordInput}
+
+        <SecureInput
+          label={I18n.t('password')}
+          value={password.value}
+          onChangeText={onChangePassword}
+          error={!!password.error}
+          errorText={password.error}
         />
-        {isShowPasswordErrMsg && invalidPassword && (
-          <Text style={styles.errMsg}>{errPasswordMsg}</Text>
-        )}
+
         <View style={styles.btnWrapper}>
           <ButtonRounded
             onPress={() => onSignIn()}
             label={I18n.t('signIn')}
-            disabled={disabledSignInBtn}
+            disabled={isDisabledButton()}
           />
         </View>
+
         <View style={styles.btnWrapper}>
           <TextButton
-            icon={({size, color}) => <Phone />}
-            onPress={() => onSignInWithPhone()}
+            icon={() => <Phone/>}
+            onPress={onSignInWithPhone}
             labelStyle={styles.iconTextLabel}
             label={I18n.t('signInWithPhone')}
           />
         </View>
+
         <View>
           <TextButton
-            onPress={() => onForgotPw()}
+            onPress={onForgotPw}
             labelStyle={styles.labelBtn}
             label={I18n.t('forgotPassword')}
           />

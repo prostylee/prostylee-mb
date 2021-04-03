@@ -4,6 +4,7 @@ import {Text, View, Dimensions} from 'react-native';
 import {Container, TextButton, SocialSignIn} from 'components';
 import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
 import {useKeyboard, useBackHandler} from '@react-native-community/hooks';
+import {listenAuth} from '../../../config/cognito-auth-listener';
 
 import styles from './styles';
 import I18n from 'i18n';
@@ -23,6 +24,7 @@ const Index = (props) => {
 
   //UseEffect
   React.useEffect(() => {
+    listenAuth(); // For debugging only
     const tabIndex = props.route.params?.index;
     if (tabIndex === 1) {
       setIndex(tabIndex);
@@ -40,7 +42,7 @@ const Index = (props) => {
   //initial Tabs
   const [routes] = React.useState([
     {key: 'signIn', title: I18n.t('signIn')},
-    {key: 'signup', title: I18n.t('signUp')},
+    {key: 'signUp', title: I18n.t('signUp')},
   ]);
 
   //handle funcs
@@ -50,6 +52,7 @@ const Index = (props) => {
       title: I18n.t('termOfUse'),
     });
   };
+
   const onGoToPrivacy = () => {
     props.navigation.navigate('SimpleWebView', {
       url: envConfig.privacyPolicyURL,
@@ -59,12 +62,12 @@ const Index = (props) => {
 
   const renderScene = SceneMap({
     signIn: SignInTab,
-    signup: SignUpTab,
+    signUp: SignUpTab,
   });
 
-  const renderTabBar = (props) => (
+  const renderTabBar = (tabProps) => (
     <TabBar
-      {...props}
+      {...tabProps}
       indicatorStyle={styles.indicatorStyle}
       style={styles.tabBarStyle}
       renderLabel={renderLabel}
