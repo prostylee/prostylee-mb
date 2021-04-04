@@ -44,7 +44,7 @@ const Footer = ({openChatModal, story, targetType}) => {
           <View style={styles.imageWrap}>
             <Image
               source={
-                product.imageUrls.length
+                product?.imageUrls?.length
                   ? {uri: product.imageUrls[0]}
                   : require('assets/images/default.png')
               }

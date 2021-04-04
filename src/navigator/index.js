@@ -12,7 +12,6 @@ import RootNavigator from './rootNavigator';
 import {darkTheme, lightTheme} from 'theme';
 
 import {
-  Chat,
   ForgotPassword,
   Onboarding,
   OTPVerification,
@@ -26,6 +25,8 @@ import {
   SimpleWebView,
   Stores,
   StoryBoard,
+  Chat,
+  UserProfile,
   Welcome,
 } from 'screens';
 
@@ -49,6 +50,7 @@ function SignedIn() {
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="UserProfile" component={UserProfile} />
     </Stack.Navigator>
   );
 }

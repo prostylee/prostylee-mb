@@ -18,12 +18,22 @@ export default EStyleSheet.create({
     paddingVertical: 10,
     width: WIDTH * 0.7,
   },
+  alignCenter: {
+    alignItems: 'center',
+  },
   textTitle: {
     fontSize: 14,
     fontWeight: '500',
     lineHeight: 20,
     fontFamily: '$font1',
     paddingLeft: 10,
+  },
+  textLike: {
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 20,
+    fontFamily: '$font1',
+    paddingRight: 2,
   },
   wrapFollow: {
     ...center,
@@ -36,6 +46,7 @@ export default EStyleSheet.create({
   },
   postAction: {
     ...flexRow,
+    alignItems: 'center',
   },
   touchHeart: {
     paddingRight: 8,
@@ -114,5 +125,20 @@ export default EStyleSheet.create({
     fontSize: 11,
     lineHeight: 16,
     marginLeft: 10,
+  },
+  viewTagStore: {
+    ...absolute(null, 8, 8, null),
+    ...flexRow,
+    ...center,
+    padding: 8,
+    borderRadius: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  textTagName: {
+    color: '$white',
+    fontSize: 14,
+    fontWeight: '500',
+    fontFamily: '$font1',
+    paddingLeft: 8,
   },
 });

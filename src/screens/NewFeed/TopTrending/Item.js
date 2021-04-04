@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {Text, Dimensions, ActivityIndicator, View} from 'react-native';
 import {ThemeView, Image} from 'components';
@@ -12,7 +13,7 @@ import {follow, unfollow} from 'services/api/socialApi';
 import {SUCCESS} from 'constants';
 
 const WIDTH = Dimensions.get('window').width;
-const WIDTH_IMG = (WIDTH * 0.7) / 3;
+const WIDTH_IMG = (WIDTH * 0.7) / 3 - 1;
 
 const Item = ({item, style, targetType}) => {
   const [followed, setFollowed] = useState(false);
@@ -60,11 +61,17 @@ const Item = ({item, style, targetType}) => {
           ? products.map((item, _i) => (
               <Image
                 key={'productOfStore' + targetType + _i}
-                source={{
-                  uri: item?.imageUrls?.length ? item.imageUrls[0] : null,
-                }}
+                source={
+                  item?.imageUrls?.length
+                    ? {uri: item.imageUrls[0]}
+                    : require('assets/images/default.png')
+                }
                 resizeMode="cover"
-                style={{height: WIDTH_IMG, width: WIDTH_IMG}}
+                style={{
+                  height: WIDTH_IMG,
+                  width: WIDTH_IMG,
+                  marginHorizontal: 1,
+                }}
                 PlaceholderContent={<ActivityIndicator />}
               />
             ))
@@ -73,11 +80,10 @@ const Item = ({item, style, targetType}) => {
       <Button
         mode="contained"
         uppercase={false}
-        disabled={followed}
         onPress={() => _followPress()}
         style={[styles.followBtn, followed && styles.followedBtn]}
         labelStyle={styles.followBtnBtnLabel}>
-        {i18n.t('common.textFollow')}
+        {i18n.t(!followed ? 'common.textFollow' : 'common.textFollowed')}
       </Button>
     </ThemeView>
   );

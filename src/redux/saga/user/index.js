@@ -1,6 +1,7 @@
-import {put, takeLatest} from 'redux-saga/effects';
+import {call, put, takeLatest} from 'redux-saga/effects';
 import {commonActions, userActions, userTypes} from 'reducers';
 import {Auth} from 'aws-amplify';
+import {getProductsByUser, getProfile, getStatistics, getUserPost,} from 'services/api/userApi';
 
 import {showMessage} from 'react-native-flash-message';
 import {UNKNOWN_MESSAGE} from 'constants';
@@ -159,6 +160,60 @@ const userChangePassword = function* ({
 
 const userLogout = function* ({payload}) {
   console.log('userLogout');
+const fetchProfile = function* ({payload}) {
+  try {
+    const res = yield call(getProfile, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.getProfileSuccess(res.data.data));
+    } else {
+      yield put(userActions.getProfileFail());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const getStatisticsOfUser = function* ({payload}) {
+  try {
+    const res = yield call(getStatistics, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.getStatisticsSuccess(res.data.data));
+    } else {
+      yield put(userActions.getStatisticsFail());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const getPostsOfUser = function* ({payload}) {
+  try {
+    const res = yield call(getUserPost, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.getUserPostSuccess(res.data.data));
+    } else {
+      yield put(userActions.getUserPostFail());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const getProductByUser = function* ({payload}) {
+  try {
+    const res = yield call(getProductsByUser, payload);
+    console.log(res);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.getProductByUserSuccess(res.data.data));
+    } else {
+      yield put(userActions.getProductByUserFail());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const userLogout = function* ({payload: {token, id}}) {
   try {
     Auth.currentAuthenticatedUser()
       .then((user) => {
@@ -193,5 +248,10 @@ const watcher = function* () {
   yield takeLatest(userTypes.USER_VERIFY_OTP, userVerifyOTP);
   yield takeLatest(userTypes.USER_CHANGE_PASSWORD, userChangePassword);
   yield takeLatest(userTypes.USER_LOGOUT, userLogout);
+  yield takeLatest(userTypes.GET_PROFILE, fetchProfile);
+  yield takeLatest(userTypes.GET_STATISTICS, getStatisticsOfUser);
+  yield takeLatest(userTypes.GET_POSTS_OF_USER, getPostsOfUser);
+  yield takeLatest(userTypes.GET_PRODUCT_BY_USER, getProductByUser);
 };
 export default watcher();
+

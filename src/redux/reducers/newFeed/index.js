@@ -70,10 +70,10 @@ export default handleActions(
     [types.SET_LOAD_MORE_LOADING]: (state, {payload}) => {
       return {...state, loadMoreLoading: payload};
     },
-    [types.SET_LOADING_STORIES]: (state, {payload}) => {
+    [types.RESET_NEW_FEED_PAGE]: (state, {payload}) => {
       return {...state, page: 0};
     },
-    [types.RESET_NEW_FEED_PAGE]: (state, {payload}) => {
+    [types.SET_LOADING_STORIES]: (state, {payload}) => {
       return {...state, storiesLoading: payload};
     },
     [types.GET_NEW_FEED_SUCCESS]: (state, {payload}) => {
