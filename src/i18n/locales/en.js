@@ -10,6 +10,9 @@ export default {
     textFollow: 'Follow',
     textFollowed: 'Followed',
     textAdvertisement: 'Advertisement',
+    textFollower: 'Followers',
+    textFollowing: 'Following',
+    textPost: 'Posts',
   },
   headerTitle: {
     featured_store: 'Featured store',

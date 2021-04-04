@@ -13,6 +13,8 @@ import ForgotPassword from './Auth/ForgotPassword';
 import ResetPassword from './Auth/ResetPassword';
 import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
 import SimpleWebView from './Auth/SimpleWebView';
+import UserProfile from './UserProfile';
+import SignUpOTPVerification from './Auth/SignUpOTPVerification';
 
 export {
   Welcome,
@@ -26,8 +28,10 @@ export {
   SignInViaPhone,
   SignInOptions,
   OTPVerification,
+  SignUpOTPVerification,
   ForgotPassword,
   ResetPassword,
   ResetPasswordViaMail,
   SimpleWebView,
+  UserProfile,
 };

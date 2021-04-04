@@ -54,11 +54,10 @@ const Item = ({item, style, targetType}) => {
       <Button
         mode="contained"
         uppercase={false}
-        disabled={followed}
         onPress={() => _followPress()}
         style={[styles.followBtn, followed && styles.followedBtn]}
         labelStyle={styles.followBtnBtnLabel}>
-        {i18n.t('common.textFollow')}
+        {i18n.t(!followed ? 'common.textFollow' : 'common.textFollowed')}
       </Button>
     </ThemeView>
   );

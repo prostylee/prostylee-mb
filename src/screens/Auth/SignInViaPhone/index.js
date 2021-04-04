@@ -1,58 +1,31 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useState} from 'react';
+import {View} from 'react-native';
 import {
-  Container,
   ButtonRounded,
-  TextInputFloatingLabel,
+  Container,
   HeaderBack,
+  TextInputFloatingLabel,
 } from 'components';
-
-import {useKeyboard} from '@react-native-community/hooks';
 
 import styles from './styles';
 
 import I18n from 'i18n';
 
 const Index = (props) => {
-  //State
-  const [phone, setPhone] = React.useState('');
-  const [invalidPhone, setInvalidPhone] = React.useState(false);
-  const [errPhoneMsg, setErrPhoneMsg] = React.useState('');
-  const [isFocused, setIsFocused] = React.useState(false);
-
-  //Ref
-  const inputRef = React.useRef(null);
-
-  //keyboard
-  const keyboard = useKeyboard();
-
-  //useEffect
-  React.useEffect(() => {
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 1000);
-  }, []);
+  const [phone, setPhone] = useState({value: '', error: ''});
 
   //back
   const onGoBack = () => {
     props.navigation.goBack();
   };
 
-  //input
-  const onChangePhone = (text) => {
-    setPhone(text);
+  const onChangePhone = (value) => {
+    setPhone({value: value, error: ''}); // TODO validate phone number
   };
 
-  //Focus Input
-  const onFocusInput = () => {
-    setIsFocused(true);
-  };
-  //Blur Input
-  const onBlurInput = () => {
-    setIsFocused(false);
+  const onVerifyOTP = () => {
   };
 
-  const onVerifyOTP = () => {};
   return (
     <View style={styles.container}>
       <Container>
@@ -63,18 +36,14 @@ const Index = (props) => {
           />
           <View style={styles.form}>
             <TextInputFloatingLabel
-              placeholder={I18n.t('yourPhoneLabel')}
-              value={phone}
+              label={I18n.t('yourPhoneLabel')}
+              value={phone.value}
               onChangeText={(text) => onChangePhone(text)}
               keyboardType="phone-pad"
-              autoFocus={true}
-              isFocused={isFocused}
-              onFocus={onFocusInput}
-              onBlur={onBlurInput}
+              error={!!phone.error}
+              errorText={phone.error}
             />
-            {!keyboard.keyboardShown && invalidPhone && (
-              <Text style={styles.errMsg}>{errPhoneMsg}</Text>
-            )}
+
             <View style={styles.btnWrapper}>
               <ButtonRounded
                 label={I18n.t('sendVerificationCode')}

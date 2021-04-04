@@ -44,7 +44,7 @@ const getLoadMoreNewFeed = function* ({payload}) {
 
 const getStoriesByStores = function* ({payload}) {
   try {
-    yield put(newFeedActions.setLoadingStories(false));
+    yield put(newFeedActions.setLoadingStories(true));
     const res = yield call(getStoriesByStore, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       let storyData = res.data.data;
@@ -75,7 +75,7 @@ const getStoriesByStores = function* ({payload}) {
 
 const getStoriesByUsers = function* ({payload}) {
   try {
-    yield put(newFeedActions.setLoadingStories(false));
+    yield put(newFeedActions.setLoadingStories(true));
     const res = yield call(getStoriesByUser, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       let storyData = res.data.data;

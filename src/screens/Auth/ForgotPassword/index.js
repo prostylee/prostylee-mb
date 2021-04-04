@@ -1,16 +1,10 @@
-import React from 'react';
-import {View, Text} from 'react-native';
-import {
-  Container,
-  ButtonRounded,
-  TextInputFloatingLabel,
-  HeaderBack,
-} from 'components';
+import React, {useState} from 'react';
+import {View} from 'react-native';
+import {ButtonRounded, Container, HeaderBack, TextInputFloatingLabel,} from 'components';
 
 import _ from 'lodash';
-import {useKeyboard} from '@react-native-community/hooks';
 
-import {userActions, commonActions} from 'reducers';
+import {commonActions, userActions} from 'reducers';
 import {useDispatch} from 'react-redux';
 
 import styles from './styles';
@@ -19,69 +13,30 @@ import I18n from 'i18n';
 import {emailRegex} from 'utils/common';
 
 const Index = (props) => {
-  //Initial States
-  const [email, setEmail] = React.useState('');
-  const [invalidEmail, setInvalidEmail] = React.useState(false);
-  const [errEmailMsg, setErrEmailMsg] = React.useState('');
-  const [disabledBtn, setDisabledBtn] = React.useState(false);
-  const [isFocused, setIsFocused] = React.useState(false);
 
-  //Ref
-  const inputRef = React.useRef(null);
-
-  //keyboard
-  const keyboard = useKeyboard();
-
-  //useEffect
-  React.useEffect(() => {
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 1000);
-  }, []);
-
-  //useEffect
-  React.useEffect(() => {
-    if (invalidEmail || _.isEmpty(email)) {
-      setDisabledBtn(true);
-    } else {
-      setDisabledBtn(false);
-    }
-  }, [invalidEmail, email]);
+  const [email, setEmail] = useState({value: '', error: ''});
+  const [disabledBtn, setDisabledBtn] = React.useState(true);
 
   //Dispatch Redux
   const dispatch = useDispatch();
 
-  //textInput
   const onChangeEmail = async (value) => {
-    if (!_.isEmpty(value)) {
-      //nếu textInput có giá trị khác rỗng
-      if (emailRegex.test(value) === false) {
-        setEmail(value);
-        setInvalidEmail(true);
-        setErrEmailMsg(I18n.t('invalidEmail'));
-        // toggleShowErrMsg(false);
-        return false;
-      } else {
-        //email hợp lệ
-        setEmail(value.toLowerCase());
-        setInvalidEmail(false);
-        setErrEmailMsg('');
-      }
+    if (_.isEmpty(value)) {
+      setEmail({
+        value: '',
+        error: I18n.t('validation.required', {field: I18n.t('user.email')}),
+      });
+      setDisabledBtn(true);
+    } else if (emailRegex.test(value) === false) {
+      setEmail({
+        value: value,
+        error: I18n.t('validation.invalid', {field: I18n.t('user.email')}),
+      });
+      setDisabledBtn(true);
     } else {
-      //nếu textInput rỗng
-      setEmail(value);
-      setInvalidEmail(false);
-      setErrEmailMsg('');
+      setEmail({value: value.toLowerCase(), error: ''});
+      setDisabledBtn(false);
     }
-  };
-
-  //Focus Input
-  const onFocusInput = () => {
-    setIsFocused(true);
-  };
-  //Blur Input
-  const onBlurInput = () => {
-    setIsFocused(false);
   };
 
   //handle User signIn
@@ -89,7 +44,7 @@ const Index = (props) => {
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
       userActions.userForgotPassword({
-        email,
+        email: email.value,
         onSuccess: () => onUserForgotPasswordSuccess(),
       }),
     );
@@ -97,7 +52,7 @@ const Index = (props) => {
 
   const onUserForgotPasswordSuccess = async () => {
     await dispatch(commonActions.toggleLoading(false));
-    props.navigation.navigate('OTPVerification', {email});
+    props.navigation.navigate('ResetPassword', {email: email.value});
   };
 
   const onGoBack = () => {
@@ -113,24 +68,19 @@ const Index = (props) => {
             onBack={() => onGoBack()}
           />
           <View style={styles.form}>
+
             <TextInputFloatingLabel
-              ref={inputRef}
-              placeholder={I18n.t('emailOrPhone')}
-              value={email}
-              onChangeText={(text) => onChangeEmail(text)}
-              keyboardType="email-address"
-              autoFocus={true}
-              isFocused={isFocused}
-              onFocus={onFocusInput}
-              onBlur={onBlurInput}
+              label={I18n.t('email')}
+              value={email.value}
+              onChangeText={onChangeEmail}
+              error={!!email.error}
+              errorText={email.error}
             />
-            {!keyboard.keyboardShown && invalidEmail && (
-              <Text style={styles.errMsg}>{errEmailMsg}</Text>
-            )}
+
             <View style={styles.btnWrapper}>
               <ButtonRounded
                 label={I18n.t('next')}
-                onPress={() => onSubmitEmail()}
+                onPress={onSubmitEmail}
                 disabled={disabledBtn}
               />
             </View>

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
@@ -27,6 +27,8 @@ import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 const Stores = (props) => {
   const dispatch = useDispatch();
 
+  const [refreshing, handleRefreshing] = useState(false);
+
   const loading = useSelector((state) =>
     getLoadingFuturedStoresSelector(state),
   );
@@ -48,7 +50,12 @@ const Stores = (props) => {
         limit: LIMIT_DEFAULT,
       }),
     );
-  }, [dispatch]);
+    handleRefreshing(false);
+  }, [dispatch, refreshing]);
+
+  const handleRefresh = () => {
+    handleRefreshing(true);
+  };
 
   const handleLoadMore = () => {
     if (hasLoadMore) {
@@ -89,6 +96,8 @@ const Stores = (props) => {
           renderItem={({item, index}) => (
             <StoreItem key={'stores' + index} storeItem={item} />
           )}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
           onEndReached={() => handleLoadMore()}
           ListFooterComponent={renderFooter}
           onEndReachedThreshold={0.5}

@@ -1,7 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {ScrollView, View, StatusBar, Platform} from 'react-native';
+import {
+  ScrollView,
+  View,
+  StatusBar,
+  Platform,
+  RefreshControl,
+} from 'react-native';
 import styles from './styles';
 import {ThemeView} from 'components';
 
@@ -131,10 +137,12 @@ const NewFeed = ({navigation}) => {
   };
 
   const changeTabStore = () => {
+    dispatch(newFeedActions.setLoading(true));
     dispatch(commonActions.toggleTargetType(TYPE_STORE));
   };
 
   const changeTabUser = () => {
+    dispatch(newFeedActions.setLoading(true));
     dispatch(commonActions.toggleTargetType(TYPE_USER));
   };
 
@@ -164,6 +172,7 @@ const NewFeed = ({navigation}) => {
       </View>
     );
   };
+
   return (
     <ThemeView isFullView>
       {Platform.OS === 'android' && (
@@ -180,7 +189,10 @@ const NewFeed = ({navigation}) => {
         <ScrollView
           scrollEventThrottle={1}
           showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}>
+          showsHorizontalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+          }>
           <StoryBoard
             targetType={targetType}
             stories={stories}
@@ -188,10 +200,10 @@ const NewFeed = ({navigation}) => {
           />
           <VerticalFeed
             targetType={targetType}
-            handleRefresh={handleRefresh}
+            handleRefresh={() => {}}
             handleLoadMore={() => {}}
             newFeedList={threeFirstNewFeedItem}
-            refreshing={refreshing}
+            refreshing={false}
             loadMoreLoading={false}
             isFirst={true}
           />
@@ -210,11 +222,12 @@ const NewFeed = ({navigation}) => {
             />
           )}
           <VerticalFeed
+            targetType={targetType}
             loading={handleLoading()}
-            handleRefresh={handleRefresh}
+            handleRefresh={() => {}}
             handleLoadMore={handleLoadMore}
             newFeedList={newFeedList}
-            refreshing={refreshing}
+            refreshing={false}
             loadMoreLoading={loadMoreLoading}
           />
         </ScrollView>

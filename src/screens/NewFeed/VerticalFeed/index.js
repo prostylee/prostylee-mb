@@ -1,13 +1,10 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 import styles from './styles';
 
 import {Colors} from 'components';
 
 import FeedItem from './item';
-
-import {targetTypeSelector} from 'redux/selectors/common';
 
 const VerticalFeed = ({
   newFeedList,
@@ -17,8 +14,9 @@ const VerticalFeed = ({
   refreshing,
   loading,
   isFirst,
+  isProfile,
+  targetType,
 }) => {
-  const targetType = useSelector((state) => targetTypeSelector(state));
   if (isFirst && loading) {
     return null;
   }
@@ -33,12 +31,14 @@ const VerticalFeed = ({
       </View>
     );
   };
+
   return (
     <FlatList
       data={newFeedList?.content || []}
       keyExtractor={(item, index) => 'newFeedkeyExtractor' + targetType + index}
       renderItem={({item, index}) => (
         <FeedItem
+          isProfile={isProfile}
           targetType={targetType}
           key={'newFeedItem' + targetType + index}
           newFeedItem={item}
@@ -58,6 +58,7 @@ const VerticalFeed = ({
 
 VerticalFeed.defaultProps = {
   isFirst: false,
+  isProfile: false,
 };
 
 VerticalFeed.propTypes = {};

@@ -6,3 +6,8 @@ export const targetTypeSelector = createSelector(
   commonState,
   (data) => data?.targetType || 'STORE',
 );
+
+export const isFullViewSelector = createSelector(
+  commonState,
+  (data) => data?.isFullView || false,
+);
