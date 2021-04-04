@@ -158,8 +158,6 @@ const userChangePassword = function* ({
   }
 };
 
-const userLogout = function* ({payload}) {
-  console.log('userLogout');
 const fetchProfile = function* ({payload}) {
   try {
     const res = yield call(getProfile, payload);
@@ -213,7 +211,7 @@ const getProductByUser = function* ({payload}) {
   }
 };
 
-const userLogout = function* ({payload: {token, id}}) {
+const userLogout = function* ({payload}) {
   try {
     Auth.currentAuthenticatedUser()
       .then((user) => {
@@ -253,5 +251,5 @@ const watcher = function* () {
   yield takeLatest(userTypes.GET_POSTS_OF_USER, getPostsOfUser);
   yield takeLatest(userTypes.GET_PRODUCT_BY_USER, getProductByUser);
 };
-export default watcher();
 
+export default watcher();

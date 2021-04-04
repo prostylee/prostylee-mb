@@ -24,6 +24,7 @@ export async function _fetch(method, path, data) {
     if (token && token.accessToken) {
       api.setHeaders({
         Authorization: 'Bearer ' + token.accessToken.jwtToken,
+        'X-PS-Authorization-Type': 'OPEN-ID',
       });
     }
   } catch (e) {
@@ -31,6 +32,7 @@ export async function _fetch(method, path, data) {
   }
 
   return api[method](path, data).then((res) => {
+    // console.log('_fetch response=' + JSON.stringify(res));
     let response;
     if (res && res.status === SUCCESS) {
       response = {
