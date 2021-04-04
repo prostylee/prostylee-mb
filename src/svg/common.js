@@ -101,7 +101,7 @@ export const HeartSolid = ({width = 24, height = 20, color = 'white'}) => {
       xmlns="http://www.w3.org/2000/svg">
       <Path
         d="M20.8401 2.60987C20.3294 2.09888 19.7229 1.69352 19.0555 1.41696C18.388 1.14039 17.6726 0.998047 16.9501 0.998047C16.2276 0.998047 15.5122 1.14039 14.8448 1.41696C14.1773 1.69352 13.5709 2.09888 13.0601 2.60987L12.0001 3.66987L10.9401 2.60987C9.90843 1.57818 8.50915 0.998582 7.05012 0.998582C5.59109 0.998582 4.19181 1.57818 3.16012 2.60987C2.12843 3.64156 1.54883 5.04084 1.54883 6.49987C1.54883 7.95891 2.12843 9.35818 3.16012 10.3899L4.22012 11.4499L12.0001 19.2299L19.7801 11.4499L20.8401 10.3899C21.3511 9.87912 21.7565 9.27269 22.033 8.60523C22.3096 7.93777 22.4519 7.22236 22.4519 6.49987C22.4519 5.77738 22.3096 5.06198 22.033 4.39452C21.7565 3.72706 21.3511 3.12063 20.8401 2.60987Z"
-        fill="white"
+        fill={color}
         stroke={color}
         stroke-width="1.5"
         stroke-linecap="round"
@@ -672,6 +672,165 @@ export const Store = ({width = 16, height = 16, color = 'white'}) => {
       <Path
         d="M2.22217 6.59033V12.0001C2.22217 12.2359 2.31582 12.4619 2.48252 12.6286C2.64922 12.7953 2.87531 12.889 3.11106 12.889H5.85417C6.08975 12.889 6.31568 12.9826 6.48232 13.1491L7.99995 14.6668L9.51758 13.1491C9.68421 12.9826 9.91014 12.889 10.1457 12.889H12.8888C13.1246 12.889 13.3507 12.7953 13.5174 12.6286C13.6841 12.4619 13.7777 12.2359 13.7777 12.0001V6.59033"
         stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const Menu = ({width = 24, height = 24, color = '#823FFD'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M3 12H21"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M3 6H21"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M3 18H21"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const GridSolid = ({width = 24, height = 24, color = '#333333'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M9 3H4C3.44772 3 3 3.44772 3 4V9C3 9.55228 3.44772 10 4 10H9C9.55228 10 10 9.55228 10 9V4C10 3.44772 9.55228 3 9 3Z"
+        fill={color}
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M20 3H15C14.4477 3 14 3.44772 14 4V9C14 9.55228 14.4477 10 15 10H20C20.5523 10 21 9.55228 21 9V4C21 3.44772 20.5523 3 20 3Z"
+        fill={color}
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M20 14H15C14.4477 14 14 14.4477 14 15V20C14 20.5523 14.4477 21 15 21H20C20.5523 21 21 20.5523 21 20V15C21 14.4477 20.5523 14 20 14Z"
+        fill={color}
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M9 14H4C3.44772 14 3 14.4477 3 15V20C3 20.5523 3.44772 21 4 21H9C9.55228 21 10 20.5523 10 20V15C10 14.4477 9.55228 14 9 14Z"
+        fill={color}
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const Grid = ({width = 24, height = 24, color = '#8B9399'}) => {
+  return (
+    <Svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M9 3H4C3.44772 3 3 3.44772 3 4V9C3 9.55228 3.44772 10 4 10H9C9.55228 10 10 9.55228 10 9V4C10 3.44772 9.55228 3 9 3Z"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M20 3H15C14.4477 3 14 3.44772 14 4V9C14 9.55228 14.4477 10 15 10H20C20.5523 10 21 9.55228 21 9V4C21 3.44772 20.5523 3 20 3Z"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M20 14H15C14.4477 14 14 14.4477 14 15V20C14 20.5523 14.4477 21 15 21H20C20.5523 21 21 20.5523 21 20V15C21 14.4477 20.5523 14 20 14Z"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M9 14H4C3.44772 14 3 14.4477 3 15V20C3 20.5523 3.44772 21 4 21H9C9.55228 21 10 20.5523 10 20V15C10 14.4477 9.55228 14 9 14Z"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const Full = ({width = 24, height = 24, color = '#8B9399'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M20 3H4C3.44772 3 3 3.44772 3 4V9C3 9.55228 3.44772 10 4 10H20C20.5523 10 21 9.55228 21 9V4C21 3.44772 20.5523 3 20 3Z"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M20 14H4C3.44772 14 3 14.4477 3 15V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V15C21 14.4477 20.5523 14 20 14Z"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const FullSolid = ({width = 24, height = 24, color = '#333333'}) => {
+  return (
+    <Svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M20 3H4C3.44772 3 3 3.44772 3 4V9C3 9.55228 3.44772 10 4 10H20C20.5523 10 21 9.55228 21 9V4C21 3.44772 20.5523 3 20 3Z"
+        fill="#333333"
+        stroke="#333333"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M20 14H4C3.44772 14 3 14.4477 3 15V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V15C21 14.4477 20.5523 14 20 14Z"
+        fill="#333333"
+        stroke="#333333"
         stroke-linecap="round"
         stroke-linejoin="round"
       />

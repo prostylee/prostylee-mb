@@ -49,6 +49,7 @@ const BottomTabs = (props) => {
       sceneAnimationEnabled={true}>
       {tabsNavigator.map((tab, _i) => {
         const TabBarIcon = TabsIcon[tab.option.tabBarIcon];
+        const TabBarIconSolid = TabsIcon[tab.option.tabBarIconSolid];
         if (!Object.keys(screens).includes(tab.screen)) {
           return null;
         }
@@ -66,7 +67,7 @@ const BottomTabs = (props) => {
               },
             }}
             options={{
-              tabBarIcon: ({color}) => {
+              tabBarIcon: ({focused, color}) => {
                 if (tab?.isTurnOfLabel) {
                   let MainTabIcon = isFocusedMainTab
                     ? TabsIcon[tab.option.tabBarIconFocused]
@@ -77,7 +78,11 @@ const BottomTabs = (props) => {
                     </SpecialIcon>
                   );
                 }
-                return <TabBarIcon color={color} size={28} />;
+                return !focused ? (
+                  <TabBarIcon color={color} size={28} />
+                ) : (
+                  <TabBarIconSolid color={color} size={28} />
+                );
               },
               tabBarColor,
               title: tab?.isTurnOfLabel ? '' : tab.name,

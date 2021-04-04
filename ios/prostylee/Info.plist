@@ -86,5 +86,26 @@
 		<string>Inter-SemiBold.ttf</string>
 		<string>Inter-Medium.ttf</string>
 	</array>
+
+	<!-- ADD AN ENTRY TO CFBundleURLTypes for Cognito Auth -->
+	<key>CFBundleURLTypes</key>
+	<array>
+	    <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>prostylee</string>
+            </array>
+        </dict>
+    </array>
+    <!-- END ADD AN ENTRY TO CFBundleURLTypes for Cognito Auth -->
+
+    <!-- Add permission for upload file -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>For choosing a photo.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>For taking a photo.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>For saving a photo.</string>
+
 </dict>
 </plist>

@@ -1,40 +1,38 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useSelector} from 'react-redux';
 import {
-  createStackNavigator,
   CardStyleInterpolators,
+  createStackNavigator,
 } from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
-import {userSelectors, commonSelectors} from 'reducers';
-import {navigationRef} from './rootNavigator';
+import {commonSelectors, userSelectors} from 'reducers';
+import RootNavigator from './rootNavigator';
 
-import {isEmpty} from 'lodash';
-
-import {lightTheme, darkTheme} from 'theme';
-
-import {api as configApi} from 'services/config';
-
-const Stack = createStackNavigator();
+import {darkTheme, lightTheme} from 'theme';
 
 import {
-  Welcome,
-  Onboarding,
-  SignIn,
-  SignUpViaPhone,
-  SignInViaPhone,
-  SignInOptions,
-  OTPVerification,
   ForgotPassword,
+  Onboarding,
+  OTPVerification,
   ResetPassword,
   ResetPasswordViaMail,
+  SignIn,
+  SignInOptions,
+  SignInViaPhone,
+  SignUpOTPVerification,
+  SignUpViaPhone,
   SimpleWebView,
   Stores,
   StoryBoard,
   Chat,
+  UserProfile,
+  Welcome,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
+
+const Stack = createStackNavigator();
 
 function SignedIn() {
   return (
@@ -52,6 +50,7 @@ function SignedIn() {
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="UserProfile" component={UserProfile} />
     </Stack.Navigator>
   );
 }
@@ -78,6 +77,10 @@ function SignedOut() {
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
       <Stack.Screen name="OTPVerification" component={OTPVerification} />
+      <Stack.Screen
+        name="SignUpOTPVerification"
+        component={SignUpOTPVerification}
+      />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} />
       <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
@@ -92,14 +95,13 @@ function SignedOut() {
 const App = React.forwardRef(() => {
   const userToken = useSelector((state) => userSelectors.getUserToken(state));
   const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
-  useEffect(() => {
-    if (!isEmpty(userToken)) {
-      configApi.setHeader('Authorization', 'Bearer ' + userToken.accessToken);
-    }
-  }, [userToken]);
+  console.log('userToken -----' + userToken);
+
   return (
     <NavigationContainer
-      ref={navigationRef}
+      ref={(navigationRef) => {
+        RootNavigator.setTopLevelNavigator(navigationRef);
+      }}
       theme={themeMode === 'dark' ? darkTheme : lightTheme}>
       <Stack.Navigator
         screenOptions={{

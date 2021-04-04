@@ -1,26 +1,19 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  ImageBackground,
-  StatusBar,
-  BackHandler,
-  ToastAndroid,
-} from 'react-native';
+import {BackHandler, ImageBackground, StatusBar, ToastAndroid, View,} from 'react-native';
 
 import {useBackHandler} from '@react-native-community/hooks';
 
-import {ButtonRounded, SocialSignIn} from 'components';
+import {ButtonRounded, SocialSignIn} from '../../../components';
 import {useDispatch} from 'react-redux';
-import {commonActions} from 'reducers';
-import {LogoWhite} from 'svg/common';
+import {LogoWhite} from '../../../svg/common';
 
 import I18n from 'i18n';
+import styles from './styles';
+import RootNavigator from '../../../navigator/rootNavigator';
+import {commonActions} from '../../../redux/reducers';
 
 //IMG
 const IMG_BG = require('assets/images/signInBg.png');
-
-import styles from './styles';
 
 const Index = (props) => {
   //dispatch
@@ -52,10 +45,10 @@ const Index = (props) => {
   });
 
   const onSignIn = () => {
-    props.navigation.navigate('SignIn', {index: 0});
+    RootNavigator.navigate('SignIn', {index: 0});
   };
   const onSignUp = () => {
-    props.navigation.navigate('SignIn', {index: 1});
+    RootNavigator.navigate('SignIn', {index: 1});
   };
   return (
     <ImageBackground source={IMG_BG} style={styles.background}>
@@ -65,9 +58,9 @@ const Index = (props) => {
           <LogoWhite />
         </View>
         <View style={styles.btnWrapper}>
-          <ButtonRounded onPress={() => onSignIn()} label={I18n.t('signIn')} />
+          <ButtonRounded onPress={onSignIn} label={I18n.t('signIn')} />
           <ButtonRounded
-            onPress={() => onSignUp()}
+            onPress={onSignUp}
             contentStyle={styles.signupBtn}
             labelStyle={styles.signupBtnLabel}
             style={styles.btnContainer}

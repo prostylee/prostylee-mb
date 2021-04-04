@@ -20,6 +20,7 @@ export const tabsSetting = {
       screen: bottomTabs.newFeed,
       option: {
         tabBarIcon: 'NewFeedTab',
+        tabBarIconSolid: 'NewFeedTabSolid',
       },
     },
     {
@@ -28,6 +29,7 @@ export const tabsSetting = {
       screen: bottomTabs.newFeed,
       option: {
         tabBarIcon: 'StoreTab',
+        tabBarIconSolid: 'StoreTabSolid',
       },
     },
     {
@@ -46,6 +48,7 @@ export const tabsSetting = {
       screen: bottomTabs.newFeed,
       option: {
         tabBarIcon: 'NotifTab',
+        tabBarIconSolid: 'NotifTabSolid',
       },
     },
     {
@@ -54,6 +57,7 @@ export const tabsSetting = {
       screen: bottomTabs.account,
       option: {
         tabBarIcon: 'AccountTab',
+        tabBarIconSolid: 'AccountTabSolid',
       },
     },
   ],

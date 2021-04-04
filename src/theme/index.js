@@ -7,6 +7,7 @@ export const lightTheme = {
     ...DefaultTheme.colors,
     loading: '#148247',
     ...Colors,
+    error: '#f13a59',
   },
 };
 
@@ -16,5 +17,6 @@ export const darkTheme = {
     ...DarkTheme.colors,
     loading: '#fff',
     ...Colors,
+    error: '#f13a59',
   },
 };

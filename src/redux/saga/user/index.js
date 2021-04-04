@@ -1,227 +1,134 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-
-import {api, authApi} from 'services';
-import {api as configApi} from 'services/config';
-import {userActions, userTypes, commonActions} from 'reducers';
+import {commonActions, userActions, userTypes} from 'reducers';
+import {Auth} from 'aws-amplify';
+import {getProductsByUser, getProfile, getStatistics, getUserPost,} from 'services/api/userApi';
 
 import {showMessage} from 'react-native-flash-message';
-import {
-  UNKNOWN_MESSAGE,
-  SESSION_EXPIRED_MESSAGE,
-  SUCCESS,
-  BAD_REQUEST,
-  SESSION_EXPIRED,
-  INTERNAL_SERVER_ERROR,
-} from 'constants';
-import asyncStorage from 'data/asyncStorage';
+import {UNKNOWN_MESSAGE} from 'constants';
 
 import messaging from '@react-native-firebase/messaging';
-
-import configEnv from 'config';
-import I18n from 'i18n';
+import I18n from '../../../i18n';
+import authService from '../../../services/authService';
 
 const userSignUp = function* ({
   payload: {fullname, email, password, onSuccess},
 }) {
   try {
-    const res = yield call(authApi.userSignUp, {
-      fullName: fullname,
+    const request = {
       username: email,
       password,
-    });
+      attributes: {
+        email,
+        name: fullname,
+      },
+    };
+    console.log('Request ' + request);
+    const {user} = yield Auth.signUp(request);
+    console.log('Auth.signUp  ' + JSON.stringify(user));
+    yield onSuccess();
+  } catch (e) {
+    console.log(e);
 
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === SUCCESS) {
-      yield asyncStorage.setUserToken(res.data.data);
-      yield asyncStorage.setUserName({username: email});
-      yield put(userActions.userSignUpSuccess(res.data.data));
-      yield onSuccess();
-    } else if (res.ok && res.data.status === BAD_REQUEST) {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: I18n.t('existedEmail'),
-        type: 'danger',
+    let errorMessage = UNKNOWN_MESSAGE;
+    if (e.code === 'InvalidPasswordException') {
+      errorMessage = I18n.t('validation.invalid', {
+        field: I18n.t('user.password'),
       });
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: UNKNOWN_MESSAGE,
-        type: 'danger',
+    } else if (e.code === 'UsernameExistsException') {
+      errorMessage = I18n.t('validation.duplicated', {
+        field: I18n.t('user.email'),
       });
     }
-  } catch (e) {
-    //Lỗi server api
-    console.log(e);
+
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
-      message: UNKNOWN_MESSAGE,
+      message: errorMessage,
       type: 'danger',
     });
   }
 };
 
-const userSignIn = function* ({payload: {email, password, onSuccess}}) {
+const userSignIn = function* ({payload: {email, password, onSuccess, onFail}}) {
   try {
-    const res = yield call(authApi.userSignIn, {
-      appClientId: configEnv.APP_CLIENT_ID,
-      appClientSecret: configEnv.APP_CLIENT_SECRET,
-      username: email,
-      password,
-    });
-    // xử lý dữ liệu trả về từ api
-    console.log(configApi);
-    if (res.ok && res.data.status === SUCCESS) {
-      yield asyncStorage.setUserToken(res.data.data);
-      yield asyncStorage.setUserName({username: email});
-      yield put(userActions.userSignInSuccess(res.data.data));
-      configApi.setHeader(
-        'Authorization',
-        'Bearer ' + res.data.data.accessToken,
-      );
-      yield onSuccess();
-    } else if (res.ok && res.data.status === SESSION_EXPIRED) {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: I18n.t('incorrectEmailOrPassword'),
-        type: 'danger',
-      });
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: UNKNOWN_MESSAGE,
-        type: 'danger',
-      });
-    }
+    const user = yield Auth.signIn(email, password);
+    console.log('Sign-in successfully!!!');
+    yield authService.setUserName({username: user.username});
+    yield authService.setAuthUser(user);
+    yield put(userActions.userSignInSuccess(user));
+    yield onSuccess();
   } catch (e) {
-    //Lỗi server api
     console.log(e);
-    yield put(commonActions.toggleLoading(false));
-    yield showMessage({
-      message: UNKNOWN_MESSAGE,
-      type: 'danger',
-    });
-  }
-};
-
-const userRefreshToken = function* ({payload: {refreshToken, onSuccess}}) {
-  try {
-    const res = yield call(authApi.userRefreshToken, {
-      refreshToken,
-    });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === SUCCESS) {
-      yield asyncStorage.setUserToken(res.data.data);
-      yield put(userActions.userRefreshTokenSuccess(res.data.data));
-      yield onSuccess();
-    } else if (res.ok && res.data.status === BAD_REQUEST) {
-      //thông báo lỗi từ api trả về
-      yield put(userActions.userRefreshTokenFail());
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.error,
-        type: 'danger',
-      });
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(userActions.userRefreshTokenFail());
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: UNKNOWN_MESSAGE,
-        type: 'danger',
-      });
-    }
-  } catch (e) {
-    //Lỗi server api
-    console.log(e);
-    yield put(userActions.userRefreshTokenFail());
-    yield put(commonActions.toggleLoading(false));
-    yield showMessage({
-      message: UNKNOWN_MESSAGE,
-      type: 'danger',
-    });
+    yield onFail(e.code);
   }
 };
 
 const userForgotPassword = function* ({payload: {email, onSuccess}}) {
   try {
-    const res = yield call(authApi.userForgotPassword, {
-      email,
-    });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === SUCCESS) {
-      if (res.data.data.data) {
-        yield onSuccess();
-      } else {
-        yield put(commonActions.toggleLoading(false));
-        yield showMessage({
-          message: I18n.t('unExistedEmail'),
-          type: 'danger',
-        });
-      }
-    } else if (res.ok && res.data.status === INTERNAL_SERVER_ERROR) {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: I18n.t('unExistedEmail'),
-        type: 'danger',
-      });
-    } else {
-      //thông báo lỗi từ api trả ve
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: UNKNOWN_MESSAGE,
-        type: 'danger',
-      });
-    }
+    const res = yield Auth.forgotPassword(email);
+    console.log('Auth.forgotPassword ' + res);
+    yield onSuccess();
   } catch (e) {
-    //Lỗi server api
     console.log(e);
+
+    let errorMessage = UNKNOWN_MESSAGE;
+    if (e.code === 'UserNotFoundException') {
+      errorMessage = I18n.t('unExistedEmail');
+    } else if (e.code === 'LimitExceededException') {
+      errorMessage = I18n.t('tooManyRequest');
+    }
+
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
-      message: UNKNOWN_MESSAGE,
+      message: errorMessage,
       type: 'danger',
     });
   }
 };
 
-const userVerifyOTP = function* ({payload: {email, otp, onSuccess, onFail}}) {
+const userVerifyOTP = function* ({payload: {email, otp, onSuccess}}) {
   try {
-    const res = yield call(authApi.userVerifyOTP, {
-      email,
-      otp,
-    });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === SUCCESS) {
-      if (res.data.data.data) {
-        yield onSuccess();
-      } else {
-        yield onFail();
-      }
-    } else if (res.ok && res.data.status === BAD_REQUEST) {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.error,
-        type: 'danger',
-      });
-    } else {
-      //thông báo lỗi từ api trả ve
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: UNKNOWN_MESSAGE,
-        type: 'danger',
-      });
-    }
+    const res = yield Auth.confirmSignUp(email, otp);
+    console.log('Verify successful ' + JSON.stringify(res));
+    yield onSuccess();
   } catch (e) {
-    //Lỗi server api
     console.log(e);
+
+    let errorMessage = UNKNOWN_MESSAGE;
+    if (e.code === 'CodeMismatchException') {
+      errorMessage = I18n.t('invalidOTP');
+    }
+
+    if (e.code === 'NotAuthorizedException') {
+      errorMessage = I18n.t('userAlreadyVerified');
+    }
+
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
-      message: UNKNOWN_MESSAGE,
+      message: errorMessage,
+      type: 'danger',
+    });
+  }
+};
+
+const resendOtpSignUp = function* ({payload: {email, onSuccess}}) {
+  console.log('Auth.resendOtpSignUp ' + email);
+  try {
+    const res = yield Auth.resendSignUp(email);
+    console.log('Auth.resendOtpSignUp ' + JSON.stringify(res));
+    yield onSuccess();
+  } catch (e) {
+    console.log(e);
+
+    let errorMessage = UNKNOWN_MESSAGE;
+    if (e.code === 'InvalidParameterException' || e.code === 'NotAuthorizedException') {
+      errorMessage = I18n.t('userAlreadyVerified');
+    } else if (e.code === 'LimitExceededException') {
+      errorMessage = I18n.t('tooManyRequest');
+    }
+
+    yield put(commonActions.toggleLoading(false));
+    yield showMessage({
+      message: errorMessage,
       type: 'danger',
     });
   }
@@ -231,286 +138,97 @@ const userChangePassword = function* ({
   payload: {email, password, newPassword, onSuccess},
 }) {
   try {
-    const res = yield call(authApi.userChangePassword, {
-      email,
-      password,
-      newPassword,
-    });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === SUCCESS) {
-      yield onSuccess();
-    } else if (res.ok && res.data.status === BAD_REQUEST) {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.error,
-        type: 'danger',
-      });
-    } else {
-      //thông báo lỗi từ api trả ve
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: UNKNOWN_MESSAGE,
-        type: 'danger',
-      });
-    }
+    const res = yield Auth.forgotPasswordSubmit(email, password, newPassword);
+    console.log('Auth.forgotPasswordSubmit ' + res);
+    yield onSuccess();
   } catch (e) {
     //Lỗi server api
     console.log(e);
+
+    let errorMessage = UNKNOWN_MESSAGE;
+    if (e.code === 'CodeMismatchException') {
+      errorMessage = I18n.t('invalidOTP');
+    }
+
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
-      message: UNKNOWN_MESSAGE,
+      message: errorMessage,
       type: 'danger',
     });
   }
 };
 
-const userLogout = function* ({payload: {token, id}}) {
+const fetchProfile = function* ({payload}) {
   try {
-    yield call(api.setHeadersRequest, {
-      Authorization: `${token.token_type} ${token.access_token}`,
-    });
-    const res = yield call(authApi.userLogout);
-    // xử lý dữ liệu trả về từ api
-    if (res.ok) {
-      yield asyncStorage.logOut();
-      yield put(commonActions.toggleLoading(false));
-      yield put(userActions.userLogOutSuccess());
-      yield messaging()
-        .unsubscribeFromTopic(`user_${id}`)
-        .then(() => console.log('Unsubscribed fom the topic user!'));
-      yield messaging()
-        .unsubscribeFromTopic('user_all')
-        .then(() => console.log('Unsubscribed fom the topic all!'));
+    const res = yield call(getProfile, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.getProfileSuccess(res.data.data));
     } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: 'Xảy ra lỗi khi đăng xuất',
-        type: 'danger',
-      });
+      yield put(userActions.getProfileFail());
     }
   } catch (e) {
-    //Lỗi server api
-    console.log(e);
+    console.error(e);
+  }
+};
+
+const getStatisticsOfUser = function* ({payload}) {
+  try {
+    const res = yield call(getStatistics, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.getStatisticsSuccess(res.data.data));
+    } else {
+      yield put(userActions.getStatisticsFail());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const getPostsOfUser = function* ({payload}) {
+  try {
+    const res = yield call(getUserPost, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.getUserPostSuccess(res.data.data));
+    } else {
+      yield put(userActions.getUserPostFail());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const getProductByUser = function* ({payload}) {
+  try {
+    const res = yield call(getProductsByUser, payload);
+    console.log(res);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.getProductByUserSuccess(res.data.data));
+    } else {
+      yield put(userActions.getProductByUserFail());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const userLogout = function* ({payload}) {
+  try {
+    Auth.currentAuthenticatedUser()
+      .then((user) => {
+        messaging()
+          .unsubscribeFromTopic(`user_${user.idToken.payload.sub}`)
+          .then(() => console.log('Unsubscribed fom the topic user!'));
+      })
+      .catch((err) => console.log(err));
+
+    yield authService.logOut();
+    yield put(userActions.userLogOutSuccess());
     yield put(commonActions.toggleLoading(false));
-    yield showMessage({
-      message: UNKNOWN_MESSAGE,
-      type: 'danger',
-    });
-  }
-};
 
-const getUserInfo = function* ({payload: {token, onSuccess}}) {
-  try {
-    yield call(api.setHeadersRequest, {
-      Authorization: `${token.token_type} ${token.access_token}`,
-    });
-    const res = yield call(authApi.getUserInfo);
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === 200) {
-      // yield Keychain.setGenericPassword(token);
-      yield asyncStorage.setUserToken(token);
-      yield asyncStorage.setUserData(res.data.data);
-      yield onSuccess(res.data.data);
-    } else if (res.ok && res.data.status === 401) {
-      //token hết hạn => force logOut
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: SESSION_EXPIRED_MESSAGE,
-        type: 'danger',
-      });
-      yield asyncStorage.logOut();
-      yield put(userActions.userLogOutSuccess());
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.errors[0],
-        type: 'danger',
-      });
-    }
+    yield messaging()
+      .unsubscribeFromTopic('user_all')
+      .then(() => console.log('Unsubscribed fom the topic all!'));
   } catch (e) {
-    //Lỗi server api
-    yield put(commonActions.toggleLoading(false));
-    console.log(e);
-    yield showMessage({
-      message: UNKNOWN_MESSAGE,
-      type: 'danger',
-    });
-  }
-};
-
-const updateUserPassword = function* ({
-  payload: {token, currentPw, newPw, confirmPw, onSuccess},
-}) {
-  try {
-    yield call(api.setHeadersRequest, {
-      Authorization: `${token.token_type} ${token.access_token}`,
-    });
-    const res = yield call(authApi.updateUserPassword, {
-      currentPw,
-      newPw,
-      confirmPw,
-    });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === 200) {
-      yield onSuccess(res.data.data);
-    } else if (res.ok && res.data.status === 401) {
-      //token hết hạn => force logOut
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: SESSION_EXPIRED_MESSAGE,
-        type: 'danger',
-      });
-      yield asyncStorage.logOut();
-      yield put(userActions.userLogOutSuccess());
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.errors[0],
-        type: 'danger',
-      });
-    }
-  } catch (e) {
-    //Lỗi server api
-    console.log(e);
-    yield put(commonActions.toggleLoading(false));
-    yield showMessage({
-      message: UNKNOWN_MESSAGE,
-      type: 'danger',
-    });
-  }
-};
-
-const updateUserAvatar = function* ({
-  payload: {token, user_avatar, onSuccess, onFail},
-}) {
-  try {
-    yield call(api.setHeadersRequest, {
-      Authorization: `${token.token_type} ${token.access_token}`,
-      Accept: 'application/json',
-      'Content-Type': 'multipart/form-data',
-    });
-    const res = yield call(authApi.updateUserAvatar, user_avatar);
-
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === 200) {
-      yield onSuccess(res.data.data);
-    } else if (res.ok && res.data.status === 401) {
-      //token hết hạn => force logOut
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: SESSION_EXPIRED_MESSAGE,
-        type: 'danger',
-      });
-      yield asyncStorage.logOut();
-      yield put(userActions.userLogOutSuccess());
-    } else {
-      //thông báo lỗi từ api trả về
-      yield onFail();
-      yield showMessage({
-        message: res.data.errors[0],
-        type: 'danger',
-      });
-    }
-  } catch (e) {
-    //Lỗi server api
-    console.log(e);
-    yield onFail();
-    yield showMessage({
-      message: UNKNOWN_MESSAGE,
-      type: 'danger',
-    });
-  }
-};
-
-const forgotPwGetEmailCode = function* ({payload: {email, onSuccess}}) {
-  try {
-    const res = yield call(authApi.forgotPwGetEmailCode, email);
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === 200) {
-      yield onSuccess(res.data.data);
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.errors[0],
-        type: 'danger',
-      });
-    }
-  } catch (e) {
-    //Lỗi server api
-    console.log(e);
-    yield put(commonActions.toggleLoading(false));
-    yield showMessage({
-      message: UNKNOWN_MESSAGE,
-      type: 'danger',
-    });
-  }
-};
-
-const userForgotPw = function* ({
-  payload: {email, code, password, confirmPw, onSuccess},
-}) {
-  try {
-    const res = yield call(authApi.userForgotPw, {
-      email,
-      code,
-      password,
-      confirmPw,
-    });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === 200) {
-      yield onSuccess(res.data.data);
-    } else if (res.ok && res.data.status === 401) {
-      //token hết hạn => force logOut
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: SESSION_EXPIRED_MESSAGE,
-        type: 'danger',
-      });
-      yield asyncStorage.logOut();
-      yield put(userActions.userLogOutSuccess());
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.errors[0],
-        type: 'danger',
-      });
-    }
-  } catch (e) {
-    //Lỗi server api
-    console.log(e);
-    yield put(commonActions.toggleLoading(false));
-    yield showMessage({
-      message: UNKNOWN_MESSAGE,
-      type: 'danger',
-    });
-  }
-};
-
-const forgotPwCheckEmailCode = function* ({payload: {email, code, onSuccess}}) {
-  try {
-    const res = yield call(authApi.forgotPwCheckEmailCode, {
-      email,
-      code,
-    });
-    // xử lý dữ liệu trả về từ api
-    if (res.ok && res.data.status === 200) {
-      yield onSuccess(res.data.data);
-    } else {
-      //thông báo lỗi từ api trả về
-      yield put(commonActions.toggleLoading(false));
-      yield showMessage({
-        message: res.data.errors[0],
-        type: 'danger',
-      });
-    }
-  } catch (e) {
-    //Lỗi server api
     console.log(e);
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
@@ -522,12 +240,16 @@ const forgotPwCheckEmailCode = function* ({payload: {email, code, onSuccess}}) {
 
 const watcher = function* () {
   yield takeLatest(userTypes.USER_SIGN_UP, userSignUp);
+  yield takeLatest(userTypes.USER_RESEND_OTP_SIGN_UP, resendOtpSignUp);
   yield takeLatest(userTypes.USER_LOGIN, userSignIn);
-  yield takeLatest(userTypes.USER_REFRESH_TOKEN, userRefreshToken);
   yield takeLatest(userTypes.USER_FORGOT_PASSWORD, userForgotPassword);
   yield takeLatest(userTypes.USER_VERIFY_OTP, userVerifyOTP);
   yield takeLatest(userTypes.USER_CHANGE_PASSWORD, userChangePassword);
-  // yield takeLatest(userTypes.GET_USER_INFO, getUserInfo);
-  // yield takeLatest(userTypes.USER_LOGOUT, userLogout);
+  yield takeLatest(userTypes.USER_LOGOUT, userLogout);
+  yield takeLatest(userTypes.GET_PROFILE, fetchProfile);
+  yield takeLatest(userTypes.GET_STATISTICS, getStatisticsOfUser);
+  yield takeLatest(userTypes.GET_POSTS_OF_USER, getPostsOfUser);
+  yield takeLatest(userTypes.GET_PRODUCT_BY_USER, getProductByUser);
 };
+
 export default watcher();

@@ -11,11 +11,14 @@ import styles from './styles';
 
 import {ImageAnimated as Image} from 'components';
 
+import {IMG_STATUS, IMG_PRODUCT, TYPE_USER} from 'constants';
+
 const DEFAULT_IMG = require('assets/images/default.png');
 const WIDTH = Dimensions.get('window').width;
 
 const Slide = React.memo((props) => {
-  const {images, width, height} = props;
+  const {images, width, targetType} = props;
+  const IMG_RATIO = targetType === TYPE_USER ? IMG_STATUS : IMG_PRODUCT;
 
   const flatListRef = useRef(null);
 
@@ -41,7 +44,7 @@ const Slide = React.memo((props) => {
         <Image
           source={{uri: item}}
           resizeMode="cover"
-          style={{height: height, width: width}}
+          style={{height: width * IMG_RATIO, width: width}}
           PlaceholderContent={<ActivityIndicator />}
         />
       </TouchableOpacity>
@@ -67,13 +70,15 @@ const Slide = React.memo((props) => {
           images.length < 1 ? (
             <Image
               source={DEFAULT_IMG}
-              style={{height: height, width: width}}
+              style={{height: width * IMG_RATIO, width: width}}
             />
           ) : null
         }
       />
       <View style={styles.renderSlide}>
-        <Text>{state.indexCurrency + 1 + '/' + images.length}</Text>
+        <Text>
+          {(images.length ? state.indexCurrency + 1 : 0) + '/' + images.length}
+        </Text>
       </View>
     </>
   );
@@ -81,7 +86,6 @@ const Slide = React.memo((props) => {
 
 Slide.defaultProps = {
   width: WIDTH,
-  height: WIDTH,
   navigationType: 'navigate',
 };
 
