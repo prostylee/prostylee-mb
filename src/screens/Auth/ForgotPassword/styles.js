@@ -23,10 +23,4 @@ export default EStyleSheet.create({
   btnWrapper: {
     marginTop: '15rem',
   },
-  errMsg: {
-    fontFamily: '$font1',
-    fontSize: '$smallText',
-    color: '$red',
-    marginTop: '4rem',
-  },
 });

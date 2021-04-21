@@ -1,8 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View} from 'react-native';
-import {ButtonRounded, Container, HeaderBack, TextInputFloatingLabel,} from 'components';
-
-import _ from 'lodash';
+import {ButtonRounded, Container, HeaderBack} from 'components';
 
 import {commonActions, userActions} from 'reducers';
 import {useDispatch} from 'react-redux';
@@ -10,49 +8,26 @@ import {useDispatch} from 'react-redux';
 import styles from './styles';
 
 import I18n from 'i18n';
-import {emailRegex} from 'utils/common';
+import {Field, Formik} from 'formik';
+import {CustomTextInput} from '../../../components';
+import {validateEmail} from '../../../utils/validatorUtils';
 
 const Index = (props) => {
-
-  const [email, setEmail] = useState({value: '', error: ''});
-  const [disabledBtn, setDisabledBtn] = React.useState(true);
-
-  //Dispatch Redux
   const dispatch = useDispatch();
 
-  const onChangeEmail = async (value) => {
-    if (_.isEmpty(value)) {
-      setEmail({
-        value: '',
-        error: I18n.t('validation.required', {field: I18n.t('user.email')}),
-      });
-      setDisabledBtn(true);
-    } else if (emailRegex.test(value) === false) {
-      setEmail({
-        value: value,
-        error: I18n.t('validation.invalid', {field: I18n.t('user.email')}),
-      });
-      setDisabledBtn(true);
-    } else {
-      setEmail({value: value.toLowerCase(), error: ''});
-      setDisabledBtn(false);
-    }
-  };
-
-  //handle User signIn
-  const onSubmitEmail = async () => {
+  const onSubmitEmail = async (formValues) => {
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
       userActions.userForgotPassword({
-        email: email.value,
-        onSuccess: () => onUserForgotPasswordSuccess(),
+        email: formValues.email,
+        onSuccess: () => onUserForgotPasswordSuccess(formValues),
       }),
     );
   };
 
-  const onUserForgotPasswordSuccess = async () => {
+  const onUserForgotPasswordSuccess = async (formValues) => {
     await dispatch(commonActions.toggleLoading(false));
-    props.navigation.navigate('ResetPassword', {email: email.value});
+    props.navigation.navigate('ResetPassword', {email: formValues.email});
   };
 
   const onGoBack = () => {
@@ -67,24 +42,30 @@ const Index = (props) => {
             title={I18n.t('forgotPassword')}
             onBack={() => onGoBack()}
           />
-          <View style={styles.form}>
+          <Formik
+            validateOnMount={true}
+            initialValues={{email: ''}}
+            onSubmit={(values) => onSubmitEmail(values)}>
+            {({handleSubmit, values, isValid}) => (
+              <View style={styles.form}>
+                <Field
+                  component={CustomTextInput}
+                  validate={validateEmail}
+                  name="email"
+                  label={I18n.t('email')}
+                  keyboardType="email-address"
+                />
 
-            <TextInputFloatingLabel
-              label={I18n.t('email')}
-              value={email.value}
-              onChangeText={onChangeEmail}
-              error={!!email.error}
-              errorText={email.error}
-            />
-
-            <View style={styles.btnWrapper}>
-              <ButtonRounded
-                label={I18n.t('next')}
-                onPress={onSubmitEmail}
-                disabled={disabledBtn}
-              />
-            </View>
-          </View>
+                <View style={styles.btnWrapper}>
+                  <ButtonRounded
+                    label={I18n.t('next')}
+                    onPress={handleSubmit}
+                    disabled={!isValid || values.email === ''}
+                  />
+                </View>
+              </View>
+            )}
+          </Formik>
         </View>
       </Container>
     </View>

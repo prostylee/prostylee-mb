@@ -59,4 +59,28 @@ Chứa các file:
 
 * Docs and Usage: https://callstack.github.io/react-native-paper/getting-started.html
 
+## Build standalone file
+
+### Build Android (APK)
+
+At root folder run command:
+
+> react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+
+Next go to android folder:
+
+> cd android
+
+Then run command:
+
+> ./gradlew assembleDebug
+
+Check generated apk file at: android/app/build/outputs/apk/debug/app-debug.apk
+
+### Build iOS (IPA)
+
+TODO
+
 ## Deploy app on Store
+
+TODO
