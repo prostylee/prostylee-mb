@@ -121,10 +121,4 @@ export default EStyleSheet.create({
     color: '$black',
     paddingHorizontal: 0,
   },
-  errMsg: {
-    fontFamily: '$font1',
-    fontSize: '$smallText',
-    color: '$red',
-    marginTop: '4rem',
-  },
 });

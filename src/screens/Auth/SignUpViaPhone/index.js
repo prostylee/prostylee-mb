@@ -1,13 +1,6 @@
-import React, {useState} from 'react';
-import {View, Text} from 'react-native';
-import {
-  Container,
-  ButtonRounded,
-  TextInputFloatingLabel,
-  HeaderBack,
-  TextButton,
-  SocialSignIn,
-} from 'components';
+import React from 'react';
+import {Text, View} from 'react-native';
+import {ButtonRounded, Container, HeaderBack, SocialSignIn, TextButton} from 'components';
 
 import {useKeyboard} from '@react-native-community/hooks';
 
@@ -15,15 +8,11 @@ import I18n from 'i18n';
 
 import styles from './styles';
 import envConfig from 'config';
-import _ from 'lodash';
-import {fullNameRegex} from '../../../utils/common';
+import {Field, Formik} from 'formik';
+import {CustomTextInput} from '../../../components';
+import {validateFullname, validatePhone} from '../../../utils/validatorUtils';
 
 const Index = (props) => {
-
-  const [fullname, setFullname] = useState({value: '', error: ''});
-  const [phone, setPhone] = useState({value: '', error: ''});
-  const [disabledSignUpBtn, setDisabledSignUpBtn] = useState(true);
-
   const onGoBack = () => {
     props.navigation.goBack();
   };
@@ -31,31 +20,9 @@ const Index = (props) => {
   //keyboard
   const keyboard = useKeyboard();
 
-  //input
-  const onChangeFullname = (value) => {
-    if (_.isEmpty(value)) {
-      setFullname({
-        value: '',
-        error: I18n.t('validation.required', {field: I18n.t('user.name')}),
-      });
-      setDisabledSignUpBtn(true);
-    } else if (fullNameRegex.test(value) === false) {
-      setFullname({
-        value: value,
-        error: I18n.t('validation.invalid', {field: I18n.t('user.name')}),
-      });
-      setDisabledSignUpBtn(true);
-    } else {
-      setFullname({value: value, error: ''});
-      setDisabledSignUpBtn(false);
-    }
+  const onSignUp = (values) => {
+    console.log('onSignUp: ' + JSON.stringify(values));
   };
-  const onChangePhone = (value) => {
-    setPhone({value: value, error: ''}); // TODO validate phone number
-    setDisabledSignUpBtn(false);
-  };
-
-  const onSignUp = () => {};
 
   //handle funcs
   const onGoToTerms = () => {
@@ -80,32 +47,39 @@ const Index = (props) => {
             title={I18n.t('signUpWithPhone')}
             onBack={() => onGoBack()}
           />
-          <View style={styles.form}>
-            <TextInputFloatingLabel
-              label={I18n.t('fullname')}
-              value={fullname.value}
-              onChangeText={onChangeFullname}
-              error={!!fullname.error}
-              errorText={fullname.error}
-            />
+          <Formik
+            validateOnMount={true}
+            initialValues={{fullname: '', phone: ''}}
+            onSubmit={(values) => onSignUp(values)}>
+            {({handleSubmit, values, isValid}) => (
+              <View style={styles.form}>
+                <Field
+                  component={CustomTextInput}
+                  validate={validateFullname}
+                  name="fullname"
+                  label={I18n.t('fullname')}
+                />
 
-            <TextInputFloatingLabel
-              label={I18n.t('yourPhoneLabel')}
-              value={phone.value}
-              onChangeText={(text) => onChangePhone(text)}
-              keyboardType="phone-pad"
-              error={!!phone.error}
-              errorText={phone.error}
-            />
+                <Field
+                  component={CustomTextInput}
+                  validate={validatePhone}
+                  name="phone"
+                  label={I18n.t('yourPhoneLabel')}
+                  keyboardType="phone-pad"
+                />
 
-            <View style={styles.btnWrapper}>
-              <ButtonRounded
-                label={I18n.t('signUp')}
-                disabled={disabledSignUpBtn}
-                onPress={() => onSignUp()}
-              />
-            </View>
-          </View>
+                <View style={styles.btnWrapper}>
+                  <ButtonRounded
+                    label={I18n.t('signUp')}
+                    onPress={handleSubmit}
+                    disabled={
+                      !isValid || values.fullname === '' || values.phone === ''
+                    }
+                  />
+                </View>
+              </View>
+            )}
+          </Formik>
           {!keyboard.keyboardShown && (
             <View>
               <SocialSignIn />
