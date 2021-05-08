@@ -1,10 +1,4 @@
-### ProStylee Application
-
-## Author: Diep Bui
-
-## Last update: 01/02/2021
-
----
+# Mobile App for Buyer | ProStylee
 
 ## Running the project
 
@@ -13,13 +7,13 @@ Assuming you have all the requirements installed, you can setup and run the proj
 - `npm install` to install the dependencies
 - Run the following steps
 
-* Android
+### Android
 
 - `cd android`
 - `./gradlew clean` to clear file cache/build
 - `react-native run-android` to run the Android application (remember to start a simulator or connect an Android phone)
 
-* iOS
+### iOS
 
 - `cd ios`
 - `pod install` to install pod dependencies (remember to clear file Pods/Podfile.lock first)
