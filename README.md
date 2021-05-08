@@ -1,8 +1,20 @@
 # Mobile App for Buyer | ProStylee
 
-## Running the project
+## Prerequisite
 
-Assuming you have all the requirements installed, you can setup and run the project by running:
+Setting up the development environment: https://reactnative.dev/docs/environment-setup
+
+- Node
+- React Native CLI
+- JDK
+- Android Studio + AVD
+- Xcode
+
+---
+
+## Build and Run at local
+
+Assuming you have all the requirements installed, you can set up and run the project by running:
 
 - `npm install` to install the dependencies
 - Run the following steps
@@ -21,7 +33,7 @@ Assuming you have all the requirements installed, you can setup and run the proj
 
 ---
 
-## Site map Prostylee
+## Site map
 
 Thư mục src nằm cùng cấp với folder Android & IOS
 Chứa các file:
@@ -30,7 +42,7 @@ Chứa các file:
 - navigator: Xử lý điều hướng các page trong app
 - services/api: chứa hàm call api
 - config: chứa path/url cấu hình gọi từ Server
-- ultils: chứa các hàm sử lý format cho String - Number - Html - Url
+- utils: chứa các hàm sử lý format cho String - Number - Html - Url
 - I18n: Khai báo hàm gọi đa ngôn ngữ
 - store: redux store
 - saga: redux saga
@@ -43,15 +55,20 @@ Chứa các file:
 
 ---
 
-## UI Design Patterns
+## Libraries
 
-- Native Base
+- React Native: https://reactnative.dev/
 
-* Docs and Usage: https://docs.nativebase.io/Components.html#Components
+- React native paper: https://callstack.github.io/react-native-paper/getting-started.html
 
-- React native paper
+- React Native Formik: https://formik.org/docs/guides/react-native
 
-* Docs and Usage: https://callstack.github.io/react-native-paper/getting-started.html
+- AWS Amplify:
+
+    - https://docs.amplify.aws/start/q/integration/react
+    - https://docs.amplify.aws/guides/q/platform/js
+
+---
 
 ## Build standalone file
 
@@ -74,6 +91,8 @@ Check generated apk file at: android/app/build/outputs/apk/debug/app-debug.apk
 ### Build iOS (IPA)
 
 TODO
+
+---
 
 ## Deploy app on Store
 
