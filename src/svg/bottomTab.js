@@ -198,6 +198,24 @@ export const AccountTabSolid = ({
   );
 };
 
+export const StoryButton = ({width = 24, height = 24, color = '#FFFFFF'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M16.293 0.293L21.707 5.707C21.8946 5.89449 21.9999 6.14881 22 6.414V22C22 22.5304 21.7893 23.0391 21.4142 23.4142C21.0391 23.7893 20.5304 24 20 24H4C3.46957 24 2.96086 23.7893 2.58579 23.4142C2.21071 23.0391 2 22.5304 2 22V2C2 1.46957 2.21071 0.960859 2.58579 0.585786C2.96086 0.210714 3.46957 0 4 0H15.586C15.8512 5.66374e-05 16.1055 0.105451 16.293 0.293ZM16.5 13.866C17.1667 13.4811 17.1667 12.5189 16.5 12.134L10.5 8.66987C9.83333 8.28497 9 8.7661 9 9.5359L9 16.4641C9 17.2339 9.83333 17.715 10.5 17.3301L16.5 13.866Z"
+        fill={color}
+      />
+    </Svg>
+  );
+};
+
 export const MainTab = () => <SvgXml xml={xmlMainTab} />;
 
 export const xmlMainTab = `

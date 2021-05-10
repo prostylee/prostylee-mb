@@ -31,6 +31,7 @@ import CustomTextInput from './CustomTextInput';
 import CustomSecureInput from './CustomSecureInput';
 import Countdown from './Countdown';
 import CustomPinCodeInput from './CustomPinCodeInput';
+import ModalTabButton from './ModalTabButton';
 
 export {
   ContainerWithoutScrollView,
@@ -66,4 +67,5 @@ export {
   CustomSecureInput,
   Countdown,
   CustomPinCodeInput,
+  ModalTabButton,
 };

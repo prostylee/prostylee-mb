@@ -20,6 +20,7 @@ export default {
     notification: 'Thông báo',
     account: 'Tài khoản',
     post: 'Bài đăng',
+    addStory: 'Đăng story',
   },
   headerTitle: {
     featured_store: 'Cửa hàng nổi bật',
