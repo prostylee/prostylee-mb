@@ -20,6 +20,7 @@ import user, {
 
 import newFeed, {
   actions as newFeedActions,
+  selectors as newFeedSelectors,
   types as newFeedTypes,
 } from './newFeed';
 
@@ -41,7 +42,7 @@ const rootReducer = combineReducers({
 export {commonActions, commonSelectors, commonTypes};
 export {productActions, productSelectors, productTypes};
 export {userActions, userSelectors, userTypes};
-export {newFeedActions, newFeedTypes};
+export {newFeedActions, newFeedTypes, newFeedSelectors};
 export {storeActions, storeTypes};
 export {dynamicUsersActions, dynamicUsersTypes};
 

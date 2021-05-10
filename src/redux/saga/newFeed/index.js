@@ -5,7 +5,7 @@ import {
   getStoriesByUser,
 } from 'services/api/newFeedApi';
 import {getProductById} from 'services/api/productApi';
-import {getStoreById} from 'services/api/storeApi';
+import {getStoreById, getStoreMiniApi} from 'services/api/storeApi';
 import {newFeedActions, newFeedTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
@@ -117,11 +117,25 @@ const getProductOfStory = function* (id) {
   }
 };
 
+const getStoreMini = function* () {
+  try {
+    const res = yield call(getStoreMiniApi);
+    if (res.ok && res.data.status === SUCCESS) {
+      yield put(newFeedActions.getStoreMiniSuccess(res.data.data));
+    } else {
+      yield put(newFeedActions.getStoreMiniFail());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 const watcher = function* () {
   yield takeLatest(newFeedTypes.GET_NEW_FEED, getNewFeeds);
   yield takeLatest(newFeedTypes.HANDLE_LOAD_MORE, getLoadMoreNewFeed);
   yield takeLatest(newFeedTypes.GET_STORIES_BY_STORE, getStoriesByStores);
   yield takeLatest(newFeedTypes.GET_STORIES_BY_USER, getStoriesByUsers);
   yield takeLatest(newFeedTypes.GET_PRODUCT_OF_STORIES, getProductOfStory);
+  yield takeLatest(newFeedTypes.GET_STORE_MINI, getStoreMini);
 };
 export default watcher();

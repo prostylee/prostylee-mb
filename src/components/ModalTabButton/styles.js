@@ -7,6 +7,11 @@ const styles = EStyleSheet.create({
     justifyContent: 'flex-end',
     paddingBottom: '20%',
   },
+  modalStyle: {
+    flex: 1,
+    padding: 0,
+    margin: 0,
+  },
   linearGradient: {
     flex: 1,
     width: '100%',

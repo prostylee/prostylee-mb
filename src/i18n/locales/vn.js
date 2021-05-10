@@ -95,4 +95,8 @@ export default {
     phone: 'Số điện thoại',
     password: 'Mật khẩu',
   },
+  addStory: {
+    addStore: 'Thêm cửa hàng',
+    addStory: 'Chia sẻ story',
+  },
 };

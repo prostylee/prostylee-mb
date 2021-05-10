@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, ActivityIndicator, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import {Button, Text} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import {commonActions, commonSelectors} from 'reducers';
+import RootNavigator from 'navigator/rootNavigator';
 import LinearGradient from 'react-native-linear-gradient';
 import * as TabsIcon from 'svg/bottomTab';
 import i18n from 'i18n';
@@ -16,18 +17,19 @@ const ModalTabButton = ({style, visible}) => {
   const isFocusedMainTab = useSelector((state) =>
     commonSelectors.isFocusedMainTab(state),
   );
-  const closeTabButton = () => {
+  const closeTabButton = React.useCallback(() => {
     dispatch(commonActions.toggleTabButton(false));
-    dispatch(commonActions.toggleFocusMainTab(!isFocusedMainTab));
-  };
+    dispatch(commonActions.toggleFocusMainTab(false));
+  }, [dispatch]);
   const AddStoryButton = React.useMemo(() => {
     const buttonAction = () => {
       ImagePicker.openPicker({
         // width: 300,
         // height: 400,
-        cropping: false
-      }).then(image => {
-        console.log(image);
+        cropping: false,
+      }).then((image) => {
+        closeTabButton();
+        RootNavigator.navigate('AddStory', {image: image});
       });
     };
     return (
@@ -42,7 +44,7 @@ const ModalTabButton = ({style, visible}) => {
         <Text style={styles.labelStyle}>{i18n.t('bottomTab.addStory')}</Text>
       </View>
     );
-  }, []);
+  }, [closeTabButton]);
   return (
     <Modal
       animationIn="fadeIn"
@@ -53,7 +55,7 @@ const ModalTabButton = ({style, visible}) => {
       onBackdropPress={() => {
         dispatch(commonActions.toggleTabButton(false));
       }}
-      style={{flex: 1, padding: 0, margin: 0}}
+      style={styles.modalStyle}
       animationOutTiming={20}
       backdropOpacity={0.1}>
       <View style={styles.container}>
