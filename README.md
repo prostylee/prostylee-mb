@@ -84,3 +84,32 @@ TODO
 ## Deploy app on Store
 
 TODO
+
+## Code push
+Sign up account in CodePush https://appcenter.ms
+
+Add new app ios & android
+
+Go to Distribute -> CodePush -> create standard deployment
+
+Get list apps
+> appcenter apps list
+
+Get key 
+> appcenter codepush deployment list -a ownerName/appName -k
+
+Change key At file
+IOS
+> prostylee-mb/ios/prostylee/Info.plist
+> At <key>CodePushDeploymentKey</key>
+
+Android
+> prostylee-mb/android/app/src/main/res/values/strings.xml
+> At name="CodePushDeploymentKey"
+
+Deploy
+> appcenter codepush release-react -a sunshinesoftware.vn-gmail.com/prostylee-mb-ios -d Staging
+
+
+
+

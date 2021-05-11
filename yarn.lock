@@ -3739,7 +3739,7 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.0.tgz"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-base64-js@^1.0.2, base64-js@^1.1.2, base64-js@^1.2.3, base64-js@^1.3.1:
+base64-js@^1.0.2, base64-js@^1.1.2, base64-js@^1.2.3, base64-js@^1.3.1, base64-js@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
@@ -4108,16 +4108,16 @@ coa@^2.0.2:
     chalk "^2.4.1"
     q "^1.1.2"
 
-code-push@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/code-push/-/code-push-4.0.2.tgz"
-  integrity sha512-sJitS/KVFT136z3LUbiZXWsvi9Ub1eIDkmtZvKQ4/0N2RyegKqbSa+Ybozt6IJrvozLahdkSp8Yl9BgYcmCCvg==
+code-push@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/code-push/-/code-push-4.0.4.tgz#e25b16981dba5794dd249e104fa5408c593b4b4f"
+  integrity sha512-CIxGvXt4o/iiYSSZT7mhkAz0EeCJms3255PIs3BMawHptnBRrXUAma4JKRwSlldmZhpO425WXHZRaHc9HorM3A==
   dependencies:
     appcenter-file-upload-client "0.0.24"
     recursive-fs "^2.1.0"
     slash "^3.0.0"
     superagent "^5.3.1"
-    superagent-proxy "^2.0.0"
+    superagent-proxy "^2.1.0"
     yazl "^2.5.1"
 
 collect-v8-coverage@^1.0.0:
@@ -8054,7 +8054,7 @@ pkg-up@^3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-plist@3.0.1, plist@^3.0.1:
+plist@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/plist/-/plist-3.0.1.tgz"
   integrity sha512-GpgvHHocGRyQm74b6FWEZZVRroHKE1I0/BTjAmySaohK+cUn+hZpbqXkc3KWgW3gQYkqcQej35FohcT0FRlkRQ==
@@ -8062,6 +8062,15 @@ plist@3.0.1, plist@^3.0.1:
     base64-js "^1.2.3"
     xmlbuilder "^9.0.7"
     xmldom "0.1.x"
+
+plist@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/plist/-/plist-3.0.2.tgz#74bbf011124b90421c22d15779cee60060ba95bc"
+  integrity sha512-MSrkwZBdQ6YapHy87/8hDU8MnIcyxBKjeF+McXnr5A9MtffPewTs7G3hlpodT5TacyfIyFTaJEhh3GGcmasTgQ==
+  dependencies:
+    base64-js "^1.5.1"
+    xmlbuilder "^9.0.7"
+    xmldom "^0.5.0"
 
 plugin-error@^0.1.2:
   version "0.1.2"
@@ -8326,16 +8335,16 @@ react-native-autoheight-webview@^1.5.8:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-code-push@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npmjs.org/react-native-code-push/-/react-native-code-push-7.0.0.tgz"
-  integrity sha512-k2zZEnX00C8zxrhrrePOzVI77//YKvRa46uqtBECeYOZrGBo6VHp/sFFHBvUQed2dloS508+7g+qbarIt2FIqA==
+react-native-code-push@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-7.0.1.tgz#f82619ed2aa7da14633073876f3d4b8ee34d93c5"
+  integrity sha512-9NOVuTnaoQO6ZDJKCmPvqIZ36GkXePc+EZE1NkQ+Qtsh2KbHvfBFBrUaw5NmXSzrFNUwwoSFoPpeQzW/yt8CAA==
   dependencies:
-    code-push "^4.0.2"
+    code-push "^4.0.4"
     glob "^7.1.6"
     hoist-non-react-statics "^3.3.2"
     inquirer "^7.3.3"
-    plist "3.0.1"
+    plist "^3.0.2"
     semver "^7.3.2"
     xcode "3.0.1"
 
@@ -9589,9 +9598,9 @@ sudo-prompt@^9.0.0:
   resolved "https://registry.npmjs.org/sudo-prompt/-/sudo-prompt-9.2.1.tgz"
   integrity sha512-Mu7R0g4ig9TUuGSxJavny5Rv0egCEtpZRNMrZaYS1vxkiIxGiGUwoezU3LazIQ+KE04hTrTfNPgxU5gzi7F5Pw==
 
-superagent-proxy@^2.0.0:
+superagent-proxy@^2.1.0:
   version "2.1.0"
-  resolved "https://registry.npmjs.org/superagent-proxy/-/superagent-proxy-2.1.0.tgz"
+  resolved "https://registry.yarnpkg.com/superagent-proxy/-/superagent-proxy-2.1.0.tgz#34e91f9024fbace95f0a35c50c69edf2a0d331e2"
   integrity sha512-DnarpKN6Xn8e3pYlFV4Yvsj9yxLY4q5FIsUe5JvN7vjzP+YCfzXv03dTkZSD2yzrSadsNYHf0IgOUJwKjX457A==
   dependencies:
     debug "^3.1.0"
@@ -10388,6 +10397,11 @@ xmldom@0.1.x:
   version "0.1.31"
   resolved "https://registry.npmjs.org/xmldom/-/xmldom-0.1.31.tgz"
   integrity sha512-yS2uJflVQs6n+CyjHoaBmVSqIDevTAWrzMmjG1Gc7h1qQ7uVozNhEPJAwZXWyGQ/Gafo3fCwrcaokezLPupVyQ==
+
+xmldom@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.5.0.tgz#193cb96b84aa3486127ea6272c4596354cb4962e"
+  integrity sha512-Foaj5FXVzgn7xFzsKeNIde9g6aFBxTPi37iwsno8QvApmtg7KYrr+OPyRHcJF7dud2a5nGRBXK3n0dL62Gf7PA==
 
 xpipe@^1.0.5:
   version "1.0.5"
