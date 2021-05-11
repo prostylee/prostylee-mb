@@ -29,6 +29,10 @@ export const types = {
 
   ADD_NEW_FEED_STORE: 'ADD_NEW_FEED_STORE',
   REMOVE_NEW_FEED_STORE: 'REMOVE_NEW_FEED_STORE',
+
+  POST_STORY: 'POST_STORY',
+  POST_STORY_SUCCESS: 'POST_STORY_SUCCESS',
+  POST_STORY_FAIL: 'POST_STORY_FAIL',
 };
 
 export const actions = {
@@ -59,6 +63,10 @@ export const actions = {
 
   addNewFeedStore: createAction(types.ADD_NEW_FEED_STORE),
   removeNewFeedStore: createAction(types.REMOVE_NEW_FEED_STORE),
+
+  postStory: createAction(types.POST_STORY),
+  postStorySuccess: createAction(types.POST_STORY_SUCCESS),
+  postStoryFail: createAction(types.POST_STORY_FAIL),
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;

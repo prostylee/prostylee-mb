@@ -3,6 +3,7 @@ import {
   getNewFeed,
   getStoriesByStore,
   getStoriesByUser,
+  postStoriesByUser,
 } from 'services/api/newFeedApi';
 import {getProductById} from 'services/api/productApi';
 import {getStoreById, getStoreMiniApi} from 'services/api/storeApi';
@@ -130,6 +131,20 @@ const getStoreMini = function* () {
   }
 };
 
+const postStory = function* (payload) {
+  try {
+    const res = yield call(postStoriesByUser, payload);
+    console.log('res', JSON.stringify(res, null, 4));
+    if (res.ok && res.data.status === SUCCESS) {
+      yield put(newFeedActions.postStorySuccess(res.data.data));
+    } else {
+      yield put(newFeedActions.postStoryFail());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 const watcher = function* () {
   yield takeLatest(newFeedTypes.GET_NEW_FEED, getNewFeeds);
   yield takeLatest(newFeedTypes.HANDLE_LOAD_MORE, getLoadMoreNewFeed);
@@ -137,5 +152,6 @@ const watcher = function* () {
   yield takeLatest(newFeedTypes.GET_STORIES_BY_USER, getStoriesByUsers);
   yield takeLatest(newFeedTypes.GET_PRODUCT_OF_STORIES, getProductOfStory);
   yield takeLatest(newFeedTypes.GET_STORE_MINI, getStoreMini);
+  yield takeLatest(newFeedTypes.POST_STORY, postStory);
 };
 export default watcher();

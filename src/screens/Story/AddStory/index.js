@@ -83,22 +83,65 @@ const AddStory = (props) => {
     await dispatch(newFeedActions.removeNewFeedStore());
   };
 
-  const uploadImageFile = async (uri) => {
-    try {
-      const response = await fetch(uri);
-      const blob = await response.blob();
-      const res = await Storage.put('yourKeyNow', blob, {
-        contentType: 'image/jpg',
-      });
-      console.log(res, JSON.stringify(res, null, 4));
-    } catch (err) {
-      console.log('Error uploading file:', err);
+  const postStory = async (name) => {
+    if (!isEmpty(storeSelected) && storeSelected.id) {
+      await dispatch(
+        newFeedActions.postStory({
+          storeId: storeSelected.id,
+          productImageRequests: [
+            {
+              name: name,
+              path: 'cloundfront/prostylee/',
+            },
+          ],
+          targetType: 'USER',
+        }),
+      );
+    } else {
+      await dispatch(
+        newFeedActions.postStory({
+          productImageRequests: [
+            {
+              name: name,
+              path: 'cloundfront/prostylee/',
+            },
+          ],
+          targetType: 'USER',
+        }),
+      );
     }
   };
 
-  const addStory = (value) => {
-    const imgUri = viewShotRef.current.capture().then((uri) => {
-      uploadImageFile(uri);
+  const uploadToStorage = async (uri) => {
+    console.log('uploadToStorage ');
+    try {
+      if (!uri) {
+        return;
+      }
+      dispatch(commonActions.toggleLoading(true));
+      Storage.configure({level: 'protected'}); // public | protected | private
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      const fileName = `story_${Date.now()}.jpg`;
+      Storage.put(fileName, blob, {
+        contentType: 'image/jpg',
+      })
+        .then((result) => {
+          console.log('Uploaded with result = ' + JSON.stringify(result));
+          postStory(result.key);
+        })
+        .catch((err) => console.log(err));
+
+      console.log('Upload successfully');
+      dispatch(commonActions.toggleLoading(false));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const addStory = () => {
+    viewShotRef.current.capture().then(async (uri) => {
+      uploadToStorage(uri);
     });
   };
   //BackHandler handle

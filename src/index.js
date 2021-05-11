@@ -22,7 +22,7 @@ import FlashMessage from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
 
-import {Auth} from 'aws-amplify';
+import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from './config/aws-exports';
 
 // import NotificationPopup from 'react-native-push-notification-popup';
@@ -33,6 +33,10 @@ import LocalStorageService from './services/LocalStorageService';
 Auth.configure({
   ...awsconfig,
   storage: LocalStorageService,
+});
+Amplify.configure({
+  aws_user_files_s3_bucket: 'psmedia211437-dev',
+  aws_user_files_s3_bucket_region: 'ap-southeast-1',
 });
 
 EStyleSheet.build({
