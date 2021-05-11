@@ -34,7 +34,6 @@ const styles = EStyleSheet.create({
     width: 64,
     height: 64,
     padding: 0,
-    backgroundColor: 'red',
   },
   buttonWrapper: {
     display: 'flex',

@@ -12,54 +12,63 @@ export default EStyleSheet.create({
     flex: 1,
     position: 'relative',
   },
-  backButton: {
-    position: 'absolute',
-    top: 40,
-    left: 16,
-  },
-  backButtonStyle: {
-    width: 36,
-    height: 36,
-  },
-  bottom: {
-    height: 76,
+  searchBoxContainer: {
     width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    paddingTop: 6,
-    paddingHorizontal: 12,
+    paddingHorizontal: 16,
+    marginVertical: 8,
   },
-  addStore: {
-    height: 36,
-    width: '50%',
+  searchBox: {
+    borderWidth: 0,
+    borderColor: 'transparent',
+    backgroundColor: '$bgColor',
+  },
+  listContainer: {
+    flex: 1,
+  },
+  listContent: {
+    paddingHorizontal: 16,
+  },
+  storeWrapper: {
+    width: '100%',
+    height: 78,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '$bgColor',
   },
-  addStoreText: {
+  storeLogo: {
+    width: 46,
+    height: 46,
+  },
+  storeInfo: {
+    flex: 1,
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    paddingVertical: 20,
+    paddingHorizontal: 12,
+  },
+  storeName: {
     fontSize: 14,
     lineHeight: 20,
+    fontWeight: 'bold',
     color: '$black',
   },
-  addStory: {
-    height: 36,
-    width: '50%',
+  storeLocation: {
+    fontSize: 11,
+    lineHeight: 16,
+    color: '$lightGray',
+  },
+  storeIcon: {
+    width: 12,
+    height: '100%',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-  },
-  addStoryButton: {
-    height: 36,
-    paddingHorizontal: 12,
-    paddingVertical: 0,
-  },
-  addStoryButtonText: {
-    fontSize: 14,
-    lineHeight: 20,
-    color: '$white',
   },
 });

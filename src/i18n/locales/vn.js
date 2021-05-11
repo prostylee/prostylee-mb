@@ -97,6 +97,12 @@ export default {
   },
   addStory: {
     addStore: 'Thêm cửa hàng',
+    changeStore: 'Thay đổi cửa hàng',
     addStory: 'Chia sẻ story',
   },
+  addStore: {
+    title: 'Thêm cửa hàng',
+    search: 'Tìm kiếm cửa hàng',
+  },
+  remove: 'Xoá',
 };

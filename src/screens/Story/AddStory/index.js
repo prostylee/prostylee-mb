@@ -1,16 +1,27 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {Image, ContainerWithoutScrollView, ButtonRounded} from 'components';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Animated,
+  PanResponder,
+  Image,
+} from 'react-native';
+import {ContainerWithoutScrollView, ButtonRounded} from 'components';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {hasNotch} from 'react-native-device-info';
 import {useTheme, useRoute} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import * as CommonIcon from 'svg/common';
+import isEmpty from 'lodash/isEmpty';
+import ViewShot from 'react-native-view-shot';
+import {Storage} from 'aws-amplify';
 
 import styles from './styles';
 import i18n from 'i18n';
 import {useBackHandler} from '@react-native-community/hooks';
-import {commonActions} from 'reducers';
-import {useDispatch} from 'react-redux';
+import {commonActions, newFeedSelectors, newFeedActions} from 'reducers';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {dim} from 'utils/common';
 
@@ -18,9 +29,10 @@ const WIDTH = dim.width;
 const HEIGHT = dim.height;
 
 const AddStory = (props) => {
+  const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = React.useState(0);
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
-
+  const viewShotRef = React.useRef();
   //route
   const route = useRoute();
   const image = route?.params.image || '';
@@ -34,10 +46,61 @@ const AddStory = (props) => {
           width: (HEIGHT - (76 + notchHeight)) / imageRatio,
           height: HEIGHT - (76 + notchHeight),
         };
+  const storeSelected = useSelector((state) =>
+    newFeedSelectors.getNewFeedStore(state),
+  );
+  const pan = React.useRef(new Animated.ValueXY()).current;
 
-  //dispatch
-  const dispatch = useDispatch();
+  const panXValue = pan.x.interpolate({
+    inputRange: [-(WIDTH / imageRatio), 0],
+    outputRange: [-(WIDTH / imageRatio), 0],
+    extrapolate: 'clamp',
+  });
 
+  const panYValue = pan.y.interpolate({
+    inputRange: [-(HEIGHT - (76 + notchHeight)) / imageRatio, 0],
+    outputRange: [-(HEIGHT - (76 + notchHeight)) / imageRatio, 0],
+    extrapolate: 'clamp',
+  });
+
+  const panResponder = React.useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {
+        pan.setOffset({
+          x: pan.x._value,
+          y: pan.y._value,
+        });
+      },
+      onPanResponderMove: Animated.event([null, {dx: pan.x, dy: pan.y}]),
+      onPanResponderRelease: () => {
+        pan.flattenOffset();
+      },
+    }),
+  ).current;
+
+  const removeStore = async () => {
+    await dispatch(newFeedActions.removeNewFeedStore());
+  };
+
+  const uploadImageFile = async (uri) => {
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      const res = await Storage.put('yourKeyNow', blob, {
+        contentType: 'image/jpg',
+      });
+      console.log(res, JSON.stringify(res, null, 4));
+    } catch (err) {
+      console.log('Error uploading file:', err);
+    }
+  };
+
+  const addStory = (value) => {
+    const imgUri = viewShotRef.current.capture().then((uri) => {
+      uploadImageFile(uri);
+    });
+  };
   //BackHandler handle
   useBackHandler(() => {
     return true;
@@ -52,18 +115,34 @@ const AddStory = (props) => {
         safeAreaTopStyle={styles.safeAreaTopStyle}
         bgStatusBar={colors['$bgColor']}>
         <View style={styles.mainWrapper}>
-          <Image
-            source={{uri: image.path}}
-            style={imageStyle}
-            resizeMode={'contain'}
-          />
+          <ViewShot ref={viewShotRef} options={{format: 'jpg', quality: 0.9}}>
+            <Animated.Image
+              source={{uri: image.uri}}
+              style={[
+                imageStyle,
+                {
+                  transform: [
+                    {
+                      translateX: imageRatio < screenRatio ? panXValue : 0,
+                    },
+                    {translateY: imageRatio >= screenRatio ? panYValue : 0},
+                  ],
+                },
+              ]}
+              resizeMode={'contain'}
+              {...panResponder.panHandlers}
+            />
+          </ViewShot>
           <View style={styles.bottom}>
             <TouchableOpacity
               style={styles.addStore}
               activeOpacity={1}
               onPress={() => props.navigation.navigate('AddStore')}>
               <Text style={styles.addStoreText}>
-                + {i18n.t('addStory.addStore')}
+                +{' '}
+                {isEmpty(storeSelected)
+                  ? i18n.t('addStory.addStore')
+                  : i18n.t('addStory.changeStore')}
               </Text>
             </TouchableOpacity>
             <View style={styles.addStory}>
@@ -72,6 +151,7 @@ const AddStory = (props) => {
                 contentStyle={styles.addStoryButton}
                 labelStyle={styles.addStoryButtonText}
                 label={i18n.t('addStory.addStory')}
+                onPress={addStory}
               />
             </View>
           </View>
@@ -86,6 +166,20 @@ const AddStory = (props) => {
               />
             </TouchableOpacity>
           </View>
+          {!isEmpty(storeSelected) ? (
+            <View style={styles.selectStore}>
+              <CommonIcon.Store width={12} height={12} />
+              <Text style={styles.selectStoreName}>{storeSelected.name}</Text>
+              <TouchableOpacity
+                style={styles.selectStoreRemove}
+                activeOpacity={0.9}
+                onPress={removeStore}>
+                <Text style={styles.selectStoreRemoveText}>
+                  {i18n.t('remove')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : null}
         </View>
       </ContainerWithoutScrollView>
     </View>

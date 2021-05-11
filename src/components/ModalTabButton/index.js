@@ -8,29 +8,33 @@ import RootNavigator from 'navigator/rootNavigator';
 import LinearGradient from 'react-native-linear-gradient';
 import * as TabsIcon from 'svg/bottomTab';
 import i18n from 'i18n';
-import ImagePicker from 'react-native-image-crop-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 import Modal from 'react-native-modal';
 
+import {dim} from 'utils/common';
+
+const WIDTH = dim.width;
+
 const ModalTabButton = ({style, visible}) => {
   const dispatch = useDispatch();
-  const isFocusedMainTab = useSelector((state) =>
-    commonSelectors.isFocusedMainTab(state),
-  );
   const closeTabButton = React.useCallback(() => {
     dispatch(commonActions.toggleTabButton(false));
     dispatch(commonActions.toggleFocusMainTab(false));
   }, [dispatch]);
   const AddStoryButton = React.useMemo(() => {
     const buttonAction = () => {
-      ImagePicker.openPicker({
-        // width: 300,
-        // height: 400,
-        cropping: false,
-      }).then((image) => {
-        closeTabButton();
-        RootNavigator.navigate('AddStory', {image: image});
-      });
+      launchImageLibrary(
+        {
+          mediaType: 'photo',
+          maxWidth: WIDTH,
+        },
+        (image) => {
+          console.log('image', JSON.stringify(image, null, 4))
+          closeTabButton();
+          RootNavigator.navigate('AddStory', {image: image});
+        },
+      );
     };
     return (
       <View style={styles.buttonContainer}>

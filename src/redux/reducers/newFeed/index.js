@@ -26,6 +26,9 @@ export const types = {
   GET_STORE_MINI: 'GET_STORE_MINI',
   GET_STORE_MINI_SUCCESS: 'GET_STORE_MINI_SUCCESS',
   GET_STORE_MINI_FAIL: 'GET_STORE_MINI_FAIL',
+
+  ADD_NEW_FEED_STORE: 'ADD_NEW_FEED_STORE',
+  REMOVE_NEW_FEED_STORE: 'REMOVE_NEW_FEED_STORE',
 };
 
 export const actions = {
@@ -53,6 +56,9 @@ export const actions = {
   getStoreMini: createAction(types.GET_STORE_MINI),
   getStoreMiniSuccess: createAction(types.GET_STORE_MINI_SUCCESS),
   getStoreMiniFail: createAction(types.GET_STORE_MINI_FAIL),
+
+  addNewFeedStore: createAction(types.ADD_NEW_FEED_STORE),
+  removeNewFeedStore: createAction(types.REMOVE_NEW_FEED_STORE),
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -62,6 +68,7 @@ const intialState = {
   loadMoreLoading: false,
   stories: {},
   newFeed: {},
+  newFeedStoreSelect: {},
   threeFirstNewFeedItem: {},
   productOfStory: {},
   storeOfStory: {},
@@ -73,6 +80,7 @@ const intialState = {
 
 export const selectors = {
   getStoreMini: (state) => state.newFeed.storeMini,
+  getNewFeedStore: (state) => state.newFeed.newFeedStoreSelect,
 };
 
 export default handleActions(
@@ -144,6 +152,12 @@ export default handleActions(
     },
     [types.GET_STORE_MINI_FAIL]: (state, {payload}) => {
       return {...state, storeMini: {}};
+    },
+    [types.ADD_NEW_FEED_STORE]: (state, {payload}) => {
+      return {...state, newFeedStoreSelect: payload};
+    },
+    [types.REMOVE_NEW_FEED_STORE]: (state, {payload}) => {
+      return {...state, newFeedStoreSelect: {}};
     },
   },
   intialState,
