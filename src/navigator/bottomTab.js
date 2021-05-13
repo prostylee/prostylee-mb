@@ -67,6 +67,15 @@ const BottomTabs = (props) => {
                 _i === 2 && e.preventDefault();
                 _i === 2 &&
                   dispatch(commonActions.toggleTabButton(!isShowTabButton));
+                if (_i === 2) {
+                  if (isShowTabButton) {
+                    dispatch(commonActions.toggleTabButton(false));
+                    dispatch(commonActions.toggleFocusMainTab(false));
+                  } else {
+                    dispatch(commonActions.toggleTabButton(true));
+                    dispatch(commonActions.toggleFocusMainTab(true));
+                  }
+                }
               },
             }}
             options={{

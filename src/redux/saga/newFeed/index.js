@@ -133,8 +133,7 @@ const getStoreMini = function* () {
 
 const postStory = function* (payload) {
   try {
-    const res = yield call(postStoriesByUser, payload);
-    console.log('res', JSON.stringify(res, null, 4));
+    const res = yield call(postStoriesByUser, payload.payload);
     if (res.ok && res.data.status === SUCCESS) {
       yield put(newFeedActions.postStorySuccess(res.data.data));
     } else {

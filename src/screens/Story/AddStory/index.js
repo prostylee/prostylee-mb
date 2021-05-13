@@ -14,9 +14,9 @@ import {useTheme, useRoute} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
-import ViewShot from 'react-native-view-shot';
+import ViewShot, {captureRef} from 'react-native-view-shot';
 import {Storage} from 'aws-amplify';
-
+import {userTokenSelector} from 'redux/selectors/user';
 import styles from './styles';
 import i18n from 'i18n';
 import {useBackHandler} from '@react-native-community/hooks';
@@ -27,10 +27,10 @@ import {dim} from 'utils/common';
 
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
+const storyImageRatio = 16 / 9;
 
 const AddStory = (props) => {
   const dispatch = useDispatch();
-  const [activeIndex, setActiveIndex] = React.useState(0);
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
   const viewShotRef = React.useRef();
   //route
@@ -38,30 +38,43 @@ const AddStory = (props) => {
   const image = route?.params.image || '';
 
   const imageRatio = image.height / image.width;
-  const screenRatio = (HEIGHT - 76 + notchHeight) / WIDTH;
-  const imageStyle =
+  const screenRatio = (HEIGHT + notchHeight) / WIDTH;
+  let imageStyle;
+  imageStyle =
     imageRatio >= screenRatio
       ? {width: WIDTH, height: WIDTH * imageRatio}
       : {
-          width: (HEIGHT - (76 + notchHeight)) / imageRatio,
-          height: HEIGHT - (76 + notchHeight),
+          width: (HEIGHT - notchHeight) / imageRatio,
+          height: HEIGHT - notchHeight,
         };
   const storeSelected = useSelector((state) =>
     newFeedSelectors.getNewFeedStore(state),
   );
+  const userProfile = useSelector((state) => userTokenSelector(state));
+  const userData = userProfile
+    ? userProfile.signInUserSession?.idToken.payload.identities?.[0]
+    : {};
   const pan = React.useRef(new Animated.ValueXY()).current;
 
-  const panXValue = pan.x.interpolate({
-    inputRange: [-(WIDTH / imageRatio), 0],
-    outputRange: [-(WIDTH / imageRatio), 0],
-    extrapolate: 'clamp',
-  });
+  let panXValue;
+  panXValue =
+    imageRatio < screenRatio
+      ? pan.x.interpolate({
+          inputRange: [-((HEIGHT - notchHeight) / imageRatio - WIDTH), 0],
+          outputRange: [-((HEIGHT - notchHeight) / imageRatio - WIDTH), 0],
+          extrapolate: 'clamp',
+        })
+      : 0;
 
-  const panYValue = pan.y.interpolate({
-    inputRange: [-(HEIGHT - (76 + notchHeight)) / imageRatio, 0],
-    outputRange: [-(HEIGHT - (76 + notchHeight)) / imageRatio, 0],
-    extrapolate: 'clamp',
-  });
+  let panYValue;
+  panYValue =
+    imageRatio >= screenRatio
+      ? pan.y.interpolate({
+          inputRange: [-(WIDTH * imageRatio - (HEIGHT - notchHeight)), 0],
+          outputRange: [-(WIDTH * imageRatio - (HEIGHT - notchHeight)), 0],
+          extrapolate: 'clamp',
+        })
+      : 0;
 
   const panResponder = React.useRef(
     PanResponder.create({
@@ -87,29 +100,23 @@ const AddStory = (props) => {
     if (!isEmpty(storeSelected) && storeSelected.id) {
       await dispatch(
         newFeedActions.postStory({
-          storeId: storeSelected.id,
-          productImageRequests: [
-            {
-              name: name,
-              path: 'cloundfront/prostylee/',
-            },
-          ],
-          targetType: 'USER',
+          productId: storeSelected.id,
+          attachmentIds: [name],
+          targetType: 'user',
+          targetId: userData.userId,
         }),
       );
     } else {
       await dispatch(
         newFeedActions.postStory({
-          productImageRequests: [
-            {
-              name: name,
-              path: 'cloundfront/prostylee/',
-            },
-          ],
-          targetType: 'USER',
+          productId: null,
+          attachmentIds: [name],
+          targetType: 'user',
+          targetId: userData.userId,
         }),
       );
     }
+    removeStore();
   };
 
   const uploadToStorage = async (uri) => {
@@ -124,11 +131,12 @@ const AddStory = (props) => {
       const blob = await response.blob();
       const fileName = `story_${Date.now()}.jpg`;
       Storage.put(fileName, blob, {
-        contentType: 'image/jpg',
+        contentType: 'image/jpeg',
       })
         .then((result) => {
           console.log('Uploaded with result = ' + JSON.stringify(result));
           postStory(result.key);
+          getUrl(result.key);
         })
         .catch((err) => console.log(err));
 
@@ -139,10 +147,20 @@ const AddStory = (props) => {
     }
   };
 
+  const getUrl = async (key) => {
+    const signedURL = await Storage.get(key);
+    // setUploadedPhoto(signedURL);
+    console.log('signedURL ' + signedURL);
+  };
+
   const addStory = () => {
-    viewShotRef.current.capture().then(async (uri) => {
-      uploadToStorage(uri);
-    });
+    captureRef(viewShotRef, {
+      format: 'jpg',
+      quality: 0.9,
+    }).then(
+      (uri) => uploadToStorage(uri),
+      (error) => console.error('Oops, snapshot failed', error),
+    );
   };
   //BackHandler handle
   useBackHandler(() => {
@@ -152,22 +170,32 @@ const AddStory = (props) => {
   //Theme
   const {colors} = useTheme();
 
+  const ViewShotStyle =
+    (HEIGHT - notchHeight) / WIDTH > storyImageRatio
+      ? {width: WIDTH, height: WIDTH * storyImageRatio, overflow: 'visible'}
+      : {
+          width: (HEIGHT - notchHeight) / storyImageRatio,
+          height: HEIGHT - notchHeight,
+          overflow: 'visible',
+        };
+
   return (
     <View style={styles.container}>
       <ContainerWithoutScrollView
         safeAreaTopStyle={styles.safeAreaTopStyle}
         bgStatusBar={colors['$bgColor']}>
         <View style={styles.mainWrapper}>
-          <ViewShot ref={viewShotRef} options={{format: 'jpg', quality: 0.9}}>
+          <ViewShot
+            style={ViewShotStyle}
+            ref={viewShotRef}
+            options={{format: 'jpg', quality: 0.9}}>
             <Animated.Image
-              source={{uri: image.uri}}
+              source={{uri: image.path}}
               style={[
                 imageStyle,
                 {
                   transform: [
-                    {
-                      translateX: imageRatio < screenRatio ? panXValue : 0,
-                    },
+                    {translateX: imageRatio < screenRatio ? panXValue : 0},
                     {translateY: imageRatio >= screenRatio ? panYValue : 0},
                   ],
                 },

@@ -21,6 +21,8 @@ export default {
     account: 'Tài khoản',
     post: 'Bài đăng',
     addStory: 'Đăng story',
+    addPost: 'Đăng bài viết',
+    addProduct: 'Đăng sản phẩm',
   },
   headerTitle: {
     featured_store: 'Cửa hàng nổi bật',
