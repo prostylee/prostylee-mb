@@ -92,7 +92,7 @@ const ModalTabButton = ({style, visible}) => {
     })
       .then((res) => {
         console.log(res);
-        // RootNavigator.navigate('AddStory', {image: res[0]});
+        RootNavigator.navigate('CropPicture', {images: res});
       })
       .catch((e) => console.log(e));
   };

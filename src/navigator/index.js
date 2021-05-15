@@ -30,6 +30,9 @@ import {
   Welcome,
   AddStory,
   AddStore,
+  CropPicture,
+  AddStatus,
+  AddStoreForStatus,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -55,6 +58,9 @@ function SignedIn() {
       <Stack.Screen name="UserProfile" component={UserProfile} />
       <Stack.Screen name="AddStory" component={AddStory} />
       <Stack.Screen name="AddStore" component={AddStore} />
+      <Stack.Screen name="CropPicture" component={CropPicture} />
+      <Stack.Screen name="AddStatus" component={AddStatus} />
+      <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
     </Stack.Navigator>
   );
 }

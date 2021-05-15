@@ -107,4 +107,9 @@ export default {
     search: 'Tìm kiếm cửa hàng',
   },
   remove: 'Xoá',
+  addStatus: {
+    title: 'Thêm bài viết',
+    textPlaceholder: 'Viết chú thích...',
+    addStatus: 'Đăng bài viết',
+  },
 };
