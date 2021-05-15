@@ -8,7 +8,7 @@ import RootNavigator from 'navigator/rootNavigator';
 import LinearGradient from 'react-native-linear-gradient';
 import * as TabsIcon from 'svg/bottomTab';
 import i18n from 'i18n';
-import ImagePicker from 'react-native-image-crop-picker';
+import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
 import Modal from 'react-native-modal';
 
@@ -20,6 +20,7 @@ const HEIGHT = dim.height;
 const ModalTabButton = ({style, visible}) => {
   const dispatch = useDispatch();
   const [initRender, setInitRender] = React.useState(false);
+  const [pickerModal, setPickerModal] = React.useState('');
   const isShowTabButton = useSelector((state) =>
     commonSelectors.isShowTabButton(state),
   );
@@ -68,14 +69,53 @@ const ModalTabButton = ({style, visible}) => {
       useNativeDriver: true,
     }).start();
   };
+  const openStoryPicker = async () => {
+    MultipleImagePicker.openPicker({
+      mediaType: 'image',
+      singleSelectedMode: true,
+      selectedColor: '#3470FB',
+      selectedAssets: [],
+    })
+      .then((res) => {
+        console.log(res);
+        RootNavigator.navigate('AddStory', {image: res[0]});
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const openStatusPicker = async () => {
+    MultipleImagePicker.openPicker({
+      mediaType: 'image',
+      maxSelectedAssets: 4,
+      selectedColor: '#3470FB',
+      selectedAssets: [],
+    })
+      .then((res) => {
+        console.log(res);
+        // RootNavigator.navigate('AddStory', {image: res[0]});
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const checkPickerModal = () => {
+    switch (pickerModal) {
+      case 'story':
+        openStoryPicker();
+        break;
+      case 'status':
+        openStatusPicker();
+        break;
+      case 'product':
+        break;
+      default:
+        return;
+    }
+  };
+
   const AddStoryButton = () => {
-    const buttonAction = () => {
-      ImagePicker.openPicker({
-        cropping: false,
-      }).then((image) => {
-        RootNavigator.navigate('AddStory', {image: image});
-        closeTabButton();
-      });
+    const buttonAction = async () => {
+      setPickerModal('story');
+      closeTabButton();
     };
     return (
       <Animated.View
@@ -101,14 +141,8 @@ const ModalTabButton = ({style, visible}) => {
   };
   const AddPostButton = () => {
     const buttonAction = () => {
-      ImagePicker.openPicker({
-        cropping: true,
-        multiple: true,
-        maxFiles: 4,
-      }).then((images) => {
-        closeTabButton();
-        console.log(images);
-      });
+      setPickerModal('status');
+      closeTabButton();
     };
     return (
       <Animated.View
@@ -175,6 +209,11 @@ const ModalTabButton = ({style, visible}) => {
       }}
       onModalWillHide={() => {
         tabButtonHide();
+      }}
+      onModalHide={() => {
+        setTimeout(() => {
+          checkPickerModal();
+        }, 200);
       }}
       backdropColor={'transparent'}
       onBackdropPress={() => {
