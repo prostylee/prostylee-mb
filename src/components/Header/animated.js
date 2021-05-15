@@ -1,21 +1,23 @@
 import React from 'react';
 import {StyleSheet, View, Dimensions} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-
 const {width} = Dimensions.get('window');
 
 const HeaderAnimated = ({
   heightShow,
-  title,
   leftComponent,
   rightComponent,
   midComponent,
+  bottomComponent,
   scrollAnimated,
   Animated,
+  bottomHeight,
+  hideBottomBorder,
 }) => {
   /*Dimension header*/
   const WIDTH_HEADER = width;
-  const HEIGHT_HEADER = 50 + getStatusBarHeight();
+  const HEIGHT_HEADER =
+    (bottomHeight ? bottomHeight : 0) + 50 + getStatusBarHeight();
 
   /*Animated*/
   const headerColor = scrollAnimated.interpolate({
@@ -25,7 +27,10 @@ const HeaderAnimated = ({
   });
   const borderBottomColor = scrollAnimated.interpolate({
     inputRange: [0, heightShow ? heightShow : HEIGHT_HEADER],
-    outputRange: ['transparent', '#F4F5F5'],
+    outputRange: [
+      'transparent',
+      hideBottomBorder && hideBottomBorder == true ? 'transparent' : '#F4F5F5',
+    ],
     extrapolate: 'clamp',
   });
   const opacity = scrollAnimated.interpolate({
@@ -33,7 +38,6 @@ const HeaderAnimated = ({
     outputRange: [0, 1],
     extrapolate: 'clamp',
   });
-
   return (
     <Animated.View
       style={{
@@ -46,7 +50,9 @@ const HeaderAnimated = ({
           paddingTop: getStatusBarHeight(),
           ...styles.content,
         }}>
-        <View style={styles.left}>{leftComponent ? leftComponent : null}</View>
+        <View style={styles.left}>
+          <Animated.View style={{opacity}}>{leftComponent}</Animated.View>
+        </View>
         <View style={styles.mid(WIDTH_HEADER)}>
           {midComponent ? (
             <Animated.View style={{opacity}}>{midComponent}</Animated.View>
@@ -56,6 +62,9 @@ const HeaderAnimated = ({
           {rightComponent ? rightComponent : null}
         </View>
       </View>
+      {bottomComponent ? (
+        <Animated.View style={{opacity}}>{bottomComponent}</Animated.View>
+      ) : null}
     </Animated.View>
   );
 };

@@ -25,6 +25,7 @@ import ThemeView from './ThemeView';
 import ImageAnimated from './Image/imageAnimated';
 import ContainerView from './ContainerView';
 import Header from './Header';
+import HeaderAnimated from './Header/animated';
 import Title from './Title';
 import SocialSignIn from '../screens/Auth/SocialSignIn';
 import CustomTextInput from './CustomTextInput';
@@ -60,6 +61,7 @@ export {
   ImageAnimated,
   ContainerView,
   Header,
+  HeaderAnimated,
   Title,
   SocialSignIn,
   CustomTextInput,
