@@ -14,17 +14,35 @@ export default EStyleSheet.create({
   form: {
     paddingHorizontal: '6%',
     marginTop: '20rem',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  label: {
+    fontFamily: '$font1',
+    color: '$lightGray',
+    fontSize: '$normalText',
+    lineHeight: '20rem',
+    textAlign: 'center',
+  },
+  phone: {
+    fontFamily: '$font1Bold',
+    color: '$black500',
+    fontSize: '$normalText',
+    marginBottom: '20rem',
+    textAlign: 'center',
   },
   button: {
-    marginTop: '15rem',
+    marginTop: '30rem',
+    marginBottom: '20rem',
+    width: '100%',
   },
-  textInput: {
-    paddingRight: '5%',
+  labelTextButton: {
+    color: '$primaryBlue',
   },
-  errMsg: {
+  countDown: {
+    textAlign: 'center',
     fontFamily: '$font1',
-    fontSize: '$smallText',
-    color: '$red',
-    marginTop: '4rem',
+    color: '$black500',
+    fontSize: '$largeText',
   },
 });

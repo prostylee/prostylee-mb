@@ -9,8 +9,8 @@ import styles from './styles';
 import {Success} from 'svg/common';
 
 const Index = (props) => {
-  const onBackToLogin = () => {
-    props.navigation.navigate('Login');
+  const onBackToSignIn = () => {
+    props.navigation.navigate('SignIn');
   };
   return (
     <View style={styles.container}>
@@ -20,10 +20,10 @@ const Index = (props) => {
           <Text style={styles.label}>{I18n.t('pwChangeSuccess')}</Text>
           <Text style={styles.content}>{I18n.t('pwChangeSuccessNoti')}</Text>
           <ButtonOutlined
-            label={I18n.t('backToLogin')}
+            label={I18n.t('backToSignIn')}
             contentStyle={styles.contentButton}
             style={styles.button}
-            onPress={() => onBackToLogin()}
+            onPress={() => onBackToSignIn()}
           />
         </View>
       </ContainerWithoutScrollView>

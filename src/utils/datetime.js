@@ -2,29 +2,6 @@ import moment from 'moment';
 
 moment.locale('vi-VN');
 
-export const currentDate = () => {
-  return moment();
-};
-
-export const format = (timestamp, pattern) => {
-  if (timestamp) {
-    return moment(timestamp).format(pattern);
-  }
-  return '';
-};
-
-export const formatDateTime = (timestamp) => {
-  return format(timestamp, 'DD/MM/YYYY HH:mm');
-};
-
-export const formatDate = (timestamp) => {
-  return format(timestamp, 'DD/MM/YYYY');
-};
-
-export const formatTime = (timestamp) => {
-  return format(timestamp, 'HH:mm');
-};
-
 export const convertUnixTime = (UNIX_TIMESTAMP) => {
   const a = new Date(UNIX_TIMESTAMP);
   const months = [
@@ -62,10 +39,50 @@ export const convertUnixTime = (UNIX_TIMESTAMP) => {
   return time;
 };
 
+export const getToday = () => {
+  const t = new Date();
+  const d = t.getDate();
+  const m = t.getMonth() + 1;
+  const y = t.getFullYear();
+  const today = checkValue(d) + '/' + checkValue(m) + '/' + y;
+
+  return today;
+};
+
+const checkValue = (value) => {
+  if (value < 10) {
+    return '0' + value;
+  }
+  return value;
+};
+
 export const checkExpiredDate = (date) => {
   if (Date.now() >= date * 1000) {
     return true;
   } else {
     return false;
   }
+};
+
+export const currentDate = () => {
+  return moment();
+};
+
+export const format = (timestamp, pattern) => {
+  if (timestamp) {
+    return moment(timestamp).format(pattern);
+  }
+  return '';
+};
+
+export const formatDateTime = (timestamp) => {
+  return format(timestamp, 'DD/MM/YYYY HH:mm');
+};
+
+export const formatDate = (timestamp) => {
+  return format(timestamp, 'DD/MM/YYYY');
+};
+
+export const formatTime = (timestamp) => {
+  return format(timestamp, 'HH:mm');
 };

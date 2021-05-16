@@ -1,8 +1,6 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {ButtonRounded, Container, HeaderBack, TextInputBorderBottom} from 'components';
-
-import _ from 'lodash';
+import {View} from 'react-native';
+import {ButtonRounded, Container, HeaderBack} from 'components';
 
 import {commonActions, userActions} from 'reducers';
 import {useDispatch} from 'react-redux';
@@ -10,72 +8,26 @@ import {useDispatch} from 'react-redux';
 import styles from './styles';
 
 import I18n from 'i18n';
+import {Field, Formik} from 'formik';
+import {CustomTextInput} from '../../../components';
+import {validateEmail} from '../../../utils/validatorUtils';
 
 const Index = (props) => {
-  //Initial States
-  const [email, setEmail] = React.useState('');
-  const [invalidEmail, setInvalidEmail] = React.useState(false);
-  const [errEmailMsg, setErrEmailMsg] = React.useState('');
-  const [disabledBtn, setDisabledBtn] = React.useState(false);
-  const [isShowErrMsg, toggleShowErrMsg] = React.useState(false);
-
-  //useEffect
-  React.useEffect(() => {
-    if (invalidEmail || _.isEmpty(email)) {
-      setDisabledBtn(true);
-    } else {
-      setDisabledBtn(false);
-    }
-  }, [invalidEmail, email]);
-
-  //Dispatch Redux
   const dispatch = useDispatch();
 
-  //textInput
-  const onChangeEmail = async (value) => {
-    let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    if (!_.isEmpty(value)) {
-      //nếu textInput có giá trị khác rỗng
-      if (reg.test(value) === false) {
-        setEmail(value);
-        setInvalidEmail(true);
-        setErrEmailMsg(I18n.t('invalidEmail'));
-        toggleShowErrMsg(false);
-        return false;
-      } else {
-        //email hợp lệ
-        setEmail(value.toLowerCase());
-        setInvalidEmail(false);
-        setErrEmailMsg('');
-      }
-    } else {
-      //nếu textInput rỗng
-      setEmail(value);
-      setInvalidEmail(false);
-      setErrEmailMsg('');
-    }
-  };
-
-  const onBlurEmailInput = () => {
-    if (invalidEmail) {
-      toggleShowErrMsg(true);
-    }
-  };
-
-  //handle User login
-  const onSubmitEmail = async () => {
+  const onSubmitEmail = async (formValues) => {
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
       userActions.userForgotPassword({
-        email,
-        onSuccess: () => onUserForgotPasswordSuccess(),
+        email: formValues.email,
+        onSuccess: () => onUserForgotPasswordSuccess(formValues),
       }),
     );
   };
 
-  const onUserForgotPasswordSuccess = async () => {
+  const onUserForgotPasswordSuccess = async (formValues) => {
     await dispatch(commonActions.toggleLoading(false));
-    props.navigation.navigate('OTPVerification', {email});
+    props.navigation.navigate('ResetPassword', {email: formValues.email});
   };
 
   const onGoBack = () => {
@@ -90,29 +42,30 @@ const Index = (props) => {
             title={I18n.t('forgotPassword')}
             onBack={() => onGoBack()}
           />
-          <View style={styles.form}>
-            <Text style={styles.label}>{I18n.t('emailOrPhone')}</Text>
-            <TextInputBorderBottom
-              hint=""
-              value={email}
-              onChangeText={(text) => onChangeEmail(text)}
-              textInputStyle={styles.textInput}
-              autoFocus={true}
-              keyboardType="email-address"
-              onBlur={() => onBlurEmailInput()}
-            />
-            {isShowErrMsg && invalidEmail && (
-              <Text style={styles.errMsg}>{errEmailMsg}</Text>
+          <Formik
+            validateOnMount={true}
+            initialValues={{email: ''}}
+            onSubmit={(values) => onSubmitEmail(values)}>
+            {({handleSubmit, values, isValid}) => (
+              <View style={styles.form}>
+                <Field
+                  component={CustomTextInput}
+                  validate={validateEmail}
+                  name="email"
+                  label={I18n.t('email')}
+                  keyboardType="email-address"
+                />
+
+                <View style={styles.btnWrapper}>
+                  <ButtonRounded
+                    label={I18n.t('next')}
+                    onPress={handleSubmit}
+                    disabled={!isValid || values.email === ''}
+                  />
+                </View>
+              </View>
             )}
-            <View style={styles.btnWrapper}>
-              <ButtonRounded
-                label={I18n.t('next')}
-                style={styles.button}
-                onPress={() => onSubmitEmail()}
-                disabled={disabledBtn}
-              />
-            </View>
-          </View>
+          </Formik>
         </View>
       </Container>
     </View>

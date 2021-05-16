@@ -1,5 +1,6 @@
 import React from 'react';
-import {TextInput, View, TouchableOpacity, Image, Text} from 'react-native';
+import {TextInput, View, TouchableOpacity, Text} from 'react-native';
+import PropTypes from 'prop-types';
 import styles from './styles';
 
 const TextInputBorderBottom = ({
@@ -62,6 +63,12 @@ const TextInputBorderBottom = ({
 TextInputBorderBottom.defaultProps = {
   disablePressIcon: false,
   placeholderTextColor: '#BBC0C3',
+};
+
+TextInputBorderBottom.propTypes = {
+  placeholderTextColor: PropTypes.string,
+  unit: PropTypes.string,
+  disablePressIcon: PropTypes.bool,
 };
 
 export default TextInputBorderBottom;

@@ -1,72 +1,64 @@
+import i18n from 'i18n';
+
 export const bottomTabs = {
   newFeed: 'NewFeed',
-  shop: "ProductCategory",
-  account: "Account"
-}
+  shop: 'ProductCategory',
+  account: 'Account',
+};
 
 export const tabsSetting = {
   configs: {
-    initialRouteName: bottomTabs['newFeed'],
+    initialRouteName: bottomTabs.newFeed,
     tabBarColor: '#ffffff',
     activeColor: '#823FFD',
-    inactiveColor: 'gray'
+    inactiveColor: 'gray',
   },
   tabsNavigator: [
     {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'New Feed',
-        en: 'New Feed'
-      },
-      screen: bottomTabs['newFeed'],
+      title: '',
+      name: i18n.t('bottomTab.newFeed'),
+      screen: bottomTabs.newFeed,
       option: {
-        tabBarIcon: 'NewFeedTab'
-      }
-    },
-     {
-      title: {
-        vi: '',
-        en: '',
+        tabBarIcon: 'NewFeedTab',
+        tabBarIconSolid: 'NewFeedTabSolid',
       },
-      name: {
-        vi: 'Cửa hàng',
-        en: 'Store'
-      },
-      screen: bottomTabs['newFeed'],
-      option: {
-        tabBarIcon: 'StoreTab'
-      }
     },
     {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Thông báo',
-        en: 'Notification'
-      },
-      screen: bottomTabs['newFeed'],
+      title: '',
+      name: i18n.t('bottomTab.store'),
+      screen: bottomTabs.newFeed,
       option: {
-        tabBarIcon: 'NotifTab'
-      }
+        tabBarIcon: 'StoreTab',
+        tabBarIconSolid: 'StoreTabSolid',
+      },
     },
     {
-      title: {
-        vi: '',
-        en: '',
-      },
-      name: {
-        vi: 'Tài khoản',
-        en: 'Account'
-      },
-      screen: bottomTabs['newFeed'],
+      title: '',
+      name: i18n.t('bottomTab.post'),
+      isTurnOfLabel: true,
+      screen: bottomTabs.newFeed,
       option: {
-        tabBarIcon: 'AccountTab'
-      }
+        tabBarIcon: 'MainTab',
+        tabBarIconFocused: 'MainTabFocused',
+      },
     },
-  ]
-}
+    {
+      title: '',
+      name: i18n.t('bottomTab.notification'),
+      screen: bottomTabs.newFeed,
+      option: {
+        tabBarIcon: 'NotifTab',
+        tabBarIconSolid: 'NotifTabSolid',
+      },
+    },
+    {
+      title: '',
+      name: i18n.t('bottomTab.account'),
+      screen: bottomTabs.account,
+      option: {
+        tabBarIcon: 'AccountTab',
+        tabBarIconSolid: 'AccountTabSolid',
+      },
+    },
+  ],
+};

@@ -1,13 +1,27 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Animated, Image as RNImage, Platform, StyleSheet, View } from 'react-native'
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  Animated,
+  Image as RNImage,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native';
 
-const Index = ({ placeholderStyle, PlaceholderContent, containerStyle, style, ImageComponent, ...attributes }) => {
-  const placeholderContainerOpacity = React.useRef(new Animated.Value(1)).current
+const Index = ({
+  placeholderStyle,
+  PlaceholderContent,
+  containerStyle,
+  style,
+  ImageComponent,
+  ...attributes
+}) => {
+  const placeholderContainerOpacity = React.useRef(new Animated.Value(1))
+    .current;
 
   const onLoadEnd = () => {
-    const minimumWait = 100
-    const staggerNonce = 200 * Math.random()
+    const minimumWait = 100;
+    const staggerNonce = 200 * Math.random();
     setTimeout(
       () =>
         Animated.timing(placeholderContainerOpacity, {
@@ -15,9 +29,9 @@ const Index = ({ placeholderStyle, PlaceholderContent, containerStyle, style, Im
           duration: 350,
           useNativeDriver: true,
         }).start(),
-      minimumWait + staggerNonce
-    )
-  }
+      minimumWait + staggerNonce,
+    );
+  };
   return (
     <View style={StyleSheet.flatten([styles.container, containerStyle])}>
       {Platform.select({
@@ -32,12 +46,14 @@ const Index = ({ placeholderStyle, PlaceholderContent, containerStyle, style, Im
                   {
                     backgroundColor: placeholderContainerOpacity.interpolate({
                       inputRange: [0, 1],
-                      outputRange: [styles.placeholder.backgroundColor, 'transparent'],
+                      outputRange: [
+                        styles.placeholder.backgroundColor,
+                        'transparent',
+                      ],
                     }),
                   },
                   placeholderStyle,
-                ])}
-              >
+                ])}>
                 {PlaceholderContent}
               </Animated.View>
             </View>
@@ -47,15 +63,24 @@ const Index = ({ placeholderStyle, PlaceholderContent, containerStyle, style, Im
         ),
         default: (
           <React.Fragment>
-            <ImageComponent {...attributes} onLoadEnd={onLoadEnd} style={style} />
+            <ImageComponent
+              {...attributes}
+              onLoadEnd={onLoadEnd}
+              style={style}
+            />
 
             <Animated.View
-              style={StyleSheet.flatten([styles.placeholderContainer, { opacity: placeholderContainerOpacity }])}
-            >
+              style={StyleSheet.flatten([
+                styles.placeholderContainer,
+                {opacity: placeholderContainerOpacity},
+              ])}>
               <View
                 testID="Image__placeholder"
-                style={StyleSheet.flatten([style, styles.placeholder, placeholderStyle])}
-              >
+                style={StyleSheet.flatten([
+                  style,
+                  styles.placeholder,
+                  placeholderStyle,
+                ])}>
                 {PlaceholderContent}
               </View>
             </Animated.View>
@@ -63,8 +88,8 @@ const Index = ({ placeholderStyle, PlaceholderContent, containerStyle, style, Im
         ),
       })}
     </View>
-  )
-}
+  );
+};
 
 const styles = {
   container: {
@@ -79,18 +104,23 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
   },
-}
+};
 
 Index.propTypes = {
   ...RNImage.propTypes,
   ImageComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  PlaceholderContent: PropTypes.oneOfType([PropTypes.element, PropTypes.object, PropTypes.bool, PropTypes.func,]),
+  PlaceholderContent: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.object,
+    PropTypes.bool,
+    PropTypes.func,
+  ]),
   placeholderStyle: RNImage.propTypes.style,
-}
+};
 
 Index.defaultProps = {
   ImageComponent: RNImage,
-}
+};
 
-export { Index }
-export default Index
+export {Index};
+export default Index;

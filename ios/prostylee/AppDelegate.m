@@ -43,7 +43,6 @@ static void InitializeFlipper(UIApplication *application) {
                     restorationHandler:restorationHandler];
 }
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   // --Firebase--

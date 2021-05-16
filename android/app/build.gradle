@@ -136,8 +136,8 @@ android {
         applicationId "com.prostylee"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0.1"
+        versionCode 5
+        versionName "1.0.5"
         multiDexEnabled true
     }
     splits {
@@ -192,6 +192,9 @@ android {
 
         }
     }
+    lintOptions {
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {
@@ -236,8 +239,12 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '6.2.1'
+// task wrapper(type: Wrapper) {
+//     gradleVersion = '6.5.1'
+// }
+
+task prepareKotlinBuildScriptModel {
+
 }
 
 

@@ -3,12 +3,12 @@
 
 const awsmobile = {
   "aws_project_region": "ap-southeast-1",
-  "aws_cognito_identity_pool_id": "ap-southeast-1:289b0d35-9dd6-4164-a2f8-073a72d88e84",
+  "aws_cognito_identity_pool_id": "ap-southeast-1:04513a47-2cf0-47fe-a766-606510e6be33",
   "aws_cognito_region": "ap-southeast-1",
-  "aws_user_pools_id": "ap-southeast-1_c0EMF4obI",
-  "aws_user_pools_web_client_id": "1cjpg4lfnim8m1p7iiokcvbrld",
+  "aws_user_pools_id": "ap-southeast-1_dSSJM8sQe",
+  "aws_user_pools_web_client_id": "2cjbb1o65lh7upb6gppdb0ddp8",
   "oauth": {
-    "domain": "prostylee-dev.auth.ap-southeast-1.amazoncognito.com",
+    "domain": "prostylee-staging.auth.ap-southeast-1.amazoncognito.com",
     "scope": [
       "phone",
       "email",
@@ -16,17 +16,15 @@ const awsmobile = {
       "profile",
       "aws.cognito.signin.user.admin"
     ],
-    "redirectSignIn": "prostylee://oauth",
-    "redirectSignOut": "prostylee://signout",
+    "redirectSignIn": "prostylee://",
+    "redirectSignOut": "prostylee://",
     "responseType": "code"
   },
   "federationTarget": "COGNITO_USER_POOLS",
-  "aws_appsync_graphqlEndpoint": "https://khbnmit5ofep3ejorjec26xw3q.appsync-api.ap-southeast-1.amazonaws.com/graphql",
+  "aws_appsync_graphqlEndpoint": "https://b5rhkorgpnak5hv5j5e632mmsi.appsync-api.ap-southeast-1.amazonaws.com/graphql",
   "aws_appsync_region": "ap-southeast-1",
   "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
-  "aws_user_files_s3_bucket": "psmedia211437-dev",
+  "aws_user_files_s3_bucket": "psmedia224241-staging",
   "aws_user_files_s3_bucket_region": "ap-southeast-1"
 };
-
-
 export default awsmobile;

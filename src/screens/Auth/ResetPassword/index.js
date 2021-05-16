@@ -1,85 +1,39 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
-import {ButtonRounded, Container, HeaderBack, TextInputBorderBottom} from 'components';
+import {ButtonRounded, HeaderBack,} from 'components';
 
 import I18n from 'i18n';
-import _ from 'lodash';
-
-import {Eye} from 'svg/common';
 
 import {commonActions, userActions} from 'reducers';
 import {useDispatch} from 'react-redux';
 
 import styles from './styles';
+import {showMessage} from 'react-native-flash-message';
+import {ContainerWithoutScrollView, Countdown, CustomPinCodeInput, CustomSecureInput, TextButton,} from '../../../components';
+import {Field, Formik} from 'formik';
+import {validatePassword} from '../../../utils/validatorUtils';
+import {CODE_LENGTH} from '../../../components/CustomPinCodeInput';
 
 const Index = (props) => {
-  //Initial States
-  const [password, setPassword] = React.useState('');
-  const [invalidPassword, setInvalidPassword] = React.useState(false);
-  const [errPasswordMsg, setErrPasswordMsg] = React.useState('');
-  const [disabledBtn, setDisabledBtn] = React.useState(false);
-  const [isVisiblePw, setVisiblePw] = React.useState(true);
-  const [isShowErrMsg, toggleShowErrMsg] = React.useState(true);
-
-  //useEffect
-  React.useEffect(() => {
-    if (invalidPassword || _.isEmpty(password)) {
-      setDisabledBtn(true);
-    } else {
-      setDisabledBtn(false);
-    }
-  }, [invalidPassword, password]);
-
-  //Dispatch Redux
+  const [showCountdown, setShowCountdown] = React.useState(false);
   const dispatch = useDispatch();
 
   const onGoBack = () => {
     props.navigation.goBack();
   };
 
-  //input
-  const onChangePassword = async (value) => {
-    let reg = /^.{4,50}$/;
-    if (!_.isEmpty(value)) {
-      //nếu textInput có giá trị khác rỗng
-      if (reg.test(value) === false) {
-        setPassword(value);
-        setInvalidPassword(true);
-        setErrPasswordMsg(I18n.t('invalidPassword'));
-        toggleShowErrMsg(false);
-        return false;
-      } else {
-        //email hợp lệ
-        setPassword(value);
-        setInvalidPassword(false);
-        setErrPasswordMsg('');
-      }
-    } else {
-      //nếu textInput rỗng
-      setPassword(value);
-      setInvalidPassword(false);
-      setErrPasswordMsg('');
-    }
-  };
+  useEffect(() => {
+    setShowCountdown(true);
+  }, []);
 
-  const onBlurPasswordInput = () => {
-    if (invalidPassword) {
-      toggleShowErrMsg(true);
-    }
-  };
-
-  const onTogglePasswordVisibility = () => {
-    setVisiblePw(!isVisiblePw);
-  };
-
-  const onUpdateNewPassword = async () => {
+  const onUpdateNewPassword = async (formValues) => {
+    console.log('onUpdateNewPassword: ' + JSON.stringify(formValues));
     await dispatch(commonActions.toggleLoading(true));
-    console.log(props.route);
     dispatch(
       userActions.userChangePassword({
         email: props.route.params.email,
-        password: props.route.params.otp,
-        newPassword: password,
+        password: formValues.code,
+        newPassword: formValues.password,
         onSuccess: () => onUpdateNewPasswordSuccess(),
       }),
     );
@@ -89,35 +43,97 @@ const Index = (props) => {
     await dispatch(commonActions.toggleLoading(false));
     props.navigation.navigate('ResetPasswordViaMail');
   };
+
+  const onResendPassword = async () => {
+    console.log('onResendPassword ' + props.route.params.email);
+    await dispatch(commonActions.toggleLoading(true));
+    await dispatch(
+      userActions.userForgotPassword({
+        email: props.route.params.email,
+        onSuccess: () => onUserForgotPasswordSuccess(),
+      }),
+    );
+  };
+
+  const onUserForgotPasswordSuccess = async () => {
+    console.log('onResendOTPSuccess ' + props.route.params.email);
+    await dispatch(commonActions.toggleLoading(false));
+    showMessage({
+      message: I18n.t('resendOTPSuccess'),
+      type: 'success',
+    });
+    setShowCountdown(true);
+  };
+
   return (
     <View style={styles.container}>
-      <Container>
+      <ContainerWithoutScrollView>
         <View style={styles.mainWrapper}>
-          <HeaderBack title={I18n.t('resetPw')} onBack={() => onGoBack()} />
-          <View style={styles.form}>
-            <TextInputBorderBottom
-              hint={I18n.t('yourNewPw')}
-              value={password}
-              onChangeText={(text) => onChangePassword(text)}
-              textInputStyle={styles.textInput}
-              autoFocus={true}
-              icon={<Eye />}
-              secureTextEntry={isVisiblePw}
-              onPressIcon={() => onTogglePasswordVisibility()}
-              onBlur={() => onBlurPasswordInput()}
-            />
-            {isShowErrMsg && invalidPassword && (
-              <Text style={styles.errMsg}>{errPasswordMsg}</Text>
+          <HeaderBack title={I18n.t('resetPw')} onBack={() => onGoBack()}/>
+
+          <Formik
+            validateOnMount={true}
+            initialValues={{code: '', password: ''}}
+            onSubmit={(values) => onUpdateNewPassword(values)}>
+            {({handleSubmit, handleChange, values, isValid}) => (
+              <>
+                <View style={styles.form}>
+                  <Text style={styles.label}>{I18n.t('otpSent')}</Text>
+                  <Text style={styles.phone}>{props.route.params.email}</Text>
+
+                  <Text
+                    style={{
+                      alignSelf: 'flex-start',
+                      marginTop: 10,
+                      marginBottom: 10,
+                      marginLeft: 12,
+                    }}>
+                    {I18n.t('enterOTP')}
+                  </Text>
+
+                  <CustomPinCodeInput
+                    name="code"
+                    value={values.code}
+                    onChange={handleChange('code')}
+                  />
+
+                  <Field
+                    component={CustomSecureInput}
+                    validate={validatePassword}
+                    name="password"
+                    label={I18n.t('yourNewPw')}
+                  />
+
+                  <ButtonRounded
+                    label={I18n.t('next')}
+                    style={styles.button}
+                    onPress={handleSubmit}
+                    disabled={
+                      !isValid ||
+                      values.password === '' ||
+                      values.code.length !== CODE_LENGTH
+                    }
+                  />
+                </View>
+
+                <View style={styles.btnWrapper}>
+                  <TextButton
+                    label={I18n.t('resendOTP')}
+                    labelStyle={styles.labelTextButton}
+                    onPress={() => onResendPassword()}
+                    disabled={showCountdown}
+                  />
+                </View>
+
+                <Countdown
+                  showCountdown={showCountdown}
+                  onCountDown={() => setShowCountdown(false)}
+                />
+              </>
             )}
-            <ButtonRounded
-              label={I18n.t('next')}
-              style={styles.button}
-              onPress={() => onUpdateNewPassword()}
-              disabled={disabledBtn}
-            />
-          </View>
+          </Formik>
         </View>
-      </Container>
+      </ContainerWithoutScrollView>
     </View>
   );
 };

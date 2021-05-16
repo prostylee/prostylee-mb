@@ -5,6 +5,7 @@ import {
   StatusBar,
   KeyboardAvoidingView,
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 import styles from './styles';
 
@@ -40,6 +41,13 @@ ContainerWithoutScrollView.defaultProps = {
   translucent: true,
   hidden: false,
   bgStatusBar: '#fff',
+};
+
+ContainerWithoutScrollView.propTypes = {
+  translucent: PropTypes.bool,
+  hidden: PropTypes.bool,
+  barStyle: PropTypes.string,
+  bgStatusBar: PropTypes.string,
 };
 
 export default ContainerWithoutScrollView;

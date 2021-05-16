@@ -1,14 +1,11 @@
 import apisauce from 'apisauce';
 
 import configEnv from 'config';
-import {
-  TIME_OUT,
-  SUCCESS,
-  INTERNAL_SERVER_ERROR,
-  UNKNOWN_MESSAGE,
-} from 'constants';
 
-var config = {
+import {SUCCESS, TIME_OUT} from 'constants';
+import {Auth} from 'aws-amplify';
+
+const config = {
   url: configEnv.api_url,
   baseURL: configEnv.api_url,
   timeout: TIME_OUT,
@@ -20,7 +17,22 @@ export const api = apisauce.create({
 });
 
 export async function _fetch(method, path, data) {
+  console.log('_fetch: method=' + method + ', path=' + path + ', data=' + JSON.stringify(data));
+
+  try {
+    const token = await Auth.currentSession();
+    if (token && token.accessToken) {
+      api.setHeaders({
+        Authorization: 'Bearer ' + token.accessToken.jwtToken,
+        'X-PS-Authorization-Type': 'OPEN-ID',
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
   return api[method](path, data).then((res) => {
+    // console.log('_fetch response=' + JSON.stringify(res));
     let response;
     if (res && res.status === SUCCESS) {
       response = {
@@ -39,7 +51,3 @@ export async function _fetch(method, path, data) {
     }
   });
 }
-
-export const setHeadersRequest = async (headers) => {
-  api.setHeaders(headers);
-};

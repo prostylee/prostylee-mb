@@ -10,7 +10,7 @@ import {useBackHandler} from '@react-native-community/hooks';
 import {commonActions} from 'reducers';
 import {useDispatch} from 'react-redux';
 
-import {onboarding as data} from 'data/localJson';
+import {ON_BOARDING as data} from 'constants/onboarding';
 
 import {dim} from 'utils/common';
 
@@ -47,7 +47,7 @@ const Index = (props) => {
       flatListRef.current.scrollToIndex({animated: true, index: index + 1});
     } else {
       await dispatch(commonActions.showOnboardingScreen(false));
-      props.navigation.navigate('LoginOptions');
+      props.navigation.navigate('SignInOptions');
     }
   };
 

@@ -19,7 +19,7 @@ const Index = (props) => {
   React.useEffect(() => {
     if (!isShowOnboardingScreen) {
       setTimeout(() => {
-        props.navigation.navigate('LoginOptions');
+        props.navigation.navigate('SignInOptions');
       }, 1000);
     } else {
       setTimeout(() => {

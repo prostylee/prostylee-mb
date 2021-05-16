@@ -1,28 +1,18 @@
 import React from 'react';
-import {View, Text, Platform, TouchableOpacity} from 'react-native';
-import {
-  ContainerWithoutScrollView,
-  ButtonRounded,
-  TextInputBorderBottom,
-  HeaderBack,
-  Image,
-  TextButton,
-} from 'components';
+import {Text, View} from 'react-native';
+import {ButtonRounded, Container, HeaderBack, SocialSignIn, TextButton} from 'components';
 
 import {useKeyboard} from '@react-native-community/hooks';
 
 import I18n from 'i18n';
 
 import styles from './styles';
-
-import {Facebook, Google, AppleBlack, Zalo} from 'svg/common';
-
-//ICONS
-const IC_ZALO = require('assets/icons/zaloIcon.png');
+import envConfig from 'config';
+import {Field, Formik} from 'formik';
+import {CustomTextInput} from '../../../components';
+import {validateFullname, validatePhone} from '../../../utils/validatorUtils';
 
 const Index = (props) => {
-  //State
-  const [phone, setPhone] = React.useState('');
   const onGoBack = () => {
     props.navigation.goBack();
   };
@@ -30,70 +20,69 @@ const Index = (props) => {
   //keyboard
   const keyboard = useKeyboard();
 
-  //input
-  const onChangePhone = (text) => {
-    setPhone(text);
+  const onSignUp = (values) => {
+    console.log('onSignUp: ' + JSON.stringify(values));
   };
-  const onGoToTerms = () => {};
-  const onGoToPrivacy = () => {};
+
+  //handle funcs
+  const onGoToTerms = () => {
+    props.navigation.navigate('PrivacyAndPolicy', {
+      url: envConfig.termOfUseURL,
+      title: I18n.t('termOfUse'),
+    });
+  };
+
+  const onGoToPrivacy = () => {
+    props.navigation.navigate('PrivacyAndPolicy', {
+      url: envConfig.privacyPolicyURL,
+      title: I18n.t('privacyPolicy'),
+    });
+  };
+
   return (
     <View style={styles.container}>
-      <ContainerWithoutScrollView>
+      <Container>
         <View style={styles.mainWrapper}>
           <HeaderBack
             title={I18n.t('signUpWithPhone')}
             onBack={() => onGoBack()}
           />
-          <View style={styles.form}>
-            {/* <Text style={styles.label}>Số điện thoại của bạn</Text> */}
-            <TextInputBorderBottom
-              hint={I18n.t('fullname')}
-              value={phone}
-              onChangeText={(text) => onChangePhone(text)}
-              style={styles.textInput}
-              autoFocus={true}
-            />
-            <TextInputBorderBottom
-              hint={I18n.t('yourPhone')}
-              value={phone}
-              onChangeText={(text) => onChangePhone(text)}
-              style={styles.textInput}
-              autoFocus={true}
-              keyboardType="phone-pad"
-            />
-            <ButtonRounded
-              label={I18n.t('signUp')}
-              style={styles.button}
-              disabled={true}
-            />
-          </View>
+          <Formik
+            validateOnMount={true}
+            initialValues={{fullname: '', phone: ''}}
+            onSubmit={(values) => onSignUp(values)}>
+            {({handleSubmit, values, isValid}) => (
+              <View style={styles.form}>
+                <Field
+                  component={CustomTextInput}
+                  validate={validateFullname}
+                  name="fullname"
+                  label={I18n.t('fullname')}
+                />
+
+                <Field
+                  component={CustomTextInput}
+                  validate={validatePhone}
+                  name="phone"
+                  label={I18n.t('yourPhoneLabel')}
+                  keyboardType="phone-pad"
+                />
+
+                <View style={styles.btnWrapper}>
+                  <ButtonRounded
+                    label={I18n.t('signUp')}
+                    onPress={handleSubmit}
+                    disabled={
+                      !isValid || values.fullname === '' || values.phone === ''
+                    }
+                  />
+                </View>
+              </View>
+            )}
+          </Formik>
           {!keyboard.keyboardShown && (
             <View>
-              <View style={styles.divider}>
-                <View style={styles.line} />
-                <Text style={styles.labelDivider}>
-                  {I18n.t('otherLoginOptions')}
-                </Text>
-                <View style={styles.line} />
-              </View>
-              <View style={styles.socialLogin}>
-                <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <Facebook />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <View style={styles.btnBordered}>
-                    <Google />
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.socialBtnWrapper}>
-                  <Zalo />
-                </TouchableOpacity>
-                {Platform.OS === 'ios' && (
-                  <TouchableOpacity style={styles.socialBtnWrapper}>
-                    <AppleBlack />
-                  </TouchableOpacity>
-                )}
-              </View>
+              <SocialSignIn />
 
               <View style={styles.privacyWrapper}>
                 <Text style={styles.noticeText}>
@@ -116,7 +105,7 @@ const Index = (props) => {
             </View>
           )}
         </View>
-      </ContainerWithoutScrollView>
+      </Container>
     </View>
   );
 };

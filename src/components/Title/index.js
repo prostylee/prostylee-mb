@@ -1,47 +1,54 @@
-import React from 'react'
+import React from 'react';
 
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Text } from '~/Theme/Components'
-import { padding } from '~/Theme/Configs/spacing'
-import { sizes } from '~/Theme/Configs/dimension'
+import EStyleSheet from 'react-native-extended-stylesheet';
+import {TouchableOpacity, View, Text} from 'react-native';
 
-const Title = ({ title, subTitle, onPress, subTitleComponent, style, containerStyle }) => {
+const Title = ({
+  title,
+  subTitle,
+  onPress,
+  subTitleComponent,
+  style,
+  containerStyle,
+  textStyle,
+}) => {
   return (
     <View style={[styles.container, containerStyle && containerStyle]}>
       <Text medium style={[styles.textTitle, style && style]}>
         {title}
       </Text>
-      {subTitleComponent
-        ? subTitleComponent
-        : subTitle ? (
-          <TouchableOpacity onPress={onPress} style={styles.touchSubtitle}>
-            <Text colorThird h6>
-              {subTitle}
-            </Text>
-          </TouchableOpacity>
-        ) : null}
+      {subTitleComponent ? (
+        subTitleComponent
+      ) : subTitle ? (
+        <TouchableOpacity onPress={onPress} style={styles.touchSubtitle}>
+          <Text style={[styles.textStyle, textStyle && textStyle]}>
+            {subTitle}
+          </Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
-  )
-}
+  );
+};
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingVertical: padding.big,
+    alignItems: 'center',
   },
   textTitle: {
     flex: 1,
-    fontSize: sizes.h3,
-    paddingRight: padding.large,
   },
   touchSubtitle: {
     paddingVertical: 5,
     justifyContent: 'center',
   },
-})
+  textStyle: {
+    color: '$purple',
+  },
+});
 
 Title.defaultProps = {
-  onPress: () => { },
-}
+  onPress: () => {},
+};
 
-export default Title
+export default Title;

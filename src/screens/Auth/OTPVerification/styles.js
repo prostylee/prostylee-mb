@@ -31,27 +31,9 @@ export default EStyleSheet.create({
     marginBottom: '20rem',
     textAlign: 'center',
   },
-  button: {
-    marginTop: '30rem',
-    marginBottom: '20rem',
-    width: '100%',
-  },
-  cellStyle: {
-    borderBottomWidth: 1,
-    borderColor: '$lightGray',
-  },
-  cellStyleFocused: {
-    borderColor: '$black',
-  },
-  textStyle: {
-    fontFamily: '$font1',
-    color: '$black500',
-    fontSize: '$maxText',
-  },
-  textStyleFocused: {
-    fontFamily: '$font1',
-    color: '$black500',
-    fontSize: '$maxText',
+  btnWrapper: {
+    marginHorizontal: '6%',
+    marginVertical: '15rem',
   },
   labelTextButton: {
     color: '$primaryBlue',

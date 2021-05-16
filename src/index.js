@@ -2,35 +2,33 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
-import jwtDecode from 'jwt-decode';
 
-import {commonActions, commonSelectors, userActions, userSelectors,} from './redux/reducers';
+import {commonActions, commonSelectors, userActions} from './redux/reducers';
 
-import {common, datetime} from './utils';
+import {common} from './utils';
 
 import Navigator from './navigator';
 
-import {Colors, ModalIndicator, ModalNetworkWarning,} from 'components';
+import {Colors, ModalIndicator, ModalNetworkWarning} from 'components';
 
 import NetInfo from '@react-native-community/netinfo';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import FlashMessage from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
-// import NotificationPopup from 'react-native-push-notification-popup';
-import {
-  getApplicationName,
-  getDeviceId,
-  getDeviceName,
-  getSystemName,
-  getSystemVersion,
-  getVersion,
-} from 'react-native-device-info';
 
-import Amplify, {Auth} from 'aws-amplify';
+import {Auth} from 'aws-amplify';
 import awsconfig from './config/aws-exports';
+
+// import NotificationPopup from 'react-native-push-notification-popup';
+import {getApplicationName, getDeviceId, getDeviceName, getSystemName, getSystemVersion, getVersion} from 'react-native-device-info';
 import RootNavigator from './navigator/rootNavigator';
-Amplify.configure(awsconfig);
+import LocalStorageService from './services/LocalStorageService';
+
+Auth.configure({
+  ...awsconfig,
+  storage: LocalStorageService,
+});
 
 EStyleSheet.build({
   ...Colors,
@@ -57,7 +55,7 @@ const Index = () => {
     onCodepushCheckForUpdateApp();
     async function getInfo() {
       const res = await getDeviceInfo();
-      // console.log(res);
+      console.log(res);
     }
 
     getInfo();
@@ -80,7 +78,6 @@ const Index = () => {
   // );
 
   const isLoading = useSelector((state) => commonSelectors.getLoading(state));
-  const userToken = useSelector((state) => userSelectors.getUserToken(state));
 
   //other functions
   const getDeviceInfo = async () => {
@@ -124,7 +121,7 @@ const Index = () => {
         }, 300);
       } else {
         console.log('APP IS UP TO DATE');
-        onCheckLoginSession();
+        onCheckSignInSession();
       }
     } catch (err) {
       console.log(err);
@@ -142,11 +139,11 @@ const Index = () => {
         break;
       case codePush.SyncStatus.UP_TO_DATE:
         console.log('Up-to-date.');
-        onCheckLoginSession();
+        onCheckSignInSession();
         break;
       case codePush.SyncStatus.UPDATE_INSTALLED:
         console.log('Update installed.');
-        onCheckLoginSession();
+        onCheckSignInSession();
         break;
       default:
         dispatch(commonActions.toggleLoading(false));
@@ -176,42 +173,23 @@ const Index = () => {
     );
   };
 
-  const onCheckLoginSession = async () => {
+  const onCheckSignInSession = async () => {
     await dispatch(commonActions.toggleLoading(true));
-    if (userToken) {
-      let accessToken = await jwtDecode(userToken.accessToken);
-      let refreshToken = await jwtDecode(userToken.refreshToken);
-      let isAccessTokenExpired = await datetime.checkExpiredDate(
-        accessToken.exp,
-      );
-      let isRefreshTokenExpired = await datetime.checkExpiredDate(
-        refreshToken.exp,
-      );
-      if (isAccessTokenExpired && isRefreshTokenExpired) {
-        //accessToken && refreshToken expired
-        dispatch(userActions.userClearExpiredToken());
-        RootNavigator.navigate('LoginOptions');
+    Auth.currentAuthenticatedUser()
+      .then((data) => {
+        console.log('Already sign-in');
+        dispatch(userActions.userSignInSuccess(data));
         dispatch(commonActions.toggleLoading(false));
-      } else if (isAccessTokenExpired && !isRefreshTokenExpired) {
-        //refresh token valid
-        //get new access token
-        dispatch(
-          userActions.userRefreshToken({
-            refreshToken: userToken.refreshToken,
-            onSuccess: () => onUserRefreshTokenSuccess(),
-          }),
-        );
-      } else {
-        //accessToken valid
-        dispatch(commonActions.toggleLoading(false));
-      }
-    } else {
-      dispatch(commonActions.toggleLoading(false));
-    }
-  };
+      })
+      .catch((err) => {
+        console.log('Not sign-in yet!!!');
+        console.log(err);
+        Auth.signOut({global: true});
 
-  const onUserRefreshTokenSuccess = async () => {
-    dispatch(commonActions.toggleLoading(false));
+        dispatch(userActions.userClearExpiredToken());
+        RootNavigator.navigate('SignInOptions');
+        dispatch(commonActions.toggleLoading(false));
+      });
   };
 
   //firebase Message

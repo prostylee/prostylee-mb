@@ -20,3 +20,22 @@ export const DELETE = 'delete';
 export const UNKNOWN_MESSAGE = I18n.t('unknownMessage');
 export const DISCONNECT = I18n.t('disconnected');
 export const SESSION_EXPIRED_MESSAGE = I18n.t('sessionExpiredMessage');
+
+// TARGET TYPE
+export const TYPE_STORE = 'STORE';
+export const TYPE_USER = 'USER';
+
+// PARAM QUERY
+export const PAGE_DEFAULT = 0;
+export const LIMIT_DEFAULT = 12;
+export const NUMBER_OF_PRODUCT = 3;
+
+//Story
+export const STORY_DURATION = 15;
+
+//IMG SIZE
+export const IMG_STATUS = 5 / 4;
+export const IMG_PRODUCT = 3 / 2;
+export const IMG_RATIO = 4 / 3;
+//NEW FEED
+export const FIRST_SLICE_ITEM = 3;

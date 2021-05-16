@@ -25,6 +25,13 @@ import ThemeView from './ThemeView';
 import ImageAnimated from './Image/imageAnimated';
 import ContainerView from './ContainerView';
 import Header from './Header';
+import Title from './Title';
+import SocialSignIn from '../screens/Auth/SocialSignIn';
+import CustomTextInput from './CustomTextInput';
+import CustomSecureInput from './CustomSecureInput';
+import Countdown from './Countdown';
+import CustomPinCodeInput from './CustomPinCodeInput';
+
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -53,4 +60,10 @@ export {
   ImageAnimated,
   ContainerView,
   Header,
+  Title,
+  SocialSignIn,
+  CustomTextInput,
+  CustomSecureInput,
+  Countdown,
+  CustomPinCodeInput,
 };

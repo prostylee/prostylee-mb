@@ -5,6 +5,7 @@ import styles from './styles';
 import ButtonRounded from '../ButtonRounded';
 
 import Modal from 'react-native-modal';
+import PropTypes from 'prop-types';
 
 const ModalRequireUpdate = (props) => {
   return (
@@ -35,6 +36,11 @@ const ModalRequireUpdate = (props) => {
       </View>
     </Modal>
   );
+};
+
+ModalRequireUpdate.propTypes = {
+  visible: PropTypes.bool,
+  onConfirm: PropTypes.func,
 };
 
 export default ModalRequireUpdate;
