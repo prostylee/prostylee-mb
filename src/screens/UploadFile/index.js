@@ -12,13 +12,13 @@ const Index = () => {
   const dispatch = useDispatch();
   const [photo, setPhoto] = React.useState(null);
   const [uploadedPhoto, setUploadedPhoto] = React.useState(null);
-  const [currentUserName, setCurrentUserName] = React.useState('');
+  const [userId, setUserId] = React.useState('');
 
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((user) => {
-        // console.log('USER ' + JSON.stringify(user));
-        setCurrentUserName(user.username);
+        console.log('USER ' + JSON.stringify(user));
+        setUserId(user.signInUserSession.idToken.payload.sub);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -44,13 +44,13 @@ const Index = () => {
       console.log('photo ' + JSON.stringify(photo));
       dispatch(commonActions.toggleLoading(true));
 
-      Storage.configure({level: 'protected'}); // public | protected | private
+      Storage.configure({level: 'public'}); // public | protected | private
       const response = await fetch(photo.uri);
 
       const blob = await response.blob();
 
       Storage.put(
-        photo.fileName || new Date().getMilliseconds() + '.jpg',
+        userId + '/' + photo.fileName || new Date().getMilliseconds() + '.jpg',
         blob,
         {
           contentType: 'image/jpeg',
