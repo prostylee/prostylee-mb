@@ -54,6 +54,7 @@ const AddStory = (props) => {
   const userData = userProfile
     ? userProfile.signInUserSession?.idToken.payload.identities?.[0]
     : {};
+  const customPrefix = 'public/userId/stories/';
   const pan = React.useRef(new Animated.ValueXY()).current;
 
   let panXValue;
@@ -100,17 +101,26 @@ const AddStory = (props) => {
     if (!isEmpty(storeSelected) && storeSelected.id) {
       await dispatch(
         newFeedActions.postStory({
-          productId: storeSelected.id,
-          attachmentIds: [name],
-          targetType: 'user',
+          images: [
+            {
+              name: name,
+              path: customPrefix,
+            },
+          ],
+          targetType: name,
           targetId: userData.userId,
         }),
       );
     } else {
       await dispatch(
         newFeedActions.postStory({
-          productId: null,
-          attachmentIds: [name],
+          storeId: storeSelected.id,
+          images: [
+            {
+              name: name,
+              path: customPrefix,
+            },
+          ],
           targetType: 'user',
           targetId: userData.userId,
         }),
@@ -132,6 +142,7 @@ const AddStory = (props) => {
       const fileName = `story_${Date.now()}.jpg`;
       Storage.put(fileName, blob, {
         contentType: 'image/jpeg',
+        customPrefix: customPrefix,
       })
         .then((result) => {
           console.log('Uploaded with result = ' + JSON.stringify(result));
