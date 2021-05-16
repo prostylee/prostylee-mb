@@ -1,108 +1,101 @@
 import {createAction, handleActions} from 'redux-actions';
 
 export const types = {
-  SET_LOADING: 'SET_LOADING',
-  GET_TOP_PRODUCT: 'GET_TOP_PRODUCT',
-  GET_TOP_PRODUCT_SUCCESS: 'GET_TOP_PRODUCT_SUCCESS',
-  GET_TOP_PRODUCT_FAILED: 'GET_TOP_PRODUCT_FAILED',
-  SET_LOADING_FUTURED_STORE: 'SET_LOADING_FUTURED_STORE',
-  GET_LIST_OF_FUTURED_STORE: 'GET_LIST_OF_FUTURED_STORE',
-  GET_LIST_OF_FUTURED_STORE_SUCCESS: 'GET_LIST_OF_FUTURED_STORE_SUCCESS',
-  GET_LIST_OF_FUTURED_STORE_FAILED: 'GET_LIST_OF_FUTURED_STORE_FAILED',
-  SET_LOADING_LOAD_MORE_FUTURED_STORE: 'SET_LOADING_LOAD_MORE_FUTURED_STORE',
-  GET_LIST_OF_FUTURED_STORE_LOAD_MORE: 'GET_LIST_OF_FUTURED_STORE_LOAD_MORE',
-  GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS:
-    'GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS',
-  GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED:
-    'GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED',
-  SET_PAGE_DEFAULT: 'SET_PAGE_DEFAULT',
+  SET_LEFT_LOADING: 'SET_LEFT_LOADING',
+  SET_CATEGORIES_PARENT_SELECT: 'SET_CATEGORIES_PARENT_SELECT',
+  GET_LIST_LEFT_CATEGORIES: 'GET_LIST_LEFT_CATEGORIES',
+  GET_LIST_LEFT_CATEGORIES_SUCCESS: 'GET_LIST_LEFT_CATEGORIES_SUCCESS',
+  GET_LIST_LEFT_CATEGORIES_FAILED: 'GET_LIST_LEFT_CATEGORIES_FAILED',
+  SET_PAGE_LEFT_CATEGORIES_DEFAULT: 'SET_PAGE_LEFT_CATEGORIES_DEFAULT',
+  SET_LOADING_LOAD_MORE_LEFT_CATEGORIES:
+    'SET_LOADING_LOAD_MORE_LEFT_CATEGORIES',
+  GET_LIST_LEFT_CATEGORIES_LOAD_MORE: 'GET_LIST_LEFT_CATEGORIES_LOAD_MORE',
+  GET_LIST_LEFT_CATEGORIES_LOAD_MORE_SUCCESS:
+    'GET_LIST_LEFT_CATEGORIES_LOAD_MORE_SUCCESS',
+  GET_LIST_LEFT_CATEGORIES_LOAD_MORE_FAILED:
+    'GET_LIST_LEFT_CATEGORIES_LOAD_MORE_FAILED',
 };
 
 export const actions = {
-  setLoading: createAction(types.SET_LOADING),
-  setPageDefault: createAction(types.SET_PAGE_DEFAULT),
-  getTopProduct: createAction(types.GET_TOP_PRODUCT),
-  getTopProductSuccess: createAction(types.GET_TOP_PRODUCT_SUCCESS),
-  getTopProductFailed: createAction(types.GET_TOP_PRODUCT_FAILED),
-  setLoadingFuturedStores: createAction(types.SET_LOADING_FUTURED_STORE),
-  getListOfFuturedStore: createAction(types.GET_LIST_OF_FUTURED_STORE),
-  getListOfFuturedStoreSuccess: createAction(
-    types.GET_LIST_OF_FUTURED_STORE_SUCCESS,
+  setLeftLoading: createAction(types.SET_LEFT_LOADING),
+  getListLeftCategories: createAction(types.GET_LIST_LEFT_CATEGORIES),
+  getListLeftCategoriesSuccess: createAction(
+    types.GET_LIST_LEFT_CATEGORIES_SUCCESS,
   ),
-  getListOfFuturedStoreFailed: createAction(
-    types.GET_LIST_OF_FUTURED_STORE_FAILED,
+  getListLeftCategoriesFailed: createAction(
+    types.GET_LIST_LEFT_CATEGORIES_FAILED,
   ),
-  setLoadingLoadMoreFuturedStores: createAction(
-    types.SET_LOADING_LOAD_MORE_FUTURED_STORE,
+  setPageLeftCategoriesDefault: createAction(
+    types.SET_PAGE_LEFT_CATEGORIES_DEFAULT,
   ),
-  getListOfFuturedStoresLoadMore: createAction(
-    types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE,
+
+  setLoadingLoadMoreLeftCategories: createAction(
+    types.SET_LOADING_LOAD_MORE_LEFT_CATEGORIES,
   ),
-  getListOfFuturedStoresLoadMoreSuccess: createAction(
-    types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS,
+  getListLeftCategoriesLoadMore: createAction(
+    types.GET_LIST_LEFT_CATEGORIES_LOAD_MORE,
   ),
-  getListOfFuturedStoresLoadMoreFailed: createAction(
-    types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED,
+  getListLeftCategoriesLoadMoreSuccess: createAction(
+    types.GET_LIST_LEFT_CATEGORIES_LOAD_MORE_SUCCESS,
   ),
+  getListLeftCategoriesLoadMoreFailed: createAction(
+    types.GET_LIST_LEFT_CATEGORIES_LOAD_MORE_FAILED,
+  ),
+};
+
+const intialState = {
+  leftLoading: true,
+    loadLeftCategoriesMoreLoading: true,
+  categoriesParentSelect: null,
+  listLeftCategories: {},
+  hasLoadMoreLeftCategories: false,
+  pageLeftCategories: 0,
+  limitLeftCategories: 12,
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
-
-const intialState = {
-  isLoading: false,
-  isLoadingFuturedStores: false,
-  isLoadMoreLoading: false,
-  topProduct: {},
-  listOfFuturedStores: {},
-  hasLoadMore: false,
-  page: 0,
-  limit: 12,
-};
-
 export default handleActions(
   {
-    [types.SET_LOADING]: (state, {payload}) => {
-      return {...state, isLoading: payload};
+    [types.SET_LEFT_LOADING]: (state, {payload}) => {
+      return {...state, leftLoading: payload};
     },
-    [types.SET_PAGE_DEFAULT]: (state, {payload}) => {
-      return {...state, page: 0};
+    [types.SET_CATEGORIES_PARENT_SELECT]: (state, {payload}) => {
+      return {...state, categoriesParentSelect: payload};
     },
-    [types.GET_TOP_PRODUCT_SUCCESS]: (state, {payload}) => {
-      return {...state, topProduct: payload};
-    },
-    [types.GET_TOP_PRODUCT_FAILED]: (state, {payload}) => {
-      return {...state, topProduct: {}};
-    },
-    [types.SET_LOADING_FUTURED_STORE]: (state, {payload}) => {
-      return {...state, isLoadingFuturedStores: payload};
-    },
-    [types.GET_LIST_OF_FUTURED_STORE_SUCCESS]: (state, {payload}) => {
+    [types.GET_LIST_LEFT_CATEGORIES_SUCCESS]: (state, {payload}) => {
       const {totalPages} = payload;
       return {
         ...state,
-        page: PAGE_INIT,
-        hasLoadMore: state.page < totalPages ? true : false,
-        listOfFuturedStores: payload,
+        pageLeftCategories: PAGE_INIT,
+        hasLoadMoreLeftCategories:
+          state.pageLeftCategories < totalPages ? true : false,
+        listLeftCategories: payload,
       };
     },
-    [types.GET_LIST_OF_FUTURED_STORE_FAILED]: (state, {payload}) => {
-      return {...state, listOfFuturedStores: {}};
-    },
-    [types.SET_LOADING_LOAD_MORE_FUTURED_STORE]: (state, {payload}) => {
-      return {...state, isLoadMoreLoading: payload};
-    },
-    [types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE_SUCCESS]: (state, {payload}) => {
-      const {totalPages, content} = payload;
-      payload.content =
-        state.listOfFuturedStores?.content.concat(content) || [];
+    [types.GET_LIST_LEFT_CATEGORIES_FAILED]: (state, {payload}) => {
       return {
         ...state,
-        listOfFuturedStores: payload,
-        page: state.page + UNIT_INCREASE,
-        hasLoadMore: state.page + 1 < totalPages ? true : false,
+        listLeftCategories: {},
+        hasLoadMoreLeftCategories: false,
       };
     },
-    [types.GET_LIST_OF_FUTURED_STORE_LOAD_MORE_FAILED]: (state, {payload}) => {
+    [types.SET_PAGE_LEFT_CATEGORIES_DEFAULT]: (state, {payload}) => {
+      return {...state, pageLeftCategories: 0};
+    },
+    [types.SET_LOADING_LOAD_MORE_LEFT_CATEGORIES]: (state, {payload}) => {
+      return {...state, loadLeftCategoriesMoreLoading: payload};
+    },
+    [types.GET_LIST_LEFT_CATEGORIES_LOAD_MORE]: (state, {payload}) => {
+      const {totalPages, content} = payload;
+      payload.content = state.listLeftCategories?.content.concat(content) || [];
+      return {
+        ...state,
+        listLeftCategories: payload,
+        page: state.page + UNIT_INCREASE,
+        hasLoadMoreLeftCategories: state.page + 1 < totalPages ? true : false,
+      };
+    },
+    [types.GET_LIST_LEFT_CATEGORIES_LOAD_MORE_FAILED]: (state, {payload}) => {
       return {...state};
     },
   },

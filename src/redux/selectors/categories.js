@@ -1,38 +1,34 @@
 import {createSelector} from 'reselect';
+import {storeReducer} from './stores';
 
 export const categoriesReducer = (state) => state.categories;
 
-export const getTopProduct = createSelector(
+export const getLeftLoadingSelector = createSelector(
   categoriesReducer,
-  (data) => data?.topProduct || {},
+  (data) => data?.leftLoading,
 );
 
-export const getTopProductLoadingSelector = createSelector(
+export const getCategoriesParentSelectSelector = createSelector(
   categoriesReducer,
-  (data) => data?.isLoading,
+  (data) => data?.categoriesParentSelect,
 );
 
-export const getLoadingFuturedcategoriessSelector = createSelector(
+export const getListLeftCategoriesSelector = createSelector(
   categoriesReducer,
-  (data) => data?.isLoadingFuturedcategoriess,
+  (data) => data?.listLeftCategories || {},
 );
 
-export const listOfFuturedcategoriessSelector = createSelector(
+export const getLoadLeftCategoriesMoreLoadingSelector = createSelector(
   categoriesReducer,
-  (data) => data?.listOfFuturedcategoriess || {},
+  (data) => data?.loadLeftCategoriesMoreLoading || false,
 );
 
-export const loadMoreLoadingSelector = createSelector(
+export const getHasLoadMoreLeftCategoriesSelector = createSelector(
   categoriesReducer,
-  (data) => data?.isLoadMoreLoading || false,
+  (data) => data?.hasLoadMoreLeftCategories || false,
 );
 
-export const hasLoadMoreSelector = createSelector(
+export const getPageLeftCategoriesSelector = createSelector(
   categoriesReducer,
-  (data) => data?.hasLoadMore || false,
-);
-
-export const getPageSelector = createSelector(
-  categoriesReducer,
-  (data) => data?.page,
+  (data) => data?.pageLeftCategories,
 );

@@ -1,23 +1,67 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useState} from 'react';
-import {View, ActivityIndicator, FlatList} from 'react-native';
+import {View, ActivityIndicator, FlatList, Platform} from 'react-native';
 
 import styles from './styles';
+
 import {Colors} from 'components';
-import {StoreLoading} from 'components/Loading/contentLoader';
+
+import {
+  getLeftLoadingSelector,
+  getListLeftCategoriesSelector,
+  getCategoriesParentSelectSelector,
+  getLoadLeftCategoriesMoreLoadingSelector,
+  getHasLoadMoreLeftCategoriesSelector,
+  getPageLeftCategoriesSelector,
+} from 'redux/selectors/categories';
+
 import CategoriesRightItem from './item.js';
+import {useDispatch, useSelector} from 'react-redux';
+import {CategoriesLeftLoading} from 'components/Loading/contentLoader';
+import {categoriesActions} from 'redux/reducers';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 const LeftCategories = () => {
-  const loading = false;
-  const loadMoreLoading = false;
-  const [dataSource, setDataSource] = useState([]);
+  const dispatch = useDispatch();
+  const [refreshing, handleRefreshing] = useState(false);
+
+  const loading = useSelector((state) => getLeftLoadingSelector(state));
+  const listLeftCategoriesSelector = useSelector((state) =>
+    getListLeftCategoriesSelector(state),
+  );
+  const listLeftCategories = listLeftCategoriesSelector?.content || [];
+  const loadMoreLoading = useSelector((state) =>
+    getLoadLeftCategoriesMoreLoadingSelector(state),
+  );
+  const hasLoadMore = useSelector((state) =>
+    getHasLoadMoreLeftCategoriesSelector(state),
+  );
+  const page = useSelector((state) => getPageLeftCategoriesSelector(state));
 
   useEffect(() => {
-    let items = Array.apply(null, Array(60)).map((v, i) => {
-      return {id: i, src: 'http://placehold.it/200x200?text=' + (i + 1)};
-    });
-    setDataSource(items);
-  }, []);
+    dispatch(
+      categoriesActions.getListLeftCategories({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+    handleRefreshing(false);
+  }, [dispatch, refreshing]);
+
+  const handleRefresh = () => {
+    handleRefreshing(true);
+  };
+
+  const handleLoadMore = () => {
+    if (hasLoadMore) {
+      dispatch(
+        categoriesActions.getListLeftCategoriesLoadMore({
+          page: page + 1,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
+    }
+  };
 
   const renderFooter = () => {
     if (!loadMoreLoading) {
@@ -32,14 +76,32 @@ const LeftCategories = () => {
   };
   return (
     <View style={styles.container}>
-      <FlatList
-        data={dataSource}
-        renderItem={({item}) => <CategoriesRightItem item={item} />}
-        numColumns={1}
-        keyExtractor={(item, index) => index}
-        ListFooterComponent={renderFooter}
-        showsHorizontalScrollIndicator={false}
-      />
+      {loading ? (
+        <>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(
+            (item, _i) => {
+              return (
+                <CategoriesLeftLoading
+                  key={'storeLoading' + _i}
+                  style={{marginTop: 5, width: 90, height: 90}}
+                />
+              );
+            },
+          )}
+        </>
+      ) : (
+        <FlatList
+          data={listLeftCategories}
+          renderItem={({item}) => <CategoriesRightItem item={item} />}
+          numColumns={1}
+          keyExtractor={(item, index) => index}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          onEndReached={() => handleLoadMore()}
+          ListFooterComponent={renderFooter}
+          showsHorizontalScrollIndicator={false}
+        />
+      )}
     </View>
   );
 };

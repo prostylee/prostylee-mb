@@ -20,7 +20,7 @@ const Categories = () => {
           <View style={styles.wrapRightBanner}>
             <Image
               style={styles.imageBanner}
-              source={{uri: 'http://placehold.it/400x200?text=Banner 2x1'}}
+              source={require('assets/images/data/saleOff.png')}
             />
           </View>
           <RightCategories />

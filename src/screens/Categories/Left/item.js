@@ -4,15 +4,14 @@ import {Text, View} from 'react-native';
 import {Image} from 'components';
 import styles from './styles';
 import PropTypes from 'prop-types';
-const CategoriesRightItem = ({item}) => {
-  const active = item.id == 1;
+const CategoriesLeftItem = ({item, active = false}) => {
   return (
     <View style={styles.wrapItems}>
       <View style={[styles.item, active ? styles.itemActive : null]}>
-        <Image style={styles.imageThumbnail} source={{uri: item.src}} />
+        <Image style={styles.imageThumbnail} source={{uri: item.icon}} />
         <View style={{height: 32}}>
           <Text numberOfLines={2} style={styles.title}>
-            {item.id % 2 == 0 ? 'Tất cả thời trang nam' : 'Áo thun'}
+            {item.name}
           </Text>
         </View>
       </View>
@@ -20,12 +19,12 @@ const CategoriesRightItem = ({item}) => {
   );
 };
 
-CategoriesRightItem.defaultProps = {
+CategoriesLeftItem.defaultProps = {
   item: {},
 };
 
-CategoriesRightItem.propTypes = {
+CategoriesLeftItem.propTypes = {
   item: PropTypes.object,
 };
 
-export default CategoriesRightItem;
+export default CategoriesLeftItem;
