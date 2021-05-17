@@ -30,7 +30,7 @@ import {getApplicationName, getDeviceId, getDeviceName, getSystemName, getSystem
 import RootNavigator from './navigator/rootNavigator';
 import LocalStorageService from './services/LocalStorageService';
 
-Auth.configure({
+Amplify.configure({
   ...awsconfig,
   storage: LocalStorageService,
 });
