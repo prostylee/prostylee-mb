@@ -9,7 +9,6 @@ import {Colors} from 'components';
 import {
   getLeftLoadingSelector,
   getListLeftCategoriesSelector,
-  getCategoriesParentSelectSelector,
   getLoadLeftCategoriesMoreLoadingSelector,
   getHasLoadMoreLeftCategoriesSelector,
   getPageLeftCategoriesSelector,
@@ -26,16 +25,21 @@ const LeftCategories = () => {
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector((state) => getLeftLoadingSelector(state));
+
   const listLeftCategoriesSelector = useSelector((state) =>
     getListLeftCategoriesSelector(state),
   );
+
   const listLeftCategories = listLeftCategoriesSelector?.content || [];
+
   const loadMoreLoading = useSelector((state) =>
     getLoadLeftCategoriesMoreLoadingSelector(state),
   );
+
   const hasLoadMore = useSelector((state) =>
     getHasLoadMoreLeftCategoriesSelector(state),
   );
+
   const page = useSelector((state) => getPageLeftCategoriesSelector(state));
 
   useEffect(() => {
@@ -74,6 +78,7 @@ const LeftCategories = () => {
       </View>
     );
   };
+
   return (
     <View style={styles.container}>
       {loading ? (
@@ -82,7 +87,7 @@ const LeftCategories = () => {
             (item, _i) => {
               return (
                 <CategoriesLeftLoading
-                  key={'storeLoading' + _i}
+                  key={'CategoriesLeftLoading' + _i}
                   style={{marginTop: 5, width: 90, height: 90}}
                 />
               );
@@ -99,6 +104,7 @@ const LeftCategories = () => {
           onRefresh={handleRefresh}
           onEndReached={() => handleLoadMore()}
           ListFooterComponent={renderFooter}
+          showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         />
       )}

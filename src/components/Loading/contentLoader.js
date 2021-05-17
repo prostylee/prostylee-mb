@@ -135,13 +135,13 @@ export const CategoriesRightLoading = ({
   return (
     <View style={StyleSheet.flatten([styles.container, style])}>
       <ContentLoader
-        height={25}
-        width={25}
+        height={50}
+        width={50}
         speed={speed}
-        viewBox="0 0 10 10"
+        viewBox="0 0 50 50"
         backgroundColor={backgroundColor}
         foregroundColor={foregroundColor}>
-        <Rect width={25} height={25} />
+        <Rect rx="50" ry="50" width={50} height={50} />
       </ContentLoader>
       <ContentLoader
         height={20}

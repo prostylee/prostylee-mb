@@ -8,7 +8,7 @@ import {ThemeView, Header, Image} from 'components';
 import RightCategories from './Right';
 import LeftCategories from './Left';
 
-const Categories = () => {
+const Categories = ({ navigation }) => {
   return (
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('headerTitle.categories')} />
@@ -23,7 +23,7 @@ const Categories = () => {
               source={require('assets/images/data/saleOff.png')}
             />
           </View>
-          <RightCategories />
+          <RightCategories navigation={navigation} />
         </View>
       </View>
     </ThemeView>

@@ -2,7 +2,7 @@ import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {center, flexRow} from 'theme/style';
 
-const WIDTH = Dimensions.get('window').width - 30;
+const WIDTH = Dimensions.get('window').width - 100;
 export default EStyleSheet.create({
   container: {
     flex: 1,
@@ -12,12 +12,13 @@ export default EStyleSheet.create({
   wrapItems: {
     flex: 1,
     flexDirection: 'column',
-    margin: 1,
+    alignItems: 'flex-start',
   },
   item: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 100,
+    width: WIDTH / 3,
     backgroundColor: 'transparent',
   },
   imageThumbnail: {

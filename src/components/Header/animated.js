@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Dimensions} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 const {width} = Dimensions.get('window');
@@ -14,6 +14,7 @@ const HeaderAnimated = ({
   bottomHeight,
   hideBottomBorder,
 }) => {
+  const [showView, handleShowView] = useState(false);
   /*Dimension header*/
   const WIDTH_HEADER = width;
   const HEIGHT_HEADER =
@@ -38,14 +39,20 @@ const HeaderAnimated = ({
     outputRange: [0, 1],
     extrapolate: 'clamp',
   });
+  const translateWidth = scrollAnimated.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, width],
+    extrapolate: 'clamp',
+  });
   return (
     <Animated.View
       style={{
         ...styles.container(WIDTH_HEADER, HEIGHT_HEADER),
         backgroundColor: headerColor,
         borderBottomColor,
+        width: translateWidth
       }}>
-      <View
+      <Animated.View
         style={{
           paddingTop: getStatusBarHeight(),
           ...styles.content,
@@ -61,7 +68,7 @@ const HeaderAnimated = ({
         <View style={styles.right}>
           {rightComponent ? rightComponent : null}
         </View>
-      </View>
+      </Animated.View>
       {bottomComponent ? (
         <Animated.View style={{opacity}}>{bottomComponent}</Animated.View>
       ) : null}
@@ -83,6 +90,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    zIndex: 100,
   },
   left: {
     justifyContent: 'center',

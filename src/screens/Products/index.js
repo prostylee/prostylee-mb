@@ -5,6 +5,7 @@ import {
   View,
   Text,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import {Divider, Searchbar, Chip} from 'react-native-paper';
 import i18n from 'i18n';
@@ -16,6 +17,7 @@ import ProductsCategories from './Categories';
 import ProductItem from './ProductItem';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {ChevronLeft, Sort, Filter, CaretDown} from 'svg/common';
+import CategoriesRightItem from '../Categories/Right/item';
 
 const heightShow = 334;
 
@@ -53,11 +55,6 @@ const Products = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
 
   const onChangeSearch = (query) => setSearchQuery(query);
-  const logo = {
-    uri: 'https://reactnative.dev/img/tiny_logo.png',
-    width: 64,
-    height: 64,
-  };
 
   return (
     <ThemeView style={styles.container} isFullView>
@@ -193,74 +190,79 @@ const Products = ({navigation}) => {
         navigation={navigation}
         scrollAnimated={scrollAnimated}
       />
-      <Animated.ScrollView
-        ref={scrollRef}
+      <FlatList
+        data={dataSource}
+        ListHeaderComponent={() => {
+          return (
+            <View
+              style={{
+                height: heightShow,
+                width: '100%',
+                position: 'relative',
+              }}>
+              <Image
+                style={styles.imageBanner}
+                source={{uri: 'http://placehold.it/400x200?text=Banner 2x1'}}
+              />
+              <View
+                style={{
+                  position: 'absolute',
+                  bottom: 114,
+                  width: '100%',
+                  paddingLeft: 16,
+                  paddingRight: 16,
+                }}>
+                <Searchbar
+                  placeholder={i18n.t('search')}
+                  onChangeText={onChangeSearch}
+                  value={searchQuery}
+                />
+              </View>
+              <View
+                style={{
+                  position: 'absolute',
+                  top: getStatusBarHeight(),
+                  width: '100%',
+                  paddingLeft: 16,
+                }}>
+                <Touch
+                  style={{
+                    width: 16,
+                  }}
+                  onPress={leftPress}>
+                  <ChevronLeft color={Colors.$white} />
+                </Touch>
+              </View>
+              <View
+                style={{
+                  position: 'absolute',
+                  bottom: 175,
+                  width: '100%',
+                  paddingLeft: 16,
+                  paddingRight: 16,
+                }}>
+                <Text numberOfLines={1} style={styles.headTitle}>
+                  Thời trang nam
+                </Text>
+              </View>
+              <ProductsCategories />
+            </View>
+          );
+        }}
+        renderItem={({item}) => {
+          return (
+            <View style={{width: '50%'}}>
+              <ProductItem item={item} />
+            </View>
+          );
+        }}
+        numColumns={2}
         onScroll={onScrollEvent}
         scrollEventThrottle={1}
+        keyExtractor={(item, index) => index}
         showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}>
-        <View
-          style={{
-            height: heightShow,
-            width: '100%',
-            position: 'relative',
-          }}>
-          <Image
-            style={styles.imageBanner}
-            source={{uri: 'http://placehold.it/400x200?text=Banner 2x1'}}
-          />
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 114,
-              width: '100%',
-              paddingLeft: 16,
-              paddingRight: 16,
-            }}>
-            <Searchbar
-              placeholder={i18n.t('search')}
-              onChangeText={onChangeSearch}
-              value={searchQuery}
-            />
-          </View>
-          <View
-            style={{
-              position: 'absolute',
-              top: getStatusBarHeight(),
-              width: '100%',
-              paddingLeft: 16,
-            }}>
-            <ChevronLeft color={Colors.$white} />
-          </View>
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 175,
-              width: '100%',
-              paddingLeft: 16,
-              paddingRight: 16,
-            }}>
-            <Text numberOfLines={1} style={styles.headTitle}>
-              Thời trang nam
-            </Text>
-          </View>
-          <ProductsCategories />
-        </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-          }}>
-          {dataSource.map((item, index) => {
-            return (
-              <View key={index} style={{width: '50%'}}>
-                <ProductItem item={item} />
-              </View>
-            );
-          })}
-        </View>
-      </Animated.ScrollView>
+        showsHorizontalScrollIndicator={false}
+      />
     </ThemeView>
   );
 };
