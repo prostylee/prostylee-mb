@@ -16,7 +16,7 @@ import {userTokenSelector} from 'redux/selectors/user';
 import styles from './styles';
 import i18n from 'i18n';
 import {useBackHandler} from '@react-native-community/hooks';
-import {statusSelectors, newFeedActions, statusActions} from 'reducers';
+import {commonActions, statusSelectors, statusActions} from 'reducers';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {dim} from 'utils/common';
@@ -31,6 +31,8 @@ const AddStatus = (props) => {
   const inputRef = React.useRef();
   const imagesRef = React.useRef();
   const [textValue, setTextValue] = React.useState('');
+  const [uploadList, setUploadList] = React.useState([]);
+  const [doneUpload, setDoneUpload] = React.useState(false);
 
   //route
   const route = useRoute();
@@ -40,7 +42,7 @@ const AddStatus = (props) => {
   const storeSelected = useSelector((state) =>
     statusSelectors.getStatusStore(state),
   );
-  console.log('storeSelected', storeSelected);
+  const customPrefix = '/public/userId/posts/';
   const userProfile = useSelector((state) => userTokenSelector(state));
   const userData = userProfile
     ? userProfile.signInUserSession?.idToken.payload.identities?.[0]
@@ -50,7 +52,12 @@ const AddStatus = (props) => {
     await dispatch(statusActions.removeStatusStore());
   };
 
-  const addStatus = () => {};
+  React.useEffect(() => {
+    if (doneUpload) {
+      postStatus();
+    }
+  }, [doneUpload]);
+
   //BackHandler handle
   useBackHandler(() => {
     return true;
@@ -67,6 +74,89 @@ const AddStatus = (props) => {
         resizeMode={'contain'}
       />
     );
+  };
+
+  const postStatus = async (name) => {
+    const imagesList = uploadList.map((item) => {
+      return {
+        name: item.name,
+        path: customPrefix,
+      };
+    });
+    if (!isEmpty(storeSelected) && storeSelected.id) {
+      await dispatch(
+        statusActions.postStatus({
+          images: imagesList,
+          targetType: 'user',
+          targetId: userData.userId,
+        }),
+      );
+    } else {
+      await dispatch(
+        statusActions.postStatus({
+          storeId: storeSelected.id,
+          images: imagesList,
+          targetType: 'user',
+          targetId: userData.userId,
+        }),
+      );
+    }
+    removeStore();
+  };
+
+  const uploadToStorage = async (image) => {
+    console.log('uploadToStorage ');
+    try {
+      if (!image.uri) {
+        return;
+      }
+      dispatch(commonActions.toggleLoading(true));
+      Storage.configure({level: 'protected'}); // public | protected | private
+      const response = await fetch(image.uri);
+      const blob = await response.blob();
+      const fileName = `status_${Date.now()}.jpg`;
+      try {
+        const result = await Storage.put(fileName, blob, {
+          contentType: 'image/jpeg',
+          customPrefix: customPrefix,
+        });
+        if (result) {
+          console.log('Uploaded with result = ' + JSON.stringify(result));
+          setUploadList((prev) => {
+            let newList = prev;
+            newList[image.index] = {
+              name: result.key,
+              uri: image.uri,
+              index: image.index,
+            };
+            return newList;
+          });
+          getUrl(result.key);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+      console.log('Upload successfully');
+    } catch (err) {
+      console.log(err);
+    } finally {
+      if (image.index === images.length - 1) setDoneUpload(true);
+      dispatch(commonActions.toggleLoading(false));
+    }
+  };
+
+  const getUrl = async (key) => {
+    const signedURL = await Storage.get(key);
+    // setUploadedPhoto(signedURL);
+    console.log('signedURL ' + signedURL);
+  };
+
+  const addStatus = () => {
+    if (images.length) {
+      images.forEach(async (item) => {
+        await uploadToStorage(item);
+      });
+    }
   };
 
   return (

@@ -8,6 +8,7 @@ import storeApi from './api/storeApi';
 import socialApi from './api/socialApi';
 import dynamicUsersApi from './api/dynamicUsersApi';
 import userApi from './api/userApi';
+import statusApi from './api/statusApi';
 
 export {
   api,
@@ -17,4 +18,5 @@ export {
   socialApi,
   dynamicUsersApi,
   userApi,
+  statusApi,
 };

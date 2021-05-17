@@ -54,7 +54,7 @@ const AddStory = (props) => {
   const userData = userProfile
     ? userProfile.signInUserSession?.idToken.payload.identities?.[0]
     : {};
-  const customPrefix = 'public/userId/stories/';
+  const customPrefix = '/public/userId/stories/';
   const pan = React.useRef(new Animated.ValueXY()).current;
 
   let panXValue;
