@@ -15,7 +15,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
 import ViewShot, {captureRef} from 'react-native-view-shot';
-import {Storage} from 'aws-amplify';
+import {Storage, Auth} from 'aws-amplify';
 import {userTokenSelector} from 'redux/selectors/user';
 import styles from './styles';
 import i18n from 'i18n';
@@ -31,8 +31,18 @@ const storyImageRatio = 16 / 9;
 
 const AddStory = (props) => {
   const dispatch = useDispatch();
+  const [userId, setUserId] = React.useState('');
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
   const viewShotRef = React.useRef();
+
+  React.useEffect(() => {
+    Auth.currentAuthenticatedUser()
+      .then((user) => {
+        setUserId(user.signInUserSession.idToken.payload.sub);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   //route
   const route = useRoute();
   const image = route?.params.image || '';
@@ -54,7 +64,7 @@ const AddStory = (props) => {
   const userData = userProfile
     ? userProfile.signInUserSession?.idToken.payload.identities?.[0]
     : {};
-  const customPrefix = 'public/userId/stories/';
+  const customPrefix = `/public/${userId}/stories/`;
   const pan = React.useRef(new Animated.ValueXY()).current;
 
   let panXValue;
@@ -97,18 +107,17 @@ const AddStory = (props) => {
     await dispatch(newFeedActions.removeNewFeedStore());
   };
 
-  const postStory = async (name) => {
+  const postStory = async (data) => {
     if (!isEmpty(storeSelected) && storeSelected.id) {
       await dispatch(
         newFeedActions.postStory({
           images: [
             {
-              name: name,
+              name: data.name,
               path: customPrefix,
             },
           ],
-          targetType: name,
-          targetId: userData.userId,
+          targetType: 'user',
         }),
       );
     } else {
@@ -117,12 +126,11 @@ const AddStory = (props) => {
           storeId: storeSelected.id,
           images: [
             {
-              name: name,
+              name: data.name,
               path: customPrefix,
             },
           ],
           targetType: 'user',
-          targetId: userData.userId,
         }),
       );
     }
@@ -130,23 +138,22 @@ const AddStory = (props) => {
   };
 
   const uploadToStorage = async (uri) => {
-    console.log('uploadToStorage ');
     try {
       if (!uri) {
         return;
       }
       dispatch(commonActions.toggleLoading(true));
-      Storage.configure({level: 'protected'}); // public | protected | private
+      Storage.configure({level: 'public'}); // public | protected | private
       const response = await fetch(uri);
       const blob = await response.blob();
-      const fileName = `story_${Date.now()}.jpg`;
+      const time = Date.now();
+      const fileName = `${userId}/stories/story_${time}.jpg`;
       Storage.put(fileName, blob, {
         contentType: 'image/jpeg',
-        customPrefix: customPrefix,
       })
         .then((result) => {
           console.log('Uploaded with result = ' + JSON.stringify(result));
-          postStory(result.key);
+          postStory({name: `story_${time}.jpg`});
           getUrl(result.key);
         })
         .catch((err) => console.log(err));

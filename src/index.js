@@ -34,10 +34,6 @@ Amplify.configure({
   ...awsconfig,
   storage: LocalStorageService,
 });
-Amplify.configure({
-  aws_user_files_s3_bucket: 'psmedia211437-dev',
-  aws_user_files_s3_bucket_region: 'ap-southeast-1',
-});
 
 EStyleSheet.build({
   ...Colors,

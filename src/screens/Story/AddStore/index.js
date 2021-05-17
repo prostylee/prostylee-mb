@@ -35,7 +35,7 @@ const AddStore = (props) => {
 
   const getStoreList = React.useCallback(async () => {
     await dispatch(newFeedActions.getStoreMini());
-  }, [dispatch]);
+  }, []);
 
   React.useEffect(() => {
     getStoreList();
