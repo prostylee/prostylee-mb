@@ -11,6 +11,7 @@ import ModalRequireUpdate from './ModalRequireUpdate';
 import TextInputBorderBottom from './TextInputBorderBottom';
 import TextInputRounded from './TextInputRounded';
 import RnDateTimePicker from './RnDateTimePicker';
+import ProductLike from './ProductLike';
 // import {RnRatingTap} from './RnRatingTap';
 // import {ModalImagePicker} from './ModalImagePicker';
 import ModalZoomImage from './ModalZoomImage';
@@ -68,4 +69,5 @@ export {
   CustomSecureInput,
   Countdown,
   CustomPinCodeInput,
+  ProductLike,
 };

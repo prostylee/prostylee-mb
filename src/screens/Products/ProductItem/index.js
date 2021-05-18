@@ -1,39 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, {useState} from 'react';
-import {ActivityIndicator, Text, View, TouchableOpacity} from 'react-native';
-import {Image} from 'components';
+import React from 'react';
+import {ActivityIndicator, Text, View} from 'react-native';
+import {Image, ProductLike} from 'components';
 import styles from './styles';
-import {Heart, HeartFill} from 'svg/common';
-import {currencyFormat} from 'utils/currency';
-import {
-  likeProductService,
-  unLikeProductService,
-} from 'services/api/productApi';
-import * as CONTANTS from 'constants';
+import {currencyFormat, priceSalePercent} from 'utils/currency';
 
 const ProductItem = ({item}) => {
-  const [clickLike, handdleClickLike] = useState(false);
-  const [productLike, handdleProductLike] = useState(
-    item?.productLike ? item?.productLike : false,
-  );
-  const toggleProduct = async () => {
-    if (clickLike) {
-      return null;
-    } else {
-      handdleClickLike(true);
-      let result = null;
-      if (productLike) {
-        result = await unLikeProductService(item.id);
-      } else {
-        result = await likeProductService(item.id);
-      }
-      if (result.ok && result.data.status === CONTANTS.SUCCESS) {
-        handdleProductLike(!productLike);
-      }
-      handdleClickLike(false);
-      console.log(result);
-    }
-  };
   return (
     <View style={styles.wrapItems}>
       <View style={styles.item}>
@@ -51,8 +23,7 @@ const ProductItem = ({item}) => {
           {item?.priceSale < item?.price ? (
             <View style={styles.wrapTextSale}>
               <Text style={styles.textSale}>
-                {' '}
-                -{Math.round(100 - (item?.priceSale / item?.price) * 100)}%{' '}
+                -{priceSalePercent(item?.price, item?.priceSale)}%
               </Text>
             </View>
           ) : null}
@@ -67,9 +38,7 @@ const ProductItem = ({item}) => {
           <Text numberOfLines={1} style={styles.priceRoot}>
             {currencyFormat(item?.price, 'đ')}
           </Text>
-          <TouchableOpacity onPress={toggleProduct}>
-            {!productLike ? <Heart /> : <HeartFill />}
-          </TouchableOpacity>
+          <ProductLike item={item} />
         </View>
       </View>
     </View>
