@@ -17,7 +17,7 @@ import FlashMessage from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
 
-import {Auth} from 'aws-amplify';
+import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from './config/aws-exports';
 
 // import NotificationPopup from 'react-native-push-notification-popup';
@@ -25,7 +25,7 @@ import {getApplicationName, getDeviceId, getDeviceName, getSystemName, getSystem
 import RootNavigator from './navigator/rootNavigator';
 import LocalStorageService from './services/LocalStorageService';
 
-Auth.configure({
+Amplify.configure({
   ...awsconfig,
   storage: LocalStorageService,
 });
