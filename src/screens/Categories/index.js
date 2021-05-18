@@ -8,7 +8,7 @@ import {ThemeView, Header, Image} from 'components';
 import RightCategories from './Right';
 import LeftCategories from './Left';
 
-const Categories = ({ navigation }) => {
+const Categories = ({navigation}) => {
   return (
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('headerTitle.categories')} />

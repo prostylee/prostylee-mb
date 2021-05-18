@@ -12,6 +12,11 @@ export const getCategoriesParentSelectSelector = createSelector(
       : null),
 );
 
+export const getCategoriesSelectSelector = createSelector(
+  categoriesReducer,
+  (data) => data?.categoriesSelect || null,
+);
+
 //Left
 export const getLeftLoadingSelector = createSelector(
   categoriesReducer,

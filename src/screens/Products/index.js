@@ -17,7 +17,7 @@ import ProductsCategories from './Categories';
 import ProductItem from './ProductItem';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {ChevronLeft, Sort, Filter, CaretDown} from 'svg/common';
-import CategoriesRightItem from '../Categories/Right/item';
+import HeaderList from './HeaderList';
 
 const heightShow = 334;
 
@@ -46,16 +46,6 @@ const Products = ({navigation}) => {
     navigation.goBack();
   };
 
-  const scrollProfile = () => {
-    scrollRef.current?.scrollTo({
-      y: 0,
-      animated: true,
-    });
-  };
-  const [searchQuery, setSearchQuery] = React.useState('');
-
-  const onChangeSearch = (query) => setSearchQuery(query);
-
   return (
     <ThemeView style={styles.container} isFullView>
       <HeaderAnimated
@@ -65,11 +55,9 @@ const Products = ({navigation}) => {
           </Touch>
         }
         midComponent={
-          <Touch onPress={scrollProfile} style={styles.mid}>
-            <Text numberOfLines={1} style={styles.textTitle}>
-              Thời trang nam
-            </Text>
-          </Touch>
+          <Text numberOfLines={1} style={styles.textTitle}>
+            Thời trang nam
+          </Text>
         }
         bottomComponent={
           <View style={{width: '100%'}}>
@@ -192,63 +180,13 @@ const Products = ({navigation}) => {
       />
       <FlatList
         data={dataSource}
-        ListHeaderComponent={() => {
-          return (
-            <View
-              style={{
-                height: heightShow,
-                width: '100%',
-                position: 'relative',
-              }}>
-              <Image
-                style={styles.imageBanner}
-                source={{uri: 'http://placehold.it/400x200?text=Banner 2x1'}}
-              />
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: 114,
-                  width: '100%',
-                  paddingLeft: 16,
-                  paddingRight: 16,
-                }}>
-                <Searchbar
-                  placeholder={i18n.t('search')}
-                  onChangeText={onChangeSearch}
-                  value={searchQuery}
-                />
-              </View>
-              <View
-                style={{
-                  position: 'absolute',
-                  top: getStatusBarHeight(),
-                  width: '100%',
-                  paddingLeft: 16,
-                }}>
-                <Touch
-                  style={{
-                    width: 16,
-                  }}
-                  onPress={leftPress}>
-                  <ChevronLeft color={Colors.$white} />
-                </Touch>
-              </View>
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: 175,
-                  width: '100%',
-                  paddingLeft: 16,
-                  paddingRight: 16,
-                }}>
-                <Text numberOfLines={1} style={styles.headTitle}>
-                  Thời trang nam
-                </Text>
-              </View>
-              <ProductsCategories />
-            </View>
-          );
-        }}
+        ListHeaderComponent={() => (
+          <HeaderList
+            leftPress={leftPress}
+            navigation={navigation}
+            heightShow={heightShow}
+          />
+        )}
         renderItem={({item}) => {
           return (
             <View style={{width: '50%'}}>
