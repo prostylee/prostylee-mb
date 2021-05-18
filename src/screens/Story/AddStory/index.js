@@ -108,9 +108,10 @@ const AddStory = (props) => {
   };
 
   const postStory = async (data) => {
-    if (!isEmpty(storeSelected) && storeSelected.id) {
+    if (!isEmpty(storeSelected)) {
       await dispatch(
         newFeedActions.postStory({
+          storeId: storeSelected.id,
           images: [
             {
               name: data.name,
@@ -123,7 +124,6 @@ const AddStory = (props) => {
     } else {
       await dispatch(
         newFeedActions.postStory({
-          storeId: storeSelected.id,
           images: [
             {
               name: data.name,
@@ -152,13 +152,11 @@ const AddStory = (props) => {
         contentType: 'image/jpeg',
       })
         .then((result) => {
-          console.log('Uploaded with result = ' + JSON.stringify(result));
           postStory({name: `story_${time}.jpg`});
           getUrl(result.key);
         })
         .catch((err) => console.log(err));
 
-      console.log('Upload successfully');
       dispatch(commonActions.toggleLoading(false));
     } catch (err) {
       console.log(err);
@@ -168,7 +166,7 @@ const AddStory = (props) => {
   const getUrl = async (key) => {
     const signedURL = await Storage.get(key);
     // setUploadedPhoto(signedURL);
-    console.log('signedURL ' + signedURL);
+    // console.log('signedURL ' + signedURL);
   };
 
   const addStory = () => {
