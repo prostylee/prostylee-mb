@@ -1,22 +1,47 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from 'react';
-import {ActivityIndicator, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {ActivityIndicator, Text, View, TouchableOpacity} from 'react-native';
 import {Image} from 'components';
 import styles from './styles';
-import {Heart} from 'svg/common';
+import {Heart, HeartFill} from 'svg/common';
 import {currencyFormat} from 'utils/currency';
-import {IMG_RATIO} from 'constants';
+import {
+  likeProductService,
+  unLikeProductService,
+} from 'services/api/productApi';
+import * as CONTANTS from 'constants';
 
 const ProductItem = ({item}) => {
-  console.log(item);
+  const [clickLike, handdleClickLike] = useState(false);
+  const [productLike, handdleProductLike] = useState(
+    item?.productLike ? item?.productLike : false,
+  );
+  const toggleProduct = async () => {
+    if (clickLike) {
+      return null;
+    } else {
+      handdleClickLike(true);
+      let result = null;
+      if (productLike) {
+        result = await unLikeProductService(item.id);
+      } else {
+        result = await likeProductService(item.id);
+      }
+      if (result.ok && result.data.status === CONTANTS.SUCCESS) {
+        handdleProductLike(!productLike);
+      }
+      handdleClickLike(false);
+      console.log(result);
+    }
+  };
   return (
     <View style={styles.wrapItems}>
       <View style={styles.item}>
         <View style={styles.wrapImageThumbnail}>
           <Image
             source={
-              item?.productOwnerResponse.logoUrl
-                ? {uri: item?.productOwnerResponse.logoUrl}
+              item?.imageUrls.length
+                ? {uri: item?.imageUrls[0]}
                 : require('assets/images/default.png')
             }
             resizeMode="cover"
@@ -42,7 +67,9 @@ const ProductItem = ({item}) => {
           <Text numberOfLines={1} style={styles.priceRoot}>
             {currencyFormat(item?.price, 'đ')}
           </Text>
-          <Heart />
+          <TouchableOpacity onPress={toggleProduct}>
+            {!productLike ? <Heart /> : <HeartFill />}
+          </TouchableOpacity>
         </View>
       </View>
     </View>

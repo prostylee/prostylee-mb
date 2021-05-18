@@ -5,6 +5,7 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
+    paddingBottom: 30,
   },
   leftTouch: {
     paddingLeft: 16,

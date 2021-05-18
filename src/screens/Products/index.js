@@ -115,9 +115,6 @@ const Products = ({navigation}) => {
       </View>
     );
   };
-
-  console.log(loading);
-
   return (
     <ThemeView style={styles.container} isFullView>
       {loading ? (
@@ -133,10 +130,7 @@ const Products = ({navigation}) => {
           renderItem={({item}) => {
             return (
               <View style={styles.wrapProduct}>
-                <ProductLoading
-                  width={WIDTH_IMAGE}
-                  height={HEIGHT_IMAGE}
-                />
+                <ProductLoading width={WIDTH_IMAGE} height={HEIGHT_IMAGE} />
               </View>
             );
           }}
@@ -176,10 +170,10 @@ const Products = ({navigation}) => {
                 heightShow={heightShow}
               />
             }
-            renderItem={({item}) => {
+            renderItem={({item, index}) => {
               return (
                 <View style={styles.wrapProduct}>
-                  <ProductItem item={item} />
+                  <ProductItem index={index} item={item} />
                 </View>
               );
             }}
