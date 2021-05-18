@@ -1,17 +1,13 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
-import {
-  ContainerWithoutScrollView,
-  ButtonRounded,
-  HeaderBack,
-} from 'components';
+import {Container, ButtonRounded, HeaderBack} from 'components';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {hasNotch} from 'react-native-device-info';
 import {useTheme, useRoute, useNavigation} from '@react-navigation/native';
 import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
 import Carousel from 'react-native-snap-carousel';
-import {Storage} from 'aws-amplify';
+import {Storage, Auth} from 'aws-amplify';
 import {userTokenSelector} from 'redux/selectors/user';
 import styles from './styles';
 import i18n from 'i18n';
@@ -22,8 +18,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {dim} from 'utils/common';
 
 const WIDTH = dim.width;
-const HEIGHT = dim.height;
-const storyImageRatio = 5 / 4;
 
 const AddStatus = (props) => {
   const dispatch = useDispatch();
@@ -33,6 +27,15 @@ const AddStatus = (props) => {
   const [textValue, setTextValue] = React.useState('');
   const [uploadList, setUploadList] = React.useState([]);
   const [doneUpload, setDoneUpload] = React.useState(false);
+  const [userId, setUserId] = React.useState('');
+
+  React.useEffect(() => {
+    Auth.currentAuthenticatedUser()
+      .then((user) => {
+        setUserId(user.signInUserSession.idToken.payload.sub);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   //route
   const route = useRoute();
@@ -42,7 +45,7 @@ const AddStatus = (props) => {
   const storeSelected = useSelector((state) =>
     statusSelectors.getStatusStore(state),
   );
-  const customPrefix = '/public/userId/posts/';
+  const customPrefix = `/public/${userId}/posts/`;
   const userProfile = useSelector((state) => userTokenSelector(state));
   const userData = userProfile
     ? userProfile.signInUserSession?.idToken.payload.identities?.[0]
@@ -66,7 +69,7 @@ const AddStatus = (props) => {
   //Theme
   const {colors} = useTheme();
 
-  const renderItem = ({item}) => {
+  const renderItem = ({item, index}) => {
     return (
       <Image
         style={styles.imageStyle}
@@ -76,7 +79,7 @@ const AddStatus = (props) => {
     );
   };
 
-  const postStatus = async (name) => {
+  const postStatus = async () => {
     const imagesList = uploadList.map((item) => {
       return {
         name: item.name,
@@ -88,7 +91,6 @@ const AddStatus = (props) => {
         statusActions.postStatus({
           images: imagesList,
           targetType: 'user',
-          targetId: userData.userId,
         }),
       );
     } else {
@@ -97,7 +99,6 @@ const AddStatus = (props) => {
           storeId: storeSelected.id,
           images: imagesList,
           targetType: 'user',
-          targetId: userData.userId,
         }),
       );
     }
@@ -111,22 +112,21 @@ const AddStatus = (props) => {
         return;
       }
       dispatch(commonActions.toggleLoading(true));
-      Storage.configure({level: 'protected'}); // public | protected | private
+      Storage.configure({level: 'public'}); // public | protected | private
       const response = await fetch(image.uri);
       const blob = await response.blob();
-      const fileName = `status_${Date.now()}.jpg`;
+      const time = Date.now();
+      const fileName = `${userId}/posts/status_${time}.jpg`;
       try {
         const result = await Storage.put(fileName, blob, {
           contentType: 'image/jpeg',
-          customPrefix: customPrefix,
         });
         if (result) {
           console.log('Uploaded with result = ' + JSON.stringify(result));
           setUploadList((prev) => {
             let newList = prev;
             newList[image.index] = {
-              name: result.key,
-              uri: image.uri,
+              name: `status_${time}.jpg`,
               index: image.index,
             };
             return newList;
@@ -140,7 +140,9 @@ const AddStatus = (props) => {
     } catch (err) {
       console.log(err);
     } finally {
-      if (image.index === images.length - 1) setDoneUpload(true);
+      if (image.index === images.length - 1) {
+        setDoneUpload(true);
+      }
       dispatch(commonActions.toggleLoading(false));
     }
   };
@@ -159,77 +161,89 @@ const AddStatus = (props) => {
     }
   };
 
+  const ImageSlideList = () => {
+    const [activeImage, setActiveImage] = React.useState(1);
+    return (
+      <>
+        <Carousel
+          ref={imagesRef}
+          data={images}
+          activeSlideAlignment={'start'}
+          renderItem={renderItem}
+          sliderWidth={WIDTH * images.length}
+          itemWidth={WIDTH}
+          onSnapToItem={(index) => setActiveImage(index + 1)}
+        />
+        {images.length > 1 ? (
+          <View style={styles.imagesCount}>
+            <Text
+              style={
+                styles.imageCountText
+              }>{`${activeImage}/${images.length}`}</Text>
+          </View>
+        ) : null}
+      </>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <ContainerWithoutScrollView
-        safeAreaTopStyle={styles.safeAreaTopStyle}
-        bgStatusBar={colors['$bgColor']}>
-        <View style={styles.mainWrapper}>
-          <HeaderBack
-            onBack={navigation.goBack}
-            title={i18n.t('addStatus.title')}
-          />
-          <TextInput
-            ref={inputRef}
-            multiline={true}
-            underlineColorAndroid="transparent"
-            style={styles.textInput}
-            placeholder={i18n.t('addStatus.textPlaceholder')}
-            onChangeText={(text) => setTextValue(text)}
-            autoCapitalize={true}
-            value={textValue}
-            blurOnSubmit={true}
-            onSubmitEditing={addStatus}
-            placeholderTextColor={colors['$lightGray']}
-          />
-          <View style={{position: 'relative'}}>
-            <Carousel
-              ref={imagesRef}
-              data={images}
-              renderItem={renderItem}
-              sliderWidth={WIDTH * images.length}
-              itemWidth={WIDTH}
-            />
-            {!isEmpty(storeSelected) ? (
-              <View style={styles.selectStore}>
-                <CommonIcon.Store width={12} height={12} />
-                <Text style={styles.selectStoreName}>{storeSelected.name}</Text>
-                <TouchableOpacity
-                  style={styles.selectStoreRemove}
-                  activeOpacity={0.9}
-                  onPress={removeStore}>
-                  <Text style={styles.selectStoreRemoveText}>
-                    {i18n.t('remove')}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            ) : null}
-          </View>
-
-          <View style={styles.bottom}>
-            <TouchableOpacity
-              style={styles.addStore}
-              activeOpacity={1}
-              onPress={() => props.navigation.navigate('AddStoreForStatus')}>
-              <Text style={styles.addStoreText}>
-                +{' '}
-                {isEmpty(storeSelected)
-                  ? i18n.t('addStory.addStore')
-                  : i18n.t('addStory.changeStore')}
-              </Text>
-            </TouchableOpacity>
-            <View style={styles.addStory}>
-              <ButtonRounded
-                style={styles.addStoryButton}
-                contentStyle={styles.addStoryButton}
-                labelStyle={styles.addStoryButtonText}
-                label={i18n.t('addStatus.addStatus')}
-                onPress={addStatus}
-              />
+      <HeaderBack
+        onBack={navigation.goBack}
+        title={i18n.t('addStatus.title')}
+      />
+      <Container style={styles.mainContent}>
+        <TextInput
+          ref={inputRef}
+          multiline={true}
+          underlineColorAndroid="transparent"
+          style={styles.textInput}
+          placeholder={i18n.t('addStatus.textPlaceholder')}
+          onChangeText={(text) => setTextValue(text)}
+          value={textValue}
+          blurOnSubmit={true}
+          placeholderTextColor={colors['$lightGray']}
+        />
+        <View style={styles.imagesList}>
+          <ImageSlideList />
+          {!isEmpty(storeSelected) ? (
+            <View style={styles.selectStore}>
+              <CommonIcon.Store width={12} height={12} />
+              <Text style={styles.selectStoreName}>{storeSelected.name}</Text>
+              <TouchableOpacity
+                style={styles.selectStoreRemove}
+                activeOpacity={0.9}
+                onPress={removeStore}>
+                <Text style={styles.selectStoreRemoveText}>
+                  {i18n.t('remove')}
+                </Text>
+              </TouchableOpacity>
             </View>
-          </View>
+          ) : null}
         </View>
-      </ContainerWithoutScrollView>
+      </Container>
+      <View style={styles.bottom}>
+        <TouchableOpacity
+          style={styles.addStore}
+          activeOpacity={1}
+          onPress={() => props.navigation.navigate('AddStoreForStatus')}>
+          <Text style={styles.addStoreText}>
+            +{' '}
+            {isEmpty(storeSelected)
+              ? i18n.t('addStory.addStore')
+              : i18n.t('addStory.changeStore')}
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.addStory}>
+          <ButtonRounded
+            style={styles.addStoryButton}
+            contentStyle={styles.addStoryButton}
+            labelStyle={styles.addStoryButtonText}
+            label={i18n.t('addStatus.addStatus')}
+            onPress={addStatus}
+          />
+        </View>
+      </View>
     </View>
   );
 };

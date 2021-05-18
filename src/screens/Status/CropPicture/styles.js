@@ -36,4 +36,25 @@ export default EStyleSheet.create({
     lineHeight: 24,
     color: '$purple',
   },
+  thumbList: {
+    height: 100,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 10,
+    paddingHorizontal: 13,
+  },
+  thumbItemContainer: {
+    height: (WIDTH - 26) / 4 - 6,
+    width: (WIDTH - 26) / 4,
+    paddingHorizontal: 3,
+  },
+  thumbItem: {
+    width: (WIDTH - 26) / 4 - 6,
+    height: (WIDTH - 26) / 4 - 6,
+    borderRadius: 5,
+    borderWidth: 2,
+  },
 });

@@ -6,6 +6,7 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
+    position: 'relative',
   },
   safeAreaTopStyle: {
     backgroundColor: '$bgColor',
@@ -13,6 +14,9 @@ export default EStyleSheet.create({
   mainWrapper: {
     flex: 1,
     position: 'relative',
+  },
+  mainContent: {
+    paddingBottom: 76,
   },
   textInput: {
     width: '100%',
@@ -94,5 +98,26 @@ export default EStyleSheet.create({
     fontSize: 13,
     lineHeight: 18,
     color: '$red',
+  },
+  imagesList: {
+    position: 'relative',
+  },
+  imagesCount: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    height: 20,
+    borderRadius: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 3,
+  },
+  imageCountText: {
+    fontSize: 11,
+    lineHeight: 16,
+    color: '$black',
   },
 });
