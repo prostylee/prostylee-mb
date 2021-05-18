@@ -56,10 +56,14 @@ const AddStatus = (props) => {
   };
 
   React.useEffect(() => {
-    if (doneUpload) {
+    if (
+      doneUpload &&
+      uploadList.length === images.length &&
+      uploadList.every((image) => Boolean(image))
+    ) {
       postStatus();
     }
-  }, [doneUpload]);
+  }, [doneUpload, JSON.stringify(uploadList)]);
 
   //BackHandler handle
   useBackHandler(() => {
@@ -79,34 +83,36 @@ const AddStatus = (props) => {
     );
   };
 
-  const postStatus = async () => {
+  const postStatus = React.useCallback(async () => {
     const imagesList = uploadList.map((item) => {
       return {
         name: item.name,
         path: customPrefix,
       };
     });
-    if (!isEmpty(storeSelected) && storeSelected.id) {
+    if (!isEmpty(storeSelected)) {
       await dispatch(
         statusActions.postStatus({
-          images: imagesList,
-          targetType: 'user',
-        }),
-      );
-    } else {
-      await dispatch(
-        statusActions.postStatus({
+          description: textValue,
           storeId: storeSelected.id,
           images: imagesList,
           targetType: 'user',
         }),
       );
+      removeStore();
+    } else {
+      await dispatch(
+        statusActions.postStatus({
+          description: textValue,
+          images: imagesList,
+          targetType: 'user',
+        }),
+      );
+      removeStore();
     }
-    removeStore();
-  };
+  }, [JSON.stringify(uploadList), textValue, storeSelected]);
 
   const uploadToStorage = async (image) => {
-    console.log('uploadToStorage ');
     try {
       if (!image.uri) {
         return;
@@ -122,7 +128,6 @@ const AddStatus = (props) => {
           contentType: 'image/jpeg',
         });
         if (result) {
-          console.log('Uploaded with result = ' + JSON.stringify(result));
           setUploadList((prev) => {
             let newList = prev;
             newList[image.index] = {
@@ -136,21 +141,20 @@ const AddStatus = (props) => {
       } catch (err) {
         console.log(err);
       }
-      console.log('Upload successfully');
     } catch (err) {
       console.log(err);
     } finally {
       if (image.index === images.length - 1) {
         setDoneUpload(true);
+        dispatch(commonActions.toggleLoading(false));
       }
-      dispatch(commonActions.toggleLoading(false));
     }
   };
 
   const getUrl = async (key) => {
     const signedURL = await Storage.get(key);
     // setUploadedPhoto(signedURL);
-    console.log('signedURL ' + signedURL);
+    // console.log('signedURL ' + signedURL);
   };
 
   const addStatus = () => {
