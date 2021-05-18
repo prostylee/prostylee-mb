@@ -21,7 +21,7 @@ import {CategoriesRightLoading} from 'components/Loading/contentLoader';
 import {categoriesActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
-const Categories = ({navigation}) => {
+const RightCategories = ({navigation}) => {
   const dispatch = useDispatch();
   const categoryParentSelect = useSelector((state) =>
     getCategoriesParentSelectSelector(state),
@@ -129,8 +129,8 @@ const Categories = ({navigation}) => {
   );
 };
 
-Categories.defaultProps = {};
+RightCategories.defaultProps = {};
 
-Categories.propTypes = {};
+RightCategories.propTypes = {};
 
-export default Categories;
+export default RightCategories;

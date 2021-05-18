@@ -13,15 +13,18 @@ import styles from './styles';
 
 import {ThemeView, Colors, Image, HeaderAnimated} from 'components';
 
-import ProductsCategories from './Categories';
 import ProductItem from './ProductItem';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {getCategoriesSelectSelector} from 'redux/selectors/categories';
 import {ChevronLeft, Sort, Filter, CaretDown} from 'svg/common';
 import HeaderList from './HeaderList';
+import {useSelector} from 'react-redux';
 
 const heightShow = 334;
 
 const Products = ({navigation}) => {
+  const categoriesSelect = useSelector((state) =>
+    getCategoriesSelectSelector(state),
+  );
   const scrollRef = useRef();
 
   /*Animated*/
@@ -56,7 +59,7 @@ const Products = ({navigation}) => {
         }
         midComponent={
           <Text numberOfLines={1} style={styles.textTitle}>
-            Thời trang nam
+            {categoriesSelect?.name}
           </Text>
         }
         bottomComponent={
