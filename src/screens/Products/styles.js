@@ -39,4 +39,7 @@ export default EStyleSheet.create({
     width: '100%',
     height: 200,
   },
+  wrapProduct: {
+    width: '50%',
+  },
 });

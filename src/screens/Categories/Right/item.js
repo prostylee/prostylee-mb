@@ -5,19 +5,12 @@ import {Image} from 'components';
 import styles from './styles';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch} from 'react-redux';
-import {categoriesActions} from 'redux/reducers';
+import {categoriesActions, productActions} from 'redux/reducers';
 const CategoriesRightItem = ({item, navigation}) => {
   const dispatch = useDispatch();
   const clickItem = () => {
     dispatch(categoriesActions.setCategoriesSelect(item));
     navigation.navigate('Products');
-    // dispatch(
-    //   categoriesActions.getListRightCategories({
-    //     page: PAGE_DEFAULT,
-    //     limit: LIMIT_DEFAULT,
-    //     parentId: item?.id,
-    //   }),
-    // );
   };
   return (
     <View style={styles.wrapItems}>

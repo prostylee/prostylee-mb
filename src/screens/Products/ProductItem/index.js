@@ -1,31 +1,46 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
-import {Text, View} from 'react-native';
+import {ActivityIndicator, Text, View} from 'react-native';
 import {Image} from 'components';
 import styles from './styles';
 import {Heart} from 'svg/common';
+import {currencyFormat} from 'utils/currency';
+import {IMG_RATIO} from 'constants';
 
 const ProductItem = ({item}) => {
+  console.log(item);
   return (
     <View style={styles.wrapItems}>
       <View style={styles.item}>
         <View style={styles.wrapImageThumbnail}>
-          <Image style={styles.imageThumbnail} source={{uri: item.src}} />
-          <View style={styles.wrapTextSale}>
-            <Text style={styles.textSale}> -50% </Text>
-          </View>
+          <Image
+            source={
+              item?.productOwnerResponse.logoUrl
+                ? {uri: item?.productOwnerResponse.logoUrl}
+                : require('assets/images/default.png')
+            }
+            resizeMode="cover"
+            style={styles.imageThumbnail}
+            PlaceholderContent={<ActivityIndicator />}
+          />
+          {item?.priceSale < item?.price ? (
+            <View style={styles.wrapTextSale}>
+              <Text style={styles.textSale}>
+                {' '}
+                -{Math.round(100 - (item?.priceSale / item?.price) * 100)}%{' '}
+              </Text>
+            </View>
+          ) : null}
         </View>
         <Text numberOfLines={2} style={styles.title}>
-          {item.id % 2 == 0
-            ? 'Giày adidas Original Continental 80’s'
-            : 'Áo thun'}
+          {item.name}
         </Text>
         <Text numberOfLines={1} style={styles.price}>
-          700.000đ
+          {currencyFormat(item?.priceSale, 'đ')}
         </Text>
         <View style={styles.wrapPriceRoot}>
           <Text numberOfLines={1} style={styles.priceRoot}>
-            1.000.000đ
+            {currencyFormat(item?.price, 'đ')}
           </Text>
           <Heart />
         </View>

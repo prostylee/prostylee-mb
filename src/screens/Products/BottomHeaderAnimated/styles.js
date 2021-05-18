@@ -2,39 +2,51 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 44,
+    width: '100%'
   },
-  item: {
-    justifyContent: 'center',
+  wrapBlockOne: {
+    height: 45,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  wrapBlockFilter: {
+    height: 45,
+    width: 105,
     alignItems: 'center',
-    width: 90,
-    height: 90,
-    padding: 8,
+    paddingRight: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
-  itemActive: {
-    backgroundColor: '$purpleActive',
-    borderLeftColor: '$purple',
-  },
-  imageThumbnail: {
-    justifyContent: 'center',
+  contentBlockOne: {
+    height: 45,
+    width: 80,
     alignItems: 'center',
-    height: 50,
-    width: 50,
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: '#E9EAEB',
+    paddingLeft: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  title: {
-    lineHeight: 16,
-    fontSize: 11,
-    fontFamily: '$font1',
-    fontWeight: 'normal',
-    fontStyle: 'normal',
-    textAlign: 'center',
-    color: '$black',
+  textSort: {
+    lineHeight: 18,
+    fontSize: 13,
+    color: '#8B9399',
+    marginLeft: 5,
   },
-  viewFooter: {
-    marginBottom: 6,
+  textSpace: {
+    lineHeight: 25,
+    fontSize: 25,
+    color: '#F4F5F5',
+    marginRight: 10,
+  },
+  wrapBlockChips: {
+    height: 45,
+    width: '100%',
+    alignItems: 'flex-start',
+    paddingLeft: 16,
+  },
+  itemChips: {
+    height: 32,
+    marginTop: 5,
+    marginRight: 10
   },
 });

@@ -83,6 +83,8 @@ export default {
   unExistedEmail: 'Email chưa được đăng ký',
   pressBackToExitApp: 'Nhấn Back để thoát',
   search: 'Tìm kiếm',
+  sort: 'Sắp xếp',
+  filter: 'Bộ lọc',
   validation: {
     required: '%{field} bắt buộc nhập',
     invalid: '%{field} không hợp lệ',

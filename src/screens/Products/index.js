@@ -4,29 +4,38 @@ import {
   TouchableOpacity as Touch,
   View,
   Text,
-  ScrollView,
   FlatList,
+  ActivityIndicator,
+  Dimensions,
 } from 'react-native';
-import {Divider, Searchbar, Chip} from 'react-native-paper';
-import i18n from 'i18n';
 import styles from './styles';
 
-import {ThemeView, Colors, Image, HeaderAnimated} from 'components';
+import {ThemeView, Colors, HeaderAnimated} from 'components';
 
 import ProductItem from './ProductItem';
 import {getCategoriesSelectSelector} from 'redux/selectors/categories';
-import {ChevronLeft, Sort, Filter, CaretDown} from 'svg/common';
+import {ChevronLeft} from 'svg/common';
 import HeaderList from './HeaderList';
-import {useSelector} from 'react-redux';
+import BottomHeaderAnimated from './BottomHeaderAnimated';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  getListProductSelector,
+  getListProductLoadingSelector,
+  getLoadProductMoreLoadingSelector,
+  getHasLoadMoreProductSelector,
+  getPageProductSelector,
+} from 'redux/selectors/product';
+
+import {productActions} from 'redux/reducers';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 const heightShow = 334;
+import {ProductLoading} from 'components/Loading/contentLoader';
+const WIDTH = Dimensions.get('window').width;
+const WIDTH_IMAGE = WIDTH / 2 - 14;
+const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 
 const Products = ({navigation}) => {
-  const categoriesSelect = useSelector((state) =>
-    getCategoriesSelectSelector(state),
-  );
-  const scrollRef = useRef();
-
   /*Animated*/
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -34,176 +43,159 @@ const Products = ({navigation}) => {
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
-  const loading = false;
-  const loadMoreLoading = false;
-  const [dataSource, setDataSource] = useState([]);
 
-  useEffect(() => {
-    let items = Array.apply(null, Array(60)).map((v, i) => {
-      return {id: i, src: 'http://placehold.it/200x200?text=' + (i + 1)};
-    });
-    setDataSource(items);
-  }, []);
-
+  /*Custom action*/
   const leftPress = () => {
     navigation.goBack();
   };
 
+  /*Get List Product*/
+  const dispatch = useDispatch();
+  const categoriesSelect = useSelector((state) =>
+    getCategoriesSelectSelector(state),
+  );
+
+  const [refreshing, handleRefreshing] = useState(false);
+
+  const loading = useSelector((state) => getListProductLoadingSelector(state));
+
+  const listProductSelector = useSelector((state) =>
+    getListProductSelector(state),
+  );
+
+  const listProduct = listProductSelector?.content || [];
+
+  const loadMoreLoading = useSelector((state) =>
+    getLoadProductMoreLoadingSelector(state),
+  );
+
+  const hasLoadMore = useSelector((state) =>
+    getHasLoadMoreProductSelector(state),
+  );
+
+  const page = useSelector((state) => getPageProductSelector(state));
+
+  useEffect(() => {
+    dispatch(
+      productActions.getListProduct({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        categoryId: categoriesSelect?.id,
+        sorts: 'name',
+      }),
+    );
+    handleRefreshing(false);
+  }, [categoriesSelect.id, dispatch, refreshing]);
+
+  const handleRefresh = () => {
+    handleRefreshing(true);
+  };
+
+  const handleLoadMore = () => {
+    if (hasLoadMore) {
+      dispatch(
+        productActions.getListProductLoadMore({
+          page: page + 1,
+          limit: LIMIT_DEFAULT,
+          categoryId: categoriesSelect?.id,
+          sorts: 'name',
+        }),
+      );
+    }
+  };
+
+  const renderFooter = () => {
+    if (!loadMoreLoading) {
+      return <View style={styles.viewFooter} />;
+    }
+
+    return (
+      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+        <ActivityIndicator animating color={Colors.$purple} size="small" />
+      </View>
+    );
+  };
+
+  console.log(loading);
+
   return (
     <ThemeView style={styles.container} isFullView>
-      <HeaderAnimated
-        leftComponent={
-          <Touch style={styles.leftTouch} onPress={leftPress}>
-            <ChevronLeft color={Colors.$black} />
-          </Touch>
-        }
-        midComponent={
-          <Text numberOfLines={1} style={styles.textTitle}>
-            {categoriesSelect?.name}
-          </Text>
-        }
-        bottomComponent={
-          <View style={{width: '100%'}}>
-            <Divider />
-            <View
-              style={{
-                height: 45,
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <View
-                style={{
-                  height: 45,
-                  width: 80,
-                  alignItems: 'center',
-                  paddingLeft: 16,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
-                <View>
-                  <Sort />
-                </View>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    lineHeight: 18,
-                    fontSize: 13,
-                    color: '#8B9399',
-                    marginLeft: 5,
-                  }}>
-                  Sắp xếp
-                </Text>
-                <View>
-                  <CaretDown />
-                </View>
+      {loading ? (
+        <FlatList
+          data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
+          ListHeaderComponent={
+            <HeaderList
+              leftPress={leftPress}
+              navigation={navigation}
+              heightShow={heightShow}
+            />
+          }
+          renderItem={({item}) => {
+            return (
+              <View style={styles.wrapProduct}>
+                <ProductLoading
+                  width={WIDTH_IMAGE}
+                  height={HEIGHT_IMAGE}
+                />
               </View>
-              <View
-                style={{
-                  height: 45,
-                  width: 105,
-                  alignItems: 'center',
-                  paddingRight: 16,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    lineHeight: 25,
-                    fontSize: 25,
-                    color: '#F4F5F5',
-                    marginRight: 10,
-                  }}>
-                  |
-                </Text>
-                <Filter />
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    lineHeight: 18,
-                    fontSize: 13,
-                    color: '#8B9399',
-                    marginLeft: 5,
-                  }}>
-                  Bộ lọc
-                </Text>
-              </View>
-            </View>
-            <Divider />
-            <View
-              style={{
-                height: 45,
-                width: '100%',
-                alignItems: 'flex-start',
-                paddingLeft: 16,
-              }}>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <Chip
-                  small
-                  icon="map-marker"
-                  onPress={() => console.log('Pressed')}
-                  style={{height: 32, marginTop: 5, marginRight: 10}}>
-                  Example Chip
-                </Chip>
-                <Chip
-                  small
-                  onPress={() => console.log('Pressed')}
-                  style={{height: 32, marginTop: 5, marginRight: 10}}>
-                  Best-seller
-                </Chip>
-                <Chip
-                  small
-                  onPress={() => console.log('Pressed')}
-                  style={{height: 32, marginTop: 5, marginRight: 10}}>
-                  Best-seller
-                </Chip>
-                <Chip
-                  small
-                  onPress={() => console.log('Pressed')}
-                  style={{height: 32, marginTop: 5, marginRight: 10}}>
-                  Best-seller
-                </Chip>
-                <Chip
-                  small
-                  onPress={() => console.log('Pressed')}
-                  style={{height: 32, marginTop: 5, marginRight: 10}}>
-                  Best-seller
-                </Chip>
-              </ScrollView>
-            </View>
-          </View>
-        }
-        bottomHeight={100}
-        hideBottomBorder={true}
-        heightShow={heightShow - 190}
-        Animated={Animated}
-        navigation={navigation}
-        scrollAnimated={scrollAnimated}
-      />
-      <FlatList
-        data={dataSource}
-        ListHeaderComponent={() => (
-          <HeaderList
-            leftPress={leftPress}
+            );
+          }}
+          numColumns={2}
+          scrollEventThrottle={1}
+          keyExtractor={(item, index) => index}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+        />
+      ) : (
+        <>
+          <HeaderAnimated
+            leftComponent={
+              <Touch style={styles.leftTouch} onPress={leftPress}>
+                <ChevronLeft color={Colors.$black} />
+              </Touch>
+            }
+            midComponent={
+              <Text numberOfLines={1} style={styles.textTitle}>
+                {categoriesSelect?.name}
+              </Text>
+            }
+            bottomComponent={<BottomHeaderAnimated />}
+            bottomHeight={100}
+            hideBottomBorder={true}
+            heightShow={heightShow - 190}
+            Animated={Animated}
             navigation={navigation}
-            heightShow={heightShow}
+            scrollAnimated={scrollAnimated}
           />
-        )}
-        renderItem={({item}) => {
-          return (
-            <View style={{width: '50%'}}>
-              <ProductItem item={item} />
-            </View>
-          );
-        }}
-        numColumns={2}
-        onScroll={onScrollEvent}
-        scrollEventThrottle={1}
-        keyExtractor={(item, index) => index}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      />
+          <FlatList
+            data={listProduct}
+            ListHeaderComponent={
+              <HeaderList
+                leftPress={leftPress}
+                navigation={navigation}
+                heightShow={heightShow}
+              />
+            }
+            renderItem={({item}) => {
+              return (
+                <View style={styles.wrapProduct}>
+                  <ProductItem item={item} />
+                </View>
+              );
+            }}
+            numColumns={2}
+            onScroll={onScrollEvent}
+            scrollEventThrottle={1}
+            keyExtractor={(item, index) => index}
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            onEndReached={() => handleLoadMore()}
+            ListFooterComponent={renderFooter}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+          />
+        </>
+      )}
     </ThemeView>
   );
 };

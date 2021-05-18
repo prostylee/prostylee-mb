@@ -102,7 +102,7 @@ const LeftCategories = () => {
           keyExtractor={(item, index) => index}
           refreshing={refreshing}
           onRefresh={handleRefresh}
-          onEndReached={() => handleLoadMore()}
+          onEndReached={handleLoadMore}
           ListFooterComponent={renderFooter}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}

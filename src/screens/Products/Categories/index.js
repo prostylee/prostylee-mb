@@ -36,7 +36,6 @@ const Categories = ({navigation}) => {
   );
 
   const listRightCategories = listRightCategoriesSelector?.content || [];
-
   const loadMoreLoading = useSelector((state) =>
     getLoadRightCategoriesMoreLoadingSelector(state),
   );
@@ -56,7 +55,7 @@ const Categories = ({navigation}) => {
       }),
     );
     handleRefreshing(false);
-  }, [dispatch, refreshing]);
+  }, [categoryParentSelect.id, dispatch, refreshing]);
 
   const handleRefresh = () => {
     handleRefreshing(true);

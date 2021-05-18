@@ -9,3 +9,7 @@ export const getProducts = (payload) => {
 export const getProductById = (id) => {
   return _fetch(GET, `/products/${id}`);
 };
+
+export const getListProductService = (payload) => {
+  return _fetch(GET, `/products`, payload);
+};
