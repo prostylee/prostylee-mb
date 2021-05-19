@@ -9,6 +9,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import * as TabsIcon from 'svg/bottomTab';
 import i18n from 'i18n';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import Modal from 'react-native-modal';
 
@@ -70,15 +71,12 @@ const ModalTabButton = ({style, visible}) => {
     }).start();
   };
   const openStoryPicker = async () => {
-    MultipleImagePicker.openPicker({
-      mediaType: 'image',
-      singleSelectedMode: true,
-      selectedColor: '#3470FB',
-      selectedAssets: [],
+    ImagePicker.openPicker({
+      mediaType: 'photo',
     })
       .then((res) => {
         console.log(res);
-        RootNavigator.navigate('AddStory', {image: res[0]});
+        RootNavigator.navigate('AddStory', {image: res});
       })
       .catch((e) => console.log(e));
   };
