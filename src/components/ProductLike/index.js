@@ -11,7 +11,7 @@ import * as CONTANTS from 'constants';
 const ProductLike = ({item}) => {
   const [clickLike, handleClickLike] = useState(false);
   const [like, handleLike] = useState(
-    item?.productLike ? item?.productLike : false,
+    item?.likeStatusOfUserLogin ? item?.likeStatusOfUserLogin : false,
   );
   const toggleProduct = async () => {
     if (clickLike) {

@@ -86,7 +86,8 @@ const Categories = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      {loading || !categoryParentSelect ? (
+      {(loading || !categoryParentSelect) &&
+      !listRightCategories.length === 0 ? (
         <>
           <ScrollView>
             <View
@@ -95,9 +96,7 @@ const Categories = ({navigation}) => {
                 flexDirection: 'row',
                 flexWrap: 'wrap',
               }}>
-              {[
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
-              ].map((item, _i) => {
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item, _i) => {
                 return (
                   <View key={'CategoriesRightLoading' + _i} style={styles.item}>
                     <CategoriesRightLoading />

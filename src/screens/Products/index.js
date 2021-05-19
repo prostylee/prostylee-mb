@@ -117,7 +117,7 @@ const Products = ({navigation}) => {
   };
   return (
     <ThemeView style={styles.container} isFullView>
-      {loading ? (
+      {loading && !listProduct.length ? (
         <FlatList
           data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
           ListHeaderComponent={

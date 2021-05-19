@@ -12,12 +12,13 @@ import {getCategoriesSelectSelector} from 'redux/selectors/categories';
 import {useDispatch, useSelector} from 'react-redux';
 
 const HeaderList = ({heightShow, leftPress, navigation}) => {
-  const dispatch = useDispatch();
   const categoriesSelect = useSelector((state) =>
     getCategoriesSelectSelector(state),
   );
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => setSearchQuery(query);
+  console.log('categoriesSelect');
+  console.log(categoriesSelect);
   return (
     <View
       style={{
@@ -27,7 +28,12 @@ const HeaderList = ({heightShow, leftPress, navigation}) => {
       }}>
       <Image
         style={styles.imageBanner}
-        source={require('assets/images/data/category.png')}
+        source={
+          categoriesSelect?.banner
+            ? {uri: categoriesSelect?.banner}
+            : require('assets/images/default.png')
+        }
+        resizeMode="cover"
       />
       <View style={styles.wrapSearchBar}>
         <Searchbar

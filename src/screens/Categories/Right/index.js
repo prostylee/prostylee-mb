@@ -87,7 +87,8 @@ const RightCategories = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      {loading || !categoryParentSelect ? (
+      {(loading || !categoryParentSelect) &&
+      !listRightCategories.length === 0 ? (
         <>
           <View
             style={{

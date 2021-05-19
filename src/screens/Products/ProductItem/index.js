@@ -6,6 +6,7 @@ import styles from './styles';
 import {currencyFormat, priceSalePercent} from 'utils/currency';
 
 const ProductItem = ({item}) => {
+  console.log(item);
   return (
     <View style={styles.wrapItems}>
       <View style={styles.item}>
@@ -31,13 +32,19 @@ const ProductItem = ({item}) => {
         <Text numberOfLines={2} style={styles.title}>
           {item.name}
         </Text>
-        <Text numberOfLines={1} style={styles.price}>
-          {currencyFormat(item?.priceSale, 'đ')}
-        </Text>
-        <View style={styles.wrapPriceRoot}>
-          <Text numberOfLines={1} style={styles.priceRoot}>
-            {currencyFormat(item?.price, 'đ')}
+        {item?.priceSale ? (
+          <Text numberOfLines={1} style={styles.price}>
+            {currencyFormat(item?.priceSale, 'đ')}
           </Text>
+        ) : null}
+
+        <View style={styles.wrapPriceRoot}>
+          {item?.price ? (
+            <Text numberOfLines={1} style={styles.priceRoot}>
+              {currencyFormat(item?.price, 'đ')}
+            </Text>
+          ) : null}
+
           <ProductLike item={item} />
         </View>
       </View>
