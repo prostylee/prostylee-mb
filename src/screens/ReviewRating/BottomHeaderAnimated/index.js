@@ -9,10 +9,13 @@ import {Divider} from 'react-native-paper';
 import {Sort, Filter, CaretDown} from 'svg/common';
 import i18n from 'i18n';
 import Radio from '../Radio';
+import {RadioButton} from 'react-native-paper';
 
 const BottomHeaderAnimated = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState(null);
+  const [valueSort, setValueSort] = useState();
+  const [valueFilter, setValueFilter] = useState();
 
   const onSort = (e) => {
     e.preventDefault();
@@ -76,28 +79,25 @@ const BottomHeaderAnimated = ({navigation}) => {
       </View>
       <Picker visible={visible} setVisible={setVisible} setAction={setAction}>
         {action === 'sort' ? (
-          <Radio
-            defaultActive="default"
-            data={[
-              {label: 'Default', key: 'default', value: 'default'},
-              {label: 'Moi nhat', key: 'newest', value: 'newest'},
-              {label: 'Cu nhat', key: 'oldest', value: 'oldest'},
-            ]}
-            onChange={() => console.log('hahaha')}
-          />
+          <RadioButton.Group
+            onValueChange={(value) => setValueSort(value)}
+            value={valueSort}
+            color="#823ffd">
+            <RadioButton.Item label="Default" value="default" />
+            <RadioButton.Item label="Mới nhất" value="newest" />
+            <RadioButton.Item label="Cũ nhất" value="oldest" />
+          </RadioButton.Group>
         ) : (
-          <Radio
-            defaultActive={5}
-            data={[
-              {label: renderStar(5), key: '5', value: 5},
-              {label: renderStar(4), key: '4', value: 4},
-              {label: renderStar(3), key: '3', value: 3},
-              {label: renderStar(2), key: '2', value: 2},
-              {label: renderStar(1), key: '1', value: 1},
-            ]}
-            onChange={() => console.log('hahaha')}
-            isRating={true}
-          />
+          <RadioButton.Group
+            onValueChange={(value) => setValueFilter(value)}
+            value={valueFilter}
+            color="#823ffd">
+            <RadioButton.Item label={renderStar(5)} value={5} />
+            <RadioButton.Item label={renderStar(4)} value={4} />
+            <RadioButton.Item label={renderStar(3)} value={3} />
+            <RadioButton.Item label={renderStar(2)} value={2} />
+            <RadioButton.Item label={renderStar(1)} value={1} />
+          </RadioButton.Group>
         )}
       </Picker>
     </>

@@ -2,13 +2,12 @@
 import styles from './styles';
 
 import React from 'react';
-import {ActivityIndicator, Text, View} from 'react-native';
-
+import {ActivityIndicator, Text, View, TouchableOpacity} from 'react-native';
 import {Image, RnRatingTap} from 'components';
 
-const ReviewItem = ({item}) => {
+const ReviewItem = ({item,navigation}) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <View style={styles.item}>
         <View style={styles.header}>
           <View style={styles.author}>
@@ -26,20 +25,23 @@ const ReviewItem = ({item}) => {
         <View style={styles.content}>
           <Text style={styles.textContent}>{item.content}</Text>
         </View>
-        <View style={styles.images}>
-          {item.images.map((vl) => (
-            <Image
-              key={vl.key}
-              source={
-                vl.url ? {uri: vl.url} : require('assets/images/default.png')
-              }
-              style={styles.imageChild}
-              PlaceholderContent={<ActivityIndicator />}
-            />
-          ))}
-        </View>
+        {item.images.length > 0 && (
+          <View style={styles.images}>
+            {item.images.map((vl) => (
+              
+              <Image
+                key={vl.key}
+                source={
+                  vl.url ? {uri: vl.url} : require('assets/images/default.png')
+                }
+                style={styles.imageChild}
+                PlaceholderContent={<ActivityIndicator />}
+              />
+            ))}
+          </View>
+        )}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
