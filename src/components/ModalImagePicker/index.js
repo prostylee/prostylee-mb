@@ -10,8 +10,7 @@ import styles from './styles';
 
 import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
-import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
-import {launchCamera} from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 
 const IC_GALLERY = require('assets/icons/gallery.png');
 const IC_CAMERA = require('assets/icons/camera.png');
@@ -19,13 +18,15 @@ const IC_CAMERA = require('assets/icons/camera.png');
 const ModalImagePicker = (props) => {
   const openGallery = async () => {
     try {
-      let image = await MultipleImagePicker.openPicker({
+      let image = await ImagePicker.openPicker({
+        width: 400,
+        height: 400,
+        cropping: props.cropping ? props.cropping : false,
         compressImageQuality: 0.8,
         includeBase64: true,
-        mediaType: 'image',
-        selectedAssets: [],
+        mediaType: 'photo',
       });
-      props.onGetValue(image[0]);
+      props.onGetValue(image);
     } catch (err) {
       console.log(err);
       props.onCancel();
@@ -34,18 +35,15 @@ const ModalImagePicker = (props) => {
 
   const openCamera = async () => {
     try {
-      launchCamera(
-        {
-          quality: 0.8,
-          includeBase64: true,
-          mediaType: 'photo',
-        },
-        (res) => {
-          if (res) {
-            props.onGetValue(res);
-          }
-        },
-      );
+      let image = await ImagePicker.openCamera({
+        width: 400,
+        height: 400,
+        cropping: props.cropping ? props.cropping : false,
+        compressImageQuality: 0.8,
+        includeBase64: true,
+        mediaType: 'photo',
+      });
+      props.onGetValue(image);
     } catch (err) {
       console.log(err);
       props.onCancel();
