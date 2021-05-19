@@ -1,14 +1,13 @@
 import React from 'react';
 import {View, TouchableOpacity, Animated} from 'react-native';
 import styles from './styles';
-import {Button, Text} from 'react-native-paper';
+import {Text} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import {commonActions, commonSelectors} from 'reducers';
 import RootNavigator from 'navigator/rootNavigator';
 import LinearGradient from 'react-native-linear-gradient';
 import * as TabsIcon from 'svg/bottomTab';
 import i18n from 'i18n';
-import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import Modal from 'react-native-modal';
@@ -82,11 +81,10 @@ const ModalTabButton = ({style, visible}) => {
   };
 
   const openStatusPicker = async () => {
-    MultipleImagePicker.openPicker({
-      mediaType: 'image',
-      maxSelectedAssets: 4,
-      selectedColor: '#3470FB',
-      selectedAssets: [],
+    ImagePicker.openPicker({
+      mediaType: 'photo',
+      multiple: true,
+      maxFiles: 4,
     })
       .then((res) => {
         console.log(res);

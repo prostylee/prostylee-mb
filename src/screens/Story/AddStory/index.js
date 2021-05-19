@@ -206,7 +206,7 @@ const AddStory = (props) => {
             ref={viewShotRef}
             options={{format: 'jpg', quality: 0.9}}>
             <Animated.Image
-              source={{uri: image.path}}
+              source={{uri: image.sourceURL}}
               style={[
                 imageStyle,
                 {

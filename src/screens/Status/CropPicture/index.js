@@ -71,7 +71,7 @@ const CropPicture = () => {
   const RenderCropView = ({item, index}) => {
     return (
       <CropView
-        sourceUrl={item.path}
+        sourceUrl={item.sourceURL}
         style={CropViewStyle}
         ref={cropViewRefList[index]}
         onImageCrop={(res) => {
