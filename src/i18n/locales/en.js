@@ -23,4 +23,12 @@ export default {
   storyBoard: {
     titleStoryBoard: 'Fashion inspiration',
   },
+  search: 'Search',
+  sort: 'Sort',
+  filter: 'Filter',
+  reviewRating: 'Review & Rating',
+  reviewRating: {
+    count: 'Review & Rating (%{count})',
+    title: 'Review & Rating',
+  },
 };

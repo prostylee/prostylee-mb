@@ -53,7 +53,8 @@ export default {
   otpSent: 'Mã xác minh đã được gửi đến',
   invalidOTP: 'Mã xác minh không đúng',
   userAlreadyVerified: 'Tài khoản đã được xác nhận',
-  userNeedToVerify: 'Tài khoản chưa xác nhận. Vui lòng nhập mã OTP đã được gửi đến email của bạn.',
+  userNeedToVerify:
+    'Tài khoản chưa xác nhận. Vui lòng nhập mã OTP đã được gửi đến email của bạn.',
   resendOTPSuccess: 'Yêu cầu gửi lại mã xác minh thành công',
   next: 'Tiếp',
   resendOTP: 'Gửi lại mã xác minh',
@@ -81,6 +82,9 @@ export default {
   existedEmail: 'Email đã tồn tại',
   unExistedEmail: 'Email chưa được đăng ký',
   pressBackToExitApp: 'Nhấn Back để thoát',
+  search: 'Tìm kiếm',
+  sort: 'Sắp xếp',
+  filter: 'Bộ lọc',
   validation: {
     required: '%{field} bắt buộc nhập',
     invalid: '%{field} không hợp lệ',
@@ -93,5 +97,10 @@ export default {
     name: 'Họ tên',
     phone: 'Số điện thoại',
     password: 'Mật khẩu',
+  },
+  reviewRating: 'Đánh giá sản phẩm',
+  reviewRating: {
+    count: 'Đánh giá sản phẩm (%{count})',
+    title: 'Đánh giá sản phẩm',
   },
 };

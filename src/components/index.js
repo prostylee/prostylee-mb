@@ -11,7 +11,7 @@ import ModalRequireUpdate from './ModalRequireUpdate';
 import TextInputBorderBottom from './TextInputBorderBottom';
 import TextInputRounded from './TextInputRounded';
 import RnDateTimePicker from './RnDateTimePicker';
-// import {RnRatingTap} from './RnRatingTap';
+import RnRatingTap from './RnRatingTap';
 // import {ModalImagePicker} from './ModalImagePicker';
 import ModalZoomImage from './ModalZoomImage';
 import ModalNetworkWarning from './ModalNetworkWarning';
@@ -25,6 +25,7 @@ import ThemeView from './ThemeView';
 import ImageAnimated from './Image/imageAnimated';
 import ContainerView from './ContainerView';
 import Header from './Header';
+import HeaderAnimated from './Header/animated';
 import Title from './Title';
 import SocialSignIn from '../screens/Auth/SocialSignIn';
 import CustomTextInput from './CustomTextInput';
@@ -48,7 +49,7 @@ export {
   TextInputBorderBottom,
   TextInputRounded,
   RnDateTimePicker,
-  // RnRatingTap,
+  RnRatingTap,
   //   ModalImagePicker,
   ModalZoomImage,
   ModalNetworkWarning,
@@ -60,6 +61,7 @@ export {
   ImageAnimated,
   ContainerView,
   Header,
+  HeaderAnimated,
   Title,
   SocialSignIn,
   CustomTextInput,

@@ -91,6 +91,41 @@ export const DubHeart = ({width = 16, height = 16, color = '#8B9399'}) => {
   );
 };
 
+export const Heart = ({width = 16, height = 16, color = '#8B9399'}) => {
+  return (
+    <Svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M13.8933 3.07333C13.5528 2.73267 13.1485 2.46243 12.7036 2.27805C12.2586 2.09368 11.7817 1.99878 11.3 1.99878C10.8183 1.99878 10.3414 2.09368 9.89643 2.27805C9.45146 2.46243 9.04717 2.73267 8.70667 3.07333L8 3.78L7.29333 3.07333C6.60554 2.38554 5.67269 1.99914 4.7 1.99914C3.72731 1.99914 2.79446 2.38554 2.10667 3.07333C1.41887 3.76112 1.03247 4.69397 1.03247 5.66666C1.03247 6.63935 1.41887 7.5722 2.10667 8.26L2.81333 8.96666L8 14.1533L13.1867 8.96666L13.8933 8.26C14.234 7.91949 14.5042 7.51521 14.6886 7.07023C14.873 6.62526 14.9679 6.14832 14.9679 5.66666C14.9679 5.185 14.873 4.70807 14.6886 4.26309C14.5042 3.81812 14.234 3.41383 13.8933 3.07333V3.07333Z"
+        stroke="#8B9399"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const HeartFill = ({width = 16, height = 16, color = '#8B9399'}) => {
+  return (
+    <Svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M17.3667 3.84172C16.9411 3.41589 16.4357 3.0781 15.8795 2.84763C15.3233 2.61716 14.7271 2.49854 14.1251 2.49854C13.523 2.49854 12.9268 2.61716 12.3706 2.84763C11.8144 3.0781 11.309 3.41589 10.8834 3.84172L10.0001 4.72506L9.11673 3.84172C8.25698 2.98198 7.09092 2.49898 5.87506 2.49898C4.6592 2.49898 3.49314 2.98198 2.63339 3.84172C1.77365 4.70147 1.29065 5.86753 1.29065 7.08339C1.29065 8.29925 1.77365 9.46531 2.63339 10.3251L3.51672 11.2084L10.0001 17.6917L16.4834 11.2084L17.3667 10.3251C17.7926 9.89943 18.1304 9.39407 18.3608 8.83785C18.5913 8.28164 18.7099 7.68546 18.7099 7.08339C18.7099 6.48132 18.5913 5.88514 18.3608 5.32893C18.1304 4.77271 17.7926 4.26735 17.3667 3.84172Z"
+        fill="#EA3F49"
+      />
+    </Svg>
+  );
+};
+
 export const HeartSolid = ({width = 24, height = 20, color = 'white'}) => {
   return (
     <Svg
@@ -837,3 +872,126 @@ export const FullSolid = ({width = 24, height = 24, color = '#333333'}) => {
     </Svg>
   );
 };
+
+export const Sort = ({width = 24, height = 24, color = '#333333'}) => {
+  return (
+    <Svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M22 6L11 6"
+        stroke="#8B9399"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M19 12L11 12"
+        stroke="#8B9399"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M15 18H11"
+        stroke="#8B9399"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M5 20V4"
+        stroke="#8B9399"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M2 7L5 4L8 7"
+        stroke="#8B9399"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M8 17L5 20L2 17"
+        stroke="#8B9399"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const Filter = ({width = 24, height = 24, color = '#333333'}) => {
+  return (
+    <Svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M3 12H21"
+        stroke="#8B9399"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M3 6H21"
+        stroke="#8B9399"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M3 18H21"
+        stroke="#8B9399"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Circle cx="7" cy="6" r="1" stroke="#8B9399" stroke-width="2" />
+      <Circle cx="17" cy="12" r="1" stroke="#8B9399" stroke-width="2" />
+      <Circle cx="7" cy="18" r="1" stroke="#8B9399" stroke-width="2" />
+    </Svg>
+  );
+};
+
+export const CaretDown = ({width = 24, height = 24, color = '#333333'}) => {
+  return (
+    <Svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M10.5418 8.45823L9.01823 9.98177L9.01823 9.98177C8.66182 10.3382 8.48361 10.5164 8.27812 10.5832C8.09736 10.6419 7.90264 10.6419 7.72188 10.5832C7.51639 10.5164 7.33818 10.3382 6.98177 9.98177L6.98177 9.98177L5.45823 8.45823C4.68716 7.68716 4.30162 7.30162 4.27557 6.97061C4.25296 6.68341 4.36922 6.40274 4.58829 6.21563C4.84077 6 5.386 6 6.47647 6L9.52353 6C10.614 6 11.1592 6 11.4117 6.21563C11.6308 6.40274 11.747 6.68341 11.7244 6.97061C11.6984 7.30162 11.3128 7.68716 10.5418 8.45823Z"
+        fill="#8B9399"
+      />
+    </Svg>
+  );
+};
+
+export const CheckIcon = () => (
+  <Svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Path
+      d="M13.3333 4L5.99999 11.3333L2.66666 8"
+      stroke="#823FFD"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

@@ -28,9 +28,11 @@ import {
   Chat,
   UserProfile,
   Welcome,
+  ReviewRaaing
 } from 'screens';
 
 import BottomTabs from './bottomTab';
+import ReviewRating from '../screens/ReviewRating';
 
 const Stack = createStackNavigator();
 
@@ -42,11 +44,12 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Home"
+      initialRouteName="ReviewRating"
       mode="card"
       headerMode="none"
       animation="fade">
       <Stack.Screen name="Home" component={BottomTabs} />
+      <Stack.Screen name="ReviewRating" component={ReviewRating} />
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
