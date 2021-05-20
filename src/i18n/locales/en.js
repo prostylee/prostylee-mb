@@ -32,6 +32,14 @@ export default {
     title: 'Review & Rating',
     default: 'Default',
     newest: 'Newest',
-    oldest: 'Oldest'
+    oldest: 'Oldest',
+  },
+  rateProduct: {
+    title: 'Product Rating',
+    choose: 'Choose Product',
+    ratingTitle: 'Your rating about this product',
+    ratingComment: 'Your Comment',
+    ratingimages: 'Add your images (maximum 4 images)',
+    ratingSend: 'Send Rating',
   },
 };

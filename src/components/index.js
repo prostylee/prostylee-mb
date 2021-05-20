@@ -11,7 +11,8 @@ import ModalRequireUpdate from './ModalRequireUpdate';
 import TextInputBorderBottom from './TextInputBorderBottom';
 import TextInputRounded from './TextInputRounded';
 import RnDateTimePicker from './RnDateTimePicker';
-import RnRatingTap from './RnRatingTap';
+import Rating from './RnRating/SwipeRating';
+import AirbnbRating from './RnRating/TapRating';
 // import {ModalImagePicker} from './ModalImagePicker';
 import ModalZoomImage from './ModalZoomImage';
 import ModalNetworkWarning from './ModalNetworkWarning';
@@ -33,6 +34,7 @@ import CustomSecureInput from './CustomSecureInput';
 import Countdown from './Countdown';
 import CustomPinCodeInput from './CustomPinCodeInput';
 import GridImageReviewer from './GridImageReviewer';
+import TextInputArea from './TextInputArea';
 
 export {
   ContainerWithoutScrollView,
@@ -50,7 +52,8 @@ export {
   TextInputBorderBottom,
   TextInputRounded,
   RnDateTimePicker,
-  RnRatingTap,
+  AirbnbRating,
+  Rating,
   //   ModalImagePicker,
   ModalZoomImage,
   ModalNetworkWarning,
@@ -70,4 +73,5 @@ export {
   Countdown,
   CustomPinCodeInput,
   GridImageReviewer,
+  TextInputArea,
 };

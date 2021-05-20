@@ -104,6 +104,14 @@ export default {
     title: 'Đánh giá sản phẩm',
     default: 'Mặc định',
     newest: 'Mới nhất',
-    oldest: 'Cũ nhất'
+    oldest: 'Cũ nhất',
+  },
+  rateProduct: {
+    title: 'Đánh giá sản phẩm',
+    choose: 'Choose Product',
+    ratingTitle: 'Your rating about this product',
+    ratingComment: 'Your Comment',
+    ratingimages: 'Add your images (maximum 4 images)',
+    ratingSend: 'Send Rating',
   },
 };

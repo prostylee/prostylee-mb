@@ -8,7 +8,7 @@ import I18n from 'i18n';
 /*Components*/
 import {View, Text} from 'react-native';
 import ListReview from './ListReview';
-import {Header, ThemeView, RnRatingTap} from 'components';
+import {Header, ThemeView, AirbnbRating} from 'components';
 
 const ReviewRating = ({navigation, data}) => {
   useEffect(() => {}, []);
@@ -23,11 +23,14 @@ const ReviewRating = ({navigation, data}) => {
       <View style={styles.ratingWrapper}>
         <Text style={styles.label}>{data.ratingCount}</Text>
         <View style={styles.row}>
-          <RnRatingTap
-            onChangeValue={onChangeRating}
+          <AirbnbRating
             value={4.6}
             isDisabled={true}
             size={20}
+            defaultRating={4.6}
+            showRating={false}
+            reviewColor="#E5E5E5"
+            reviewSize={14}
           />
         </View>
       </View>
