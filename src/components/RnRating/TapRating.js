@@ -4,19 +4,22 @@ import {StyleSheet, Text, View} from 'react-native';
 import Star from './components/Star';
 const TapRating = (props) => {
   const [position, setPosition] = useState(props.defaultRating);
+
   useEffect(() => {
     const {defaultRating} = props;
-    if (defaultRating === null || defaultRating === undefined) {
-      setPosition(3);
+    if (!defaultRating ) {
+      setPosition(1);
     } else {
       setPosition(defaultRating);
     }
   }, [props.defaultRating]);
+  
   const renderStars = (rating_array) => {
     return _.map(rating_array, (star) => {
       return star;
     });
   };
+  
   const starSelectedInPosition = (position) => {
     const {onFinishRating} = props;
     if (typeof onFinishRating === 'function') {
@@ -24,6 +27,7 @@ const TapRating = (props) => {
     }
     setPosition(position);
   };
+  
   const {count, reviews, showRating, reviewColor, reviewSize} = props;
   const rating_array = [];
   const starContainerStyle = [styles.starContainer];
