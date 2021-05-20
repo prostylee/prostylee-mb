@@ -1,6 +1,10 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
+
 export default EStyleSheet.create({
+  container: {
+    flex: 1,
+  },
   wrapItems: {
     flex: 0,
     padding: 5,
@@ -22,7 +26,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
     marginBottom: 5,
   },
-  wrapItemReview:{
+  wrapItemReview: {
     padding: 5,
     backgroundColor: '$white',
     justifyContent: 'center',
@@ -103,5 +107,14 @@ export default EStyleSheet.create({
   },
   viewFooter: {
     marginBottom: 6,
+  },
+  formRate: {flex: 1},
+  btnWrapper: {
+    marginBottom: '20rem',
+    margin: 10,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });

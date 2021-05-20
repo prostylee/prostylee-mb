@@ -20,8 +20,8 @@ const TextInputArea = ({
       <Text
         style={{
           top: !isFocused ? 18 : 0,
-          fontSize: !isFocused ? 20 : 12,
-          color: !isFocused ? '#8B9399' : '#8B9399',
+          fontSize: !isFocused ? 18 : 14,
+
           ...labelStyle,
         }}>
         {label}
@@ -39,9 +39,7 @@ const TextInputArea = ({
 };
 
 const labelStyle = {
-  fontSize: 18,
-  color: '#737373',
-  paddingBottom: 10,
+  color: '#8B9399',
   fontFamily: 'System',
   position: 'relative',
   ':after': {

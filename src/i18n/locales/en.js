@@ -41,5 +41,10 @@ export default {
     ratingComment: 'Your Comment',
     ratingimages: 'Add your images (maximum 4 images)',
     ratingSend: 'Send Rating',
+    terrible: 'Terrible',
+    bad: 'Bad',
+    notBad: 'Not bad',
+    good: 'Good',
+    perfect: 'Perfect',
   },
 };

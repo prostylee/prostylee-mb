@@ -10,7 +10,7 @@ import {Image} from 'components';
 import {UploadIcon} from 'svg/common';
 import ImagePicker from 'react-native-image-crop-picker';
 
-const ChooseImage = ({navigation, label, images}) => {
+const ChooseImage = ({navigation, label, images, setImages}) => {
   const [tempArray, setTempArray] = useState(
     new Array(4 - (images.length + 1)).fill(),
   );
@@ -26,6 +26,9 @@ const ChooseImage = ({navigation, label, images}) => {
     })
       .then((res) => {
         console.log(res);
+        alert(res.path);
+        const tempImage = [...images, {source: res.path}];
+        setImages(tempImage);
         // RootNavigator.navigate('AddStory', {image: res});
       })
       .catch((e) => console.log(e));
@@ -41,6 +44,8 @@ const ChooseImage = ({navigation, label, images}) => {
               source={
                 item.url
                   ? {uri: item?.url}
+                  : item.source
+                  ? item.source
                   : require('assets/images/default.png')
               }
               style={styles.imageChoose}
@@ -75,6 +80,10 @@ ChooseImage.defaultProps = {
       url: 'https://i.vietgiaitri.com/2018/9/19/thoi-trang-nu-cao-cap-vay-dam-nu-528267.jpg',
     },
   ],
+};
+
+ChooseImage.defaultProps = {
+  images: [],
 };
 
 export default ChooseImage;

@@ -13,6 +13,7 @@ import {
   FlatList,
   Text,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import {
   Header,
@@ -29,32 +30,70 @@ import {Formik, Field} from 'formik';
 import ChooseImage from '../ChooseImage';
 
 const RatingProduct = ({navigation, product}) => {
+  const [star, setStar] = useState();
+  const [imageList, setImageList] = useState([]);
+  //handle User signIn
+  const onRate = async (formValues) => {
+    console.log(formValues);
+  };
+
+  const onPickRating = (rate) => {
+    setStar(rate);
+  };
+
   return (
-    <Animated.View>
-      <Item item={product} />
-      <View style={styles.wrapItemRating}>
-        <Text style={styles.ratingTitle}>
-          {I18n.t('rateProduct.ratingTitle')}
-        </Text>
-        <AirbnbRating
-          showRating={true}
-          defaultRating={0}
-          reviews={['Te', 'Tam on', 'Tot', 'Rat tot']}
-          reviewColor="#333333"
-          reviewSize={14}
-        />
-      </View>
-      <View style={styles.wrapItemReview}>
-        <TextInputArea
-          multiline={true}
-          label="Nhan xet cua ban"
-          numberOfLines={5}
-        />
-      </View>
-      <View style={styles.wrapItemReview}>
-        <ChooseImage label="Them hinh anh san pham" />
-      </View>
-    </Animated.View>
+    <ThemeView style={styles.container} isFullView>
+      <Formik validateOnMount={true} onSubmit={(values) => onRate(values)}>
+        {({handleSubmit, values, isValid}) => (
+          <View style={styles.formRate}>
+            <ScrollView>
+              <Item item={product} />
+              <View style={styles.wrapItemRating}>
+                <Text style={styles.ratingTitle}>
+                  {I18n.t('rateProduct.ratingTitle')}
+                </Text>
+                <AirbnbRating
+                  onFinishRating={onPickRating}
+                  showRating={true}
+                  defaultRating={star}
+                  reviews={[
+                    I18n.t('rateProduct.terrible'),
+                    I18n.t('rateProduct.bad'),
+                    I18n.t('rateProduct.notBad'),
+                    I18n.t('rateProduct.good'),
+                    I18n.t('rateProduct.perfect'),
+                  ]}
+                  reviewColor="#333333"
+                  reviewSize={14}
+                />
+              </View>
+              <View style={styles.wrapItemReview}>
+                <TextInputArea
+                  multiline={true}
+                  label={I18n.t('rateProduct.ratingTitle')}
+                  numberOfLines={5}
+                />
+              </View>
+              <View style={styles.wrapItemReview}>
+                <ChooseImage
+                  label={I18n.t('rateProduct.ratingimages')}
+                  images={imageList}
+                  setImages={setImageList}
+                />
+              </View>
+            </ScrollView>
+
+            <View style={styles.btnWrapper}>
+              <ButtonRounded
+                onPress={handleSubmit}
+                label={I18n.t('rateProduct.ratingSend')}
+                disabled={!star}
+              />
+            </View>
+          </View>
+        )}
+      </Formik>
+    </ThemeView>
   );
 };
 
