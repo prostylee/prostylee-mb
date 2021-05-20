@@ -22,7 +22,7 @@ import {categoriesActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Text} from 'react-native-paper';
 
-const FeaturedCategories = ({navigation}) => {
+const ResultProductSearchResult = ({navigation}) => {
   const dispatch = useDispatch();
 
   const [refreshing, handleRefreshing] = useState(false);
@@ -74,9 +74,6 @@ const FeaturedCategories = ({navigation}) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.wrapHeader}>
-          <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
-        </View>
         <View style={styles.wrapList}>
           <FlatList
             data={[
@@ -85,7 +82,7 @@ const FeaturedCategories = ({navigation}) => {
             renderItem={({item, index}) => (
               <FeaturedCategoriesItem index={index} navigation={navigation} item={item} />
             )}
-            numColumns={2}
+            numColumns={1}
             keyExtractor={(item, index) => index}
             refreshing={refreshing}
             onRefresh={handleRefresh}
@@ -100,8 +97,8 @@ const FeaturedCategories = ({navigation}) => {
   );
 };
 
-FeaturedCategories.defaultProps = {};
+ResultProductSearchResult.defaultProps = {};
 
-FeaturedCategories.propTypes = {};
+ResultProductSearchResult.propTypes = {};
 
-export default FeaturedCategories;
+export default ResultProductSearchResult;

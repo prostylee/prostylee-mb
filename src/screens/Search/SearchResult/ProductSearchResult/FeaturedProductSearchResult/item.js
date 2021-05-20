@@ -7,21 +7,10 @@ import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch} from 'react-redux';
 import {categoriesActions, productActions} from 'redux/reducers';
 const FeaturedCategoriesItem = ({item, index, navigation}) => {
-  const paddingLeft = index % 2 ? 4 : 12;
-  const paddingRight = index % 2 ? 12 : 0;
-  console.log(paddingLeft)
-  const dispatch = useDispatch();
-  const clickItem = () => {
-    dispatch(categoriesActions.setCategoriesSelect(item));
-    navigation.navigate('Products');
-  };
   return (
-    <View style={[styles.wrapItems, { paddingLeft: paddingLeft, paddingRight:paddingRight }]}>
-      <TouchableOpacity onPress={clickItem}>
+    <View style={styles.wrapItems}>
+      <TouchableOpacity>
         <View style={styles.item}>
-          <Text numberOfLines={2} style={styles.titleCategory}>
-            Thời trang nam{item?.name}
-          </Text>
           <Image
             source={
               item?.icon
@@ -32,6 +21,13 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
             style={styles.imageThumbnail}
             PlaceholderContent={<ActivityIndicator />}
           />
+          <View style={styles.wrapDetail}>
+            <View style={styles.wrapTitle}>
+              <Text numberOfLines={1} style={styles.titleCategory}>
+                Thời trang nam Thời trang nam Thời trang nam Thời trang nam
+              </Text>
+            </View>
+          </View>
         </View>
       </TouchableOpacity>
     </View>

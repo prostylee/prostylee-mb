@@ -4,7 +4,6 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 const WIDTH = Dimensions.get('window').width - 32;
 export default EStyleSheet.create({
   container: {
-    marginTop: 6,
     flex: 1,
   },
   wrapHeader: {

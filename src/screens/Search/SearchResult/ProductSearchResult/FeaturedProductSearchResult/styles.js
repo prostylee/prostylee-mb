@@ -1,11 +1,13 @@
 import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-const WIDTH = Dimensions.get('window').width - 32;
+const WIDTH = Dimensions.get('window').width;
+const WIDTH_IMAGE = 80;
+const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 export default EStyleSheet.create({
   container: {
-    marginTop: 6,
     flex: 1,
+    marginTop: 7,
   },
   wrapHeader: {
     backgroundColor: '$white',
@@ -23,31 +25,35 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '$white',
     paddingBottom: 4,
+    paddingTop: 4,
   },
   item: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    height: 60,
-    width: WIDTH / 2,
-    backgroundColor: '$bgColor',
-    borderRadius: 8,
+    backgroundColor: '$white',
   },
   imageThumbnail: {
     alignItems: 'center',
-    height: 24,
-    width: 24,
-    borderWidth: 1,
-    borderColor: '#E9EAEB',
-    marginRight: 12,
+    height: HEIGHT_IMAGE,
+    width: WIDTH_IMAGE,
+    borderRadius: 4,
+    marginLeft: 12
+  },
+  wrapTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   title: {
     color: '$icon',
   },
-  titleCategory: {
+  wrapDetail: {
+    alignItems: 'flex-start',
+    height: HEIGHT_IMAGE,
     color: '$black',
-    width: 70,
+    backgroundColor: 'red',
     marginLeft: 12,
+    width: WIDTH - WIDTH_IMAGE - 36
   },
   viewFooter: {
     marginBottom: 6,

@@ -99,5 +99,7 @@ export default {
     inputPlaceholder: 'Tìm kiếm sản phẩm, cửa hàng',
     topSearch: 'Tìm kiếm hàng đầu',
     featuredCategories: 'Danh mục nổi bật',
+    searchResultProduct: 'Sản phẩm',
+    searchResultStore: 'Cửa hàng',
   },
 };

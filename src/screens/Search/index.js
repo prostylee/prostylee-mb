@@ -8,15 +8,23 @@ import {ThemeView, Header, TextInputRounded} from 'components';
 import {Searchbar} from 'react-native-paper';
 import TopSearch from './TopSearch';
 import FeaturedCategories from './FeaturedCategories';
+import SearchResult from './SearchResult';
 const WIDTH = Dimensions.get('window').width;
 import {debounce} from 'lodash';
+
 const Search = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
-  const search = (query) => setSearchQuery(query);
-  const handlerDebounce = useCallback(debounce(search, 2000), []);
+  const handlerSearch = useCallback(
+    debounce((query) => {
+      console.log('searchQuery');
+      console.log(query);
+    }, 1000),
+    [],
+  );
 
   const onChangeSearch = (query) => {
-    handlerDebounce();
+    setSearchQuery(query);
+    handlerSearch(query);
   };
 
   return (
@@ -52,8 +60,14 @@ const Search = ({navigation}) => {
         }
       />
       <View style={styles.wrapContent}>
-        <TopSearch />
-        <FeaturedCategories />
+        {searchQuery === '' ? (
+          <>
+            <TopSearch />
+            <FeaturedCategories />
+          </>
+        ) : (
+          <SearchResult />
+        )}
       </View>
     </ThemeView>
   );
