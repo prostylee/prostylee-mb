@@ -5,7 +5,15 @@ import user from './user';
 import newFeed from './newFeed';
 import stores from './stores';
 import daynamicUsers from './dynamicUsers';
+import categories from './categories';
 
 export default function* rootSaga() {
-  yield all([...product, ...user, ...newFeed, ...stores, ...daynamicUsers]);
+  yield all([
+    ...product,
+    ...user,
+    ...newFeed,
+    ...stores,
+    ...daynamicUsers,
+    ...categories,
+  ]);
 }

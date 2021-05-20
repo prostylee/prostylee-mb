@@ -18,7 +18,9 @@ export default {
   $primaryBlue: '#2F80ED',
   $mainColor: '#ff7675',
   $purple: '#823FFD',
+  $purpleActive: '#F3ECFF',
   $line: '#E9EAEB',
   $icon: '#8B9399',
+  $bgColorTwo: '#F7F7F7',
   $bgColorSearch: '#E5E5E5',
 };

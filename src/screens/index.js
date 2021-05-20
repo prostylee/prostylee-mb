@@ -1,4 +1,6 @@
 import Home from './Home';
+import Categories from './Categories';
+import Products from './Products';
 import Stores from './Stores';
 import StoryBoard from './StoryBoard';
 import Chat from './Chat';
@@ -23,6 +25,8 @@ export {
   Home,
   SignIn,
   Stores,
+  Categories,
+  Products,
   StoryBoard,
   Chat,
   SignUpViaPhone,
