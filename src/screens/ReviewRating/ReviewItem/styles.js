@@ -1,3 +1,4 @@
+import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
@@ -31,16 +32,27 @@ export default EStyleSheet.create({
     color: '#8B9399',
   },
   images: {
-    height: 45,
-    width: '100%',
-    flexDirection: 'row',
+    height: 60,
+    width: Dimensions.get('window').width,
     alignItems: 'center',
     marginTop: 10,
     margin: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    display: 'flex',
+    flex: 0,
   },
   imageChild: {
     width: 60,
     height: 60,
-    marginRight: 5,
+    display:'flex',
+    flex:0,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  img_modal: {
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+    resizeMode: 'contain',
   },
 });

@@ -32,6 +32,7 @@ import CustomTextInput from './CustomTextInput';
 import CustomSecureInput from './CustomSecureInput';
 import Countdown from './Countdown';
 import CustomPinCodeInput from './CustomPinCodeInput';
+import GridImageReviewer from './GridImageReviewer';
 
 export {
   ContainerWithoutScrollView,
@@ -68,4 +69,5 @@ export {
   CustomSecureInput,
   Countdown,
   CustomPinCodeInput,
+  GridImageReviewer,
 };

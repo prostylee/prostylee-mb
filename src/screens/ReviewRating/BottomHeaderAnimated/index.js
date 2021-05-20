@@ -8,7 +8,6 @@ import {RnRatingTap} from 'components';
 import {Divider} from 'react-native-paper';
 import {Sort, Filter, CaretDown} from 'svg/common';
 import i18n from 'i18n';
-import Radio from '../Radio';
 import {RadioButton} from 'react-native-paper';
 
 const BottomHeaderAnimated = ({navigation}) => {

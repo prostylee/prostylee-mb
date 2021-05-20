@@ -3,9 +3,37 @@ import styles from './styles';
 
 import React from 'react';
 import {ActivityIndicator, Text, View, TouchableOpacity} from 'react-native';
-import {Image, RnRatingTap} from 'components';
+import {Image, RnRatingTap, GridImageReviewer} from 'components';
 
-const ReviewItem = ({item,navigation}) => {
+const ReviewItem = ({item, navigation}) => {
+  const renderGridImage = (item) => {
+    return (
+      <Image
+        key={item.key}
+        source={
+          item.url ? {uri: item.url} : require('assets/images/default.png')
+        }
+        style={{...styles.imageChild}}
+        PlaceholderContent={<ActivityIndicator />}
+      />
+    );
+  };
+
+  const renderModalImage = (item) => {
+    return (
+      <Image
+        key={item.key}
+        style={{
+          ...styles.img_modal,
+          backgroundColor: `rgba(0, 0, 0, 0,8)`,
+        }}
+        source={
+          item.url ? {uri: item.url} : require('assets/images/default.png')
+        }
+      />
+    );
+  };
+
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.item}>
@@ -27,17 +55,11 @@ const ReviewItem = ({item,navigation}) => {
         </View>
         {item.images.length > 0 && (
           <View style={styles.images}>
-            {item.images.map((vl) => (
-              
-              <Image
-                key={vl.key}
-                source={
-                  vl.url ? {uri: vl.url} : require('assets/images/default.png')
-                }
-                style={styles.imageChild}
-                PlaceholderContent={<ActivityIndicator />}
-              />
-            ))}
+            <GridImageReviewer
+              data={item.images}
+              renderGridImage={renderGridImage}
+              renderModalImage={renderModalImage}
+            />
           </View>
         )}
       </View>

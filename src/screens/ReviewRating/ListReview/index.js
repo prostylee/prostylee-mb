@@ -66,7 +66,7 @@ const ListReview = ({navigation}) => {
               },
               {
                 key: '2',
-                url: 'https://cdn2.yame.vn/pimg/so-mi-nam-no-style-td-km18-0018246/7af60ad2-b54b-0400-1db4-00159060c9b0.jpg?w=440',
+                url: 'https://sagasilk.com/wp-content/uploads/vay-dam-maxi-trang-dai-du-tiec-hang-hieu-cao-cap-2019.jpg',
               },
               {
                 key: '3',
@@ -74,7 +74,15 @@ const ListReview = ({navigation}) => {
               },
               {
                 key: '4',
+                url: 'https://vaymaxi.vn/wp-content/uploads/2019/08/IMG_0790.jpg',
+              },
+              {
+                key: '5',
                 url: 'https://cdn2.yame.vn/pimg/so-mi-nam-no-style-td-km18-0018246/7af60ad2-b54b-0400-1db4-00159060c9b0.jpg?w=440',
+              },
+              {
+                key: '6',
+                url: 'https://sagasilk.com/wp-content/uploads/vay-dam-maxi-trang-dai-du-tiec-hang-hieu-cao-cap-2019.jpg',
               },
             ],
           },
