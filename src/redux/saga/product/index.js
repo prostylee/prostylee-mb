@@ -12,6 +12,8 @@ import {
 import {showMessage} from 'react-native-flash-message';
 import * as CONTANTS from 'constants';
 import authService from '../../../services/authService';
+import {SUCCESS} from 'constants';
+import {getListProductService} from 'services/api/productApi';
 
 const getProducts = function* ({payload: {token, isRefresh}}) {
   try {
@@ -65,7 +67,47 @@ const getProducts = function* ({payload: {token, isRefresh}}) {
   }
 };
 
+//List product from categories
+const getListProduct = function* ({payload}) {
+  try {
+    yield put(productActions.setListProductLoading(true));
+    yield put(productActions.setPageProductDefault());
+    const res = yield call(getListProductService, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(productActions.getListProductSuccess(res.data.data));
+    } else {
+      yield put(productActions.getListProductFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(productActions.setListProductLoading(false));
+  }
+};
+
+const getLoadMoreListProduct = function* ({payload}) {
+  try {
+    yield put(productActions.setLoadingLoadMoreProduct(true));
+    const res = yield call(getListProductService, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(productActions.getListProductLoadMoreSuccess(res.data.data));
+    } else {
+      yield put(productActions.getListProductLoadMoreFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(productActions.setLoadingLoadMoreProduct(false));
+  }
+};
+
 const watcher = function* () {
   // yield takeLatest(productType.GET_PRODUCTS, getCustomerList);
+  //List product from categories
+  yield takeLatest(productTypes.GET_LIST_PRODUCT, getListProduct);
+  yield takeLatest(
+    productTypes.GET_LIST_PRODUCT_LOAD_MORE,
+    getLoadMoreListProduct,
+  );
 };
 export default watcher();
