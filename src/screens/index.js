@@ -15,6 +15,7 @@ import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
 import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
+import Search from './Search';
 
 export {
   Welcome,
@@ -34,4 +35,5 @@ export {
   ResetPasswordViaMail,
   SimpleWebView,
   UserProfile,
+  Search,
 };

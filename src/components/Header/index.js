@@ -19,6 +19,7 @@ const Header = ({
   middleComponent,
   rightComponent,
   leftComponent,
+  leftStyle,
   isDefault,
 }) => {
   const navigation = useNavigation();
@@ -30,7 +31,7 @@ const Header = ({
     <View style={StyleSheet.flatten([styles.container, containerStyle])}>
       {leftIcon || isDefault ? (
         <TouchableOpacity
-          style={isDefault ? styles.backStyle : {}}
+          style={isDefault ? [styles.backStyle, leftStyle] : {}}
           onPress={isDefault ? _goBack : leftPress}>
           {isDefault ? <ChevronLeft /> : leftIcon}
         </TouchableOpacity>

@@ -20,4 +20,5 @@ export default {
   $purple: '#823FFD',
   $line: '#E9EAEB',
   $icon: '#8B9399',
+  $bgColorSearch: '#E5E5E5',
 };

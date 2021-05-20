@@ -28,6 +28,7 @@ import {
   Chat,
   UserProfile,
   Welcome,
+  Search,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -42,7 +43,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Home"
+      initialRouteName="Search"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -51,6 +52,7 @@ function SignedIn() {
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
   );
 }

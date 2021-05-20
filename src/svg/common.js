@@ -837,3 +837,29 @@ export const FullSolid = ({width = 24, height = 24, color = '#333333'}) => {
     </Svg>
   );
 };
+
+export const Trending = ({width = 24, height = 24, color = '#333333'}) => {
+  return (
+    <Svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M2 12L6 7L9 10L14 4"
+        stroke="#ED2727"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M10 4H14V8"
+        stroke="#ED2727"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
