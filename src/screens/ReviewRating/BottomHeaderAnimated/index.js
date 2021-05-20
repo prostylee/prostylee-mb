@@ -82,9 +82,18 @@ const BottomHeaderAnimated = ({navigation}) => {
             onValueChange={(value) => setValueSort(value)}
             value={valueSort}
             color="#823ffd">
-            <RadioButton.Item label="Default" value="default" />
-            <RadioButton.Item label="Mới nhất" value="newest" />
-            <RadioButton.Item label="Cũ nhất" value="oldest" />
+            <RadioButton.Item
+              label={i18n.t('reviewRating.default')}
+              value="default"
+            />
+            <RadioButton.Item
+              label={i18n.t('reviewRating.newest')}
+              value="newest"
+            />
+            <RadioButton.Item
+              label={i18n.t('reviewRating.oldest')}
+              value="oldest"
+            />
           </RadioButton.Group>
         ) : (
           <RadioButton.Group

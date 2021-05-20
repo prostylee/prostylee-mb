@@ -47,4 +47,10 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  label: {
+    fontWeight: '500',
+    fontSize: 20,
+    lineHeight: 28,
+    color: '#333333',
+  },
 });

@@ -30,5 +30,8 @@ export default {
   reviewRating: {
     count: 'Review & Rating (%{count})',
     title: 'Review & Rating',
+    default: 'Default',
+    newest: 'Newest',
+    oldest: 'Oldest'
   },
 };

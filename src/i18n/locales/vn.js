@@ -102,5 +102,8 @@ export default {
   reviewRating: {
     count: 'Đánh giá sản phẩm (%{count})',
     title: 'Đánh giá sản phẩm',
+    default: 'Mặc định',
+    newest: 'Mới nhất',
+    oldest: 'Cũ nhất'
   },
 };
