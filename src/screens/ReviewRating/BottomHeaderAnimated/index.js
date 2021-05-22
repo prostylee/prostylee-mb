@@ -4,7 +4,7 @@ import styles from './styles';
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import Picker from '../Picker';
-import {RnRatingTap} from 'components';
+import {AirbnbRating} from 'components';
 import {Divider} from 'react-native-paper';
 import {Sort, Filter, CaretDown} from 'svg/common';
 import i18n from 'i18n';
@@ -38,11 +38,13 @@ const BottomHeaderAnimated = ({navigation}) => {
   };
 
   const renderStar = (star) => (
-    <RnRatingTap
-      onChangeValue={() => {}}
-      value={star}
+    <AirbnbRating
       isDisabled={true}
       size={20}
+      showRating={false}
+      defaultRating={star}
+      reviewColor="#333333"
+      reviewSize={14}
     />
   );
 
@@ -85,14 +87,17 @@ const BottomHeaderAnimated = ({navigation}) => {
             <RadioButton.Item
               label={i18n.t('reviewRating.default')}
               value="default"
+              color="#823ffd"
             />
             <RadioButton.Item
               label={i18n.t('reviewRating.newest')}
               value="newest"
+              color="#823ffd"
             />
             <RadioButton.Item
               label={i18n.t('reviewRating.oldest')}
               value="oldest"
+              color="#823ffd"
             />
           </RadioButton.Group>
         ) : (
@@ -100,11 +105,11 @@ const BottomHeaderAnimated = ({navigation}) => {
             onValueChange={(value) => setValueFilter(value)}
             value={valueFilter}
             color="#823ffd">
-            <RadioButton.Item label={renderStar(5)} value={5} />
-            <RadioButton.Item label={renderStar(4)} value={4} />
-            <RadioButton.Item label={renderStar(3)} value={3} />
-            <RadioButton.Item label={renderStar(2)} value={2} />
-            <RadioButton.Item label={renderStar(1)} value={1} />
+            <RadioButton.Item label={renderStar(5)} value={5} color="#823ffd" />
+            <RadioButton.Item label={renderStar(4)} value={4} color="#823ffd" />
+            <RadioButton.Item label={renderStar(3)} value={3} color="#823ffd" />
+            <RadioButton.Item label={renderStar(2)} value={2} color="#823ffd" />
+            <RadioButton.Item label={renderStar(1)} value={1} color="#823ffd" />
           </RadioButton.Group>
         )}
       </Picker>
