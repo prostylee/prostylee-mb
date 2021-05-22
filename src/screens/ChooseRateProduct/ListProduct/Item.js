@@ -19,7 +19,7 @@ const ProductItem = ({item, navigation}) => {
       style={styles.wrapItems}
       key={item.id}
       onPress={onNavigate}>
-      <View style={styles.productItem}>
+      <View style={styles.productItem}  key={item.id}>
         <View style={styles.wrapImageThumbnail}>
           <Image
             source={

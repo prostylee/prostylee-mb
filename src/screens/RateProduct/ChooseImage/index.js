@@ -10,25 +10,36 @@ import {Image} from 'components';
 import {UploadIcon} from 'svg/common';
 import ImagePicker from 'react-native-image-crop-picker';
 
-const ChooseImage = ({navigation, label, images, setImages}) => {
+const ChooseImage = ({
+  onSuccess,
+  label,
+  images,
+  setImages,
+  length = 5,
+  pickerConfig,
+}) => {
   const [tempArray, setTempArray] = useState(
-    new Array(4 - (images.length + 1)).fill(),
+    new Array(length - images.length - 2).fill(),
   );
 
   useEffect(() => {
-    setTempArray(new Array(4 - (images.length + 1)).fill());
+    setTempArray(new Array(length - images.length - 2).fill());
   }, [JSON.stringify(images)]);
 
   const openImagePicker = async () => {
     ImagePicker.openPicker({
       mediaType: 'photo',
       multiple: false,
+      ...pickerConfig,
     })
       .then((res) => {
         console.log(res);
         alert(res.path);
         const tempImage = [...images, {source: res.path}];
         setImages(tempImage);
+        if (typeof onSuccess === 'function') {
+          onSuccess();
+        }
         // RootNavigator.navigate('AddStory', {image: res});
       })
       .catch((e) => console.log(e));
@@ -41,6 +52,7 @@ const ChooseImage = ({navigation, label, images, setImages}) => {
         {images?.length > 0 &&
           images.map((item) => (
             <Image
+              key={images.id}
               source={
                 item.url
                   ? {uri: item?.url}
@@ -53,7 +65,7 @@ const ChooseImage = ({navigation, label, images, setImages}) => {
             />
           ))}
 
-        {images?.length < 4 && (
+        {images?.length < length - 1 && (
           <TouchableOpacity
             onPress={openImagePicker}
             style={styles.btnImageUpload}>
@@ -74,9 +86,11 @@ const ChooseImage = ({navigation, label, images, setImages}) => {
 ChooseImage.defaultProps = {
   images: [
     {
+      id: '12345',
       url: 'https://i.vietgiaitri.com/2018/9/19/thoi-trang-nu-cao-cap-vay-dam-nu-528267.jpg',
     },
     {
+      id: '12346',
       url: 'https://i.vietgiaitri.com/2018/9/19/thoi-trang-nu-cao-cap-vay-dam-nu-528267.jpg',
     },
   ],
@@ -84,6 +98,8 @@ ChooseImage.defaultProps = {
 
 ChooseImage.defaultProps = {
   images: [],
+  length: 5,
+  pickerConfig: {},
 };
 
 export default ChooseImage;

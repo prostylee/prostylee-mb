@@ -1,3 +1,5 @@
+import styles from './styles';
+
 import React, {Component} from 'react';
 import times from 'lodash/times';
 import {
@@ -6,15 +8,13 @@ import {
   Animated,
   PanResponder,
   Image,
-  StyleSheet,
-  Platform,
   Dimensions,
 } from 'react-native';
 // RATING IMAGES WITH STATIC BACKGROUND COLOR (white)
-const STAR_IMAGE = require('./images/star.png');
-const HEART_IMAGE = require('./images/heart.png');
-const ROCKET_IMAGE = require('./images/rocket.png');
-const BELL_IMAGE = require('./images/bell.png');
+const STAR_IMAGE = require('../assets/images/star.png');
+const HEART_IMAGE = require('../assets/images/heart.png');
+const ROCKET_IMAGE = require('../assets/images/rocket.png');
+const BELL_IMAGE = require('../assets/images/bell.png');
 const TYPES = {
   star: {
     source: STAR_IMAGE,
@@ -53,6 +53,7 @@ const fractionsType = (props, propName, componentName) => {
     );
   }
 };
+
 export default class SwipeRating extends Component {
   constructor(props) {
     super(props);
@@ -328,57 +329,3 @@ SwipeRating.defaultProps = {
   minValue: 0,
   jumpValue: 0,
 };
-const styles = StyleSheet.create({
-  starsWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  starsInsideWrapper: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  showRatingView: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 5,
-  },
-  ratingView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 5,
-  },
-  ratingText: {
-    fontSize: 15,
-    textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'Trebuchet MS' : null,
-    color: '#34495e',
-  },
-  readonlyLabel: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 12,
-    textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'Trebuchet MS' : null,
-    color: '#34495a',
-  },
-  currentRatingText: {
-    fontSize: 30,
-    textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'Trebuchet MS' : null,
-  },
-  maxRatingText: {
-    fontSize: 18,
-    textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'Trebuchet MS' : null,
-    color: '#34495e',
-  },
-});

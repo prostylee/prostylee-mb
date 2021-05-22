@@ -6,36 +6,23 @@ import React, {useEffect, useState, useRef} from 'react';
 import I18n from 'i18n';
 
 /*Components*/
+import {View, Text, ScrollView} from 'react-native';
 import {
-  Animated,
-  View,
-  ActivityIndicator,
-  FlatList,
-  Text,
-  TextInput,
-  ScrollView,
-} from 'react-native';
-import {
-  Header,
   ThemeView,
   AirbnbRating,
   ButtonRounded,
-  CustomSecureInput,
-  CustomTextInput,
-  TextButton,
   TextInputArea,
 } from 'components';
 import Item from './Item';
-import {Formik, Field} from 'formik';
+import {Formik} from 'formik';
 import ChooseImage from '../ChooseImage';
 
 const RatingProduct = ({navigation, product}) => {
   const [star, setStar] = useState();
   const [imageList, setImageList] = useState([]);
+
   //handle User signIn
-  const onRate = async (formValues) => {
-    console.log(formValues);
-  };
+  const onRate = () => {};
 
   const onPickRating = (rate) => {
     setStar(rate);
@@ -43,7 +30,7 @@ const RatingProduct = ({navigation, product}) => {
 
   return (
     <ThemeView style={styles.container} isFullView>
-      <Formik validateOnMount={true} onSubmit={(values) => onRate(values)}>
+      <Formik validateOnMount={true} onSubmit={onRate}>
         {({handleSubmit, values, isValid}) => (
           <View style={styles.formRate}>
             <ScrollView>
@@ -72,6 +59,7 @@ const RatingProduct = ({navigation, product}) => {
                   multiline={true}
                   label={I18n.t('rateProduct.ratingTitle')}
                   numberOfLines={5}
+                  maxLength={255}
                 />
               </View>
               <View style={styles.wrapItemReview}>

@@ -14,8 +14,8 @@ export default EStyleSheet.create({
     height: 45,
     width: '100%',
     flexDirection: 'row',
-
     alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   author: {
     margin: 5,

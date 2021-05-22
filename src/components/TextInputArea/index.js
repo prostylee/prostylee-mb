@@ -21,7 +21,6 @@ const TextInputArea = ({
         style={{
           top: !isFocused ? 18 : 0,
           fontSize: !isFocused ? 18 : 14,
-
           ...labelStyle,
         }}>
         {label}

@@ -1,3 +1,2 @@
-import Rating from './SwipeRating';
-import AirbnbRating from './TapRating';
-export {Rating, AirbnbRating};
+export {default as AirbnbRating} from './TapRating';
+export {default as Rating} from './SwipeRating';

@@ -3,7 +3,7 @@ import styles from './styles';
 
 import React from 'react';
 import {ActivityIndicator, Text, View, TouchableOpacity} from 'react-native';
-import {Image, RnRatingTap, GridImageReviewer} from 'components';
+import {Image, AirbnbRating, GridImageReviewer} from 'components';
 
 const ReviewItem = ({item, navigation}) => {
   const renderGridImage = (item) => {
@@ -42,11 +42,13 @@ const ReviewItem = ({item, navigation}) => {
             <Text style={styles.textAuthor}>{item.author.name}</Text>
           </View>
           <View style={styles.rating}>
-            <RnRatingTap
-              onChangeValue={() => {}}
-              value={item.rating}
+            <AirbnbRating
               isDisabled={true}
               size={20}
+              showRating={false}
+              defaultRating={item.rating}
+              reviewColor="#333333"
+              reviewSize={14}
             />
           </View>
         </View>

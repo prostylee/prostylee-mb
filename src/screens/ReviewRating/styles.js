@@ -46,6 +46,7 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 10
   },
   label: {
     fontWeight: '500',
