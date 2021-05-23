@@ -978,3 +978,61 @@ export const CaretDown = ({width = 24, height = 24, color = '#333333'}) => {
     </Svg>
   );
 };
+
+export const CartEmpty = (props) => (
+  <Svg width={64} height={64} viewBox="0 0 64 64" fill="none" {...props}>
+    <Path
+      d="M7 20h50l2 43H5l2-43zM7 20l4-5h1M57 20l-4-5h-2"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Circle
+      cx={23}
+      cy={28}
+      r={3}
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Circle
+      cx={41}
+      cy={28}
+      r={3}
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M23 28v5a9 9 0 009 9v0a9 9 0 009-9v-5M13.298 20L12.057 5.812l18.982-1.66.693 7.924"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M40.282 20l-1.605-9.102-18.764 3.308L20.934 20"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M49.215 20l2.353-9.438-16.237-4.048-1.244 4.986"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M40 7.5C39.508 3.554 36.08 1 32 1c-3.012 0-5.135 1.04-6.5 3.5"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

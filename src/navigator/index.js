@@ -30,6 +30,7 @@ import {
   Welcome,
   Categories,
   Products,
+  Cart,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -44,11 +45,12 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Home"
+      initialRouteName="Cart"
       mode="card"
       headerMode="none"
       animation="fade">
       <Stack.Screen name="Home" component={BottomTabs} />
+      <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="Categories" component={Categories} />
       <Stack.Screen name="Products" component={Products} />
       <Stack.Screen name="Stores" component={Stores} />

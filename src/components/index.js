@@ -33,6 +33,7 @@ import CustomTextInput from './CustomTextInput';
 import CustomSecureInput from './CustomSecureInput';
 import Countdown from './Countdown';
 import CustomPinCodeInput from './CustomPinCodeInput';
+import NumberInputUpDown from './NumberInputUpDown';
 
 export {
   ContainerWithoutScrollView,
@@ -70,4 +71,5 @@ export {
   Countdown,
   CustomPinCodeInput,
   ProductLike,
+  NumberInputUpDown,
 };
