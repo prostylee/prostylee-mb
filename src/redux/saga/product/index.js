@@ -13,7 +13,10 @@ import {showMessage} from 'react-native-flash-message';
 import * as CONTANTS from 'constants';
 import authService from '../../../services/authService';
 import {SUCCESS} from 'constants';
-import {getListProductService} from 'services/api/productApi';
+import {
+  getListProductService,
+  getProductById as getProductByIdApi,
+} from 'services/api/productApi';
 
 const getProducts = function* ({payload: {token, isRefresh}}) {
   try {
@@ -101,6 +104,22 @@ const getLoadMoreListProduct = function* ({payload}) {
   }
 };
 
+const getProductById = function* ({payload}) {
+  try {
+    yield put(productActions.getProductByIdLoading(true));
+    const res = yield call(getProductByIdApi, payload.id);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(productActions.getProductByIdSuccess(res.data.data));
+    } else {
+      yield put(productActions.getProductByIdSuccess());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(productActions.getProductByIdLoading(false));
+  }
+};
+
 const watcher = function* () {
   // yield takeLatest(productType.GET_PRODUCTS, getCustomerList);
   //List product from categories
@@ -109,5 +128,6 @@ const watcher = function* () {
     productTypes.GET_LIST_PRODUCT_LOAD_MORE,
     getLoadMoreListProduct,
   );
+  yield takeLatest(productTypes.GET_PRODUCT_BY_ID, getProductById);
 };
 export default watcher();

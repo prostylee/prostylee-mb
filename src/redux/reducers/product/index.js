@@ -13,6 +13,11 @@ export const types = {
   GET_LIST_PRODUCT_LOAD_MORE: 'GET_LIST_PRODUCT_LOAD_MORE',
   GET_LIST_PRODUCT_LOAD_MORE_SUCCESS: 'GET_LIST_PRODUCT_LOAD_MORE_SUCCESS',
   GET_LIST_PRODUCT_LOAD_MORE_FAILED: 'GET_LIST_PRODUCT_LOAD_MORE_FAILED',
+
+  GET_PRODUCT_BY_ID_LOADING: 'GET_PRODUCT_BY_ID_LOADING',
+  GET_PRODUCT_BY_ID: 'GET_PRODUCT_BY_ID',
+  GET_PRODUCT_BY_ID_SUCCESS: 'GET_PRODUCT_BY_ID_SUCCESS',
+  GET_PRODUCT_BY_ID_FAILED: 'GET_PRODUCT_BY_ID_FAILED',
 };
 
 export const actions = {
@@ -33,10 +38,16 @@ export const actions = {
   getListProductLoadMoreFailed: createAction(
     types.GET_LIST_PRODUCT_LOAD_MORE_FAILED,
   ),
+
+  getProductByIdLoading: createAction(types.GET_PRODUCT_BY_ID_LOADING),
+  getProductById: createAction(types.GET_PRODUCT_BY_ID),
+  getProductByIdSuccess: createAction(types.GET_PRODUCT_BY_ID_SUCCESS),
+  getProductByIdFail: createAction(types.GET_PRODUCT_BY_ID_FAILED),
 };
 
 export const selectors = {
   getProducts: (state) => state.product.networkStatus,
+  getProductDetail: (state) => state.product.productDetail,
 };
 
 const defaultState = {
@@ -48,6 +59,9 @@ const defaultState = {
   hasLoadMoreProduct: false,
   pageProduct: 0,
   limitProduct: 12,
+  // Product detail
+  productDetail: {},
+  productDetailLoading: false,
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -95,6 +109,15 @@ export default handleActions(
     },
     [types.GET_LIST_PRODUCT_LOAD_MORE_FAILED]: (state, {payload}) => {
       return {...state};
+    },
+    [types.GET_PRODUCT_BY_ID_LOADING]: (state, {payload}) => {
+      return {...state, productDetailLoading: payload};
+    },
+    [types.GET_PRODUCT_BY_ID_SUCCESS]: (state, {payload}) => {
+      return {...state, productDetail: payload};
+    },
+    [types.GET_PRODUCT_BY_ID_FAILED]: (state, {payload}) => {
+      return {...state, productDetail: {}};
     },
   },
   defaultState,
