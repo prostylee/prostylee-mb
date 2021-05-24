@@ -30,6 +30,8 @@ import {
   Welcome,
   AddStory,
   AddStore,
+  Categories,
+  Products,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -49,6 +51,8 @@ function SignedIn() {
       headerMode="none"
       animation="fade">
       <Stack.Screen name="Home" component={BottomTabs} />
+      <Stack.Screen name="Categories" component={Categories} />
+      <Stack.Screen name="Products" component={Products} />
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />

@@ -30,6 +30,11 @@ import dynamicUsers, {
   types as dynamicUsersTypes,
 } from './dynamicUsers';
 
+import categories, {
+  actions as categoriesActions,
+  types as categoriesTypes,
+} from './categories';
+
 const rootReducer = combineReducers({
   common,
   product,
@@ -37,6 +42,7 @@ const rootReducer = combineReducers({
   newFeed,
   store,
   dynamicUsers,
+  categories,
 });
 
 export {commonActions, commonSelectors, commonTypes};
@@ -45,5 +51,6 @@ export {userActions, userSelectors, userTypes};
 export {newFeedActions, newFeedTypes, newFeedSelectors};
 export {storeActions, storeTypes};
 export {dynamicUsersActions, dynamicUsersTypes};
+export {categoriesActions, categoriesTypes};
 
 export default rootReducer;
