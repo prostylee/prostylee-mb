@@ -1,6 +1,6 @@
 import React from 'react';
 import {Dimensions, View, StyleSheet, Platform} from 'react-native';
-import ContentLoader, {Rect} from 'react-content-loader/native';
+import ContentLoader, {Circle, Rect} from 'react-content-loader/native';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -96,6 +96,100 @@ export const StoreLoading = ({
   );
 };
 
+export const CategoriesLeftLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([styles.container, style])}>
+      <ContentLoader
+        height={25}
+        width={25}
+        speed={speed}
+        viewBox="0 0 10 10"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect width={25} height={25} />
+      </ContentLoader>
+      <ContentLoader
+        height={20}
+        width={50}
+        speed={speed}
+        viewBox="0 0 50 10"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y="10" width={50} height={10} />
+      </ContentLoader>
+    </View>
+  );
+};
+
+export const CategoriesRightLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([styles.container, style])}>
+      <ContentLoader
+        height={50}
+        width={50}
+        speed={speed}
+        viewBox="0 0 50 50"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect rx="50" ry="50" width={50} height={50} />
+      </ContentLoader>
+      <ContentLoader
+        height={20}
+        width={50}
+        speed={speed}
+        viewBox="0 0 50 10"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y="10" width={50} height={10} />
+      </ContentLoader>
+    </View>
+  );
+};
+
+export const ProductLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([styles.container, style])}>
+      <ContentLoader
+        height={height}
+        width={width}
+        speed={speed}
+        viewBox="0 0 10 10"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect width={width} height={25} />
+      </ContentLoader>
+      <ContentLoader
+        height={50}
+        width={width}
+        speed={speed}
+        viewBox={'0 0 ' + width + ' 50'}
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y={10} width={width} height={10} />
+        <Rect y={30} width={width} height={5} />
+        <Rect y={40} width={width} height={5} />
+      </ContentLoader>
+    </View>
+  );
+};
+
 NewFeedContentLoading.defaultProps = {
   height: 190,
   width: deviceWidth,
@@ -117,6 +211,33 @@ NewFeedTrendingContentLoading.defaultProps = {
 StoreLoading.defaultProps = {
   height: Platform.OS === 'android' ? 160 : 170,
   width: deviceWidth,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+
+CategoriesLeftLoading.defaultProps = {
+  height: 100,
+  width: 100,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+
+CategoriesRightLoading.defaultProps = {
+  height: 100,
+  width: 100,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+
+ProductLoading.defaultProps = {
+  height: 100,
+  width: 100,
   backgroundColor: '#d9d9d9',
   foregroundColor: '#ecebeb',
   style: {},

@@ -7,3 +7,7 @@ export const currencyFormat = (n, currency) => {
     currency
   );
 };
+
+export const priceSalePercent = (price, priceSale) => {
+  return Math.round(100 - (priceSale / price) * 100);
+};

@@ -1,6 +1,6 @@
 import I18n from 'i18n';
 
-export default [
+export const ON_BOARDING = [
   {
     id: 1,
     title: I18n.t('titleOnboarding1'),
