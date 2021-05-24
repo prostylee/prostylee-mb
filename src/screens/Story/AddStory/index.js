@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Animated,
   PanResponder,
-  Image,
+  Alert,
 } from 'react-native';
 import {ContainerWithoutScrollView, ButtonRounded} from 'components';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
@@ -155,11 +155,13 @@ const AddStory = (props) => {
           postStory({name: `story_${time}.jpg`});
           getUrl(result.key);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          Alert.alert(i18n.t('error.cannotUploadImage'));
+        });
 
       dispatch(commonActions.toggleLoading(false));
     } catch (err) {
-      console.log(err);
+      Alert.alert(i18n.t('error.cannotGetImage'));
     }
   };
 

@@ -9,6 +9,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import * as TabsIcon from 'svg/bottomTab';
 import i18n from 'i18n';
 import ImagePicker from 'react-native-image-crop-picker';
+import {showMessage} from 'react-native-flash-message';
 
 import Modal from 'react-native-modal';
 
@@ -110,8 +111,12 @@ const ModalTabButton = ({style, visible}) => {
 
   const AddStoryButton = () => {
     const buttonAction = async () => {
-      setPickerModal('story');
-      closeTabButton();
+      // setPickerModal('story');
+      // closeTabButton();
+      showMessage({
+        message: 'CONTANTS.UNKNOWN_MESSAGE,',
+        type: 'danger',
+      });
     };
     return (
       <Animated.View

@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Image,
+  Alert,
+} from 'react-native';
 import {Container, ButtonRounded, HeaderBack} from 'components';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {hasNotch} from 'react-native-device-info';
@@ -139,10 +146,10 @@ const AddStatus = (props) => {
           getUrl(result.key);
         }
       } catch (err) {
-        console.log(err);
+        Alert.alert(i18n.t('error.cannotUploadImage'));
       }
     } catch (err) {
-      console.log(err);
+      Alert.alert(i18n.t('error.cannotGetImage'));
     } finally {
       if (image.index === images.length - 1) {
         setDoneUpload(true);
