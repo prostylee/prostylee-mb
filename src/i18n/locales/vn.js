@@ -14,6 +14,12 @@ export default {
     textFollowing: 'Đang theo dõi',
     textPost: 'Bài đăng',
   },
+  codePush: {
+    installButton: 'Cập nhật',
+    IgnoreButton: 'Bỏ qua',
+    title: 'Thông Báo',
+    updateMessage: 'Có phiên bản mới, nhấn cài đặt để cập nhật.',
+  },
   bottomTab: {
     newFeed: 'Trang chủ',
     store: 'Cửa hàng',
