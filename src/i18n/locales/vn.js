@@ -26,6 +26,7 @@ export default {
   },
   headerTitle: {
     featured_store: 'Cửa hàng nổi bật',
+    categories: 'Danh mục sản phẩm',
   },
   dynamicUsers: {
     titleDynamicUser: 'Người dùng năng động',
@@ -85,6 +86,9 @@ export default {
   existedEmail: 'Email đã tồn tại',
   unExistedEmail: 'Email chưa được đăng ký',
   pressBackToExitApp: 'Nhấn Back để thoát',
+  search: 'Tìm kiếm',
+  sort: 'Sắp xếp',
+  filter: 'Bộ lọc',
   validation: {
     required: '%{field} bắt buộc nhập',
     invalid: '%{field} không hợp lệ',
