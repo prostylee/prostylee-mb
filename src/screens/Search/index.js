@@ -12,6 +12,8 @@ import SearchResult from './SearchResult';
 const WIDTH = Dimensions.get('window').width;
 import {debounce} from 'lodash';
 
+import SearchProducts from './SearchProducts';
+
 const Search = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const handlerSearch = useCallback(
@@ -77,4 +79,4 @@ Search.defaultProps = {};
 
 Search.propTypes = {};
 
-export default Search;
+export default SearchProducts;
