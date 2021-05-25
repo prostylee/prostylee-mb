@@ -873,6 +873,32 @@ export const FullSolid = ({width = 24, height = 24, color = '#333333'}) => {
   );
 };
 
+export const Trending = ({width = 24, height = 24, color = '#333333'}) => {
+  return (
+    <Svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M2 12L6 7L9 10L14 4"
+        stroke="#ED2727"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M10 4H14V8"
+        stroke="#ED2727"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
 export const Sort = ({width = 24, height = 24, color = '#333333'}) => {
   return (
     <Svg
@@ -974,6 +1000,32 @@ export const CaretDown = ({width = 24, height = 24, color = '#333333'}) => {
       <Path
         d="M10.5418 8.45823L9.01823 9.98177L9.01823 9.98177C8.66182 10.3382 8.48361 10.5164 8.27812 10.5832C8.09736 10.6419 7.90264 10.6419 7.72188 10.5832C7.51639 10.5164 7.33818 10.3382 6.98177 9.98177L6.98177 9.98177L5.45823 8.45823C4.68716 7.68716 4.30162 7.30162 4.27557 6.97061C4.25296 6.68341 4.36922 6.40274 4.58829 6.21563C4.84077 6 5.386 6 6.47647 6L9.52353 6C10.614 6 11.1592 6 11.4117 6.21563C11.6308 6.40274 11.747 6.68341 11.7244 6.97061C11.6984 7.30162 11.3128 7.68716 10.5418 8.45823Z"
         fill="#8B9399"
+      />
+    </Svg>
+  );
+};
+
+export const Remove = ({width = 24, height = 24, color = '#333333'}) => {
+  return (
+    <Svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M18 6L6 18"
+        stroke="black"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M6 6L18 18"
+        stroke="black"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
       />
     </Svg>
   );

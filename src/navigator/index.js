@@ -30,6 +30,8 @@ import {
   Welcome,
   Categories,
   Products,
+  Search,
+  FilterProduct,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -44,17 +46,19 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Home"
+      initialRouteName="Search"
       mode="card"
       headerMode="none"
       animation="fade">
       <Stack.Screen name="Home" component={BottomTabs} />
       <Stack.Screen name="Categories" component={Categories} />
       <Stack.Screen name="Products" component={Products} />
+      <Stack.Screen name="FilterProduct" component={FilterProduct} />
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
   );
 }

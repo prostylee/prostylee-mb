@@ -54,7 +54,8 @@ export default {
   otpSent: 'Mã xác minh đã được gửi đến',
   invalidOTP: 'Mã xác minh không đúng',
   userAlreadyVerified: 'Tài khoản đã được xác nhận',
-  userNeedToVerify: 'Tài khoản chưa xác nhận. Vui lòng nhập mã OTP đã được gửi đến email của bạn.',
+  userNeedToVerify:
+    'Tài khoản chưa xác nhận. Vui lòng nhập mã OTP đã được gửi đến email của bạn.',
   resendOTPSuccess: 'Yêu cầu gửi lại mã xác minh thành công',
   next: 'Tiếp',
   resendOTP: 'Gửi lại mã xác minh',
@@ -97,5 +98,12 @@ export default {
     name: 'Họ tên',
     phone: 'Số điện thoại',
     password: 'Mật khẩu',
+  },
+  Search: {
+    inputPlaceholder: 'Tìm kiếm sản phẩm, cửa hàng',
+    topSearch: 'Tìm kiếm hàng đầu',
+    featuredCategories: 'Danh mục nổi bật',
+    searchResultProduct: 'Sản phẩm',
+    searchResultStore: 'Cửa hàng',
   },
 };
