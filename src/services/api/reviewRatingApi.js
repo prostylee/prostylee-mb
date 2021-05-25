@@ -1,34 +1,35 @@
 import {_fetch} from '../config';
 import {GET} from 'constants';
 
-export const getAverage = (payload) => {
-  return _fetch(GET, '/v1/user-rating-controller/average', payload);
-};
-
-export const getListReview = (payload) => {
-  return _fetch(GET, '/v1/user-rating-controller/getAll_16', payload);
-};
-
-export const filterReview = (payload) => {
+export const getAverage = (productId) => {
   return _fetch(
     GET,
-    '/v1/swagger-ui/index.html#/user-rating-controller/getAll_12',
+    `/user-ratings/average?targetId=${productId}&targetType=PRODUCT`,
+  );
+};
+
+export const getListReviewRatingService = (payload) => {
+  return _fetch(GET, `/user-ratings`, payload);
+};
+
+export const sortReview = (productId, order) => {
+  return _fetch(
+    GET,
+    `/user-ratings?targetId=${productId}&targetType=PRODUCT&sorts=${
+      order === 1 ? 'createdAt' : '-createdAt'
+    }`,
     payload,
   );
 };
 
-export const filterReview = (payload) => {
+export const filterReview = (productId, star) => {
   return _fetch(
     GET,
-    '/v1/swagger-ui/index.html#/user-rating-controller/getAll_12',
+    `/user-ratings?targetId=${productId}&targetType=PRODUCT&value=${star}`,
     payload,
   );
 };
 
-export const addReview = (payload) => {
-  return _fetch(
-    GET,
-    '/swagger-ui/index.html#/user-rating-controller/create_12',
-    payload,
-  );
+export const addReview = (body) => {
+  return _fetch(POST, '/user-ratings', {body});
 };

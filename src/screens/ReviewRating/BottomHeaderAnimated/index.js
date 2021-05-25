@@ -10,11 +10,14 @@ import {Sort, Filter, CaretDown} from 'svg/common';
 import i18n from 'i18n';
 import {RadioButton} from 'react-native-paper';
 
-const BottomHeaderAnimated = ({navigation}) => {
+const BottomHeaderAnimated = ({
+  sortValue,
+  filterValue,
+  setSortValue,
+  setFilterValue,
+}) => {
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState(null);
-  const [valueSort, setValueSort] = useState();
-  const [valueFilter, setValueFilter] = useState();
 
   const onSort = (e) => {
     e.preventDefault();
@@ -27,7 +30,8 @@ const BottomHeaderAnimated = ({navigation}) => {
     setVisible(true);
   };
 
-  const onFilter = () => {
+  const onFilter = (e) => {
+    e.preventDefault();
     if (action === 'filter') {
       setAction(null);
       setVisible(false);
@@ -47,6 +51,18 @@ const BottomHeaderAnimated = ({navigation}) => {
       reviewSize={14}
     />
   );
+
+  const handleSort = (value) => {
+    setSortValue(value);
+    setAction(null);
+    setVisible(false);
+  };
+
+  const handleFilter = (value) => {
+    setFilterValue(value);
+    setAction(null);
+    setVisible(false);
+  };
 
   return (
     <>
@@ -81,8 +97,8 @@ const BottomHeaderAnimated = ({navigation}) => {
       <Picker visible={visible} setVisible={setVisible} setAction={setAction}>
         {action === 'sort' ? (
           <RadioButton.Group
-            onValueChange={(value) => setValueSort(value)}
-            value={valueSort}
+            onValueChange={handleSort}
+            value={sortValue}
             color="#823ffd">
             <RadioButton.Item
               label={i18n.t('reviewRating.default')}
@@ -102,8 +118,8 @@ const BottomHeaderAnimated = ({navigation}) => {
           </RadioButton.Group>
         ) : (
           <RadioButton.Group
-            onValueChange={(value) => setValueFilter(value)}
-            value={valueFilter}
+            onValueChange={handleFilter}
+            value={filterValue}
             color="#823ffd">
             <RadioButton.Item label={renderStar(5)} value={5} color="#823ffd" />
             <RadioButton.Item label={renderStar(4)} value={4} color="#823ffd" />

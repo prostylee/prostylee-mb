@@ -1,6 +1,6 @@
 import React from 'react';
 import {Dimensions, View, StyleSheet, Platform} from 'react-native';
-import ContentLoader, {Rect} from 'react-content-loader/native';
+import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -96,6 +96,40 @@ export const StoreLoading = ({
   );
 };
 
+export const ReviewRatingLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([styles.container, style])}>
+      <ContentLoader
+        height={50}
+        width={width}
+        speed={speed}
+        viewBox="0 0 10 10"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y={10} width={width} height={10} />
+      </ContentLoader>
+      <ContentLoader
+        height={50}
+        width={width}
+        speed={speed}
+        viewBox={'0 0 ' + width + ' 50'}
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y={10} width={width} height={10} />
+        <Rect y={30} width={width} height={5} />
+        <Rect y={40} width={width} height={5} />
+      </ContentLoader>
+    </View>
+  );
+};
+
 NewFeedContentLoading.defaultProps = {
   height: 190,
   width: deviceWidth,
@@ -116,6 +150,15 @@ NewFeedTrendingContentLoading.defaultProps = {
 
 StoreLoading.defaultProps = {
   height: Platform.OS === 'android' ? 160 : 170,
+  width: deviceWidth,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+
+ReviewRatingLoading.defaultProps = {
+  height: 10,
   width: deviceWidth,
   backgroundColor: '#d9d9d9',
   foregroundColor: '#ecebeb',

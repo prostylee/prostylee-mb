@@ -10,6 +10,8 @@ import {Image} from 'components';
 import {UploadIcon} from 'svg/common';
 import ImagePicker from 'react-native-image-crop-picker';
 
+import {commonActions} from 'reducers';
+
 const ChooseImage = ({
   onSuccess,
   label,
@@ -34,11 +36,11 @@ const ChooseImage = ({
     })
       .then((res) => {
         console.log(res);
-        alert(res.path);
-        const tempImage = [...images, {source: res.path}];
+        alert(res);
+        const tempImage = [...images, {source: res.sourceURL, id: res.filename}];
         setImages(tempImage);
         if (typeof onSuccess === 'function') {
-          onSuccess();
+          onSuccess(tempImage);
         }
         // RootNavigator.navigate('AddStory', {image: res});
       })
@@ -76,24 +78,13 @@ const ChooseImage = ({
         )}
         {tempArray.length > 0 &&
           tempArray.map((item, index) => (
-            <View style={styles.buttonUploadEmpty}></View>
+            <View
+              style={styles.buttonUploadEmpty}
+              key={`empty-${index}`}></View>
           ))}
       </View>
     </View>
   );
-};
-
-ChooseImage.defaultProps = {
-  images: [
-    {
-      id: '12345',
-      url: 'https://i.vietgiaitri.com/2018/9/19/thoi-trang-nu-cao-cap-vay-dam-nu-528267.jpg',
-    },
-    {
-      id: '12346',
-      url: 'https://i.vietgiaitri.com/2018/9/19/thoi-trang-nu-cao-cap-vay-dam-nu-528267.jpg',
-    },
-  ],
 };
 
 ChooseImage.defaultProps = {

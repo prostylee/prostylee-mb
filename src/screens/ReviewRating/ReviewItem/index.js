@@ -39,14 +39,14 @@ const ReviewItem = ({item, navigation}) => {
       <View style={styles.item}>
         <View style={styles.header}>
           <View style={styles.author}>
-            <Text style={styles.textAuthor}>{item.author.name}</Text>
+            <Text style={styles.textAuthor}>{item.user.fullName}</Text>
           </View>
           <View style={styles.rating}>
             <AirbnbRating
               isDisabled={true}
               size={20}
               showRating={false}
-              defaultRating={item.rating}
+              defaultRating={item.value}
               reviewColor="#333333"
               reviewSize={14}
             />

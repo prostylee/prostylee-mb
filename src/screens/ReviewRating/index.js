@@ -1,6 +1,7 @@
 import styles from './styles';
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 
 /*Hooks*/
 import I18n from 'i18n';
@@ -10,160 +11,54 @@ import {View, Text} from 'react-native';
 import ListReview from './ListReview';
 import {Header, ThemeView, AirbnbRating} from 'components';
 
-const ReviewRating = ({navigation, data}) => {
-  useEffect(() => {}, []);
+/*Api*/
+import {getAverage, getListReview} from 'services/api/reviewRatingApi';
 
-  const onChangeRating = (rating) => {
-    console.log('rating is: ', rating);
-  };
+/*Selector*/
+import {getListReviewRatingSelector} from 'redux/selectors/reviewRating';
+
+const ReviewRating = ({navigation, data, productId}) => {
+  const [rate, setRate] = useState(0);
+
+  const listReviewRatingSelector = useSelector((state) =>
+    getListReviewRatingSelector(state),
+  );
+
+  const listReviewRating = listReviewRatingSelector?.content || [];
+
+  useEffect(() => {
+    getAverage(productId)
+      .then((res) => setRate(res.data.data))
+      .catch(() => {
+        console.log('Có lỗi xảy ra!');
+      });
+  }, [productId]);
 
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header title={I18n.t('reviewRating.count', {count: 15})} isDefault />
+      <Header
+        title={I18n.t('reviewRating.count', {count: listReviewRating.length})}
+        isDefault
+      />
       <View style={styles.ratingWrapper}>
-        <Text style={styles.label}>{data.ratingCount}</Text>
+        <Text style={styles.label}>{rate}</Text>
         <View style={styles.row}>
           <AirbnbRating
-            value={4.6}
             isDisabled={true}
             size={20}
-            defaultRating={4.6}
+            defaultRating={rate}
             showRating={false}
             reviewColor="#E5E5E5"
             reviewSize={14}
           />
         </View>
       </View>
-      <ListReview navigation={navigation} data={data.reviews} />
+      <ListReview navigation={navigation} productId={productId} />
     </ThemeView>
   );
 };
 
-ReviewRating.defaultProps = {
-  data: {
-    ratingCount: 4.6,
-    reviews: [
-      {
-        author: {name: 'Vũ'},
-        rating: 5,
-        content: 'Sản phẩm tốt, chất lượng',
-        images: [
-          {
-            key: '1',
-            url: 'https://cdn3.yame.vn/pimg/so-mi-nam-no-style-td-km18-0018246/e4cebcc8-21b2-1a00-b6bc-00173fc25903.jpg?w=440',
-          },
-          {
-            key: '2',
-            url: 'https://sagasilk.com/wp-content/uploads/vay-dam-maxi-trang-dai-du-tiec-hang-hieu-cao-cap-2019.jpg',
-          },
-          {
-            key: '3',
-            url: 'https://cdn2.yame.vn/pimg/so-mi-nam-no-style-td-km18-0018246/7af60ad2-b54b-0400-1db4-00159060c9b0.jpg?w=440',
-          },
-          {
-            key: '4',
-            url: 'https://vaymaxi.vn/wp-content/uploads/2019/08/IMG_0790.jpg',
-          },
-          {
-            key: '5',
-            url: 'https://cdn2.yame.vn/pimg/so-mi-nam-no-style-td-km18-0018246/7af60ad2-b54b-0400-1db4-00159060c9b0.jpg?w=440',
-          },
-          {
-            key: '6',
-            url: 'https://sagasilk.com/wp-content/uploads/vay-dam-maxi-trang-dai-du-tiec-hang-hieu-cao-cap-2019.jpg',
-          },
-        ],
-      },
-      {
-        author: {name: 'Vũ Nguyễn'},
-        rating: 3,
-        content:
-          'I bought this product two weeks ago. I really really like it so elegant.',
-        images: [
-          {
-            key: '1',
-            url: 'https://cdn3.yame.vn/pimg/so-mi-nam-no-style-td-km18-0018246/e4cebcc8-21b2-1a00-b6bc-00173fc25903.jpg?w=440',
-          },
-          {
-            key: '2',
-            url: 'https://cdn2.yame.vn/pimg/so-mi-nam-no-style-td-km18-0018246/7af60ad2-b54b-0400-1db4-00159060c9b0.jpg?w=440',
-          },
-        ],
-      },
-      {
-        author: {name: 'Vũ XYZ'},
-        rating: 4,
-        content:
-          'Sản phẩm tốt, chất lượng. I bought this product two weeks ago. I really really like it so elegant.',
-        images: [
-          {
-            key: '1',
-            url: 'https://cdn3.yame.vn/pimg/so-mi-nam-no-style-td-km18-0018246/e4cebcc8-21b2-1a00-b6bc-00173fc25903.jpg?w=440',
-          },
-          {
-            key: '2',
-            url: 'https://cdn2.yame.vn/pimg/so-mi-nam-no-style-td-km18-0018246/7af60ad2-b54b-0400-1db4-00159060c9b0.jpg?w=440',
-          },
-        ],
-      },
-      {
-        author: {name: 'Tran Vawn A'},
-        rating: 1,
-        content: 'Sản phẩm tốt, chất lượng',
-        images: [],
-      },
-      {
-        author: {name: 'Vũ Nguyeen'},
-        rating: 5,
-        content: 'Sản phẩm tốt, chất lượng',
-        images: [],
-      },
-      {
-        author: {name: 'Vũ 123'},
-        rating: 5,
-        content:
-          'Sản phẩm tốt, chất lượng. I bought this product two weeks ago. I really really like it so elegant.',
-        images: [],
-      },
-      {
-        author: {name: 'Vũ ABC'},
-        rating: 5,
-        content: 'Sản phẩm tốt, chất lượng',
-        images: [],
-      },
-      {
-        author: {name: 'Vũ'},
-        rating: 4,
-        content: 'Sản phẩm tốt, chất lượng',
-        images: [],
-      },
-      {
-        author: {name: 'Vũ'},
-        rating: 5,
-        content: 'Sản phẩm tốt, chất lượng',
-        images: [],
-      },
-      {
-        author: {name: 'Vũ'},
-        rating: 5,
-        content: 'Sản phẩm tốt, chất lượng',
-        images: [],
-      },
-      {
-        author: {name: 'Vũ'},
-        rating: 5,
-        content: 'Sản phẩm tốt, chất lượng',
-        images: [],
-      },
-      {
-        author: {name: 'Vũ'},
-        rating: 5,
-        content: 'Sản phẩm tốt, chất lượng',
-        images: [],
-      },
-    ],
-  },
-};
+ReviewRating.defaultProps = {};
 
 ReviewRating.propTypes = {};
 
