@@ -18,6 +18,7 @@ import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
 import Search from './Search';
+import FilterProduct from './FilterProduct';
 
 export {
   Welcome,
@@ -40,4 +41,5 @@ export {
   SimpleWebView,
   UserProfile,
   Search,
+  FilterProduct,
 };

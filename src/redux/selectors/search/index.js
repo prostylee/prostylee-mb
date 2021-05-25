@@ -1,29 +1,29 @@
 import {createSelector} from 'reselect';
 
-export const productReducer = (state) => state.product;
+export const searchReducer = (state) => state.search;
 
 //List product from categories
 export const getSearchFeaturedCategoriesLoadingSelector = createSelector(
-  productReducer,
+  searchReducer,
   (data) => data?.searchFeaturedCategoriesLoading,
 );
 
 export const getSearchFeaturedCategoriesSelector = createSelector(
-  productReducer,
+  searchReducer,
   (data) => data?.searchFeaturedCategories || {},
 );
 
 export const getLoadSearchFeaturedCategoriesMoreLoading = createSelector(
-  productReducer,
+  searchReducer,
   (data) => data?.loadSearchFeaturedCategoriesMoreLoading || false,
 );
 
 export const getHasLoadMoreSearchFeaturedCategoriesSelector = createSelector(
-  productReducer,
+  searchReducer,
   (data) => data?.hasLoadMoreSearchFeaturedCategories || false,
 );
 
 export const getPageSearchFeaturedCategoriesSelector = createSelector(
-  productReducer,
+  searchReducer,
   (data) => data?.pageSearchFeaturedCategories,
 );

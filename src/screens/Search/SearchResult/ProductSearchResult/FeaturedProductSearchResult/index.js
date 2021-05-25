@@ -17,9 +17,6 @@ import {
 import FeaturedCategoriesItem from './item.js';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {CategoriesRightLoading} from 'components/Loading/contentLoader';
-import {categoriesActions} from 'redux/reducers';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Text} from 'react-native-paper';
 
 const ResultProductSearchResult = ({navigation}) => {
@@ -62,7 +59,11 @@ const ResultProductSearchResult = ({navigation}) => {
 
   const renderFooter = () => {
     if (!loadMoreLoading) {
-      return <View style={styles.viewFooter} />;
+      return (
+        <View style={styles.viewFooterHasResult}>
+          <Text style={{color: "#823FFD", lineHeight: 20, fontSize: 14, fontWeight: "500"}}>Xem toàn bộ kết quả (167)</Text>
+        </View>
+      );
     }
 
     return (

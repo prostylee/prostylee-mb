@@ -1,30 +1,57 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
-import {Image} from 'components';
+import {Image, ProductLike, AirbnbRating} from 'components';
 import styles from './styles';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
-import {useDispatch} from 'react-redux';
-import {categoriesActions, productActions} from 'redux/reducers';
+import {currencyFormat, priceSalePercent} from 'utils/currency';
+
 const FeaturedCategoriesItem = ({item, index, navigation}) => {
   return (
     <View style={styles.wrapItems}>
       <TouchableOpacity>
         <View style={styles.item}>
-          <Image
-            source={
-              item?.icon
-                ? {uri: item?.icon}
-                : require('assets/images/default.png')
-            }
-            resizeMode="cover"
-            style={styles.imageThumbnail}
-            PlaceholderContent={<ActivityIndicator />}
-          />
+          <View style={styles.wrapImage}>
+            <Image
+              source={
+                item?.icon
+                  ? {uri: item?.icon}
+                  : require('assets/images/default.png')
+              }
+              resizeMode="cover"
+              style={styles.imageThumbnail}
+              PlaceholderContent={<ActivityIndicator />}
+            />
+            <View style={styles.wrapTextSale}>
+              <Text style={styles.textSale}>
+                -{priceSalePercent(100000, 90000)}%
+              </Text>
+            </View>
+          </View>
+
           <View style={styles.wrapDetail}>
             <View style={styles.wrapTitle}>
-              <Text numberOfLines={1} style={styles.titleCategory}>
+              <Text numberOfLines={1} style={styles.title}>
                 Thời trang nam Thời trang nam Thời trang nam Thời trang nam
+              </Text>
+              <ProductLike item={item} />
+            </View>
+
+            <Text numberOfLines={1} style={styles.price}>
+              {currencyFormat(100000, 'đ')}
+            </Text>
+            <Text numberOfLines={1} style={styles.priceRoot}>
+              {currencyFormat(100000, 'đ')}
+            </Text>
+            <View style={styles.wrapRating}>
+              <AirbnbRating
+                showRating={false}
+                isDisabled={true}
+                size={12}
+                count={5}
+                defaultRating={3}
+              />
+              <Text numberOfLines={1} style={styles.resultRating}>
+                4.6(2)
               </Text>
             </View>
           </View>

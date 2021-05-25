@@ -14,17 +14,17 @@ import {
   getPageSearchFeaturedCategoriesSelector,
 } from 'redux/selectors/search';
 
-import FeaturedCategoriesItem from './item.js';
+import StoreSearchResultItem from './item.js';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {CategoriesRightLoading} from 'components/Loading/contentLoader';
 import {categoriesActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
-import {Text} from 'react-native-paper';
+import {Avatar, Text} from 'react-native-paper';
 
 const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
-
+  const followed = false;
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector((state) =>
@@ -74,27 +74,68 @@ const FeaturedCategories = ({navigation}) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.wrapHeader}>
-          <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
-        </View>
-        <View style={styles.wrapList}>
-          <FlatList
-            data={[
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-            ]}
-            renderItem={({item, index}) => (
-              <FeaturedCategoriesItem index={index} navigation={navigation} item={item} />
-            )}
-            numColumns={2}
-            keyExtractor={(item, index) => index}
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            onEndReached={() => handleLoadMore()}
-            ListFooterComponent={renderFooter}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
+        <FlatList
+          data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+          renderItem={({item, index}) => (
+            <>
+              <View style={styles.wrapHeader}>
+                <View
+                  style={{
+                    height: 65,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
+                  <Avatar.Image size={32} />
+                  <View style={{marginLeft: 10}}>
+                    <Text numberOfLines={1} style={styles.storeName}>
+                      Pull&Bear
+                    </Text>
+                    <Text style={styles.isAdvertising}>
+                      {i18n.t('common.textAdvertisement')}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.wrapTextFlow}>
+                  <Text
+                    style={[
+                      styles.text,
+                      !followed ? styles.textFollow : styles.textFollowed,
+                    ]}>
+                    {!followed
+                      ? i18n.t('common.textFollow')
+                      : i18n.t('common.textFollowed')}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.wrapList}>
+                <FlatList
+                  horizontal
+                  data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                  renderItem={({item, index}) => (
+                    <StoreSearchResultItem
+                      index={index}
+                      navigation={navigation}
+                      item={item}
+                    />
+                  )}
+                  numColumns={1}
+                  keyExtractor={(item, index) => index}
+                  showsVerticalScrollIndicator={false}
+                  showsHorizontalScrollIndicator={false}
+                />
+              </View>
+            </>
+          )}
+          numColumns={1}
+          keyExtractor={(item, index) => index}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          onEndReached={() => handleLoadMore()}
+          ListFooterComponent={renderFooter}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+        />
       </View>
     </>
   );

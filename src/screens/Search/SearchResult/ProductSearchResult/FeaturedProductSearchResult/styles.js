@@ -38,24 +38,82 @@ export default EStyleSheet.create({
     height: HEIGHT_IMAGE,
     width: WIDTH_IMAGE,
     borderRadius: 4,
-    marginLeft: 12
+    marginLeft: 12,
   },
   wrapTitle: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    paddingRight: 12,
   },
   title: {
     color: '$icon',
+    paddingRight: 10,
+  },
+  wrapImage: {
+    position: 'relative',
   },
   wrapDetail: {
     alignItems: 'flex-start',
     height: HEIGHT_IMAGE,
     color: '$black',
-    backgroundColor: 'red',
     marginLeft: 12,
-    width: WIDTH - WIDTH_IMAGE - 36
+    width: WIDTH - WIDTH_IMAGE - 36,
+  },
+  wrapTextSale: {
+    position: 'absolute',
+    bottom: 8,
+    left: 20,
+    padding: 4,
+    borderRadius: 3,
+    backgroundColor: '$red',
+  },
+  price: {
+    width: WIDTH_IMAGE,
+    lineHeight: 20,
+    fontSize: 14,
+    fontFamily: '$font1',
+    fontWeight: '500',
+    fontStyle: 'normal',
+    textAlign: 'left',
+    color: '$black',
+    marginTop: 8,
+  },
+  priceRoot: {
+    width: WIDTH_IMAGE - 20,
+    lineHeight: 16,
+    fontSize: 11,
+    fontFamily: '$font1',
+    fontWeight: '400',
+    fontStyle: 'normal',
+    textAlign: 'left',
+    color: '$icon',
+  },
+  textSale: {
+    fontFamily: '$font1',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: 11,
+    lineHeight: 16,
+    color: '$white',
   },
   viewFooter: {
     marginBottom: 6,
+  },
+  viewFooterHasResult: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginBottom: 6,
+    alignItems: 'center',
+    backgroundColor: '$white',
+  },
+  wrapRating: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginTop: 12,
+  },
+  resultRating: {
+    lineHeight: 20,
+    marginLeft: 5,
+    color: '$icon',
   },
 });

@@ -1,83 +1,58 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {getListFeaturedCategoriesService} from 'services/searchApi';
+import {getListFeaturedCategoriesService} from 'services/api/searchApi';
 
-import {
-  searchFeaturedCategoriesActions,
-  searchFeaturedCategoriesTypes,
-} from 'reducers';
+import {searchActions, searchTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
 
 //List product from categories
 const getSearchFeaturedCategories = function* ({payload}) {
+  console.log('getListFeaturedCategoriesService');
   try {
-    yield put(
-      searchFeaturedCategoriesActions.setSearchFeaturedCategoriesLoading(true),
-    );
-    yield put(
-      searchFeaturedCategoriesActions.setPageSearchFeaturedCategoriesDefault(),
-    );
+    yield put(searchActions.setSearchFeaturedCategoriesLoading(true));
+    yield put(searchActions.setPageSearchFeaturedCategoriesDefault());
     const res = yield call(getListFeaturedCategoriesService, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(
-        searchFeaturedCategoriesActions.getSearchFeaturedCategoriesSuccess(
-          res.data.data,
-        ),
+        searchActions.getSearchFeaturedCategoriesSuccess(res.data.data),
       );
     } else {
-      yield put(
-        searchFeaturedCategoriesActions.getSearchFeaturedCategoriesFailed(),
-      );
+      yield put(searchActions.getSearchFeaturedCategoriesFailed());
     }
   } catch (e) {
     console.error(e);
   } finally {
-    yield put(
-      searchFeaturedCategoriesActions.setSearchFeaturedCategoriesLoading(false),
-    );
+    yield put(searchActions.setSearchFeaturedCategoriesLoading(false));
   }
 };
 
 const getLoadMoreSearchFeaturedCategories = function* ({payload}) {
   try {
-    yield put(
-      searchFeaturedCategoriesActions.setSearchFeaturedCategoriesLoadingLoadMore(
-        true,
-      ),
-    );
+    yield put(searchActions.setSearchFeaturedCategoriesLoadingLoadMore(true));
     const res = yield call(getListFeaturedCategoriesService, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(
-        searchFeaturedCategoriesActions.getSearchFeaturedCategoriesLoadMoreSuccess(
-          res.data.data,
-        ),
+        searchActions.getSearchFeaturedCategoriesLoadMoreSuccess(res.data.data),
       );
     } else {
-      yield put(
-        searchFeaturedCategoriesActions.getSearchFeaturedCategoriesLoadMoreFailed(),
-      );
+      yield put(searchActions.getSearchFeaturedCategoriesLoadMoreFailed());
     }
   } catch (e) {
     console.error(e);
   } finally {
-    yield put(
-      searchFeaturedCategoriesActions.setSearchFeaturedCategoriesLoadingLoadMore(
-        false,
-      ),
-    );
+    yield put(searchActions.setSearchFeaturedCategoriesLoadingLoadMore(false));
   }
 };
 
 const watcher = function* () {
-  // yield takeLatest(productType.GET_PRODUCTS, getCustomerList);
   //List SEARCH_FEATURED_CATEGORIES
   yield takeLatest(
-    searchFeaturedCategoriesTypes.GET_SEARCH_FEATURED_CATEGORIES,
+    searchTypes.GET_SEARCH_FEATURED_CATEGORIES,
     getSearchFeaturedCategories,
   );
   yield takeLatest(
-    searchFeaturedCategoriesTypes.GET_SEARCH_FEATURED_CATEGORIES_LOAD_MORE,
+    searchTypes.GET_SEARCH_FEATURED_CATEGORIES_LOAD_MORE,
     getLoadMoreSearchFeaturedCategories,
   );
 };

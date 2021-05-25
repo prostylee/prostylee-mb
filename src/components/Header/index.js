@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import {StyleSheet, TouchableOpacity, View, Text, Platform} from 'react-native';
 
-import {ChevronLeft} from 'svg/common';
+import {ChevronLeft, Remove} from 'svg/common';
 
 const Header = ({
   title,
@@ -33,7 +33,7 @@ const Header = ({
         <TouchableOpacity
           style={isDefault ? [styles.backStyle, leftStyle] : {}}
           onPress={isDefault ? _goBack : leftPress}>
-          {isDefault ? <ChevronLeft /> : leftIcon}
+          {!leftIcon ? <ChevronLeft /> : leftIcon}
         </TouchableOpacity>
       ) : leftComponent ? (
         leftComponent

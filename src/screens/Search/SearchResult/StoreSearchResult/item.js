@@ -6,22 +6,17 @@ import styles from './styles';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch} from 'react-redux';
 import {categoriesActions, productActions} from 'redux/reducers';
-const FeaturedCategoriesItem = ({item, index, navigation}) => {
-  const paddingLeft = index % 2 ? 4 : 12;
-  const paddingRight = index % 2 ? 12 : 0;
-  console.log(paddingLeft)
+import {Divider} from "react-native-paper";
+const StoreSearchResultItem = ({item, index, navigation}) => {
   const dispatch = useDispatch();
   const clickItem = () => {
     dispatch(categoriesActions.setCategoriesSelect(item));
     navigation.navigate('Products');
   };
   return (
-    <View style={[styles.wrapItems, { paddingLeft: paddingLeft, paddingRight:paddingRight }]}>
+    <View style={[styles.wrapItems]}>
       <TouchableOpacity onPress={clickItem}>
         <View style={styles.item}>
-          <Text numberOfLines={2} style={styles.titleCategory}>
-            Thời trang nam{item?.name}
-          </Text>
           <Image
             source={
               item?.icon
@@ -32,14 +27,18 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
             style={styles.imageThumbnail}
             PlaceholderContent={<ActivityIndicator />}
           />
+          <Text numberOfLines={2} style={styles.titleProduct}>
+            Thời trang nam
+          </Text>
+          <Divider />
         </View>
       </TouchableOpacity>
     </View>
   );
 };
 
-FeaturedCategoriesItem.defaultProps = {};
+StoreSearchResultItem.defaultProps = {};
 
-FeaturedCategoriesItem.propTypes = {};
+StoreSearchResultItem.propTypes = {};
 
-export default FeaturedCategoriesItem;
+export default StoreSearchResultItem;
