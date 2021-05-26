@@ -33,9 +33,10 @@ const SortDropDown = ({
         color="#823ffd">
         {MockSortItem?.map((v, i, arr) => (
           <>
+            <Divider />
             <RadioButton.Item
+              color={Colors['$purple']}
               style={styles.itemContainer}
-              label={v.label}
               value={v.value}
               uncheckedColor={'#fff'}
               labelStyle={[
@@ -47,8 +48,9 @@ const SortDropDown = ({
                       : Colors['$black'],
                 },
               ]}
+              label={v.label}
             />
-            {i !== arr.length - 1 ? <Divider /> : null}
+            {/* {i !== arr.length - 1 ? <Divider /> : null} */}
           </>
         ))}
       </RadioButton.Group>

@@ -35,7 +35,7 @@ const PriceFilter = ({navigation}) => {
             width: 20,
             height: 20,
           }}
-          values={[30, 40]}
+          values={[10, 100]}
           min={10}
           max={100}
           markerOffsetY={2}
