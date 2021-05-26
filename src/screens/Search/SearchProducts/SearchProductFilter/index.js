@@ -33,11 +33,9 @@ const FilterProduct = ({navigation}) => {
           <SizeFilter />
           <PriceFilter />
           <ConditionOfProductsFilter />
-          <MaterialFilter />
-          <StyleFilter />
         </View>
       </ScrollView>
-      <ButtonRounded label="Áp Dụng" style={{paddingBottom: 30}} />
+      <ButtonRounded label="Áp Dụng" style={{margin: 20}} />
     </ThemeView>
   );
 };
