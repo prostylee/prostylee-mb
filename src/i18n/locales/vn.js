@@ -105,5 +105,8 @@ export default {
     featuredCategories: 'Danh mục nổi bật',
     searchResultProduct: 'Sản phẩm',
     searchResultStore: 'Cửa hàng',
+    categories: 'Danh mục',
+    priceRange: 'Khoảng giá',
+    size: 'Size',
   },
 };

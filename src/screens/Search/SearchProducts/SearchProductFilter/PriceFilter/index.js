@@ -1,80 +1,53 @@
 import React from 'react';
 import {Dimensions, View} from 'react-native';
 import i18n from 'i18n';
-
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import styles from './styles';
 
 import {ThemeView, Header, TextInputRounded} from 'components';
 import {Chip, Divider, Text} from 'react-native-paper';
 import {Trending} from 'svg/common';
+import Colors from '../../../../../components/Colors';
 const WIDTH = Dimensions.get('window').width;
-const Search = ({navigation}) => {
+const PriceFilter = ({navigation}) => {
   return (
     <>
       <View style={styles.wrapHeader}>
-        <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
+        <Text style={styles.title}>{i18n.t('Search.priceRange')}</Text>
+        <Text
+          style={[
+            styles.title,
+            {
+              color: Colors['$black500'],
+            },
+          ]}>
+          0đ - 100.000đ
+        </Text>
       </View>
       <View style={styles.wrapChip}>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Thời trang nam
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Phụ kiện da
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Sale
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Giày da
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Best-seller
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Hoodie
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Quần tây
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Dép
-        </Chip>
+        <MultiSlider
+          sliderLength={WIDTH - 32}
+          selectedStyle={{backgroundColor: Colors['$black'], height: 5}}
+          unselectedStyle={{backgroundColor: Colors['$line'], height: 5}}
+          markerStyle={{
+            backgroundColor: Colors['$black'],
+            borderWidth: 0,
+            width: 20,
+            height: 20,
+          }}
+          markerOffsetY={2}
+          enabledTwo={true}
+          enabledOne={true}
+          isMarkersSeparated={true}
+        />
       </View>
       <Divider />
     </>
   );
 };
 
-Search.defaultProps = {};
+PriceFilter.defaultProps = {};
 
-Search.propTypes = {};
+PriceFilter.propTypes = {};
 
-export default Search;
+export default PriceFilter;

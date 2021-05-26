@@ -12,7 +12,7 @@ const Search = ({navigation}) => {
   return (
     <>
       <View style={styles.wrapHeader}>
-        <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
+        <Text style={styles.title}>{i18n.t('Search.categories')}</Text>
       </View>
       <View style={styles.wrapChip}>
         <Chip
