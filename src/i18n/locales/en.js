@@ -47,5 +47,9 @@ export default {
     notBad: 'Not bad',
     good: 'Good',
     perfect: 'Perfect',
+    ratingSuccessTitle: 'Rate success',
+    ratingSuccessContent: 'Thanks for your rating',
+    ratingFailTitle: 'Rate failed',
+    ratingFailContent: 'Oops! Rate failed, please try again later',
   },
 };

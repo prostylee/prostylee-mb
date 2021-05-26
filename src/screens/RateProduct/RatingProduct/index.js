@@ -60,20 +60,20 @@ const RatingProduct = ({navigation, product, productId}) => {
         if (res.status !== 200) {
           console.log('failed');
           showMessage({
-            message: 'Thất bại',
-            description: 'Oops! Có lỗi xảy ra, vui lòng thử lại sau.',
+            message: I18n.t("rateProduct.ratingFailTitle"),
+            description: I18n.t("rateProduct.ratingFailContent"),
             type: 'danger',
           });
           return;
         }
         showMessage({
-          message: 'Đánh giá thành công',
-          description: 'Cảm ơn bạn đã đánh giá',
+          message: I18n.t("rateProduct.ratingSuccessTitle"),
+          description: I18n.t("rateProduct.ratingSuccessContent"),
           type: 'success',
         });
         navigation.navigate('Products', {});
       })
-      .catch((e) => console.log('Có lỗi xảy ra', e));
+      .catch((e) => console.log('Error: ', e));
   };
 
   const onPickRating = (rate) => {

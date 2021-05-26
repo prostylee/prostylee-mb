@@ -119,5 +119,11 @@ export default {
     notBad: 'Tạm ổn',
     good: 'Tốt',
     perfect: 'Rất tốt',
+    ratingSuccessTitle: 'Đánh giá thành công',
+    ratingSuccessContent: 'Cảm ơn bạn đã đánh giá',
+    ratingFailTitle: 'Đánh giá thất bại',
+    ratingFailContent: 'Oops! Đánh giá thất bại, vui lòng thử lại sau',
+    ratingNotFoundTitle: 'Oops, hiện không có đánh giá nào phù hợp',
+    ratingNotFoundContent: 'Mua hàng để bổ sung vào danh sách nhé!',
   },
 };

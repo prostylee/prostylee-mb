@@ -168,12 +168,12 @@ const ListReview = ({navigation, productId}) => {
           </View>
           <View style={styles.viewtitle}>
             <Text style={styles.title}>
-              Oops, hiện không có đánh giá nào phù hợp
+              {I18n.t('rateProduct.ratingNotFoundTitle')}
             </Text>
           </View>
           <View style={styles.viewSubTitle}>
             <Text style={styles.subTitle}>
-              Mua hàng để bổ sung vào danh sách nhé!
+              {I18n.t('rateProduct.ratingNotFoundContent')}
             </Text>
           </View>
         </View>
