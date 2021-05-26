@@ -5,7 +5,14 @@ export default EStyleSheet.create({
     flex: 1,
     backgroundColor: '$bgColorSearch',
   },
-
+  headerGroupButtonRight: {
+    flexDirection: 'row',
+    height: 35,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    // borderWidth: 1,
+    width: 80,
+  },
   wrapBlockOne: {
     height: 45,
     width: '100%',
@@ -43,5 +50,22 @@ export default EStyleSheet.create({
   },
   wrapContent: {
     flex: 1,
+  },
+  wrapList: {
+    height: 50,
+  },
+  wrapChip: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: '$white',
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 16,
+  },
+  itemChips: {
+    height: 32,
+    marginTop: 8,
+    marginRight: 8,
+    backgroundColor: '$bgColor',
   },
 });

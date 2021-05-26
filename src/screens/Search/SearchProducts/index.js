@@ -1,11 +1,24 @@
 import React, {useCallback, useState} from 'react';
-import {Dimensions, View, Text, Image, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import i18n from 'i18n';
 
 import styles from './styles';
 import {Sort, Filter, CaretDown} from 'svg/common';
 import {ThemeView, Header, TextInputRounded} from 'components';
-import {IconButton, Searchbar, RadioButton, Divider} from 'react-native-paper';
+import {
+  IconButton,
+  Searchbar,
+  RadioButton,
+  Divider,
+  Chip,
+} from 'react-native-paper';
 import {Colors} from 'components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {RnRatingTap, Picker} from 'components';
@@ -14,30 +27,81 @@ import SearchProductFilter from './SearchProductFilter';
 
 const WIDTH = Dimensions.get('window').width;
 import {debounce} from 'lodash';
+import {MessageOutlined, Bell, BellWithNotiBadge} from '../../../svg/header';
+import ProductList from './ProductList';
+import SortDropDown from './SortDropDown';
 
-const CustomBadge = ({content = '', size = ''}) => (
-  <View style={styles.customBadge}>
-    {content ? <Text>{content}</Text> : null}
-  </View>
-);
-const GroupHeaderRightButton = () => {
+const MockTag = [
+  'Best seller',
+  'Gần đây',
+  'Sale',
+  'Elegant',
+  'Best seller',
+  'Gần đây',
+  'Sale',
+  'Elegant',
+];
+
+const GroupHeaderRightButton = ({haveNoti = false}) => {
   return (
     <View style={styles.headerGroupButtonRight}>
-      <IconButton
-        icon="message-outline"
-        size={25}
-        color={Colors['$lightGray']}
-        style={{marginLeft: 0}}
-      />
-      <IconButton
-        icon="bell-outline"
-        size={25}
-        color={Colors['$lightGray']}
-        style={{marginLeft: 0}}
-      />
+      <TouchableOpacity
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <MessageOutlined
+          width={20}
+          height={20}
+          color={Colors['$lightGray']}
+          strokeWidth={2}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        {haveNoti ? (
+          <BellWithNotiBadge
+            width={24}
+            height={24}
+            color={Colors['$lightGray']}
+            strokeWidth={2}
+          />
+        ) : (
+          <Bell
+            width={24}
+            height={24}
+            color={Colors['$lightGray']}
+            strokeWidth={2}
+          />
+        )}
+      </TouchableOpacity>
     </View>
   );
 };
+const TagList = () => (
+  <View style={styles.wrapList}>
+    <FlatList
+      style={styles.wrapChip}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      data={MockTag}
+      renderItem={({item, index}) => (
+        <Chip
+          small
+          onPress={() => console.log('Pressed')}
+          style={styles.itemChips}
+          key={`${item}-${index}`}>
+          {item}
+        </Chip>
+      )}
+    />
+  </View>
+);
 
 const SearchProducts = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -71,7 +135,7 @@ const SearchProducts = ({navigation}) => {
         middleComponent={
           <Searchbar
             style={{
-              minWidth: WIDTH - 150,
+              minWidth: WIDTH - 140,
               backgroundColor: '#F4F5F5',
               height: 35,
               borderRadius: 4,
@@ -89,7 +153,7 @@ const SearchProducts = ({navigation}) => {
             value={searchQuery}
           />
         }
-        rightComponent={<GroupHeaderRightButton />}
+        rightComponent={<GroupHeaderRightButton haveNoti={true} />}
       />
       <View style={styles.wrapBlockOne}>
         <TouchableOpacity onPress={() => setVisible(!visible)}>
@@ -118,16 +182,15 @@ const SearchProducts = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <Divider />
-      <Picker visible={visible} setVisible={setVisible} setAction={setAction}>
-        <RadioButton.Group
-          value={valueSort}
-          onValueChange={(value) => setValueSort(value)}
-          color="#823ffd">
-          <RadioButton.Item label="Liên quan nhất" value="default" />
-          <RadioButton.Item label="Phổ biến nhất" value="new" />
-        </RadioButton.Group>
-      </Picker>
-      <View style={styles.wrapContent}></View>
+      <TagList />
+      <SortDropDown
+        visible={visible}
+        setVisible={setVisible}
+        setAction={setAction}
+        setValueSort={setValueSort}
+        valueSort={valueSort}
+      />
+      <ProductList />
     </ThemeView>
   );
 };
@@ -136,4 +199,4 @@ SearchProducts.defaultProps = {};
 
 SearchProducts.propTypes = {};
 
-export default SearchProductFilter;
+export default SearchProducts;
