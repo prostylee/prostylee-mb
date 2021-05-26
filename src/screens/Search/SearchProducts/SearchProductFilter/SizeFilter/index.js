@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Dimensions, View} from 'react-native';
+import {Dimensions, TouchableOpacity, View} from 'react-native';
 import i18n from 'i18n';
 
 import styles from './styles';
@@ -31,8 +31,7 @@ const Search = ({navigation}) => {
       </View>
       <View style={styles.wrapChip}>
         {MockSize.map((v, i) => (
-          <Chip
-            small
+          <TouchableOpacity
             onPress={() => setActiveItem(i)}
             style={[
               styles.itemChips,
@@ -52,7 +51,7 @@ const Search = ({navigation}) => {
               ]}>
               {v}
             </Text>
-          </Chip>
+          </TouchableOpacity>
         ))}
       </View>
       <Divider />

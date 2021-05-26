@@ -32,5 +32,6 @@ export default EStyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     fontSize: 14,
+    paddingHorizontal: 10,
   },
 });
