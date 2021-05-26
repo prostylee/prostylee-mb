@@ -6,7 +6,10 @@ import {Chip, Divider} from 'react-native-paper';
 const FeaturedCategoriesItem = ({item, index, navigation}) => {
   return (
     <View style={styles.wrapItems}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('SearchProducts');
+        }}>
         <View style={styles.item}>
           <Text style={styles.title}>Áo khoác</Text>
         </View>

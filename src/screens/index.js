@@ -19,6 +19,8 @@ import UserProfile from './UserProfile';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
 import Search from './Search';
 import FilterProduct from './FilterProduct';
+import SearchProductFilter from './SearchProductFilter';
+import SearchProducts from './SearchProducts';
 
 export {
   Welcome,
@@ -42,4 +44,6 @@ export {
   UserProfile,
   Search,
   FilterProduct,
+  SearchProductFilter,
+  SearchProducts,
 };

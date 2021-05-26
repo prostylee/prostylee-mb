@@ -61,52 +61,52 @@ const Search = ({navigation}) => {
         <Chip
           small
           avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigation.navigate('SearchProducts')}
           style={styles.itemChips}>
           Thời trang nam
         </Chip>
         <Chip
           small
           avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigation.navigate('SearchProducts')}
           style={styles.itemChips}>
           Phụ kiện da
         </Chip>
         <Chip
           small
           avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigation.navigate('SearchProducts')}
           style={styles.itemChips}>
           Sale
         </Chip>
         <Chip
           small
           avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigation.navigate('SearchProducts')}
           style={styles.itemChips}>
           Giày da
         </Chip>
         <Chip
           small
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigation.navigate('SearchProducts')}
           style={styles.itemChips}>
           Best-seller
         </Chip>
         <Chip
           small
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigation.navigate('SearchProducts')}
           style={styles.itemChips}>
           Hoodie
         </Chip>
         <Chip
           small
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigation.navigate('SearchProducts')}
           style={styles.itemChips}>
           Quần tây
         </Chip>
         <Chip
           small
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigation.navigate('SearchProducts')}
           style={styles.itemChips}>
           Dép
         </Chip>

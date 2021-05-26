@@ -12,8 +12,6 @@ import SearchResult from './SearchResult';
 const WIDTH = Dimensions.get('window').width;
 import {debounce} from 'lodash';
 
-import SearchProducts from './SearchProducts';
-
 const Search = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const handlerSearch = useCallback(
@@ -58,17 +56,20 @@ const Search = ({navigation}) => {
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
             value={searchQuery}
+            onSubmitEditing={() => {
+              navigation.navigate('SearchProducts');
+            }}
           />
         }
       />
       <View style={styles.wrapContent}>
         {searchQuery === '' ? (
           <>
-            <TopSearch />
-            <FeaturedCategories />
+            <TopSearch navigation={navigation} />
+            <FeaturedCategories navigation={navigation} />
           </>
         ) : (
-          <SearchResult />
+          <SearchResult navigation={navigation} />
         )}
       </View>
     </ThemeView>
@@ -79,4 +80,4 @@ Search.defaultProps = {};
 
 Search.propTypes = {};
 
-export default SearchProducts;
+export default Search;

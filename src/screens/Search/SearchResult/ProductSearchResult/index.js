@@ -7,8 +7,8 @@ import FeaturedProductSearchResult from './FeaturedProductSearchResult';
 const ProductSearchResult = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <ResultProductSearchResult />
-      <FeaturedProductSearchResult />
+      <ResultProductSearchResult navigation={navigation} />
+      <FeaturedProductSearchResult navigation={navigation} />
     </View>
   );
 };
