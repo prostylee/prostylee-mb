@@ -1,80 +1,79 @@
-import React from 'react';
-import {Dimensions, View} from 'react-native';
-import i18n from 'i18n';
+import React, {useState} from 'react';
+import {
+  SafeAreaView,
+  Switch,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 
 import styles from './styles';
-
-import {ThemeView, Header, TextInputRounded} from 'components';
-import {Chip, Divider, Text} from 'react-native-paper';
-import {Trending} from 'svg/common';
-const WIDTH = Dimensions.get('window').width;
+import Accordion from 'react-native-collapsible/Accordion';
+import Icon from 'react-native-vector-icons/Ionicons';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+const CONTENT = [
+  {
+    title: 'Tình trạng sản phẩm',
+    content: 'Content.....',
+  },
+  {
+    title: 'Chất liệu',
+    content: 'Content.....',
+  },
+  {
+    title: 'Phong cách',
+    content: 'Content.....',
+  },
+];
 const Search = ({navigation}) => {
+  const [activeSections, setActiveSections] = useState([]);
+  const setSections = (sections) => {
+    setActiveSections(sections.includes(undefined) ? [] : sections);
+  };
+
+  const renderHeader = (section, _, isActive) => {
+    return (
+      <View
+        duration={400}
+        style={[styles.header, isActive ? styles.active : styles.inactive]}
+        transition="backgroundColor">
+        <Text style={styles.headerText}>{section.title}</Text>
+        <Icon name="caret-down-outline" />
+      </View>
+    );
+  };
+
+  const renderContent = (section, _, isActive) => {
+    return (
+      <View
+        duration={400}
+        style={[styles.content, isActive ? styles.active : styles.inactive]}
+        transition="backgroundColor">
+        <Text
+          animation={isActive ? 'bounceIn' : undefined}
+          style={{textAlign: 'left'}}>
+          {section.content}
+        </Text>
+      </View>
+    );
+  };
+
   return (
-    <>
-      <View style={styles.wrapHeader}>
-        <Text style={styles.title}>{i18n.t('Search.categories')}</Text>
+    <SafeAreaView>
+      <View style={styles.wrapper}>
+        <Accordion
+          activeSections={activeSections}
+          sections={CONTENT}
+          touchableComponent={TouchableOpacity}
+          renderHeader={renderHeader}
+          renderContent={renderContent}
+          duration={400}
+          onChange={setSections}
+        />
       </View>
-      <View style={styles.wrapChip}>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Thời trang nam
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Phụ kiện da
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Sale
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Giày da
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Best-seller
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Hoodie
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Quần tây
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Dép
-        </Chip>
-      </View>
-      <Divider />
-    </>
+    </SafeAreaView>
   );
 };
-
-Search.defaultProps = {};
-
-Search.propTypes = {};
-
 export default Search;
