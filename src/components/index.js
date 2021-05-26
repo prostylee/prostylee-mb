@@ -13,6 +13,8 @@ import TextInputRounded from './TextInputRounded';
 import RnDateTimePicker from './RnDateTimePicker';
 import Rating from './RnRating/SwipeRating';
 import AirbnbRating from './RnRating/TapRating';
+import ProductLike from './ProductLike';
+// import {RnRatingTap} from './RnRatingTap';
 // import {ModalImagePicker} from './ModalImagePicker';
 import ModalZoomImage from './ModalZoomImage';
 import ModalNetworkWarning from './ModalNetworkWarning';
@@ -74,4 +76,5 @@ export {
   CustomPinCodeInput,
   GridImageReviewer,
   TextInputArea,
+  ProductLike,
 };

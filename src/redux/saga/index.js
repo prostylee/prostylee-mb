@@ -6,6 +6,7 @@ import newFeed from './newFeed';
 import stores from './stores';
 import daynamicUsers from './dynamicUsers';
 import reviewRating from './reviewRating';
+import categories from './categories';
 
 export default function* rootSaga() {
   yield all([
@@ -15,5 +16,6 @@ export default function* rootSaga() {
     ...stores,
     ...daynamicUsers,
     ...reviewRating,
+    ...categories,
   ]);
 }

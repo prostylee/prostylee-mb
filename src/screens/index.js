@@ -1,4 +1,6 @@
 import Home from './Home';
+import Categories from './Categories';
+import Products from './Products';
 import Stores from './Stores';
 import StoryBoard from './StoryBoard';
 import Chat from './Chat';
@@ -15,6 +17,9 @@ import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
 import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
+import ReviewRating from './ReviewRating';
+import ChooseRateProduct from './ChooseRateProduct';
+import RateProduct from './RateProduct';
 
 export {
   Welcome,
@@ -22,6 +27,8 @@ export {
   Home,
   SignIn,
   Stores,
+  Categories,
+  Products,
   StoryBoard,
   Chat,
   SignUpViaPhone,
@@ -34,4 +41,7 @@ export {
   ResetPasswordViaMail,
   SimpleWebView,
   UserProfile,
+  ReviewRating,
+  ChooseRateProduct,
+  RateProduct,
 };

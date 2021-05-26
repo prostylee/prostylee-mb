@@ -16,6 +16,7 @@ export default {
   },
   headerTitle: {
     featured_store: 'Featured store',
+    categories: 'Categories',
   },
   dynamicUsers: {
     titleDynamicUser: 'Dynamic User',

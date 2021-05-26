@@ -9,7 +9,7 @@ import {useDispatch} from 'react-redux';
 import {commonActions, userActions} from 'reducers';
 import {Auth} from 'aws-amplify';
 
-const Index = () => {
+const Index = ({navigation}) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -32,6 +32,7 @@ const Index = () => {
     <View style={styles.container}>
       <Text>HOME SCREEN</Text>
       <ButtonOutlined label="Đăng Xuất Ngay" onPress={() => onSignOut()} />
+      <ButtonOutlined label="Categories Screen" onPress={() => navigation.navigate("Categories")} />
     </View>
   );
 };

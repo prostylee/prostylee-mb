@@ -28,12 +28,14 @@ import {
   Chat,
   UserProfile,
   Welcome,
+  Categories,
+  Products,
+  ReviewRating,
+  ChooseRateProduct,
+  RateProduct,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
-import ReviewRating from '../screens/ReviewRating';
-import ChooseRateProduct from '../screens/ChooseRateProduct';
-import RateProduct from '../screens/RateProduct';
 
 const Stack = createStackNavigator();
 
@@ -45,7 +47,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="ChooseRateProduct"
+      initialRouteName="Home"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -53,6 +55,8 @@ function SignedIn() {
       <Stack.Screen name="ReviewRating" component={ReviewRating} />
       <Stack.Screen name="ChooseRateProduct" component={ChooseRateProduct} />
       <Stack.Screen name="RateProduct" component={RateProduct} />
+      <Stack.Screen name="Categories" component={Categories} />
+      <Stack.Screen name="Products" component={Products} />
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />

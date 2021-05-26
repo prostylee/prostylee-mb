@@ -23,6 +23,7 @@ export default {
   },
   headerTitle: {
     featured_store: 'Cửa hàng nổi bật',
+    categories: 'Danh mục sản phẩm',
   },
   dynamicUsers: {
     titleDynamicUser: 'Người dùng năng động',
