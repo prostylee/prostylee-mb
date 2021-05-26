@@ -45,7 +45,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="ReviewRating"
+      initialRouteName="ChooseRateProduct"
       mode="card"
       headerMode="none"
       animation="fade">

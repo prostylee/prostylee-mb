@@ -12,12 +12,12 @@ import ListReview from './ListReview';
 import {Header, ThemeView, AirbnbRating} from 'components';
 
 /*Api*/
-import {getAverage, getListReview} from 'services/api/reviewRatingApi';
+import {getAverage} from 'services/api/reviewRatingApi';
 
 /*Selector*/
 import {getListReviewRatingSelector} from 'redux/selectors/reviewRating';
 
-const ReviewRating = ({navigation, data, productId}) => {
+const ReviewRating = ({navigation, productId}) => {
   const [rate, setRate] = useState(0);
 
   const listReviewRatingSelector = useSelector((state) =>

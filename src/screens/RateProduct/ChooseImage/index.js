@@ -12,14 +12,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 import {commonActions} from 'reducers';
 
-const ChooseImage = ({
-  onSuccess,
-  label,
-  images,
-  setImages,
-  length = 5,
-  pickerConfig,
-}) => {
+const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
   const [tempArray, setTempArray] = useState(
     new Array(length - images.length - 2).fill(),
   );
@@ -35,14 +28,14 @@ const ChooseImage = ({
       ...pickerConfig,
     })
       .then((res) => {
-        console.log(res);
-        alert(res);
-        const tempImage = [...images, {source: res.sourceURL, id: res.filename}];
-        setImages(tempImage);
-        if (typeof onSuccess === 'function') {
-          onSuccess(tempImage);
+        const tempImage = [
+          ...images,
+          {source: res.sourceURL, id: res.filename},
+        ];
+
+        if (typeof setImages === 'function') {
+          setImages(tempImage);
         }
-        // RootNavigator.navigate('AddStory', {image: res});
       })
       .catch((e) => console.log(e));
   };
@@ -59,7 +52,7 @@ const ChooseImage = ({
                 item.url
                   ? {uri: item?.url}
                   : item.source
-                  ? item.source
+                  ? {uri: item.source}
                   : require('assets/images/default.png')
               }
               style={styles.imageChoose}
@@ -77,11 +70,11 @@ const ChooseImage = ({
           </TouchableOpacity>
         )}
         {tempArray.length > 0 &&
-          tempArray.map((item, index) => (
-            <View
-              style={styles.buttonUploadEmpty}
-              key={`empty-${index}`}></View>
-          ))}
+          tempArray.map((item, index) => {
+            return (
+              <View key={`choose-${index}`} style={styles.buttonUploadEmpty} />
+            );
+          })}
       </View>
     </View>
   );

@@ -53,4 +53,10 @@ export default EStyleSheet.create({
     lineHeight: 28,
     color: '#333333',
   },
+  containerToastSuccess: {
+    height: 60,
+    width: '100%',
+    backgroundColor: '#3FBA44',
+    borderRadius: 8,
+  },
 });

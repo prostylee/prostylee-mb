@@ -5,7 +5,7 @@ import {TextInput, View, Text} from 'react-native';
 
 const TextInputArea = ({
   label,
-  inputvalue,
+  value,
   styleLabel,
   ipOnChangeText,
   placeholder,
@@ -15,17 +15,19 @@ const TextInputArea = ({
 
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
+  
   return (
     <View style={styles.containerStyle}>
       <Text
         style={{
-          top: !isFocused ? 18 : 0,
-          fontSize: !isFocused ? 18 : 14,
+          top: isFocused || value ? 0 : 18,
+          fontSize: isFocused || value ? 14 : 18,
           ...labelStyle,
         }}>
         {label}
       </Text>
       <TextInput
+        value={value}
         autoCorrect={false}
         style={styles.inputStyle}
         onFocus={handleFocus}

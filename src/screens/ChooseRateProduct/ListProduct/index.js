@@ -67,34 +67,34 @@ const ListProduct = ({navigation, data}) => {
 ListProduct.defaultProps = {
   data: [
     {
-      id: '1234567890',
-      image:
+      id: 231,
+      productImage:
         'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      name: 'Ao thum nam den ',
-      price: 99000,
-      count: 1,
-      size: 'M',
-      color: 'Den',
+      productName: 'Ao thum nam den ',
+      productPrice: 99000,
+      amount: 1,
+      productSize: 'M',
+      productColor: 'Den',
     },
     {
-      id: '1234567891',
-      image:
+      id: 232,
+      productImage:
         'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      name: 'Ao thum nam den ',
-      price: 99000,
-      count: 1,
-      size: 'M',
-      color: 'Den',
+      productName: 'Ao thum nam den ',
+      productPrice: 99000,
+      amount: 1,
+      productSize: 'M',
+      productColor: 'Den',
     },
     {
-      id: '1234567892',
-      image:
+      id: 233,
+      productImage:
         'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      name: 'Ao thum nam den ',
-      price: 99000,
-      count: 1,
-      size: 'M',
-      color: 'Den',
+      productName: 'Ao thum nam den ',
+      productPrice: 99000,
+      amount: 1,
+      productSize: 'M',
+      productColor: 'Den',
     },
   ],
 };

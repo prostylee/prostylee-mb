@@ -1,5 +1,5 @@
 import {_fetch} from '../config';
-import {GET} from 'constants';
+import {GET, POST} from 'constants';
 
 export const getAverage = (productId) => {
   return _fetch(
@@ -31,5 +31,5 @@ export const filterReview = (productId, star) => {
 };
 
 export const addReview = (body) => {
-  return _fetch(POST, '/user-ratings', {body});
+  return _fetch(POST, '/user-ratings', body);
 };

@@ -1,6 +1,6 @@
 import styles from './styles';
 
-import React, {useEffect} from 'react';
+import React from 'react';
 
 /*Hooks*/
 import I18n from 'i18n';
@@ -10,13 +10,19 @@ import RatingProduct from './RatingProduct';
 import {Header, ThemeView} from 'components';
 
 const RateProduct = ({navigation, route}) => {
-  const {product} = route.params;
+  const {productId, product} = route.params;
 
   return (
-    <ThemeView style={styles.container} isFullView>
-      <Header title={I18n.t('rateProduct.title')} isDefault />
-      <RatingProduct navigation={navigation} product={product} />
-    </ThemeView>
+    <>
+      <ThemeView style={styles.container} isFullView>
+        <Header title={I18n.t('rateProduct.title')} isDefault />
+        <RatingProduct
+          navigation={navigation}
+          productId={productId}
+          product={product}
+        />
+      </ThemeView>
+    </>
   );
 };
 

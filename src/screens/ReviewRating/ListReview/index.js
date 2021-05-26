@@ -182,7 +182,7 @@ const ListReview = ({navigation, productId}) => {
   );
 };
 
-ListReview.defaultProps = {data: []};
+ListReview.defaultProps = {};
 
 ListReview.propTypes = {};
 
