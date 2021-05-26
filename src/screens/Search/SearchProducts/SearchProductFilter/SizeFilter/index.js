@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Dimensions, View} from 'react-native';
 import i18n from 'i18n';
 
@@ -7,66 +7,53 @@ import styles from './styles';
 import {ThemeView, Header, TextInputRounded} from 'components';
 import {Chip, Divider, Text} from 'react-native-paper';
 import {Trending} from 'svg/common';
+import {Colors} from 'components';
 const WIDTH = Dimensions.get('window').width;
+const MockSize = [
+  'one-size',
+  'XXS',
+  'XS',
+  'S',
+  'M',
+  'L',
+  'XL',
+  'XXL',
+  'XXXL',
+  '30',
+  '40',
+];
 const Search = ({navigation}) => {
+  const [activeItem, setActiveItem] = useState(null);
   return (
     <>
       <View style={styles.wrapHeader}>
-        <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
+        <Text style={styles.title}>{i18n.t('Search.size')}</Text>
       </View>
       <View style={styles.wrapChip}>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Thời trang nam
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Phụ kiện da
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Sale
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Giày da
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Best-seller
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Hoodie
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Quần tây
-        </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
-          Dép
-        </Chip>
+        {MockSize.map((v, i) => (
+          <Chip
+            small
+            onPress={() => setActiveItem(i)}
+            style={[
+              styles.itemChips,
+              {
+                borderColor:
+                  activeItem === i ? Colors['$purple'] : Colors['$line'],
+              },
+            ]}
+            key={`${v}-${i}`}>
+            <Text
+              style={[
+                styles.priceText,
+                {
+                  color:
+                    activeItem === i ? Colors['$purple'] : Colors['$black'],
+                },
+              ]}>
+              {v}
+            </Text>
+          </Chip>
+        ))}
       </View>
       <Divider />
     </>

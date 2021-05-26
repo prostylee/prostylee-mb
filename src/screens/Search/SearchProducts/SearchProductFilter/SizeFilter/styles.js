@@ -21,9 +21,16 @@ export default EStyleSheet.create({
     paddingBottom: 16,
   },
   itemChips: {
-    height: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    minWidth: 40,
     marginTop: 8,
     marginRight: 8,
-    backgroundColor: '$bgColor',
+    backgroundColor: '$white',
+    borderColor: '$line',
+    borderRadius: 10,
+    borderWidth: 1,
+    fontSize: 14,
   },
 });

@@ -31,4 +31,7 @@ export default EStyleSheet.create({
     marginRight: 8,
     backgroundColor: '$bgColor',
   },
+  priceText: {
+    fontSize: 14,
+  },
 });

@@ -24,6 +24,7 @@ import {Divider, Text} from 'react-native-paper';
 
 const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
+  const [activeItem, setActiveItem] = useState(null);
 
   const [refreshing, handleRefreshing] = useState(false);
 
@@ -50,7 +51,7 @@ const FeaturedCategories = ({navigation}) => {
   );
 
   useEffect(() => {}, [dispatch, refreshing]);
-
+  const handleCategoryClick = (index) => setActiveItem(index);
   const handleRefresh = () => {
     handleRefreshing(true);
   };
@@ -75,19 +76,23 @@ const FeaturedCategories = ({navigation}) => {
     <>
       <View style={styles.container}>
         <View style={styles.wrapHeader}>
-          <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
+          <Text style={styles.title}>{i18n.t('Search.categories')}</Text>
         </View>
         <View style={styles.wrapList}>
           <FlatList
             horizontal
+            directionalLockEnabled={true}
             data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
             renderItem={({item, index}) => (
               <FeaturedCategoriesItem
                 index={index}
                 navigation={navigation}
                 item={item}
+                isActive={activeItem === index}
+                setActive={handleCategoryClick}
               />
             )}
+            contentContainerStyle={{backgroundColor: Colors['$white']}}
             keyExtractor={(item, index) => index}
             refreshing={refreshing}
             onRefresh={handleRefresh}
