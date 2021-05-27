@@ -19,6 +19,9 @@ import UserProfile from './UserProfile';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
 import AddStory from './Story/AddStory';
 import AddStore from './Story/AddStore';
+import CropPicture from './Status/CropPicture';
+import AddStatus from './Status/AddStatus';
+import AddStoreForStatus from './Status/AddStore';
 
 export {
   Welcome,
@@ -42,4 +45,7 @@ export {
   UserProfile,
   AddStory,
   AddStore,
+  CropPicture,
+  AddStatus,
+  AddStoreForStatus,
 };

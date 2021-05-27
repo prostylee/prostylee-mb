@@ -9,6 +9,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import * as TabsIcon from 'svg/bottomTab';
 import i18n from 'i18n';
 import ImagePicker from 'react-native-image-crop-picker';
+import {showMessage} from 'react-native-flash-message';
 
 import Modal from 'react-native-modal';
 
@@ -80,7 +81,18 @@ const ModalTabButton = ({style, visible}) => {
       .catch((e) => console.log(e));
   };
 
-  const openStatusPicker = async () => {};
+  const openStatusPicker = async () => {
+    ImagePicker.openPicker({
+      mediaType: 'photo',
+      multiple: true,
+      maxFiles: 4,
+    })
+      .then((res) => {
+        console.log(res);
+        RootNavigator.navigate('CropPicture', {images: res});
+      })
+      .catch((e) => console.log(e));
+  };
 
   const checkPickerModal = () => {
     switch (pickerModal) {
@@ -99,8 +111,12 @@ const ModalTabButton = ({style, visible}) => {
 
   const AddStoryButton = () => {
     const buttonAction = async () => {
-      setPickerModal('story');
-      closeTabButton();
+      // setPickerModal('story');
+      // closeTabButton();
+      showMessage({
+        message: 'CONTANTS.UNKNOWN_MESSAGE,',
+        type: 'danger',
+      });
     };
     return (
       <Animated.View

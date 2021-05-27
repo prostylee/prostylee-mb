@@ -14,6 +14,12 @@ export default {
     textFollowing: 'Đang theo dõi',
     textPost: 'Bài đăng',
   },
+  codePush: {
+    installButton: 'Cập nhật',
+    IgnoreButton: 'Bỏ qua',
+    title: 'Thông Báo',
+    updateMessage: 'Có phiên bản mới, nhấn cài đặt để cập nhật.',
+  },
   bottomTab: {
     newFeed: 'Trang chủ',
     store: 'Cửa hàng',
@@ -57,7 +63,8 @@ export default {
   otpSent: 'Mã xác minh đã được gửi đến',
   invalidOTP: 'Mã xác minh không đúng',
   userAlreadyVerified: 'Tài khoản đã được xác nhận',
-  userNeedToVerify: 'Tài khoản chưa xác nhận. Vui lòng nhập mã OTP đã được gửi đến email của bạn.',
+  userNeedToVerify:
+    'Tài khoản chưa xác nhận. Vui lòng nhập mã OTP đã được gửi đến email của bạn.',
   resendOTPSuccess: 'Yêu cầu gửi lại mã xác minh thành công',
   next: 'Tiếp',
   resendOTP: 'Gửi lại mã xác minh',
@@ -101,6 +108,11 @@ export default {
     phone: 'Số điện thoại',
     password: 'Mật khẩu',
   },
+  error: {
+    cannotUploadImage:
+      'Xuất hiện khi upload hình. Bạn hãy kiểm tra lại kết nối mạng nhé!',
+    cannotGetImage: 'Không thể chọn hình ảnh này. Xin hãy thử lại!',
+  },
   addStory: {
     addStore: 'Thêm cửa hàng',
     changeStore: 'Thay đổi cửa hàng',
@@ -111,4 +123,9 @@ export default {
     search: 'Tìm kiếm cửa hàng',
   },
   remove: 'Xoá',
+  addStatus: {
+    title: 'Thêm bài viết',
+    textPlaceholder: 'Viết chú thích...',
+    addStatus: 'Đăng bài viết',
+  },
 };
