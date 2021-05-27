@@ -10,6 +10,7 @@ import {commonSelectors, userSelectors} from 'reducers';
 import RootNavigator from './rootNavigator';
 
 import {darkTheme, lightTheme} from 'theme';
+import AllProduct from '../screens/AllProduct';
 import {
   ForgotPassword,
   Onboarding,
@@ -43,7 +44,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Home"
+      initialRouteName="AllProduct"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -53,6 +54,7 @@ function SignedIn() {
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="AllProduct" component={AllProduct} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
     </Stack.Navigator>
   );

@@ -8,7 +8,6 @@ import {
   FlatList,
 } from 'react-native';
 import i18n from 'i18n';
-
 import styles from './styles';
 import {Sort, Filter, CaretDown} from 'svg/common';
 import {ThemeView, Header, TextInputRounded} from 'components';
@@ -20,6 +19,9 @@ import {
   Chip,
 } from 'react-native-paper';
 import {Colors} from 'components';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {RnRatingTap, Picker} from 'components';
+
 const WIDTH = Dimensions.get('window').width;
 import {debounce} from 'lodash';
 import {MessageOutlined, Bell, BellWithNotiBadge} from 'svg/header';
