@@ -80,9 +80,7 @@ const ModalTabButton = ({style, visible}) => {
       .catch((e) => console.log(e));
   };
 
-  const openStatusPicker = async () => {
-    
-  };
+  const openStatusPicker = async () => {};
 
   const checkPickerModal = () => {
     switch (pickerModal) {
@@ -152,16 +150,7 @@ const ModalTabButton = ({style, visible}) => {
   };
   const AddProductButton = () => {
     const buttonAction = () => {
-      // launchImageLibrary(
-      //   {
-      //     mediaType: 'photo',
-      //     maxWidth: WIDTH,
-      //   },
-      //   (image) => {
       closeTabButton();
-      //     RootNavigator.navigate('AddStory', {image: image});
-      //   },
-      // );
     };
     return (
       <Animated.View

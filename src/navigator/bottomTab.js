@@ -39,6 +39,8 @@ const BottomTabs = (props) => {
     );
   };
 
+  const middleTabPosition = 2;
+
   return (
     <Tab.Navigator
       initialRouteName={initialRouteName}
@@ -49,7 +51,7 @@ const BottomTabs = (props) => {
         inactiveTintColor: inactiveColor,
       }}
       sceneAnimationEnabled={true}>
-      {tabsNavigator.map((tab, _i) => {
+      {tabsNavigator.map((tab, index) => {
         const TabBarIcon = TabsIcon[tab.option.tabBarIcon];
         const TabBarIconSolid = TabsIcon[tab.option.tabBarIconSolid];
         if (!Object.keys(screens).includes(tab.screen)) {
@@ -63,11 +65,8 @@ const BottomTabs = (props) => {
             listeners={{
               tabPress: (e) => {
                 // Prevent default action
-                dispatch(commonActions.toggleFocusMainTab(!isFocusedMainTab));
-                _i === 2 && e.preventDefault();
-                _i === 2 &&
-                  dispatch(commonActions.toggleTabButton(!isShowTabButton));
-                if (_i === 2) {
+                index === middleTabPosition && e.preventDefault();
+                if (index === middleTabPosition) {
                   if (isShowTabButton) {
                     dispatch(commonActions.toggleTabButton(false));
                     dispatch(commonActions.toggleFocusMainTab(false));
