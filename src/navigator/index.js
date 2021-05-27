@@ -10,9 +10,6 @@ import {commonSelectors, userSelectors} from 'reducers';
 import RootNavigator from './rootNavigator';
 
 import {darkTheme, lightTheme} from 'theme';
-import AllProduct from '../screens/AllProduct';
-import SearchProductFilter from '../screens/SearchProductFilter';
-import PersonalSalers from '../screens/PersonalSalers';
 import {
   ForgotPassword,
   Onboarding,
@@ -32,6 +29,9 @@ import {
   Welcome,
   Categories,
   Products,
+  AllProduct,
+  PersonalSalers,
+  SearchProductFilter,
 } from 'screens';
 
 import BottomTabs from './bottomTab';

@@ -12,7 +12,7 @@ import {
   getLoadSearchFeaturedCategoriesMoreLoading,
   getHasLoadMoreSearchFeaturedCategoriesSelector,
   getPageSearchFeaturedCategoriesSelector,
-} from 'redux/selectors/search';
+} from '../../../redux/selectors/search';
 
 import FeaturedCategoriesItem from './item.js';
 
