@@ -35,20 +35,18 @@ export default EStyleSheet.create({
     position: 'relative',
   },
   infoContainer: {
-    flex: 3,
-    paddingTop: 10,
+    flex: 2,
+    paddingVertical: 0,
     justifyContent: 'space-around',
   },
   toolContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingBottom: 20,
+    justifyContent: 'flex-end',
   },
   ratingContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingBottom: 20,
   },
   itemName: {
     fontSize: 13,

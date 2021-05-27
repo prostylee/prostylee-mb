@@ -11,6 +11,8 @@ import RootNavigator from './rootNavigator';
 
 import {darkTheme, lightTheme} from 'theme';
 import AllProduct from '../screens/AllProduct';
+import SearchProductFilter from '../screens/SearchProductFilter';
+import PersonalSalers from '../screens/PersonalSalers';
 import {
   ForgotPassword,
   Onboarding,
@@ -55,6 +57,11 @@ function SignedIn() {
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="AllProduct" component={AllProduct} />
+      <Stack.Screen name="PersonalSalers" component={PersonalSalers} />
+      <Stack.Screen
+        name="SearchProductFilter"
+        component={SearchProductFilter}
+      />
       <Stack.Screen name="UserProfile" component={UserProfile} />
     </Stack.Navigator>
   );
