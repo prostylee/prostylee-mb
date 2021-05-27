@@ -1,9 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './style';
-import {SwiperFlatList} from 'react-native-swiper-flatlist';
-import img from '../../../assets/images/slider.png';
-import {Image} from 'components';
 import {ChevronRight} from 'svg/common';
 import {FlatList} from 'react-native-gesture-handler';
 import BrandItem from './BrandItem';

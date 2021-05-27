@@ -19,7 +19,13 @@ const ItemBadge = () => (
 );
 
 const ProductItem = ({item, index}) => (
-  <View style={styles.itemWrapper}>
+  <View
+    style={[
+      styles.itemWrapper,
+      {
+        marginTop: index !== 1 && index % 2 !== 0 ? 16 : 0,
+      },
+    ]}>
     <View
       style={[
         styles.itemInner,
@@ -36,13 +42,10 @@ const ProductItem = ({item, index}) => (
         <Text style={styles.itemName}>Áo nỉ hoddie trơn đủ màu Unisex</Text>
         <View style={{flexDirection: 'column'}}>
           <Text style={styles.itemPrice}>99.000 đ</Text>
-          <Text style={styles.itemDiscountPrice}>99.000 đ</Text>
         </View>
         <View style={styles.toolContainer}>
           <View style={styles.ratingContainer}>
-            {/* <Rating imageSize={10} showRating={false} /> */}
-            <Text>AAA</Text>
-            <Text style={styles.ratingPoint}>4.6 (2)</Text>
+            <Text style={styles.itemDiscountPrice}>99.000 đ</Text>
           </View>
           <TouchableOpacity>
             <Heart />

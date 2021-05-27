@@ -2,10 +2,10 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import styles from './style';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
-import img from '../../../assets/images/slider.png';
-import {Image} from 'components';
+import img from 'assets/images/adver.png';
+import {Image, Colors} from 'components';
 
-const AdvertisingSlider = () => {
+const MidAdvertisingSlider = () => {
   return (
     <View style={styles.container}>
       <View style={styles.sliderContainer}>
@@ -19,14 +19,16 @@ const AdvertisingSlider = () => {
           showPagination
           paginationStyle={{
             position: 'absolute',
-            bottom: -10,
-            left: 0,
+            bottom: -30,
+            alignSelf: 'center',
           }}
           paginationStyleItem={{
             width: 6,
             height: 6,
             marginRight: 0,
           }}
+          paginationActiveColor={Colors?.['$black']}
+          paginationDefaultColor={Colors?.['$line']}
           renderItem={({item, index}) => (
             <View style={styles.sliderItem}>
               <Image
@@ -43,4 +45,4 @@ const AdvertisingSlider = () => {
   );
 };
 
-export default AdvertisingSlider;
+export default MidAdvertisingSlider;
