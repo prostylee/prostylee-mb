@@ -7,6 +7,11 @@ export const profileSelector = createSelector(
   (data) => data?.profile || null,
 );
 
+export const userTokenSelector = createSelector(
+  userReducer,
+  (data) => data?.userToken || null,
+);
+
 export const statisticsSelector = createSelector(
   userReducer,
   (data) => data?.statistics || null,

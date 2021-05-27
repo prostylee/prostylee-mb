@@ -26,6 +26,9 @@ export default {
     notification: 'Thông báo',
     account: 'Tài khoản',
     post: 'Bài đăng',
+    addStory: 'Đăng story',
+    addPost: 'Đăng bài viết',
+    addProduct: 'Đăng sản phẩm',
   },
   headerTitle: {
     featured_store: 'Cửa hàng nổi bật',
@@ -60,7 +63,8 @@ export default {
   otpSent: 'Mã xác minh đã được gửi đến',
   invalidOTP: 'Mã xác minh không đúng',
   userAlreadyVerified: 'Tài khoản đã được xác nhận',
-  userNeedToVerify: 'Tài khoản chưa xác nhận. Vui lòng nhập mã OTP đã được gửi đến email của bạn.',
+  userNeedToVerify:
+    'Tài khoản chưa xác nhận. Vui lòng nhập mã OTP đã được gửi đến email của bạn.',
   resendOTPSuccess: 'Yêu cầu gửi lại mã xác minh thành công',
   next: 'Tiếp',
   resendOTP: 'Gửi lại mã xác minh',
@@ -103,5 +107,25 @@ export default {
     name: 'Họ tên',
     phone: 'Số điện thoại',
     password: 'Mật khẩu',
+  },
+  error: {
+    cannotUploadImage:
+      'Xuất hiện khi upload hình. Bạn hãy kiểm tra lại kết nối mạng nhé!',
+    cannotGetImage: 'Không thể chọn hình ảnh này. Xin hãy thử lại!',
+  },
+  addStory: {
+    addStore: 'Thêm cửa hàng',
+    changeStore: 'Thay đổi cửa hàng',
+    addStory: 'Chia sẻ story',
+  },
+  addStore: {
+    title: 'Thêm cửa hàng',
+    search: 'Tìm kiếm cửa hàng',
+  },
+  remove: 'Xoá',
+  addStatus: {
+    title: 'Thêm bài viết',
+    textPlaceholder: 'Viết chú thích...',
+    addStatus: 'Đăng bài viết',
   },
 };
