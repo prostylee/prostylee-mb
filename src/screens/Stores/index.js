@@ -39,6 +39,7 @@ import img from '../../assets/images/slider.png';
 import {Image} from '../../components';
 import PopularBrands from './PopularBrands';
 import AdvertisingImage from './AdvertisingImage';
+import FeaturedCategories from './FeaturedCategories';
 
 const HeaderLeft = () => {
   return (
@@ -139,6 +140,7 @@ const Stores = (props) => {
       <FunctionTags />
       <PopularBrands />
       <AdvertisingImage />
+      <FeaturedCategories />
     </ScrollView>
   );
 };
