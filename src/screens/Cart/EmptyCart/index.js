@@ -3,7 +3,7 @@ import styles from './styles';
 
 import React from 'react';
 import {View, Text} from 'react-native';
-import {ButtonOutlined, NumberInputUpDown} from 'components';
+import {ButtonOutlined} from 'components';
 import {CartEmpty} from 'svg/common';
 
 const EmptyCart = ({
@@ -32,9 +32,6 @@ const EmptyCart = ({
       </View>
       <View style={styles.actionButton}>
         <ButtonOutlined onPress={handlePress} label={buttonText} />
-      </View>
-      <View>
-        <NumberInputUpDown value={2}/>
       </View>
     </View>
   );

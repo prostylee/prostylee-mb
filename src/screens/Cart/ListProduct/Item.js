@@ -4,10 +4,9 @@ import React from 'react';
 import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Image} from 'components';
 
-
 const CategoriesRightItem = ({item, navigation}) => {
   const clickItem = () => {
-    console.log("Cliked!")
+    console.log('Cliked!');
   };
   return (
     <View style={styles.wrapItems}>
@@ -15,8 +14,8 @@ const CategoriesRightItem = ({item, navigation}) => {
         <View style={styles.item}>
           <Image
             source={
-              item?.icon
-                ? {uri: item?.icon}
+              item?.productImage
+                ? {uri: item?.productImage}
                 : require('assets/images/default.png')
             }
             resizeMode="cover"
@@ -25,7 +24,7 @@ const CategoriesRightItem = ({item, navigation}) => {
           />
           <View style={{height: 32}}>
             <Text numberOfLines={2} style={styles.title}>
-              {item?.name}
+              {item?.productName}
             </Text>
           </View>
         </View>

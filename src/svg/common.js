@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, {Path, Circle, Rect} from 'react-native-svg';
+import Svg, {Path, Circle, Rect, G, Defs, ClipPath} from 'react-native-svg';
 
 export const Search = ({width = 24, height = 24, color = '#8B9399'}) => {
   return (
@@ -1031,6 +1031,68 @@ export const CartEmpty = (props) => (
       d="M40 7.5C39.508 3.554 36.08 1 32 1c-3.012 0-5.135 1.04-6.5 3.5"
       stroke="#BBC0C3"
       strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const CreditSvg = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Rect
+      x={1.33337}
+      y={3.33334}
+      width={13.3333}
+      height={9.33333}
+      rx={1}
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M1.83337 4.83334L14.1667 4.83334"
+    />
+    <Path
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M1.83337 6.83334L14.1667 6.83334"
+    />
+    <Path
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M2.5 10.1667L4.16667 10.1667"
+    />
+  </Svg>
+);
+
+export const CouponSvg = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <G
+      clipPath="url(#clip0)"
+      stroke="#823FFD"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <Path d="M15.667 10a2 2 0 010-4V3.667A.666.666 0 0015 3H1a.667.667 0 00-.667.667V6a2 2 0 110 4v2.333A.667.667 0 001 13h14a.666.666 0 00.667-.667V10zM5.333 10.667l5.334-5.334" />
+      <Path d="M6 7a1 1 0 100-2 1 1 0 000 2zM10 11a1 1 0 100-2 1 1 0 000 2z" />
+    </G>
+    <Defs>
+      <ClipPath id="clip0">
+        <Path fill="#fff" d="M0 0H16V16H0z" />
+      </ClipPath>
+    </Defs>
+  </Svg>
+);
+
+export const RightArrow = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M6 12l4-4-4-4"
+      stroke="#333"
       strokeLinecap="round"
       strokeLinejoin="round"
     />

@@ -2,19 +2,19 @@ import style from './styles';
 
 import React, {useState, useEffect, useRef} from 'react';
 import {View, TextInput, Text} from 'react-native';
-import {Button} from 'react-native-paper';
+import {IconButton} from 'react-native-paper';
 
 const NumberInputUpDown = ({
   value,
   ref,
   containerStyle,
-  subStyle,
+  minusStyle,
   inputStyle,
   plusStyle,
   maxValue,
   minValue,
   regex = /^[0-9]+$/,
-  subIcon,
+  minusIcon,
   plusIcon,
   editable,
   onChange,
@@ -60,12 +60,14 @@ const NumberInputUpDown = ({
 
   return (
     <View style={{...style.container, ...containerStyle}}>
-      <Button
+      <IconButton
         onPress={inc}
-        style={{...style.subIcon, ...subStyle}}
-        disabled={minValue && minValue >= +currentValue}>
-        {subIcon ? subIcon : <Text style={style.subIcon}>-</Text>}
-      </Button>
+        style={{...style.minusIcon, ...minusStyle}}
+        size={12}
+        icon={minusIcon || 'minus'}
+        disabled={minValue && minValue >= +currentValue}
+      />
+
       <TextInput
         editable={editable}
         returnKeyType="done"
@@ -81,12 +83,13 @@ const NumberInputUpDown = ({
         autoFocus={true}
         {...rest}
       />
-      <Button
+      <IconButton
         onPress={dec}
         style={{...style.plusIcon, ...plusStyle}}
-        disabled={maxValue && maxValue <= +currentValue}>
-        {plusIcon ? plusIcon : <Text style={style.plusIcon}>+</Text>}
-      </Button>
+        size={12}
+        icon={plusIcon || 'plus'}
+        disabled={maxValue && maxValue <= +currentValue}
+      />
     </View>
   );
 };
