@@ -1,14 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useState} from 'react';
-import {View, ActivityIndicator, FlatList} from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
 
 import styles from './styles';
 
-import StoreItem from './item';
-
-import {ThemeView, Header, Colors} from 'components';
+import {ThemeView, Header, Colors, ContainerView} from 'components';
 
 import {storeActions} from 'redux/reducers';
 
@@ -23,6 +28,43 @@ import {
 } from 'redux/selectors/stores';
 
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
+import CustomBackground from './CustomBackground';
+import AdvertisingSlider from './AdvertisingSlider';
+import FunctionTags from './FunctionTags';
+
+import {MapPin, MessageOutlined, Bag, Search, MapPinFill} from 'svg/common';
+import {Searchbar} from 'react-native-paper';
+import img from '../../assets/images/slider.png';
+
+import {Image} from '../../components';
+import PopularBrands from './PopularBrands';
+import AdvertisingImage from './AdvertisingImage';
+
+const HeaderLeft = () => {
+  return (
+    <TouchableOpacity style={styles.headerLeftContainer}>
+      <MapPinFill color="#fff" width={18} height={18} backdropColor="#E82E46" />
+      <Text style={styles.locationText}>100 Nguyễn Công Trứ</Text>
+    </TouchableOpacity>
+  );
+};
+const HeaderRight = () => {
+  return (
+    <View style={styles.headerRightContainer}>
+      <TouchableOpacity>
+        <MessageOutlined color="#fff" width={18} height={18} strokeWidth={2} />
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Bag color="#fff" width={20} height={20} strokeWidth={2} />
+      </TouchableOpacity>
+    </View>
+  );
+};
+const CustomSearchBar = () => (
+  <View style={styles.searchBarContainer}>
+    <Searchbar placeholder={i18n.t('search')} />
+  </View>
+);
 
 const Stores = (props) => {
   const dispatch = useDispatch();
@@ -81,32 +123,23 @@ const Stores = (props) => {
   };
 
   return (
-    <ThemeView style={styles.container} isFullView>
-      <Header isDefault title={i18n.t('headerTitle.featured_store')} />
-      {loading ? (
-        <>
-          {[1, 2, 3, 4].map((item, _i) => {
-            return <StoreLoading key={'storeLoading' + _i} />;
-          })}
-        </>
-      ) : (
-        <FlatList
-          data={listData}
-          keyExtractor={(item) => `${item.id}`}
-          renderItem={({item, index}) => (
-            <StoreItem key={'stores' + index} storeItem={item} />
-          )}
-          refreshing={refreshing}
-          onRefresh={handleRefresh}
-          onEndReached={() => handleLoadMore()}
-          ListFooterComponent={renderFooter}
-          onEndReachedThreshold={0.5}
-          initialNumToRender={10}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
-    </ThemeView>
+    <ScrollView
+      style={styles.container}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}>
+      <CustomBackground />
+      <Header
+        // title={i18n.t('headerTitle.featured_store')}
+        leftComponent={<HeaderLeft />}
+        rightComponent={<HeaderRight />}
+        containerStyle={styles.headerContainer}
+      />
+      <CustomSearchBar />
+      <AdvertisingSlider />
+      <FunctionTags />
+      <PopularBrands />
+      <AdvertisingImage />
+    </ScrollView>
   );
 };
 

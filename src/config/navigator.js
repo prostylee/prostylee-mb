@@ -4,6 +4,7 @@ export const bottomTabs = {
   newFeed: 'NewFeed',
   shop: 'ProductCategory',
   account: 'Account',
+  store: 'Stores',
 };
 
 export const tabsSetting = {
@@ -26,7 +27,7 @@ export const tabsSetting = {
     {
       title: '',
       name: i18n.t('bottomTab.store'),
-      screen: bottomTabs.newFeed,
+      screen: bottomTabs.store,
       option: {
         tabBarIcon: 'StoreTab',
         tabBarIconSolid: 'StoreTabSolid',
