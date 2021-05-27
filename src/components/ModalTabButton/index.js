@@ -166,16 +166,7 @@ const ModalTabButton = ({style, visible}) => {
   };
   const AddProductButton = () => {
     const buttonAction = () => {
-      // launchImageLibrary(
-      //   {
-      //     mediaType: 'photo',
-      //     maxWidth: WIDTH,
-      //   },
-      //   (image) => {
       closeTabButton();
-      //     RootNavigator.navigate('AddStory', {image: image});
-      //   },
-      // );
     };
     return (
       <Animated.View
