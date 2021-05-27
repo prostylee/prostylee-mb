@@ -40,6 +40,7 @@ import {Image} from '../../components';
 import PopularBrands from './PopularBrands';
 import AdvertisingImage from './AdvertisingImage';
 import FeaturedCategories from './FeaturedCategories';
+import ForUserTabView from './ForUserTabView';
 
 const HeaderLeft = () => {
   return (
@@ -141,6 +142,7 @@ const Stores = (props) => {
       <PopularBrands />
       <AdvertisingImage />
       <FeaturedCategories />
+      <ForUserTabView />
     </ScrollView>
   );
 };
