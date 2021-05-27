@@ -14,7 +14,6 @@ import {
   ForgotPassword,
   Onboarding,
   OTPVerification,
-  AllProduces,
   ResetPassword,
   ResetPasswordViaMail,
   SignIn,
@@ -44,7 +43,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="AllProduces"
+      initialRouteName="Home"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -55,7 +54,6 @@ function SignedIn() {
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
-      <Stack.Screen name="AllProduces" component={AllProduces} />
     </Stack.Navigator>
   );
 }
