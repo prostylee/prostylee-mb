@@ -66,7 +66,7 @@ const CustomSearchBar = () => (
 
 const Stores = (props) => {
   const dispatch = useDispatch();
-
+  const {navigation} = props;
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector((state) =>
@@ -134,7 +134,7 @@ const Stores = (props) => {
       />
       <CustomSearchBar />
       <AdvertisingSlider />
-      <FunctionTags />
+      <FunctionTags navigation={navigation} />
       <PopularBrands />
       <MidAdvertisingSlider />
       <FeaturedCategories />

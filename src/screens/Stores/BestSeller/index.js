@@ -117,7 +117,6 @@ const SearchProducts = ({navigation}) => {
         containerStyle={{
           paddingBottom: 10,
           borderBottomWidth: 0,
-          height: 50,
           borderBottomWidth: 1,
         }}
         leftStyle={{

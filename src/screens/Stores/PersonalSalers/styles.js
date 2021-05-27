@@ -3,6 +3,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 export default EStyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '$white',
   },
   headerGroupButtonRight: {
     flexDirection: 'row',
@@ -59,7 +60,8 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: '$white',
-    paddingTop: 10,
+    flex: 1,
+    // paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 16,
   },

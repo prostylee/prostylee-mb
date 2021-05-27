@@ -1,3 +1,3 @@
 import Store from './StoreMain/index';
 import Vouchers from './Vouchers';
-export default Vouchers;
+export default Store;

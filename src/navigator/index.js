@@ -29,9 +29,10 @@ import {
   Welcome,
   Categories,
   Products,
-  AllProduct,
+  BestSeller,
   PersonalSalers,
   SearchProductFilter,
+  Vouchers,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -46,7 +47,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="AllProduct"
+      initialRouteName="Stores"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -56,13 +57,14 @@ function SignedIn() {
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
-      <Stack.Screen name="AllProduct" component={AllProduct} />
+      <Stack.Screen name="BestSeller" component={BestSeller} />
       <Stack.Screen name="PersonalSalers" component={PersonalSalers} />
+      <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="Vouchers" component={Vouchers} />
       <Stack.Screen
         name="SearchProductFilter"
         component={SearchProductFilter}
       />
-      <Stack.Screen name="UserProfile" component={UserProfile} />
     </Stack.Navigator>
   );
 }

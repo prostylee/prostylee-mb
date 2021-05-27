@@ -17,10 +17,10 @@ import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
 import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
-import AllProduct from './AllProduct';
+import BestSeller from './Stores/BestSeller';
 import SearchProductFilter from './SearchProductFilter';
-import PersonalSalers from './PersonalSalers';
-
+import PersonalSalers from './Stores/PersonalSalers';
+import Vouchers from './Stores/Vouchers';
 export {
   Welcome,
   Onboarding,
@@ -31,7 +31,7 @@ export {
   Products,
   StoryBoard,
   Chat,
-  AllProduct,
+  BestSeller,
   PersonalSalers,
   SearchProductFilter,
   SignUpViaPhone,
@@ -44,4 +44,5 @@ export {
   ResetPasswordViaMail,
   SimpleWebView,
   UserProfile,
+  Vouchers,
 };

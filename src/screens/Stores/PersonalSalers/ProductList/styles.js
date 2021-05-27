@@ -3,7 +3,17 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '$bgColorSearch',
+    backgroundColor: '$white',
+    flexDirection: 'column',
+  },
+  titleContainer: {
+    padding: 16,
+    backgroundColor: '$white',
+  },
+  title: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '$black',
   },
   listWrapper: {
     paddingTop: 20,
@@ -15,7 +25,7 @@ export default EStyleSheet.create({
   },
   itemWrapper: {
     width: '$screenWidth/2',
-    height: 335,
+    height: 300,
     marginBottom: 20,
   },
   itemInner: {
@@ -36,12 +46,12 @@ export default EStyleSheet.create({
   },
   infoContainer: {
     flex: 2,
-    paddingVertical: 0,
+    paddingTop: 10,
     justifyContent: 'space-around',
   },
   toolContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   ratingContainer: {
     flexDirection: 'row',
