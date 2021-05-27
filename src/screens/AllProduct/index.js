@@ -105,17 +105,9 @@ const SearchProducts = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
-  const handlerSearch = useCallback(
-    debounce((query) => {
-      console.log('searchQuery');
-      console.log(query);
-    }, 1000),
-    [],
-  );
 
   const onChangeSearch = (query) => {
     setSearchQuery(query);
-    handlerSearch(query);
   };
 
   return (
@@ -123,34 +115,25 @@ const SearchProducts = ({navigation}) => {
       <Header
         isDefault
         containerStyle={{
-          paddingBottom: 5,
+          paddingBottom: 10,
           borderBottomWidth: 0,
+          height: 50,
+          borderBottomWidth: 1,
         }}
         leftStyle={{
           height: 30,
+          fontWeight: 'bold',
         }}
         middleComponent={
-          <Searchbar
+          <Text
             style={{
-              minWidth: WIDTH - 140,
-              backgroundColor: '#F4F5F5',
-              height: 35,
-              borderRadius: 4,
-              elevation: 0,
-              padding: 0,
-            }}
-            inputStyle={{
-              height: 35,
-              fontSize: 14,
-              lineHeight: 18,
-              elevation: 0,
-            }}
-            placeholder={i18n.t('Search.inputPlaceholder')}
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-          />
+              textAlign: 'center',
+              fontSize: 18,
+              fontWeight: 'bold',
+            }}>
+            Tất cả sản phẩm
+          </Text>
         }
-        rightComponent={<GroupHeaderRightButton haveNoti={true} />}
       />
       <View style={styles.wrapBlockOne}>
         <TouchableOpacity onPress={() => setVisible(!visible)}>
