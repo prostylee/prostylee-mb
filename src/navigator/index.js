@@ -35,6 +35,7 @@ import {
   AddStoreForStatus,
   Categories,
   Products,
+  PostProductCategory,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -65,6 +66,10 @@ function SignedIn() {
       <Stack.Screen name="CropPicture" component={CropPicture} />
       <Stack.Screen name="AddStatus" component={AddStatus} />
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
+      <Stack.Screen
+        name="PostProductCategory"
+        component={PostProductCategory}
+      />
     </Stack.Navigator>
   );
 }

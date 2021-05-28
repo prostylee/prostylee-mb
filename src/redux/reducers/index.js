@@ -40,6 +40,12 @@ import categories, {
   types as categoriesTypes,
 } from './categories';
 
+import postProduct, {
+  actions as postProductActions,
+  selectors as postProductSelectors,
+  types as postProductTypes,
+} from './postProduct';
+
 const rootReducer = combineReducers({
   common,
   product,
@@ -49,6 +55,7 @@ const rootReducer = combineReducers({
   dynamicUsers,
   status,
   categories,
+  postProduct,
 });
 
 export {commonActions, commonSelectors, commonTypes};
@@ -59,5 +66,6 @@ export {storeActions, storeTypes};
 export {dynamicUsersActions, dynamicUsersTypes};
 export {statusActions, statusSelectors, statusTypes};
 export {categoriesActions, categoriesTypes};
+export {postProductActions, postProductSelectors, postProductTypes};
 
 export default rootReducer;

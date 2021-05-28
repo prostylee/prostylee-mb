@@ -128,4 +128,7 @@ export default {
     textPlaceholder: 'Viết chú thích...',
     addStatus: 'Đăng bài viết',
   },
+  addProduct: {
+    categoryScreenTitle: 'Thêm sản phẩm',
+  },
 };
