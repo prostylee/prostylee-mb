@@ -74,13 +74,13 @@ const ProductDetail = (props) => {
     {
       id: 'choice_1',
       label: 'Kích thước',
-      value: ['XS', 'S', 'M', 'L'],
+      productAttributeResponses: ['XS', 'S', 'M', 'L'],
       isSize: true,
     },
     {
       id: 'choice_2',
       label: 'Màu sắc',
-      value: ['Đen', 'Trắng', 'Xám'],
+      productAttributeResponses: ['Đen', 'Trắng', 'Xám'],
     },
   ];
   const demoComments = {

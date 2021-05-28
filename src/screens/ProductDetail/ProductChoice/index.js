@@ -1,9 +1,6 @@
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import styles from './styles';
-
-import Entypo from 'react-native-vector-icons/Entypo';
-import IonIcons from 'react-native-vector-icons/Ionicons';
 import i18n from 'i18n';
 import {useTheme} from '@react-navigation/native';
 import {currencyFormat} from 'utils/currency';
@@ -55,41 +52,43 @@ const ProductChoice = (props) => {
                   )}
                 </View>
                 <View style={styles.choiceList}>
-                  {item.value.map((itemChoice, indexChoice) => {
-                    let choiceButtonStyle = styles.choiceButton;
-                    let choiceButtonTextStyle = styles.choiceButtonText;
-                    const choiceIsSelected = selectList.find(
-                      (selectItem) => selectItem.id === item.id,
-                    );
-                    if (
-                      choiceIsSelected &&
-                      choiceIsSelected.value === itemChoice
-                    ) {
-                      choiceButtonStyle = [
-                        styles.choiceButton,
-                        {backgroundColor: colors['$purple']},
-                      ];
-                      choiceButtonTextStyle = [
-                        styles.choiceButtonText,
-                        {color: colors['$white']},
-                      ];
-                    }
-                    return (
-                      <View
-                        key={`choice_value_${indexChoice}`}
-                        style={styles.choiceButtonContainer}>
-                        <TouchableOpacity
-                          style={choiceButtonStyle}
-                          onPress={() => {
-                            selectChoice({...item, value: itemChoice});
-                          }}>
-                          <Text style={choiceButtonTextStyle}>
-                            {itemChoice}
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    );
-                  })}
+                  {item.productAttributeResponses.map(
+                    (itemChoice, indexChoice) => {
+                      let choiceButtonStyle = styles.choiceButton;
+                      let choiceButtonTextStyle = styles.choiceButtonText;
+                      const choiceIsSelected = selectList.find(
+                        (selectItem) => selectItem.id === item.id,
+                      );
+                      if (
+                        choiceIsSelected &&
+                        choiceIsSelected.value === itemChoice
+                      ) {
+                        choiceButtonStyle = [
+                          styles.choiceButton,
+                          {backgroundColor: colors['$purple']},
+                        ];
+                        choiceButtonTextStyle = [
+                          styles.choiceButtonText,
+                          {color: colors['$white']},
+                        ];
+                      }
+                      return (
+                        <View
+                          key={`choice_value_${indexChoice}`}
+                          style={styles.choiceButtonContainer}>
+                          <TouchableOpacity
+                            style={choiceButtonStyle}
+                            onPress={() => {
+                              selectChoice({...item, value: itemChoice});
+                            }}>
+                            <Text style={choiceButtonTextStyle}>
+                              {itemChoice}
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    },
+                  )}
                 </View>
               </View>
             );
