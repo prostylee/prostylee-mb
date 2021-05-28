@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import styles from './style';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
-import img from 'assets/images/slider.png';
+import img from 'assets/images/slider.jpeg';
 import {Image} from 'components';
 
 const AdvertisingSlider = () => {

@@ -3,7 +3,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '$white',
+    // backgroundColor: '$white',
     flexDirection: 'column',
   },
   titleContainer: {
@@ -24,7 +24,6 @@ export default EStyleSheet.create({
     width: '100%',
     flexDirection: 'column',
     minHeight: 140,
-    marginBottom: 20,
     padding: 16,
   },
   itemInner: {
@@ -40,6 +39,7 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
+    padding: 16,
   },
   bottomSideWrapper: {
     position: 'relative',
@@ -48,6 +48,10 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
+    padding: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   leftCutPoint: {
@@ -68,21 +72,64 @@ export default EStyleSheet.create({
     borderRadius: 10,
     backgroundColor: '$bgColorTwo',
   },
+  voucherInfoContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    width: '100%',
+  },
+  voucherImgWrapper: {
+    // width: 64,
+    // height: 64,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 32,
+    flex: 1,
+  },
+  voucherImg: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+  },
+  voucerDetailWrapper: {
+    flex: 4,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    marginLeft: 10,
+    width: '100%',
+  },
 
-  itemName: {
+  brandName: {
     fontSize: 13,
     lineHeight: 16,
     fontWeight: '400',
-    color: '$black',
+    color: '$lightGray',
   },
-  itemPrice: {
+  voucherDetail: {
     fontSize: 14,
     fontWeight: '500',
     color: '$black',
+    marginTop: 5,
+    width: '100%',
+    lineHeight: 20,
   },
-  itemDiscountPrice: {
+  expiredDate: {
     fontSize: 13,
     color: '$lightGray',
     fontWeight: '200',
+  },
+  takeButton: {
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    backgroundColor: '$purple',
+  },
+  buttonText: {
+    color: '$white',
+    fontSize: 14,
+    fontWeight: '500',
   },
 });

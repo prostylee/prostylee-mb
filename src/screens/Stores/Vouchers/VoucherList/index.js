@@ -9,7 +9,6 @@ const VoucherList = ({navigation}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        style={{width: '100%', backgroundColor: 'yellow'}}
         contentContainerStyle={styles.listWrapper}
         data={[1, 2, 3, 4, 5, 6, 7]}
         renderItem={({item, index}) => (

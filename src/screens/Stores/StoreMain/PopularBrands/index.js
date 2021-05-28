@@ -19,7 +19,7 @@ const PopularBrands = () => {
         <FlatList
           data={[1, 2, 3, 4, 5, 6, 7, 8]}
           horizontal
-          renderItem={({item}) => <BrandItem key={item} />}
+          renderItem={({item, index}) => <BrandItem key={item} index={index} />}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.listInner}
         />
