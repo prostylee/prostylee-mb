@@ -20,6 +20,7 @@ import SignUpOTPVerification from './Auth/SignUpOTPVerification';
 import AllProduct from './AllProduct';
 import SearchProductFilter from './SearchProductFilter';
 import PersonalSalers from './PersonalSalers';
+import NearbyStore from './NearbyStore';
 
 export {
   Welcome,
@@ -44,4 +45,5 @@ export {
   ResetPasswordViaMail,
   SimpleWebView,
   UserProfile,
+  NearbyStore,
 };
