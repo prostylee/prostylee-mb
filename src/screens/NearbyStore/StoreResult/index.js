@@ -17,9 +17,7 @@ import {
 import StoreSearchResultItem from './item.js';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {CategoriesRightLoading} from 'components/Loading/contentLoader';
-import {categoriesActions} from 'redux/reducers';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {Avatar, Text} from 'react-native-paper';
 
 const FeaturedCategories = ({navigation}) => {
@@ -91,9 +89,12 @@ const FeaturedCategories = ({navigation}) => {
                     <Text numberOfLines={1} style={styles.storeName}>
                       Pull&Bear
                     </Text>
-                    <Text style={styles.isAdvertising}>
-                      {i18n.t('common.textAdvertisement')}
-                    </Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Icon name="location-outline" color="grey" />
+                      <Text style={styles.isAdvertising}>
+                        {i18n.t('common.textNear')}
+                      </Text>
+                    </View>
                   </View>
                 </View>
                 <View style={styles.wrapTextFlow}>

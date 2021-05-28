@@ -13,6 +13,7 @@ export default {
     textFollower: 'Người theo dõi',
     textFollowing: 'Đang theo dõi',
     textPost: 'Bài đăng',
+    textNear: '2.5km',
   },
   bottomTab: {
     newFeed: 'Trang chủ',
@@ -54,7 +55,8 @@ export default {
   otpSent: 'Mã xác minh đã được gửi đến',
   invalidOTP: 'Mã xác minh không đúng',
   userAlreadyVerified: 'Tài khoản đã được xác nhận',
-  userNeedToVerify: 'Tài khoản chưa xác nhận. Vui lòng nhập mã OTP đã được gửi đến email của bạn.',
+  userNeedToVerify:
+    'Tài khoản chưa xác nhận. Vui lòng nhập mã OTP đã được gửi đến email của bạn.',
   resendOTPSuccess: 'Yêu cầu gửi lại mã xác minh thành công',
   next: 'Tiếp',
   resendOTP: 'Gửi lại mã xác minh',
