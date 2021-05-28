@@ -116,7 +116,7 @@ ListProduct.defaultProps = {
       productPrice: 99000,
       amount: 1,
       productSize: 'M',
-      productColor: 'Den',
+      productColor: 'black',
       storeName: 'Store',
       storeAvatar:
         'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
@@ -130,7 +130,7 @@ ListProduct.defaultProps = {
       productPrice: 99000,
       amount: 1,
       productSize: 'M',
-      productColor: 'Den',
+      productColor: 'black',
       storeName: 'Store',
       storeAvatar:
         'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
@@ -144,7 +144,7 @@ ListProduct.defaultProps = {
       productPrice: 99000,
       amount: 1,
       productSize: 'M',
-      productColor: 'Den',
+      productColor: 'black',
       storeName: 'Store',
       storeAvatar:
         'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
@@ -158,7 +158,7 @@ ListProduct.defaultProps = {
       productPrice: 99000,
       amount: 1,
       productSize: 'M',
-      productColor: 'Den',
+      productColor: 'white',
       storeName: 'Store',
       storeAvatar:
         'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
@@ -172,7 +172,7 @@ ListProduct.defaultProps = {
       productPrice: 99000,
       amount: 1,
       productSize: 'M',
-      productColor: 'Den',
+      productColor: 'black',
       storeName: 'Store',
       storeAvatar:
         'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
@@ -186,7 +186,7 @@ ListProduct.defaultProps = {
       productPrice: 99000,
       amount: 1,
       productSize: 'M',
-      productColor: 'Den',
+      productColor: 'white',
       storeName: 'Store',
       storeAvatar:
         'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
@@ -200,7 +200,7 @@ ListProduct.defaultProps = {
       productPrice: 99000,
       amount: 1,
       productSize: 'M',
-      productColor: 'Den',
+      productColor: 'white',
       storeName: 'Store',
       storeAvatar:
         'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
@@ -214,7 +214,7 @@ ListProduct.defaultProps = {
       productPrice: 99000,
       amount: 1,
       productSize: 'M',
-      productColor: 'Den',
+      productColor: 'black',
       storeName: 'Store',
       storeAvatar:
         'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',

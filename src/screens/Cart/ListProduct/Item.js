@@ -1,17 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React from 'react';
-import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Text, View, Picker, ActivityIndicator} from 'react-native';
 import {Image, NumberInputUpDown} from 'components';
 import HeaderStore from './HeaderStore';
 import {currencyFormat} from 'utils/currency';
 
 const Item = ({product, navigation}) => {
-  const clickItem = () => {
-    console.log('Cliked!');
-  };
-
   const {storeId, storeName, storeAvatar, data} = product;
+
+  useEffect(() => {}, [JSON.stringify(data)]);
 
   return (
     <View style={styles.wrapSection}>
@@ -48,7 +46,16 @@ const Item = ({product, navigation}) => {
                     <Text numberOfLines={1} style={styles.textSpace}>
                       |
                     </Text>
-                    &nbsp;{item.productColor}
+                    &nbsp;
+                    <Picker
+                      selectedValue={item.productColor}
+                      style={{height: 50, width: 150}}
+                      onValueChange={(itemValue, itemIndex) =>
+                        console.log(itemValue)
+                      }>
+                      <Picker.Item label="Đen" value="black" />
+                      <Picker.Item label="Trang" value="white" />
+                    </Picker>
                   </Text>
                 </View>
                 <View style={styles.wrapUpdown}>
