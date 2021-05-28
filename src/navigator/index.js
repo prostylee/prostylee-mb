@@ -28,6 +28,11 @@ import {
   Chat,
   UserProfile,
   Welcome,
+  AddStory,
+  AddStore,
+  CropPicture,
+  AddStatus,
+  AddStoreForStatus,
   Categories,
   ProductDetail,
   Products,
@@ -57,6 +62,11 @@ function SignedIn() {
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="AddStory" component={AddStory} />
+      <Stack.Screen name="AddStore" component={AddStore} />
+      <Stack.Screen name="CropPicture" component={CropPicture} />
+      <Stack.Screen name="AddStatus" component={AddStatus} />
+      <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
     </Stack.Navigator>
   );
 }

@@ -18,6 +18,11 @@ import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import ProductDetail from './ProductDetail';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
+import AddStory from './Story/AddStory';
+import AddStore from './Story/AddStore';
+import CropPicture from './Status/CropPicture';
+import AddStatus from './Status/AddStatus';
+import AddStoreForStatus from './Status/AddStore';
 
 export {
   Welcome,
@@ -40,4 +45,9 @@ export {
   SimpleWebView,
   ProductDetail,
   UserProfile,
+  AddStory,
+  AddStore,
+  CropPicture,
+  AddStatus,
+  AddStoreForStatus,
 };

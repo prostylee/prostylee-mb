@@ -55,7 +55,7 @@ const Categories = ({navigation}) => {
       }),
     );
     handleRefreshing(false);
-  }, [categoryParentSelect.id, dispatch, refreshing]);
+  }, [dispatch, refreshing]);
 
   const handleRefresh = () => {
     handleRefreshing(true);

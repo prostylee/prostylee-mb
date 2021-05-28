@@ -9,6 +9,7 @@ export const types = {
   SHOW_ONBOARDING_SCREEN: 'SHOW_ONBOARDING_SCREEN',
   SET_INITIAL_ROUTE_NAME: 'SET_INITIAL_ROUTE_NAME',
   TOGGLE_FOCUS_MAIN_TAB: 'TOGGLE_FOCUS_MAIN_TAB',
+  TOGGLE_TAB_BUTTON: 'TOGGLE_TAB_BUTTON',
 };
 
 export const actions = {
@@ -20,6 +21,7 @@ export const actions = {
   showOnboardingScreen: createAction(types.SHOW_ONBOARDING_SCREEN),
   setInitialRouteName: createAction(types.SET_INITIAL_ROUTE_NAME),
   toggleFocusMainTab: createAction(types.TOGGLE_FOCUS_MAIN_TAB),
+  toggleTabButton: createAction(types.TOGGLE_TAB_BUTTON),
 };
 
 export const selectors = {
@@ -29,6 +31,7 @@ export const selectors = {
   showOnboardingScreen: (state) => state.common.isShowOnboardingScreen,
   getInitialRouteName: (state) => state.common.initialRouteName,
   isFocusedMainTab: (state) => state.common.isFocusedMainTab,
+  isShowTabButton: (state) => state.common.isShowTabButton,
 };
 
 const intialState = {
@@ -40,6 +43,7 @@ const intialState = {
   targetType: 'STORE',
   initialRouteName: 'Welcome',
   isFullView: false,
+  isShowTabButton: false,
 };
 
 export default handleActions(
@@ -64,6 +68,9 @@ export default handleActions(
     },
     [types.TOGGLE_VIEW_MODE]: (state, {payload}) => {
       return {...state, isFullView: payload};
+    },
+    [types.TOGGLE_TAB_BUTTON]: (state, {payload}) => {
+      return {...state, isShowTabButton: payload};
     },
   },
   intialState,

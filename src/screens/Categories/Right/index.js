@@ -56,7 +56,7 @@ const RightCategories = ({navigation}) => {
       }),
     );
     handleRefreshing(false);
-  }, [categoryParentSelect.id, dispatch, refreshing]);
+  }, [categoryParentSelect, dispatch, refreshing]);
 
   const handleRefresh = () => {
     handleRefreshing(true);
