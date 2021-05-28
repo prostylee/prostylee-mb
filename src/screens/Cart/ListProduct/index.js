@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useEffect, useState, useRef} from 'react';
-import {View, ActivityIndicator, FlatList, Text, Animated} from 'react-native';
+import React, {useEffect, useState, useRef, useMemo} from 'react';
+import {View, ActivityIndicator, FlatList, Animated} from 'react-native';
 import {Colors} from 'components';
-import Product from './Item.js';
+import Product from './Item';
 import EmptyCart from '../EmptyCart';
 import CardFooter from '../CardFooter';
 import i18n from 'i18n';
@@ -11,7 +11,6 @@ import {CartEmpty} from 'svg/common';
 
 const ListProduct = ({navigation, data}) => {
   const [refreshing, handleRefreshing] = useState(false);
-  const [products, setProducts] = useState([]);
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -23,10 +22,6 @@ const ListProduct = ({navigation, data}) => {
   useEffect(() => {
     handleRefreshing(false);
   }, [refreshing]);
-
-  useEffect(() => {
-    setProducts(data);
-  }, [JSON.stringify(data)]);
 
   const handleRefresh = () => {
     handleRefreshing(true);
@@ -42,16 +37,45 @@ const ListProduct = ({navigation, data}) => {
     );
   };
 
+  const renderGroupItem = (item) => {};
+
+  /* Extract note */
+  const groupDataByStore = (list) => {
+    return list.reduce((acc, product) => {
+      const foundIndex = acc.findIndex(
+        (element) => element.key === product.storeId,
+      );
+      if (foundIndex === -1) {
+        return [
+          ...acc,
+          {
+            key: product.storeId,
+            storeName: product.storeName,
+            storeAvatar: product.storeAvatar,
+            data: [product],
+          },
+        ];
+      }
+      acc[foundIndex].data = [...acc[foundIndex].data, product];
+      return acc;
+    }, []);
+  };
+
+  const groupData = useMemo(
+    () => groupDataByStore(data),
+    [JSON.stringify(data)],
+  );
+
   return (
     <View style={styles.container}>
-      {products.length > 0 ? (
+      {Object.keys(groupData).length > 0 ? (
         <>
           <View style={styles.wrapList}>
             <View style={styles.wrapBody}>
               <FlatList
-                data={products}
+                data={groupData}
                 renderItem={({item}) => (
-                  <Product navigation={navigation} item={item} />
+                  <Product navigation={navigation} product={item} />
                 )}
                 numColumns={1}
                 keyExtractor={(item, index) => index}
@@ -65,9 +89,9 @@ const ListProduct = ({navigation, data}) => {
                 onScroll={onScrollEvent}
               />
             </View>
-            <View style={styles.wrapFooter}>
-              <CardFooter />
-            </View>
+          </View>
+          <View style={styles.wrapFooter}>
+            <CardFooter />
           </View>
         </>
       ) : (

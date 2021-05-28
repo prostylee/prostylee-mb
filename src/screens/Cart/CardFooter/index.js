@@ -5,7 +5,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {ButtonRounded} from 'components';
 import {Button} from 'react-native-paper';
-import {CartEmpty, CreditSvg, CouponSvg, RightArrow} from 'svg/common';
+import {CreditSvg, CouponSvg, RightArrow} from 'svg/common';
 
 const CardFooter = ({
   navigation,
@@ -55,7 +55,12 @@ const CardFooter = ({
           <Text style={styles.viewTempValue}>999999</Text>
         </View>
         <View style={styles.viewCheckout}>
-          <ButtonRounded onPress={handlePress} style={styles.btnCheckout} label="Thanh toán" />
+          <ButtonRounded
+            onPress={handlePress}
+            compact={false}
+            style={styles.btnCheckout}
+            label="Thanh toán"
+          />
         </View>
       </View>
     </View>

@@ -34,7 +34,7 @@ export default EStyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   viewTemp: {
     flex: 1,
@@ -46,7 +46,9 @@ export default EStyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    padding: 0,
   },
 
   btnCredit: {
