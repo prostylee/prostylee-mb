@@ -52,9 +52,9 @@
     picker.preferredDatePickerStyle = UIDatePickerStyleWheels;
    }
   //date picker
-#ifdef FB_SONARKIT_ENABLED
-  InitializeFlipper(application);
-#endif
+// #ifdef FB_SONARKIT_ENABLED
+//   InitializeFlipper(application);
+// #endif
 
 
 

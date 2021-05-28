@@ -95,28 +95,28 @@ const ModalTabButton = ({style, visible}) => {
   };
 
   const checkPickerModal = () => {
-    switch (pickerModal) {
-      case 'story':
-        openStoryPicker();
-        break;
-      case 'status':
-        openStatusPicker();
-        break;
-      case 'product':
-        break;
-      default:
-        return;
+    try {
+      switch (pickerModal) {
+        case 'story':
+          openStoryPicker();
+          break;
+        case 'status':
+          openStatusPicker();
+          break;
+        case 'product':
+          break;
+        default:
+          return;
+      }
+    } finally {
+      setPickerModal('false');
     }
   };
 
   const AddStoryButton = () => {
     const buttonAction = async () => {
-      // setPickerModal('story');
-      // closeTabButton();
-      showMessage({
-        message: 'CONTANTS.UNKNOWN_MESSAGE,',
-        type: 'danger',
-      });
+      setPickerModal('story');
+      closeTabButton();
     };
     return (
       <Animated.View
@@ -166,6 +166,7 @@ const ModalTabButton = ({style, visible}) => {
   };
   const AddProductButton = () => {
     const buttonAction = () => {
+      setPickerModal('product');
       closeTabButton();
     };
     return (
