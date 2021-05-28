@@ -2,13 +2,11 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
   container: {
-    flex: 0,
     backgroundColor: '$white',
     flexDirection: 'column',
   },
   viewHeader: {
     display: 'flex',
-    flex: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -16,14 +14,13 @@ export default EStyleSheet.create({
   },
   viewBody: {
     display: 'flex',
-    flex: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
   },
   viewCredit: {
-    flex: 1,
+    flex: 0.5,
     borderRightWidth: 1,
     borderColor: '#E9EAEB',
     flexDirection: 'column',
@@ -31,24 +28,24 @@ export default EStyleSheet.create({
     alignItems: 'flex-start',
   },
   viewCoupon: {
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    flex: 0.5,
   },
   viewTemp: {
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
+    paddingLeft: 10,
+    flex: 0.5,
   },
   viewCheckout: {
-    flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black',
     padding: 0,
+    flex: 0.5,
   },
 
   btnCredit: {
@@ -64,10 +61,7 @@ export default EStyleSheet.create({
     alignContent: 'center',
   },
   btnCheckout: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignContent: 'center',
+    flex: 1,
   },
   labelCredit: {
     color: '#333333',
