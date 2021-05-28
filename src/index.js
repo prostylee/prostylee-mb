@@ -9,7 +9,12 @@ import {common} from './utils';
 
 import Navigator from './navigator';
 
-import {Colors, ModalIndicator, ModalNetworkWarning} from 'components';
+import {
+  Colors,
+  ModalIndicator,
+  ModalNetworkWarning,
+  SlideInModal,
+} from 'components';
 
 import NetInfo from '@react-native-community/netinfo';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -21,7 +26,14 @@ import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from './config/aws-exports';
 
 // import NotificationPopup from 'react-native-push-notification-popup';
-import {getApplicationName, getDeviceId, getDeviceName, getSystemName, getSystemVersion, getVersion} from 'react-native-device-info';
+import {
+  getApplicationName,
+  getDeviceId,
+  getDeviceName,
+  getSystemName,
+  getSystemVersion,
+  getVersion,
+} from 'react-native-device-info';
 import RootNavigator from './navigator/rootNavigator';
 import LocalStorageService from './services/LocalStorageService';
 
@@ -319,6 +331,7 @@ const Index = () => {
         onConfirm={() => onHandleUpdate()}
       /> */}
       <ModalNetworkWarning visible={!networkStatus} />
+      <SlideInModal />
       {/* <NotificationPopup
         ref={(ref) => {
           this.popup = ref;

@@ -1289,7 +1289,7 @@ export const TicketCutLine = ({width = 279, height = 2, color = '#E9EAEB'}) => (
     xmlns="http://www.w3.org/2000/svg">
     <Line
       y1="0.5"
-      x2="279"
+      x2={width}
       y2="0.5"
       stroke={color}
       strokeWidth={`${height}`}
@@ -1297,3 +1297,33 @@ export const TicketCutLine = ({width = 279, height = 2, color = '#E9EAEB'}) => (
     />
   </Svg>
 );
+export const CloseOutLined = ({
+  width = 28,
+  height = 28,
+  color = 'black',
+  strokeWidth = 2,
+}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M18 10L10 18"
+        stroke={color}
+        strokeWidth={`${strokeWidth}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M10 10L18 18"
+        stroke={color}
+        strokeWidth={`${strokeWidth}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};

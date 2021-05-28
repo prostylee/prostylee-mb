@@ -23,4 +23,5 @@ export default {
   $icon: '#8B9399',
   $bgColorTwo: '#F7F7F7',
   $bgColorSearch: '#E5E5E5',
+  $black600: '#000000',
 };
