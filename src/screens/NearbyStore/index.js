@@ -18,7 +18,6 @@ import {
   Divider,
   Chip,
 } from 'react-native-paper';
-const WIDTH = Dimensions.get('window').width;
 import StoreResult from './StoreResult';
 
 const MockTag = [

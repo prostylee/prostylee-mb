@@ -33,6 +33,7 @@ import {
   PersonalSalers,
   SearchProductFilter,
   NearbyStore,
+  StoreAddress,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -47,7 +48,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="NearbyStore"
+      initialRouteName="StoreAddress"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -64,6 +65,7 @@ function SignedIn() {
         component={SearchProductFilter}
       />
       <Stack.Screen name="NearbyStore" component={NearbyStore} />
+      <Stack.Screen name="StoreAddress" component={StoreAddress} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
     </Stack.Navigator>
   );

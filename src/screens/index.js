@@ -21,6 +21,7 @@ import AllProduct from './AllProduct';
 import SearchProductFilter from './SearchProductFilter';
 import PersonalSalers from './PersonalSalers';
 import NearbyStore from './NearbyStore';
+import StoreAddress from './StoreAddress';
 
 export {
   Welcome,
@@ -35,6 +36,8 @@ export {
   AllProduct,
   PersonalSalers,
   SearchProductFilter,
+  UserProfile,
+  NearbyStore,
   SignUpViaPhone,
   SignInViaPhone,
   SignInOptions,
@@ -44,6 +47,5 @@ export {
   ResetPassword,
   ResetPasswordViaMail,
   SimpleWebView,
-  UserProfile,
-  NearbyStore,
+  StoreAddress,
 };
