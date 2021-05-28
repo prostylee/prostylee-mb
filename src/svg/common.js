@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, {Path, Circle, Rect} from 'react-native-svg';
+import Svg, {Path, Circle, Rect, ClipPath, G, Defs} from 'react-native-svg';
 
 export const Search = ({width = 24, height = 24, color = '#8B9399'}) => {
   return (
@@ -975,6 +975,83 @@ export const CaretDown = ({width = 24, height = 24, color = '#333333'}) => {
         d="M10.5418 8.45823L9.01823 9.98177L9.01823 9.98177C8.66182 10.3382 8.48361 10.5164 8.27812 10.5832C8.09736 10.6419 7.90264 10.6419 7.72188 10.5832C7.51639 10.5164 7.33818 10.3382 6.98177 9.98177L6.98177 9.98177L5.45823 8.45823C4.68716 7.68716 4.30162 7.30162 4.27557 6.97061C4.25296 6.68341 4.36922 6.40274 4.58829 6.21563C4.84077 6 5.386 6 6.47647 6L9.52353 6C10.614 6 11.1592 6 11.4117 6.21563C11.6308 6.40274 11.747 6.68341 11.7244 6.97061C11.6984 7.30162 11.3128 7.68716 10.5418 8.45823Z"
         fill="#8B9399"
       />
+    </Svg>
+  );
+};
+export const AsRead = ({
+  width = 24,
+  height = 24,
+  color = '#111111',
+  strokeWidth = 1,
+}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Path
+      d="M13 7L23 7"
+      stroke={color}
+      strokeWidth={`${strokeWidth}`}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M4 14L23 14"
+      stroke={color}
+      strokeWidth={`${strokeWidth}`}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M4 21L23 21"
+      stroke={color}
+      strokeWidth={`${strokeWidth}`}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M10 3L3.8125 9L1 6.27273"
+      stroke={color}
+      strokeWidth={`${strokeWidth}`}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+export const TicketOrange = ({width = 40, height = 40, color = '#F46F2F'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Rect width="40" height="40" rx="8" fill={color} />
+      <G clip-path="url(#clip0)">
+        <Path
+          d="M17.5143 17.1599C17.5143 15.8801 18.1267 14.6776 19.1616 13.9249L21.0712 12.5362C22.4738 11.5161 24.374 11.5161 25.7766 12.5362L27.6861 13.9249C28.7211 14.6776 29.3334 15.8801 29.3334 17.1599V26.7027C29.3334 28.9118 27.5426 30.7027 25.3334 30.7027H21.5143C19.3052 30.7027 17.5143 28.9118 17.5143 26.7027V17.1599Z"
+          fill="white"
+          fillOpacity="0.4"
+        />
+        <Path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M20.1213 8.99168C18.8487 9.12606 17.7171 9.86127 17.0772 10.9696L10.8682 21.7239C9.76365 23.6371 10.4192 26.0835 12.3323 27.188L17.5287 30.1882C19.4419 31.2927 21.8883 30.6372 22.9928 28.7241L29.2019 17.9697C29.8417 16.8614 29.9127 15.5139 29.3927 14.3445L27.8855 10.9548C27.1808 9.37013 25.5352 8.42004 23.8105 8.60215L20.1213 8.99168ZM22.2489 16.0123C23.162 16.5395 24.3296 16.2266 24.8568 15.3135C25.384 14.4004 25.0711 13.2328 24.158 12.7056C23.2449 12.1784 22.0773 12.4913 21.5501 13.4044C21.0229 14.3175 21.3357 15.4851 22.2489 16.0123Z"
+          fill="white"
+        />
+      </G>
+      <Defs>
+        <ClipPath id="clip0">
+          <Rect
+            width="24"
+            height="24"
+            fill="white"
+            transform="translate(8 8)"
+          />
+        </ClipPath>
+      </Defs>
     </Svg>
   );
 };
