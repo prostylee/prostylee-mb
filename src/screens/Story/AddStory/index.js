@@ -6,6 +6,7 @@ import {
   Animated,
   PanResponder,
   Alert,
+  Platform,
 } from 'react-native';
 import {ContainerWithoutScrollView, ButtonRounded} from 'components';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
@@ -208,7 +209,9 @@ const AddStory = (props) => {
             ref={viewShotRef}
             options={{format: 'jpg', quality: 0.9}}>
             <Animated.Image
-              source={{uri: image.sourceURL}}
+              source={{
+                uri: Platform.OS === 'ios' ? image.sourceURL : image.path,
+              }}
               style={[
                 imageStyle,
                 {
