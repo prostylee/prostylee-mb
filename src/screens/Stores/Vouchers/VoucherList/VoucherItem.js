@@ -14,8 +14,8 @@ import voucher3 from 'assets/images/voucher3.png';
 
 import VoucherDetail from '../VoucherDetail';
 
-const ItemTopSide = ({index, onClick}) => (
-  <TouchableOpacity style={styles.topSideWrapper} onPress={onClick}>
+const ItemTopSide = ({index, item}) => (
+  <View style={styles.topSideWrapper}>
     <View style={styles.voucherInfoContainer}>
       <View style={styles.voucherImgWrapper}>
         <Image
@@ -26,37 +26,47 @@ const ItemTopSide = ({index, onClick}) => (
         />
       </View>
       <View style={styles.voucerDetailWrapper}>
-        <Text style={styles.brandName}>{`Pull&Bear`}</Text>
-        <Text style={styles.voucherDetail}>
-          Giảm 500k cho đơn hàng từ 1 triệu
-        </Text>
+        <Text style={styles.brandName}>{item?.brand}</Text>
+        <Text style={styles.voucherDetail}>{item?.content}</Text>
       </View>
     </View>
-  </TouchableOpacity>
+  </View>
 );
-const ItemBottomSide = ({onClick}) => (
-  <TouchableOpacity style={styles.bottomSideWrapper} onPress={onClick}>
+const ItemBottomSide = ({onPress, data}) => (
+  <View style={styles.bottomSideWrapper} onPress={onPress}>
     <View style={styles.leftCutPoint} />
     <View style={styles.rightCutPoint} />
-    <Text style={styles.expiredDate}>HSD: 12-02-2021</Text>
-    <TouchableOpacity style={styles.takeButton}>
-      <Text style={styles.buttonText}>Lưu</Text>
+    <Text style={styles.expiredDate}>HSD: {data?.expiredDate}</Text>
+    <TouchableOpacity style={styles.takeButton} onPress={onPress}>
+      <Text style={styles.buttonText}>
+        {data?.status === 1 ? 'Sử dụng' : 'Lưu'}
+      </Text>
     </TouchableOpacity>
-  </TouchableOpacity>
+  </View>
 );
-const VoucherItem = ({item, index}) => {
+const VoucherItem = ({
+  item,
+  index,
+  onSavePress = () => {},
+  onUsePress = () => {},
+}) => {
   const handleOpenVoucherDetail = () => {
-    console.log('Voucher Press');
-    SlideInModal.show(() => {}, <VoucherDetail />);
+    SlideInModal.show(() => {},
+    <VoucherDetail data={item} submit={status === 0 ? onSavePress : onUsePress} />);
   };
-
+  const {status} = item;
   return (
     <View style={styles.itemWrapper} key={`${item}-${index}`}>
-      <View style={styles.itemInner}>
-        <ItemTopSide index={index} onClick={handleOpenVoucherDetail} />
+      <TouchableOpacity
+        style={styles.itemInner}
+        onPress={handleOpenVoucherDetail}>
+        <ItemTopSide index={index} item={item} />
         <TicketCutLine height={3} />
-        <ItemBottomSide onClick={handleOpenVoucherDetail} />
-      </View>
+        <ItemBottomSide
+          data={item}
+          onPress={status === 0 ? onSavePress : onUsePress}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

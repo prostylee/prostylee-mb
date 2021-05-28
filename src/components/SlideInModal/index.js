@@ -8,7 +8,6 @@ export default class SlideInModal extends React.PureComponent {
   static show = (onShowCb = () => {}, children = <View />) => {
     onShowCb();
     if (SlideInModal.instance) {
-      console.log('Modal show ne');
       SlideInModal.instance.setState({visible: false}, () => {
         SlideInModal.instance.setState({visible: true, children});
       });
@@ -17,7 +16,6 @@ export default class SlideInModal extends React.PureComponent {
   static hide = (onHideCb = () => {}) => {
     if (SlideInModal.instance) {
       SlideInModal.instance.setState({visible: false});
-      console.log('modal hide ne');
       onHideCb();
     }
   };
@@ -42,8 +40,8 @@ export default class SlideInModal extends React.PureComponent {
         backdropColor="#fff"
         backdropOpacity={1}
         animationIn="slideInUp"
-        animationInTiming={500}
-        animationOutTiming={500}
+        animationInTiming={300}
+        animationOutTiming={300}
         animationOut="slideOutDown"
         isVisible={SlideInModal?.instance?.state?.visible || false}
         onRequestClose={() => SlideInModal.hide()}
