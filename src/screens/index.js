@@ -17,6 +17,11 @@ import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
 import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
+import AddStory from './Story/AddStory';
+import AddStore from './Story/AddStore';
+import CropPicture from './Status/CropPicture';
+import AddStatus from './Status/AddStatus';
+import AddStoreForStatus from './Status/AddStore';
 import Search from './Search';
 import FilterProduct from './FilterProduct';
 
@@ -40,6 +45,11 @@ export {
   ResetPasswordViaMail,
   SimpleWebView,
   UserProfile,
+  AddStory,
+  AddStore,
+  CropPicture,
+  AddStatus,
+  AddStoreForStatus,
   Search,
   FilterProduct,
 };
