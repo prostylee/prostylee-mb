@@ -21,6 +21,8 @@ import BestSeller from './Stores/BestSeller';
 import SearchProductFilter from './SearchProductFilter';
 import PersonalSalers from './Stores/PersonalSalers';
 import Vouchers from './Stores/Vouchers';
+import NearbyStore from './Stores/NearbyStore';
+import FlashSale from './Stores/FlashSale';
 export {
   Welcome,
   Onboarding,
@@ -45,4 +47,6 @@ export {
   SimpleWebView,
   UserProfile,
   Vouchers,
+  NearbyStore,
+  FlashSale,
 };

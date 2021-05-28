@@ -30,22 +30,7 @@ const VoucherList = ({navigation}) => {
     });
   };
   const _handUsePress = () => {
-    showMessage({
-      titleStyle: {fontSize: 13, fontWeight: '500'},
-      message: 'Thành công',
-      textStyle: {fontSize: 13, fontWeight: '300'},
-      description: 'Mã giảm giá đã được sử dụng',
-
-      type: 'success',
-      position: {
-        top: 40,
-        left: 0,
-      },
-      icon: {icon: 'success', position: 'left'},
-      style: {
-        alignItems: 'center',
-      },
-    });
+    navigation.navigate('FlashSale');
   };
   console.log('Data ', data);
   return (

@@ -33,6 +33,8 @@ import {
   PersonalSalers,
   SearchProductFilter,
   Vouchers,
+  NearbyStore,
+  FlashSale,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -61,6 +63,8 @@ function SignedIn() {
       <Stack.Screen name="PersonalSalers" component={PersonalSalers} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
       <Stack.Screen name="Vouchers" component={Vouchers} />
+      <Stack.Screen name="NearbyStore" component={NearbyStore} />
+      <Stack.Screen name="FlashSale" component={FlashSale} />
       <Stack.Screen
         name="SearchProductFilter"
         component={SearchProductFilter}

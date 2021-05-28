@@ -139,6 +139,13 @@ const Stores = (props) => {
       <MidAdvertisingSlider />
       <FeaturedCategories />
       <ForUserTabView />
+      <View
+        style={{
+          width: '100%',
+          height: 500,
+          backdropColor: 'red',
+          borderWidth: 1,
+        }}></View>
     </ScrollView>
   );
 };

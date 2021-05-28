@@ -55,7 +55,7 @@ export default class SlideInModal extends React.PureComponent {
           elevation: 9999,
           backgroundColor: '#333333',
         }}>
-        {this.state.children}
+        {this.state.children ? this.state.children : <View />}
       </Modal>
     );
   }

@@ -7,7 +7,7 @@ import styles from './style';
 import SortDropDown from './SortDropDown';
 import VoucherList from './VoucherList';
 
-const Vouchers = () => {
+const Vouchers = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
@@ -57,7 +57,7 @@ const Vouchers = () => {
         setValueSort={setValueSort}
         valueSort={valueSort}
       />
-      <VoucherList />
+      <VoucherList navigation={navigation} />
     </ThemeView>
   );
 };

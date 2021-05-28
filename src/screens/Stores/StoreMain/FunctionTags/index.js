@@ -13,7 +13,9 @@ const FunctionTags = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.tagListContainer}>
-        <TouchableOpacity style={styles.tagItem}>
+        <TouchableOpacity
+          style={styles.tagItem}
+          onPress={() => navigation.navigate('NearbyStore')}>
           <MapIconWithColor />
           <Text style={styles.tagName}>Shop gần đây</Text>
         </TouchableOpacity>

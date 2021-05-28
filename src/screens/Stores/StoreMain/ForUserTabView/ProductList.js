@@ -19,4 +19,4 @@ ProductList.defaultProps = {};
 
 ProductList.propTypes = {};
 
-export default React.memo(ProductList);
+export default ProductList;
