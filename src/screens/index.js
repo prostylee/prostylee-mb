@@ -17,8 +17,6 @@ import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
 import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
-import Search from './Search';
-import FilterProduct from './FilterProduct';
 import SearchProductFilter from './SearchProductFilter';
 import SearchProducts from './SearchProducts';
 import AddStory from './Story/AddStory';
@@ -49,8 +47,6 @@ export {
   ResetPasswordViaMail,
   SimpleWebView,
   UserProfile,
-  Search,
-  FilterProduct,
   SearchProductFilter,
   SearchProducts,
   AddStory,
