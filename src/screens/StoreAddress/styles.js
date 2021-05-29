@@ -5,13 +5,15 @@ export default EStyleSheet.create({
     flexDirection: 'column',
   },
   content: {
-    padding: 10,
+    paddingTop: 10,
     backgroundColor: '#fff',
   },
   header: {
     backgroundColor: 'white',
     marginVertical: 0.8,
     paddingLeft: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',

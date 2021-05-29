@@ -9,10 +9,11 @@ import {
   FlatList,
 } from 'react-native';
 import styles from './styles';
-import {ThemeView, Header, TextInputRounded} from 'components';
+import {ThemeView, Header, ButtonRounded} from 'components';
 import Accordion from 'react-native-collapsible/Accordion';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListStoreAddress from './ListStoreAddress';
+import {flatMap} from 'lodash-es';
 const CONTENT = [
   {
     id: 1,
@@ -86,17 +87,22 @@ const StoreAddress = ({navigation}) => {
             }
           />
         </ThemeView>
-        <Accordion
-          activeSections={activeSections}
-          sections={CONTENT}
-          touchableComponent={TouchableOpacity}
-          renderHeader={renderHeader}
-          renderContent={renderContent}
-          duration={400}
-          onChange={setSections}
-        />
-        <ListStoreAddress />
+        <View>
+          <Accordion
+            activeSections={activeSections}
+            sections={CONTENT}
+            touchableComponent={TouchableOpacity}
+            renderHeader={renderHeader}
+            renderContent={renderContent}
+            duration={400}
+            onChange={setSections}
+          />
+          <ListStoreAddress />
+        </View>
       </View>
+      <TouchableOpacity style={{paddingVertical: 150}}>
+        <ButtonRounded label="Áp Dụng" style={{margin: 20}} />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
