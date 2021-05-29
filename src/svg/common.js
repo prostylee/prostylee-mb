@@ -1098,3 +1098,15 @@ export const RightArrow = (props) => (
     />
   </Svg>
 );
+
+export const DownArrow = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M4 6l4 4 4-4"
+      stroke="#333"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

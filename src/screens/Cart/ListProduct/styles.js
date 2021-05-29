@@ -119,6 +119,13 @@ export default EStyleSheet.create({
     color: '$black',
     fontWeight: '400',
   },
+  productColor: {
+    borderLeftWidth: 1,
+    borderColor: '#E9EAEB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: -3,
+  },
 
   textSpace: {
     lineHeight: 25,
@@ -132,5 +139,27 @@ export default EStyleSheet.create({
   },
   viewFooter: {
     marginBottom: 6,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+
+  modalChangeColor: {
+    height: '75%',
+    backgroundColor: '$white',
+    borderRadius: 10,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+  contentBox: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  modalHeader: {
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    marginRight: 10,
   },
 });

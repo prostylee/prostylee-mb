@@ -34,7 +34,7 @@ import CustomSecureInput from './CustomSecureInput';
 import Countdown from './Countdown';
 import CustomPinCodeInput from './CustomPinCodeInput';
 import NumberInputUpDown from './NumberInputUpDown';
-import Dropdown from './Dropdown';
+import RadioSelectGroup from './RadioSelectGroup';
 
 export {
   ContainerWithoutScrollView,
@@ -73,5 +73,5 @@ export {
   CustomPinCodeInput,
   ProductLike,
   NumberInputUpDown,
-  Dropdown,
+  RadioSelectGroup,
 };
