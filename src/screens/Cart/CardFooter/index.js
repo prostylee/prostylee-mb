@@ -6,15 +6,10 @@ import {View, Text} from 'react-native';
 import {ButtonRounded} from 'components';
 import {Button} from 'react-native-paper';
 import {CreditSvg, CouponSvg, RightArrow} from 'svg/common';
+import {useNavigation} from '@react-navigation/native';
 
-const CardFooter = ({
-  navigation,
-  title,
-  subTitle,
-  buttonText,
-  actionButton,
-  icon,
-}) => {
+const CardFooter = ({title, subTitle, buttonText, actionButton, icon}) => {
+  const navigation = useNavigation();
   const handlePress = () => {
     if (typeof actionButton === 'function') {
       actionButton();
@@ -29,7 +24,7 @@ const CardFooter = ({
           <Button
             mode="text"
             style={styles.btnCredit}
-            onPress={() => console.log('Pressed')}>
+            onPress={() => navigation.navigate('PaymentMethodCart')}>
             <View style={styles.labelCredit}>
               <CreditSvg />
               <Text> &nbsp;Credit card&nbsp;</Text>

@@ -33,6 +33,8 @@ import {
   Cart,
 } from 'screens';
 
+import PaymentMethodCart from 'screens/Cart/PaymentMethod';
+
 import BottomTabs from './bottomTab';
 
 const Stack = createStackNavigator();
@@ -51,6 +53,7 @@ function SignedIn() {
       animation="fade">
       <Stack.Screen name="Home" component={BottomTabs} />
       <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="PaymentMethodCart" component={PaymentMethodCart} />
       <Stack.Screen name="Categories" component={Categories} />
       <Stack.Screen name="Products" component={Products} />
       <Stack.Screen name="Stores" component={Stores} />

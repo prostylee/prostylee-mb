@@ -146,7 +146,7 @@ export default EStyleSheet.create({
   },
 
   modalChangeColor: {
-    height: '75%',
+    height: '80%',
     backgroundColor: '$white',
     borderRadius: 10,
     alignItems: 'flex-start',

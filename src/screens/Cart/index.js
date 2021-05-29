@@ -11,7 +11,7 @@ const Cart = ({navigation}) => {
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('cart.title')} />
       <View style={styles.wrapContent}>
-        <ListProduct />
+        <ListProduct navigation={navigation} />
       </View>
     </ThemeView>
   );

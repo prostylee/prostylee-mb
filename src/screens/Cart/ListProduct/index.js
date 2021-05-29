@@ -91,7 +91,7 @@ const ListProduct = ({navigation, data}) => {
             </View>
           </View>
           <View style={styles.wrapFooter}>
-            <CardFooter />
+            <CardFooter navigation={navigation} />
           </View>
         </>
       ) : (

@@ -26,6 +26,8 @@ export default EStyleSheet.create({
   },
   wrapName: {
     marginTop: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   name: {
     color: '#333333',
@@ -34,6 +36,8 @@ export default EStyleSheet.create({
     fontWeight: '400',
   },
   wrapPrice: {
+    paddingLeft: 10,
+    paddingRight: 10,
     marginTop: 5,
   },
   price: {
@@ -43,9 +47,12 @@ export default EStyleSheet.create({
     fontWeight: '500',
   },
   wrapSize: {
-    marginTop: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginTop: 10,
   },
   wrapColor: {
-    marginTop: 5,
+    padding: 10,
   },
+  wrapCheckout: {padding: 10},
 });
