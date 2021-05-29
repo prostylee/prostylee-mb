@@ -21,6 +21,11 @@ import Search from './Search';
 import FilterProduct from './FilterProduct';
 import SearchProductFilter from './SearchProductFilter';
 import SearchProducts from './SearchProducts';
+import AddStory from './Story/AddStory';
+import AddStore from './Story/AddStore';
+import CropPicture from './Status/CropPicture';
+import AddStatus from './Status/AddStatus';
+import AddStoreForStatus from './Status/AddStore';
 
 export {
   Welcome,
@@ -46,4 +51,9 @@ export {
   FilterProduct,
   SearchProductFilter,
   SearchProducts,
+  AddStory,
+  AddStore,
+  CropPicture,
+  AddStatus,
+  AddStoreForStatus,
 };

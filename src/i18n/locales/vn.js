@@ -14,12 +14,21 @@ export default {
     textFollowing: 'Đang theo dõi',
     textPost: 'Bài đăng',
   },
+  codePush: {
+    installButton: 'Cập nhật',
+    IgnoreButton: 'Bỏ qua',
+    title: 'Thông Báo',
+    updateMessage: 'Có phiên bản mới, nhấn cài đặt để cập nhật.',
+  },
   bottomTab: {
     newFeed: 'Trang chủ',
     store: 'Cửa hàng',
     notification: 'Thông báo',
     account: 'Tài khoản',
     post: 'Bài đăng',
+    addStory: 'Đăng story',
+    addPost: 'Đăng bài viết',
+    addProduct: 'Đăng sản phẩm',
   },
   headerTitle: {
     featured_store: 'Cửa hàng nổi bật',
@@ -98,6 +107,26 @@ export default {
     name: 'Họ tên',
     phone: 'Số điện thoại',
     password: 'Mật khẩu',
+  },
+  error: {
+    cannotUploadImage:
+      'Xuất hiện khi upload hình. Bạn hãy kiểm tra lại kết nối mạng nhé!',
+    cannotGetImage: 'Không thể chọn hình ảnh này. Xin hãy thử lại!',
+  },
+  addStory: {
+    addStore: 'Thêm cửa hàng',
+    changeStore: 'Thay đổi cửa hàng',
+    addStory: 'Chia sẻ story',
+  },
+  addStore: {
+    title: 'Thêm cửa hàng',
+    search: 'Tìm kiếm cửa hàng',
+  },
+  remove: 'Xoá',
+  addStatus: {
+    title: 'Thêm bài viết',
+    textPlaceholder: 'Viết chú thích...',
+    addStatus: 'Đăng bài viết',
   },
   Search: {
     inputPlaceholder: 'Tìm kiếm sản phẩm, cửa hàng',
