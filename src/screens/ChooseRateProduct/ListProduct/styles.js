@@ -2,30 +2,34 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
   wrapItems: {
-    flex: 0,
     padding: 5,
     flexDirection: 'row',
     backgroundColor: '$white',
+    marginBottom: 5,
   },
   productItem: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: 5,
   },
   wrapImageThumbnail: {
-    flex: 1,
     position: 'relative',
   },
   wrapTextContent: {
-    flex: 4,
+    flex: 1,
+    marginLeft: 5,
+    justifyContent: 'space-between',
     alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+  },
+  wrapInfo: {
+    alignItems: 'flex-start',
+  },
+  wrapAmount: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   wrapTextSale: {
     position: 'absolute',
-    backgroundColor: '$red',
     bottom: 8,
     left: 8,
     padding: 4,
@@ -56,8 +60,8 @@ export default EStyleSheet.create({
     fontStyle: 'normal',
     textAlign: 'left',
     color: '$black',
-    marginTop: 12,
     fontWeight: '400',
+    justifyContent: 'flex-start',
   },
   price: {
     lineHeight: 18,
@@ -69,13 +73,19 @@ export default EStyleSheet.create({
     color: '$black',
     fontWeight: '400',
   },
+  productColor: {
+    borderLeftWidth: 1,
+    borderColor: '#E9EAEB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: -3,
+  },
   textSpace: {
     lineHeight: 25,
     fontSize: 12,
     color: '#F4F5F5',
   },
   wrapPriceRoot: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

@@ -22,23 +22,27 @@ const ProductItem = ({item}) => {
           />
         </View>
         <View style={styles.wrapTextContent}>
-          <Text numberOfLines={2} style={styles.name}>
-            {item.productName}
-          </Text>
-          {item?.price ? (
-            <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(item?.productPrice, 'đ')}
+          <View style={styles.wrapInfo}>
+            <Text numberOfLines={2} style={styles.name}>
+              {item.productName}
             </Text>
-          ) : null}
-          <Text numberOfLines={1} style={styles.name}>
-            Size: {item.productSize}&nbsp;{' '}
-            <Text numberOfLines={1} style={styles.textSpace}>
-              |
+            {item?.productPrice ? (
+              <Text numberOfLines={1} style={styles.price}>
+                {currencyFormat(item?.productPrice, 'đ')}
+              </Text>
+            ) : null}
+          </View>
+          <View style={styles.wrapAttribute}>
+            <Text numberOfLines={1} style={styles.name}>
+              Size: {item.productSize}&nbsp;{' '}
+              <Text numberOfLines={1} style={styles.textSpace}>
+                |
+              </Text>
+              &nbsp;{item.productColor}
             </Text>
-            &nbsp;{item.productColor}
-          </Text>
+          </View>
         </View>
-        <View>
+        <View style={styles.wrapAmount}>
           <Text numberOfLines={2} style={styles.count}>
             x{item.amount}
           </Text>
