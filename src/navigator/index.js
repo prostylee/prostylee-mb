@@ -37,6 +37,8 @@ import {
   Products,
   Search,
   FilterProduct,
+  SearchProductFilter,
+  SearchProducts,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -69,6 +71,12 @@ function SignedIn() {
       <Stack.Screen name="CropPicture" component={CropPicture} />
       <Stack.Screen name="AddStatus" component={AddStatus} />
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
+      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="SearchProducts" component={SearchProducts} />
+      <Stack.Screen
+        name="SearchProductFilter"
+        component={SearchProductFilter}
+      />
     </Stack.Navigator>
   );
 }

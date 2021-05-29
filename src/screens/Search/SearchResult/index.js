@@ -25,7 +25,7 @@ const SearchResult = ({navigation}) => {
           <View
             style={{flex: 1}}
             tabLabel={i18n.t('Search.searchResultProduct')}>
-            <ProductSearchResult />
+            <ProductSearchResult navigation={navigation} />
           </View>
           <View style={{flex: 1}} tabLabel={i18n.t('Search.searchResultStore')}>
             <View style={styles.wrapContent}>

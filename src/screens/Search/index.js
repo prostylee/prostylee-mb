@@ -56,17 +56,20 @@ const Search = ({navigation}) => {
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
             value={searchQuery}
+            onSubmitEditing={() => {
+              navigation.navigate('SearchProducts');
+            }}
           />
         }
       />
       <View style={styles.wrapContent}>
         {searchQuery === '' ? (
           <>
-            <TopSearch />
-            <FeaturedCategories />
+            <TopSearch navigation={navigation} />
+            <FeaturedCategories navigation={navigation} />
           </>
         ) : (
-          <SearchResult />
+          <SearchResult navigation={navigation} />
         )}
       </View>
     </ThemeView>
