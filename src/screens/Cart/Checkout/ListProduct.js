@@ -7,8 +7,10 @@ import Product from './Item';
 import EmptyCart from '../EmptyCart';
 import CardFooter from '../CardFooter';
 import i18n from 'i18n';
-import CardAddress from './CardAddress';
+import CardAddress from '../CardAddress';
 import {CartEmpty} from 'svg/common';
+import {List} from 'react-native-paper';
+import {currencyFormat} from 'utils/currency';
 
 const ListProduct = ({navigation, data}) => {
   const [refreshing, handleRefreshing] = useState(false);
@@ -32,13 +34,54 @@ const ListProduct = ({navigation, data}) => {
 
   const renderFooter = () => {
     return (
-      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-        <ActivityIndicator animating color={Colors.$purple} size="small" />
-      </View>
+      <>
+        <View style={styles.wrapAccordion}>
+          <List.Accordion
+            title="Phương thức vận chuyển"
+            left={(props) => <List.Icon {...props} icon="folder" />}>
+            <List.Item title="First item" />
+            <List.Item title="Second item" />
+          </List.Accordion>
+        </View>
+        <View style={styles.wrapTotal}>
+          <View style={styles.rowTotal}>
+            <View style={styles.colLabelTotal}>
+              <Text style={styles.labelTotal}>Tổng tiền hàng</Text>
+            </View>
+            <View style={styles.colValueTotal}>
+              <Text style={styles.valueTotal}>
+                {currencyFormat(9999999, 'đ')}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.rowTotal}>
+            <View style={styles.colLabelTotal}>
+              <Text style={styles.labelTotal}>Phí vận chuyển</Text>
+            </View>
+            <View style={styles.colValueTotal}>
+              <Text style={styles.valueTotal}>
+                {currencyFormat(9999999, 'đ')}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.rowTotal}>
+            <View style={styles.colLabelTotal}>
+              <Text style={styles.labelTotal}>Mã giảm giá</Text>
+            </View>
+            <View style={styles.colValueTotal}>
+              <Text style={styles.valueTotal}>
+                {currencyFormat(9999999, 'đ')}
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+          <ActivityIndicator animating color={Colors.$purple} size="small" />
+        </View>
+      </>
     );
   };
-
-  const renderGroupItem = (item) => {};
 
   /* Extract note */
   const groupDataByStore = (list) => {

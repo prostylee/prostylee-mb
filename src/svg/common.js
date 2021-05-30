@@ -1353,3 +1353,44 @@ export const LocationIcon = (props) => (
     />
   </Svg>
 );
+
+export const DeliveryIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M.5 9V4a1 1 0 011-1h8a1 1 0 011 1v4M10.5 8V4h2a3 3 0 013 3v4a1 1 0 01-1 1H14"
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M15.5 8h-2a1 1 0 01-1-1V4M11 13a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM3 13a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM8 12H6"
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const DownIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M4 6l4 4 4-4"
+      stroke="#8B9399"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const RightIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M6 12l4-4-4-4"
+      stroke="#8B9399"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

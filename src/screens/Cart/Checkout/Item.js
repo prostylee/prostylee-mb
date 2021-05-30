@@ -5,7 +5,6 @@ import {Text, View, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {Image, NumberInputUpDown} from 'components';
 import HeaderStore from './HeaderStore';
 import {currencyFormat} from 'utils/currency';
-import {DownArrow} from 'svg/common';
 
 const Item = ({product, navigation}) => {
   const [visible, setVisible] = useState(false);

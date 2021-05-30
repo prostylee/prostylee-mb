@@ -165,35 +165,38 @@ export default EStyleSheet.create({
     alignItems: 'flex-end',
     marginRight: 10,
   },
-  wrapAddress: {
+  wrapAccordion: {
+    backgroundColor: '$white',
+    flex: 1,
     flexDirection: 'column',
+    marginBottom: 5,
+    marginTop: 5,
+  },
+  titleAccordion: {
+    backgroundColor: 'red',
+    flexDirection: 'row',
+  },
+  wrapTotal: {
+    marginBottom: 5,
     backgroundColor: '$white',
     padding: 10,
-    marginBottom: 5,
   },
-  wrapAddressHeader: {
+  rowTotal: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 5,
   },
-  wrapLabelAddress: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  wrapAddressContent: {width: '50%'},
-  labelAddress: {
-    fontSize: 12,
+  labelTotal: {
+    color: '#8B9399',
+    fontSize: 11,
     lineHeight: 16,
     fontWeight: '400',
-    color: '#8B9399',
-    justifyContent: 'center',
-    textAlign: 'center',
-    alignItems: 'center',
   },
-  labelChangeAddress: {
-    color: '#823FFD',
-    fontSize: 12,
+  valueTotal: {
+    color: '#333333',
+    fontSize: 11,
     lineHeight: 16,
-    fontWeight: '500',
+    fontWeight: '400',
   },
 });
