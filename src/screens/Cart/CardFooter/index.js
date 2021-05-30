@@ -36,7 +36,7 @@ const CardFooter = ({title, subTitle, buttonText, actionButton, icon}) => {
           <Button
             mode="text"
             style={styles.btnCoupon}
-            onPress={() => console.log('Pressed')}>
+            onPress={() => navigation.navigate('VoucherCart')}>
             <View style={styles.labelCoupon}>
               <CouponSvg />
               <Text>&nbsp;Mã giảm giá</Text>

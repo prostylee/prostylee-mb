@@ -1342,3 +1342,14 @@ export const MomoIcon = (props) => (
     </Defs>
   </Svg>
 );
+
+export const LocationIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M8 15.333s6-4 6-8.666a6 6 0 10-12 0c0 4.666 6 8.666 6 8.666zm2-8.666a2 2 0 11-4 0 2 2 0 014 0z"
+      fill="#8B9399"
+    />
+  </Svg>
+);
