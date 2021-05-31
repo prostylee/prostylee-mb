@@ -1,12 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  ActivityIndicator,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, View, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {Image, NumberInputUpDown} from 'components';
 import HeaderStore from './HeaderStore';
 import {currencyFormat} from 'utils/currency';
@@ -94,7 +89,7 @@ const Item = ({product, navigation}) => {
                     </Text>
                   </View>
                   <View style={styles.wrapUpdown}>
-                    <NumberInputUpDown value={+item.amount} />
+                    <NumberInputUpDown value={+item.amount} minValue={0} />
                   </View>
                 </View>
               </View>

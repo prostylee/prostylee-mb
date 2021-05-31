@@ -2,19 +2,16 @@
 import styles from './styles';
 
 import React, {useRef} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text} from 'react-native';
 import {RadioSelectGroup, ButtonRounded} from 'components';
-import {CartEmpty} from 'svg/common';
-import {Dimensions, StyleSheet} from 'react-native';
+import {Dimensions} from 'react-native';
 import {currencyFormat} from 'utils/currency';
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 
 const {width} = Dimensions.get('window');
 const WIDTH_IMAGE = width / 2 - 14;
-const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 
 const ModalChangeCart = ({images}) => {
-  const carouselRef = useRef();
   const renderItem = ({item, index}, parallaxProps) => {
     return (
       <View style={styles.item}>
@@ -52,7 +49,7 @@ const ModalChangeCart = ({images}) => {
         <View style={styles.wrapSize}>
           <RadioSelectGroup
             value="black"
-            title="Kích thước"
+            title={i18n.t('cart.size')}
             data={[
               {label: 'S', value: 's'},
               {label: 'M', value: 'm'},
@@ -64,7 +61,7 @@ const ModalChangeCart = ({images}) => {
         <View style={styles.wrapColor}>
           <RadioSelectGroup
             value="black"
-            title="Màu sắc"
+            title={i18n.t('cart.color')}
             data={[
               {label: 'Đen', value: 'black'},
               {label: 'Trắng', value: 'white'},
@@ -73,7 +70,7 @@ const ModalChangeCart = ({images}) => {
         </View>
         <View style={styles.wrapCheckout}>
           <ButtonRounded
-            label="Cập nhật sản phẩm"
+            label={i18n.t('cart.updateProduct')}
             style={styles.btnCheckout}
             titleStyle={styles.titleStyle}
             onPress={() => console.log('pressed')}

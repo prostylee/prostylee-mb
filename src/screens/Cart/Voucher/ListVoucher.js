@@ -42,10 +42,6 @@ const ListVoucher = ({navigation, data}) => {
     );
   };
 
-  const leftPress = () => {
-    navigation.goBack();
-  };
-
   return (
     <FlatList
       data={data}

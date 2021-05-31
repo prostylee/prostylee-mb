@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 import React, {useEffect, useState, useRef, useMemo} from 'react';
-import {View, ActivityIndicator, FlatList, Animated} from 'react-native';
-import {Colors} from 'components';
+import {View, ActivityIndicator, FlatList, Animated, Text} from 'react-native';
 import Product from './Item';
 import EmptyCart from '../EmptyCart';
 import CardFooter from '../CardFooter';
+import ProductSimilar from '../ProductSimilar';
 import i18n from 'i18n';
+import {Colors} from 'components';
 import {CartEmpty} from 'svg/common';
 
 const ListProduct = ({navigation, data}) => {
@@ -31,13 +32,19 @@ const ListProduct = ({navigation, data}) => {
 
   const renderFooter = () => {
     return (
-      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-        <ActivityIndicator animating color={Colors.$purple} size="small" />
-      </View>
+      <>
+        <View style={styles.wrapMore}>
+          <Text style={styles.textMore}>{i18n.t('cart.more')}</Text>
+        </View>
+        <View style={styles.wrapProductSimilar}>
+          <ProductSimilar />
+        </View>
+        <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+          <ActivityIndicator animating color={Colors.$purple} size="small" />
+        </View>
+      </>
     );
   };
-
-  const renderGroupItem = (item) => {};
 
   /* Extract note */
   const groupDataByStore = (list) => {
@@ -66,6 +73,10 @@ const ListProduct = ({navigation, data}) => {
     [JSON.stringify(data)],
   );
 
+  const onCheckout = () => {
+    navigation.navigate('CheckoutCart');
+  };
+
   return (
     <View style={styles.container}>
       {Object.keys(groupData).length > 0 ? (
@@ -91,7 +102,11 @@ const ListProduct = ({navigation, data}) => {
             </View>
           </View>
           <View style={styles.wrapFooter}>
-            <CardFooter navigation={navigation} />
+            <CardFooter
+              navigation={navigation}
+              actionButton={onCheckout}
+              buttonText={i18n.t('cart.payment')}
+            />
           </View>
         </>
       ) : (

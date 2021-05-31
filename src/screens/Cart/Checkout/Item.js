@@ -1,14 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useState, useEffect} from 'react';
-import {Text, View, ActivityIndicator, TouchableOpacity} from 'react-native';
-import {Image, NumberInputUpDown} from 'components';
+import React, {useEffect} from 'react';
+import {Text, View, ActivityIndicator} from 'react-native';
+import {Image} from 'components';
 import HeaderStore from './HeaderStore';
 import {currencyFormat} from 'utils/currency';
 
 const Item = ({product, navigation}) => {
-  const [visible, setVisible] = useState(false);
-
   const {storeId, storeName, storeAvatar, data} = product;
 
   useEffect(() => {}, [JSON.stringify(data)]);

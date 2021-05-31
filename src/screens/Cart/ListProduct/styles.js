@@ -144,7 +144,6 @@ export default EStyleSheet.create({
     justifyContent: 'flex-end',
     margin: 0,
   },
-
   modalChangeColor: {
     height: '80%',
     backgroundColor: '$white',
@@ -161,5 +160,22 @@ export default EStyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     marginRight: 10,
+  },
+  wrapMore: {
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  wrapProductSimilar: {
+    backgroundColor: '$white',
+    padding: 10,
+    marginBottom: 5,
+  },
+  textMore: {
+    color: '#8B9399',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '400',
   },
 });

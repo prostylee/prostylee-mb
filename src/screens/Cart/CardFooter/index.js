@@ -4,19 +4,20 @@ import styles from './styles';
 import React from 'react';
 import {View, Text} from 'react-native';
 import {ButtonRounded} from 'components';
-import {Button} from 'react-native-paper';
+import {Button, Chip} from 'react-native-paper';
 import {CreditSvg, CouponSvg, RightArrow} from 'svg/common';
 import {useNavigation} from '@react-navigation/native';
 
-const CardFooter = ({title, subTitle, buttonText, actionButton, icon}) => {
+const CardFooter = ({buttonText, actionButton}) => {
   const navigation = useNavigation();
+
   const handlePress = () => {
     if (typeof actionButton === 'function') {
       actionButton();
       return;
     }
-    navigation.navigate('Home');
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.viewHeader}>
@@ -38,6 +39,18 @@ const CardFooter = ({title, subTitle, buttonText, actionButton, icon}) => {
             style={styles.btnCoupon}
             onPress={() => navigation.navigate('VoucherCart')}>
             <View style={styles.labelCoupon}>
+              {/* <Chip
+                icon="information"
+                onPress={() => console.log('Pressed')}
+                style={{
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  margin: 4,
+                }}
+                onClose={() => console.log('closed')}>
+                Example Chip
+              </Chip> */}
+
               <CouponSvg />
               <Text>&nbsp;Mã giảm giá</Text>
             </View>
@@ -54,7 +67,7 @@ const CardFooter = ({title, subTitle, buttonText, actionButton, icon}) => {
             onPress={handlePress}
             compact={false}
             style={styles.btnCheckout}
-            label="Thanh toán"
+            label={buttonText}
           />
         </View>
       </View>
@@ -62,7 +75,9 @@ const CardFooter = ({title, subTitle, buttonText, actionButton, icon}) => {
   );
 };
 
-CardFooter.defaultProps = {};
+CardFooter.defaultProps = {
+  buttonText: 'Thanh toán',
+};
 
 CardFooter.propTypes = {};
 

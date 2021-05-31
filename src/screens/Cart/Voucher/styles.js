@@ -8,7 +8,7 @@ export default EStyleSheet.create({
     backgroundColor: '$purple',
   },
   button: {
-    height: '30px',
+    height: '30rem',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '4rem',

@@ -2,11 +2,11 @@
 import styles from './styles';
 import React, {useEffect, useState, useRef, useMemo} from 'react';
 import {View, ActivityIndicator, FlatList, Animated, Text} from 'react-native';
+import i18n from 'i18n';
 import {Colors} from 'components';
 import Product from './Item';
 import EmptyCart from '../EmptyCart';
 import CardFooter from '../CardFooter';
-import i18n from 'i18n';
 import CardAddress from '../CardAddress';
 import {CartEmpty, DeliveryIcon, DownIcon, RightIcon} from 'svg/common';
 import {currencyFormat} from 'utils/currency';
@@ -63,7 +63,7 @@ const ListProduct = ({navigation, data}) => {
             <View style={styles.wrapCollapseHeader}>
               <DeliveryIcon />
               <Text style={styles.titleCollapseHeader}>
-                &nbsp;Phương thức vận chuyển
+                &nbsp;{i18n.t('cart.deliveryMethod')}
               </Text>
             </View>
             <View>{collapsed ? <DownIcon /> : <RightIcon />}</View>
@@ -91,7 +91,7 @@ const ListProduct = ({navigation, data}) => {
         <View style={styles.wrapTotal}>
           <View style={styles.rowTotal}>
             <View style={styles.colLabelTotal}>
-              <Text style={styles.labelTotal}>Tổng tiền hàng</Text>
+              <Text style={styles.labelTotal}>{i18n.t('cart.total')}</Text>
             </View>
             <View style={styles.colValueTotal}>
               <Text style={styles.valueTotal}>
@@ -101,7 +101,9 @@ const ListProduct = ({navigation, data}) => {
           </View>
           <View style={styles.rowTotal}>
             <View style={styles.colLabelTotal}>
-              <Text style={styles.labelTotal}>Phí vận chuyển</Text>
+              <Text style={styles.labelTotal}>
+                {i18n.t('cart.deliveryFee')}
+              </Text>
             </View>
             <View style={styles.colValueTotal}>
               <Text style={styles.valueTotal}>
@@ -109,10 +111,9 @@ const ListProduct = ({navigation, data}) => {
               </Text>
             </View>
           </View>
-
           <View style={styles.rowTotal}>
             <View style={styles.colLabelTotal}>
-              <Text style={styles.labelTotal}>Mã giảm giá</Text>
+              <Text style={styles.labelTotal}>{i18n.t('cart.coupon')}</Text>
             </View>
             <View style={styles.colValueTotal}>
               <Text style={styles.valueTotal}>
@@ -139,7 +140,9 @@ const ListProduct = ({navigation, data}) => {
           </View>
           <View style={styles.wrapPrice}>
             <Text style={styles.priceRadio}>
-              {item.value ? currencyFormat(item.value, 'đ') : 'Miễn phí'}
+              {item.value
+                ? currencyFormat(item.value, 'đ')
+                : i18n.t('cart.freeShip')}
             </Text>
           </View>
         </View>
@@ -177,6 +180,10 @@ const ListProduct = ({navigation, data}) => {
     return <CardAddress />;
   };
 
+  const onPayment = () => {
+    navigation.navigate('Home');
+  };
+
   const groupData = useMemo(
     () => groupDataByStore(data),
     [JSON.stringify(data)],
@@ -210,7 +217,10 @@ const ListProduct = ({navigation, data}) => {
             </View>
           </View>
           <View style={styles.wrapFooter}>
-            <CardFooter navigation={navigation} />
+            <CardFooter
+              buttonText={i18n.t('cart.orderˇ')}
+              actionButton={onPayment}
+            />
           </View>
         </>
       ) : (

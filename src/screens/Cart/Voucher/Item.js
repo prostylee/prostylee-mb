@@ -2,12 +2,16 @@
 import styles from './styles';
 
 import React from 'react';
-import {ActivityIndicator, Text, View, TouchableOpacity} from 'react-native';
-import {Image, ButtonRounded} from 'components';
+import {ActivityIndicator, Text, View} from 'react-native';
+import {Image} from 'components';
 import CardVoucher from '../CardVoucher';
 import {Button} from 'react-native-paper';
 
 const ProductItem = ({item, navigation}) => {
+  const onUse = () => {
+    navigation.goBack();
+  };
+
   return (
     <CardVoucher style={styles.cardItem}>
       <View style={styles.wrapCardItem}>
@@ -45,8 +49,9 @@ const ProductItem = ({item, navigation}) => {
               contentStyle={styles.button}
               labelStyle={styles.labelStyle}
               mode="contained"
-              color="#823FFD">
-              Sử dụng
+              color="#823FFD"
+              onPress={onUse}>
+              {i18n.t('cart.use')}
             </Button>
           </View>
         </View>

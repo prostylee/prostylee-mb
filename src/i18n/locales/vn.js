@@ -120,5 +120,12 @@ export default {
     notfound: 'Chưa có sản phẩm nào',
     subNotFound: 'Hàng ngàn sản phẩm vẫn đang chờ bạn khám phá',
     shoppingNow: 'Mua sắm ngay',
+    similarProduct: 'Sản phẩm đã xem gần đầy',
+    more: 'Khám phá thêm các sản phẩm khác',
+    order: 'Đặt hàng',
+    freeShip: 'Miễn phí',
+    color: 'Màu sắc',
+    size: 'Kích thước',
+    updateProduct: 'Cập nhật sản phẩm',
   },
 };

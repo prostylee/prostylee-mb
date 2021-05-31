@@ -45,5 +45,12 @@ export default {
     notfound: 'No product in your cart',
     subNotFound: 'More product for you',
     shoppingNow: 'Shopping Now',
+    similarProduct: 'Similar Product',
+    more: 'Others product',
+    order: 'Order',
+    freeShip: 'Freeship',
+    color: 'Color',
+    size: 'Size',
+    updateProduct: 'Update',
   },
 };

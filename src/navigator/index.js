@@ -36,7 +36,6 @@ import {
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
 import VoucherCart from 'screens/Cart/Voucher';
 import CheckoutCart from 'screens/Cart/Checkout';
-import DeliveryMethodCart from 'screens/Cart/DeliveryMethod';
 
 import BottomTabs from './bottomTab';
 
@@ -50,14 +49,13 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="CheckoutCart"
+      initialRouteName="Home"
       mode="card"
       headerMode="none"
       animation="fade">
       <Stack.Screen name="Home" component={BottomTabs} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="PaymentMethodCart" component={PaymentMethodCart} />
-      <Stack.Screen name="DeliveryMethodCart" component={DeliveryMethodCart} />
       <Stack.Screen name="VoucherCart" component={VoucherCart} />
       <Stack.Screen name="CheckoutCart" component={CheckoutCart} />
       <Stack.Screen name="Categories" component={Categories} />

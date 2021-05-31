@@ -42,7 +42,11 @@ const NumberInputUpDown = ({
 
   const inc = () => {
     if (regex.test(currentValue)) {
-      if (!minValue || minValue <= currentValue) {
+      if (
+        minValue === undefined ||
+        minValue === null ||
+        currentValue > minValue
+      ) {
         const newValue = +currentValue - 1;
         setCurrentValue(newValue);
       }
@@ -51,7 +55,11 @@ const NumberInputUpDown = ({
 
   const dec = () => {
     if (regex.test(currentValue)) {
-      if (!maxValue || maxValue >= currentValue) {
+      if (
+        maxValue === undefined ||
+        maxValue === null ||
+        currentValue < maxValue
+      ) {
         const newValue = +currentValue + 1;
         setCurrentValue(newValue);
       }
@@ -65,7 +73,7 @@ const NumberInputUpDown = ({
         style={{...style.minusIcon, ...minusStyle}}
         size={12}
         icon={minusIcon || 'minus'}
-        disabled={minValue && minValue >= +currentValue}
+        disabled={+minValue >= +currentValue}
       />
 
       <TextInput
@@ -88,7 +96,7 @@ const NumberInputUpDown = ({
         style={{...style.plusIcon, ...plusStyle}}
         size={12}
         icon={plusIcon || 'plus'}
-        disabled={maxValue && maxValue <= +currentValue}
+        disabled={+maxValue <= +currentValue}
       />
     </View>
   );
