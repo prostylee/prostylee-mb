@@ -18,7 +18,7 @@ export default EStyleSheet.create({
     // alignItems: 'center',
     backgroundColor: '#333333',
     borderBottomWidth: 0,
-    paddingHorizontal: 16,
+    paddingTop: 20,
   },
   headerWrap: {
     ...flexRow,
@@ -30,6 +30,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     height: 35,
+
     // borderWidth: 1,
   },
   headerRightContainer: {
