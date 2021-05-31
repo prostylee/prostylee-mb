@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, Image} from 'react-native';
 import IconIcons from 'react-native-vector-icons/Ionicons';
+import MapView from 'react-native-maps';
 import i18n from 'i18n';
 import {useTheme} from '@react-navigation/native';
 import styles from './styles';
@@ -27,7 +28,15 @@ const ProductLocation = (props) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.mapPlaceholder} />
+      <MapView
+        style={styles.mapPlaceholder}
+        initialRegion={{
+          latitude: location.latitude,
+          longitude: location.longitude,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+        }}
+      />
       <View style={styles.locationDirection}>
         <View style={styles.directionText}>
           <Text style={styles.directionTextStyle}>
