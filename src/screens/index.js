@@ -22,6 +22,7 @@ import AddStore from './Story/AddStore';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
+import PromoNotification from './Notifications/PromoNotification';
 
 export {
   Welcome,
@@ -48,4 +49,5 @@ export {
   CropPicture,
   AddStatus,
   AddStoreForStatus,
+  PromoNotification,
 };
