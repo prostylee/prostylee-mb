@@ -33,8 +33,9 @@ import {
   PersonalSalers,
   SearchProductFilter,
   Vouchers,
-  NearbyStore,
   FlashSale,
+  NearbyStore,
+  StoreAddress,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -69,6 +70,9 @@ function SignedIn() {
         name="SearchProductFilter"
         component={SearchProductFilter}
       />
+      <Stack.Screen name="NearbyStore" component={NearbyStore} />
+      <Stack.Screen name="StoreAddress" component={StoreAddress} />
+      <Stack.Screen name="UserProfile" component={UserProfile} />
     </Stack.Navigator>
   );
 }

@@ -23,6 +23,8 @@ import PersonalSalers from './Stores/PersonalSalers';
 import Vouchers from './Stores/Vouchers';
 import NearbyStore from './Stores/NearbyStore';
 import FlashSale from './Stores/FlashSale';
+import StoreAddress from './StoreAddress';
+
 export {
   Welcome,
   Onboarding,
@@ -36,6 +38,8 @@ export {
   BestSeller,
   PersonalSalers,
   SearchProductFilter,
+  UserProfile,
+  NearbyStore,
   SignUpViaPhone,
   SignInViaPhone,
   SignInOptions,
@@ -49,4 +53,5 @@ export {
   Vouchers,
   NearbyStore,
   FlashSale,
+  StoreAddress,
 };

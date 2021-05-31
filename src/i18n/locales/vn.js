@@ -15,6 +15,7 @@ export default {
     textFollower: 'Người theo dõi',
     textFollowing: 'Đang theo dõi',
     textPost: 'Bài đăng',
+    textNear: '2.5km',
   },
   bottomTab: {
     newFeed: 'Trang chủ',
