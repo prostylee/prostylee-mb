@@ -12,6 +12,7 @@ import TextInputBorderBottom from './TextInputBorderBottom';
 import TextInputRounded from './TextInputRounded';
 import RnDateTimePicker from './RnDateTimePicker';
 import ProductLike from './ProductLike';
+import Rating from './RnRating/SwipeRating';
 // import {RnRatingTap} from './RnRatingTap';
 // import {ModalImagePicker} from './ModalImagePicker';
 import ModalZoomImage from './ModalZoomImage';
@@ -33,6 +34,8 @@ import CustomTextInput from './CustomTextInput';
 import CustomSecureInput from './CustomSecureInput';
 import Countdown from './Countdown';
 import CustomPinCodeInput from './CustomPinCodeInput';
+import Picker from './Picker';
+import SlideInModal from './SlideInModal';
 
 export {
   ContainerWithoutScrollView,
@@ -50,6 +53,7 @@ export {
   TextInputBorderBottom,
   TextInputRounded,
   RnDateTimePicker,
+  Rating,
   // RnRatingTap,
   //   ModalImagePicker,
   ModalZoomImage,
@@ -70,4 +74,6 @@ export {
   Countdown,
   CustomPinCodeInput,
   ProductLike,
+  Picker,
+  SlideInModal,
 };

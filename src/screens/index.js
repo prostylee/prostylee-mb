@@ -17,7 +17,12 @@ import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
 import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
-
+import BestSeller from './Stores/BestSeller';
+import SearchProductFilter from './SearchProductFilter';
+import PersonalSalers from './Stores/PersonalSalers';
+import Vouchers from './Stores/Vouchers';
+import NearbyStore from './Stores/NearbyStore';
+import FlashSale from './Stores/FlashSale';
 export {
   Welcome,
   Onboarding,
@@ -28,6 +33,9 @@ export {
   Products,
   StoryBoard,
   Chat,
+  BestSeller,
+  PersonalSalers,
+  SearchProductFilter,
   SignUpViaPhone,
   SignInViaPhone,
   SignInOptions,
@@ -38,4 +46,7 @@ export {
   ResetPasswordViaMail,
   SimpleWebView,
   UserProfile,
+  Vouchers,
+  NearbyStore,
+  FlashSale,
 };
