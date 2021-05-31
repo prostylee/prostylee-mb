@@ -119,6 +119,9 @@ export default {
     tabProduct: 'Sản phẩm',
     tabRate: 'Đánh giá',
     tabSuggest: 'Đề xuất',
+    similarProduct: 'Sản phẩm tương tự',
+    buttonStore: 'Cửa hàng',
+    buttonAddToCart: 'Thêm vào giỏ hàng',
   },
   error: {
     cannotUploadImage:

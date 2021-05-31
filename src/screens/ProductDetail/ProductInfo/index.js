@@ -26,7 +26,7 @@ const ProductInfo = (props) => {
           </Text>
         </View>
         <IconIcons
-          name={showInfo ? 'ios-chevron-up' : 'ios-chevron-down'}
+          name={showInfo ? 'ios-chevron-down' : 'ios-chevron-up'}
           size={16}
           color={colors['$lightGray']}
         />

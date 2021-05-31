@@ -3,6 +3,8 @@ import {View, TouchableOpacity, Text, Image, Dimensions} from 'react-native';
 import IconIcons from 'react-native-vector-icons/Ionicons';
 import i18n from 'i18n';
 import ImageView from 'react-native-image-viewing';
+import {useSelector} from 'react-redux';
+import {productSelectors} from 'reducers';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -12,12 +14,18 @@ import styles from './styles';
 const ProductRating = (props) => {
   const {colors} = useTheme();
   const data = props.data ? props.data : {};
-  const totalRate = data.totalRate ? data.totalRate : 0;
-  const numberOfRate = data.totalRateCount ? data.totalRateCount : 0;
-  const commentList = data.list ? data.list.slice(0, 3) : [];
+  const totalElements = data.totalElements ? data.totalElements : 0;
+  const commentList = data.content ? data.content.slice(0, 3) : [];
   const [imageListVisible, setImageListVisible] = React.useState(false);
   const [imageList, setImageList] = React.useState([]);
   const [imageListActive, setImageListActive] = React.useState(0);
+
+  const totalRate = useSelector((state) =>
+    productSelectors.getProductCommentsAverage(state),
+  );
+  const totalRateDisplay =
+    typeof totalRate === 'number' ? totalRate?.toFixed(1) : 0;
+
   const numberOfImageAvailabel = Math.floor(
     (Dimensions.get('window').width - 32) / 64,
   );
@@ -55,7 +63,7 @@ const ProductRating = (props) => {
   };
   const openImageModal = (item, index) => {
     setImageListActive(index);
-    setImageList(item.commentImages);
+    setImageList(item.images);
     setImageListVisible(true);
   };
   return (
@@ -66,9 +74,10 @@ const ProductRating = (props) => {
         </Text>
         <TouchableOpacity style={styles.ratingTotal} onPress={() => {}}>
           <Rating value={totalRate} />
-          <Text style={styles.rateNumber}>{`${totalRate.toFixed(
-            1,
-          )} (${numberOfRate})`}</Text>
+          <Text
+            style={
+              styles.rateNumber
+            }>{`${totalRateDisplay} (${totalElements})`}</Text>
           <IonIcons
             name={'ios-chevron-forward'}
             size={14}
@@ -82,12 +91,12 @@ const ProductRating = (props) => {
           return (
             <View key={`rating_item_${item.id}`} style={styles.ratingItem}>
               <View style={styles.itemTitle}>
-                <Text style={styles.itemUserName}>{user?.displayName}</Text>
+                <Text style={styles.itemUserName}>{user?.fullName}</Text>
                 <Rating value={item?.value} />
               </View>
               <Text style={styles.itemContent}>{item?.content}</Text>
               <View style={styles.commentImage}>
-                {item.commentImages
+                {item.images
                   .slice(0, numberOfImageAvailabel - 1)
                   .map((imageItem, index) => {
                     return (
@@ -101,13 +110,13 @@ const ProductRating = (props) => {
                             styles.commentImageStyle,
                             {marginLeft: index > 0 ? 4 : 0},
                           ]}
-                          source={{uri: imageItem.uri}}
+                          source={{uri: imageItem.original}}
                           resizeMethod={'cover'}
                         />
                       </TouchableOpacity>
                     );
                   })}
-                {item.commentImages.length >= numberOfImageAvailabel ? (
+                {item.images.length >= numberOfImageAvailabel ? (
                   <TouchableOpacity
                     style={styles.commentLastImage}
                     key={`comment_${item.id}_${numberOfImageAvailabel - 1}`}
@@ -117,14 +126,14 @@ const ProductRating = (props) => {
                     <Image
                       style={[styles.commentImageStyle, {marginLeft: 4}]}
                       source={{
-                        uri: item.commentImages[numberOfImageAvailabel - 1].uri,
+                        uri: item.images[numberOfImageAvailabel - 1].uri,
                       }}
                       resizeMethod={'cover'}
                     />
-                    {item.commentImages.length >= numberOfImageAvailabel + 1 ? (
+                    {item.images.length >= numberOfImageAvailabel + 1 ? (
                       <View style={styles.commentImageMore}>
                         <Text style={styles.commentImageMoreText}>{`+${
-                          item.commentImages.length - numberOfImageAvailabel
+                          item.images.length - numberOfImageAvailabel
                         }`}</Text>
                       </View>
                     ) : null}
@@ -135,11 +144,11 @@ const ProductRating = (props) => {
           );
         })}
       </View>
-      {data.list.length > 3 ? (
+      {data.content && data.content.length > 3 ? (
         <TouchableOpacity style={styles.readAllButton}>
           <Text style={styles.readAllButtonText}>{`${i18n.t(
             'productDetail.ratingAll',
-          )} (${data.list.length})`}</Text>
+          )} (${data.content.length})`}</Text>
         </TouchableOpacity>
       ) : null}
       <ImageView

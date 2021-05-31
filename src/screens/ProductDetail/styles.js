@@ -6,6 +6,7 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
+    position: 'relative',
   },
   lineHr: {
     height: 1,
@@ -18,7 +19,9 @@ export default EStyleSheet.create({
     width: WIDTH,
     backgroundColor: '$bgColor',
   },
-  mainContent: {},
+  mainContent: {
+    paddingBottom: 76,
+  },
   imageList: {
     width: WIDTH,
     height: (WIDTH * 4) / 3,

@@ -16,6 +16,9 @@ import {SUCCESS} from 'constants';
 import {
   getListProductService,
   getProductById as getProductByIdApi,
+  getProductCommentsById,
+  getProductCommentsAverage,
+  getProductRelated as getRelatedProduct,
 } from 'services/api/productApi';
 
 const getProducts = function* ({payload: {token, isRefresh}}) {
@@ -120,6 +123,57 @@ const getProductById = function* ({payload}) {
   }
 };
 
+const getProductComments = function* ({payload}) {
+  try {
+    yield put(productActions.getProductCommentsLoading(true));
+    const res = yield call(getProductCommentsById, {
+      targetId: payload.id,
+      targetType: 'PRODUCT',
+    });
+    const resAverage = yield call(getProductCommentsAverage, {
+      targetId: payload.id,
+      targetType: 'PRODUCT',
+    });
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(productActions.getProductCommentsSuccess(res.data.data));
+    } else {
+      yield put(productActions.getProductCommentsFail());
+    }
+    if (
+      resAverage.ok &&
+      resAverage.data.status === SUCCESS &&
+      !resAverage.data.error
+    ) {
+      yield put(productActions.getProductCommentsSuccess(resAverage.data.data));
+    } else {
+      yield put(productActions.getProductCommentsFail());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(productActions.getProductCommentsLoading(false));
+  }
+};
+
+const getProductRelated = function* ({payload}) {
+  try {
+    yield put(productActions.getProductRelatedLoading(true));
+    const res = yield call(getRelatedProduct, {
+      id: payload.id,
+      newest: true,
+    });
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(productActions.getProductRelatedSuccess(res.data.data));
+    } else {
+      yield put(productActions.getProductRelatedFail());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(productActions.getProductRelatedLoading(false));
+  }
+};
+
 const watcher = function* () {
   // yield takeLatest(productType.GET_PRODUCTS, getCustomerList);
   //List product from categories
@@ -129,5 +183,7 @@ const watcher = function* () {
     getLoadMoreListProduct,
   );
   yield takeLatest(productTypes.GET_PRODUCT_BY_ID, getProductById);
+  yield takeLatest(productTypes.GET_PRODUCT_COMMENTS, getProductComments);
+  yield takeLatest(productTypes.GET_PRODUCT_RELATED, getProductRelated);
 };
 export default watcher();

@@ -38,7 +38,7 @@ const ProductChoice = (props) => {
                 ]}>
                 <View key={`choice_${index}`} style={styles.titleRow}>
                   <Text style={styles.itemLabel}>{item.label}</Text>
-                  {item.isSize ? (
+                  {item.key === 'kich_co' ? (
                     <TouchableOpacity
                       style={styles.linkSupport}
                       onPress={() => {}}>
@@ -57,11 +57,11 @@ const ProductChoice = (props) => {
                       let choiceButtonStyle = styles.choiceButton;
                       let choiceButtonTextStyle = styles.choiceButtonText;
                       const choiceIsSelected = selectList.find(
-                        (selectItem) => selectItem.id === item.id,
+                        (selectItem) => selectItem.value === itemChoice.id,
                       );
                       if (
                         choiceIsSelected &&
-                        choiceIsSelected.value === itemChoice
+                        choiceIsSelected.value === itemChoice.id
                       ) {
                         choiceButtonStyle = [
                           styles.choiceButton,
@@ -79,10 +79,10 @@ const ProductChoice = (props) => {
                           <TouchableOpacity
                             style={choiceButtonStyle}
                             onPress={() => {
-                              selectChoice({...item, value: itemChoice});
+                              selectChoice({...item, value: itemChoice.id});
                             }}>
                             <Text style={choiceButtonTextStyle}>
-                              {itemChoice}
+                              {itemChoice.attrValue}
                             </Text>
                           </TouchableOpacity>
                         </View>

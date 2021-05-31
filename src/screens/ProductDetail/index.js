@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Image,
-  Animated,
-} from 'react-native';
-import {Container, ButtonRounded, HeaderBack} from 'components';
+import {View, Text, Animated, ActivityIndicator} from 'react-native';
+import {Container} from 'components';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {hasNotch} from 'react-native-device-info';
 import {useTheme, useRoute, useNavigation} from '@react-navigation/native';
@@ -27,6 +20,8 @@ import ProductChoice from './ProductChoice';
 import ProductInfo from './ProductInfo';
 import ProductLocation from './ProductLocation';
 import ProductRating from './ProductRating';
+import ProductSimilar from './ProductSimilar';
+import Footer from './Footer';
 
 import {dim} from 'utils/common';
 
@@ -42,8 +37,6 @@ const ProductDetail = (props) => {
   const imagesRef = React.useRef();
   const scrollViewRef = React.useRef();
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
-  const [userId, setUserId] = React.useState('');
-  const [contentSizeChange, setContentSizeChange] = React.useState(false);
   const [currentImage, setCurrentImage] = React.useState(1);
   const [choiceSelect, setChoiceSelect] = React.useState([]);
 
@@ -65,134 +58,31 @@ const ProductDetail = (props) => {
 
   React.useEffect(() => {
     dispatch(productActions.getProductById({id: productId}));
+    dispatch(productActions.getProductComments({id: productId}));
+    dispatch(productActions.getProductRelated({id: productId}));
   }, []);
 
   const productData = useSelector((state) =>
     productSelectors.getProductDetail(state),
   );
-  const demoChoice = [
-    {
-      id: 'choice_1',
-      label: 'Kích thước',
-      productAttributeResponses: ['XS', 'S', 'M', 'L'],
-      isSize: true,
-    },
-    {
-      id: 'choice_2',
-      label: 'Màu sắc',
-      productAttributeResponses: ['Đen', 'Trắng', 'Xám'],
-    },
-  ];
-  const demoComments = {
-    totalRate: 4.6,
-    totalRateCount: 4,
-    list: [
-      {
-        id: 'rate_1',
-        content:
-          'I bought this product two weeks ago. I really really like it so elegant.',
-        value: 4,
-        commentImages: [
-          {
-            attachmentId: 0,
-            uri: 'https://images.unsplash.com/photo-1571501679680-de32f1e7aad4',
-          },
-          {
-            attachmentId: 1,
-            uri: 'https://images.unsplash.com/photo-1573273787173-0eb81a833b34',
-          },
-        ],
-        user: {
-          displayName: 'Diệu Anh',
-          emailAddress: 'dieuanh@gmail.com',
-        },
-      },
-      {
-        id: 'rate_2',
-        content:
-          'I bought this product two weeks ago. I really really like it so elegant.',
-        value: 3,
-        commentImages: [
-          {
-            attachmentId: 0,
-            uri: 'https://images.unsplash.com/photo-1571501679680-de32f1e7aad4',
-          },
-          {
-            attachmentId: 1,
-            uri: 'https://images.unsplash.com/photo-1573273787173-0eb81a833b34',
-          },
-          {
-            attachmentId: 2,
-            uri: 'https://images.unsplash.com/photo-1569569970363-df7b6160d111',
-          },
-          {
-            attachmentId: 3,
-            uri: 'https://images.unsplash.com/photo-1571501679680-de32f1e7aad4',
-          },
-          {
-            attachmentId: 4,
-            uri: 'https://images.unsplash.com/photo-1573273787173-0eb81a833b34',
-          },
-          {
-            attachmentId: 5,
-            uri: 'https://images.unsplash.com/photo-1569569970363-df7b6160d111',
-          },
-        ],
-        user: {
-          displayName: 'Việt Khang',
-          emailAddress: 'vietkhang@gmail.com',
-        },
-      },
-      {
-        id: 'rate_3',
-        content:
-          'I bought this product two weeks ago. I really really like it so elegant.',
-        value: 5,
-        commentImages: [
-          {
-            attachmentId: 0,
-            uri: 'https://images.unsplash.com/photo-1571501679680-de32f1e7aad4',
-          },
-          {
-            attachmentId: 1,
-            uri: 'https://images.unsplash.com/photo-1573273787173-0eb81a833b34',
-          },
-          {
-            attachmentId: 2,
-            uri: 'https://images.unsplash.com/photo-1569569970363-df7b6160d111',
-          },
-        ],
-        user: {
-          displayName: 'Đức Tường',
-          emailAddress: 'ductuong@gmail.com',
-        },
-      },
-      {
-        id: 'rate_4',
-        content:
-          'I bought this product two weeks ago. I really really like it so elegant.',
-        value: 5,
-        commentImages: [
-          {
-            attachmentId: 0,
-            uri: 'https://images.unsplash.com/photo-1571501679680-de32f1e7aad4',
-          },
-          {
-            attachmentId: 1,
-            uri: 'https://images.unsplash.com/photo-1573273787173-0eb81a833b34',
-          },
-          {
-            attachmentId: 2,
-            uri: 'https://images.unsplash.com/photo-1569569970363-df7b6160d111',
-          },
-        ],
-        user: {
-          displayName: 'Đức Tường',
-          emailAddress: 'ductuong@gmail.com',
-        },
-      },
-    ],
-  };
+  const productDataLoading = useSelector((state) =>
+    productSelectors.getProductDetailLoading(state),
+  );
+  const productComments = useSelector((state) =>
+    productSelectors.getProductComments(state),
+  );
+  const productRelated = useSelector((state) =>
+    productSelectors.getProductRelated(state),
+  );
+
+  React.useEffect(() => {
+    if (productDataLoading) {
+      dispatch(commonActions.toggleLoading(true));
+    } else {
+      dispatch(commonActions.toggleLoading(false));
+    }
+  }, [productDataLoading]);
+
   const productImage =
     productData?.imageUrls && productData?.imageUrls?.length
       ? productData.imageUrls
@@ -203,21 +93,38 @@ const ProductDetail = (props) => {
     return true;
   });
 
+  const scrollToTop = () => {
+    scrollViewRef.current?.scrollTo({y: 0, animated: true});
+  };
+  const scrollToComment = () => {
+    scrollViewRef.current?.scrollToEnd({animated: true});
+  };
+  const scrollToRelated = () => {
+    scrollViewRef.current?.scrollToEnd({animated: true});
+  };
+
+  const selectRelatedProduct = (id) => {
+    setCurrentImage(1);
+    setChoiceSelect([]);
+    dispatch(productActions.getProductById({id: id}));
+    scrollToTop();
+  };
+
   const ProductChoiceMemo = React.useMemo(() => {
     return (
       <ProductChoice
-        choiceList={demoChoice}
+        choiceList={productData.productAttributeOptionResponse}
         setChoiceSelect={setChoiceSelect}
         choiceSelect={choiceSelect}
       />
     );
-  }, [demoChoice, choiceSelect]);
+  }, [productData, choiceSelect]);
 
   const renderImageItem = ({item, index}) => {
     return (
       <Animated.Image
         style={styles.imageItem}
-        source={{uri: item}}
+        source={{original: item}}
         resizeMode={'cover'}
       />
     );
@@ -231,6 +138,9 @@ const ProductDetail = (props) => {
       <AnimatedHeader
         scrollAnimated={scrollAnimated}
         image={productImage}
+        scrollToTop={scrollToTop}
+        scrollToComment={scrollToComment}
+        scrollToRelated={scrollToRelated}
         discount={priceSalePercent(productData?.price, productData?.priceSale)}
       />
       <Container
@@ -289,8 +199,14 @@ const ProductDetail = (props) => {
           </>
         ) : null}
         <View style={styles.lineHrBig} />
-        <ProductRating data={demoComments} />
+        <ProductRating data={productComments} />
+        <View style={styles.lineHrBig} />
+        <ProductSimilar
+          data={productRelated.content || []}
+          onSelect={selectRelatedProduct}
+        />
       </Container>
+      <Footer isLike={productData?.likeStatusOfUserLogin || false} />
     </View>
   );
 };

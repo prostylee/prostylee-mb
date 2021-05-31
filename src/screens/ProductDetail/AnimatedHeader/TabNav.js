@@ -9,7 +9,7 @@ import {useTheme, useNavigation} from '@react-navigation/native';
 
 const {width: WIDTH_HEADER} = Dimensions.get('window');
 
-const TabNav = ({opacity}) => {
+const TabNav = ({opacity, scrollToTop, scrollToComment, scrollToRelated}) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
   const [activeTab, setActiveTab] = React.useState('product');
@@ -40,21 +40,30 @@ const TabNav = ({opacity}) => {
       ]}>
       <TouchableOpacity
         style={tabButtonStyle('product')}
-        onPress={() => setActiveTab('product')}>
+        onPress={() => {
+          setActiveTab('product');
+          scrollToTop();
+        }}>
         <Text style={tabButtoTextnStyle('product')}>
           {i18n.t('productDetail.tabProduct')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={tabButtonStyle('rate')}
-        onPress={() => setActiveTab('rate')}>
+        onPress={() => {
+          setActiveTab('rate');
+          scrollToComment();
+        }}>
         <Text style={tabButtoTextnStyle('rate')}>
           {i18n.t('productDetail.tabRate')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={tabButtonStyle('suggest')}
-        onPress={() => setActiveTab('suggest')}>
+        onPress={() => {
+          setActiveTab('suggest');
+          scrollToRelated();
+        }}>
         <Text style={tabButtoTextnStyle('suggest')}>
           {i18n.t('productDetail.tabSuggest')}
         </Text>

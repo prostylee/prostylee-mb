@@ -10,7 +10,14 @@ import {useTheme, useNavigation} from '@react-navigation/native';
 
 const {width: WIDTH_HEADER} = Dimensions.get('window');
 
-const AnimatedHeader = ({image: productImages, heightShow, scrollAnimated}) => {
+const AnimatedHeader = ({
+  image: productImages,
+  heightShow,
+  scrollAnimated,
+  scrollToTop,
+  scrollToComment,
+  scrollToRelated,
+}) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
   /*Dimension header*/
@@ -119,7 +126,12 @@ const AnimatedHeader = ({image: productImages, heightShow, scrollAnimated}) => {
           </TouchableOpacity>
         </View>
       </Animated.View>
-      <TabNav opacity={reverseOpacity} />
+      <TabNav
+        opacity={reverseOpacity}
+        scrollToTop={scrollToTop}
+        scrollToComment={scrollToComment}
+        scrollToRelated={scrollToRelated}
+      />
     </Animated.View>
   );
 };
