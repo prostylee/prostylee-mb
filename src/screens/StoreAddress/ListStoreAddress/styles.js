@@ -1,11 +1,6 @@
 import {StyleSheet, StatusBar} from 'react-native';
 export default StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    paddingTop: 5,
-  },
   FomatItem: {
-    flex: 1,
     paddingLeft: 10,
     flexDirection: 'column',
     marginVertical: 0.5,

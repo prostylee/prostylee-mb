@@ -8,9 +8,10 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {RadioButton} from 'react-native-paper';
+import {Checkbox, RadioButton} from 'react-native-paper';
 import styles from './styles';
 
 const DATA = [
@@ -38,8 +39,55 @@ const DATA = [
     address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
     range: '0.2',
   },
+  {
+    id: '4',
+    title: 'Nike',
+    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
+    range: '0.2',
+  },
+  {
+    id: '5',
+    title: 'Nike',
+    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
+    range: '0.2',
+  },
+  {
+    id: '4',
+    title: 'Nike',
+    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
+    range: '0.2',
+  },
+  {
+    id: '5',
+    title: 'Nike',
+    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
+    range: '0.2',
+  },
+  {
+    id: '4',
+    title: 'Nike',
+    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
+    range: '0.2',
+  },
+  {
+    id: '5',
+    title: 'Nike',
+    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
+    range: '0.2',
+  },
+  {
+    id: '4',
+    title: 'Nike',
+    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
+    range: '0.2',
+  },
+  {
+    id: '5',
+    title: 'Nike',
+    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
+    range: '0.2',
+  },
 ];
-
 const Item = ({item, onPress}) => {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -65,16 +113,14 @@ const ListStoreAddress = () => {
     return <Item item={item} onPress={() => setSelectedId(item.id)} />;
   };
   return (
-    <View style={{flexDirection: 'column'}}>
-      <SafeAreaView style={styles.container}>
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          extraData={selectedId}
-        />
-      </SafeAreaView>
-    </View>
+    <ScrollView>
+      <FlatList
+        data={DATA}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        extraData={selectedId}
+      />
+    </ScrollView>
   );
 };
 

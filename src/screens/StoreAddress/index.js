@@ -10,99 +10,77 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {ThemeView, Header, ButtonRounded} from 'components';
-import Accordion from 'react-native-collapsible/Accordion';
+import {Picker} from '@react-native-picker/picker';
+import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListStoreAddress from './ListStoreAddress';
-import {flatMap} from 'lodash-es';
-const CONTENT = [
-  {
-    id: 1,
-    title: 'TP.Hồ Chí Minh',
-    content: 'Content.....',
-  },
-];
-const StoreAddress = ({navigation}) => {
-  const [activeSections, setActiveSections] = useState([]);
-  const setSections = (sections) => {
-    setActiveSections(sections.includes(undefined) ? [] : sections);
-  };
 
-  const renderHeader = (section, _, isActive) => {
+const StoreAddress = ({navigation}) => {
+  const [selectedAddress, setselectedAddress] = useState('HCM');
+  const Dropdown = () => {
     return (
       <View
-        duration={400}
-        style={[styles.header, isActive ? styles.active : styles.inactive]}
-        transition="backgroundColor">
-        <Icon
-          name="location-outline"
-          color="grey"
-          size={30}
-          style={{paddingRight: 15}}
-        />
-        <Text style={styles.headerText}>{section.title}</Text>
-        <Icon name="caret-down-outline" color="grey" />
-      </View>
-    );
-  };
-  const renderContent = (section, _, isActive) => {
-    return (
-      <View
-        duration={400}
-        style={[styles.content, isActive ? styles.active : styles.inactive]}
-        transition="backgroundColor">
-        <Text
-          animation={isActive ? 'bounceIn' : undefined}
-          style={{textAlign: 'left'}}>
-          {section.content}
-        </Text>
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingLeft: 15,
+          backgroundColor: 'white',
+        }}>
+        <Icon name="location-outline" color="grey" size={28} />
+        <View style={{width: 200, marginHorizontal: -10}}>
+          <Picker
+            selectedValue={selectedAddress}
+            onValueChange={(itemValue, itemIndex) =>
+              setselectedAddress(itemValue)
+            }>
+            <Picker.Item label="TP.Hồ Chí Minh" value="HCM" />
+            <Picker.Item label="Hà Nội" value="HN" />
+            <Picker.Item label="Đà nẵng" value="DN" />
+            <Picker.Item label="Cần Thơ" value="CT" />
+            <Picker.Item label="Quy Nhơn" value="QN" />
+            <Picker.Item label="Hà Tĩnh" value="HT" />
+          </Picker>
+        </View>
       </View>
     );
   };
 
   return (
     <SafeAreaView>
+      <ThemeView>
+        <Header
+          isDefault
+          containerStyle={{
+            paddingBottom: 10,
+            borderBottomWidth: 0,
+            height: 50,
+            borderBottomWidth: 1,
+          }}
+          leftStyle={{
+            height: 30,
+            fontWeight: 'bold',
+          }}
+          middleComponent={
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}>
+              Cửa hàng
+            </Text>
+          }
+        />
+        <Dropdown />
+      </ThemeView>
       <View style={styles.wrapper}>
-        <ThemeView>
-          <Header
-            isDefault
-            containerStyle={{
-              paddingBottom: 10,
-              borderBottomWidth: 0,
-              height: 50,
-              borderBottomWidth: 1,
-            }}
-            leftStyle={{
-              height: 30,
-              fontWeight: 'bold',
-            }}
-            middleComponent={
-              <Text
-                style={{
-                  textAlign: 'center',
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                }}>
-                Cửa hàng
-              </Text>
-            }
-          />
-        </ThemeView>
-        <View>
-          <Accordion
-            activeSections={activeSections}
-            sections={CONTENT}
-            touchableComponent={TouchableOpacity}
-            renderHeader={renderHeader}
-            renderContent={renderContent}
-            duration={400}
-            onChange={setSections}
-          />
-          <ListStoreAddress />
+        <ListStoreAddress style={styles.list} />
+        <View style={styles.button}>
+          <TouchableOpacity>
+            <ButtonRounded label="Mua tại cửa hàng" />
+          </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style={{paddingVertical: 150}}>
-        <ButtonRounded label="Áp Dụng" style={{margin: 20}} />
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };

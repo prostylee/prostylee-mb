@@ -1,27 +1,16 @@
-import {Dimensions} from 'react-native';
-import EStyleSheet from 'react-native-extended-stylesheet';
-export default EStyleSheet.create({
+import {StyleSheet, StatusBar} from 'react-native';
+export default StyleSheet.create({
   wrapper: {
-    flexDirection: 'column',
+    flex: 1,
+    width: '100%',
+    height: '100%',
   },
-  content: {
-    paddingTop: 10,
-    backgroundColor: '#fff',
-  },
-  header: {
-    backgroundColor: 'white',
-    marginVertical: 0.8,
-    paddingLeft: 15,
-    paddingTop: 5,
+  list: {
     paddingBottom: 5,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    backgroundColor: 'red',
   },
-  headerText: {
-    textAlign: 'left',
-    fontSize: 15,
-    color: 'grey',
-    paddingRight: 5,
+  button: {
+    width: '90%',
+    alignSelf: 'center',
   },
 });
