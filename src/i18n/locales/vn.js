@@ -108,6 +108,21 @@ export default {
     phone: 'Số điện thoại',
     password: 'Mật khẩu',
   },
+  productDetail: {
+    reduce: 'Giảm',
+    sizeSupport: 'Hướng dẫn kích thước',
+    productInfo: 'Thông tin sản phẩm',
+    follow: 'Theo dõi',
+    findPath: 'Tìm đường',
+    rating: 'Đánh giá sản phẩm',
+    ratingAll: 'Xem toàn bộ đánh giá',
+    tabProduct: 'Sản phẩm',
+    tabRate: 'Đánh giá',
+    tabSuggest: 'Đề xuất',
+    similarProduct: 'Sản phẩm tương tự',
+    buttonStore: 'Cửa hàng',
+    buttonAddToCart: 'Thêm vào giỏ hàng',
+  },
   error: {
     cannotUploadImage:
       'Xuất hiện khi upload hình. Bạn hãy kiểm tra lại kết nối mạng nhé!',

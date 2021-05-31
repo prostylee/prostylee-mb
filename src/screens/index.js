@@ -16,6 +16,7 @@ import ResetPassword from './Auth/ResetPassword';
 import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
 import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
+import ProductDetail from './ProductDetail';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
 import AddStory from './Story/AddStory';
 import AddStore from './Story/AddStore';
@@ -42,6 +43,7 @@ export {
   ResetPassword,
   ResetPasswordViaMail,
   SimpleWebView,
+  ProductDetail,
   UserProfile,
   AddStory,
   AddStore,
