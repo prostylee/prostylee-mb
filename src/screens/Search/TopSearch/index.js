@@ -1,24 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, View} from 'react-native';
+import {ScrollView, View, RefreshControl} from 'react-native';
 import i18n from 'i18n';
 import styles from './styles';
 import {Chip, Text} from 'react-native-paper';
-import {Trending} from 'svg/common';
-const WIDTH = Dimensions.get('window').width;
-
 import {
   getTopSearchLoadingSelector,
   getTopSearchSelector,
-  getLoadTopSearchMoreLoading,
-  getHasLoadMoreTopSearchSelector,
-  getPageTopSearchSelector,
 } from 'redux/selectors/search/topSearch';
-
 import {useDispatch, useSelector} from 'react-redux';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {searchActions} from 'redux/reducers';
+import {TopSearchLoading} from 'components/Loading/contentLoader';
 
-const Search = ({navigation}) => {
+const TopSearch = ({navigation}) => {
   const dispatch = useDispatch();
 
   const [refreshing, handleRefreshing] = useState(false);
@@ -27,14 +20,7 @@ const Search = ({navigation}) => {
   const listTopSearchSelector = useSelector((state) =>
     getTopSearchSelector(state),
   );
-  const listTopSearch = listTopSearchSelector?.content || [];
-  const loadMoreLoading = useSelector((state) =>
-    getLoadTopSearchMoreLoading(state),
-  );
-  const hasLoadMore = useSelector((state) =>
-    getHasLoadMoreTopSearchSelector(state),
-  );
-  const page = useSelector((state) => getPageTopSearchSelector(state));
+  const listTopSearch = listTopSearchSelector || [];
 
   useEffect(() => {
     dispatch(searchActions.getTopSearch());
@@ -45,78 +31,49 @@ const Search = ({navigation}) => {
     handleRefreshing(true);
   };
 
-  const handleLoadMore = () => {
-    if (hasLoadMore) {
-      dispatch(searchActions.getTopSearch());
-    }
-  };
-  console.log('listTopSearch');
-  console.log(listTopSearch);
   return (
     <>
       <View style={styles.wrapHeader}>
         <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
       </View>
-      <View style={styles.wrapChip}>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => navigation.navigate('SearchProducts')}
-          style={styles.itemChips}>
-          Thời trang nam
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => navigation.navigate('SearchProducts')}
-          style={styles.itemChips}>
-          Phụ kiện da
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => navigation.navigate('SearchProducts')}
-          style={styles.itemChips}>
-          Sale
-        </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => navigation.navigate('SearchProducts')}
-          style={styles.itemChips}>
-          Giày da
-        </Chip>
-        <Chip
-          small
-          onPress={() => navigation.navigate('SearchProducts')}
-          style={styles.itemChips}>
-          Best-seller
-        </Chip>
-        <Chip
-          small
-          onPress={() => navigation.navigate('SearchProducts')}
-          style={styles.itemChips}>
-          Hoodie
-        </Chip>
-        <Chip
-          small
-          onPress={() => navigation.navigate('SearchProducts')}
-          style={styles.itemChips}>
-          Quần tây
-        </Chip>
-        <Chip
-          small
-          onPress={() => navigation.navigate('SearchProducts')}
-          style={styles.itemChips}>
-          Dép
-        </Chip>
-      </View>
+      {loading && !listTopSearch.length === 0 ? (
+        <>
+          <View style={styles.wrapChip}>
+            {[1, 2, 3, 4, 5, 6, 7].map((item, _i) => {
+              return (
+                <TopSearchLoading
+                  style={{height: 32, marginTop: 8, marginRight: 8}}
+                />
+              );
+            })}
+          </View>
+        </>
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+          }
+          style={styles.wrapScroll}>
+          <View style={styles.wrapChip}>
+            {listTopSearch.map((item) => (
+              <Chip
+                small
+                onPress={() => navigation.navigate('SearchProducts')}
+                style={styles.itemChips}>
+                {item}
+              </Chip>
+            ))}
+          </View>
+        </ScrollView>
+      )}
     </>
   );
 };
 
-Search.defaultProps = {};
+TopSearch.defaultProps = {};
 
-Search.propTypes = {};
+TopSearch.propTypes = {};
 
-export default Search;
+export default TopSearch;

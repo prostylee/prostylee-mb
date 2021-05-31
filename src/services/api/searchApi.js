@@ -11,6 +11,12 @@ export const getListFeaturedCategoriesService = (payload) => {
 
 export const getListTopSearchService = (payload) => {
   return _fetch(GET, '/suggestions/keywords/top', {
-    ...payload
+    ...payload,
+  });
+};
+
+export const getSuggestionsSearchService = (payload) => {
+  return _fetch(GET, '/suggestions/keywords/hint', {
+    ...payload,
   });
 };

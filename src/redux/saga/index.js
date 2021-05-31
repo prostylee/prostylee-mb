@@ -9,6 +9,7 @@ import status from './status';
 import categories from './categories';
 import search from './search';
 import topSearch from './search/topSearch';
+import hintProductSearch from './search/hintProductSearch';
 
 export default function* rootSaga() {
   yield all([
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     ...categories,
     ...search,
     ...topSearch,
+    ...hintProductSearch,
   ]);
 }

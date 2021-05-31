@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
-import {View, FlatList, Text} from 'react-native';
+import {View} from 'react-native';
 import i18n from 'i18n';
 
 import styles from './styles';

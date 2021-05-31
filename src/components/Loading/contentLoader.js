@@ -190,6 +190,50 @@ export const ProductLoading = ({
   );
 };
 
+export const TopSearchLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([style])}>
+      <ContentLoader
+        speed={2}
+        width={60}
+        height={30}
+        viewBox="0 0 60 30"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect rx="15" ry="15" width="60" height="30" />
+      </ContentLoader>
+    </View>
+  );
+};
+
+export const FeaturedCategoriesLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <ContentLoader
+      speed={2}
+      width={width}
+      height={height}
+      viewBox={'0 0 ' + width + ' ' + height}
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}>
+      <Rect rx="15" ry="15" width={width} height={height} />
+    </ContentLoader>
+  );
+};
+
 NewFeedContentLoading.defaultProps = {
   height: 190,
   width: deviceWidth,
@@ -236,6 +280,24 @@ CategoriesRightLoading.defaultProps = {
 };
 
 ProductLoading.defaultProps = {
+  height: 100,
+  width: 100,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+
+TopSearchLoading.defaultProps = {
+  height: 100,
+  width: 100,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+
+FeaturedCategoriesLoading.defaultProps = {
   height: 100,
   width: 100,
   backgroundColor: '#d9d9d9',

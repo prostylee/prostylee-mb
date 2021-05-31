@@ -9,22 +9,27 @@ import {Searchbar} from 'react-native-paper';
 import TopSearch from './TopSearch';
 import FeaturedCategories from './FeaturedCategories';
 import SearchResult from './SearchResult';
-const WIDTH = Dimensions.get('window').width;
-import {debounce} from 'lodash';
-
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {useDispatch} from 'react-redux';
+import {searchActions} from 'redux/reducers';
+let timeoutSearch = null;
 const Search = ({navigation}) => {
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = React.useState('');
-  const handlerSearch = useCallback(
-    debounce((query) => {
-      console.log('searchQuery');
-      console.log(query);
-    }, 1000),
-    [],
-  );
 
   const onChangeSearch = (query) => {
+    clearTimeout(timeoutSearch);
     setSearchQuery(query);
-    handlerSearch(query);
+    timeoutSearch = setTimeout(() => {
+      dispatch(
+        searchActions.getHintProductSearch({
+          keyword: query,
+          type: 'product',
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
+    }, 1000);
   };
 
   return (
@@ -39,20 +44,8 @@ const Search = ({navigation}) => {
         }}
         middleComponent={
           <Searchbar
-            style={{
-              width: WIDTH - 60,
-              backgroundColor: '#F4F5F5',
-              height: 35,
-              borderRadius: 0,
-              elevation: 0,
-              padding: 0,
-            }}
-            inputStyle={{
-              height: 35,
-              fontSize: 14,
-              lineHeight: 18,
-              elevation: 0,
-            }}
+            style={styles.wrapSearchBar}
+            inputStyle={styles.wrapSearchBarInput}
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
             value={searchQuery}

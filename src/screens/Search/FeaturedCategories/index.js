@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useState} from 'react';
-import {View, ActivityIndicator, FlatList} from 'react-native';
+import {View, ActivityIndicator, FlatList, Dimensions} from 'react-native';
 
 import styles from './styles';
 import {Colors} from 'components';
@@ -17,10 +17,11 @@ import {
 import FeaturedCategoriesItem from './item.js';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {CategoriesRightLoading} from 'components/Loading/contentLoader';
+import {FeaturedCategoriesLoading} from 'components/Loading/contentLoader';
 import {searchActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Text} from 'react-native-paper';
+const WIDTH = Dimensions.get('window').width - 52;
 
 const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const FeaturedCategories = ({navigation}) => {
   const loading = useSelector((state) =>
     getSearchFeaturedCategoriesLoadingSelector(state),
   );
+
   const listCategoriesSelector = useSelector((state) =>
     getSearchFeaturedCategoriesSelector(state),
   );
@@ -88,22 +90,30 @@ const FeaturedCategories = ({navigation}) => {
         </View>
         {loading && !listCategories.length === 0 ? (
           <>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-              }}>
-              {[
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-                19, 20,
-              ].map((item, _i) => {
-                return (
-                  <View key={'CategoriesRightLoading' + _i} style={styles.item}>
-                    <CategoriesRightLoading />
-                  </View>
-                );
-              })}
+            <View style={styles.wrapList}>
+              <FlatList
+                data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                renderItem={({item, index}) => {
+                  const paddingLeft = index % 2 ? 4 : 12;
+                  const paddingRight = index % 2 ? 12 : 0;
+                  return (
+                    <View
+                      style={[
+                        styles.wrapItems,
+                        {paddingLeft: paddingLeft, paddingRight: paddingRight},
+                      ]}>
+                      <FeaturedCategoriesLoading
+                        width={WIDTH / 2}
+                        height={60}
+                      />
+                    </View>
+                  );
+                }}
+                numColumns={2}
+                keyExtractor={(item, index) => index}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+              />
             </View>
           </>
         ) : (

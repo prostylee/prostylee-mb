@@ -61,7 +61,15 @@ const ResultProductSearchResult = ({navigation}) => {
     if (!loadMoreLoading) {
       return (
         <View style={styles.viewFooterHasResult}>
-          <Text style={{color: "#823FFD", lineHeight: 20, fontSize: 14, fontWeight: "500"}}>Xem toàn bộ kết quả (167)</Text>
+          <Text
+            style={{
+              color: '#823FFD',
+              lineHeight: 20,
+              fontSize: 14,
+              fontWeight: '500',
+            }}>
+            Xem toàn bộ kết quả (167)
+          </Text>
         </View>
       );
     }
@@ -76,7 +84,7 @@ const ResultProductSearchResult = ({navigation}) => {
     <>
       <View style={styles.container}>
         <View style={styles.wrapHeader}>
-          <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
+          <Text style={styles.title}>{i18n.t('Search.featuredProduct')}</Text>
         </View>
         <View style={styles.wrapList}>
           <FlatList

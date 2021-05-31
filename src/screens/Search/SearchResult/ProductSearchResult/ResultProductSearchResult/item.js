@@ -3,7 +3,8 @@ import React from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import {Chip, Divider} from 'react-native-paper';
-const FeaturedCategoriesItem = ({item, index, navigation}) => {
+
+const ResultProductSearchResultItem = ({item, index, navigation}) => {
   return (
     <View style={styles.wrapItems}>
       <TouchableOpacity
@@ -11,7 +12,7 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
           navigation.navigate('SearchProducts');
         }}>
         <View style={styles.item}>
-          <Text style={styles.title}>Áo khoác</Text>
+          <Text style={styles.title}>{item}</Text>
         </View>
       </TouchableOpacity>
       <View style={{paddingLeft: 16, paddingRight: 16}}>
@@ -21,8 +22,8 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
   );
 };
 
-FeaturedCategoriesItem.defaultProps = {};
+ResultProductSearchResultItem.defaultProps = {};
 
-FeaturedCategoriesItem.propTypes = {};
+ResultProductSearchResultItem.propTypes = {};
 
-export default FeaturedCategoriesItem;
+export default ResultProductSearchResultItem;

@@ -6,6 +6,7 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     maxHeight: 200,
+    backgroundColor: '$white',
   },
   wrapList: {
     flex: 1,

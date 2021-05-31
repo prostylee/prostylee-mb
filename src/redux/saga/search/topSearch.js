@@ -1,18 +1,13 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {getListFeaturedCategoriesService} from 'services/api/searchApi';
-
 import {searchActions, searchTypes} from 'reducers';
-
 import {SUCCESS} from 'constants';
-import {getListTopSearchService} from '../../../services/api/searchApi';
+import {getListTopSearchService} from 'services/api/searchApi';
 
 //List product from categories
 const getTopSearch = function* ({payload}) {
-  console.log('getListFeaturedCategoriesService');
   try {
     yield put(searchActions.setTopSearchLoading(true));
-    yield put(searchActions.setPageTopSearchDefault());
     const resProduct = yield call(getListTopSearchService, {
       type: 'PRODUCT',
       limit: '10',

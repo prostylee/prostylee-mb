@@ -5,10 +5,28 @@ import {
   defaultState as defaultStateTopSearch,
   handleActions as handleActionsTopSearch,
 } from './topSearch';
+import {
+  types as typesHintProductSearch,
+  actions as actionsHintProductSearch,
+  defaultState as defaultStateHintProductSearch,
+  handleActions as handleActionsHintProductSearch,
+} from './hintProductSearch';
+import {
+  types as typesFeaturedProductSearch,
+  actions as actionsFeaturedProductSearch,
+  defaultState as defaultStateFeaturedProductSearch,
+  handleActions as handleActionsFeaturedProductSearch,
+} from './featuredProductSearch';
 
 export const types = {
+  //Root
+  SET_CONDITION_SEARCH: 'SET_CONDITION_SEARCH',
   //List TOP_SEARCH
   ...typesTopSearch,
+  //List FEATURED_PRODUCT_SEARCH
+  ...typesFeaturedProductSearch,
+  //List HINT_PRODUCT_SEARCH
+  ...typesHintProductSearch,
   //List SEARCH_FEATURED_CATEGORIES
   SET_SEARCH_FEATURED_CATEGORIES_LOADING:
     'SET_SEARCH_FEATURED_CATEGORIES_LOADING',
@@ -30,8 +48,14 @@ export const types = {
 };
 
 export const actions = {
+  //Root
+  setConditionSearch: createAction(types.SET_CONDITION_SEARCH),
   //List TOP_SEARCH
   ...actionsTopSearch,
+  //List FEATURED_PRODUCT_SEARCH
+  ...actionsFeaturedProductSearch,
+  //List HINT_PRODUCT_SEARCH
+  ...actionsHintProductSearch,
   //List SEARCH_FEATURED_CATEGORIES
   setSearchFeaturedCategoriesLoading: createAction(
     types.SET_SEARCH_FEATURED_CATEGORIES_LOADING,
@@ -64,8 +88,16 @@ export const actions = {
 };
 
 const defaultState = {
+  //CONDITION_SEARCH
+  conditionSearch: {
+    keyWord: null,
+  },
   //List TOP_SEARCH
   ...defaultStateTopSearch,
+  //List FEATURED_PRODUCT_SEARCH
+  ...defaultStateFeaturedProductSearch,
+  //List HINT_PRODUCT_SEARCH
+  ...defaultStateHintProductSearch,
   //List SEARCH_FEATURED_CATEGORIES
   searchFeaturedCategoriesLoading: false,
   loadSearchFeaturedCategoriesMoreLoading: false,
@@ -79,8 +111,16 @@ const UNIT_INCREASE = 1;
 
 export default handleActions(
   {
+    //CONDITION_SEARCH
+    [types.SET_CONDITION_SEARCH]: (state, {payload}) => {
+      return {...state, conditionSearch: {...payload}};
+    },
     //List TOP_SEARCH
     ...handleActionsTopSearch,
+    //List FEATURED_PRODUCT_SEARCH
+    ...handleActionsFeaturedProductSearch,
+    //List HINT_PRODUCT_SEARCH
+    ...handleActionsHintProductSearch,
     //List SearchFeaturedCategories from categories
     [types.SET_SEARCH_FEATURED_CATEGORIES_LOADING]: (state, {payload}) => {
       return {...state, searchFeaturedCategoriesLoading: payload};

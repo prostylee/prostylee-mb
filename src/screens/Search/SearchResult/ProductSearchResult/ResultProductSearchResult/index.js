@@ -4,21 +4,20 @@ import {View, ActivityIndicator, FlatList} from 'react-native';
 
 import styles from './styles';
 import {Colors} from 'components';
-import i18n from 'i18n';
 
 import {
-  getSearchFeaturedCategoriesLoadingSelector,
-  getSearchFeaturedCategoriesSelector,
-  getLoadSearchFeaturedCategoriesMoreLoading,
-  getHasLoadMoreSearchFeaturedCategoriesSelector,
-  getPageSearchFeaturedCategoriesSelector,
-} from 'redux/selectors/search';
+  getHintProductSearchLoadingSelector,
+  getHintProductSearchSelector,
+  getLoadHintProductSearchMoreLoading,
+  getHasLoadMoreHintProductSearchSelector,
+  getPageHintProductSearchSelector,
+} from 'redux/selectors/search/hintProductSearch';
 
-import FeaturedCategoriesItem from './item.js';
+import ResultProductSearchResultItem from './item.js';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {CategoriesRightLoading} from 'components/Loading/contentLoader';
-import {categoriesActions} from 'redux/reducers';
+import {searchActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Text} from 'react-native-paper';
 
@@ -28,35 +27,42 @@ const ResultProductSearchResult = ({navigation}) => {
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector((state) =>
-    getSearchFeaturedCategoriesLoadingSelector(state),
+    getHintProductSearchLoadingSelector(state),
   );
 
-  const listRightCategoriesSelector = useSelector((state) =>
-    getSearchFeaturedCategoriesSelector(state),
+  const listHintProductSearchSelector = useSelector((state) =>
+    getHintProductSearchSelector(state),
   );
 
-  const listRightCategories = listRightCategoriesSelector?.content || [];
+  const listHintProductSearch = listHintProductSearchSelector?.data || [];
 
   const loadMoreLoading = useSelector((state) =>
-    getLoadSearchFeaturedCategoriesMoreLoading(state),
+    getLoadHintProductSearchMoreLoading(state),
   );
 
   const hasLoadMore = useSelector((state) =>
-    getHasLoadMoreSearchFeaturedCategoriesSelector(state),
+    getHasLoadMoreHintProductSearchSelector(state),
   );
 
-  const page = useSelector((state) =>
-    getPageSearchFeaturedCategoriesSelector(state),
-  );
-
-  useEffect(() => {}, [dispatch, refreshing]);
+  const page = useSelector((state) => getPageHintProductSearchSelector(state));
 
   const handleRefresh = () => {
-    handleRefreshing(true);
+    dispatch(
+      searchActions.getHintProductSearch({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
   };
 
   const handleLoadMore = () => {
     if (hasLoadMore) {
+      dispatch(
+        searchActions.getHintProductSearch({
+          page: page + 1,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
     }
   };
 
@@ -71,16 +77,26 @@ const ResultProductSearchResult = ({navigation}) => {
       </View>
     );
   };
+  console.log('listHintProductSearch');
+  console.log(listHintProductSearch);
   return (
     <>
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          listHintProductSearch.length * 55 < 200
+            ? {maxHeight: listHintProductSearch.length * 55}
+            : null,
+        ]}>
         <View style={styles.wrapList}>
           <FlatList
-            data={[
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-            ]}
+            data={listHintProductSearch}
             renderItem={({item, index}) => (
-              <FeaturedCategoriesItem index={index} navigation={navigation} item={item} />
+              <ResultProductSearchResultItem
+                index={index}
+                navigation={navigation}
+                item={item}
+              />
             )}
             numColumns={1}
             keyExtractor={(item, index) => index}

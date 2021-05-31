@@ -8,7 +8,6 @@ import {SUCCESS} from 'constants';
 
 //List product from categories
 const getSearchFeaturedCategories = function* ({payload}) {
-  console.log('getListFeaturedCategoriesService');
   try {
     yield put(searchActions.setSearchFeaturedCategoriesLoading(true));
     yield put(searchActions.setPageSearchFeaturedCategoriesDefault());

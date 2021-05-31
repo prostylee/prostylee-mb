@@ -33,7 +33,11 @@ export const handleActions = {
     return {
       ...state,
       hasLoadMoreTopSearch: state.pageTopSearch + 1 < totalPages ? true : false,
-      topSearch: payload,
+      topSearch: [
+        ...payload.resProduct.data,
+        ...payload.resCategory.data,
+        ...payload.resStore.data,
+      ],
     };
   },
   [types.GET_TOP_SEARCH_FAILED]: (state, {payload}) => {
