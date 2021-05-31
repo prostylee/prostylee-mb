@@ -12,6 +12,12 @@ import product, {
   types as productTypes,
 } from './product';
 
+import reviewRating, {
+  actions as reviewRatingActions,
+  selectors as reviewRatingSelectors,
+  types as reviewRatingTypes,
+} from './reviewRating';
+
 import user, {
   actions as userActions,
   selectors as userSelectors,
@@ -47,6 +53,7 @@ const rootReducer = combineReducers({
   newFeed,
   store,
   dynamicUsers,
+  reviewRating,
   status,
   categories,
 });
@@ -57,6 +64,7 @@ export {userActions, userSelectors, userTypes};
 export {newFeedActions, newFeedTypes, newFeedSelectors};
 export {storeActions, storeTypes};
 export {dynamicUsersActions, dynamicUsersTypes};
+export {reviewRatingActions, reviewRatingSelectors, reviewRatingTypes};
 export {statusActions, statusSelectors, statusTypes};
 export {categoriesActions, categoriesTypes};
 

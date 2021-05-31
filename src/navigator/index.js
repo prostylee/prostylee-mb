@@ -36,6 +36,9 @@ import {
   Categories,
   ProductDetail,
   Products,
+  ReviewRating,
+  ChooseRateProduct,
+  RateProduct,
   Cart,
 } from 'screens';
 
@@ -60,6 +63,9 @@ function SignedIn() {
       headerMode="none"
       animation="fade">
       <Stack.Screen name="Home" component={BottomTabs} />
+      <Stack.Screen name="ReviewRating" component={ReviewRating} />
+      <Stack.Screen name="ChooseRateProduct" component={ChooseRateProduct} />
+      <Stack.Screen name="RateProduct" component={RateProduct} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="PaymentMethodCart" component={PaymentMethodCart} />
       <Stack.Screen name="VoucherCart" component={VoucherCart} />

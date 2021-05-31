@@ -5,6 +5,7 @@ import user from './user';
 import newFeed from './newFeed';
 import stores from './stores';
 import daynamicUsers from './dynamicUsers';
+import reviewRating from './reviewRating';
 import status from './status';
 import categories from './categories';
 
@@ -15,6 +16,7 @@ export default function* rootSaga() {
     ...newFeed,
     ...stores,
     ...daynamicUsers,
+    ...reviewRating,
     ...status,
     ...categories,
   ]);
