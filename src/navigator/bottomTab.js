@@ -18,7 +18,9 @@ const BottomTabs = (props) => {
   const isFocusedMainTab = useSelector((state) =>
     commonSelectors.isFocusedMainTab(state),
   );
-
+  const isShowTabButton = useSelector((state) =>
+    commonSelectors.isShowTabButton(state),
+  );
   const backBehavior = 'initialRoute';
   const {
     initialRouteName,
@@ -37,6 +39,8 @@ const BottomTabs = (props) => {
     );
   };
 
+  const middleTabPosition = 2;
+
   return (
     <Tab.Navigator
       initialRouteName={initialRouteName}
@@ -47,7 +51,7 @@ const BottomTabs = (props) => {
         inactiveTintColor: inactiveColor,
       }}
       sceneAnimationEnabled={true}>
-      {tabsNavigator.map((tab, _i) => {
+      {tabsNavigator.map((tab, index) => {
         const TabBarIcon = TabsIcon[tab.option.tabBarIcon];
         const TabBarIconSolid = TabsIcon[tab.option.tabBarIconSolid];
         if (!Object.keys(screens).includes(tab.screen)) {
@@ -61,9 +65,16 @@ const BottomTabs = (props) => {
             listeners={{
               tabPress: (e) => {
                 // Prevent default action
-                dispatch(commonActions.toggleFocusMainTab(!isFocusedMainTab));
-                _i === 2 && e.preventDefault();
-                _i === 2 && console.log('-----ONPRESSED POST SCREEN------');
+                index === middleTabPosition && e.preventDefault();
+                if (index === middleTabPosition) {
+                  if (isShowTabButton) {
+                    dispatch(commonActions.toggleTabButton(false));
+                    dispatch(commonActions.toggleFocusMainTab(false));
+                  } else {
+                    dispatch(commonActions.toggleTabButton(true));
+                    dispatch(commonActions.toggleFocusMainTab(true));
+                  }
+                }
               },
             }}
             options={{

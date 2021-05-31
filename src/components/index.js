@@ -37,6 +37,9 @@ import Countdown from './Countdown';
 import CustomPinCodeInput from './CustomPinCodeInput';
 import GridImageReviewer from './GridImageReviewer';
 import TextInputArea from './TextInputArea';
+import NumberInputUpDown from './NumberInputUpDown';
+import RadioSelectGroup from './RadioSelectGroup';
+import ModalTabButton from './ModalTabButton';
 
 export {
   ContainerWithoutScrollView,
@@ -76,5 +79,8 @@ export {
   CustomPinCodeInput,
   GridImageReviewer,
   TextInputArea,
+  ModalTabButton,
   ProductLike,
+  NumberInputUpDown,
+  RadioSelectGroup,
 };

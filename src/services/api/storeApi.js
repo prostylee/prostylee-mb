@@ -8,3 +8,7 @@ export const getTopStore = (payload) => {
 export const getStoreById = (id) => {
   return _fetch(GET, `/stores/${id}`);
 };
+
+export const getStoreMiniApi = () => {
+  return _fetch(GET, '/stores/mini-stores', {});
+};

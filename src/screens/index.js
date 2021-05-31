@@ -16,10 +16,17 @@ import ResetPassword from './Auth/ResetPassword';
 import ResetPasswordViaMail from './Auth/ResetPasswordViaMail';
 import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
+import ProductDetail from './ProductDetail';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
 import ReviewRating from './ReviewRating';
 import ChooseRateProduct from './ChooseRateProduct';
 import RateProduct from './RateProduct';
+import Cart from './Cart';
+import AddStory from './Story/AddStory';
+import AddStore from './Story/AddStore';
+import CropPicture from './Status/CropPicture';
+import AddStatus from './Status/AddStatus';
+import AddStoreForStatus from './Status/AddStore';
 
 export {
   Welcome,
@@ -40,8 +47,15 @@ export {
   ResetPassword,
   ResetPasswordViaMail,
   SimpleWebView,
+  ProductDetail,
   UserProfile,
   ReviewRating,
   ChooseRateProduct,
   RateProduct,
+  Cart,
+  AddStory,
+  AddStore,
+  CropPicture,
+  AddStatus,
+  AddStoreForStatus,
 };
