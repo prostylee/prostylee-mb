@@ -36,7 +36,12 @@ import {
   Categories,
   ProductDetail,
   Products,
+  Cart,
 } from 'screens';
+
+import PaymentMethodCart from 'screens/Cart/PaymentMethod';
+import VoucherCart from 'screens/Cart/Voucher';
+import CheckoutCart from 'screens/Cart/Checkout';
 
 import BottomTabs from './bottomTab';
 
@@ -55,6 +60,10 @@ function SignedIn() {
       headerMode="none"
       animation="fade">
       <Stack.Screen name="Home" component={BottomTabs} />
+      <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="PaymentMethodCart" component={PaymentMethodCart} />
+      <Stack.Screen name="VoucherCart" component={VoucherCart} />
+      <Stack.Screen name="CheckoutCart" component={CheckoutCart} />
       <Stack.Screen name="Categories" component={Categories} />
       <Stack.Screen name="Products" component={Products} />
       <Stack.Screen name="ProductDetail" component={ProductDetail} />

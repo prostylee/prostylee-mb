@@ -33,6 +33,8 @@ import CustomTextInput from './CustomTextInput';
 import CustomSecureInput from './CustomSecureInput';
 import Countdown from './Countdown';
 import CustomPinCodeInput from './CustomPinCodeInput';
+import NumberInputUpDown from './NumberInputUpDown';
+import RadioSelectGroup from './RadioSelectGroup';
 import ModalTabButton from './ModalTabButton';
 
 export {
@@ -72,4 +74,6 @@ export {
   CustomPinCodeInput,
   ModalTabButton,
   ProductLike,
+  NumberInputUpDown,
+  RadioSelectGroup,
 };

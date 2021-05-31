@@ -18,6 +18,7 @@ import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import ProductDetail from './ProductDetail';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
+import Cart from './Cart';
 import AddStory from './Story/AddStory';
 import AddStore from './Story/AddStore';
 import CropPicture from './Status/CropPicture';
@@ -45,6 +46,7 @@ export {
   SimpleWebView,
   ProductDetail,
   UserProfile,
+  Cart,
   AddStory,
   AddStore,
   CropPicture,
