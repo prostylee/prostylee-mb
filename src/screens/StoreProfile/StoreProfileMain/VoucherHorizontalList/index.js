@@ -1,18 +1,22 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './style';
-// import {ChevronRight} from 'svg/common';
+import {ChevronRight} from 'svg/common';
 import {FlatList} from 'react-native-gesture-handler';
 import VoucherItem from './VoucherItem';
 
-const VoucherHorizontalList = () => {
+const VoucherHorizontalList = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapTitle}>
         <Text style={styles.title}>Mã giảm giá</Text>
-        <TouchableOpacity style={{flexDirection: 'row'}}>
+        <TouchableOpacity
+          style={{flexDirection: 'row'}}
+          onPress={() => {
+            navigation.navigate('StoreVouchers');
+          }}>
           <Text style={styles.seeMoreText}>Xem thêm</Text>
-          {/* <ChevronRight /> */}
+          <ChevronRight />
         </TouchableOpacity>
       </View>
       <View style={styles.wrapList}>

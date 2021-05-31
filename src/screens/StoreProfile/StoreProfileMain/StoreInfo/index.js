@@ -10,14 +10,16 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const StoreInfo = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image />
-      </View>
-      <View style={styles.storeNameWrapper}>
-        <Text style={styles.storeName}>Femi Clothing Store</Text>
-        <View style={styles.storeAddressWrapper}>
-          <MapPin />
-          <Text style={styles.storeAddressText}>Sai gon, Viet Nam</Text>
+      <View style={{flexDirection: 'row'}}>
+        <View style={styles.logoContainer}>
+          <Image />
+        </View>
+        <View style={styles.storeNameWrapper}>
+          <Text style={styles.storeName}>Femi Clothing Store</Text>
+          <View style={styles.storeAddressWrapper}>
+            <MapPin />
+            <Text style={styles.storeAddressText}>Sai gon, Viet Nam</Text>
+          </View>
         </View>
       </View>
       <TreeDotHorizontal />

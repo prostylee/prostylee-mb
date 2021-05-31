@@ -14,6 +14,7 @@ import {
   ModalIndicator,
   ModalNetworkWarning,
   ModalTabButton,
+  SlideInModal,
 } from 'components';
 
 import NetInfo from '@react-native-community/netinfo';
@@ -26,7 +27,14 @@ import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from './config/aws-exports';
 
 // import NotificationPopup from 'react-native-push-notification-popup';
-import {getApplicationName, getDeviceId, getDeviceName, getSystemName, getSystemVersion, getVersion} from 'react-native-device-info';
+import {
+  getApplicationName,
+  getDeviceId,
+  getDeviceName,
+  getSystemName,
+  getSystemVersion,
+  getVersion,
+} from 'react-native-device-info';
 import RootNavigator from './navigator/rootNavigator';
 import LocalStorageService from './services/LocalStorageService';
 
@@ -323,6 +331,7 @@ const Index = () => {
       />
       <ModalTabButton visible={isShowTabButton} />
       <ModalIndicator visible={isLoading} />
+      <SlideInModal />
       {/* <ModalRequireUpdate
         visible={isRequireUpdate}
         onConfirm={() => onHandleUpdate()}

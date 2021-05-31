@@ -1,14 +1,9 @@
 import React, {useCallback, useState} from 'react';
-import {RnRatingTap, Picker} from 'components';
-import {
-  IconButton,
-  Searchbar,
-  RadioButton,
-  Divider,
-  Chip,
-} from 'react-native-paper';
+// import {Picker} from 'components';
+import {RadioButton, Divider} from 'react-native-paper';
 import styles from './style';
 import {Colors} from 'components';
+import Picker from '../../../../components/Picker';
 const MockSortItem = [
   {label: 'Tất cả', value: 0},
   {label: 'Liên quan nhất', value: 1},
@@ -52,7 +47,6 @@ const SortDropDown = ({
               ]}
               label={v.label}
             />
-            {/* {i !== arr.length - 1 ? <Divider /> : null} */}
           </>
         ))}
       </RadioButton.Group>

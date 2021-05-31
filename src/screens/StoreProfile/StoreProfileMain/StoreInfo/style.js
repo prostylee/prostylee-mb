@@ -16,8 +16,8 @@ export default EStyleSheet.create({
   },
   storeNameWrapper: {
     flexDirection: 'column',
-    paddingLeft: 16,
     justifyContent: 'center',
+    paddingLeft: 12,
   },
   logoContainer: {
     width: 46,

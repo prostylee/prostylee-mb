@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {ThemeView, Header, Colors} from 'components';
-import {Sort, Filter, CaretDown} from 'svg/common';
+import {Sort, CaretDown} from 'svg/common';
 import i18n from 'i18n';
 import styles from './style';
-import SortDropDown from './SortDropDown';
+
 import VoucherList from './VoucherList';
+import SortDropDown from './SortDropDown';
 
 const Vouchers = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');

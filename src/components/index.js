@@ -34,6 +34,8 @@ import CustomSecureInput from './CustomSecureInput';
 import Countdown from './Countdown';
 import CustomPinCodeInput from './CustomPinCodeInput';
 import ModalTabButton from './ModalTabButton';
+import Picker from './Picker';
+import SlideInModal from './SlideInModal';
 
 export {
   ContainerWithoutScrollView,
@@ -72,4 +74,6 @@ export {
   CustomPinCodeInput,
   ModalTabButton,
   ProductLike,
+  Picker,
+  SlideInModal,
 };

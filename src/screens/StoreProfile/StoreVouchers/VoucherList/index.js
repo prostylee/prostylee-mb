@@ -30,7 +30,7 @@ const VoucherList = ({navigation}) => {
     });
   };
   const _handUsePress = () => {
-    navigation.navigate('FlashSale');
+    // navigation.navigate('FlashSale');
   };
   console.log('Data ', data);
   return (

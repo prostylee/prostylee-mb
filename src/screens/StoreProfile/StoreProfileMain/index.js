@@ -37,6 +37,8 @@ import MidAdvertisingSlider from './MidAdvertisingSlider';
 import {ChevronLeft} from '../../../svg/common';
 import {ThemeView} from '../../../components';
 import StoreInfo from './StoreInfo';
+import BestSeller from './BestSeller';
+import AllProducts from './AllProducts';
 
 const HeaderLeft = () => {
   return (
@@ -153,7 +155,9 @@ const Stores = (props) => {
         <CustomBackground />
         <StoreInfo />
         <MidAdvertisingSlider />
-        <VoucherHorizontalList />
+        <VoucherHorizontalList navigation={props.navigation} />
+        <BestSeller />
+        <AllProducts />
       </ScrollView>
     </ThemeView>
   );
