@@ -8,12 +8,28 @@ import EmptyCart from '../EmptyCart';
 import CardFooter from '../CardFooter';
 import i18n from 'i18n';
 import CardAddress from '../CardAddress';
-import {CartEmpty} from 'svg/common';
-import {List} from 'react-native-paper';
+import {CartEmpty, DeliveryIcon, DownIcon, RightIcon} from 'svg/common';
 import {currencyFormat} from 'utils/currency';
+import Collapsible from 'react-native-collapsible';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {RadioButton} from 'react-native-paper';
+
+const deliveries = [
+  {label: 'Grab', content: 'Nhận hàng vào 29-12 đến 31-12', value: 25000},
+  {label: 'Viettel Post', content: 'Nhận hàng trong ngày', value: 45000},
+  {label: 'VN Express', content: 'Nhận hàng trong ngày', value: 35000},
+  {label: 'Giao hàng tiết kiệm', content: 'Nhận hàng trong ngày', value: 30000},
+  {
+    label: 'Tự lấy hàng',
+    content: 'Bạn có thể tự đến lấy hàng tại địa chỉ của người bán.',
+    value: 0,
+  },
+];
 
 const ListProduct = ({navigation, data}) => {
   const [refreshing, handleRefreshing] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [valueDelivery, setValueDelivery] = useState();
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -32,17 +48,46 @@ const ListProduct = ({navigation, data}) => {
 
   const handleLoadMore = () => {};
 
+  const onChangeDelivery = (vl) => {
+    setValueDelivery(vl);
+    setCollapsed(true);
+  };
+
   const renderFooter = () => {
     return (
       <>
         <View style={styles.wrapAccordion}>
-          <List.Accordion
-            title="Phương thức vận chuyển"
-            left={(props) => <List.Icon {...props} icon="folder" />}>
-            <List.Item title="First item" />
-            <List.Item title="Second item" />
-          </List.Accordion>
+          <TouchableOpacity
+            style={styles.buttonCollapseHeader}
+            onPress={() => setCollapsed(!collapsed)}>
+            <View style={styles.wrapCollapseHeader}>
+              <DeliveryIcon />
+              <Text style={styles.titleCollapseHeader}>
+                &nbsp;Phương thức vận chuyển
+              </Text>
+            </View>
+            <View>{collapsed ? <DownIcon /> : <RightIcon />}</View>
+          </TouchableOpacity>
+          <Collapsible collapsed={collapsed}>
+            <RadioButton.Group
+              onValueChange={onChangeDelivery}
+              value={valueDelivery}
+              color="#823ffd"
+              style={styles.wrapRadioGroup}>
+              {listDelivery?.length > 0 &&
+                listDelivery.map((item) => (
+                  <RadioButton.Item
+                    key={item.value}
+                    label={renderDelivery(item)}
+                    value={item.value}
+                    color="#823ffd"
+                    style={styles.wrapRadioButton}
+                  />
+                ))}
+            </RadioButton.Group>
+          </Collapsible>
         </View>
+
         <View style={styles.wrapTotal}>
           <View style={styles.rowTotal}>
             <View style={styles.colLabelTotal}>
@@ -83,6 +128,29 @@ const ListProduct = ({navigation, data}) => {
     );
   };
 
+  const renderDelivery = (item) => {
+    return (
+      <View style={styles.wrapRadio}>
+        <View style={styles.wrapInfo}>
+          <View>
+            <View style={styles.wrapRadioTitle}>
+              <Text style={styles.titleRadio}>{item.label}</Text>
+            </View>
+          </View>
+          <View style={styles.wrapPrice}>
+            <Text style={styles.priceRadio}>
+              {item.value ? currencyFormat(item.value, 'đ') : 'Miễn phí'}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.wrapRadioContent}>
+          <Text style={styles.contentRadio}>{item.content}</Text>
+        </View>
+      </View>
+    );
+  };
+
   /* Extract note */
   const groupDataByStore = (list) => {
     return list.reduce((acc, product) => {
@@ -113,6 +181,8 @@ const ListProduct = ({navigation, data}) => {
     () => groupDataByStore(data),
     [JSON.stringify(data)],
   );
+
+  const listDelivery = useMemo(() => deliveries, [JSON.stringify(deliveries)]);
 
   return (
     <View style={styles.container}>

@@ -50,7 +50,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="DeliveryMethodCart"
+      initialRouteName="CheckoutCart"
       mode="card"
       headerMode="none"
       animation="fade">

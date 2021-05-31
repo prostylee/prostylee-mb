@@ -171,10 +171,21 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     marginBottom: 5,
     marginTop: 5,
+    padding: 10,
   },
-  titleAccordion: {
-    backgroundColor: 'red',
+  buttonCollapseHeader: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+  wrapCollapseHeader: {
+    flexDirection: 'row',
+  },
+  titleCollapseHeader: {
+    color: '#333333',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '400',
   },
   wrapTotal: {
     marginBottom: 5,
@@ -198,5 +209,58 @@ export default EStyleSheet.create({
     fontSize: 11,
     lineHeight: 16,
     fontWeight: '400',
+  },
+  wrapRadioGroup: {
+    flexDirection: 'row',
+    backgroundColor: '$white',
+  },
+  wrapRadioButton: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: '#F4F5F5',
+    backgroundColor: '$white',
+  },
+  wrapRadio: {
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  wrapInfo: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  wrapRadioTitle: {
+    flexDirection: 'column',
+  },
+
+  wrapRadioSub: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  iconRadioSub: {
+    marginLeft: 5,
+  },
+  titleRadio: {
+    color: '#333333',
+    fontWeight: '400',
+    fontSize: 11,
+    lineHeight: 16,
+  },
+  priceRadio: {
+    color: '#ED2727',
+    fontWeight: '400',
+    fontSize: 11,
+    lineHeight: 16,
+  },
+  contentRadio: {
+    color: '#8B9399',
+    fontWeight: '400',
+    fontSize: 11,
+    lineHeight: 16,
+  },
+  wrapLabelDelivery: {
+    padding: 10,
   },
 });
