@@ -12,6 +12,7 @@ const App = () => {
   useEffect(() => {
     disableLogBox();
   }, []);
+  console.log = () => {};
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

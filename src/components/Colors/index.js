@@ -8,6 +8,7 @@ export default {
   $gray: '#4A4A4A',
   $black: '#333333',
   $black500: '#111111',
+  $black600: '#000000',
   $success: '#2ecc71',
   $green: '#148247',
   $pink: '#ED7581',

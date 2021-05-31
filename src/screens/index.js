@@ -22,6 +22,8 @@ import AddStore from './Story/AddStore';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
+import StoreProfileMain from './StoreProfile/StoreProfileMain';
+import StoreVouchers from './StoreProfile/StoreVouchers';
 
 export {
   Welcome,
@@ -48,4 +50,6 @@ export {
   CropPicture,
   AddStatus,
   AddStoreForStatus,
+  StoreProfileMain,
+  StoreVouchers,
 };

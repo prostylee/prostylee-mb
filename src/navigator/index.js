@@ -35,6 +35,8 @@ import {
   AddStoreForStatus,
   Categories,
   Products,
+  StoreProfileMain,
+  StoreVouchers,
 } from 'screens';
 
 import BottomTabs from './bottomTab';
@@ -49,7 +51,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Home"
+      initialRouteName="StoreProfileMain"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -65,6 +67,7 @@ function SignedIn() {
       <Stack.Screen name="CropPicture" component={CropPicture} />
       <Stack.Screen name="AddStatus" component={AddStatus} />
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
+      <Stack.Screen name="StoreProfileMain" component={StoreProfileMain} />
     </Stack.Navigator>
   );
 }
