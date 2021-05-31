@@ -14,12 +14,21 @@ export default {
     textFollowing: 'Đang theo dõi',
     textPost: 'Bài đăng',
   },
+  codePush: {
+    installButton: 'Cập nhật',
+    IgnoreButton: 'Bỏ qua',
+    title: 'Thông Báo',
+    updateMessage: 'Có phiên bản mới, nhấn cài đặt để cập nhật.',
+  },
   bottomTab: {
     newFeed: 'Trang chủ',
     store: 'Cửa hàng',
     notification: 'Thông báo',
     account: 'Tài khoản',
     post: 'Bài đăng',
+    addStory: 'Đăng story',
+    addPost: 'Đăng bài viết',
+    addProduct: 'Đăng sản phẩm',
   },
   headerTitle: {
     featured_store: 'Cửa hàng nổi bật',
@@ -99,6 +108,21 @@ export default {
     phone: 'Số điện thoại',
     password: 'Mật khẩu',
   },
+  productDetail: {
+    reduce: 'Giảm',
+    sizeSupport: 'Hướng dẫn kích thước',
+    productInfo: 'Thông tin sản phẩm',
+    follow: 'Theo dõi',
+    findPath: 'Tìm đường',
+    rating: 'Đánh giá sản phẩm',
+    ratingAll: 'Xem toàn bộ đánh giá',
+    tabProduct: 'Sản phẩm',
+    tabRate: 'Đánh giá',
+    tabSuggest: 'Đề xuất',
+    similarProduct: 'Sản phẩm tương tự',
+    buttonStore: 'Cửa hàng',
+    buttonAddToCart: 'Thêm vào giỏ hàng',
+  },
   cart: {
     title: 'Giỏ hàng',
     payment: 'Thanh toán',
@@ -127,5 +151,25 @@ export default {
     color: 'Màu sắc',
     size: 'Kích thước',
     updateProduct: 'Cập nhật sản phẩm',
+  },
+  error: {
+    cannotUploadImage:
+      'Xuất hiện khi upload hình. Bạn hãy kiểm tra lại kết nối mạng nhé!',
+    cannotGetImage: 'Không thể chọn hình ảnh này. Xin hãy thử lại!',
+  },
+  addStory: {
+    addStore: 'Thêm cửa hàng',
+    changeStore: 'Thay đổi cửa hàng',
+    addStory: 'Chia sẻ story',
+  },
+  addStore: {
+    title: 'Thêm cửa hàng',
+    search: 'Tìm kiếm cửa hàng',
+  },
+  remove: 'Xoá',
+  addStatus: {
+    title: 'Thêm bài viết',
+    textPlaceholder: 'Viết chú thích...',
+    addStatus: 'Đăng bài viết',
   },
 };

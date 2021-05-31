@@ -9,7 +9,12 @@ import {common} from './utils';
 
 import Navigator from './navigator';
 
-import {Colors, ModalIndicator, ModalNetworkWarning} from 'components';
+import {
+  Colors,
+  ModalIndicator,
+  ModalNetworkWarning,
+  ModalTabButton,
+} from 'components';
 
 import NetInfo from '@react-native-community/netinfo';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -71,6 +76,9 @@ const Index = () => {
   //redux state selector
   const networkStatus = useSelector((state) =>
     commonSelectors.getNetworkStatus(state),
+  );
+  const isShowTabButton = useSelector((state) =>
+    commonSelectors.isShowTabButton(state),
   );
 
   // const isRequireUpdate = useSelector((state) =>
@@ -313,6 +321,7 @@ const Index = () => {
         titleStyle={styles.textMessage}
         floating={true}
       />
+      <ModalTabButton visible={isShowTabButton} />
       <ModalIndicator visible={isLoading} />
       {/* <ModalRequireUpdate
         visible={isRequireUpdate}

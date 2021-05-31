@@ -35,6 +35,7 @@ import Countdown from './Countdown';
 import CustomPinCodeInput from './CustomPinCodeInput';
 import NumberInputUpDown from './NumberInputUpDown';
 import RadioSelectGroup from './RadioSelectGroup';
+import ModalTabButton from './ModalTabButton';
 
 export {
   ContainerWithoutScrollView,
@@ -71,6 +72,7 @@ export {
   CustomSecureInput,
   Countdown,
   CustomPinCodeInput,
+  ModalTabButton,
   ProductLike,
   NumberInputUpDown,
   RadioSelectGroup,
