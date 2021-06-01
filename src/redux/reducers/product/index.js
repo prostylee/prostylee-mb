@@ -13,6 +13,23 @@ export const types = {
   GET_LIST_PRODUCT_LOAD_MORE: 'GET_LIST_PRODUCT_LOAD_MORE',
   GET_LIST_PRODUCT_LOAD_MORE_SUCCESS: 'GET_LIST_PRODUCT_LOAD_MORE_SUCCESS',
   GET_LIST_PRODUCT_LOAD_MORE_FAILED: 'GET_LIST_PRODUCT_LOAD_MORE_FAILED',
+
+  GET_PRODUCT_BY_ID_LOADING: 'GET_PRODUCT_BY_ID_LOADING',
+  GET_PRODUCT_BY_ID: 'GET_PRODUCT_BY_ID',
+  GET_PRODUCT_BY_ID_SUCCESS: 'GET_PRODUCT_BY_ID_SUCCESS',
+  GET_PRODUCT_BY_ID_FAILED: 'GET_PRODUCT_BY_ID_FAILED',
+
+  GET_PRODUCT_COMMENTS_LOADING: 'GET_PRODUCT_COMMENTS_LOADING',
+  GET_PRODUCT_COMMENTS: 'GET_PRODUCT_COMMENTS',
+  GET_PRODUCT_COMMENTS_SUCCESS: 'GET_PRODUCT_COMMENTS_SUCCESS',
+  GET_PRODUCT_COMMENTS_FAILED: 'GET_PRODUCT_COMMENTS_FAILED',
+  GET_PRODUCT_COMMENTS_AVERAGE_SUCCESS: 'GET_PRODUCT_COMMENTS_AVERAGE_SUCCESS',
+  GET_PRODUCT_COMMENTS_AVERAGE_FAILED: 'GET_PRODUCT_COMMENTS_AVERAGE_FAILED',
+
+  GET_PRODUCT_RELATED_LOADING: 'GET_PRODUCT_RELATED_LOADING',
+  GET_PRODUCT_RELATED: 'GET_PRODUCT_RELATED',
+  GET_PRODUCT_RELATED_SUCCESS: 'GET_PRODUCT_RELATED_SUCCESS',
+  GET_PRODUCT_RELATED_FAILED: 'GET_PRODUCT_RELATED_FAILED',
 };
 
 export const actions = {
@@ -33,10 +50,37 @@ export const actions = {
   getListProductLoadMoreFailed: createAction(
     types.GET_LIST_PRODUCT_LOAD_MORE_FAILED,
   ),
+
+  getProductByIdLoading: createAction(types.GET_PRODUCT_BY_ID_LOADING),
+  getProductById: createAction(types.GET_PRODUCT_BY_ID),
+  getProductByIdSuccess: createAction(types.GET_PRODUCT_BY_ID_SUCCESS),
+  getProductByIdFail: createAction(types.GET_PRODUCT_BY_ID_FAILED),
+
+  getProductCommentsLoading: createAction(types.GET_PRODUCT_COMMENTS_LOADING),
+  getProductComments: createAction(types.GET_PRODUCT_COMMENTS),
+  getProductCommentsSuccess: createAction(types.GET_PRODUCT_COMMENTS_SUCCESS),
+  getProductCommentsFail: createAction(types.GET_PRODUCT_COMMENTS_FAILED),
+  getProductCommentsAverageSuccess: createAction(
+    types.GET_PRODUCT_COMMENTS_AVERAGE_SUCCESS,
+  ),
+  getProductCommentsAverageFail: createAction(
+    types.GET_PRODUCT_COMMENTS_AVERAGE_FAILED,
+  ),
+
+  getProductRelatedLoading: createAction(types.GET_PRODUCT_RELATED_LOADING),
+  getProductRelated: createAction(types.GET_PRODUCT_RELATED),
+  getProductRelatedSuccess: createAction(types.GET_PRODUCT_RELATED_SUCCESS),
+  getProductRelatedFail: createAction(types.GET_PRODUCT_RELATED_FAILED),
 };
 
 export const selectors = {
   getProducts: (state) => state.product.networkStatus,
+  getProductDetail: (state) => state.product.productDetail,
+  getProductDetailLoading: (state) => state.product.productDetailLoading,
+  getProductComments: (state) => state.product.productDetailComments,
+  getProductCommentsAverage: (state) =>
+    state.product.productDetailCommentsAverage,
+  getProductRelated: (state) => state.product.productRelated,
 };
 
 const defaultState = {
@@ -48,6 +92,14 @@ const defaultState = {
   hasLoadMoreProduct: false,
   pageProduct: 0,
   limitProduct: 12,
+  // Product detail
+  productDetail: {},
+  productDetailLoading: false,
+  productDetailComments: {},
+  productDetailCommentsLoading: false,
+  productDetailCommentsAverage: 0,
+  productRelated: {},
+  productRelatedLoading: false,
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -95,6 +147,42 @@ export default handleActions(
     },
     [types.GET_LIST_PRODUCT_LOAD_MORE_FAILED]: (state, {payload}) => {
       return {...state};
+    },
+    [types.GET_PRODUCT_BY_ID_LOADING]: (state, {payload}) => {
+      return {...state, productDetailLoading: payload};
+    },
+    [types.GET_PRODUCT_BY_ID_SUCCESS]: (state, {payload}) => {
+      return {...state, productDetail: payload};
+    },
+    [types.GET_PRODUCT_BY_ID_FAILED]: (state, {payload}) => {
+      return {...state, productDetail: {}};
+    },
+
+    [types.GET_PRODUCT_COMMENTS_LOADING]: (state, {payload}) => {
+      return {...state, productDetailCommentsLoading: payload};
+    },
+    [types.GET_PRODUCT_COMMENTS_SUCCESS]: (state, {payload}) => {
+      return {...state, productDetailComments: payload};
+    },
+    [types.GET_PRODUCT_COMMENTS_FAIL]: (state, {payload}) => {
+      return {...state, productDetailComments: {}};
+    },
+
+    [types.GET_PRODUCT_COMMENTS_AVERAGE_SUCCESS]: (state, {payload}) => {
+      return {...state, productDetailCommentsAverage: payload};
+    },
+    [types.GET_PRODUCT_COMMENTS_AVERAGE_FAIL]: (state, {payload}) => {
+      return {...state, productDetailCommentsAverage: 0};
+    },
+
+    [types.GET_PRODUCT_RELATED_LOADING]: (state, {payload}) => {
+      return {...state, productRelatedLoading: payload};
+    },
+    [types.GET_PRODUCT_RELATED_SUCCESS]: (state, {payload}) => {
+      return {...state, productRelated: payload};
+    },
+    [types.GET_PRODUCT_RELATED_FAIL]: (state, {payload}) => {
+      return {...state, productRelated: {}};
     },
   },
   defaultState,
