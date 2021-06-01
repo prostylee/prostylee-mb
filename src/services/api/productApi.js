@@ -25,6 +25,13 @@ export const getProductRelated = (payload) => {
   });
 };
 
+// TODO: update api sau khi ráp màn hình store
+export const getProductCoordinated = (payload) => {
+  return _fetch(GET, `/products/${payload.id}/related`, {
+    newest: true,
+  });
+};
+
 export const getListProductService = (payload) => {
   return _fetch(GET, '/products', payload);
 };

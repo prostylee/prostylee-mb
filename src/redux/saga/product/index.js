@@ -19,6 +19,7 @@ import {
   getProductCommentsById,
   getProductCommentsAverage,
   getProductRelated as getRelatedProduct,
+  getProductCoordinated as getCoordinatedProduct,
 } from 'services/api/productApi';
 
 const getProducts = function* ({payload: {token, isRefresh}}) {
@@ -144,9 +145,11 @@ const getProductComments = function* ({payload}) {
       resAverage.data.status === SUCCESS &&
       !resAverage.data.error
     ) {
-      yield put(productActions.getProductCommentsSuccess(resAverage.data.data));
+      yield put(
+        productActions.getProductCommentsAverageSuccess(resAverage.data.data),
+      );
     } else {
-      yield put(productActions.getProductCommentsFail());
+      yield put(productActions.getProductCommentsAverageFail());
     }
   } catch (e) {
     console.error(e);
@@ -174,6 +177,25 @@ const getProductRelated = function* ({payload}) {
   }
 };
 
+const getProductCoordinated = function* ({payload}) {
+  try {
+    yield put(productActions.getProductCoordinatedLoading(true));
+    const res = yield call(getCoordinatedProduct, {
+      id: payload.id,
+      newest: true,
+    });
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(productActions.getProductCoordinatedSuccess(res.data.data));
+    } else {
+      yield put(productActions.getProductCoordinatedFail());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(productActions.getProductCoordinatedLoading(false));
+  }
+};
+
 const watcher = function* () {
   // yield takeLatest(productType.GET_PRODUCTS, getCustomerList);
   //List product from categories
@@ -185,5 +207,6 @@ const watcher = function* () {
   yield takeLatest(productTypes.GET_PRODUCT_BY_ID, getProductById);
   yield takeLatest(productTypes.GET_PRODUCT_COMMENTS, getProductComments);
   yield takeLatest(productTypes.GET_PRODUCT_RELATED, getProductRelated);
+  yield takeLatest(productTypes.GET_PRODUCT_COORDINATED, getProductCoordinated);
 };
 export default watcher();
