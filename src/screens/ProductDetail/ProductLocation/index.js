@@ -1,6 +1,15 @@
 import React from 'react';
-import {View, TouchableOpacity, Text, Image} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  Image,
+  StyleSheet,
+  Platform,
+  Linking,
+} from 'react-native';
 import IconIcons from 'react-native-vector-icons/Ionicons';
+import MapView from 'react-native-maps';
 import i18n from 'i18n';
 import {useTheme} from '@react-navigation/native';
 import styles from './styles';
@@ -14,6 +23,16 @@ const ProductLocation = (props) => {
   }, ${location.city ? location.city : ''}, ${
     location.country ? location.country : ''
   }`;
+  const findPathMapsApp = () => {
+    const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
+    const latLng = `${location.latitude},${location.longitude}`;
+    const label = address;
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`,
+    });
+    Linking.openURL(url);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.locationName}>
@@ -27,7 +46,17 @@ const ProductLocation = (props) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.mapPlaceholder} />
+      <View style={styles.mapPlaceholder}>
+        <MapView
+          style={{...StyleSheet.absoluteFillObject}}
+          initialRegion={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          }}
+        />
+      </View>
       <View style={styles.locationDirection}>
         <View style={styles.directionText}>
           <Text style={styles.directionTextStyle}>
@@ -37,7 +66,9 @@ const ProductLocation = (props) => {
             }km`}</Text>
           </Text>
         </View>
-        <TouchableOpacity style={styles.directionButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.directionButton}
+          onPress={findPathMapsApp}>
           <IconIcons
             name="paper-plane-outline"
             size={14}

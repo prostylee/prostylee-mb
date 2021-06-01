@@ -148,6 +148,7 @@ export default {
     similarProduct: 'Sản phẩm tương tự',
     buttonStore: 'Cửa hàng',
     buttonAddToCart: 'Thêm vào giỏ hàng',
+    sizeHelp: 'Hướng dẫn kích thước',
   },
   cart: {
     title: 'Giỏ hàng',

@@ -84,6 +84,7 @@ function SignedIn() {
       <Stack.Screen name="AddStatus" component={AddStatus} />
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
       <Stack.Screen name="PromoNotification" component={PromoNotification} />
+      <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
     </Stack.Navigator>
   );
 }
