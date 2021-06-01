@@ -113,7 +113,7 @@ const ProductDetail = (props) => {
   const ProductChoiceMemo = React.useMemo(() => {
     return (
       <ProductChoice
-        choiceList={productData.productAttributeOptionResponse}
+        choiceList={productData?.productAttributeOptionResponse}
         setChoiceSelect={setChoiceSelect}
         choiceSelect={choiceSelect}
       />
@@ -182,8 +182,8 @@ const ProductDetail = (props) => {
           name={productData?.name}
           price={productData?.price}
           priceOriginal={productData?.priceSale}
-          rateValue={productData?.productStatisticResponse.resultOfRating}
-          numberOfRate={productData?.productStatisticResponse.numberOfReview}
+          rateValue={productData?.productStatisticResponse?.resultOfRating}
+          numberOfRate={productData?.productStatisticResponse?.numberOfReview}
         />
         <View style={styles.lineHr} />
         {ProductChoiceMemo}
@@ -202,7 +202,7 @@ const ProductDetail = (props) => {
         <ProductRating data={productComments} />
         <View style={styles.lineHrBig} />
         <ProductSimilar
-          data={productRelated.content || []}
+          data={productRelated?.content || []}
           onSelect={selectRelatedProduct}
         />
       </Container>
