@@ -21,6 +21,7 @@ import ProductInfo from './ProductInfo';
 import ProductLocation from './ProductLocation';
 import ProductRating from './ProductRating';
 import ProductSimilar from './ProductSimilar';
+import ProductCoordinated from './ProductCoordinated';
 import Footer from './Footer';
 
 import {dim} from 'utils/common';
@@ -60,6 +61,7 @@ const ProductDetail = (props) => {
     dispatch(productActions.getProductById({id: productId}));
     dispatch(productActions.getProductComments({id: productId}));
     dispatch(productActions.getProductRelated({id: productId}));
+    dispatch(productActions.getProductCoordinated({id: productId}));
   }, []);
 
   const productData = useSelector((state) =>
@@ -73,6 +75,9 @@ const ProductDetail = (props) => {
   );
   const productRelated = useSelector((state) =>
     productSelectors.getProductRelated(state),
+  );
+  const productCoordinated = useSelector((state) =>
+    productSelectors.getProductCoordinated(state),
   );
 
   React.useEffect(() => {
@@ -205,6 +210,8 @@ const ProductDetail = (props) => {
           data={productRelated?.content || []}
           onSelect={selectRelatedProduct}
         />
+        <View style={styles.lineHrBig} />
+        <ProductCoordinated data={productCoordinated?.content || []} />
       </Container>
       <Footer isLike={productData?.likeStatusOfUserLogin || false} />
     </View>
