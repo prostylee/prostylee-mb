@@ -20,3 +20,19 @@ export const getSuggestionsSearchService = (payload) => {
     ...payload,
   });
 };
+export const getFeaturedProductSearchApi = (payload) => {
+  return _fetch(GET, '/products/best-seller', {
+    ...payload,
+  });
+};
+
+export const getStoreResultsApi = (payload) => {
+  return _fetch(GET, '/stores', {
+    ...payload,
+  });
+};
+export const getStoreBestSellerProduct = (payload) => {
+  return _fetch(GET, '/products/best-seller', {
+    ...payload,
+  });
+};

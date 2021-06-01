@@ -13,8 +13,8 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
           <View style={styles.wrapImage}>
             <Image
               source={
-                item?.icon
-                  ? {uri: item?.icon}
+                item?.imageUrls?.length
+                  ? {uri: item?.imageUrls[0]}
                   : require('assets/images/default.png')
               }
               resizeMode="cover"
@@ -31,16 +31,16 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
           <View style={styles.wrapDetail}>
             <View style={styles.wrapTitle}>
               <Text numberOfLines={1} style={styles.title}>
-                Thời trang nam Thời trang nam Thời trang nam Thời trang nam
+                {item?.name}
               </Text>
               <ProductLike item={item} />
             </View>
 
             <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(100000, 'đ')}
+              {currencyFormat(item?.priceSale, 'đ')}
             </Text>
             <Text numberOfLines={1} style={styles.priceRoot}>
-              {currencyFormat(100000, 'đ')}
+              {currencyFormat(item?.price, 'đ')}
             </Text>
             <View style={styles.wrapRating}>
               <AirbnbRating

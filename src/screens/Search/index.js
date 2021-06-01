@@ -29,6 +29,14 @@ const Search = ({navigation}) => {
           limit: LIMIT_DEFAULT,
         }),
       );
+      dispatch(
+        searchActions.getFeaturedProductSearch({
+          // keyword: query,
+          // type: 'product',
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
     }, 1000);
   };
 

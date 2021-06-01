@@ -36,7 +36,7 @@ const TopSearch = ({navigation}) => {
       <View style={styles.wrapHeader}>
         <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
       </View>
-      {loading && !listTopSearch.length === 0 ? (
+      {loading && !listTopSearch?.length === 0 ? (
         <>
           <View style={styles.wrapChip}>
             {[1, 2, 3, 4, 5, 6, 7].map((item, _i) => {
@@ -57,14 +57,16 @@ const TopSearch = ({navigation}) => {
           }
           style={styles.wrapScroll}>
           <View style={styles.wrapChip}>
-            {listTopSearch.map((item) => (
-              <Chip
-                small
-                onPress={() => navigation.navigate('SearchProducts')}
-                style={styles.itemChips}>
-                {item}
-              </Chip>
-            ))}
+            {listTopSearch && listTopSearch.length
+              ? listTopSearch.map((item) => (
+                  <Chip
+                    small
+                    onPress={() => navigation.navigate('SearchProducts')}
+                    style={styles.itemChips}>
+                    {item}
+                  </Chip>
+                ))
+              : null}
           </View>
         </ScrollView>
       )}

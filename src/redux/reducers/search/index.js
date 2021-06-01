@@ -18,6 +18,13 @@ import {
   handleActions as handleActionsFeaturedProductSearch,
 } from './featuredProductSearch';
 
+import {
+  types as typesStoreSearch,
+  actions as actionsStoreSearch,
+  defaultState as defaultStateStoreSearch,
+  handleActions as handleActionsStoreSearch,
+} from './storeSearch';
+
 export const types = {
   //Root
   SET_CONDITION_SEARCH: 'SET_CONDITION_SEARCH',
@@ -27,6 +34,8 @@ export const types = {
   ...typesFeaturedProductSearch,
   //List HINT_PRODUCT_SEARCH
   ...typesHintProductSearch,
+  // List STORE_SEARCH
+  ...typesStoreSearch,
   //List SEARCH_FEATURED_CATEGORIES
   SET_SEARCH_FEATURED_CATEGORIES_LOADING:
     'SET_SEARCH_FEATURED_CATEGORIES_LOADING',
@@ -56,6 +65,8 @@ export const actions = {
   ...actionsFeaturedProductSearch,
   //List HINT_PRODUCT_SEARCH
   ...actionsHintProductSearch,
+  //List STORE_SEARCH
+  ...actionsStoreSearch,
   //List SEARCH_FEATURED_CATEGORIES
   setSearchFeaturedCategoriesLoading: createAction(
     types.SET_SEARCH_FEATURED_CATEGORIES_LOADING,
@@ -98,6 +109,9 @@ const defaultState = {
   ...defaultStateFeaturedProductSearch,
   //List HINT_PRODUCT_SEARCH
   ...defaultStateHintProductSearch,
+  //List STORE_SEARCH
+  ...defaultStateStoreSearch,
+
   //List SEARCH_FEATURED_CATEGORIES
   searchFeaturedCategoriesLoading: false,
   loadSearchFeaturedCategoriesMoreLoading: false,
@@ -121,6 +135,8 @@ export default handleActions(
     ...handleActionsFeaturedProductSearch,
     //List HINT_PRODUCT_SEARCH
     ...handleActionsHintProductSearch,
+    //List STORE_SEARCH
+    ...handleActionsStoreSearch,
     //List SearchFeaturedCategories from categories
     [types.SET_SEARCH_FEATURED_CATEGORIES_LOADING]: (state, {payload}) => {
       return {...state, searchFeaturedCategoriesLoading: payload};

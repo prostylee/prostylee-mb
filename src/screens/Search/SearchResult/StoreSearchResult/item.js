@@ -6,7 +6,7 @@ import styles from './styles';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch} from 'react-redux';
 import {categoriesActions, productActions} from 'redux/reducers';
-import {Divider} from "react-native-paper";
+import {Divider} from 'react-native-paper';
 const StoreSearchResultItem = ({item, index, navigation}) => {
   const dispatch = useDispatch();
   const clickItem = () => {
@@ -19,8 +19,8 @@ const StoreSearchResultItem = ({item, index, navigation}) => {
         <View style={styles.item}>
           <Image
             source={
-              item?.icon
-                ? {uri: item?.icon}
+              item?.imgUrl
+                ? {uri: item?.imgUrl}
                 : require('assets/images/default.png')
             }
             resizeMode="cover"
@@ -28,7 +28,7 @@ const StoreSearchResultItem = ({item, index, navigation}) => {
             PlaceholderContent={<ActivityIndicator />}
           />
           <Text numberOfLines={2} style={styles.titleProduct}>
-            Thời trang nam
+            {item?.name}
           </Text>
           <Divider />
         </View>

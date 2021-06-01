@@ -58,29 +58,31 @@ const ResultProductSearchResult = ({navigation}) => {
     }
   };
 
-  const renderFooter = () => {
-    if (!loadMoreLoading) {
-      return (
-        <View style={styles.viewFooterHasResult}>
-          <Text
-            style={{
-              color: '#823FFD',
-              lineHeight: 20,
-              fontSize: 14,
-              fontWeight: '500',
-            }}>
-            Xem toàn bộ kết quả (167)
-          </Text>
-        </View>
-      );
-    }
+  console.log('LIST PRODUCT SEARCH', listFeaturedProductSearch);
 
-    return (
-      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-        <ActivityIndicator animating color={Colors.$purple} size="small" />
-      </View>
-    );
-  };
+  // const renderFooter = () => {
+  //   if (!loadMoreLoading) {
+  //     return (
+  //       <View style={styles.viewFooterHasResult}>
+  //         <Text
+  //           style={{
+  //             color: '#823FFD',
+  //             lineHeight: 20,
+  //             fontSize: 14,
+  //             fontWeight: '500',
+  //           }}>
+  //           Xem toàn bộ kết quả (167)
+  //         </Text>
+  //       </View>
+  //     );
+  //   }
+
+  //   return (
+  //     <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+  //       <ActivityIndicator animating color={Colors.$purple} size="small" />
+  //     </View>
+  //   );
+  // };
   return (
     <>
       <View style={styles.container}>
@@ -89,7 +91,7 @@ const ResultProductSearchResult = ({navigation}) => {
         </View>
         <View style={styles.wrapList}>
           <FlatList
-            data={[1, 2, 3]}
+            data={listFeaturedProductSearch}
             renderItem={({item, index}) => (
               <FeaturedCategoriesItem
                 index={index}
@@ -102,7 +104,7 @@ const ResultProductSearchResult = ({navigation}) => {
             refreshing={refreshing}
             onRefresh={handleRefresh}
             onEndReached={() => handleLoadMore()}
-            ListFooterComponent={renderFooter}
+            // ListFooterComponent={renderFooter}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
           />

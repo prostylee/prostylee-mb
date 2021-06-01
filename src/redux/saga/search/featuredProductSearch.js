@@ -1,6 +1,9 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {getSuggestionsSearchService} from 'services/api/searchApi';
+import {
+  getSuggestionsSearchService,
+  getFeaturedProductSearchApi,
+} from 'services/api/searchApi';
 
 import {searchActions, searchTypes} from 'reducers';
 
@@ -11,7 +14,8 @@ const getFeaturedProductSearch = function* ({payload}) {
   try {
     yield put(searchActions.setFeaturedProductSearchLoading(true));
     yield put(searchActions.setPageFeaturedProductSearchDefault());
-    const res = yield call(getSuggestionsSearchService, payload);
+    const res = yield call(getFeaturedProductSearchApi, payload);
+    console.log('LONG RESS', res);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(searchActions.getFeaturedProductSearchSuccess(res.data.data));
     } else {
