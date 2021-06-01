@@ -10,6 +10,7 @@ import categories from './categories';
 import search from './search';
 import topSearch from './search/topSearch';
 import hintProductSearch from './search/hintProductSearch';
+import featuredProductSearch from './search/featuredProductSearch';
 
 export default function* rootSaga() {
   yield all([
@@ -23,5 +24,6 @@ export default function* rootSaga() {
     ...search,
     ...topSearch,
     ...hintProductSearch,
+    ...featuredProductSearch,
   ]);
 }

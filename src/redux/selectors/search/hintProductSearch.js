@@ -2,7 +2,7 @@ import {createSelector} from 'reselect';
 
 export const searchReducer = (state) => state.search;
 
-//List product from categories
+//List HINT_PRODUCT_SEARCH
 export const getHintProductSearchLoadingSelector = createSelector(
   searchReducer,
   (data) => data?.hintProductSearchLoading,

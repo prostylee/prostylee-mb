@@ -4,7 +4,7 @@ import {searchActions, searchTypes} from 'reducers';
 import {SUCCESS} from 'constants';
 import {getListTopSearchService} from 'services/api/searchApi';
 
-//List product from categories
+//List TOP_SEARCH
 const getTopSearch = function* ({payload}) {
   try {
     yield put(searchActions.setTopSearchLoading(true));

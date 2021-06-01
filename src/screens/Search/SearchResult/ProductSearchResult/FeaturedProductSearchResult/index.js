@@ -7,12 +7,12 @@ import {Colors} from 'components';
 import i18n from 'i18n';
 
 import {
-  getSearchFeaturedCategoriesLoadingSelector,
-  getSearchFeaturedCategoriesSelector,
-  getLoadSearchFeaturedCategoriesMoreLoading,
-  getHasLoadMoreSearchFeaturedCategoriesSelector,
-  getPageSearchFeaturedCategoriesSelector,
-} from 'redux/selectors/search';
+  getFeaturedProductSearchLoadingSelector,
+  getFeaturedProductSearchSelector,
+  getLoadFeaturedProductSearchMoreLoading,
+  getHasLoadMoreFeaturedProductSearchSelector,
+  getPageFeaturedProductSearchSelector,
+} from 'redux/selectors/search/featuredProductSearch';
 
 import FeaturedCategoriesItem from './item.js';
 
@@ -25,25 +25,26 @@ const ResultProductSearchResult = ({navigation}) => {
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector((state) =>
-    getSearchFeaturedCategoriesLoadingSelector(state),
+    getFeaturedProductSearchLoadingSelector(state),
   );
 
-  const listRightCategoriesSelector = useSelector((state) =>
-    getSearchFeaturedCategoriesSelector(state),
+  const listFeaturedProductSearchSelector = useSelector((state) =>
+    getFeaturedProductSearchSelector(state),
   );
 
-  const listRightCategories = listRightCategoriesSelector?.content || [];
+  const listFeaturedProductSearch =
+    listFeaturedProductSearchSelector?.content || [];
 
   const loadMoreLoading = useSelector((state) =>
-    getLoadSearchFeaturedCategoriesMoreLoading(state),
+    getLoadFeaturedProductSearchMoreLoading(state),
   );
 
   const hasLoadMore = useSelector((state) =>
-    getHasLoadMoreSearchFeaturedCategoriesSelector(state),
+    getHasLoadMoreFeaturedProductSearchSelector(state),
   );
 
   const page = useSelector((state) =>
-    getPageSearchFeaturedCategoriesSelector(state),
+    getPageFeaturedProductSearchSelector(state),
   );
 
   useEffect(() => {}, [dispatch, refreshing]);
