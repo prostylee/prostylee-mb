@@ -46,3 +46,8 @@ export const getStories = createSelector(
   newFeedState,
   (data) => data?.stories || {},
 );
+
+export const getStoreMini = createSelector(
+  newFeedState,
+  (data) => data?.storeMini || {},
+);

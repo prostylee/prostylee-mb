@@ -22,6 +22,17 @@ export const types = {
   GET_PRODUCT_OF_STORIES: 'GET_PRODUCT_OF_STORIES',
   GET_PRODUCT_OF_STORIES_SUCCESS: 'GET_PRODUCT_OF_STORIES_SUCCESS',
   GET_PRODUCT_OF_STORIES_FAILED: 'GET_PRODUCT_OF_STORIES_FAILED',
+
+  GET_STORE_MINI: 'GET_STORE_MINI',
+  GET_STORE_MINI_SUCCESS: 'GET_STORE_MINI_SUCCESS',
+  GET_STORE_MINI_FAIL: 'GET_STORE_MINI_FAIL',
+
+  ADD_NEW_FEED_STORE: 'ADD_NEW_FEED_STORE',
+  REMOVE_NEW_FEED_STORE: 'REMOVE_NEW_FEED_STORE',
+
+  POST_STORY: 'POST_STORY',
+  POST_STORY_SUCCESS: 'POST_STORY_SUCCESS',
+  POST_STORY_FAIL: 'POST_STORY_FAIL',
 };
 
 export const actions = {
@@ -45,6 +56,17 @@ export const actions = {
   getProductOfStory: createAction(types.GET_PRODUCT_OF_STORIES),
   getProductOfStorySuccess: createAction(types.GET_PRODUCT_OF_STORIES_SUCCESS),
   getProductOfStoryFailed: createAction(types.GET_PRODUCT_OF_STORIES_FAILED),
+
+  getStoreMini: createAction(types.GET_STORE_MINI),
+  getStoreMiniSuccess: createAction(types.GET_STORE_MINI_SUCCESS),
+  getStoreMiniFail: createAction(types.GET_STORE_MINI_FAIL),
+
+  addNewFeedStore: createAction(types.ADD_NEW_FEED_STORE),
+  removeNewFeedStore: createAction(types.REMOVE_NEW_FEED_STORE),
+
+  postStory: createAction(types.POST_STORY),
+  postStorySuccess: createAction(types.POST_STORY_SUCCESS),
+  postStoryFail: createAction(types.POST_STORY_FAIL),
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -54,12 +76,19 @@ const intialState = {
   loadMoreLoading: false,
   stories: {},
   newFeed: {},
+  newFeedStoreSelect: {},
   threeFirstNewFeedItem: {},
   productOfStory: {},
   storeOfStory: {},
+  storeMini: {},
   page: PAGE_DEFAULT,
   limit: LIMIT_DEFAULT,
   hasLoadMore: false,
+};
+
+export const selectors = {
+  getStoreMini: (state) => state.newFeed.storeMini,
+  getNewFeedStore: (state) => state.newFeed.newFeedStoreSelect,
 };
 
 export default handleActions(
@@ -125,6 +154,18 @@ export default handleActions(
     },
     [types.GET_PRODUCT_OF_STORIES_FAILED]: (state, {payload}) => {
       return {...state, productOfStory: {}};
+    },
+    [types.GET_STORE_MINI_SUCCESS]: (state, {payload}) => {
+      return {...state, storeMini: payload};
+    },
+    [types.GET_STORE_MINI_FAIL]: (state, {payload}) => {
+      return {...state, storeMini: {}};
+    },
+    [types.ADD_NEW_FEED_STORE]: (state, {payload}) => {
+      return {...state, newFeedStoreSelect: payload};
+    },
+    [types.REMOVE_NEW_FEED_STORE]: (state, {payload}) => {
+      return {...state, newFeedStoreSelect: {}};
     },
   },
   intialState,

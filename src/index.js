@@ -13,6 +13,7 @@ import {
   Colors,
   ModalIndicator,
   ModalNetworkWarning,
+  ModalTabButton,
   SlideInModal,
 } from 'components';
 
@@ -83,6 +84,9 @@ const Index = () => {
   //redux state selector
   const networkStatus = useSelector((state) =>
     commonSelectors.getNetworkStatus(state),
+  );
+  const isShowTabButton = useSelector((state) =>
+    commonSelectors.isShowTabButton(state),
   );
 
   // const isRequireUpdate = useSelector((state) =>
@@ -325,6 +329,7 @@ const Index = () => {
         titleStyle={styles.textMessage}
         floating={true}
       />
+      <ModalTabButton visible={isShowTabButton} />
       <ModalIndicator visible={isLoading} />
       {/* <ModalRequireUpdate
         visible={isRequireUpdate}
