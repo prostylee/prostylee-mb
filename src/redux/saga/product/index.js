@@ -13,7 +13,13 @@ import {showMessage} from 'react-native-flash-message';
 import * as CONTANTS from 'constants';
 import authService from '../../../services/authService';
 import {SUCCESS} from 'constants';
-import {getListProductService} from 'services/api/productApi';
+import {
+  getListProductService,
+  getProductById as getProductByIdApi,
+  getProductCommentsById,
+  getProductCommentsAverage,
+  getProductRelated as getRelatedProduct,
+} from 'services/api/productApi';
 
 const getProducts = function* ({payload: {token, isRefresh}}) {
   try {
@@ -101,6 +107,73 @@ const getLoadMoreListProduct = function* ({payload}) {
   }
 };
 
+const getProductById = function* ({payload}) {
+  try {
+    yield put(productActions.getProductByIdLoading(true));
+    const res = yield call(getProductByIdApi, payload.id);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(productActions.getProductByIdSuccess(res.data.data));
+    } else {
+      yield put(productActions.getProductByIdSuccess());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(productActions.getProductByIdLoading(false));
+  }
+};
+
+const getProductComments = function* ({payload}) {
+  try {
+    yield put(productActions.getProductCommentsLoading(true));
+    const res = yield call(getProductCommentsById, {
+      targetId: payload.id,
+      targetType: 'PRODUCT',
+    });
+    const resAverage = yield call(getProductCommentsAverage, {
+      targetId: payload.id,
+      targetType: 'PRODUCT',
+    });
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(productActions.getProductCommentsSuccess(res.data.data));
+    } else {
+      yield put(productActions.getProductCommentsFail());
+    }
+    if (
+      resAverage.ok &&
+      resAverage.data.status === SUCCESS &&
+      !resAverage.data.error
+    ) {
+      yield put(productActions.getProductCommentsSuccess(resAverage.data.data));
+    } else {
+      yield put(productActions.getProductCommentsFail());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(productActions.getProductCommentsLoading(false));
+  }
+};
+
+const getProductRelated = function* ({payload}) {
+  try {
+    yield put(productActions.getProductRelatedLoading(true));
+    const res = yield call(getRelatedProduct, {
+      id: payload.id,
+      newest: true,
+    });
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(productActions.getProductRelatedSuccess(res.data.data));
+    } else {
+      yield put(productActions.getProductRelatedFail());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(productActions.getProductRelatedLoading(false));
+  }
+};
+
 const watcher = function* () {
   // yield takeLatest(productType.GET_PRODUCTS, getCustomerList);
   //List product from categories
@@ -109,5 +182,8 @@ const watcher = function* () {
     productTypes.GET_LIST_PRODUCT_LOAD_MORE,
     getLoadMoreListProduct,
   );
+  yield takeLatest(productTypes.GET_PRODUCT_BY_ID, getProductById);
+  yield takeLatest(productTypes.GET_PRODUCT_COMMENTS, getProductComments);
+  yield takeLatest(productTypes.GET_PRODUCT_RELATED, getProductRelated);
 };
 export default watcher();

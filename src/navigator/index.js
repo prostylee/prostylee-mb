@@ -34,8 +34,17 @@ import {
   AddStatus,
   AddStoreForStatus,
   Categories,
+  ProductDetail,
   Products,
+  ReviewRating,
+  ChooseRateProduct,
+  RateProduct,
+  Cart,
 } from 'screens';
+
+import PaymentMethodCart from 'screens/Cart/PaymentMethod';
+import VoucherCart from 'screens/Cart/Voucher';
+import CheckoutCart from 'screens/Cart/Checkout';
 
 import BottomTabs from './bottomTab';
 
@@ -54,8 +63,16 @@ function SignedIn() {
       headerMode="none"
       animation="fade">
       <Stack.Screen name="Home" component={BottomTabs} />
+      <Stack.Screen name="ReviewRating" component={ReviewRating} />
+      <Stack.Screen name="ChooseRateProduct" component={ChooseRateProduct} />
+      <Stack.Screen name="RateProduct" component={RateProduct} />
+      <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="PaymentMethodCart" component={PaymentMethodCart} />
+      <Stack.Screen name="VoucherCart" component={VoucherCart} />
+      <Stack.Screen name="CheckoutCart" component={CheckoutCart} />
       <Stack.Screen name="Categories" component={Categories} />
       <Stack.Screen name="Products" component={Products} />
+      <Stack.Screen name="ProductDetail" component={ProductDetail} />
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
@@ -65,6 +82,7 @@ function SignedIn() {
       <Stack.Screen name="CropPicture" component={CropPicture} />
       <Stack.Screen name="AddStatus" component={AddStatus} />
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
+      <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
     </Stack.Navigator>
   );
 }
