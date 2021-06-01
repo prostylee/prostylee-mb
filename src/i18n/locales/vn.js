@@ -108,7 +108,6 @@ export default {
     phone: 'Số điện thoại',
     password: 'Mật khẩu',
   },
-  reviewRating: 'Đánh giá sản phẩm',
   reviewRating: {
     count: 'Đánh giá sản phẩm (%{count})',
     title: 'Đánh giá sản phẩm',
@@ -177,8 +176,6 @@ export default {
     more: 'Khám phá thêm các sản phẩm khác',
     order: 'Đặt hàng',
     freeShip: 'Miễn phí',
-    color: 'Màu sắc',
-    size: 'Kích thước',
     updateProduct: 'Cập nhật sản phẩm',
   },
   error: {
