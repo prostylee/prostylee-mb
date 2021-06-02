@@ -31,14 +31,31 @@ const Search = ({navigation}) => {
       );
       dispatch(
         searchActions.getFeaturedProductSearch({
-          // keyword: query,
+          keyword: query,
           // type: 'product',
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
         }),
       );
+      dispatch(
+        searchActions.getStoreSearch({
+          keyword: query,
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          sorts: 'name',
+        }),
+      );
     }, 1000);
   };
+  React.useEffect(() => {
+    if (!searchQuery) {
+      dispatch(
+        searchActions.setCurrentKeyword({
+          keyword: '',
+        }),
+      );
+    }
+  }, [searchQuery]);
 
   return (
     <ThemeView style={styles.container} isFullView>

@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {TouchableOpacity, View, Text, ScrollView} from 'react-native';
 import i18n from 'i18n';
 
@@ -13,8 +13,38 @@ import ConditionOfProductsFilter from './ConditionOfProductsFilter';
 import MaterialFilter from './MaterialFilter';
 import StyleFilter from './StyleFilter';
 import {Button} from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
+import {searchActions} from 'redux/reducers';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {getProductFilterAttributeListSelector} from 'redux/selectors/search/productFilter';
+import {getSearchFeaturedCategoriesSelector} from 'redux/selectors/search';
 
 const FilterProduct = ({navigation}) => {
+  const dispatch = useDispatch();
+
+  const filterAttributeList = useSelector((state) =>
+    getProductFilterAttributeListSelector(state),
+  );
+  const categories = useSelector((state) =>
+    getSearchFeaturedCategoriesSelector(state),
+  );
+
+  const _handleClearFilter = () => {
+    dispatch(searchActions.clearProductsFilterState({}));
+  };
+
+  useEffect(() => {
+    if (!filterAttributeList || !filterAttributeList.length) {
+      dispatch(
+        searchActions.getProductsFilter({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          sorts: 'order',
+        }),
+      );
+    }
+  }, []);
+
   return (
     <ThemeView style={styles.container} isFullView>
       <Header
@@ -22,14 +52,14 @@ const FilterProduct = ({navigation}) => {
         leftIcon={<Remove />}
         title={i18n.t('filter')}
         rightComponent={
-          <TouchableOpacity>
+          <TouchableOpacity onPress={_handleClearFilter}>
             <Text style={styles.headerRight}>Reset</Text>
           </TouchableOpacity>
         }
       />
       <ScrollView>
         <View style={styles.wrapContent}>
-          <FeaturedCategories />
+          <FeaturedCategories data={categories} />
           <SizeFilter />
           <PriceFilter />
           <ConditionOfProductsFilter />

@@ -12,6 +12,7 @@ import {
   getHasLoadMoreHintProductSearchSelector,
   getPageHintProductSearchSelector,
 } from 'redux/selectors/search/hintProductSearch';
+import {getCurrentKeyword} from 'redux/selectors/search';
 
 import ResultProductSearchResultItem from './item.js';
 
@@ -43,14 +44,18 @@ const ResultProductSearchResult = ({navigation}) => {
   const hasLoadMore = useSelector((state) =>
     getHasLoadMoreHintProductSearchSelector(state),
   );
+  const currentKeyword = useSelector((state) => getCurrentKeyword(state));
 
   const page = useSelector((state) => getPageHintProductSearchSelector(state));
 
   const handleRefresh = () => {
+    console.log('CURRENT KEYWORD ', currentKeyword);
     dispatch(
       searchActions.getHintProductSearch({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
+        keyword: currentKeyword,
+        type: 'product',
       }),
     );
   };
@@ -61,6 +66,8 @@ const ResultProductSearchResult = ({navigation}) => {
         searchActions.getHintProductSearch({
           page: page + 1,
           limit: LIMIT_DEFAULT,
+          keyword: currentKeyword,
+          type: 'product',
         }),
       );
     }
@@ -88,26 +95,32 @@ const ResultProductSearchResult = ({navigation}) => {
             ? {maxHeight: listHintProductSearch.length * 55}
             : null,
         ]}>
-        <View style={styles.wrapList}>
-          <FlatList
-            data={listHintProductSearch}
-            renderItem={({item, index}) => (
-              <ResultProductSearchResultItem
-                index={index}
-                navigation={navigation}
-                item={item}
-              />
-            )}
-            numColumns={1}
-            keyExtractor={(item, index) => index}
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            onEndReached={() => handleLoadMore()}
-            ListFooterComponent={renderFooter}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
+        {loading ? (
+          <ActivityIndicator animating color={Colors.$purple} size="small" />
+        ) : listHintProductSearch && listHintProductSearch.length ? (
+          <View style={styles.wrapList}>
+            <FlatList
+              data={listHintProductSearch}
+              renderItem={({item, index}) => (
+                <ResultProductSearchResultItem
+                  index={index}
+                  navigation={navigation}
+                  item={item}
+                />
+              )}
+              numColumns={1}
+              keyExtractor={(item, index) => index}
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              onEndReached={() => handleLoadMore()}
+              ListFooterComponent={renderFooter}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+        ) : (
+          <Text>Không có kết quả tìm kiếm</Text>
+        )}
       </View>
     </>
   );

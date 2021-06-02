@@ -32,21 +32,19 @@ export const handleActions = {
   [types.SET_STORE_SEARCH_LOADING]: (state, {payload}) => {
     return {...state, storeSearchLoading: payload};
   },
-  [types.GET_STORE_SEARCH]: (state, {payload}) => {
-    console.log('Long GET_STORE_SEARCH ', payload);
-    return {
-      ...state,
-    };
-  },
+  // [types.GET_STORE_SEARCH]: (state, {payload}) => {
+  //   console.log('Long GET_STORE_SEARCH ', payload);
+  //   return {
+  //     ...state,
+  //   };
+  // },
   [types.GET_STORE_SEARCH_FAILED]: (state, {payload}) => {
-    console.log('Long GET_STORE_SEARCH_FAILED ', payload);
     return {
       ...state,
       storeSearchStatus: false,
     };
   },
   [types.GET_STORE_SEARCH_SUCCESS]: (state, {payload}) => {
-    console.log('Long GET_STORE_SEARCH_SUCCESS', payload);
     return {
       ...state,
       storeList: [...payload],

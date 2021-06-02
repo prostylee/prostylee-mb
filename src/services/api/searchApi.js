@@ -36,3 +36,13 @@ export const getStoreBestSellerProduct = (payload) => {
     ...payload,
   });
 };
+export const getProductSearchResultsApi = (payload) => {
+  return _fetch(GET, '/products', {
+    ...payload,
+  });
+};
+export const getProductAttributesFilterResultsApi = (payload) => {
+  return _fetch(GET, '/attributes', {
+    ...payload,
+  });
+};

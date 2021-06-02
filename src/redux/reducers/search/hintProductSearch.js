@@ -14,6 +14,7 @@ export const types = {
     'GET_HINT_PRODUCT_SEARCH_LOAD_MORE_SUCCESS',
   GET_HINT_PRODUCT_SEARCH_LOAD_MORE_FAILED:
     'GET_HINT_PRODUCT_SEARCH_LOAD_MORE_FAILED',
+  SET_CURRENT_KEYWORD: 'SET_CURRENT_KEYWORD',
 };
 
 export const actions = {
@@ -43,6 +44,7 @@ export const actions = {
   getHintProductSearchLoadMoreFailed: createAction(
     types.GET_HINT_PRODUCT_SEARCH_LOAD_MORE_FAILED,
   ),
+  setCurrentKeyword: createAction(types.SET_CURRENT_KEYWORD),
 };
 
 export const defaultState = {
@@ -53,6 +55,7 @@ export const defaultState = {
   hasLoadMoreHintProductSearch: false,
   pageHintProductSearch: 0,
   limitHintProductSearch: 12,
+  currentKeyword: '',
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -100,5 +103,8 @@ export const handleActions = {
   },
   [types.GET_HINT_PRODUCT_SEARCH_LOAD_MORE_FAILED]: (state, {payload}) => {
     return {...state};
+  },
+  [types.SET_CURRENT_KEYWORD]: (state, {payload}) => {
+    return {...state, currentKeyword: payload};
   },
 };

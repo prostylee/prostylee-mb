@@ -3,7 +3,7 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {
   getStoreResultsApi,
   getStoreBestSellerProduct,
-} from '../../../services/api/searchApi';
+} from 'services/api/searchApi';
 
 import {searchActions, searchTypes} from 'reducers';
 
@@ -16,10 +16,10 @@ const getStoreSearch = function* ({payload}) {
     yield put(searchActions.setStoreSearchLoading(true));
     const res = yield call(getStoreResultsApi, payload);
     let listStore = res?.data?.data?.content;
-    const newData = yield call(getStoreBestSellerProductByStoreId, listStore);
+    // const newData = yield call(getStoreBestSellerProductByStoreId, listStore);
 
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      yield put(searchActions.getStoreSearchSuccess(newData));
+      yield put(searchActions.getStoreSearchSuccess(listStore));
     } else {
       yield put(searchActions.getStoreSearchFailed());
     }

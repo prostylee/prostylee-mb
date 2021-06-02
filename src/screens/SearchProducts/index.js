@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Dimensions,
   View,
@@ -11,35 +11,43 @@ import i18n from 'i18n';
 
 import styles from './styles';
 import {Sort, Filter, CaretDown} from 'svg/common';
-import {ThemeView, Header, TextInputRounded} from 'components';
-import {
-  IconButton,
-  Searchbar,
-  RadioButton,
-  Divider,
-  Chip,
-} from 'react-native-paper';
+import {ThemeView, Header} from 'components';
+import {Searchbar, Divider, Chip} from 'react-native-paper';
 import {Colors} from 'components';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {RnRatingTap, Picker} from 'components';
 
-const WIDTH = Dimensions.get('window').width;
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+
 import {debounce} from 'lodash';
 import {MessageOutlined, Bell, BellWithNotiBadge} from 'svg/header';
 import ProductList from './ProductList';
 import SortDropDown from './SortDropDown';
+import {useDispatch, useSelector} from 'react-redux';
+import {searchActions} from 'redux/reducers';
+import {getCurrentKeyword} from 'redux/selectors/search';
+import {getProductSearchListSelector} from 'redux/selectors/search/productSearchMain';
 
 const MockTag = [
-  'Best seller',
-  'Gần đây',
-  'Sale',
-  'Elegant',
-  'Best seller',
-  'Gần đây',
-  'Sale',
-  'Elegant',
+  {
+    label: 'Best seller',
+    value: {
+      bestSeller: true,
+    },
+  },
+  {
+    label: 'Gần đây',
+    value: {
+      atitude: 10.806406363857086,
+      longitude: 106.6634168400805,
+    },
+  },
+  {
+    label: 'Sale',
+    value: {
+      sale: true,
+    },
+  },
 ];
-
+const WIDTH = Dimensions.get('window').width;
 const GroupHeaderRightButton = ({haveNoti = false}) => {
   return (
     <View style={styles.headerGroupButtonRight}>
@@ -81,43 +89,127 @@ const GroupHeaderRightButton = ({haveNoti = false}) => {
     </View>
   );
 };
-const TagList = () => (
-  <View style={styles.wrapList}>
-    <FlatList
-      style={styles.wrapChip}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      data={MockTag}
-      renderItem={({item, index}) => (
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}
-          key={`${item}-${index}`}>
-          {item}
-        </Chip>
-      )}
-    />
-  </View>
-);
+const TagList = ({onTagPress}) => {
+  const [active, setActive] = useState(null);
+  return (
+    <View style={styles.wrapList}>
+      <FlatList
+        style={styles.wrapChip}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={MockTag}
+        renderItem={({item, index}) => (
+          <Chip
+            selectedColor={Colors?.['$purple']}
+            selected={index === active}
+            small
+            onPress={() => {
+              setActive(index);
+              onTagPress(item.value);
+            }}
+            style={styles.itemChips}
+            key={`${item.label}-${index}`}>
+            {item.label}
+          </Chip>
+        )}
+      />
+    </View>
+  );
+};
 
 const SearchProducts = ({navigation}) => {
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const dispatch = useDispatch();
+  const currentKeyword = useSelector((state) => getCurrentKeyword(state));
+  const [searchQuery, setSearchQuery] = React.useState(currentKeyword.keyword);
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
+
+  const searchResults = useSelector((state) =>
+    getProductSearchListSelector(state),
+  );
+  console.log('ALL SEARCH PRODUCTS RESULTS', searchResults);
+
   const handlerSearch = useCallback(
     debounce((query) => {
-      console.log('searchQuery');
-      console.log(query);
+      dispatch(
+        searchActions.getProductsSearch({
+          keyword: query,
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          sorts: 'name',
+        }),
+      );
     }, 1000),
     [],
   );
+  const _handleSort = (value) => {
+    setValueSort(value);
+    let sortOption = {};
+    switch (value) {
+      case 1: {
+        sortOption.sorts = 'name';
+        break;
+      }
+      case 2: {
+        sortOption.bestSeller = true;
+        break;
+      }
+      case 3: {
+        sortOption.sorts = '-createdAt';
+        break;
+      }
+      case 4: {
+        sortOption.sorts = '-priceSale';
+        break;
+      }
+      case 5: {
+        sortOption.sorts = 'priceSale';
+        break;
+      }
+      default: {
+        sortOption.bestRating = true;
+        break;
+      }
+    }
+    dispatch(
+      searchActions.getProductsSearch({
+        keyword: searchQuery,
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: 'name',
+        ...sortOption,
+      }),
+    );
+  };
 
   const onChangeSearch = (query) => {
     setSearchQuery(query);
     handlerSearch(query);
   };
+  const _handleFilterByTag = (queryObject) => {
+    dispatch(
+      searchActions.getProductsSearch({
+        keyword: searchQuery,
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        ...queryObject,
+      }),
+    );
+  };
+
+  const _handleLoadMore = () => {};
+  useEffect(() => {
+    console.log('CURRENT KEYWORD SEARCH MAIN', currentKeyword);
+    dispatch(
+      searchActions.getProductsSearch({
+        keyword: currentKeyword.keyword,
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: 'name',
+      }),
+    );
+  }, []);
 
   return (
     <ThemeView style={styles.container} isFullView>
@@ -148,7 +240,7 @@ const SearchProducts = ({navigation}) => {
             }}
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
-            value={searchQuery}
+            value={currentKeyword.keyword}
           />
         }
         rightComponent={<GroupHeaderRightButton haveNoti={true} />}
@@ -181,15 +273,15 @@ const SearchProducts = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <Divider />
-      <TagList />
+      <TagList onTagPress={_handleFilterByTag} />
       <SortDropDown
         visible={visible}
         setVisible={setVisible}
         setAction={setAction}
-        setValueSort={setValueSort}
+        setValueSort={_handleSort}
         valueSort={valueSort}
       />
-      <ProductList />
+      <ProductList data={searchResults} />
     </ThemeView>
   );
 };

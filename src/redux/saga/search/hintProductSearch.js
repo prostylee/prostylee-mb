@@ -10,6 +10,7 @@ import {SUCCESS} from 'constants';
 const getHintProductSearch = function* ({payload}) {
   try {
     yield put(searchActions.setHintProductSearchLoading(true));
+    yield put(searchActions.setCurrentKeyword(payload?.keyword));
     yield put(searchActions.setPageHintProductSearchDefault());
     const res = yield call(getSuggestionsSearchService, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {

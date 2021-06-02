@@ -6,7 +6,9 @@ import {Heart} from 'svg/common';
 import styles from './styles';
 import picture from '../../../assets/images/signInBg.png';
 import {Colors} from 'components';
-const ItemBadge = () => (
+import {formatMoney} from '../../../utils/numberUtils';
+import {currencyFormat, priceSalePercent} from 'utils/currency';
+const ItemBadge = ({discountPercent = 0}) => (
   <View
     style={[
       styles.itemBadge,
@@ -14,7 +16,7 @@ const ItemBadge = () => (
         backgroundColor: Colors['$red'],
       },
     ]}>
-    <Text style={styles.badgeText}>-50%</Text>
+    <Text style={styles.badgeText}>-{discountPercent}%</Text>
   </View>
 );
 
@@ -29,19 +31,39 @@ const ProductItem = ({item, index}) => (
         },
       ]}>
       <View style={[styles.imageContainer]}>
-        <Image style={styles.imageStyle} source={picture} resizeMode="cover" />
-        <ItemBadge />
+        <Image
+          style={styles.imageStyle}
+          source={{uri: item?.imageUrls?.[0]}}
+          resizeMode="cover"
+        />
+        <ItemBadge
+          discountPercent={priceSalePercent(
+            item?.price ? item?.price : 0,
+            item?.priceSale ? item?.priceSale : 0,
+          )}
+        />
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.itemName}>Áo nỉ hoddie trơn đủ màu Unisex</Text>
         <View style={{flexDirection: 'column'}}>
-          <Text style={styles.itemPrice}>99.000 đ</Text>
-          <Text style={styles.itemDiscountPrice}>99.000 đ</Text>
+          <Text style={styles.itemDiscountPrice}>
+            {currencyFormat(item?.priceSale ? item?.priceSale : 0, 'đ')}
+          </Text>
+          <Text style={styles.itemPrice}>
+            {currencyFormat(item?.price ? item?.price : 0, 'đ')}
+          </Text>
         </View>
         <View style={styles.toolContainer}>
           <View style={styles.ratingContainer}>
-            <Rating imageSize={10} showRating={false} />
-            <Text style={styles.ratingPoint}>4.6 (2)</Text>
+            <Rating
+              imageSize={10}
+              showRating={false}
+              startingValue={item?.productStatisticResponse?.resultOfRating}
+            />
+            <Text style={styles.ratingPoint}>
+              {item?.productStatisticResponse?.resultOfRating} (
+              {item?.productStatisticResponse?.numberOfLike})
+            </Text>
           </View>
           <TouchableOpacity>
             <Heart />

@@ -27,3 +27,7 @@ export const getPageSearchFeaturedCategoriesSelector = createSelector(
   searchReducer,
   (data) => data?.pageSearchFeaturedCategories,
 );
+export const getCurrentKeyword = createSelector(
+  searchReducer,
+  (data) => data?.currentKeyword,
+);

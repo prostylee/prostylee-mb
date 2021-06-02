@@ -5,8 +5,11 @@ const WIDTH = Dimensions.get('window').width - 32;
 export default EStyleSheet.create({
   container: {
     flex: 1,
+    minHeight: 50,
     maxHeight: 200,
     backgroundColor: '$white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   wrapList: {
     flex: 1,

@@ -58,8 +58,6 @@ const ResultProductSearchResult = ({navigation}) => {
     }
   };
 
-  console.log('LIST PRODUCT SEARCH', listFeaturedProductSearch);
-
   // const renderFooter = () => {
   //   if (!loadMoreLoading) {
   //     return (
