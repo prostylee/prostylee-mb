@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, Image, Dimensions} from 'react-native';
-import IconIcons from 'react-native-vector-icons/Ionicons';
 import i18n from 'i18n';
 import ImageView from 'react-native-image-viewing';
 import {useSelector} from 'react-redux';

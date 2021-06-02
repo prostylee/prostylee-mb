@@ -3,7 +3,6 @@ import {View, TouchableOpacity} from 'react-native';
 import {ButtonRounded, ButtonOutlined} from 'components';
 import {Heart, HeartFill} from 'svg/common';
 import i18n from 'i18n';
-import {useTheme} from '@react-navigation/native';
 import styles from './styles';
 import {cartActions} from 'reducers';
 import {useDispatch} from 'react-redux';

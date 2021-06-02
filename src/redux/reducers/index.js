@@ -12,6 +12,12 @@ import product, {
   types as productTypes,
 } from './product';
 
+import reviewRating, {
+  actions as reviewRatingActions,
+  selectors as reviewRatingSelectors,
+  types as reviewRatingTypes,
+} from './reviewRating';
+
 import user, {
   actions as userActions,
   selectors as userSelectors,
@@ -42,6 +48,7 @@ import categories, {
 } from './categories';
 
 import cart, {actions as cartActions, types as cartTypes} from './cart';
+import search, {actions as searchActions, types as searchTypes} from './search';
 
 const rootReducer = combineReducers({
   common,
@@ -50,9 +57,11 @@ const rootReducer = combineReducers({
   newFeed,
   store,
   dynamicUsers,
+  reviewRating,
   status,
   categories,
   cart,
+  search,
 });
 
 export {commonActions, commonSelectors, commonTypes};
@@ -61,8 +70,10 @@ export {userActions, userSelectors, userTypes};
 export {newFeedActions, newFeedTypes, newFeedSelectors};
 export {storeActions, storeTypes};
 export {dynamicUsersActions, dynamicUsersTypes};
+export {reviewRatingActions, reviewRatingSelectors, reviewRatingTypes};
 export {statusActions, statusSelectors, statusTypes};
 export {categoriesActions, categoriesTypes};
 export {cartActions, cartTypes};
+export {searchActions, searchTypes};
 
 export default rootReducer;

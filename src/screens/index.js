@@ -18,12 +18,20 @@ import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import ProductDetail from './ProductDetail';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
+import SearchProductFilter from './SearchProductFilter';
+import SearchProducts from './SearchProducts';
+import ReviewRating from './ReviewRating';
+import ChooseRateProduct from './ChooseRateProduct';
+import RateProduct from './RateProduct';
 import Cart from './Cart';
 import AddStory from './Story/AddStory';
 import AddStore from './Story/AddStore';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
+import Search from './Search';
+import FilterProduct from './FilterProduct';
+import PromoNotification from './Notifications/PromoNotification';
 
 export {
   Welcome,
@@ -46,10 +54,18 @@ export {
   SimpleWebView,
   ProductDetail,
   UserProfile,
+  SearchProductFilter,
+  SearchProducts,
+  ReviewRating,
+  ChooseRateProduct,
+  RateProduct,
   Cart,
   AddStory,
   AddStore,
   CropPicture,
   AddStatus,
   AddStoreForStatus,
+  Search,
+  FilterProduct,
+  PromoNotification,
 };
