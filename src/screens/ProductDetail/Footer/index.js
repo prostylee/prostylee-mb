@@ -2,7 +2,6 @@ import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {ButtonRounded, ButtonOutlined} from 'components';
 import {Heart, HeartFill} from 'svg/common';
-import Collapsible from 'react-native-collapsible';
 import i18n from 'i18n';
 import {useTheme} from '@react-navigation/native';
 import styles from './styles';
@@ -11,6 +10,11 @@ const Footer = (props) => {
   const {colors} = useTheme();
   const isLike = props.isLike ? props.isLike : false;
   const [showInfo, setShowInfo] = React.useState(false);
+
+  const onAddToCart = () => {
+    console.log('productData', props.productData);
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -38,7 +42,7 @@ const Footer = (props) => {
           contentStyle={{}}
           labelStyle={{}}
           label={i18n.t('productDetail.buttonAddToCart')}
-          onPress={() => {}}
+          onPress={onAddToCart}
         />
       </View>
     </View>

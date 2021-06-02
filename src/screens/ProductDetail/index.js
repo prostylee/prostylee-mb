@@ -182,8 +182,8 @@ const ProductDetail = (props) => {
           name={productData?.name}
           price={productData?.price}
           priceOriginal={productData?.priceSale}
-          rateValue={productData?.productStatisticResponse.resultOfRating}
-          numberOfRate={productData?.productStatisticResponse.numberOfReview}
+          rateValue={productData?.productStatisticResponse?.resultOfRating}
+          numberOfRate={productData?.productStatisticResponse?.numberOfReview}
         />
         <View style={styles.lineHr} />
         {ProductChoiceMemo}
@@ -206,7 +206,10 @@ const ProductDetail = (props) => {
           onSelect={selectRelatedProduct}
         />
       </Container>
-      <Footer isLike={productData?.likeStatusOfUserLogin || false} />
+      <Footer
+        isLike={productData?.likeStatusOfUserLogin || false}
+        productData={productData}
+      />
     </View>
   );
 };
