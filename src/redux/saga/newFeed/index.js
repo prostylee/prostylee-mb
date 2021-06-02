@@ -119,6 +119,7 @@ const getProductOfStory = function* (id) {
 };
 
 const getStoreMini = function* () {
+  yield put(newFeedActions.getStoreMiniLoading(true));
   try {
     const res = yield call(getStoreMiniApi);
     if (res.ok && res.data.status === SUCCESS) {
@@ -128,6 +129,8 @@ const getStoreMini = function* () {
     }
   } catch (e) {
     console.error(e);
+  } finally {
+    yield put(newFeedActions.getStoreMiniLoading(false));
   }
 };
 
