@@ -27,6 +27,12 @@ import AddStore from './Story/AddStore';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
+import Setting from './Setting';
+import SettingMyAccount from './Setting/SettingMyAccount';
+import SettingAddress from './Setting/SettingAddress';
+import SettingChat from './Setting/SettingChat';
+import SettingNotification from './Setting/SettingNotification';
+import SettingLanguage from './Setting/SettingLanguage';
 
 export {
   Welcome,
@@ -58,4 +64,10 @@ export {
   CropPicture,
   AddStatus,
   AddStoreForStatus,
+  Setting,
+  SettingMyAccount,
+  SettingAddress,
+  SettingChat,
+  SettingNotification,
+  SettingLanguage
 };

@@ -199,4 +199,33 @@ export default {
     textPlaceholder: 'Viết chú thích...',
     addStatus: 'Đăng bài viết',
   },
+  setting: {
+    title: 'Thiết lập tài khoản',
+    myaccount: 'Tài khoản của tôi',
+    profile: 'Hồ sơ của tôi',
+    address: 'Địa chỉ',
+    setting: 'Cài đặt',
+    settingChat: 'Cài đặt chat',
+    settingNotification: 'Cài đặt thông báo',
+    settingLanguage: 'Ngôn ngữ'
+  },
+  settingProfile: {
+    name: 'Tên',
+    bio: 'Bio',
+    gender: 'Giới tính',
+    birthday: 'Ngày sinh',
+    phone: 'Điện thoại',
+    email: 'Email',
+    changePass: 'Đổi mật khẩu',
+    buttonSave: 'Lưu thay đổi',
+    changeImage: 'Thay ảnh đại diện'
+  },
+  settingAddress: {
+    addAddress: 'Thêm địa chỉ',
+    province: 'Tỉnh/thành phố',
+    district: 'Quận/Huyện',
+    ward: 'Quận/Huyện',
+    noAddress: 'Hiện tại bạn không có địa chỉ đã lưu. Hãy bắt đầu thêm một địa chỉ mới ngay',
+    default: 'Mặc định'
+  }
 };

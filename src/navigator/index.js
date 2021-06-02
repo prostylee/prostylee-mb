@@ -40,6 +40,12 @@ import {
   ChooseRateProduct,
   RateProduct,
   Cart,
+  Setting,
+  SettingMyAccount,
+  SettingAddress,
+  SettingChat,
+  SettingNotification,
+  SettingLanguage
 } from 'screens';
 
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
@@ -82,6 +88,12 @@ function SignedIn() {
       <Stack.Screen name="CropPicture" component={CropPicture} />
       <Stack.Screen name="AddStatus" component={AddStatus} />
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
+      <Stack.Screen name="Setting" component={Setting} />
+      <Stack.Screen name="SettingMyAccount" component={SettingMyAccount} />
+      <Stack.Screen name="SettingAddress" component={SettingAddress} />
+      <Stack.Screen name="SettingChat" component={SettingChat} />
+      <Stack.Screen name="SettingNotification" component={SettingNotification} />
+      <Stack.Screen name="SettingLanguage" component={SettingLanguage} />
     </Stack.Navigator>
   );
 }
