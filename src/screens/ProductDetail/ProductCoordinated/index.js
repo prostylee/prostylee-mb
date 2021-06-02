@@ -17,7 +17,7 @@ const ProductSimilar = (props) => {
           {i18n.t('productDetail.productCoordinated')}
         </Text>
         <TouchableOpacity style={styles.listMore} onPress={() => {}}>
-          <Text style={styles.listMoreText}>
+          {/* <Text style={styles.listMoreText}>
             {i18n.t('productDetail.seeMore')}
           </Text>
           <IonIcons
@@ -25,7 +25,7 @@ const ProductSimilar = (props) => {
             size={18}
             color={colors['$purple']}
             style={styles.iconContainer}
-          />
+          /> */}
         </TouchableOpacity>
       </View>
       <FlatList
