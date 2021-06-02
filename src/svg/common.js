@@ -94,8 +94,8 @@ export const DubHeart = ({width = 16, height = 16, color = '#8B9399'}) => {
 export const Heart = ({width = 16, height = 16, color = '#8B9399'}) => {
   return (
     <Svg
-      width="16"
-      height="16"
+      width={width}
+      height={height}
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
@@ -113,8 +113,8 @@ export const Heart = ({width = 16, height = 16, color = '#8B9399'}) => {
 export const HeartFill = ({width = 16, height = 16, color = '#8B9399'}) => {
   return (
     <Svg
-      width="20"
-      height="20"
+      width={width}
+      height={height}
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
@@ -1217,6 +1217,189 @@ export const EmptyNotiOutlined = ({
       d="M6.74908 33.921C3.3722 25.433 5.09037 17.3418 10.1387 12.0495C9.93056 11.7312 9.7203 11.4341 9.56314 11.0691C7.96602 7.43627 9.62048 3.20075 13.2586 1.60713C16.8967 0.0113815 21.1401 1.67079 22.7372 5.30154C22.888 5.6453 22.9708 6.0018 23.06 6.35617C30.6229 6.20339 38.0881 10.8039 41.9896 18.6298C41.9896 18.6298 47.7685 31.886 54.1145 32.9406C54.3099 32.9512 57.7144 33.0361 58.7529 35.5146C59.732 37.8594 57.7165 40.9979 54.2101 42.5066L16.2383 58.8567C12.7361 60.3654 8.86652 59.7606 8.03823 57.3606C7.22056 54.9946 9.01519 52.7941 9.1851 52.5989C12.768 47.0986 6.74908 33.921 6.74908 33.921Z"
       stroke={color}
       strokeWidth={`${strokeWidth}`}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const EmptyCart = (props) => (
+  <Svg width={64} height={64} viewBox="0 0 64 64" fill="none" {...props}>
+    <Path
+      d="M7 20h50l2 43H5l2-43zM7 20l4-5h1M57 20l-4-5h-2"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Circle
+      cx={23}
+      cy={28}
+      r={3}
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Circle
+      cx={41}
+      cy={28}
+      r={3}
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M23 28v5a9 9 0 009 9v0a9 9 0 009-9v-5M13.298 20L12.057 5.812l18.982-1.66.693 7.924"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M40.282 20l-1.605-9.102-18.764 3.308L20.934 20"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M49.215 20l2.353-9.438-16.237-4.048-1.244 4.986"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M40 7.5C39.508 3.554 36.08 1 32 1c-3.012 0-5.135 1.04-6.5 3.5"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const RightArrow = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M6 12l4-4-4-4"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const DownArrow = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M4 6l4 4 4-4"
+      stroke="#333"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const LocationIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M8 15.333s6-4 6-8.666a6 6 0 10-12 0c0 4.666 6 8.666 6 8.666zm2-8.666a2 2 0 11-4 0 2 2 0 014 0z"
+      fill="#8B9399"
+    />
+  </Svg>
+);
+
+export const CreditSvg = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Rect
+      x={1.33337}
+      y={3.33334}
+      width={13.3333}
+      height={9.33333}
+      rx={1}
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M1.83337 4.83334L14.1667 4.83334"
+    />
+    <Path
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M1.83337 6.83334L14.1667 6.83334"
+    />
+    <Path
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M2.5 10.1667L4.16667 10.1667"
+    />
+  </Svg>
+);
+
+export const CouponSvg = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <G
+      clipPath="url(#clip0)"
+      stroke="#823FFD"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <Path d="M15.667 10a2 2 0 010-4V3.667A.666.666 0 0015 3H1a.667.667 0 00-.667.667V6a2 2 0 110 4v2.333A.667.667 0 001 13h14a.666.666 0 00.667-.667V10zM5.333 10.667l5.334-5.334" />
+      <Path d="M6 7a1 1 0 100-2 1 1 0 000 2zM10 11a1 1 0 100-2 1 1 0 000 2z" />
+    </G>
+    <Defs>
+      <ClipPath id="clip0">
+        <Path fill="#fff" d="M0 0H16V16H0z" />
+      </ClipPath>
+    </Defs>
+  </Svg>
+);
+
+export const DeliveryIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M.5 9V4a1 1 0 011-1h8a1 1 0 011 1v4M10.5 8V4h2a3 3 0 013 3v4a1 1 0 01-1 1H14"
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M15.5 8h-2a1 1 0 01-1-1V4M11 13a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM3 13a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM8 12H6"
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const DownIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M4 6l4 4 4-4"
+      stroke="#8B9399"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const RightIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M6 12l4-4-4-4"
+      stroke="#8B9399"
       strokeLinecap="round"
       strokeLinejoin="round"
     />

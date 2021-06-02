@@ -14,8 +14,8 @@ import {CartEmpty} from 'svg/common';
 import {getListCartSelector} from 'redux/selectors/cart';
 
 const ListProduct = ({navigation}) => {
-  const cart = useSelector((state) => getListCartSelector(state));
-
+  const cart = useSelector((state) => getListCartSelector(state)) || [];
+  console.log('cart', cart);
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const onScrollEvent = Animated.event(
@@ -69,6 +69,8 @@ const ListProduct = ({navigation}) => {
   const onCheckout = () => {
     navigation.navigate('CheckoutCart');
   };
+
+  console.log('group', groupData);
 
   return (
     <View style={styles.container}>

@@ -45,8 +45,10 @@ const Search = ({navigation}) => {
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
           sorts: 'name',
+          numberOfProducts: 10,
         }),
       );
+      dispatch(searchActions.setCurrentKeyword(query));
     }, 1000);
   };
   React.useEffect(() => {

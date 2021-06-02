@@ -10,6 +10,7 @@ import {useTheme} from '@react-navigation/native';
 const ProductSimilar = (props) => {
   const {colors} = useTheme();
   const listProduct = props.data ? props.data : [];
+  const selectItem = props.onSelect ? props.onSelect : () => {};
   return (
     <View style={styles.container}>
       <View style={styles.titleRow}>
@@ -33,7 +34,7 @@ const ProductSimilar = (props) => {
         renderItem={({item, index}) => {
           return (
             <View style={styles.wrapProduct}>
-              <ProductItem index={index} item={item} />
+              <ProductItem index={index} item={item} onSelect={selectItem} />
             </View>
           );
         }}

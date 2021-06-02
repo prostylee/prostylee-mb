@@ -10,6 +10,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {searchActions} from 'redux/reducers';
 import {TopSearchLoading} from 'components/Loading/contentLoader';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 const TopSearch = ({navigation}) => {
   const dispatch = useDispatch();
@@ -63,6 +64,23 @@ const TopSearch = ({navigation}) => {
                     small
                     onPress={() => {
                       dispatch(searchActions.setCurrentKeyword(item));
+                      dispatch(
+                        searchActions.getProductsSearch({
+                          keyword: item,
+                          page: PAGE_DEFAULT,
+                          limit: LIMIT_DEFAULT,
+                          sorts: 'name',
+                        }),
+                      );
+                      dispatch(
+                        searchActions.getStoreSearch({
+                          keyword: item,
+                          page: PAGE_DEFAULT,
+                          limit: LIMIT_DEFAULT,
+                          sorts: 'name',
+                          numberOfProducts: 10,
+                        }),
+                      );
 
                       navigation.navigate('SearchProducts');
                     }}
