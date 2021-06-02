@@ -196,18 +196,17 @@ const SearchProducts = ({navigation}) => {
       }),
     );
   };
-  const inputRef = React.useRef();
 
   useEffect(() => {
     setSearchQuery(currentKeyword);
-    dispatch(
-      searchActions.getFeaturedProductSearch({
-        keyword: currentKeyword,
-        // type: 'product',
-        page: PAGE_DEFAULT,
-        limit: LIMIT_DEFAULT,
-      }),
-    );
+    // dispatch(
+    //   searchActions.getFeaturedProductSearch({
+    //     keyword: currentKeyword,
+    //     // type: 'product',
+    //     page: PAGE_DEFAULT,
+    //     limit: LIMIT_DEFAULT,
+    //   }),
+    // );
   }, [currentKeyword]);
 
   return (

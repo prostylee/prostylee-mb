@@ -57,7 +57,7 @@ export const handleActions = {
   [types.GET_STORE_SEARCH_SUCCESS]: (state, {payload}) => {
     return {
       ...state,
-      storeList: [...payload],
+      storeList: {...payload},
     };
   },
   [types.SET_STORE_SEARCH_LOADMORE_LOADING]: (state, {payload}) => {

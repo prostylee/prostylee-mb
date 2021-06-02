@@ -19,12 +19,7 @@ const getProductFilter = function* ({payload}) {
     console.log('LONG MAIN FILTER PRODUCTS', res.data.data.content);
     let listProduct = res?.data?.data?.content;
 
-    let initFilterState = [...res.data.data.content].reduce(
-      (currentValue, nextValue) => {
-        return {...currentValue, [`${nextValue.id}`]: null};
-      },
-      {},
-    );
+    let initFilterState = {};
     console.log('INIT FILTER STATE', initFilterState);
 
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {

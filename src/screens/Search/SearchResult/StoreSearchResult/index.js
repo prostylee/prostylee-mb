@@ -45,6 +45,7 @@ const FeaturedCategories = ({navigation}) => {
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         sorts: 'name',
+        numberOfProducts: 10,
       }),
     );
   };
@@ -58,6 +59,7 @@ const FeaturedCategories = ({navigation}) => {
           page: PAGE_DEFAULT + 1,
           limit: LIMIT_DEFAULT,
           sorts: 'name',
+          numberOfProducts: 10,
         }),
       );
     }
@@ -73,15 +75,17 @@ const FeaturedCategories = ({navigation}) => {
     return null;
   };
 
+  console.log('STORE LIST \n\n\n', storeList);
   return (
     <>
       <View style={styles.container}>
         {loading ? (
           <ActivityIndicator animating color={Colors.$purple} size="small" />
-        ) : storeList && storeList.length ? (
+        ) : storeList && storeList?.content?.length ? (
           <FlatList
-            data={storeList}
+            data={storeList?.content}
             renderItem={({item, index}) => {
+              console.log('ITEM', index, '\n\n\n', item);
               return (
                 <>
                   <View style={styles.wrapHeader}>

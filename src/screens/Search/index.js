@@ -45,6 +45,7 @@ const Search = ({navigation}) => {
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
           sorts: 'name',
+          numberOfProducts: 10,
         }),
       );
     }, 1000);
