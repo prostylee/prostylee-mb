@@ -35,10 +35,13 @@ import status, {
   selectors as statusSelectors,
   types as statusTypes,
 } from './status';
+
 import categories, {
   actions as categoriesActions,
   types as categoriesTypes,
 } from './categories';
+
+import cart, {actions as cartActions, types as cartTypes} from './cart';
 
 const rootReducer = combineReducers({
   common,
@@ -49,6 +52,7 @@ const rootReducer = combineReducers({
   dynamicUsers,
   status,
   categories,
+  cart,
 });
 
 export {commonActions, commonSelectors, commonTypes};
@@ -59,5 +63,6 @@ export {storeActions, storeTypes};
 export {dynamicUsersActions, dynamicUsersTypes};
 export {statusActions, statusSelectors, statusTypes};
 export {categoriesActions, categoriesTypes};
+export {cartActions, cartTypes};
 
 export default rootReducer;

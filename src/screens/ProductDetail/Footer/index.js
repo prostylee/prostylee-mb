@@ -1,18 +1,21 @@
-import React from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import React, {useState} from 'react';
+import {View, TouchableOpacity} from 'react-native';
 import {ButtonRounded, ButtonOutlined} from 'components';
 import {Heart, HeartFill} from 'svg/common';
 import i18n from 'i18n';
 import {useTheme} from '@react-navigation/native';
 import styles from './styles';
+import {cartActions} from 'reducers';
+import {useDispatch} from 'react-redux';
 
 const Footer = (props) => {
-  const {colors} = useTheme();
   const isLike = props.isLike ? props.isLike : false;
-  const [showInfo, setShowInfo] = React.useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const {colors} = useTheme();
+  const dispatch = useDispatch();
 
   const onAddToCart = () => {
-    console.log('productData', props.productData);
+    dispatch(cartActions.setListCart(props.productData));
   };
 
   return (

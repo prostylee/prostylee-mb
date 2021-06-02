@@ -52,5 +52,6 @@ export default {
     color: 'Color',
     size: 'Size',
     updateProduct: 'Update',
+    seeMore: 'More',
   },
 };

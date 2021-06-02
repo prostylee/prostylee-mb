@@ -151,6 +151,7 @@ export default {
     color: 'Màu sắc',
     size: 'Kích thước',
     updateProduct: 'Cập nhật sản phẩm',
+    seeMore: 'Xem thêm',
   },
   error: {
     cannotUploadImage:
