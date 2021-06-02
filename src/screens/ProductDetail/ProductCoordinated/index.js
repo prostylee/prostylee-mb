@@ -1,33 +1,32 @@
 import React from 'react';
-import {View, TouchableOpacity, Text, Dimensions, FlatList} from 'react-native';
+import {View, TouchableOpacity, Text, FlatList} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
-import Carousel from 'react-native-snap-carousel';
-import {currencyFormat} from 'utils/currency';
-import {Heart, HeartFill} from 'svg/common';
-import {useDispatch} from 'react-redux';
-import {productActions} from 'reducers';
 import ProductItem from './ProductItem';
 
-import Entypo from 'react-native-vector-icons/Entypo';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import {useTheme} from '@react-navigation/native';
-import {BookMark} from 'svg/common';
-
-const {width: WIDTH} = Dimensions.get('window');
 
 const ProductSimilar = (props) => {
   const {colors} = useTheme();
-  const dispatch = useDispatch();
-  const imagesRef = React.useRef();
   const listProduct = props.data ? props.data : [];
-  const selectItem = props.onSelect ? props.onSelect : () => {};
   return (
     <View style={styles.container}>
       <View style={styles.titleRow}>
         <Text style={styles.title}>
           {i18n.t('productDetail.productCoordinated')}
         </Text>
+        <TouchableOpacity style={styles.listMore} onPress={() => {}}>
+          <Text style={styles.listMoreText}>
+            {i18n.t('productDetail.seeMore')}
+          </Text>
+          <IonIcons
+            name={'ios-chevron-forward'}
+            size={18}
+            color={colors['$purple']}
+            style={styles.iconContainer}
+          />
+        </TouchableOpacity>
       </View>
       <FlatList
         data={listProduct}
@@ -41,10 +40,7 @@ const ProductSimilar = (props) => {
         numColumns={2}
         scrollEventThrottle={1}
         keyExtractor={(_, index) => `coordinated_product_${index}`}
-        // refreshing={refreshing}
-        // onRefresh={handleRefresh}
-        // onEndReached={() => handleLoadMore()}
-        // ListFooterComponent={renderFooter}
+        style={styles.listContainer}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />

@@ -12,7 +12,7 @@ export default EStyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingTop: 16,
   },
@@ -21,5 +21,22 @@ export default EStyleSheet.create({
     lineHeight: 20,
     fontWeight: 'bold',
     color: '$black',
+  },
+  listMore: {
+    paddingVertical: 8,
+    paddingLeft: 16,
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  listMoreText: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '$purple',
+  },
+  iconContainer: {
+    paddingLeft: 4,
+  },
+  listContainer: {
+    paddingHorizontal: 8,
   },
 });

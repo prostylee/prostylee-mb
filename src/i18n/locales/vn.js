@@ -150,6 +150,7 @@ export default {
     buttonAddToCart: 'Thêm vào giỏ hàng',
     sizeHelp: 'Hướng dẫn kích thước',
     productCoordinated: 'Sản phẩm có thể phối hợp',
+    seeMore: 'Xem thêm',
   },
   cart: {
     title: 'Giỏ hàng',
@@ -197,5 +198,6 @@ export default {
     title: 'Thêm bài viết',
     textPlaceholder: 'Viết chú thích...',
     addStatus: 'Đăng bài viết',
+    checkAll: 'Xin hãy check lại tất cả các hình ảnh của bạn',
   },
 };
