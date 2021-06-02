@@ -22,6 +22,7 @@ import i18n from 'i18n';
 import {useBackHandler} from '@react-native-community/hooks';
 import {commonActions, newFeedSelectors, newFeedActions} from 'reducers';
 import {useDispatch, useSelector} from 'react-redux';
+import {CropView} from 'react-native-image-crop-tools';
 
 import {dim} from 'utils/common';
 
@@ -31,6 +32,7 @@ const storyImageRatio = 16 / 9;
 
 const AddStory = (props) => {
   const dispatch = useDispatch();
+  const cropViewRef = React.useRef();
   const [userId, setUserId] = React.useState('');
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
   const viewShotRef = React.useRef();
@@ -135,7 +137,7 @@ const AddStory = (props) => {
       removeStore();
       dispatch(commonActions.toggleLoading(false));
       setTimeout(() => {
-        props.navigation.goBack();
+        props.navigation.navigate('Home');
       }, 600);
     }
   };
@@ -167,14 +169,15 @@ const AddStory = (props) => {
     }
   };
 
-  const addStory = () => {
-    captureRef(viewShotRef, {
-      format: 'jpg',
-      quality: 0.9,
-    }).then(
-      (uri) => uploadToStorage(uri),
-      (error) => console.error('Oops, snapshot failed', error),
-    );
+  const addStory = async () => {
+    await cropViewRef.current.saveImage(90);
+    // captureRef(viewShotRef, {
+    //   format: 'jpg',
+    //   quality: 0.9,
+    // }).then(
+    //   (uri) => uploadToStorage(uri),
+    //   (error) => console.error('Oops, snapshot failed', error),
+    // );
   };
   //BackHandler handle
   useBackHandler(() => {
@@ -184,14 +187,11 @@ const AddStory = (props) => {
   //Theme
   const {colors} = useTheme();
 
-  const ViewShotStyle =
-    (HEIGHT - notchHeight) / WIDTH > storyImageRatio
-      ? {width: WIDTH, height: WIDTH * storyImageRatio, overflow: 'visible'}
-      : {
-          width: (HEIGHT - notchHeight) / storyImageRatio,
-          height: HEIGHT - notchHeight,
-          overflow: 'visible',
-        };
+  const viewShotStyle = {
+    width: WIDTH,
+    height: HEIGHT - notchHeight - 76,
+    overflow: 'visible',
+  };
 
   return (
     <View style={styles.container}>
@@ -199,7 +199,18 @@ const AddStory = (props) => {
         safeAreaTopStyle={styles.safeAreaTopStyle}
         bgStatusBar={colors['$bgColor']}>
         <View style={styles.mainWrapper}>
-          <ViewShot
+          <CropView
+            sourceUrl={Platform.OS === 'ios' ? image.sourceURL : image.path}
+            style={viewShotStyle}
+            ref={cropViewRef}
+            onImageCrop={(res) => {
+              const uri = res.uri;
+              uploadToStorage(uri);
+            }}
+            keepAspectRatio
+            aspectRatio={{width: 9, height: 16}}
+          />
+          {/* <ViewShot
             style={ViewShotStyle}
             ref={viewShotRef}
             options={{format: 'jpg', quality: 0.9}}>
@@ -219,7 +230,7 @@ const AddStory = (props) => {
               resizeMode={'contain'}
               {...panResponder.panHandlers}
             />
-          </ViewShot>
+          </ViewShot> */}
           <View style={styles.bottom}>
             <TouchableOpacity
               style={styles.addStore}
