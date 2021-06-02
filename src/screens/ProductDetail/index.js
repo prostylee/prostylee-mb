@@ -251,7 +251,10 @@ const ProductDetail = (props) => {
           onSelect={selectRelatedProduct}
         />
         <View style={styles.lineHrBig} />
-        <ProductCoordinated data={productCoordinated?.content || []} />
+        <ProductCoordinated
+          data={productCoordinated?.content || []}
+          onSelect={selectRelatedProduct}
+        />
       </Container>
       <Footer item={productData} />
     </View>
