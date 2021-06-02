@@ -2,6 +2,8 @@
 import styles from './styles';
 import React, {useEffect, useState, useRef, useMemo} from 'react';
 import {View, ActivityIndicator, FlatList, Animated, Text} from 'react-native';
+import {useSelector} from 'react-redux';
+import {getListCartSelector} from 'redux/selectors/cart';
 import Product from './Item';
 import EmptyCart from '../EmptyCart';
 import CardFooter from '../CardFooter';
@@ -9,8 +11,11 @@ import ProductSimilar from '../ProductSimilar';
 import i18n from 'i18n';
 import {Colors} from 'components';
 import {CartEmpty} from 'svg/common';
+import {getProductById} from 'services/api/productApi';
 
 const ListProduct = ({navigation, data}) => {
+  const cart = useSelector((state) => getListCartSelector(state));
+
   const [refreshing, handleRefreshing] = useState(false);
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
@@ -19,6 +24,18 @@ const ListProduct = ({navigation, data}) => {
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
+
+  useEffect(() => {
+    getProductById(126)
+      .then((res) => {
+        if (res.data.status !== 200) {
+          console.log('có lỗi xảy ra');
+          return;
+        }
+        console.log('res', res.data.data);
+      })
+      .catch(() => console.log('Lỗi hệ thống!'));
+  }, []);
 
   useEffect(() => {
     handleRefreshing(false);
@@ -69,8 +86,8 @@ const ListProduct = ({navigation, data}) => {
   };
 
   const groupData = useMemo(
-    () => groupDataByStore(data),
-    [JSON.stringify(data)],
+    () => groupDataByStore(cart),
+    [JSON.stringify(cart)],
   );
 
   const onCheckout = () => {

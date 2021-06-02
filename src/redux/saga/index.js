@@ -8,6 +8,7 @@ import daynamicUsers from './dynamicUsers';
 import reviewRating from './reviewRating';
 import status from './status';
 import categories from './categories';
+import cart from './cart';
 
 export default function* rootSaga() {
   yield all([
@@ -19,5 +20,6 @@ export default function* rootSaga() {
     ...reviewRating,
     ...status,
     ...categories,
+    ...cart,
   ]);
 }

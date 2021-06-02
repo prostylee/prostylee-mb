@@ -46,6 +46,8 @@ import categories, {
   types as categoriesTypes,
 } from './categories';
 
+import cart, {actions as cartActions, types as cartTypes} from './cart';
+
 const rootReducer = combineReducers({
   common,
   product,
@@ -67,5 +69,6 @@ export {dynamicUsersActions, dynamicUsersTypes};
 export {reviewRatingActions, reviewRatingSelectors, reviewRatingTypes};
 export {statusActions, statusSelectors, statusTypes};
 export {categoriesActions, categoriesTypes};
+export {cartActions, cartTypes};
 
 export default rootReducer;
