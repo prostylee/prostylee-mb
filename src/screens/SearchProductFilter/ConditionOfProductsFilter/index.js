@@ -27,6 +27,10 @@ const ConditionOfProductsFilter = () => {
   const filterState = useSelector((state) => getProductFilterState(state));
   const attributeFilterState = filterState?.attributes;
   const categoryFilterState = filterState.category;
+  console.log('FILTER STATE', filterState);
+
+  // const attributeFilterState = {};
+  // const categoryFilterState = -1;
 
   const setSections = (sections) => {
     setActiveSections(sections.includes(undefined) ? [] : sections);
@@ -62,7 +66,7 @@ const ConditionOfProductsFilter = () => {
         transition="backgroundColor">
         <RadioButton.Group
           onValueChange={(newValue) => _handleCheck(section.id, newValue)}
-          value={attributeFilterState[`${section.id}`]}>
+          value={attributeFilterState?.[`${section.id}`]}>
           {section &&
           section.attributeOptions &&
           section.attributeOptions.length ? (
@@ -77,13 +81,20 @@ const ConditionOfProductsFilter = () => {
                     styles.labelStyle,
                     {
                       color:
-                        attributeFilterState[`${section.id}`] === item.id
+                        attributeFilterState?.[`${section.id}`] === item.id
                           ? Colors['$purple']
                           : Colors['$black'],
                     },
                   ]}
                   label={item.name}
+                  mode="android"
+                  position="leading"
+                  labelStyle={{
+                    justifyContent: 'flex-start',
+                    textAlign: 'left',
+                  }}
                 />
+
                 <Divider />
               </View>
             ))

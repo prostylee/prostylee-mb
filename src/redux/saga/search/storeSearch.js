@@ -15,9 +15,9 @@ const getStoreSearch = function* ({payload}) {
   try {
     yield put(searchActions.setStoreSearchLoading(true));
     const res = yield call(getStoreResultsApi, payload);
-    let listStore = res?.data?.data?.content;
+    let listStore = res?.data?.data;
     // const newData = yield call(getStoreBestSellerProductByStoreId, listStore);
-
+    console.log('LIST STORE', listStore);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(searchActions.getStoreSearchSuccess(listStore));
     } else {
