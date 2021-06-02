@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, FlatList, Text} from 'react-native';
 
 import styles from './styles';
@@ -63,11 +63,21 @@ const ProductList = ({navigation, data = []}) => {
       }),
     );
   };
+  useEffect(() => {
+    dispatch(
+      searchActions.getProductsSearchLoadmore({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        keyword: currentKeyword,
+        type: 'product',
+      }),
+    );
+  }, [currentKeyword]);
   return (
     <View style={styles.container}>
       {isSearchLoading ? (
         <ActivityIndicator animating color={Colors.$purple} size="small" />
-      ) : !data || !data.content.length ? (
+      ) : !data || !data?.content?.length ? (
         <Text style={{color: Colors['$lightGray']}}>
           Không tìm thấy kết quả
         </Text>

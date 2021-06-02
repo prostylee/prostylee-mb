@@ -23,7 +23,7 @@ export const actions = {
 export const defaultState = {
   //List STORE_SEARCH
   productsFilterLoading: false,
-  productFilterList: {},
+  productFilterList: [],
   pageProductFilter: 0,
   limitProductFilter: 12,
   getProductsFilterStatus: false,

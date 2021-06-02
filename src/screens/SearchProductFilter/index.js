@@ -44,6 +44,7 @@ const FilterProduct = ({navigation}) => {
       );
     }
   }, []);
+  // console.log('FIlter Attribute List', filterAttributeList);
 
   return (
     <ThemeView style={styles.container} isFullView>
@@ -60,7 +61,7 @@ const FilterProduct = ({navigation}) => {
       <ScrollView>
         <View style={styles.wrapContent}>
           <FeaturedCategories data={categories} />
-          <SizeFilter />
+          <SizeFilter filterAttributeList={filterAttributeList} />
           <PriceFilter />
           <ConditionOfProductsFilter />
         </View>

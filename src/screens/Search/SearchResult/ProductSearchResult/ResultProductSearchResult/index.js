@@ -60,6 +60,10 @@ const ResultProductSearchResult = ({navigation}) => {
     );
   };
 
+  useEffect(() => {
+    handleRefresh();
+  }, []);
+
   const handleLoadMore = () => {
     if (hasLoadMore) {
       dispatch(
