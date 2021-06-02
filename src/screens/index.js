@@ -60,7 +60,6 @@ export {
   ResetPasswordViaMail,
   SimpleWebView,
   ProductDetail,
-  UserProfile,
   ReviewRating,
   ChooseRateProduct,
   RateProduct,
@@ -71,7 +70,6 @@ export {
   AddStatus,
   AddStoreForStatus,
   Vouchers,
-  NearbyStore,
   FlashSale,
   StoreAddress,
 };

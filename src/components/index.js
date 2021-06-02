@@ -14,7 +14,6 @@ import RnDateTimePicker from './RnDateTimePicker';
 import Rating from './RnRating/SwipeRating';
 import AirbnbRating from './RnRating/TapRating';
 import ProductLike from './ProductLike';
-import Rating from './RnRating/SwipeRating';
 // import {RnRatingTap} from './RnRatingTap';
 // import {ModalImagePicker} from './ModalImagePicker';
 import ModalZoomImage from './ModalZoomImage';
@@ -61,7 +60,6 @@ export {
   TextInputRounded,
   RnDateTimePicker,
   AirbnbRating,
-  Rating,
   Rating,
   // RnRatingTap,
   //   ModalImagePicker,

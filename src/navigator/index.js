@@ -93,9 +93,7 @@ function SignedIn() {
         name="SearchProductFilter"
         component={SearchProductFilter}
       />
-      <Stack.Screen name="NearbyStore" component={NearbyStore} />
       <Stack.Screen name="StoreAddress" component={StoreAddress} />
-      <Stack.Screen name="UserProfile" component={UserProfile} />
       <Stack.Screen name="AddStory" component={AddStory} />
       <Stack.Screen name="AddStore" component={AddStore} />
       <Stack.Screen name="CropPicture" component={CropPicture} />

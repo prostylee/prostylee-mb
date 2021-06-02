@@ -9,7 +9,7 @@ import ProductsCategories from '../Categories';
 import {Searchbar} from 'react-native-paper';
 import {ChevronLeft} from 'svg/common';
 import {getCategoriesSelectSelector} from 'redux/selectors/categories';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const HeaderList = ({heightShow, leftPress, navigation}) => {
   const categoriesSelect = useSelector((state) =>
@@ -17,8 +17,6 @@ const HeaderList = ({heightShow, leftPress, navigation}) => {
   );
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => setSearchQuery(query);
-  console.log('categoriesSelect');
-  console.log(categoriesSelect);
   return (
     <View
       style={{
