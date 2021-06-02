@@ -181,8 +181,12 @@ const getProductCoordinated = function* ({payload}) {
   try {
     yield put(productActions.getProductCoordinatedLoading(true));
     const res = yield call(getCoordinatedProduct, {
-      id: payload.id,
-      newest: true,
+      storeId: payload.storeId,
+      categoryId: payload.categoryId,
+      page: 0,
+      limit: 10,
+      sort: 'name',
+      bestSeller: true,
     });
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(productActions.getProductCoordinatedSuccess(res.data.data));

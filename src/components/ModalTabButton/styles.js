@@ -17,7 +17,7 @@ const styles = EStyleSheet.create({
   modalBackground: {
     flex: 1,
     width: '100%',
-    paddingBottom: isIphoneX() ? 70 : 49,
+    paddingBottom: isIphoneX() ? 80 : 49,
   },
   linearGradient: {
     flex: 1,

@@ -17,7 +17,6 @@ import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
 import ViewShot, {captureRef} from 'react-native-view-shot';
 import {Storage, Auth} from 'aws-amplify';
-import {userTokenSelector} from 'redux/selectors/user';
 import styles from './styles';
 import i18n from 'i18n';
 import {useBackHandler} from '@react-native-community/hooks';
@@ -61,10 +60,6 @@ const AddStory = (props) => {
   const storeSelected = useSelector((state) =>
     newFeedSelectors.getNewFeedStore(state),
   );
-  const userProfile = useSelector((state) => userTokenSelector(state));
-  const userData = userProfile
-    ? userProfile.signInUserSession?.idToken.payload.identities?.[0]
-    : {};
   const customPrefix = `/public/${userId}/stories/`;
   const pan = React.useRef(new Animated.ValueXY()).current;
 
@@ -109,33 +104,40 @@ const AddStory = (props) => {
   };
 
   const postStory = async (data) => {
-    if (!isEmpty(storeSelected)) {
-      await dispatch(
-        newFeedActions.postStory({
-          storeId: storeSelected.id,
-          images: [
-            {
-              name: data.name,
-              path: customPrefix,
-            },
-          ],
-          targetType: 'user',
-        }),
-      );
-    } else {
-      await dispatch(
-        newFeedActions.postStory({
-          images: [
-            {
-              name: data.name,
-              path: customPrefix,
-            },
-          ],
-          targetType: 'user',
-        }),
-      );
+    try {
+      if (!isEmpty(storeSelected)) {
+        await dispatch(
+          newFeedActions.postStory({
+            storeId: storeSelected.id,
+            images: [
+              {
+                name: data.name,
+                path: customPrefix,
+              },
+            ],
+            targetType: 'user',
+          }),
+        );
+      } else {
+        await dispatch(
+          newFeedActions.postStory({
+            images: [
+              {
+                name: data.name,
+                path: customPrefix,
+              },
+            ],
+            targetType: 'user',
+          }),
+        );
+      }
+    } finally {
+      removeStore();
+      dispatch(commonActions.toggleLoading(false));
+      setTimeout(() => {
+        props.navigation.goBack();
+      }, 600);
     }
-    removeStore();
   };
 
   const uploadToStorage = async (uri) => {
@@ -154,22 +156,15 @@ const AddStory = (props) => {
       })
         .then((result) => {
           postStory({name: `story_${time}.jpg`});
-          getUrl(result.key);
         })
-        .catch((err) => {
+        .catch((_) => {
+          dispatch(commonActions.toggleLoading(false));
           Alert.alert(i18n.t('error.cannotUploadImage'));
         });
-
-      dispatch(commonActions.toggleLoading(false));
     } catch (err) {
+      dispatch(commonActions.toggleLoading(false));
       Alert.alert(i18n.t('error.cannotGetImage'));
     }
-  };
-
-  const getUrl = async (key) => {
-    const signedURL = await Storage.get(key);
-    // setUploadedPhoto(signedURL);
-    // console.log('signedURL ' + signedURL);
   };
 
   const addStory = () => {

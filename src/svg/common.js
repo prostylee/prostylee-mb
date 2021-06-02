@@ -714,6 +714,67 @@ export const Store = ({width = 16, height = 16, color = 'white'}) => {
   );
 };
 
+export const BookMark = ({width = 24, height = 24, color = '#8B9399'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M19 21L12 16L5 21V5C5 4.46957 5.21071 3.96086 5.58579 3.58579C5.96086 3.21071 6.46957 3 7 3H17C17.5304 3 18.0391 3.21071 18.4142 3.58579C18.7893 3.96086 19 4.46957 19 5V21Z"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const Ruler = ({width = 16, height = 16, color = '#333333'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M9.06067 2.69666L10.4747 4.11066"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M6.93933 4.81799L8.35333 6.23199"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M4.81799 6.93933L6.23199 8.35333"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M2.69672 9.06067L4.11072 10.4747"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M10.8282 0.928921L0.928664 10.8284C0.53814 11.2189 0.53814 11.8521 0.928664 12.2426L3.75709 15.0711C4.14762 15.4616 4.78078 15.4616 5.17131 15.0711L15.0708 5.17156C15.4613 4.78104 15.4613 4.14787 15.0708 3.75735L12.2424 0.928921C11.8518 0.538397 11.2187 0.538396 10.8282 0.928921Z"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};
+
 export const Menu = ({width = 24, height = 24, color = '#823FFD'}) => {
   return (
     <Svg

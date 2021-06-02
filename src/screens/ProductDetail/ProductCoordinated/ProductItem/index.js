@@ -7,7 +7,6 @@ import styles from './styles';
 import {currencyFormat, priceSalePercent} from 'utils/currency';
 
 const ProductItem = ({item}) => {
-  console.log(item);
   const navigation = useNavigation();
   return (
     <View style={styles.wrapItems}>
