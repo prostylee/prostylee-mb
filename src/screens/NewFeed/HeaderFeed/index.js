@@ -18,7 +18,9 @@ const HeaderFeed = ({changeTabStore, changeTabUser, targetType}) => {
   return (
     <Header
       leftIcon={
-        <TouchableOpacity style={styles.leftHeader}>
+        <TouchableOpacity
+          style={styles.leftHeader}
+          onPress={() => navigation.navigate('Search')}>
           <Search />
         </TouchableOpacity>
       }
