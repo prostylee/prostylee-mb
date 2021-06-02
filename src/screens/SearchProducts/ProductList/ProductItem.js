@@ -61,8 +61,10 @@ const ProductItem = ({item, index}) => (
               startingValue={item?.productStatisticResponse?.resultOfRating}
             />
             <Text style={styles.ratingPoint}>
-              {item?.productStatisticResponse?.resultOfRating} (
-              {item?.productStatisticResponse?.numberOfLike})
+              {item.productStatisticResponse
+                ? `${item?.productStatisticResponse?.resultOfRating}(
+                  ${item?.productStatisticResponse?.numberOfLike})`
+                : '0(0)'}
             </Text>
           </View>
           <TouchableOpacity>

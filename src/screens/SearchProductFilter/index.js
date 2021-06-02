@@ -65,7 +65,13 @@ const FilterProduct = ({navigation}) => {
           <ConditionOfProductsFilter />
         </View>
       </ScrollView>
-      <ButtonRounded label="Áp Dụng" style={{margin: 20}} />
+      <ButtonRounded
+        label="Áp Dụng"
+        style={{margin: 20}}
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
     </ThemeView>
   );
 };

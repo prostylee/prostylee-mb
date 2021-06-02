@@ -120,16 +120,15 @@ const TagList = ({onTagPress}) => {
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
-  const [searchQuery, setSearchQuery] = React.useState(currentKeyword.keyword);
+
+  const [searchQuery, setSearchQuery] = React.useState(currentKeyword);
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
-
+  console.log('RERENDER ');
   const searchResults = useSelector((state) =>
     getProductSearchListSelector(state),
   );
-  console.log('ALL SEARCH PRODUCTS RESULTS', searchResults);
-
   const handlerSearch = useCallback(
     debounce((query) => {
       dispatch(
@@ -197,19 +196,19 @@ const SearchProducts = ({navigation}) => {
       }),
     );
   };
+  const inputRef = React.useRef();
 
-  const _handleLoadMore = () => {};
   useEffect(() => {
-    console.log('CURRENT KEYWORD SEARCH MAIN', currentKeyword);
+    setSearchQuery(currentKeyword);
     dispatch(
-      searchActions.getProductsSearch({
-        keyword: currentKeyword.keyword,
+      searchActions.getFeaturedProductSearch({
+        keyword: currentKeyword,
+        // type: 'product',
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
-        sorts: 'name',
       }),
     );
-  }, []);
+  }, [currentKeyword]);
 
   return (
     <ThemeView style={styles.container} isFullView>
@@ -240,7 +239,8 @@ const SearchProducts = ({navigation}) => {
             }}
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
-            value={currentKeyword.keyword}
+            value={searchQuery}
+            defaultValue={searchQuery}
           />
         }
         rightComponent={<GroupHeaderRightButton haveNoti={true} />}

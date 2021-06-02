@@ -27,7 +27,7 @@ export const actions = {
   getProductsSearchLoadmoreFailed: createAction(
     types.GET_PRODUCTS_SEARCH_LOADMORE_FAILED,
   ),
-  setProductSearchLoadmoreSuccess: createAction(
+  getProductsSearchLoadmoreSuccess: createAction(
     types.GET_PRODUCTS_SEARCH_LOADMORE_SUCCESS,
   ),
 };
@@ -58,7 +58,6 @@ export const handleActions = {
   },
   [types.GET_PRODUCTS_SEARCH_SUCCESS]: (state, {payload}) => {
     const {totalPages, content} = payload;
-    payload.content = state.productSearchList?.content.concat(content) || [];
     return {
       ...state,
       productSearchList: payload,

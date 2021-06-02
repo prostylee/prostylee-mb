@@ -4,11 +4,13 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$bgColorSearch',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   listWrapper: {
     paddingTop: 20,
     backgroundColor: '$white',
-    // justifyContent: 'flex-start',
+    justifyContent: 'flex-start',
     // alignItems: 'center',
   },
   itemWrapper: {

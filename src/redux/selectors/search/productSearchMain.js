@@ -5,7 +5,7 @@ export const searchReducer = (state) => state.search;
 //List FEATURED_PRODUCT_SEARCH
 export const getProductSearchLoadingSelector = createSelector(
   searchReducer,
-  (data) => data?.productSearchLoading,
+  (data) => data?.productSearchLoading || false,
 );
 export const getProductSearchLoadmoreLoadingSelector = createSelector(
   searchReducer,

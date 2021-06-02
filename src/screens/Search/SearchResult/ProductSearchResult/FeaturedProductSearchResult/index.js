@@ -13,17 +13,19 @@ import {
   getHasLoadMoreFeaturedProductSearchSelector,
   getPageFeaturedProductSearchSelector,
 } from 'redux/selectors/search/featuredProductSearch';
+import {getCurrentKeyword} from 'redux/selectors/search';
 
 import FeaturedCategoriesItem from './item.js';
-
+import {searchActions} from 'redux/reducers';
 import {useDispatch, useSelector} from 'react-redux';
 import {Text} from 'react-native-paper';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 const ResultProductSearchResult = ({navigation}) => {
   const dispatch = useDispatch();
 
   const [refreshing, handleRefreshing] = useState(false);
-
+  const currentKeyword = useSelector((state) => getCurrentKeyword(state));
   const loading = useSelector((state) =>
     getFeaturedProductSearchLoadingSelector(state),
   );
@@ -50,42 +52,45 @@ const ResultProductSearchResult = ({navigation}) => {
   useEffect(() => {}, [dispatch, refreshing]);
 
   const handleRefresh = () => {
-    handleRefreshing(true);
+    dispatch(
+      searchActions.getFeaturedProductSearch({
+        keyword: currentKeyword,
+        // type: 'product',
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
   };
 
   const handleLoadMore = () => {
+    console.log('END REACHED');
     if (hasLoadMore) {
+      dispatch(
+        searchActions.getFeaturedProductSearch({
+          keyword: currentKeyword,
+          // type: 'product',
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
     }
   };
 
-  // const renderFooter = () => {
-  //   if (!loadMoreLoading) {
-  //     return (
-  //       <View style={styles.viewFooterHasResult}>
-  //         <Text
-  //           style={{
-  //             color: '#823FFD',
-  //             lineHeight: 20,
-  //             fontSize: 14,
-  //             fontWeight: '500',
-  //           }}>
-  //           Xem toàn bộ kết quả (167)
-  //         </Text>
-  //       </View>
-  //     );
-  //   }
-
-  //   return (
-  //     <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-  //       <ActivityIndicator animating color={Colors.$purple} size="small" />
-  //     </View>
-  //   );
-  // };
+  const renderFooter = () => {
+    if (loadMoreLoading) {
+      return (
+        <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+          <ActivityIndicator animating color={Colors.$purple} size="small" />
+        </View>
+      );
+    }
+    return null;
+  };
   return (
     <>
       <View style={styles.container}>
         <View style={styles.wrapHeader}>
-          <Text style={styles.title}>{i18n.t('Search.featuredProduct')}</Text>
+          <Text style={styles.title}>Sản phẩm phổ biến</Text>
         </View>
         <View style={styles.wrapList}>
           <FlatList
@@ -99,10 +104,10 @@ const ResultProductSearchResult = ({navigation}) => {
             )}
             numColumns={1}
             keyExtractor={(item, index) => index}
-            refreshing={refreshing}
+            refreshing={loading}
             onRefresh={handleRefresh}
-            onEndReached={() => handleLoadMore()}
-            // ListFooterComponent={renderFooter}
+            onEndReached={handleLoadMore}
+            ListFooterComponent={renderFooter}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
           />

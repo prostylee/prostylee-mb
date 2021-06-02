@@ -12,3 +12,11 @@ export const getStoreSearchListSelector = createSelector(
   searchReducer,
   (data) => data?.storeList || [],
 );
+export const hasStoreSearchLoadMoreSelector = createSelector(
+  searchReducer,
+  (data) => data?.hasStoreSearchLoadmore || false,
+);
+export const getStoreSearchLoadmoreLoading = createSelector(
+  searchReducer,
+  (data) => data?.storeSearchLoadmoreLoading || false,
+);

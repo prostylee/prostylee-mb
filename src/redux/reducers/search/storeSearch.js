@@ -6,6 +6,10 @@ export const types = {
   GET_STORE_SEARCH: 'GET_STORE_SEARCH',
   GET_STORE_SEARCH_SUCCESS: 'GET_STORE_SEARCH_SUCCESS',
   GET_STORE_SEARCH_FAILED: 'GET_STORE_SEARCH_FAILED',
+  SET_STORE_SEARCH_LOADMORE_LOADING: 'SET_STORE_SEARCH_LOADMORE_LOADING',
+  GET_STORE_SEARCH_LOADMORE: 'GET_STORE_SEARCH_LOADMORE',
+  GET_STORE_SEARCH_LOADMORE_SUCCESS: 'GET_STORE_SEARCH_LOADMORE_SUCCESS',
+  GET_STORE_SEARCH_LOADMORE_FAILED: 'GET_STORE_SEARCH_LOADMORE_FAILED',
 };
 
 export const actions = {
@@ -14,6 +18,16 @@ export const actions = {
   getStoreSearch: createAction(types.GET_STORE_SEARCH),
   getStoreSearchSuccess: createAction(types.GET_STORE_SEARCH_SUCCESS),
   getStoreSearchFailed: createAction(types.GET_STORE_SEARCH_FAILED),
+  setStoreSearchLoadmoreLoading: createAction(
+    types.SET_STORE_SEARCH_LOADMORE_LOADING,
+  ),
+  getStoreSearchLoadmore: createAction(types.GET_STORE_SEARCH_LOADMORE),
+  getStoreSearchLoadmoreSuccess: createAction(
+    types.GET_STORE_SEARCH_LOADMORE_SUCCESS,
+  ),
+  getStoreSearchLoadmoreFailed: createAction(
+    types.GET_STORE_SEARCH_LOADMORE_FAILED,
+  ),
 };
 
 export const defaultState = {
@@ -22,7 +36,9 @@ export const defaultState = {
   storeList: {},
   pageStoreSearch: 0,
   limitStoreSearch: 12,
-  storeSearchStatus: false,
+  storeSeachPage: 0,
+  storeSearchLoadmoreLoading: false,
+  hasStoreSearchLoadmore: false,
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -32,23 +48,36 @@ export const handleActions = {
   [types.SET_STORE_SEARCH_LOADING]: (state, {payload}) => {
     return {...state, storeSearchLoading: payload};
   },
-  // [types.GET_STORE_SEARCH]: (state, {payload}) => {
-  //   console.log('Long GET_STORE_SEARCH ', payload);
-  //   return {
-  //     ...state,
-  //   };
-  // },
+
   [types.GET_STORE_SEARCH_FAILED]: (state, {payload}) => {
     return {
       ...state,
-      storeSearchStatus: false,
     };
   },
   [types.GET_STORE_SEARCH_SUCCESS]: (state, {payload}) => {
     return {
       ...state,
       storeList: [...payload],
-      storeSearchStatus: true,
     };
+  },
+  [types.SET_STORE_SEARCH_LOADMORE_LOADING]: (state, {payload}) => {
+    return {...state, storeSearchLoadmoreLoading: payload};
+  },
+  [types.GET_STORE_SEARCH_LOADMORE_SUCCESS]: (state, {payload}) => {
+    const {totalPages, content} = payload;
+    payload.content = state.productSearchList?.content.concat(content) || [];
+
+    return {
+      ...state,
+      storeList: payload,
+      storeSeachPage: state.pageProductSearch + UNIT_INCREASE,
+      hasStoreSearchLoadmore:
+        state.hasStoreSearchLoadmore + UNIT_INCREASE + 1 < totalPages
+          ? true
+          : false,
+    };
+  },
+  [types.GET_STORE_SEARCH_LOADMORE_FAILED]: (state, {payload}) => {
+    return {...state};
   },
 };

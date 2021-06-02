@@ -9,6 +9,8 @@ import i18n from 'i18n';
 import {
   getStoreSearchLoadingSelector,
   getStoreSearchListSelector,
+  hasStoreSearchLoadMoreSelector,
+  getStoreSearchLoadmoreLoading,
 } from 'redux/selectors/search/storeSearch';
 
 import StoreSearchResultItem from './item.js';
@@ -29,6 +31,13 @@ const FeaturedCategories = ({navigation}) => {
   const loading = useSelector((state) => getStoreSearchLoadingSelector(state));
   const storeList = useSelector((state) => getStoreSearchListSelector(state));
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
+  const hasLoadMore = useSelector((state) =>
+    hasStoreSearchLoadMoreSelector(state),
+  );
+  const isStoreSearchLoadmoreLoading = useSelector((state) =>
+    getStoreSearchLoadmoreLoading(state),
+  );
+
   const handleRefresh = () => {
     dispatch(
       searchActions.getStoreSearch({
@@ -41,23 +50,29 @@ const FeaturedCategories = ({navigation}) => {
   };
 
   const handleLoadMore = () => {
-    // if (hasLoadMore) {
-    // }
+    console.log('STORE END REAACHED', hasLoadMore);
+    if (hasLoadMore) {
+      dispatch(
+        searchActions.getStoreSearch({
+          keyword: currentKeyword,
+          page: PAGE_DEFAULT + 1,
+          limit: LIMIT_DEFAULT,
+          sorts: 'name',
+        }),
+      );
+    }
   };
 
   const renderFooter = () => {
-    // if (!loadMoreLoading) {
-    //   return <View style={styles.viewFooter} />;
-    // }
-    return (
-      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-        {/* <ActivityIndicator animating color={Colors.$purple} size="small" /> */}
-      </View>
-    );
+    if (isStoreSearchLoadmoreLoading)
+      return (
+        <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+          <ActivityIndicator animating color={Colors.$purple} size="small" />
+        </View>
+      );
+    return null;
   };
-  // useEffect(() => {
-  //   console.log('NEW STORE LIST \n\n', storeList);
-  // }, [storeList]);
+
   return (
     <>
       <View style={styles.container}>
