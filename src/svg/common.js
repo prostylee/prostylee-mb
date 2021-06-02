@@ -94,8 +94,8 @@ export const DubHeart = ({width = 16, height = 16, color = '#8B9399'}) => {
 export const Heart = ({width = 16, height = 16, color = '#8B9399'}) => {
   return (
     <Svg
-      width="16"
-      height="16"
+      width={width}
+      height={height}
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
@@ -113,8 +113,8 @@ export const Heart = ({width = 16, height = 16, color = '#8B9399'}) => {
 export const HeartFill = ({width = 16, height = 16, color = '#8B9399'}) => {
   return (
     <Svg
-      width="20"
-      height="20"
+      width={width}
+      height={height}
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">

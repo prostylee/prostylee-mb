@@ -253,7 +253,7 @@ const ProductDetail = (props) => {
         <View style={styles.lineHrBig} />
         <ProductCoordinated data={productCoordinated?.content || []} />
       </Container>
-      <Footer isLike={productData?.likeStatusOfUserLogin || false} />
+      <Footer item={productData} />
     </View>
   );
 };
