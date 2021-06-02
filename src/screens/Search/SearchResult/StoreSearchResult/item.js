@@ -19,8 +19,8 @@ const StoreSearchResultItem = ({item, index, navigation}) => {
         <View style={styles.item}>
           <Image
             source={
-              item?.imgUrl
-                ? {uri: item?.imgUrl}
+              item?.imageUrl
+                ? {uri: item?.imageUrl}
                 : require('assets/images/default.png')
             }
             resizeMode="cover"
