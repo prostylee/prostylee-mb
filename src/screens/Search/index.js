@@ -48,6 +48,7 @@ const Search = ({navigation}) => {
           numberOfProducts: 10,
         }),
       );
+      dispatch(searchActions.setCurrentKeyword(query));
     }, 1000);
   };
   React.useEffect(() => {

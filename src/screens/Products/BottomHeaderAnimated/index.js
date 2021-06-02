@@ -5,6 +5,8 @@ import {ScrollView, View, Text, TouchableOpacity} from 'react-native';
 import {Chip, Divider} from 'react-native-paper';
 import {Sort, Filter, CaretDown} from 'svg/common';
 import i18n from 'i18n';
+import SortDropDown from '../SortDropDown';
+
 import styles from './styles';
 import {RadioButton} from 'react-native-paper';
 import {RnRatingTap, Picker} from 'components';
@@ -37,7 +39,8 @@ const BottomHeaderAnimated = ({navigation}) => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('FilterProduct')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('SearchProductFilter')}>
           <View style={styles.wrapBlockFilter}>
             <Text numberOfLines={1} style={styles.textSpace}>
               |
@@ -50,7 +53,14 @@ const BottomHeaderAnimated = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <Divider />
-      <Picker visible={visible} setVisible={setVisible} setAction={setAction}>
+      <SortDropDown
+        visible={visible}
+        setVisible={setVisible}
+        setAction={setAction}
+        setValueSort={setValueSort}
+        valueSort={valueSort}
+      />
+      {/* <Picker visible={visible} setVisible={setVisible} setAction={setAction}>
         <RadioButton.Group
           value={valueSort}
           onValueChange={(value) => setValueSort(value)}
@@ -58,7 +68,7 @@ const BottomHeaderAnimated = ({navigation}) => {
           <RadioButton.Item label="Liên quan nhất" value="default" />
           <RadioButton.Item label="Phổ biến nhất" value="new" />
         </RadioButton.Group>
-      </Picker>
+      </Picker> */}
       <View style={styles.wrapBlockChips}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <Chip

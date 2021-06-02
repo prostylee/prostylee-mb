@@ -72,6 +72,15 @@ const TopSearch = ({navigation}) => {
                           sorts: 'name',
                         }),
                       );
+                      dispatch(
+                        searchActions.getStoreSearch({
+                          keyword: item,
+                          page: PAGE_DEFAULT,
+                          limit: LIMIT_DEFAULT,
+                          sorts: 'name',
+                          numberOfProducts: 10,
+                        }),
+                      );
 
                       navigation.navigate('SearchProducts');
                     }}
