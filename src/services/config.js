@@ -34,6 +34,7 @@ export async function _fetch(method, path, data) {
   return api[method](path, data).then((res) => {
     // console.log('_fetch response=' + JSON.stringify(res));
     let response;
+    console.log(res)
     if (res && res.status === SUCCESS) {
       response = {
         status: res.status,

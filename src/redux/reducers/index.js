@@ -46,6 +46,8 @@ import categories, {
   types as categoriesTypes,
 } from './categories';
 
+import search, {actions as searchActions, types as searchTypes} from './search';
+
 const rootReducer = combineReducers({
   common,
   product,
@@ -56,6 +58,7 @@ const rootReducer = combineReducers({
   reviewRating,
   status,
   categories,
+  search,
 });
 
 export {commonActions, commonSelectors, commonTypes};
@@ -67,5 +70,6 @@ export {dynamicUsersActions, dynamicUsersTypes};
 export {reviewRatingActions, reviewRatingSelectors, reviewRatingTypes};
 export {statusActions, statusSelectors, statusTypes};
 export {categoriesActions, categoriesTypes};
+export {searchActions, searchTypes};
 
 export default rootReducer;
