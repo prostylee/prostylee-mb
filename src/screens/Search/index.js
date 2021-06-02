@@ -10,12 +10,14 @@ import TopSearch from './TopSearch';
 import FeaturedCategories from './FeaturedCategories';
 import SearchResult from './SearchResult';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {searchActions} from 'redux/reducers';
+import {getCurrentKeyword} from 'redux/selectors/search';
 let timeoutSearch = null;
 const Search = ({navigation}) => {
   const dispatch = useDispatch();
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const currentKeyword = useSelector((state) => getCurrentKeyword(state));
+  const [searchQuery, setSearchQuery] = React.useState(currentKeyword);
 
   const onChangeSearch = (query) => {
     clearTimeout(timeoutSearch);
@@ -49,13 +51,12 @@ const Search = ({navigation}) => {
   };
   React.useEffect(() => {
     if (!searchQuery) {
-      dispatch(
-        searchActions.setCurrentKeyword({
-          keyword: '',
-        }),
-      );
+      dispatch(searchActions.setCurrentKeyword(''));
     }
   }, [searchQuery]);
+  React.useEffect(() => {
+    setSearchQuery(currentKeyword);
+  }, [currentKeyword]);
 
   return (
     <ThemeView style={styles.container} isFullView>

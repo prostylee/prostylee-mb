@@ -22,6 +22,8 @@ const ConditionOfProductsFilter = () => {
     getProductFilterAttributeListSelector(state),
   );
 
+  console.log('FILTER ATTRIBUTE LIST CONDITION', filterAttributeList);
+
   const filterState = useSelector((state) => getProductFilterState(state));
   const attributeFilterState = filterState?.attributes;
   const categoryFilterState = filterState.category;
@@ -98,9 +100,13 @@ const ConditionOfProductsFilter = () => {
       <View style={styles.wrapper}>
         <Accordion
           activeSections={activeSections}
-          sections={filterAttributeList.filter(
-            (v) => v.key !== 'kich_co' && v.key !== 'Size',
-          )}
+          sections={
+            filterAttributeList && filterAttributeList.length
+              ? filterAttributeList?.filter(
+                  (v) => v.key !== 'kich_co' && v.key !== 'Size',
+                )
+              : []
+          }
           touchableComponent={TouchableOpacity}
           renderHeader={renderHeader}
           renderContent={renderContent}

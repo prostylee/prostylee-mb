@@ -13,15 +13,21 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
 import {searchActions} from 'redux/reducers';
 
-const Search = ({navigation}) => {
+const Search = ({navigation, filterAttributeList}) => {
   const dispatch = useDispatch();
-  const filterAttributeList = useSelector((state) =>
-    getProductFilterAttributeListSelector(state),
-  );
-  const sizeAttribute = filterAttributeList?.filter(
-    (v) => v.key === 'kich_co',
-  )[0];
-  const ListSize = sizeAttribute?.attributeOptions;
+  // const filterAttributeList = useSelector((state) =>
+  //   getProductFilterAttributeListSelector(state),
+  // );
+  // console.log('FILTER ATTRIBUTE LIST SIZE FILTER', filterAttributeList);
+
+  let ListSize = [];
+  let sizeAttribute = [];
+  if (filterAttributeList && filterAttributeList.length) {
+    let sizeAttribute = filterAttributeList?.filter(
+      (v) => v.key === 'kich_co',
+    )[0];
+    ListSize = sizeAttribute?.attributeOptions;
+  }
 
   const filterState = useSelector((state) => getProductFilterState(state));
   const attributeFilterState = filterState?.attributes;

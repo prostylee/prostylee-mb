@@ -61,7 +61,11 @@ const TopSearch = ({navigation}) => {
               ? listTopSearch.map((item) => (
                   <Chip
                     small
-                    onPress={() => navigation.navigate('SearchProducts')}
+                    onPress={() => {
+                      dispatch(searchActions.setCurrentKeyword(item));
+
+                      navigation.navigate('SearchProducts');
+                    }}
                     style={styles.itemChips}>
                     {item}
                   </Chip>
