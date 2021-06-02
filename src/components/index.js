@@ -35,6 +35,10 @@ import CustomTextInput from './CustomTextInput';
 import CustomSecureInput from './CustomSecureInput';
 import Countdown from './Countdown';
 import CustomPinCodeInput from './CustomPinCodeInput';
+import GridImageReviewer from './GridImageReviewer';
+import TextInputArea from './TextInputArea';
+import NumberInputUpDown from './NumberInputUpDown';
+import RadioSelectGroup from './RadioSelectGroup';
 import ModalTabButton from './ModalTabButton';
 import Picker from './Picker';
 
@@ -75,7 +79,11 @@ export {
   CustomSecureInput,
   Countdown,
   CustomPinCodeInput,
+  GridImageReviewer,
+  TextInputArea,
   ModalTabButton,
   ProductLike,
   Picker,
+  NumberInputUpDown,
+  RadioSelectGroup,
 };

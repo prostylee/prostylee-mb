@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import {StyleSheet, Animated, TouchableOpacity} from 'react-native';
 
-const STAR_IMAGE = require('../images/airbnb-star.png');
-const STAR_SELECTED_IMAGE = require('../images/airbnb-star-selected.png');
+const STAR_IMAGE = require('../assets/images/airbnb-star.png');
+const STAR_SELECTED_IMAGE = require('../assets/images/airbnb-star-selected.png');
 const STAR_SIZE = 40;
 
 const Star = (props) => {
   const [selected, setSelected] = useState(false);
+
   const springValue = new Animated.Value(1);
+
   const spring = () => {
     const {position, starSelectedInPosition} = props;
     springValue.setValue(1.2);
@@ -29,8 +31,10 @@ const Star = (props) => {
     isDisabled,
     starStyle,
   } = props;
+
   const starSource =
     fill && selectedColor === null ? STAR_SELECTED_IMAGE : starImage;
+
   return (
     <TouchableOpacity activeOpacity={1} onPress={spring} disabled={isDisabled}>
       <Animated.Image

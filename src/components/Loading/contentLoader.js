@@ -213,6 +213,40 @@ export const TopSearchLoading = ({
   );
 };
 
+export const ReviewRatingLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([styles.container, style])}>
+      <ContentLoader
+        height={50}
+        width={width}
+        speed={speed}
+        viewBox="0 0 10 10"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y={10} width={width} height={10} />
+      </ContentLoader>
+      <ContentLoader
+        height={50}
+        width={width}
+        speed={speed}
+        viewBox={'0 0 ' + width + ' 50'}
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y={10} width={width} height={10} />
+        <Rect y={30} width={width} height={5} />
+        <Rect y={40} width={width} height={5} />
+      </ContentLoader>
+    </View>
+  );
+};
+
 export const FeaturedCategoriesLoading = ({
   backgroundColor,
   foregroundColor,
@@ -232,6 +266,15 @@ export const FeaturedCategoriesLoading = ({
       <Rect rx="15" ry="15" width={width} height={height} />
     </ContentLoader>
   );
+};
+
+ReviewRatingLoading.defaultProps = {
+  height: 10,
+  width: deviceWidth,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
 };
 
 NewFeedContentLoading.defaultProps = {

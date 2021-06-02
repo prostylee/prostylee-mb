@@ -17,12 +17,12 @@ import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
 import ViewShot, {captureRef} from 'react-native-view-shot';
 import {Storage, Auth} from 'aws-amplify';
-import {userTokenSelector} from 'redux/selectors/user';
 import styles from './styles';
 import i18n from 'i18n';
 import {useBackHandler} from '@react-native-community/hooks';
 import {commonActions, newFeedSelectors, newFeedActions} from 'reducers';
 import {useDispatch, useSelector} from 'react-redux';
+import {CropView} from 'react-native-image-crop-tools';
 
 import {dim} from 'utils/common';
 
@@ -32,6 +32,7 @@ const storyImageRatio = 16 / 9;
 
 const AddStory = (props) => {
   const dispatch = useDispatch();
+  const cropViewRef = React.useRef();
   const [userId, setUserId] = React.useState('');
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
   const viewShotRef = React.useRef();
@@ -61,10 +62,6 @@ const AddStory = (props) => {
   const storeSelected = useSelector((state) =>
     newFeedSelectors.getNewFeedStore(state),
   );
-  const userProfile = useSelector((state) => userTokenSelector(state));
-  const userData = userProfile
-    ? userProfile.signInUserSession?.idToken.payload.identities?.[0]
-    : {};
   const customPrefix = `/public/${userId}/stories/`;
   const pan = React.useRef(new Animated.ValueXY()).current;
 
@@ -109,33 +106,40 @@ const AddStory = (props) => {
   };
 
   const postStory = async (data) => {
-    if (!isEmpty(storeSelected)) {
-      await dispatch(
-        newFeedActions.postStory({
-          storeId: storeSelected.id,
-          images: [
-            {
-              name: data.name,
-              path: customPrefix,
-            },
-          ],
-          targetType: 'user',
-        }),
-      );
-    } else {
-      await dispatch(
-        newFeedActions.postStory({
-          images: [
-            {
-              name: data.name,
-              path: customPrefix,
-            },
-          ],
-          targetType: 'user',
-        }),
-      );
+    try {
+      if (!isEmpty(storeSelected)) {
+        await dispatch(
+          newFeedActions.postStory({
+            storeId: storeSelected.id,
+            images: [
+              {
+                name: data.name,
+                path: customPrefix,
+              },
+            ],
+            targetType: 'user',
+          }),
+        );
+      } else {
+        await dispatch(
+          newFeedActions.postStory({
+            images: [
+              {
+                name: data.name,
+                path: customPrefix,
+              },
+            ],
+            targetType: 'user',
+          }),
+        );
+      }
+    } finally {
+      removeStore();
+      dispatch(commonActions.toggleLoading(false));
+      setTimeout(() => {
+        props.navigation.navigate('Home');
+      }, 600);
     }
-    removeStore();
   };
 
   const uploadToStorage = async (uri) => {
@@ -154,32 +158,26 @@ const AddStory = (props) => {
       })
         .then((result) => {
           postStory({name: `story_${time}.jpg`});
-          getUrl(result.key);
         })
-        .catch((err) => {
+        .catch((_) => {
+          dispatch(commonActions.toggleLoading(false));
           Alert.alert(i18n.t('error.cannotUploadImage'));
         });
-
-      dispatch(commonActions.toggleLoading(false));
     } catch (err) {
+      dispatch(commonActions.toggleLoading(false));
       Alert.alert(i18n.t('error.cannotGetImage'));
     }
   };
 
-  const getUrl = async (key) => {
-    const signedURL = await Storage.get(key);
-    // setUploadedPhoto(signedURL);
-    // console.log('signedURL ' + signedURL);
-  };
-
-  const addStory = () => {
-    captureRef(viewShotRef, {
-      format: 'jpg',
-      quality: 0.9,
-    }).then(
-      (uri) => uploadToStorage(uri),
-      (error) => console.error('Oops, snapshot failed', error),
-    );
+  const addStory = async () => {
+    await cropViewRef.current.saveImage(90);
+    // captureRef(viewShotRef, {
+    //   format: 'jpg',
+    //   quality: 0.9,
+    // }).then(
+    //   (uri) => uploadToStorage(uri),
+    //   (error) => console.error('Oops, snapshot failed', error),
+    // );
   };
   //BackHandler handle
   useBackHandler(() => {
@@ -189,14 +187,11 @@ const AddStory = (props) => {
   //Theme
   const {colors} = useTheme();
 
-  const ViewShotStyle =
-    (HEIGHT - notchHeight) / WIDTH > storyImageRatio
-      ? {width: WIDTH, height: WIDTH * storyImageRatio, overflow: 'visible'}
-      : {
-          width: (HEIGHT - notchHeight) / storyImageRatio,
-          height: HEIGHT - notchHeight,
-          overflow: 'visible',
-        };
+  const viewShotStyle = {
+    width: WIDTH,
+    height: HEIGHT - notchHeight - 76,
+    overflow: 'visible',
+  };
 
   return (
     <View style={styles.container}>
@@ -204,7 +199,18 @@ const AddStory = (props) => {
         safeAreaTopStyle={styles.safeAreaTopStyle}
         bgStatusBar={colors['$bgColor']}>
         <View style={styles.mainWrapper}>
-          <ViewShot
+          <CropView
+            sourceUrl={Platform.OS === 'ios' ? image.sourceURL : image.path}
+            style={viewShotStyle}
+            ref={cropViewRef}
+            onImageCrop={(res) => {
+              const uri = res.uri;
+              uploadToStorage(uri);
+            }}
+            keepAspectRatio
+            aspectRatio={{width: 9, height: 16}}
+          />
+          {/* <ViewShot
             style={ViewShotStyle}
             ref={viewShotRef}
             options={{format: 'jpg', quality: 0.9}}>
@@ -224,7 +230,7 @@ const AddStory = (props) => {
               resizeMode={'contain'}
               {...panResponder.panHandlers}
             />
-          </ViewShot>
+          </ViewShot> */}
           <View style={styles.bottom}>
             <TouchableOpacity
               style={styles.addStore}
