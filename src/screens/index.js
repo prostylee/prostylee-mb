@@ -38,6 +38,7 @@ import SettingLanguage from './Setting/SettingLanguage';
 import Search from './Search';
 import FilterProduct from './FilterProduct';
 import PromoNotification from './Notifications/PromoNotification';
+import Orders from './Orders';
 
 export {
   Welcome,
@@ -80,4 +81,5 @@ export {
   Search,
   FilterProduct,
   PromoNotification,
+  Orders,
 };

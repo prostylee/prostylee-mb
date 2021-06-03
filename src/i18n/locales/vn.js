@@ -222,7 +222,7 @@ export default {
     setting: 'Cài đặt',
     settingChat: 'Cài đặt chat',
     settingNotification: 'Cài đặt thông báo',
-    settingLanguage: 'Ngôn ngữ'
+    settingLanguage: 'Ngôn ngữ',
   },
   settingProfile: {
     name: 'Tên',
@@ -233,14 +233,34 @@ export default {
     email: 'Email',
     changePass: 'Đổi mật khẩu',
     buttonSave: 'Lưu thay đổi',
-    changeImage: 'Thay ảnh đại diện'
+    changeImage: 'Thay ảnh đại diện',
   },
   settingAddress: {
     addAddress: 'Thêm địa chỉ',
     province: 'Tỉnh/thành phố',
     district: 'Quận/Huyện',
     ward: 'Quận/Huyện',
-    noAddress: 'Hiện tại bạn không có địa chỉ đã lưu. Hãy bắt đầu thêm một địa chỉ mới ngay',
-    default: 'Mặc định'
-  }
+    noAddress:
+      'Hiện tại bạn không có địa chỉ đã lưu. Hãy bắt đầu thêm một địa chỉ mới ngay',
+    default: 'Mặc định',
+  },
+  orders: {
+    title: 'Đơn hàng',
+    countProduct: '%{count} sản phẩm',
+    ratingProduct: 'Đánh giá sản phẩm',
+    repurchase: 'Mua lại',
+    searchLocation: 'Tìm đường',
+    orderDetail: 'Chi tiết đơn hàng',
+    orderId: 'Mã đơn hàng',
+    orderDate: 'Ngày đặt hàng',
+    orderAddress: 'Địa chỉ giao hàng',
+    paymentMethod: 'Phương thức thanh toán',
+    deliveryMethod: 'Phương thức vận chuyển',
+    recieveRange: 'Nhận hàng vào %{startTime} đến %{endTime}',
+    cancelOrder: 'Hủy đơn hàng',
+    totalOrder: 'Tổng tiền hàng',
+    deliveryFee: 'Phí vận chuyển',
+    coupon: 'Mã giảm giá',
+    paymentTotal: 'Tổng thanh toán',
+  },
 };

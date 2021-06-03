@@ -50,7 +50,8 @@ import {
   SettingAddress,
   SettingChat,
   SettingNotification,
-  SettingLanguage
+  SettingLanguage,
+  Orders,
 } from 'screens';
 
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
@@ -69,7 +70,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Home"
+      initialRouteName="Orders"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -78,6 +79,7 @@ function SignedIn() {
       <Stack.Screen name="ChooseRateProduct" component={ChooseRateProduct} />
       <Stack.Screen name="RateProduct" component={RateProduct} />
       <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="Orders" component={Orders} />
       <Stack.Screen name="PaymentMethodCart" component={PaymentMethodCart} />
       <Stack.Screen name="VoucherCart" component={VoucherCart} />
       <Stack.Screen name="CheckoutCart" component={CheckoutCart} />
@@ -98,7 +100,10 @@ function SignedIn() {
       <Stack.Screen name="SettingMyAccount" component={SettingMyAccount} />
       <Stack.Screen name="SettingAddress" component={SettingAddress} />
       <Stack.Screen name="SettingChat" component={SettingChat} />
-      <Stack.Screen name="SettingNotification" component={SettingNotification} />
+      <Stack.Screen
+        name="SettingNotification"
+        component={SettingNotification}
+      />
       <Stack.Screen name="SettingLanguage" component={SettingLanguage} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="SearchProducts" component={SearchProducts} />
