@@ -27,7 +27,6 @@ export default {
   search: 'Search',
   sort: 'Sort',
   filter: 'Filter',
-  reviewRating: 'Review & Rating',
   reviewRating: {
     count: 'Review & Rating (%{count})',
     title: 'Review & Rating',
@@ -77,8 +76,6 @@ export default {
     more: 'Others product',
     order: 'Order',
     freeShip: 'Freeship',
-    color: 'Color',
-    size: 'Size',
     updateProduct: 'Update',
   },
 };

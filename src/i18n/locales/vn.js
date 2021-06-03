@@ -108,7 +108,6 @@ export default {
     phone: 'Số điện thoại',
     password: 'Mật khẩu',
   },
-  reviewRating: 'Đánh giá sản phẩm',
   reviewRating: {
     count: 'Đánh giá sản phẩm (%{count})',
     title: 'Đánh giá sản phẩm',
@@ -149,6 +148,9 @@ export default {
     similarProduct: 'Sản phẩm tương tự',
     buttonStore: 'Cửa hàng',
     buttonAddToCart: 'Thêm vào giỏ hàng',
+    sizeHelp: 'Hướng dẫn kích thước',
+    productCoordinated: 'Sản phẩm có thể phối hợp',
+    seeMore: 'Xem thêm',
   },
   cart: {
     title: 'Giỏ hàng',
@@ -175,8 +177,6 @@ export default {
     more: 'Khám phá thêm các sản phẩm khác',
     order: 'Đặt hàng',
     freeShip: 'Miễn phí',
-    color: 'Màu sắc',
-    size: 'Kích thước',
     updateProduct: 'Cập nhật sản phẩm',
   },
   error: {
@@ -198,6 +198,18 @@ export default {
     title: 'Thêm bài viết',
     textPlaceholder: 'Viết chú thích...',
     addStatus: 'Đăng bài viết',
+    checkAll: 'Xin hãy check lại tất cả các hình ảnh của bạn',
+  },
+  Search: {
+    inputPlaceholder: 'Tìm kiếm sản phẩm, cửa hàng',
+    topSearch: 'Tìm kiếm hàng đầu',
+    featuredCategories: 'Danh mục nổi bật',
+    featuredProduct: 'Sản phẩm phổ biến',
+    searchResultProduct: 'Sản phẩm',
+    searchResultStore: 'Cửa hàng',
+    categories: 'Danh mục',
+    priceRange: 'Khoảng giá',
+    size: 'Size',
   },
   mypage: {
     editProfile: 'Sửa hồ sơ',
