@@ -6,12 +6,21 @@ import {Header} from 'components';
 
 import {Search, Bag, FeedStore, DubHeart} from 'svg/common';
 import {Message} from 'svg/social';
+import {useNavigation} from '@react-navigation/native';
 
 const HeaderFeed = ({changeTabStore, changeTabUser, targetType}) => {
+  const navigation = useNavigation();
+
+  const onNavigateCart = () => {
+    navigation.navigate('Cart');
+  };
+
   return (
     <Header
       leftIcon={
-        <TouchableOpacity style={styles.leftHeader}>
+        <TouchableOpacity
+          style={styles.leftHeader}
+          onPress={() => navigation.navigate('Search')}>
           <Search />
         </TouchableOpacity>
       }
@@ -39,7 +48,7 @@ const HeaderFeed = ({changeTabStore, changeTabUser, targetType}) => {
           <TouchableOpacity style={styles.touch}>
             <Message />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.touch}>
+          <TouchableOpacity style={styles.touch} onPress={onNavigateCart}>
             <Bag />
           </TouchableOpacity>
         </View>

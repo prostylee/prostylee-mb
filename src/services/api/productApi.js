@@ -10,6 +10,26 @@ export const getProductById = (id) => {
   return _fetch(GET, `/products/${id}`);
 };
 
+export const getProductCommentsById = (payload) => {
+  return _fetch(GET, '/user-ratings', payload);
+};
+
+export const getProductCommentsAverage = (payload) => {
+  return _fetch(GET, '/user-ratings/average', payload);
+};
+
+export const getProductRelated = (payload) => {
+  return _fetch(GET, `/products/${payload.id}/related`, {
+    newest: payload.newest,
+    hot: payload.hot,
+  });
+};
+
+// TODO: update api sau khi ráp màn hình store
+export const getProductCoordinated = (payload) => {
+  return _fetch(GET, '/products', payload);
+};
+
 export const getListProductService = (payload) => {
   return _fetch(GET, '/products', payload);
 };

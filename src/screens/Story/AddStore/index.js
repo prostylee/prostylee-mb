@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, FlatList, TouchableOpacity, Text} from 'react-native';
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+} from 'react-native';
 import {
   Image,
   ContainerWithoutScrollView,
@@ -28,6 +34,9 @@ const AddStore = (props) => {
 
   const storeMini = useSelector((state) =>
     newFeedSelectors.getStoreMini(state),
+  );
+  const storeMiniLoading = useSelector((state) =>
+    newFeedSelectors.getStoreMiniLoading(state),
   );
 
   //dispatch
@@ -111,16 +120,23 @@ const AddStore = (props) => {
               style={styles.searchBox}
             />
           </View>
-          <FlatList
-            ref={flatListRef}
-            data={storeFilterData}
-            renderItem={_renderItem}
-            keyExtractor={(_, index) => `store_item_${index}`}
-            extraData={props}
-            bounces={false}
-            style={styles.listContainer}
-            contentContainerStyle={styles.listContent}
-          />
+          {storeMiniLoading ? (
+            <View
+              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <ActivityIndicator size="large" color={colors['$purple']} />
+            </View>
+          ) : (
+            <FlatList
+              ref={flatListRef}
+              data={storeFilterData}
+              renderItem={_renderItem}
+              keyExtractor={(_, index) => `store_item_${index}`}
+              extraData={props}
+              bounces={false}
+              style={styles.listContainer}
+              contentContainerStyle={styles.listContent}
+            />
+          )}
         </View>
       </ContainerWithoutScrollView>
     </View>

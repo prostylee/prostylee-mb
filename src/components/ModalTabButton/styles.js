@@ -1,4 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {isIphoneX} from '../../utils/ui';
 import {dim} from 'utils/common';
 
 const WIDTH = dim.width;
@@ -16,7 +17,7 @@ const styles = EStyleSheet.create({
   modalBackground: {
     flex: 1,
     width: '100%',
-    paddingBottom: '20%',
+    paddingBottom: isIphoneX() ? 80 : 49,
   },
   linearGradient: {
     flex: 1,
