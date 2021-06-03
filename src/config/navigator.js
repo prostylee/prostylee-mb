@@ -5,6 +5,7 @@ export const bottomTabs = {
   shop: 'ProductCategory',
   account: 'Account',
   store: 'Stores',
+  notification: 'Notifications',
 };
 
 export const tabsSetting = {
@@ -46,7 +47,7 @@ export const tabsSetting = {
     {
       title: '',
       name: i18n.t('bottomTab.notification'),
-      screen: bottomTabs.newFeed,
+      screen: bottomTabs.notification,
       option: {
         tabBarIcon: 'NotifTab',
         tabBarIconSolid: 'NotifTabSolid',

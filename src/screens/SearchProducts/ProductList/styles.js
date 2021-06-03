@@ -4,14 +4,14 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$bgColorSearch',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   listWrapper: {
     paddingTop: 20,
     backgroundColor: '$white',
-    // justifyContent: 'flex-start',
+    justifyContent: 'flex-start',
     // alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
   },
   itemWrapper: {
     width: '$screenWidth/2',
@@ -85,5 +85,8 @@ export default EStyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
     color: '$white',
+  },
+  viewFooter: {
+    marginBottom: 26,
   },
 });

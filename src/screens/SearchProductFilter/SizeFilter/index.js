@@ -8,51 +8,79 @@ import {ThemeView, Header, TextInputRounded} from 'components';
 import {Chip, Divider, Text} from 'react-native-paper';
 import {Trending} from 'svg/common';
 import {Colors} from 'components';
-const WIDTH = Dimensions.get('window').width;
-const MockSize = [
-  'one-size',
-  'XXS',
-  'XS',
-  'S',
-  'M',
-  'L',
-  'XL',
-  'XXL',
-  'XXXL',
-  '30',
-  '40',
-];
-const Search = ({navigation}) => {
-  const [activeItem, setActiveItem] = useState(null);
+import {getProductFilterAttributeListSelector} from 'redux/selectors/search/productFilter';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProductFilterState} from 'redux/selectors/search/productFilter';
+import {searchActions} from 'redux/reducers';
+
+const Search = ({navigation, filterAttributeList}) => {
+  const dispatch = useDispatch();
+  // const filterAttributeList = useSelector((state) =>
+  //   getProductFilterAttributeListSelector(state),
+  // );
+  // console.log('FILTER ATTRIBUTE LIST SIZE FILTER', filterAttributeList);
+
+  let ListSize = [];
+  let sizeAttribute = [];
+  if (filterAttributeList && filterAttributeList.length) {
+    let sizeAttribute = filterAttributeList?.filter(
+      (v) => v.key === 'kich_co',
+    )[0];
+    ListSize = sizeAttribute?.attributeOptions;
+  }
+
+  const filterState = useSelector((state) => getProductFilterState(state));
+  const attributeFilterState = filterState?.attributes;
+  const categoryFilterState = filterState.category;
+
+  const activeItem = attributeFilterState?.[`${sizeAttribute.id}`];
+
+  const _handleChangeActiveSize = (sizeId) => {
+    let newFilterState = {...attributeFilterState};
+    newFilterState[`${sizeAttribute.id}`] = sizeId;
+    dispatch(
+      searchActions.setProductFilterState({
+        attributes: {...newFilterState},
+        category: categoryFilterState,
+      }),
+    );
+  };
+
   return (
     <>
       <View style={styles.wrapHeader}>
         <Text style={styles.title}>{i18n.t('Search.size')}</Text>
       </View>
       <View style={styles.wrapChip}>
-        {MockSize.map((v, i) => (
-          <TouchableOpacity
-            onPress={() => setActiveItem(i)}
-            style={[
-              styles.itemChips,
-              {
-                borderColor:
-                  activeItem === i ? Colors['$purple'] : Colors['$line'],
-              },
-            ]}
-            key={`${v}-${i}`}>
-            <Text
+        {ListSize && ListSize.length ? (
+          ListSize.map((v, i) => (
+            <TouchableOpacity
+              onPress={() => _handleChangeActiveSize(v?.id)}
               style={[
-                styles.priceText,
+                styles.itemChips,
                 {
-                  color:
-                    activeItem === i ? Colors['$purple'] : Colors['$black'],
+                  borderColor:
+                    activeItem === v.id ? Colors['$purple'] : Colors['$line'],
                 },
-              ]}>
-              {v}
-            </Text>
-          </TouchableOpacity>
-        ))}
+              ]}
+              key={`${v.id}-${i}`}>
+              <Text
+                style={[
+                  styles.priceText,
+                  {
+                    color:
+                      activeItem === v.id
+                        ? Colors['$purple']
+                        : Colors['$black'],
+                  },
+                ]}>
+                {v?.label}
+              </Text>
+            </TouchableOpacity>
+          ))
+        ) : (
+          <Text style={{color: Colors['$lightGray']}}>Can not load size</Text>
+        )}
       </View>
       <Divider />
     </>

@@ -2,6 +2,7 @@
 import styles from './styles';
 
 import React, {useEffect, useState, useRef} from 'react';
+
 /*Hooks*/
 import I18n from 'i18n';
 

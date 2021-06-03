@@ -36,6 +36,11 @@ import {
   Categories,
   ProductDetail,
   Products,
+  Search,
+  FilterProduct,
+  SearchProductFilter,
+  SearchProducts,
+  PromoNotification,
   ReviewRating,
   ChooseRateProduct,
   RateProduct,
@@ -79,6 +84,7 @@ function SignedIn() {
       <Stack.Screen name="CheckoutCart" component={CheckoutCart} />
       <Stack.Screen name="Categories" component={Categories} />
       <Stack.Screen name="Products" component={Products} />
+      <Stack.Screen name="FilterProduct" component={FilterProduct} />
       <Stack.Screen name="ProductDetail" component={ProductDetail} />
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
@@ -99,6 +105,13 @@ function SignedIn() {
       <Stack.Screen name="CropPicture" component={CropPicture} />
       <Stack.Screen name="AddStatus" component={AddStatus} />
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
+      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="SearchProducts" component={SearchProducts} />
+      <Stack.Screen
+        name="SearchProductFilter"
+        component={SearchProductFilter}
+      />
+      <Stack.Screen name="PromoNotification" component={PromoNotification} />
       <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
     </Stack.Navigator>
   );

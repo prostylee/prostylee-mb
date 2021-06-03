@@ -42,6 +42,7 @@ import RadioSelectGroup from './RadioSelectGroup';
 import Picker from './Picker';
 import SlideInModal from './SlideInModal';
 import ModalTabButton from './ModalTabButton';
+import Picker from './Picker';
 
 export {
   ContainerWithoutScrollView,
@@ -84,6 +85,7 @@ export {
   TextInputArea,
   ModalTabButton,
   ProductLike,
+  Picker,
   NumberInputUpDown,
   RadioSelectGroup,
   Picker,

@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
-import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
-import {Image} from 'components';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
+// import {Image} from 'components';
 import styles from './styles';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
-import {useDispatch} from 'react-redux';
+
+import {useDispatch, useSelector} from 'react-redux';
 import {categoriesActions, productActions} from 'redux/reducers';
 import {MenFashion, WomanFashion} from 'svg/categories';
+import {getProductFilterState} from 'redux/selectors/search/productFilter';
 import {Colors} from 'components';
+import {searchActions} from 'redux/reducers';
 const FeaturedCategoriesItem = ({
   item,
   index,
@@ -16,12 +18,19 @@ const FeaturedCategoriesItem = ({
   setActive = () => {},
 }) => {
   const dispatch = useDispatch();
-  const clickItem = () => {
-    // dispatch(categoriesActions.setCategoriesSelect(item));
-
-    // navigation.navigate('Products');
-    setActive(index);
+  const filterState = useSelector((state) => getProductFilterState(state));
+  const attributeFilterState = filterState?.attributes;
+  const categoryFilterState = filterState.category;
+  const clickItem = (itemId) => {
+    dispatch(
+      searchActions.setProductFilterState({
+        attributes: {...attributeFilterState},
+        category: itemId,
+      }),
+    );
+    setActive(itemId);
   };
+
   return (
     <View
       style={[
@@ -31,7 +40,7 @@ const FeaturedCategoriesItem = ({
           marginRight: 12,
         },
       ]}>
-      <TouchableOpacity onPress={clickItem}>
+      <TouchableOpacity onPress={() => clickItem(item?.id)}>
         <View style={styles.item}>
           <View
             style={[
@@ -40,10 +49,15 @@ const FeaturedCategoriesItem = ({
                 borderWidth: isActive ? 1 : 0,
               },
             ]}>
-            <WomanFashion
-              color={isActive ? Colors['$purple'] : Colors['$lightGray']}
-              width={24}
-              height={24}
+            <Image
+              source={{
+                uri: item?.icon,
+              }}
+              style={{
+                width: 24,
+                height: 24,
+                tintColor: isActive ? Colors['$purple'] : Colors['$lightGray'],
+              }}
             />
           </View>
           <Text
@@ -54,7 +68,7 @@ const FeaturedCategoriesItem = ({
                 color: isActive ? Colors['$purple'] : Colors['$black'],
               },
             ]}>
-            Thời trang nam{item?.name}
+            {item?.name}
           </Text>
         </View>
       </TouchableOpacity>

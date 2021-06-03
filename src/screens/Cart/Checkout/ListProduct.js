@@ -218,7 +218,7 @@ const ListProduct = ({navigation, data}) => {
           </View>
           <View style={styles.wrapFooter}>
             <CardFooter
-              buttonText={i18n.t('cart.orderˇ')}
+              buttonText={i18n.t('cart.order')}
               actionButton={onPayment}
             />
           </View>

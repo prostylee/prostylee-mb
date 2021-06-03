@@ -13,23 +13,28 @@ import {
   getHasLoadMoreSearchFeaturedCategoriesSelector,
   getPageSearchFeaturedCategoriesSelector,
 } from 'redux/selectors/search';
+import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 import FeaturedCategoriesItem from './item.js';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {CategoriesRightLoading} from 'components/Loading/contentLoader';
-import {categoriesActions} from 'redux/reducers';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+
 import {Divider, Text} from 'react-native-paper';
 
-const FeaturedCategories = ({navigation}) => {
+const FeaturedCategories = ({navigation, data = []}) => {
   const dispatch = useDispatch();
-  const [activeItem, setActiveItem] = useState(null);
+
+  const filterState = useSelector((state) => getProductFilterState(state));
+
+  const attributeFilterState = filterState?.attributes;
+  const categoryFilterState = filterState.category;
+
+  const activeItem = categoryFilterState;
 
   const [refreshing, handleRefreshing] = useState(false);
 
-  const loading = useSelector((state) =>
-    getSearchFeaturedCategoriesLoadingSelector(state),
+  const categories = useSelector((state) =>
+    getSearchFeaturedCategoriesSelector(state),
   );
 
   const listRightCategoriesSelector = useSelector((state) =>
@@ -51,7 +56,7 @@ const FeaturedCategories = ({navigation}) => {
   );
 
   useEffect(() => {}, [dispatch, refreshing]);
-  const handleCategoryClick = (index) => setActiveItem(index);
+
   const handleRefresh = () => {
     handleRefreshing(true);
   };
@@ -82,14 +87,14 @@ const FeaturedCategories = ({navigation}) => {
           <FlatList
             horizontal
             directionalLockEnabled={true}
-            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            data={categories?.content ? categories?.content : [1, 2, 3, 4, 5]}
             renderItem={({item, index}) => (
               <FeaturedCategoriesItem
                 index={index}
                 navigation={navigation}
                 item={item}
-                isActive={activeItem === index}
-                setActive={handleCategoryClick}
+                isActive={activeItem === item.id}
+                // setActive={handleCategoryClick}
               />
             )}
             contentContainerStyle={{backgroundColor: Colors['$white']}}
