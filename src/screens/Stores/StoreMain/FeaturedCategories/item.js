@@ -20,19 +20,20 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
         {paddingLeft: paddingLeft, paddingRight: paddingRight},
       ]}>
       <TouchableOpacity style={styles.item}>
-        <Text numberOfLines={2} style={styles.titleCategory}>
-          Áo khoác
-        </Text>
         <Image
           source={
-            item?.icon
-              ? {uri: item?.icon}
+            item?.banner
+              ? {uri: item?.banner}
               : require('assets/images/default.png')
           }
           resizeMode="cover"
           style={styles.imageThumbnail}
           PlaceholderContent={<ActivityIndicator />}
         />
+
+        <Text numberOfLines={2} style={styles.titleCategory}>
+          {item.name}
+        </Text>
       </TouchableOpacity>
     </View>
   );

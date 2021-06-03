@@ -17,10 +17,18 @@ export const api = apisauce.create({
 });
 
 export async function _fetch(method, path, data) {
-  console.log('_fetch: method=' + method + ', path=' + path + ', data=' + JSON.stringify(data));
+  console.log(
+    '_fetch: method=' +
+      method +
+      ', path=' +
+      path +
+      ', data=' +
+      JSON.stringify(data),
+  );
 
   try {
     const token = await Auth.currentSession();
+    // console.log('TOKEN  \n\n\n', token.accessToken.jwtToken);
     if (token && token.accessToken) {
       api.setHeaders({
         Authorization: 'Bearer ' + token.accessToken.jwtToken,

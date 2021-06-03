@@ -37,11 +37,10 @@ export default EStyleSheet.create({
 
   itemContainer: {
     flexDirection: 'column',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
     width: 84,
-    // borderWidth: 1,
   },
   brandImgContainer: {
     width: 64,
@@ -57,5 +56,6 @@ export default EStyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     marginTop: 10,
+    textAlign: 'center',
   },
 });

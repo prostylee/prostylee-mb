@@ -5,7 +5,7 @@ import {ChevronRight} from 'svg/common';
 import {FlatList} from 'react-native-gesture-handler';
 import BrandItem from './BrandItem';
 
-const PopularBrands = () => {
+const PopularBrands = ({data = []}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapTitle}>
@@ -17,9 +17,11 @@ const PopularBrands = () => {
       </View>
       <View style={styles.wrapList}>
         <FlatList
-          data={[1, 2, 3, 4, 5, 6, 7, 8]}
+          data={data && data.length ? data : [1, 2, 3, 4, 5, 6, 7, 8]}
           horizontal
-          renderItem={({item, index}) => <BrandItem key={item} index={index} />}
+          renderItem={({item, index}) => (
+            <BrandItem item={item} index={index} />
+          )}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.listInner}
         />

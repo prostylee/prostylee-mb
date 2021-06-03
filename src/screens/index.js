@@ -18,7 +18,7 @@ import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import ProductDetail from './ProductDetail';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
-import SearchProductFilter from './SearchProductFilter';
+
 import SearchProducts from './SearchProducts';
 import ReviewRating from './ReviewRating';
 import ChooseRateProduct from './ChooseRateProduct';

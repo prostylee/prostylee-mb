@@ -12,7 +12,7 @@ import {CategoriesRightLoading} from 'components/Loading/contentLoader';
 
 import {Text} from 'react-native-paper';
 
-const FeaturedCategories = ({navigation}) => {
+const FeaturedCategories = ({navigation, data = []}) => {
   return (
     <>
       <View style={styles.container}>
@@ -22,7 +22,7 @@ const FeaturedCategories = ({navigation}) => {
 
         <View style={styles.wrapList}>
           <FlatList
-            data={[1, 2, 3, 4, 5, 6, 7]}
+            data={data && data.length ? data : [1, 2, 3, 4, 5, 6, 7]}
             renderItem={({item, index}) => (
               <FeaturedCategoriesItem
                 index={index}

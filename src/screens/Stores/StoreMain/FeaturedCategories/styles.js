@@ -35,11 +35,16 @@ export default EStyleSheet.create({
   },
   imageThumbnail: {
     alignItems: 'center',
-    height: 24,
-    width: 24,
+    height: '100%',
+    width: '100%',
     borderWidth: 1,
     borderColor: '#E9EAEB',
     marginRight: 12,
+    borderRadius: 8,
+    justifyContent: 'flex-start',
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
   title: {
     fontSize: 14,
@@ -48,8 +53,9 @@ export default EStyleSheet.create({
   },
   titleCategory: {
     color: '$black',
-    width: 70,
+    width: '50%',
     marginLeft: 12,
+    fontWeight: '500',
   },
   viewFooter: {
     marginBottom: 6,

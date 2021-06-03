@@ -38,7 +38,6 @@ import {
   Products,
   Search,
   FilterProduct,
-  SearchProductFilter,
   SearchProducts,
   PromoNotification,
   ReviewRating,
@@ -107,10 +106,7 @@ function SignedIn() {
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="SearchProducts" component={SearchProducts} />
-      <Stack.Screen
-        name="SearchProductFilter"
-        component={SearchProductFilter}
-      />
+
       <Stack.Screen name="PromoNotification" component={PromoNotification} />
       <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
     </Stack.Navigator>

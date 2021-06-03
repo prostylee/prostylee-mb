@@ -38,6 +38,13 @@ import MidAdvertisingSlider from './MidAdvertisingSlider';
 import FeaturedCategories from './FeaturedCategories';
 import ForUserTabView from './ForUserTabView';
 
+import {
+  getTopBannerSelector,
+  getMidBannerSelector,
+  getBrandListSelector,
+  getCategoryListSelector,
+} from 'redux/selectors/storeMain';
+
 const HeaderLeft = () => {
   return (
     <TouchableOpacity style={styles.headerLeftContainer}>
@@ -69,49 +76,59 @@ const Stores = (props) => {
   const {navigation} = props;
   const [refreshing, handleRefreshing] = useState(false);
 
-  const loading = useSelector((state) =>
-    getLoadingFuturedStoresSelector(state),
-  );
-  const listOfFuturedStores = useSelector((state) =>
-    listOfFuturedStoresSelector(state),
-  );
-  const loadMoreLoading = useSelector((state) =>
-    loadMoreLoadingSelector(state),
-  );
-  const hasLoadMore = useSelector((state) => hasLoadMoreSelector(state));
-  const page = useSelector((state) => getPageSelector(state));
-
-  const listData = listOfFuturedStores?.content || [];
+  const topBannerList = useSelector((state) => getTopBannerSelector(state));
+  const midBannerList = useSelector((state) => getMidBannerSelector(state));
+  const brandList = useSelector((state) => getBrandListSelector(state));
+  const categoryList = useSelector((state) => getCategoryListSelector(state));
 
   useEffect(() => {
     dispatch(
-      storeActions.getListOfFuturedStore({
+      storeActions.getTopBanner({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
       }),
     );
-    handleRefreshing(false);
-  }, [dispatch, refreshing]);
+    dispatch(
+      storeActions.getMidBanner({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+    dispatch(
+      storeActions.getBrandList({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+    dispatch(
+      storeActions.getCategoryList({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        hotStatus: true,
+        sorts: '+order',
+      }),
+    );
+  }, []);
 
   const handleRefresh = () => {
     handleRefreshing(true);
   };
 
-  const handleLoadMore = () => {
-    if (hasLoadMore) {
-      dispatch(
-        storeActions.getListOfFuturedStoresLoadMore({
-          page: page + 1,
-          limit: LIMIT_DEFAULT,
-        }),
-      );
-    }
-  };
+  // const handleLoadMore = () => {
+  //   if (hasLoadMore) {
+  //     dispatch(
+  //       storeActions.getListOfFuturedStoresLoadMore({
+  //         page: page + 1,
+  //         limit: LIMIT_DEFAULT,
+  //       }),
+  //     );
+  //   }
+  // };
 
   const renderFooter = () => {
-    if (!loadMoreLoading) {
-      return <View style={styles.viewFooter} />;
-    }
+    // if (!loadMoreLoading) {
+    //   return <View style={styles.viewFooter} />;
+    // }
 
     return (
       <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
@@ -133,11 +150,27 @@ const Stores = (props) => {
         containerStyle={styles.headerContainer}
       />
       <CustomSearchBar />
-      <AdvertisingSlider />
+
+      <AdvertisingSlider
+        data={topBannerList?.content ? topBannerList?.content : []}
+      />
+
       <FunctionTags navigation={navigation} />
-      <PopularBrands />
-      <MidAdvertisingSlider />
-      <FeaturedCategories />
+
+      <PopularBrands
+        data={brandList && brandList?.content?.length ? brandList.content : []}
+      />
+
+      <MidAdvertisingSlider
+        data={midBannerList?.content ? midBannerList?.content : []}
+      />
+      <FeaturedCategories
+        data={
+          categoryList?.content && categoryList?.content?.length
+            ? categoryList?.content
+            : []
+        }
+      />
       <ForUserTabView />
       <View
         style={{
