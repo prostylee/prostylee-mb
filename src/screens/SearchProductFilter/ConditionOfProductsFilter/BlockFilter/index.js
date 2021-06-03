@@ -78,11 +78,11 @@ const BlockFilter = ({attribute}) => {
         {listOption && listOption.length ? (
           listOption.map((v, i) => (
             <TouchableOpacity
-              onPress={() => _handleChangeActiveSize(v?.id)}
+              onPress={() => _handleChangeActiveSize(v?.value)}
               style={[
                 styles.itemChips,
                 {
-                  borderColor: isItemActive(v.id)
+                  borderColor: isItemActive(v.value)
                     ? Colors['$purple']
                     : Colors['$line'],
                 },
@@ -92,7 +92,7 @@ const BlockFilter = ({attribute}) => {
                 style={[
                   styles.priceText,
                   {
-                    color: isItemActive(v.id)
+                    color: isItemActive(v.value)
                       ? Colors['$purple']
                       : Colors['$black'],
                   },

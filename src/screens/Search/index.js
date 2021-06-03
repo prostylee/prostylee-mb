@@ -34,18 +34,8 @@ const Search = ({navigation}) => {
       dispatch(
         searchActions.getFeaturedProductSearch({
           keyword: query,
-          // type: 'product',
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
-        }),
-      );
-      dispatch(
-        searchActions.getStoreSearch({
-          keyword: query,
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-          sorts: 'name',
-          numberOfProducts: 10,
         }),
       );
       dispatch(searchActions.setCurrentKeyword(query));
@@ -79,6 +69,15 @@ const Search = ({navigation}) => {
             value={searchQuery}
             onSubmitEditing={() => {
               navigation.navigate('SearchProducts');
+              dispatch(
+                searchActions.getStoreSearch({
+                  keyword: searchQuery,
+                  page: PAGE_DEFAULT,
+                  limit: LIMIT_DEFAULT,
+                  sorts: 'name',
+                  numberOfProducts: 10,
+                }),
+              );
             }}
           />
         }

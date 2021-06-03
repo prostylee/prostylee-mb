@@ -100,7 +100,7 @@ const ConditionOfProductsFilter = () => {
                 onPress={() =>
                   _handleCheck(
                     section.key,
-                    item.id,
+                    item.value,
                     section.allowsMultipleSelection,
                   )
                 }

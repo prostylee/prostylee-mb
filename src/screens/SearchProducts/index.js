@@ -36,7 +36,7 @@ const MockTag = [
   {
     label: 'Gần đây',
     value: {
-      atitude: 10.806406363857086,
+      latitude: 10.806406363857086,
       longitude: 106.6634168400805,
     },
   },

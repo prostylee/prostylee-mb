@@ -56,7 +56,8 @@ const FilterProduct = ({navigation}) => {
     let attributesParamm = {...attributeFilterState};
     let newAttributes = {};
     for (let item in attributesParamm) {
-      if (attributesParamm[item] && attributesParamm[item].length > 0) {
+      if (attributesParamm[item] && Array.isArray(attributesParamm[item])) {
+        console.log('ARRAY ', attributesParamm[item], '\n\n\n');
         newAttributes[`attributes[${item}]`] = formatArrayParamsValue(
           attributesParamm[item],
         );
@@ -70,8 +71,9 @@ const FilterProduct = ({navigation}) => {
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...newAttributes,
-        categoryId: categoryFilterState,
-        price: `${priceFilterState?.join('-')}`,
+        // categoryId: categoryFilterState,
+        // price: `${priceFilterState?.join('-')}`,
+        userId: 1,
       }),
     );
 

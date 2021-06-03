@@ -24,6 +24,7 @@ const ProductList = ({navigation, data = []}) => {
   const isSearchLoading = useSelector((state) =>
     getProductSearchLoadingSelector(state),
   );
+  console.log('IS SEARCH LOADING', isSearchLoading, '\n\n\n');
   const isLoadMoreLoading = useSelector((state) =>
     getProductSearchLoadmoreLoadingSelector(state),
   );
