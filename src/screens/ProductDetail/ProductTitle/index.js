@@ -60,7 +60,13 @@ const ProductTitle = (props) => {
         <Text style={styles.priceOriginal}>
           {currencyFormat(priceOriginal, 'đ')}
         </Text>
-        <TouchableOpacity style={styles.rating} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.rating}
+          onPress={() => {
+            props.navigation.navigate('ReviewRating', {
+              productId: props.productId,
+            });
+          }}>
           <Rating />
           <Text style={styles.rateNumber}>{`${rateValue.toFixed(
             1,

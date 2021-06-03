@@ -2,7 +2,7 @@ import styles from './styles';
 
 import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
-
+import {useRoute} from '@react-navigation/native';
 /*Hooks*/
 import I18n from 'i18n';
 
@@ -17,7 +17,9 @@ import {getAverage} from 'services/api/reviewRatingApi';
 /*Selector*/
 import {getListReviewRatingSelector} from 'redux/selectors/reviewRating';
 
-const ReviewRating = ({navigation, productId}) => {
+const ReviewRating = ({navigation}) => {
+  const route = useRoute();
+  const productId = route?.params?.productId || 0;
   const [rate, setRate] = useState(0);
 
   const listReviewRatingSelector = useSelector((state) =>
@@ -28,7 +30,9 @@ const ReviewRating = ({navigation, productId}) => {
 
   useEffect(() => {
     getAverage(productId)
-      .then((res) => setRate(res.data.data))
+      .then((res) => {
+        setRate(res.data.data);
+      })
       .catch(() => {
         console.log('Có lỗi xảy ra!');
       });
