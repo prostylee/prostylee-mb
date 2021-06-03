@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
 import Svg, {
   Path,
   Circle,
@@ -14,9 +13,6 @@ import Svg, {
   Use,
   Image,
 } from 'react-native-svg';
-=======
-import Svg, {Path, Circle, Rect, ClipPath, G, Defs} from 'react-native-svg';
->>>>>>> main
 
 export const Search = ({width = 24, height = 24, color = '#8B9399'}) => {
   return (
