@@ -22,9 +22,22 @@ const FeaturedCategoriesItem = ({
   const attributeFilterState = filterState?.attributes;
   const categoryFilterState = filterState.category;
   const clickItem = (itemId) => {
+    // let newCategoryState = null;
+    // if (categoryFilterState && categoryFilterState.length) {
+    //   let flag = categoryFilterState?.indexOf(itemId);
+    //   if (flag < 0) {
+    //     newCategoryState = [...categoryFilterState, itemId];
+    //   } else {
+    //     newCategoryState = [...categoryFilterState];
+    //     newCategoryState.splice(flag, 1);
+    //   }
+    // } else {
+    //   newCategoryState = [itemId];
+    // }
+
     dispatch(
       searchActions.setProductFilterState({
-        attributes: {...attributeFilterState},
+        ...filterState,
         category: itemId,
       }),
     );

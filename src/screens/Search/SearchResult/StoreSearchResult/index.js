@@ -51,7 +51,6 @@ const FeaturedCategories = ({navigation}) => {
   };
 
   const handleLoadMore = () => {
-    console.log('STORE END REAACHED', hasLoadMore);
     if (hasLoadMore) {
       dispatch(
         searchActions.getStoreSearch({
@@ -75,7 +74,6 @@ const FeaturedCategories = ({navigation}) => {
     return null;
   };
 
-  console.log('STORE LIST \n\n\n', storeList);
   return (
     <>
       <View style={styles.container}>
@@ -85,7 +83,6 @@ const FeaturedCategories = ({navigation}) => {
           <FlatList
             data={storeList?.content}
             renderItem={({item, index}) => {
-              console.log('ITEM', index, '\n\n\n', item);
               return (
                 <>
                   <View style={styles.wrapHeader}>
