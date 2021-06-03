@@ -16,7 +16,7 @@ import {
 
 const PaymentMethod = ({navigation, data}) => {
   const dispatch = useDispatch();
-  
+
   const [value, setValue] = useState();
 
   const loading = useSelector((state) => getPaymentLoadingSelector(state));
@@ -25,8 +25,6 @@ const PaymentMethod = ({navigation, data}) => {
   useEffect(() => {
     dispatch(cartActions.getListPayment());
   }, []);
-
-
 
   const renderLabel = (item) => {
     switch (item.name) {

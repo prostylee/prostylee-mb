@@ -20,3 +20,7 @@ export const getDeliveryMethods = (payload) => {
 export const orders = (payload) => {
   return _fetch(POST, '/orders', payload);
 };
+
+export const getUserAddress = () => {
+  return _fetch(GET, '/user-addresses/userLogin');
+};

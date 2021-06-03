@@ -179,6 +179,8 @@ export default {
     freeShip: 'Miễn phí',
     updateProduct: 'Cập nhật sản phẩm',
     seeMore: 'Xem thêm',
+    yourAddress: 'Địa điểm của bạn',
+    changeAddress: 'Thay đổi địa điểm',
   },
   error: {
     cannotUploadImage:

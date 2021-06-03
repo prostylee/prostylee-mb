@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {LocationIcon} from 'svg/common';
 
