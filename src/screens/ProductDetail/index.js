@@ -208,14 +208,17 @@ const ProductDetail = (props) => {
         <ProductTitle
           name={productData?.name}
           price={productData?.price}
-          priceOriginal={productData?.priceSale}
+          priceOriginal={productData?.price}
           rateValue={productData?.productStatisticResponse?.resultOfRating}
           numberOfRate={productData?.productStatisticResponse?.numberOfReview}
         />
         <View style={styles.lineHr} />
         {ProductChoiceMemo}
         <View style={styles.lineHr} />
-        <ProductInfo description={productData?.description} />
+        <ProductInfo
+          description={productData?.description}
+          brand={productData?.brandResponse || {}}
+        />
         {productData?.storeId ? (
           <>
             <View style={styles.lineHrBig} />
