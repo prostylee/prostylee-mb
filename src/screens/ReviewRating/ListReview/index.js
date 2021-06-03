@@ -4,6 +4,9 @@ import styles from './styles';
 import React, {useEffect, useState, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
+/*Hooks*/
+import I18n from 'i18n';
+
 import {
   Animated,
   View,

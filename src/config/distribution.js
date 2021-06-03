@@ -16,3 +16,7 @@ export const termOfUseURL = 'https://prostylee.vn/tou.html';
 
 //PrivacyPolicy
 export const privacyPolicyURL = 'https://prostylee.vn/privacy.html';
+
+//SizeHelp
+export const sizeHelp =
+  'https://prostylee.vn/huong-dan-tra-cuu-kich-thuoc.html';

@@ -22,7 +22,6 @@ const Star = (props) => {
     setSelected(!selected);
     starSelectedInPosition(position);
   };
-
   const {
     starImage,
     fill,
@@ -57,7 +56,7 @@ const Star = (props) => {
 
 Star.defaultProps = {
   starImage: STAR_IMAGE,
-  selectedColor: '#F48231',
+  selectedColor: '#f1c40f',
   unSelectedColor: '#BDC3C7',
 };
 

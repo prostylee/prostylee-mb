@@ -2,15 +2,11 @@ import styles from './styles';
 
 import React, {useState, useEffect} from 'react';
 import {TouchableOpacity, ActivityIndicator, Text, View} from 'react-native';
-/*Hooks*/
-import I18n from 'i18n';
 
 /*Components*/
 import {Image} from 'components';
 import {UploadIcon} from 'svg/common';
 import ImagePicker from 'react-native-image-crop-picker';
-
-import {commonActions} from 'reducers';
 
 const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
   const [tempArray, setTempArray] = useState(

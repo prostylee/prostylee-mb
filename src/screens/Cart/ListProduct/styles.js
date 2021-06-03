@@ -172,6 +172,11 @@ export default EStyleSheet.create({
     padding: 10,
     marginBottom: 5,
   },
+  wrapProductSuggestion: {
+    backgroundColor: '$white',
+    padding: 10,
+    marginBottom: 5,
+  },
   textMore: {
     color: '#8B9399',
     fontSize: 14,

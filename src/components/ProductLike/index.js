@@ -7,8 +7,9 @@ import {
   unLikeProductService,
 } from 'services/api/productApi';
 import * as CONTANTS from 'constants';
+import {showMessage} from 'react-native-flash-message';
 
-const ProductLike = ({item}) => {
+const ProductLike = ({item, likeSize = 20, unlikeSize = 16}) => {
   const [clickLike, handleClickLike] = useState(false);
   const [like, handleLike] = useState(
     item?.likeStatusOfUserLogin ? item?.likeStatusOfUserLogin : false,
@@ -26,13 +27,22 @@ const ProductLike = ({item}) => {
       }
       if (result.ok && result.data.status === CONTANTS.SUCCESS) {
         handleLike(!like);
+      } else {
+        showMessage({
+          message: `${result?.data?.status}: ${result?.data?.error}`,
+          type: 'danger',
+        });
       }
       handleClickLike(false);
     }
   };
   return (
     <TouchableOpacity onPress={toggleProduct}>
-      {!like ? <Heart /> : <HeartFill />}
+      {!like ? (
+        <Heart width={unlikeSize} height={unlikeSize} />
+      ) : (
+        <HeartFill width={likeSize} height={likeSize} />
+      )}
     </TouchableOpacity>
   );
 };

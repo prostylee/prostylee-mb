@@ -18,6 +18,8 @@ import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import ProductDetail from './ProductDetail';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
+import SearchProductFilter from './SearchProductFilter';
+import SearchProducts from './SearchProducts';
 import ReviewRating from './ReviewRating';
 import ChooseRateProduct from './ChooseRateProduct';
 import RateProduct from './RateProduct';
@@ -33,6 +35,9 @@ import SettingAddress from './Setting/SettingAddress';
 import SettingChat from './Setting/SettingChat';
 import SettingNotification from './Setting/SettingNotification';
 import SettingLanguage from './Setting/SettingLanguage';
+import Search from './Search';
+import FilterProduct from './FilterProduct';
+import PromoNotification from './Notifications/PromoNotification';
 
 export {
   Welcome,
@@ -55,6 +60,8 @@ export {
   SimpleWebView,
   ProductDetail,
   UserProfile,
+  SearchProductFilter,
+  SearchProducts,
   ReviewRating,
   ChooseRateProduct,
   RateProduct,
@@ -69,5 +76,8 @@ export {
   SettingAddress,
   SettingChat,
   SettingNotification,
-  SettingLanguage
+  SettingLanguage,
+  Search,
+  FilterProduct,
+  PromoNotification,
 };
