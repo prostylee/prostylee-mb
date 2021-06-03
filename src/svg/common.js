@@ -1170,3 +1170,76 @@ export const EmptyNotiOutlined = ({
     />
   </Svg>
 );
+
+export const CartEmpty = (props) => (
+  <Svg width={64} height={64} viewBox="0 0 64 64" fill="none" {...props}>
+    <Path
+      d="M7 20h50l2 43H5l2-43zM7 20l4-5h1M57 20l-4-5h-2"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Circle
+      cx={23}
+      cy={28}
+      r={3}
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Circle
+      cx={41}
+      cy={28}
+      r={3}
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M23 28v5a9 9 0 009 9v0a9 9 0 009-9v-5M13.298 20L12.057 5.812l18.982-1.66.693 7.924"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M40.282 20l-1.605-9.102-18.764 3.308L20.934 20"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M49.215 20l2.353-9.438-16.237-4.048-1.244 4.986"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M40 7.5C39.508 3.554 36.08 1 32 1c-3.012 0-5.135 1.04-6.5 3.5"
+      stroke="#BBC0C3"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const UploadIcon = (props) => (
+  <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" {...props}>
+    <G clipPath="url(#clip0)" fill="#333">
+      <Path d="M13.187 4.045a1.493 1.493 0 100 2.986 1.493 1.493 0 000-2.986z" />
+      <Path d="M23.415 3L21 .585A2 2 0 0019.586 0H8a2 2 0 00-2 2v7.275a.248.248 0 00.242.25 19.17 19.17 0 011.485.083A.246.246 0 008 9.36V2.5a.5.5 0 01.5-.5h10.879a.5.5 0 01.353.146l2.122 2.122a.5.5 0 01.146.353V18a.5.5 0 01-.5.5h-6.858a.244.244 0 00-.241.21 7.956 7.956 0 01-.364 1.458.244.244 0 00.228.331H22a2 2 0 002-2V4.414A2 2 0 0023.415 3z" />
+      <Path d="M13.831 9.4a.375.375 0 00-.633 0l-1.246 1.993a.244.244 0 00.042.308c.387.365.736.767 1.044 1.2a.24.24 0 00.2.1h7.079a.186.186 0 00.158-.286l-3.24-5.179a.373.373 0 00-.633 0l-1.81 2.9a.186.186 0 01-.25.064.188.188 0 01-.067-.064L13.831 9.4zM6.5 11a6.5 6.5 0 106.5 6.5A6.508 6.508 0 006.5 11zM9 18.25H7.5a.25.25 0 00-.25.25V20a.75.75 0 11-1.5 0v-1.5a.25.25 0 00-.25-.25H4a.75.75 0 110-1.5h1.5a.25.25 0 00.25-.25V15a.75.75 0 111.5 0v1.5a.25.25 0 00.25.25H9a.75.75 0 110 1.5z" />
+    </G>
+    <Defs>
+      <ClipPath id="clip0">
+        <Path fill="#fff" d="M0 0H24V24H0z" />
+      </ClipPath>
+    </Defs>
+  </Svg>
+);
