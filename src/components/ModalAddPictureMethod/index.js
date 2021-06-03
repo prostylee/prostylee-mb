@@ -4,12 +4,11 @@ import styles from './styles';
 import {Text} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import {commonActions, commonSelectors} from 'reducers';
+import IonIcons from 'react-native-vector-icons/Ionicons';
 import RootNavigator from 'navigator/rootNavigator';
 import LinearGradient from 'react-native-linear-gradient';
-import * as TabsIcon from 'svg/bottomTab';
 import i18n from 'i18n';
 import ImagePicker from 'react-native-image-crop-picker';
-import {showMessage} from 'react-native-flash-message';
 
 import Modal from 'react-native-modal';
 
@@ -18,71 +17,76 @@ import {dim} from 'utils/common';
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
 
-const ModalTabButton = ({style, visible}) => {
+const ModalAddPictureMethod = ({visible}) => {
   const dispatch = useDispatch();
   const [initRender, setInitRender] = React.useState(false);
   const [pickerModal, setPickerModal] = React.useState('');
-  const isShowTabButton = useSelector((state) =>
-    commonSelectors.isShowTabButton(state),
+  const isShowAddPictureOption = useSelector((state) =>
+    commonSelectors.isShowAddPictureOption(state),
   );
-  const closeTabButton = React.useCallback(() => {
-    dispatch(commonActions.toggleTabButton(false));
-    dispatch(commonActions.toggleFocusMainTab(false));
+  const closeAddPictureOption = React.useCallback(() => {
+    dispatch(commonActions.toggleAddPictureOption(false));
   }, [dispatch]);
 
   React.useEffect(() => {
     setTimeout(() => {
       setInitRender(true);
     }, 1000);
-    if (isShowTabButton) {
-      closeTabButton();
+    if (isShowAddPictureOption) {
+      closeAddPictureOption();
     }
   }, []);
 
-  const tabButtonAni = React.useRef(new Animated.Value(0)).current;
-  const storyButtonXValue = tabButtonAni.interpolate({
+  const addPictureAni = React.useRef(new Animated.Value(0)).current;
+  const storyButtonXValue = addPictureAni.interpolate({
     inputRange: [0, 1],
     outputRange: [WIDTH / 3, 0],
   });
-  const buttonYValue = tabButtonAni.interpolate({
+  const buttonYValue = addPictureAni.interpolate({
     inputRange: [0, 1],
     outputRange: [HEIGHT / 5, 0],
   });
-  const productButtonXValue = tabButtonAni.interpolate({
+  const productButtonXValue = addPictureAni.interpolate({
     inputRange: [0, 1],
     outputRange: [-WIDTH / 3, 0],
   });
-  const buttonOpacitye = tabButtonAni.interpolate({
+  const buttonOpacitye = addPictureAni.interpolate({
     inputRange: [0, 1],
     outputRange: [0, 1],
   });
-  const tabButtonShow = () => {
-    Animated.timing(tabButtonAni, {
+  const addPictureOptionShow = () => {
+    Animated.timing(addPictureAni, {
       toValue: 1,
       duration: 500,
       useNativeDriver: true,
     }).start();
   };
-  const tabButtonHide = () => {
-    Animated.timing(tabButtonAni, {
+  const addPictureOptionHide = () => {
+    Animated.timing(addPictureAni, {
       toValue: 0,
       duration: 500,
       useNativeDriver: true,
     }).start();
   };
-  const openStoryPicker = async () => {
-    dispatch(commonActions.toggleAddPictureOption(true));
-  };
-
-  const openStatusPicker = async () => {
+  const openLibraryPicker = async () => {
     ImagePicker.openPicker({
       mediaType: 'photo',
-      multiple: true,
-      maxFiles: 4,
     })
       .then((res) => {
         console.log(res);
-        RootNavigator.navigate('CropPicture', {images: res});
+        RootNavigator.navigate('AddStory', {image: res});
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const openCameraPicker = async () => {
+    ImagePicker.openCamera({
+      mediaType: 'photo',
+      cropping: false,
+    })
+      .then((res) => {
+        console.log(res);
+        RootNavigator.navigate('AddStory', {image: res});
       })
       .catch((e) => console.log(e));
   };
@@ -90,26 +94,24 @@ const ModalTabButton = ({style, visible}) => {
   const checkPickerModal = () => {
     try {
       switch (pickerModal) {
-        case 'story':
-          openStoryPicker();
+        case 'library':
+          openLibraryPicker();
           break;
-        case 'status':
-          openStatusPicker();
-          break;
-        case 'product':
+        case 'camera':
+          openCameraPicker();
           break;
         default:
           return;
       }
     } finally {
-      setPickerModal('false');
+      setPickerModal('');
     }
   };
 
-  const AddStoryButton = () => {
+  const OpenLibraryButton = () => {
     const buttonAction = async () => {
-      setPickerModal('story');
-      closeTabButton();
+      setPickerModal('library');
+      closeAddPictureOption();
     };
     return (
       <Animated.View
@@ -125,42 +127,20 @@ const ModalTabButton = ({style, visible}) => {
         ]}>
         <TouchableOpacity
           // eslint-disable-next-line react-native/no-inline-styles
-          style={[styles.buttonWrapper, {backgroundColor: '#823FFD'}]}
+          style={[styles.buttonWrapper, {backgroundColor: '#E5E5E5'}]}
           onPress={buttonAction}>
-          <TabsIcon.StoryButton />
+          <IonIcons name="image" size={28} color={'#333333'} />
         </TouchableOpacity>
-        <Text style={styles.labelStyle}>{i18n.t('bottomTab.addStory')}</Text>
+        <Text style={styles.labelStyle}>
+          {i18n.t('bottomTab.libraryButton')}
+        </Text>
       </Animated.View>
     );
   };
-  const AddPostButton = () => {
+  const OpenCameraButton = () => {
     const buttonAction = () => {
-      setPickerModal('status');
-      closeTabButton();
-    };
-    return (
-      <Animated.View
-        style={[
-          styles.buttonContainer,
-          {
-            transform: [{translateY: buttonYValue}],
-            opacity: buttonOpacitye,
-          },
-        ]}>
-        <TouchableOpacity
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={[styles.buttonWrapper, {backgroundColor: '#EA3F49'}]}
-          onPress={buttonAction}>
-          <TabsIcon.PostButton />
-        </TouchableOpacity>
-        <Text style={styles.labelStyle}>{i18n.t('bottomTab.addPost')}</Text>
-      </Animated.View>
-    );
-  };
-  const AddProductButton = () => {
-    const buttonAction = () => {
-      setPickerModal('product');
-      closeTabButton();
+      setPickerModal('camera');
+      closeAddPictureOption();
     };
     return (
       <Animated.View
@@ -176,11 +156,13 @@ const ModalTabButton = ({style, visible}) => {
         ]}>
         <TouchableOpacity
           // eslint-disable-next-line react-native/no-inline-styles
-          style={[styles.buttonWrapper, {backgroundColor: '#F46F2F'}]}
+          style={[styles.buttonWrapper, {backgroundColor: '#E5E5E5'}]}
           onPress={buttonAction}>
-          <TabsIcon.ProductButton />
+          <IonIcons name="camera" size={28} color={'#333333'} />
         </TouchableOpacity>
-        <Text style={styles.labelStyle}>{i18n.t('bottomTab.addProduct')}</Text>
+        <Text style={styles.labelStyle}>
+          {i18n.t('bottomTab.cameraButton')}
+        </Text>
       </Animated.View>
     );
   };
@@ -191,10 +173,10 @@ const ModalTabButton = ({style, visible}) => {
       transparent={true}
       isVisible={initRender ? visible : false}
       onModalWillShow={() => {
-        tabButtonShow();
+        addPictureOptionShow();
       }}
       onModalWillHide={() => {
-        tabButtonHide();
+        addPictureOptionHide();
       }}
       onModalHide={() => {
         setTimeout(() => {
@@ -203,7 +185,7 @@ const ModalTabButton = ({style, visible}) => {
       }}
       backdropColor={'transparent'}
       onBackdropPress={() => {
-        dispatch(commonActions.toggleTabButton(false));
+        dispatch(commonActions.toggleAddPictureOption(false));
       }}
       style={styles.modalStyle}
       animationOutTiming={500}
@@ -211,14 +193,13 @@ const ModalTabButton = ({style, visible}) => {
       <View style={styles.container}>
         <TouchableOpacity
           activeOpacity={1}
-          onPress={closeTabButton}
+          onPress={closeAddPictureOption}
           style={styles.modalBackground}>
           <LinearGradient
             colors={['#ffffff00', '#ffffffff']}
             style={styles.linearGradient}>
-            <AddStoryButton />
-            <AddPostButton />
-            <AddProductButton />
+            <OpenLibraryButton />
+            <OpenCameraButton />
           </LinearGradient>
         </TouchableOpacity>
       </View>
@@ -226,4 +207,4 @@ const ModalTabButton = ({style, visible}) => {
   );
 };
 
-export default ModalTabButton;
+export default ModalAddPictureMethod;
