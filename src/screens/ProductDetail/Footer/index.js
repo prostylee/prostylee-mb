@@ -1,11 +1,20 @@
+import styles from './styles';
 import React from 'react';
 import {View} from 'react-native';
 import {ButtonRounded, ButtonOutlined, ProductLike} from 'components';
 import i18n from 'i18n';
-import styles from './styles';
+
+import {cartActions} from 'reducers';
+import {useDispatch} from 'react-redux';
 
 const Footer = (props) => {
   const item = props.item ? props.item : {};
+  const dispatch = useDispatch();
+
+  const onAddToCart = () => {
+    dispatch(cartActions.setListCart(props.productData));
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.likeButton}>
@@ -26,7 +35,7 @@ const Footer = (props) => {
           contentStyle={{}}
           labelStyle={{}}
           label={i18n.t('productDetail.buttonAddToCart')}
-          onPress={() => {}}
+          onPress={onAddToCart}
         />
       </View>
     </View>
