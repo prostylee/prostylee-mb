@@ -35,13 +35,10 @@ import SettingAddress from './Setting/SettingAddress';
 import SettingChat from './Setting/SettingChat';
 import SettingNotification from './Setting/SettingNotification';
 import SettingLanguage from './Setting/SettingLanguage';
-<<<<<<< HEAD
 import SettingAddAddress from './Setting/AddAddress';
-=======
 import Search from './Search';
 import FilterProduct from './FilterProduct';
 import PromoNotification from './Notifications/PromoNotification';
->>>>>>> main
 
 export {
   Welcome,
