@@ -51,7 +51,16 @@ const FullView = ({column, wImage, hImage}) => {
         keyExtractor={(item, index) => 'profileMeTab' + index}
         data={postOfUser?.content || []}
         renderItem={({item}) => (
-          <Full/>
+          <Full
+            name
+            checkin
+            image
+            isFollowed
+            store
+            heartcount
+            commentcount
+            avatar
+          />
         )}
         // onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
