@@ -1,11 +1,12 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, ScrollView} from 'react-native';
+import styles from './styles';
 
-const NewFeed = () => {
+const NewFeed = ({children}) => {
   return (
-    <View style={{flex: 1}}>
-      <Text>Đây là new feed</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      {children}
+    </ScrollView>
   )
 }
 

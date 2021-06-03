@@ -11,7 +11,8 @@ import {
   Text,
   Image,
   Animated,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
 } from 'react-native';
 
 import {ThemeView, ButtonOutlined, ButtonRounded} from 'components';
@@ -21,14 +22,14 @@ import {useDispatch} from 'react-redux';
 import {commonActions, userActions} from 'reducers';
 import {Auth} from 'aws-amplify';
 import { reduce } from 'lodash';
+import {Grid, Full} from 'svg/common';
 
-import { Avatar } from 'react-native-paper';
+import { Avatar, ToggleButton } from 'react-native-paper';
 import TabViewContainer from './TabView';
-
-const HEADER_HEIGHT = 150;
 
 const Index = ({navigation}) => {
   const dispatch = useDispatch();
+  const [viewType, setViewType] = useState('left');
 
   React.useEffect(() => {
     // TODO remove
@@ -46,64 +47,68 @@ const Index = ({navigation}) => {
     await dispatch(commonActions.setInitialRouteName('SignInOptions'));
     await dispatch(userActions.userLogout());
   };
-
+  console.log(styles);
   return (
     <ThemeView isFullView style={styles.container}>
       <View style={{flex: 1, alignSelf: 'stretch'}}>
-        <Image style={{
-            width: 500, 
-            height: 500,
-            position: 'absolute',
-            top: 0,
-            alignSelf: 'center',
-            backgroundColor: 'lightblue'
-          }}
+        <Image style={styles.backgroundImageStyle}
           source={{uri: 'https://reactjs.org/logo-og.png'}}
         />
         <Avatar.Image 
           source={{uri: 'https://reactjs.org/logo-og.png'}}
           size={80}
-          style={{top: HEADER_HEIGHT-40, zIndex: 10, position: 'absolute', alignSelf: 'center'}}
+          style={styles.avatarStyle}
         />
         <ScrollView 
-          style={{top: HEADER_HEIGHT, backgroundColor: 'white', alignSelf: 'stretch', flex: 1, borderTopRightRadius: 8, borderTopLeftRadius: 8}}
-          contentContainerStyle={{alignItems: 'center', flexGrow: 1}}
+          style={styles.scrollViewStyle}
+          contentContainerStyle={{flex: 1}}
         >
-          <Text style={{marginTop: 56, fontSize: 20}}>Alyssa Gardner</Text>
-          <View style={{paddingHorizontal: 16}}>
-            <Text style={{textAlign: 'center'}}>
-              I’m only a morning person on Christmas morning
-              {"\n"}
-              You are not just a Follower. 
-              {"\n"}
-              📚 Bookaholic - ✈️ Travelholic
-            </Text>
-          </View>
-          <View style={{paddingTop: 16}}>
-            <ButtonRounded label={I18n.t('mypage.editProfile')}/>
-          </View>
-          <View style={{paddingTop: 16, flex: 3, flexDirection: 'row', justifyContent: "space-around"}}>
-            <View style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>
-              <Text>1244</Text>
-              <Text>{I18n.t('mypage.follower')}</Text>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <Text style={{marginTop: 56, fontSize: 20}}>Alyssa Gardner</Text>
+            <View style={{paddingHorizontal: 16}}>
+              <Text style={{textAlign: 'center'}}>
+                I’m only a morning person on Christmas morning
+                {"\n"}
+                You are not just a Follower. 
+                {"\n"}
+                📚 Bookaholic - ✈️ Travelholic
+              </Text>
             </View>
-            <View style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>
-              <Text>275</Text>
-              <Text>{I18n.t('mypage.following')}</Text>
+            <View style={{paddingTop: 16}}>
+              <ButtonRounded label={I18n.t('mypage.editProfile')}/>
             </View>
-            <View style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>
-              <Text>275</Text>
-              <Text>{I18n.t('mypage.posts')}</Text>
+            <View style={styles.followParentView}>
+              <View style={styles.followChildView}>
+                <Text>1244</Text>
+                <Text>{I18n.t('mypage.follower')}</Text>
+              </View>
+              <View style={styles.followChildView}>
+                <Text>275</Text>
+                <Text>{I18n.t('mypage.following')}</Text>
+              </View>
+              <View style={styles.followChildView}>
+                <Text>275</Text>
+                <Text>{I18n.t('mypage.posts')}</Text>
+              </View>
             </View>
           </View>
-          
+          <TabViewContainer style={{borderTopWidth: 0.3, marginTop: -24}}/>
         </ScrollView>
-        <TabViewContainer/>
-                 
+        
+        <View style={styles.viewType}>
+          <ToggleButton.Row value={viewType} style={{padding: 9, justifyContent: 'space-around'}}>
+            <TouchableOpacity onPress={() => setViewType('left')}>
+              <Grid color={viewType=='left'?'#333333':'#8B9399'} fill={viewType=='left'?'#333333':'none'}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setViewType('right')}>
+              <Full color={viewType=='right'?'#333333':'#8B9399'} fill={viewType=='right'?'#333333':'none'}/>
+            </TouchableOpacity>
+          </ToggleButton.Row>
+        </View>
       </View>
       
-      <ButtonOutlined label="Đăng Xuất Ngay" onPress={() => onSignOut()} />
-      <ButtonOutlined label="Categories Screen" onPress={() => navigation.navigate("Categories")} />
+      {/* <ButtonOutlined label="Đăng Xuất Ngay" onPress={() => onSignOut()} />
+      <ButtonOutlined label="Categories Screen" onPress={() => navigation.navigate("Categories")} /> */}
     </ThemeView>
   );
 };

@@ -215,7 +215,9 @@ export default {
     editProfile: 'Sửa hồ sơ',
     follower: 'Người theo dõi',
     following: 'Đang theo dõi',
-    posts: 'Bài đăng'
+    posts: 'Bài đăng',
+    isFollowed: 'Đã theo dõi',
+    isNotFollow: 'Theo dõi'
   },
   setting: {
     title: 'Thiết lập tài khoản',

@@ -1,60 +1,57 @@
 import React, {useState} from 'react';
-import {TabView, TabBar} from 'react-native-tab-view';
 import {Bag, Menu} from 'svg/common';
-import {Dimensions, View} from 'react-native';
+import {Dimensions, View, TouchableOpacity} from 'react-native';
 import {Colors} from 'components';
 import NewFeed from '../NewFeed';
 import Order from '../Order';
 import styles from './styles';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+import I18n from 'i18n';
+import GridView from '../GridView';
+import FullView from '../FullView';
 
-const initialLayout = {width: Dimensions.get('window').width};
+const {height} = Dimensions.get('window').height;
 
-const TabViewContainer = () => {
-  const [index, setIndex] = useState(0);
-
-  const [routes] = useState([
-    {key: 'me', title: ''},
-    {key: 'store', title: ''},
-  ]);
-
-  const renderScene = ({route, jumpTo}) => {
-    switch (route.key) {
-      case 'me':
-        return <NewFeed index={index} jumpTo={jumpTo} />;
-      case 'store':
-        return <Order index={index} jumpTo={jumpTo} />;
-    }
-  };
-
-  const renderTabBar = (props) => (
-    <TabBar
-      {...props}
-      indicatorStyle={styles.indicatorStyle}
-      style={styles.tabBarStyle}
-      renderLabel={renderLabel}
-    />
-  );
-  
-  const renderLabel = ({route, focused, color}) => {
-    const renderColor = focused ? Colors.$purple : Colors.$icon;
+const TabViewContainer = ({navigation, style}) => {
+  const RenderLabel = ({tabs, goToPage, activeTab}) => {
     return (
-      <View style={styles.labelWrapper}>
-        {route.key === routes[0].key ? (
-          <Menu color={renderColor} />
-        ) : (
-          <Bag color={renderColor} />
-        )}
+      <View style={styles.tabs}>
+        {
+          tabs.map((tab, i) => {
+            return (
+              <TouchableOpacity 
+                key={tab} 
+                onPress={() => goToPage(i)} 
+                style={[styles.tab, activeTab==i?styles.activeTab:null]}
+              >
+                {tab=='menu'?<Menu/>:<Bag/>}
+              </TouchableOpacity>
+            );
+          })
+        }
       </View>
     );
-  };
+  }
+
   return (
-    <TabView
-      navigationState={{index, routes}}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={initialLayout}
-      renderTabBar={renderTabBar}
-    />
+    <ScrollableTabView
+      style={[style, { position: 'relative' }]}
+      tabBarUnderlineStyle={{backgroundColor: '#823FFD'}}
+      tabBarActiveTextColor="#823FFD"
+      initialPage={0}
+      renderTabBar={() => <RenderLabel />}
+    >
+      <View
+        style={{flex: 1, padding: 10, paddingBottom: 100}}
+        tabLabel={'menu'}>
+        <NewFeed navigation={navigation}>
+          <FullView/>
+        </NewFeed>
+      </View>
+      <View style={{flex: 1, padding: 10}} tabLabel={'bag'}>
+        <Order />
+      </View>
+    </ScrollableTabView>
   );
 }
 
