@@ -31,6 +31,12 @@ const HeaderStore = ({header, navigation, status}) => {
             Hoàn thành
           </Text>
         );
+      case 'cancel':
+        return (
+          <Text style={{...styles.textHeaderStatus, color: '#ED2727'}}>
+            Đã hủy
+          </Text>
+        );
       default:
         return '#333333';
     }

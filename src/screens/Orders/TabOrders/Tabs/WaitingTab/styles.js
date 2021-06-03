@@ -96,9 +96,10 @@ export default EStyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
     borderTopWidth: 1,
     borderColor: '#F4F5F5',
+    paddingTop: 5,
+    paddingBottom: 5,
   },
   colCountFooter: {
     flex: 1,

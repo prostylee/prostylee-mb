@@ -104,6 +104,15 @@ export default EStyleSheet.create({
   colCountFooter: {
     flex: 1,
   },
+  colButtonFooter: {
+    flex: 1,
+  },
+  colButtonFooterRating: {
+    flex: 0.6,
+  },
+  colButtonFooterRepurchase: {
+    flex: 0.4,
+  },
   labelCountFooter: {
     color: '#8B9399',
     fontSize: 13,

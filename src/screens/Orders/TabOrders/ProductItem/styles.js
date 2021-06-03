@@ -9,6 +9,7 @@ export default EStyleSheet.create({
     alignItems: 'flex-start',
     marginTop: 6,
     flex: 1,
+    padding: 10,
   },
   wrapItems: {
     padding: 5,
@@ -20,6 +21,8 @@ export default EStyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 5,
+    marginBottom: 5,
   },
   wrapImageThumbnail: {
     position: 'relative',
