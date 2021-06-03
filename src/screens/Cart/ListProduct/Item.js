@@ -10,12 +10,10 @@ import {IconButton, Colors} from 'react-native-paper';
 import ModalChangeCart from '../ModalChangeCart';
 import {DownArrow} from 'svg/common';
 
-const Item = ({product, navigation}) => {
+const Item = ({product}) => {
   const [visible, setVisible] = useState(false);
 
-  const {storeId, storeName, storeAvatar, data} = product;
-
-  useEffect(() => {}, [JSON.stringify(data)]);
+  const {id, storeId, storeName, storeAvatar, data} = product;
 
   return (
     <>
@@ -43,7 +41,7 @@ const Item = ({product, navigation}) => {
                 onPress={() => setVisible(false)}
               />
             </View>
-            <ModalChangeCart />
+            <ModalChangeCart productId={id} />
           </View>
         </View>
       </Modal>
@@ -55,8 +53,8 @@ const Item = ({product, navigation}) => {
               <View style={styles.wrapImageThumbnail}>
                 <Image
                   source={
-                    item.productImage
-                      ? {uri: item?.productImage}
+                    item?.imageUrls.length
+                      ? {uri: item?.imageUrls[0]}
                       : require('assets/images/default.png')
                   }
                   style={styles.productAvatar}
@@ -66,7 +64,7 @@ const Item = ({product, navigation}) => {
               <View style={styles.wrapTextContent}>
                 <View>
                   <Text numberOfLines={2} style={styles.name}>
-                    {item.productName}
+                    {item.name}
                   </Text>
                   {item?.productPrice ? (
                     <Text numberOfLines={1} style={styles.price}>

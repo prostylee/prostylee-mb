@@ -256,7 +256,10 @@ const ProductDetail = (props) => {
           onSelect={selectRelatedProduct}
         />
       </Container>
-      <Footer item={productData} />
+      <Footer
+        isLike={productData?.likeStatusOfUserLogin || false}
+        productData={productData}
+      />
     </View>
   );
 };

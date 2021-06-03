@@ -8,6 +8,8 @@ import daynamicUsers from './dynamicUsers';
 import reviewRating from './reviewRating';
 import status from './status';
 import categories from './categories';
+import cart from './cart';
+
 import search from './search';
 import topSearch from './search/topSearch';
 import hintProductSearch from './search/hintProductSearch';
@@ -25,6 +27,7 @@ export default function* rootSaga() {
     ...reviewRating,
     ...status,
     ...categories,
+    ...cart,
     ...search,
     ...topSearch,
     ...hintProductSearch,
