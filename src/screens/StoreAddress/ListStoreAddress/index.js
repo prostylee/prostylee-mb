@@ -52,56 +52,75 @@ const DATA = [
     range: '0.2',
   },
   {
-    id: '4',
+    id: '6',
     title: 'Nike',
     address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
     range: '0.2',
   },
   {
-    id: '5',
+    id: '7',
     title: 'Nike',
     address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
     range: '0.2',
   },
   {
-    id: '4',
+    id: '8',
     title: 'Nike',
     address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
     range: '0.2',
   },
   {
-    id: '5',
+    id: '9',
     title: 'Nike',
     address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
     range: '0.2',
   },
   {
-    id: '4',
+    id: '10',
     title: 'Nike',
     address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
     range: '0.2',
   },
   {
-    id: '5',
+    id: '11',
     title: 'Nike',
     address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
     range: '0.2',
   },
 ];
 const Item = ({item, onPress}) => {
+  const [value, setValue] = React.useState('');
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={styles.FomatItem}>
-        <Text style={styles.Card}>{item.title}</Text>
-        <Text style={[styles.fomat]}>{item.address}</Text>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Icon
-            name="location-outline"
-            color="grey"
-            size={13}
-            style={{paddingRight: 5}}
-          />
-          <Text style={{fontSize: 13, color: 'grey'}}>{item.range}km</Text>
+      <View style={styles.container}>
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <RadioButton.Group
+            onValueChange={(newValue) => setValue(newValue)}
+            value={value}>
+            <View>
+              <RadioButton
+                value="first"
+                uncheckedColor={'#F0F0F0'}
+                status={value != 'first' ? 'checked' : 'unchecked'}
+              />
+            </View>
+          </RadioButton.Group>
+          <View style={styles.fomatItem}>
+            <Text style={styles.Card}>{item.title}</Text>
+            <Text style={[styles.fomat]}>{item.address}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Icon
+                name="location-outline"
+                color="grey"
+                size={13}
+                style={{paddingRight: 5}}
+              />
+              <Text style={{fontSize: 13, color: 'grey'}}>{item.range}km</Text>
+            </View>
+          </View>
         </View>
       </View>
     </TouchableOpacity>

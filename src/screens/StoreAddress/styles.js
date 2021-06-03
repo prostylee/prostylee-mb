@@ -1,5 +1,5 @@
-import {StyleSheet, StatusBar} from 'react-native';
-export default StyleSheet.create({
+import EStyleSheet from 'react-native-extended-stylesheet';
+export default EStyleSheet.create({
   wrapper: {
     flex: 1,
     width: '100%',
@@ -7,10 +7,20 @@ export default StyleSheet.create({
   },
   list: {
     paddingBottom: 5,
-    backgroundColor: 'red',
   },
   button: {
     width: '90%',
     alignSelf: 'center',
+    paddingBottom: 20,
+  },
+  headerContain: {
+    paddingBottom: 10,
+    height: 50,
+    borderBottomWidth: 1,
+  },
+  middleComponent: {
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
