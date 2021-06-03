@@ -22,6 +22,8 @@ export default {
   $line: '#E9EAEB',
   $icon: '#8B9399',
   $bgColorTwo: '#F7F7F7',
+  $bgColorSearch: '#E5E5E5',
   $rateStar: '#F48231',
   $linkBlue: '#3470FB',
+  $bgUnReadNoti: 'rgba(130, 63, 253, 0.05)',
 };

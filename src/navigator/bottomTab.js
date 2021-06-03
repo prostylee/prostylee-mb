@@ -22,12 +22,8 @@ const BottomTabs = (props) => {
     commonSelectors.isShowTabButton(state),
   );
   const backBehavior = 'initialRoute';
-  const {
-    initialRouteName,
-    tabBarColor,
-    activeColor,
-    inactiveColor,
-  } = tabsSetting.configs;
+  const {initialRouteName, tabBarColor, activeColor, inactiveColor} =
+    tabsSetting.configs;
   const {tabsNavigator} = tabsSetting;
 
   const SpecialIcon = ({children}) => {
