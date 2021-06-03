@@ -33,6 +33,7 @@ import SettingAddress from './Setting/SettingAddress';
 import SettingChat from './Setting/SettingChat';
 import SettingNotification from './Setting/SettingNotification';
 import SettingLanguage from './Setting/SettingLanguage';
+import SettingAddAddress from './Setting/AddAddress';
 
 export {
   Welcome,
@@ -69,5 +70,6 @@ export {
   SettingAddress,
   SettingChat,
   SettingNotification,
-  SettingLanguage
+  SettingLanguage,
+  SettingAddAddress
 };
