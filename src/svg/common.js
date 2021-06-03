@@ -1770,3 +1770,31 @@ export const PlusSign = ({width = 16, height = 16, color = '#333333'}) => {
     </Svg>
   );
 };
+
+export const LocationOutline = (props) => (
+  <Svg width={12} height={12} viewBox="0 0 12 12" fill="none" {...props}>
+    <Path
+      d="M10.5 5c0 3.5-4.5 6.5-4.5 6.5S1.5 8.5 1.5 5a4.5 4.5 0 019 0z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M6 6.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const LocationArrow = (props) => (
+  <Svg width={12} height={12} viewBox="0 0 12 12" fill="none" {...props}>
+    <Path
+      d="M11.5.5l-11 4 5.75 1.25L7.5 11.5l4-11z"
+      stroke="#823FFD"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

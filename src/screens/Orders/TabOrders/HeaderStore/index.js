@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Image} from 'components';
 import {RightArrow} from 'svg/common';
+import {IconButton, Menu, Divider} from 'react-native-paper';
 
 const HeaderStore = ({header, navigation, status}) => {
+  const [visible, setVisible] = useState(false);
   const {storeName, storeId, storeAvatar} = header;
   const clickItem = () => {
     console.log('Cliked!', storeId);
@@ -37,8 +39,34 @@ const HeaderStore = ({header, navigation, status}) => {
             Đã hủy
           </Text>
         );
+      case 'inhouse':
+        return (
+          <Menu
+            visible={visible}
+            onDismiss={() => setVisible(false)}
+            anchor={
+              <IconButton
+                onPress={() => setVisible(true)}
+                icon="dots-horizontal"
+                color="#8B9399"
+                size={20}
+              />
+            }>
+            <Menu.Item onPress={() => {}} title="Đánh dấu đã mua" />
+            <Divider />
+            <Menu.Item
+              onPress={() => {}}
+              title="Xóa"
+              titleStyle={{color: '#ED2727'}}
+            />
+          </Menu>
+        );
       default:
-        return '#333333';
+        return (
+          <Text style={{...styles.textHeaderStatus, color: '#333333'}}>
+            Đã hủy
+          </Text>
+        );
     }
   };
   return (

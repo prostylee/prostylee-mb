@@ -6,7 +6,7 @@ import i18n from 'i18n';
 import ScrollableTabView, {
   ScrollableTabBar,
 } from 'react-native-scrollable-tab-view';
-import {Waiting, Delivery, Done, Cancel} from './Tabs';
+import {Waiting, Delivery, Done, Cancel, Inhouse} from './Tabs';
 
 const routes = [
   {key: 'waiting', title: 'Chờ xác nhận'},
@@ -47,6 +47,12 @@ const TabOrders = ({navigation}) => {
               return (
                 <View tabLabel={item.title} key={item.key}>
                   <Cancel status={item.key} />
+                </View>
+              );
+            case 'inhouse':
+              return (
+                <View tabLabel={item.title} key={item.key}>
+                  <Inhouse status={item.key} />
                 </View>
               );
             default:

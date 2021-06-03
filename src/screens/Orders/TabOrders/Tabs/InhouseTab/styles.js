@@ -94,12 +94,29 @@ export default EStyleSheet.create({
   },
   wrapFooterItem: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     borderTopWidth: 1,
     borderColor: '#F4F5F5',
     paddingTop: 5,
     paddingBottom: 5,
+  },
+  wrapFooterLocation: {
+    flexDirection: 'row',
+  },
+  wrapFooterItemLocation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  wrapFooterItemButton: {
+    marginLeft: 10,
+  },
+  buttonFooterItemLocation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   colCountFooter: {
     flex: 1,
@@ -136,5 +153,35 @@ export default EStyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     fontWeight: '500',
+  },
+  labelFooterItemStore: {
+    color: '#333333',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '400',
+  },
+  labelFooterItemAddress: {
+    color: '#8B9399',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '400',
+  },
+  lableFooterItemLocation: {
+    color: '#8B9399',
+    fontSize: 11,
+    lineHeight: 16,
+    fontWeight: '400',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  labelFooterItemLocation: {
+    color: '$purple',
+    fontSize: 11,
+    lineHeight: 16,
+    fontWeight: '400',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

@@ -5,7 +5,9 @@ import {View, FlatList, Animated, Text} from 'react-native';
 import Product from '../../ProductItem';
 import {currencyFormat} from 'utils/currency';
 import {ButtonRounded, ButtonOutlined} from 'components';
+import {LocationOutline, LocationArrow} from 'svg/common';
 import i18n from 'i18n';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const data = [
   {
@@ -91,7 +93,7 @@ const data = [
   },
 ];
 
-const DoneTab = ({navigation, status}) => {
+const InhouseTab = ({navigation, status}) => {
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const onScrollEvent = Animated.event(
@@ -140,20 +142,28 @@ const DoneTab = ({navigation, status}) => {
           </View>
         </View>
         <View style={styles.wrapFooterItem}>
-          <View style={styles.colButtonFooterRating}>
-            <ButtonOutlined
-              label="Đánh giá sản phẩm"
-              labelStyle={styles.labelBtnOutline}
-              onPress={() => console.log('Đánh giá sản phẩm')}
-            />
+          <View style={styles.wrapFooterItemStore}>
+            <Text style={styles.labelFooterItemStore}>Femi Clothing Store</Text>
           </View>
-          <View style={styles.colButtonFooterRepurchase}>
-            <ButtonRounded
-              label="Mua lại"
-              style={{marginLeft: 10}}
-              labelStyle={styles.labelBtnRounded}
-              onPress={() => console.log('Mua lại')}
-            />
+          <View style={styles.wrapFooterItemAddress}>
+            <Text style={styles.labelFooterItemAddress}>
+              95 Đ. Nguyễn Trãi, Phường Phạm Ngũ Lão, Quận 1, Thành phố Hồ Chí
+              Minh
+            </Text>
+          </View>
+          <View style={styles.wrapFooterLocation}>
+            <View style={styles.wrapFooterItemLocation}>
+              <LocationOutline />
+              <Text style={styles.lableFooterItemLocation}>&nbsp;2.0 Km</Text>
+            </View>
+            <View style={styles.wrapFooterItemButton}>
+              <TouchableOpacity style={styles.buttonFooterItemLocation}>
+                <LocationArrow />
+                <Text style={styles.labelFooterItemLocation}>
+                  &nbsp;Tìm đường
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </>
@@ -180,8 +190,8 @@ const DoneTab = ({navigation, status}) => {
   );
 };
 
-DoneTab.defaultProps = {};
+InhouseTab.defaultProps = {};
 
-DoneTab.propTypes = {};
+InhouseTab.propTypes = {};
 
-export default DoneTab;
+export default InhouseTab;
