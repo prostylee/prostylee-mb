@@ -6,13 +6,14 @@ import {Image, ProductLike} from 'components';
 import styles from './styles';
 import {currencyFormat, priceSalePercent} from 'utils/currency';
 
-const ProductItem = ({item}) => {
+const ProductItem = ({item, onSelect}) => {
   const navigation = useNavigation();
+  const selectItem = onSelect ? onSelect : () => {};
   return (
     <View style={styles.wrapItems}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('ProductDetail', {id: item.id});
+          selectItem(item.id);
         }}>
         <View style={styles.item}>
           <View style={styles.wrapImageThumbnail}>

@@ -44,7 +44,7 @@ export async function _fetch(method, path, data) {
     } else if (res && res.status !== SUCCESS) {
       response = {
         status: res.status,
-        error: res.data.message,
+        error: res.data.message || res.data.error,
         data: null,
       };
       return {ok: true, data: response};

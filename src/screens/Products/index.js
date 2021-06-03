@@ -31,6 +31,7 @@ import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 const heightShow = 334;
 import {ProductLoading} from 'components/Loading/contentLoader';
+
 const WIDTH = Dimensions.get('window').width;
 const WIDTH_IMAGE = WIDTH / 2 - 14;
 const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
@@ -153,7 +154,7 @@ const Products = ({navigation}) => {
                 {categoriesSelect?.name}
               </Text>
             }
-            bottomComponent={<BottomHeaderAnimated />}
+            bottomComponent={<BottomHeaderAnimated navigation={navigation} />}
             bottomHeight={100}
             hideBottomBorder={true}
             heightShow={heightShow - 190}

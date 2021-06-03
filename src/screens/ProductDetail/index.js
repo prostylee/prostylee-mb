@@ -251,9 +251,15 @@ const ProductDetail = (props) => {
           onSelect={selectRelatedProduct}
         />
         <View style={styles.lineHrBig} />
-        <ProductCoordinated data={productCoordinated?.content || []} />
+        <ProductCoordinated
+          data={productCoordinated?.content || []}
+          onSelect={selectRelatedProduct}
+        />
       </Container>
-      <Footer isLike={productData?.likeStatusOfUserLogin || false} />
+      <Footer
+        isLike={productData?.likeStatusOfUserLogin || false}
+        productData={productData}
+      />
     </View>
   );
 };

@@ -40,6 +40,7 @@ import TextInputArea from './TextInputArea';
 import NumberInputUpDown from './NumberInputUpDown';
 import RadioSelectGroup from './RadioSelectGroup';
 import ModalTabButton from './ModalTabButton';
+import Picker from './Picker';
 
 export {
   ContainerWithoutScrollView,
@@ -59,6 +60,7 @@ export {
   RnDateTimePicker,
   AirbnbRating,
   Rating,
+  // RnRatingTap,
   //   ModalImagePicker,
   ModalZoomImage,
   ModalNetworkWarning,
@@ -81,6 +83,7 @@ export {
   TextInputArea,
   ModalTabButton,
   ProductLike,
+  Picker,
   NumberInputUpDown,
   RadioSelectGroup,
 };

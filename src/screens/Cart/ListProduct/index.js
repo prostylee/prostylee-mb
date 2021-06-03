@@ -1,51 +1,27 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useEffect, useState, useRef, useMemo} from 'react';
-import {View, ActivityIndicator, FlatList, Animated, Text} from 'react-native';
+import React, {useRef, useMemo} from 'react';
 import {useSelector} from 'react-redux';
-import {getListCartSelector} from 'redux/selectors/cart';
+import {View, FlatList, Animated, Text} from 'react-native';
 import Product from './Item';
 import EmptyCart from '../EmptyCart';
 import CardFooter from '../CardFooter';
 import ProductSimilar from '../ProductSimilar';
+import ProductSuggestion from '../ProductSuggestion';
 import i18n from 'i18n';
-import {Colors} from 'components';
+
 import {CartEmpty} from 'svg/common';
-import {getProductById} from 'services/api/productApi';
+import {getListCartSelector} from 'redux/selectors/cart';
 
-const ListProduct = ({navigation, data}) => {
-  const cart = useSelector((state) => getListCartSelector(state));
-
-  const [refreshing, handleRefreshing] = useState(false);
-
+const ListProduct = ({navigation}) => {
+  const cart = useSelector((state) => getListCartSelector(state)) || [];
+  console.log('cart', cart);
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
-
-  useEffect(() => {
-    getProductById(126)
-      .then((res) => {
-        if (res.data.status !== 200) {
-          console.log('có lỗi xảy ra');
-          return;
-        }
-        console.log('res', res.data.data);
-      })
-      .catch(() => console.log('Lỗi hệ thống!'));
-  }, []);
-
-  useEffect(() => {
-    handleRefreshing(false);
-  }, [refreshing]);
-
-  const handleRefresh = () => {
-    handleRefreshing(true);
-  };
-
-  const handleLoadMore = () => {};
 
   const renderFooter = () => {
     return (
@@ -56,8 +32,8 @@ const ListProduct = ({navigation, data}) => {
         <View style={styles.wrapProductSimilar}>
           <ProductSimilar />
         </View>
-        <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-          <ActivityIndicator animating color={Colors.$purple} size="small" />
+        <View style={styles.wrapProductSuggestion}>
+          <ProductSuggestion />
         </View>
       </>
     );
@@ -66,16 +42,16 @@ const ListProduct = ({navigation, data}) => {
   /* Extract note */
   const groupDataByStore = (list) => {
     return list.reduce((acc, product) => {
-      const foundIndex = acc.findIndex(
-        (element) => element.key === product.storeId,
-      );
+      const {storeId, productOwnerResponse, id} = product;
+      const foundIndex = acc.findIndex((element) => element.key === storeId);
       if (foundIndex === -1) {
         return [
           ...acc,
           {
-            key: product.storeId,
-            storeName: product.storeName,
-            storeAvatar: product.storeAvatar,
+            key: storeId,
+            storeName: productOwnerResponse.name,
+            storeAvatar: productOwnerResponse.logoUrl,
+            id: id,
             data: [product],
           },
         ];
@@ -94,6 +70,8 @@ const ListProduct = ({navigation, data}) => {
     navigation.navigate('CheckoutCart');
   };
 
+  console.log('group', groupData);
+
   return (
     <View style={styles.container}>
       {Object.keys(groupData).length > 0 ? (
@@ -107,9 +85,6 @@ const ListProduct = ({navigation, data}) => {
                 )}
                 numColumns={1}
                 keyExtractor={(item, index) => index}
-                refreshing={refreshing}
-                onRefresh={handleRefresh}
-                onEndReached={() => handleLoadMore()}
                 ListFooterComponent={renderFooter}
                 style={styles.flatList}
                 showsVerticalScrollIndicator={false}
@@ -138,122 +113,7 @@ const ListProduct = ({navigation, data}) => {
   );
 };
 
-ListProduct.defaultProps = {
-  data: [
-    {
-      id: 231,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'black',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2345,
-    },
-    {
-      id: 232,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'black',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2346,
-    },
-    {
-      id: 233,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'black',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2346,
-    },
-    {
-      id: 233,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'white',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2346,
-    },
-    {
-      id: 233,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'black',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2346,
-    },
-    {
-      id: 233,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'white',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2346,
-    },
-    {
-      id: 233,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'white',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2346,
-    },
-    {
-      id: 233,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'black',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2346,
-    },
-  ],
-};
+ListProduct.defaultProps = {};
 
 ListProduct.propTypes = {};
 

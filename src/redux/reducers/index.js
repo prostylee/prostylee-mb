@@ -41,12 +41,14 @@ import status, {
   selectors as statusSelectors,
   types as statusTypes,
 } from './status';
+
 import categories, {
   actions as categoriesActions,
   types as categoriesTypes,
 } from './categories';
 
 import cart, {actions as cartActions, types as cartTypes} from './cart';
+import search, {actions as searchActions, types as searchTypes} from './search';
 
 const rootReducer = combineReducers({
   common,
@@ -58,6 +60,8 @@ const rootReducer = combineReducers({
   reviewRating,
   status,
   categories,
+  cart,
+  search,
 });
 
 export {commonActions, commonSelectors, commonTypes};
@@ -70,5 +74,6 @@ export {reviewRatingActions, reviewRatingSelectors, reviewRatingTypes};
 export {statusActions, statusSelectors, statusTypes};
 export {categoriesActions, categoriesTypes};
 export {cartActions, cartTypes};
+export {searchActions, searchTypes};
 
 export default rootReducer;
