@@ -22,8 +22,6 @@ const ConditionOfProductsFilter = () => {
     getProductFilterAttributeListSelector(state),
   );
 
-  console.log('FILTER ATTRIBUTE LIST CONDITION', filterAttributeList);
-
   const filterState = useSelector((state) => getProductFilterState(state));
   const attributeFilterState = filterState?.attributes;
   const categoryFilterState = filterState.category;

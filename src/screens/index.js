@@ -18,7 +18,7 @@ import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import ProductDetail from './ProductDetail';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
-import SearchProductFilter from './SearchProductFilter';
+
 import SearchProducts from './SearchProducts';
 import ReviewRating from './ReviewRating';
 import ChooseRateProduct from './ChooseRateProduct';
@@ -29,6 +29,13 @@ import AddStore from './Story/AddStore';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
+import BestSeller from './Stores/BestSeller';
+import SearchProductFilter from './SearchProductFilter';
+import PersonalSalers from './Stores/PersonalSalers';
+import Vouchers from './Stores/Vouchers';
+import NearbyStore from './Stores/NearbyStore';
+import FlashSale from './Stores/FlashSale';
+import StoreAddress from './StoreAddress';
 import Search from './Search';
 import FilterProduct from './FilterProduct';
 import PromoNotification from './Notifications/PromoNotification';
@@ -43,6 +50,10 @@ export {
   Products,
   StoryBoard,
   Chat,
+  BestSeller,
+  PersonalSalers,
+  SearchProductFilter,
+  NearbyStore,
   SignUpViaPhone,
   SignInViaPhone,
   SignInOptions,
@@ -54,7 +65,6 @@ export {
   SimpleWebView,
   ProductDetail,
   UserProfile,
-  SearchProductFilter,
   SearchProducts,
   ReviewRating,
   ChooseRateProduct,
@@ -65,6 +75,9 @@ export {
   CropPicture,
   AddStatus,
   AddStoreForStatus,
+  Vouchers,
+  FlashSale,
+  StoreAddress,
   Search,
   FilterProduct,
   PromoNotification,
