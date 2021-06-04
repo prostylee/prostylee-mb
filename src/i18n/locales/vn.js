@@ -4,6 +4,8 @@ export default {
   cancel: 'Huỷ',
   stores: {
     titleTopStore: 'Cửa hàng nổi bật',
+    textNear: 'Cửa hàng gần đây',
+    flashSale: '🔥 Flash sale',
   },
   common: {
     textSeeMore: 'Xem thêm',
@@ -13,6 +15,7 @@ export default {
     textFollower: 'Người theo dõi',
     textFollowing: 'Đang theo dõi',
     textPost: 'Bài đăng',
+    textNear: '2.5km',
   },
   codePush: {
     installButton: 'Cập nhật',

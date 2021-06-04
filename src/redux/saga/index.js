@@ -17,6 +17,8 @@ import featuredProductSearch from './search/featuredProductSearch';
 import storeSearch from './search/storeSearch';
 import productSearchMain from './search/productSearchMain';
 import productFilter from './search/productFilter';
+import storeMain from './stores/storeMain';
+
 export default function* rootSaga() {
   yield all([
     ...product,
@@ -35,5 +37,6 @@ export default function* rootSaga() {
     ...storeSearch,
     ...productSearchMain,
     ...productFilter,
+    ...storeMain,
   ]);
 }
