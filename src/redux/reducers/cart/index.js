@@ -15,6 +15,7 @@ export const types = {
   SET_LIST_CART: 'SET_LIST_CART',
   SET_LIST_CART_SUCCESS: 'SET_LIST_CART_SUCCESS',
   SET_LIST_CART_FAILED: 'SET_LIST_CART_FAILED',
+  ADD_ITEM_TO_CART: 'ADD_ITEM_TO_CART',
 
   //List Payment
   GET_LIST_PAYMENT: 'GET_LIST_PAYMENT',
@@ -46,6 +47,7 @@ export const actions = {
   setListCart: createAction(types.SET_LIST_CART),
   setListCartSuccess: createAction(types.SET_LIST_CART_SUCCESS),
   setListCartFailed: createAction(types.SET_LIST_CART_FAILED),
+  addItemToCart: createAction(types.ADD_ITEM_TO_CART),
   //List Payment
   setPaymentLoading: createAction(types.SET_PAYMENT_LOADING),
   getListPayment: createAction(types.GET_LIST_PAYMENT),
@@ -89,6 +91,19 @@ export default handleActions(
     //List Cart
     [types.SET_CART_LOADING]: (state, {payload}) => {
       return {...state, cartLoading: payload};
+    },
+    [types.ADD_ITEM_TO_CART]: (state, {payload}) => {
+      const currentCart = state.listCart;
+      const currentListItemId =
+        currentCart.map((item) => {
+          return item.item.id;
+        }) || [];
+      if (!currentListItemId.includes(payload.item.id)) {
+        currentCart.push(payload);
+        return {...state, cartLoading: currentCart};
+      } else {
+        return {...state, cartLoading: currentCart};
+      }
     },
     [types.SET_LIST_CART_SUCCESS]: (state, {payload}) => {
       showMessage({
