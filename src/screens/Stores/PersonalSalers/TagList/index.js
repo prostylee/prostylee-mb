@@ -6,6 +6,12 @@ import styles from './styles';
 
 const MockTag = [
   {
+    label: 'Sale',
+    value: {
+      sale: true,
+    },
+  },
+  {
     label: 'Best seller',
     value: {
       bestSeller: true,
@@ -13,15 +19,10 @@ const MockTag = [
   },
   {
     label: 'Gần đây',
+    icon: 'map-marker',
     value: {
       atitude: 10.806406363857086,
       longitude: 106.6634168400805,
-    },
-  },
-  {
-    label: 'Sale',
-    value: {
-      sale: true,
     },
   },
 ];
@@ -36,6 +37,7 @@ const TagList = ({onTagPress}) => {
         data={MockTag}
         renderItem={({item, index}) => (
           <Chip
+            icon={item.icon}
             selectedColor={Colors?.['$purple']}
             selected={index === active}
             small

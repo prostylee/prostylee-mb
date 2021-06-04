@@ -22,6 +22,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Avatar, Text} from 'react-native-paper';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {MapPin} from 'svg/common';
 
 const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
@@ -110,8 +111,10 @@ const FeaturedCategories = ({navigation}) => {
                       </Text>
                       <View
                         style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon name="location-outline" color="grey" />
-                        <Text style={styles.isAdvertising}>0.2 km</Text>
+                        <MapPin width={12} height={12} />
+                        <Text style={[styles.isAdvertising, {marginLeft: 2}]}>
+                          0.2 km
+                        </Text>
                       </View>
                     </View>
                   </View>

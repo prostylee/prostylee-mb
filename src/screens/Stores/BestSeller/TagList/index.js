@@ -13,6 +13,7 @@ const MockTag = [
   },
   {
     label: 'Gần đây',
+    icon: 'map-marker',
     value: {
       atitude: 10.806406363857086,
       longitude: 106.6634168400805,
@@ -36,6 +37,7 @@ const TagList = ({onTagPress}) => {
         data={MockTag}
         renderItem={({item, index}) => (
           <Chip
+            icon={item.icon}
             selectedColor={Colors?.['$purple']}
             selected={index === active}
             small
