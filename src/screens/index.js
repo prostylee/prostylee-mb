@@ -29,6 +29,13 @@ import AddStore from './Story/AddStore';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
+import Setting from './Setting';
+import SettingMyAccount from './Setting/SettingMyAccount';
+import SettingAddress from './Setting/SettingAddress';
+import SettingChat from './Setting/SettingChat';
+import SettingNotification from './Setting/SettingNotification';
+import SettingLanguage from './Setting/SettingLanguage';
+import SettingAddAddress from './Setting/AddAddress';
 import BestSeller from './Stores/BestSeller';
 import SearchProductFilter from './SearchProductFilter';
 import PersonalSalers from './Stores/PersonalSalers';
@@ -75,6 +82,13 @@ export {
   CropPicture,
   AddStatus,
   AddStoreForStatus,
+  Setting,
+  SettingMyAccount,
+  SettingAddress,
+  SettingChat,
+  SettingNotification,
+  SettingLanguage,
+  SettingAddAddress,
   Vouchers,
   FlashSale,
   StoreAddress,
