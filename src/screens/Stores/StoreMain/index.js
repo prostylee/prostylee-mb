@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {
   View,
   ActivityIndicator,
-  FlatList,
   Text,
   TouchableOpacity,
   ScrollView,
@@ -17,14 +16,6 @@ import {Header, Colors} from 'components';
 
 import {storeActions} from 'redux/reducers';
 
-import {
-  getLoadingFuturedStoresSelector,
-  listOfFuturedStoresSelector,
-  hasLoadMoreSelector,
-  loadMoreLoadingSelector,
-  getPageSelector,
-} from 'redux/selectors/stores';
-
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 import CustomBackground from './CustomBackground';
 import AdvertisingSlider from './AdvertisingSlider';
@@ -37,6 +28,8 @@ import PopularBrands from './PopularBrands';
 import MidAdvertisingSlider from './MidAdvertisingSlider';
 import FeaturedCategories from './FeaturedCategories';
 import ForUserTabView from './ForUserTabView';
+
+import useLocation from '../../../hooks/useLocation';
 
 import {
   getTopBannerSelector,
@@ -81,6 +74,9 @@ const Stores = (props) => {
   const brandList = useSelector((state) => getBrandListSelector(state));
   const categoryList = useSelector((state) => getCategoryListSelector(state));
 
+  const location = useLocation();
+  console.log('LOCATION', location);
+
   useEffect(() => {
     if (!topBannerList || !topBannerList?.content?.length)
       dispatch(
@@ -113,27 +109,10 @@ const Stores = (props) => {
         }),
       );
   }, []);
-
   const handleRefresh = () => {
     handleRefreshing(true);
   };
-
-  // const handleLoadMore = () => {
-  //   if (hasLoadMore) {
-  //     dispatch(
-  //       storeActions.getListOfFuturedStoresLoadMore({
-  //         page: page + 1,
-  //         limit: LIMIT_DEFAULT,
-  //       }),
-  //     );
-  //   }
-  // };
-
   const renderFooter = () => {
-    // if (!loadMoreLoading) {
-    //   return <View style={styles.viewFooter} />;
-    // }
-
     return (
       <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
         <ActivityIndicator animating color={Colors.$purple} size="small" />
