@@ -1859,17 +1859,6 @@ export const EmptyCart = (props) => (
   </Svg>
 );
 
-export const RightArrow = (props) => (
-  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
-    <Path
-      d="M6 12l4-4-4-4"
-      stroke="#8B9399"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </Svg>
-);
-
 export const DownArrow = (props) => (
   <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
     <Path
