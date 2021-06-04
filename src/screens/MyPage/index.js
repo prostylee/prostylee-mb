@@ -22,7 +22,8 @@ import {useDispatch} from 'react-redux';
 import {commonActions, userActions} from 'reducers';
 import {Auth} from 'aws-amplify';
 import { reduce } from 'lodash';
-import {Grid, Full} from 'svg/common';
+import {Grid, Full, Setting} from 'svg/common';
+import {Message} from 'svg/social';
 
 import { Avatar, ToggleButton } from 'react-native-paper';
 import TabViewContainer from './TabView';
@@ -51,6 +52,14 @@ const Index = ({navigation}) => {
   return (
     <ThemeView isFullView style={styles.container}>
       <View style={{flex: 1, alignSelf: 'stretch'}}>
+        <View style={styles.headerFull}>
+          <TouchableOpacity style={{paddingRight: 20}}>
+            <Message/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
+            <Setting/>
+          </TouchableOpacity>
+        </View>
         <Image style={styles.backgroundImageStyle}
           source={{uri: 'https://reactjs.org/logo-og.png'}}
         />

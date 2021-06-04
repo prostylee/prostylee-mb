@@ -1371,3 +1371,23 @@ export const StoreIcon = ({width = 16, height = 16, color = "white"}) => {
     </Svg>
   );
 };
+
+export const RightArrow = ({width = 16, height = 16, color = '#8B9399'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 16 16" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <Path
+        d="M6 12L10 8L6 4"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};

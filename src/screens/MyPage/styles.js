@@ -47,5 +47,14 @@ export default EStyleSheet.create({
     backgroundColor: '$white', 
     width: 80, 
     bottom: 7
+  },
+  headerFull: {
+    position: 'absolute', 
+    top: 50, 
+    zIndex: 11, 
+    right: 7, 
+    justifyContent: 'space-between', 
+    flexDirection: 'row', 
+    alignItems: 'center'
   }
 });
