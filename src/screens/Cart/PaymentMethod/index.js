@@ -6,25 +6,38 @@ import i18n from 'i18n';
 import {VISAIcon, MASTERIcon, AEIcon, DISCOVERIcon, MomoIcon} from 'svg/common';
 import {ThemeView, Header} from 'components';
 import {RadioButton} from 'react-native-paper';
-
+import {useNavigation} from '@react-navigation/native';
 import {cartActions} from 'reducers';
 
 import {
   getListPaymentSelector,
   getPaymentLoadingSelector,
+  getPaymentUseSelector,
 } from 'redux/selectors/cart';
 
-const PaymentMethod = ({navigation, data}) => {
+const PaymentMethod = ({data}) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const [value, setValue] = useState();
 
   const loading = useSelector((state) => getPaymentLoadingSelector(state));
   const paymentList = useSelector((state) => getListPaymentSelector(state));
+  const paymentUsed = useSelector((state) => getPaymentUseSelector(state));
 
   useEffect(() => {
     dispatch(cartActions.getListPayment());
   }, []);
+
+  useEffect(() => {
+    setValue(paymentUsed);
+  }, [paymentUsed]);
+
+  const onChange = (vl) => {
+    setValue(vl);
+    dispatch(cartActions.setPaymentUse(vl));
+    navigation.goBack();
+  };
 
   const renderLabel = (item) => {
     switch (item.name) {
@@ -80,10 +93,6 @@ const PaymentMethod = ({navigation, data}) => {
           </View>
         );
     }
-  };
-
-  const onChange = (vl) => {
-    setValue(vl);
   };
 
   return (

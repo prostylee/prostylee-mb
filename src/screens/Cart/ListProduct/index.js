@@ -15,7 +15,7 @@ import {getListCartSelector} from 'redux/selectors/cart';
 
 const ListProduct = ({navigation}) => {
   const cart = useSelector((state) => getListCartSelector(state)) || [];
-  console.log('cart', cart);
+
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const onScrollEvent = Animated.event(
@@ -35,6 +35,7 @@ const ListProduct = ({navigation}) => {
         <View style={styles.wrapProductSuggestion}>
           <ProductSuggestion />
         </View>
+        <View style={styles.viewLoadingFooter}></View>
       </>
     );
   };
@@ -42,7 +43,8 @@ const ListProduct = ({navigation}) => {
   /* Extract note */
   const groupDataByStore = (list) => {
     return list.reduce((acc, product) => {
-      const {storeId, productOwnerResponse, id} = product;
+      const {item, quantity, options} = product;
+      const {storeId, productOwnerResponse, id} = item;
       const foundIndex = acc.findIndex((element) => element.key === storeId);
       if (foundIndex === -1) {
         return [
@@ -52,11 +54,13 @@ const ListProduct = ({navigation}) => {
             storeName: productOwnerResponse.name,
             storeAvatar: productOwnerResponse.logoUrl,
             id: id,
-            data: [product],
+            data: [item],
+            amount: quantity,
+            options: options,
           },
         ];
       }
-      acc[foundIndex].data = [...acc[foundIndex].data, product];
+      acc[foundIndex].data = [...acc[foundIndex].data, item];
       return acc;
     }, []);
   };
@@ -69,8 +73,6 @@ const ListProduct = ({navigation}) => {
   const onCheckout = () => {
     navigation.navigate('CheckoutCart');
   };
-
-  console.log('group', groupData);
 
   return (
     <View style={styles.container}>

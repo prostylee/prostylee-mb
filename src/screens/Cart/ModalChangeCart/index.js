@@ -17,11 +17,14 @@ const ModalChangeCart = ({images, productId}) => {
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState({});
 
+  console.log('producId', productId);
+
   useEffect(() => {
     setLoading(true);
     if (productId) {
       getProductById(productId)
         .then((res) => {
+          console.log('res', res);
           setLoading(false);
           if (res.data.status !== 200) {
             console.log('Có lỗi xảy ra');
