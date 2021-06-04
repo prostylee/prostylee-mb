@@ -43,11 +43,14 @@ const ItemTopSide = ({data}) => (
   <View style={styles.topSideWrapper}>
     <View style={styles.voucherInfoContainer}>
       <View style={styles.voucherImgWrapper}>
-        <Image source={voucher1} style={styles.voucherImg} />
+        <Image
+          source={data?.logo ? {uri: data.logo} : voucher1}
+          style={styles.voucherImg}
+        />
       </View>
       <View style={styles.voucerDetailWrapper}>
-        <Text style={styles.subTitle}>{data?.brand}</Text>
-        <Text style={styles.voucherContent}>{data?.content}</Text>
+        <Text style={styles.subTitle}>{data?.voucherOwner}</Text>
+        <Text style={styles.voucherContent}>{data?.name}</Text>
       </View>
     </View>
   </View>
@@ -89,7 +92,6 @@ const ItemBottomSide = ({submit, data}) => (
 );
 
 const VoucherDetail = ({data, submit}) => {
-  console.log('Voucher detail ne');
   return (
     <View style={styles.container}>
       <View style={styles.topBrackdrop}>

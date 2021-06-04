@@ -27,6 +27,8 @@ import {debounce} from 'lodash';
 import {MessageOutlined, Bell, BellWithNotiBadge} from 'svg/header';
 import ProductList from './ProductList';
 import SortDropDown from './SortDropDown';
+import FilterBar from '../BestSeller/FilterBar';
+import TagList from './TagList';
 
 const MockTag = [
   'Best seller',
@@ -80,25 +82,6 @@ const GroupHeaderRightButton = ({haveNoti = false}) => {
     </View>
   );
 };
-const TagList = () => (
-  <View style={styles.wrapList}>
-    <FlatList
-      style={styles.wrapChip}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      data={MockTag}
-      renderItem={({item, index}) => (
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}
-          key={`${item}-${index}`}>
-          {item}
-        </Chip>
-      )}
-    />
-  </View>
-);
 
 const FlashSale = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -134,35 +117,13 @@ const FlashSale = ({navigation}) => {
           </Text>
         }
       />
-      <View style={styles.wrapBlockOne}>
-        <TouchableOpacity onPress={() => setVisible(!visible)}>
-          <View style={styles.contentBlockOne}>
-            <View>
-              <Sort />
-            </View>
-            <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('sort')}
-            </Text>
-            <View>
-              <CaretDown />
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('SearchProductFilter')}>
-          <View style={styles.wrapBlockFilter}>
-            <Text numberOfLines={1} style={styles.textSpace}>
-              |
-            </Text>
-            <Filter />
-            <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('filter')}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <FilterBar
+        setVisible={setVisible}
+        visible={visible}
+        navigation={navigation}
+      />
       <Divider />
-      <TagList />
+      <TagList onTagPress={() => {}} />
       <SortDropDown
         visible={visible}
         setVisible={setVisible}

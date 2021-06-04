@@ -82,32 +82,36 @@ const Stores = (props) => {
   const categoryList = useSelector((state) => getCategoryListSelector(state));
 
   useEffect(() => {
-    dispatch(
-      storeActions.getTopBanner({
-        page: PAGE_DEFAULT,
-        limit: LIMIT_DEFAULT,
-      }),
-    );
-    dispatch(
-      storeActions.getMidBanner({
-        page: PAGE_DEFAULT,
-        limit: LIMIT_DEFAULT,
-      }),
-    );
-    dispatch(
-      storeActions.getBrandList({
-        page: PAGE_DEFAULT,
-        limit: LIMIT_DEFAULT,
-      }),
-    );
-    dispatch(
-      storeActions.getCategoryList({
-        page: PAGE_DEFAULT,
-        limit: LIMIT_DEFAULT,
-        hotStatus: true,
-        sorts: '+order',
-      }),
-    );
+    if (!topBannerList || !topBannerList?.content?.length)
+      dispatch(
+        storeActions.getTopBanner({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
+    if (!midBannerList || !midBannerList?.content?.length)
+      dispatch(
+        storeActions.getMidBanner({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
+    if (!brandList || !brandList?.content?.length)
+      dispatch(
+        storeActions.getBrandList({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
+    if (!categoryList || !categoryList?.content?.length)
+      dispatch(
+        storeActions.getCategoryList({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          hotStatus: true,
+          sorts: '+order',
+        }),
+      );
   }, []);
 
   const handleRefresh = () => {

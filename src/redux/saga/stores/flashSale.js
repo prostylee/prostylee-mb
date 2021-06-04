@@ -1,6 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {getNearbyStore as getNearbyStoreApi} from 'services/api/storeApi';
+import {getFlashSale as getFlashSaleApi} from 'services/api/storeApi';
 
 import {storeActions, storeTypes} from 'reducers';
 
@@ -8,15 +8,15 @@ import {SUCCESS} from 'constants';
 
 //List FEATURED_PRODUCT_SEARCH
 
-const getNearbyStore = function* ({payload}) {
+const getFlashSale = function* ({payload}) {
   try {
     yield put(storeActions.setNearbyStoreLoading(true));
-    const res = yield call(getNearbyStoreApi, payload);
+    const res = yield call(getFlashSaleApi, payload);
     let listStore = res?.data?.data;
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      yield put(storeActions.getNearbyStoreSuccess(listStore));
+      yield put(storeActions.getFlashSaleSuccess(listStore));
     } else {
-      yield put(storeActions.getNearbyStoreFailed());
+      yield put(storeActions.getFlashSaleFailed());
     }
   } catch (e) {
     console.error(e);
@@ -24,14 +24,14 @@ const getNearbyStore = function* ({payload}) {
     yield put(storeActions.setNearbyStoreLoading(false));
   }
 };
-const getNearbyStoreLoadmore = function* ({payload}) {
+const getFlashSaleLoadmore = function* ({payload}) {
   try {
     yield put(storeActions.setNearbyStoreLoadmoreLoading(true));
-    const res = yield call(getNearbyStoreApi, payload);
+    const res = yield call(getFlashSaleApi, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      yield put(storeActions.getNearbyStoreLoadmoreSuccess(res?.data?.data));
+      yield put(storeActions.getFlashSaleLoadmoreSuccess(res?.data?.data));
     } else {
-      yield put(storeActions.getNearbyStoreLoadmoreFailed());
+      yield put(storeActions.getFlashSaleLoadmoreFailed());
     }
   } catch (e) {
     console.error(e);
@@ -42,10 +42,7 @@ const getNearbyStoreLoadmore = function* ({payload}) {
 
 const watcher = function* () {
   //List FEATURED_PRODUCT_SEARCH
-  yield takeLatest(storeTypes.GET_NEARBY_STORE, getNearbyStore);
-  yield takeLatest(
-    storeTypes.GET_NEARBY_STORE_LOADMORE,
-    getNearbyStoreLoadmore,
-  );
+  yield takeLatest(storeTypes.GET_FLASH_SALE, getFlashSale);
+  yield takeLatest(storeTypes.GET_FLASH_SALE_LOADMORE, getFlashSaleLoadmore);
 };
 export default watcher();

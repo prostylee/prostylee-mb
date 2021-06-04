@@ -11,12 +11,11 @@ import styles from './style';
 import {Colors} from 'components';
 const MockSortItem = [
   {label: 'Tất cả', value: 0},
-  {label: 'Liên quan nhất', value: 1},
-  {label: 'Phổ biến nhất', value: 2},
-  {label: 'Hàng mới về', value: 3},
-  {label: 'Giá thấp', value: 4},
-  {label: 'Giá cao nhất', value: 5},
-  {label: 'Đánh giá tốt', value: 6},
+  {label: 'Của Prostylee', value: 1},
+  {label: 'Của store', value: 2},
+  {label: 'Ưu đãi nhất', value: 3},
+  {label: 'Sắp hết hạn', value: 4},
+  {label: 'Sử dụng nhiều nhất', value: 5},
 ];
 
 const SortDropDown = ({

@@ -43,8 +43,17 @@ const FilterProduct = ({navigation}) => {
         }),
       );
     }
+    if (!categories || !categories.length) {
+      dispatch(
+        searchActions.getSearchFeaturedCategories({
+          type: 'product',
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          keyword: '',
+        }),
+      );
+    }
   }, []);
-  // console.log('FIlter Attribute List', filterAttributeList);
 
   return (
     <ThemeView style={styles.container} isFullView>

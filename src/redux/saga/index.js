@@ -18,6 +18,11 @@ import storeSearch from './search/storeSearch';
 import productSearchMain from './search/productSearchMain';
 import productFilter from './search/productFilter';
 import storeMain from './stores/storeMain';
+import personalSaler from './stores/personalSaler';
+import nearbyStore from './stores/nearbyStore';
+import bestSeller from './stores/bestSellers';
+import flashSale from './stores/flashSale';
+import vouchers from './stores/vouchers';
 
 export default function* rootSaga() {
   yield all([
@@ -38,5 +43,10 @@ export default function* rootSaga() {
     ...productSearchMain,
     ...productFilter,
     ...storeMain,
+    ...personalSaler,
+    ...nearbyStore,
+    ...bestSeller,
+    ...flashSale,
+    ...vouchers,
   ]);
 }

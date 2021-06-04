@@ -44,3 +44,15 @@ export const getNearbyStore = (payload) => {
 export const getPersonalSalersProducts = (payload) => {
   return _fetch(GET, '/products', {userId: 1, ...payload});
 };
+
+//BEST SELLER
+export const getBestSellers = (payload) => {
+  return _fetch(GET, '/products/best-seller', {
+    ...payload,
+  });
+};
+
+//VOUCHERS
+export const getVouchers = (payload) => {
+  return _fetch(GET, '/voucher/userLogin', {...payload});
+};

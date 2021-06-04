@@ -3,58 +3,64 @@ import React, {useEffect, useState} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 
 import styles from './styles';
-import {Colors} from 'components';
+import {Colors, Image} from 'components';
 import i18n from 'i18n';
 
 import {
-  getSearchFeaturedCategoriesLoadingSelector,
-  getSearchFeaturedCategoriesSelector,
-  getLoadSearchFeaturedCategoriesMoreLoading,
-  getHasLoadMoreSearchFeaturedCategoriesSelector,
-  getPageSearchFeaturedCategoriesSelector,
-} from 'redux/selectors/search';
+  getNearbyStoreLoadingSelector,
+  getNearbyStoreLoadmoreLoadingSelector,
+  getNearbyStoreSelector,
+  hasNearbyStoreLoadmoreSelector,
+  getCurrentNearbyStorePageSelector,
+} from 'redux/selectors/storeMain/nearbyStore';
+
+import {storeActions} from 'redux/reducers';
 
 import StoreSearchResultItem from './item.js';
 
 import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Avatar, Text} from 'react-native-paper';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
+
   const followed = false;
-  const [refreshing, handleRefreshing] = useState(false);
 
-  const loading = useSelector((state) =>
-    getSearchFeaturedCategoriesLoadingSelector(state),
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const isLoading = useSelector((state) =>
+    getNearbyStoreLoadingSelector(state),
   );
-
-  const listRightCategoriesSelector = useSelector((state) =>
-    getSearchFeaturedCategoriesSelector(state),
-  );
-
-  const listRightCategories = listRightCategoriesSelector?.content || [];
-
+  const data = useSelector((state) => getNearbyStoreSelector(state));
   const loadMoreLoading = useSelector((state) =>
-    getLoadSearchFeaturedCategoriesMoreLoading(state),
+    getNearbyStoreLoadmoreLoadingSelector(state),
   );
 
   const hasLoadMore = useSelector((state) =>
-    getHasLoadMoreSearchFeaturedCategoriesSelector(state),
+    hasNearbyStoreLoadmoreSelector(state),
   );
 
-  const page = useSelector((state) =>
-    getPageSearchFeaturedCategoriesSelector(state),
-  );
-
-  useEffect(() => {}, [dispatch, refreshing]);
+  const page = useSelector((state) => getCurrentNearbyStorePageSelector(state));
 
   const handleRefresh = () => {
-    handleRefreshing(true);
+    setIsRefreshing(true);
+    dispatch(
+      storeActions.getNearbyStore({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
   };
 
   const handleLoadMore = () => {
     if (hasLoadMore) {
+      dispatch(
+        storeActions.getNearbyStore({
+          page: page,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
     }
   };
 
@@ -69,72 +75,93 @@ const FeaturedCategories = ({navigation}) => {
       </View>
     );
   };
+  useEffect(() => {
+    if (!isLoading) setIsRefreshing(false);
+  }, [isLoading]);
+
   return (
     <>
       <View style={styles.container}>
-        <FlatList
-          data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-          renderItem={({item, index}) => (
-            <>
-              <View style={styles.wrapHeader}>
-                <View
-                  style={{
-                    height: 65,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <Avatar.Image size={32} />
-                  <View style={{marginLeft: 10}}>
-                    <Text numberOfLines={1} style={styles.storeName}>
-                      Pull&Bear
-                    </Text>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Icon name="location-outline" color="grey" />
-                      <Text style={styles.isAdvertising}>0.2 km</Text>
+        {isLoading && !isRefreshing ? (
+          <ActivityIndicator animating color={Colors.$purple} size="small" />
+        ) : data && data?.content?.length ? (
+          <FlatList
+            data={data.content}
+            renderItem={({item, index}) => (
+              <>
+                <View style={styles.wrapHeader}>
+                  <View
+                    style={{
+                      height: 65,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}>
+                    <Avatar.Image
+                      source={{
+                        uri: item?.logoUrl ? item?.logoUrl : null,
+                      }}
+                      size={32}
+                    />
+
+                    <View style={{marginLeft: 10}}>
+                      <Text numberOfLines={1} style={styles.storeName}>
+                        {item?.name}
+                      </Text>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Icon name="location-outline" color="grey" />
+                        <Text style={styles.isAdvertising}>0.2 km</Text>
+                      </View>
                     </View>
                   </View>
+                  <View style={styles.wrapTextFlow}>
+                    <Text
+                      style={[
+                        styles.text,
+                        !followed ? styles.textFollow : styles.textFollowed,
+                      ]}>
+                      {!followed
+                        ? i18n.t('common.textFollow')
+                        : i18n.t('common.textFollowed')}
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.wrapTextFlow}>
-                  <Text
-                    style={[
-                      styles.text,
-                      !followed ? styles.textFollow : styles.textFollowed,
-                    ]}>
-                    {!followed
-                      ? i18n.t('common.textFollow')
-                      : i18n.t('common.textFollowed')}
-                  </Text>
+                <View style={styles.wrapList}>
+                  <FlatList
+                    horizontal
+                    data={
+                      item?.products && item?.products?.length
+                        ? item?.products
+                        : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                    }
+                    renderItem={({item, index}) => (
+                      <StoreSearchResultItem
+                        index={index}
+                        navigation={navigation}
+                        item={item}
+                      />
+                    )}
+                    numColumns={1}
+                    keyExtractor={(item, index) => index}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                  />
                 </View>
-              </View>
-              <View style={styles.wrapList}>
-                <FlatList
-                  horizontal
-                  data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                  renderItem={({item, index}) => (
-                    <StoreSearchResultItem
-                      index={index}
-                      navigation={navigation}
-                      item={item}
-                    />
-                  )}
-                  numColumns={1}
-                  keyExtractor={(item, index) => index}
-                  showsVerticalScrollIndicator={false}
-                  showsHorizontalScrollIndicator={false}
-                />
-              </View>
-            </>
-          )}
-          numColumns={1}
-          keyExtractor={(item, index) => index}
-          refreshing={refreshing}
-          onRefresh={handleRefresh}
-          onEndReached={() => handleLoadMore()}
-          ListFooterComponent={renderFooter}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        />
+              </>
+            )}
+            numColumns={1}
+            keyExtractor={(item, index) => index}
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            onEndReached={handleLoadMore}
+            ListFooterComponent={renderFooter}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+          />
+        ) : (
+          <Text>Không có kết quả</Text>
+        )}
       </View>
     </>
   );
