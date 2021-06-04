@@ -12,8 +12,14 @@ import {DownArrow} from 'svg/common';
 
 const Item = ({product}) => {
   const [visible, setVisible] = useState(false);
+  const [currentId, setCurrentId] = useState();
 
-  const {id, storeId, storeName, storeAvatar, data} = product;
+  const {storeId, storeName, storeAvatar, data, amount, options} = product;
+
+  const onChangeAttr = (pId) => {
+    setCurrentId(pId);
+    setVisible(true);
+  };
 
   return (
     <>
@@ -27,9 +33,6 @@ const Item = ({product}) => {
         style={{padding: 0}}
         testID={'modal'}
         isVisible={visible}
-        // onSwipeComplete={() => setVisible(false)}
-        // swipeDirection={['down']}
-        // propagateSwipe={true}
         style={styles.modal}>
         <View style={styles.modalChangeColor}>
           <View style={styles.contentBox}>
@@ -41,7 +44,7 @@ const Item = ({product}) => {
                 onPress={() => setVisible(false)}
               />
             </View>
-            <ModalChangeCart productId={id} />
+            <ModalChangeCart productId={currentId} />
           </View>
         </View>
       </Modal>
@@ -53,7 +56,7 @@ const Item = ({product}) => {
               <View style={styles.wrapImageThumbnail}>
                 <Image
                   source={
-                    item?.imageUrls.length
+                    item?.imageUrls?.length
                       ? {uri: item?.imageUrls[0]}
                       : require('assets/images/default.png')
                   }
@@ -66,28 +69,34 @@ const Item = ({product}) => {
                   <Text numberOfLines={2} style={styles.name}>
                     {item.name}
                   </Text>
-                  {item?.productPrice ? (
+                  {item?.price ? (
                     <Text numberOfLines={1} style={styles.price}>
-                      {currencyFormat(item?.productPrice, 'đ')}
+                      {currencyFormat(item?.price, 'đ')}
                     </Text>
                   ) : null}
                 </View>
                 <View style={styles.wrapAmount}>
                   <View style={styles.wrapSize}>
                     <Text numberOfLines={1} style={styles.name}>
-                      Size: {item.productSize}&nbsp;
-                      <TouchableOpacity
-                        style={styles.productColor}
-                        onPress={() => setVisible(true)}>
-                        <Text style={styles.addButtonText}>
-                          &nbsp;{item.productColor}&nbsp;
-                          <DownArrow />
-                        </Text>
-                      </TouchableOpacity>
+                      {options.map((item) => {
+                        return (
+                          <TouchableOpacity
+                            style={styles.productAttr}
+                            onPress={() => onChangeAttr(item.id)}>
+                            <Text style={styles.name}>
+                              {`${item.label}:`}&nbsp;
+                            </Text>
+                            <Text style={styles.addButtonText}>
+                              &nbsp;{item.value.attrValue}&nbsp;
+                            </Text>
+                          </TouchableOpacity>
+                        );
+                      })}
                     </Text>
+                    <DownArrow />
                   </View>
                   <View style={styles.wrapUpdown}>
-                    <NumberInputUpDown value={+item.amount} minValue={0} />
+                    <NumberInputUpDown value={+amount} minValue={0} />
                   </View>
                 </View>
               </View>

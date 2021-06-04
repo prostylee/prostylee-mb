@@ -98,4 +98,14 @@ export default EStyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
   },
+  wrapChip: {
+    backgroundColor: 'transparent',
+  },
+  chipText: {
+    color: '$purple',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
 });
