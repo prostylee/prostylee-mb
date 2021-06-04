@@ -15,6 +15,7 @@ import {
   ModalNetworkWarning,
   ModalTabButton,
   SlideInModal,
+  ModalAddPictureMethod,
 } from 'components';
 
 import NetInfo from '@react-native-community/netinfo';
@@ -87,6 +88,9 @@ const Index = () => {
   );
   const isShowTabButton = useSelector((state) =>
     commonSelectors.isShowTabButton(state),
+  );
+  const isShowAddPictureOption = useSelector((state) =>
+    commonSelectors.isShowAddPictureOption(state),
   );
 
   // const isRequireUpdate = useSelector((state) =>
@@ -330,6 +334,7 @@ const Index = () => {
         floating={true}
       />
       <ModalTabButton visible={isShowTabButton} />
+      <ModalAddPictureMethod visible={isShowAddPictureOption} />
       <ModalIndicator visible={isLoading} />
       {/* <ModalRequireUpdate
         visible={isRequireUpdate}

@@ -9,7 +9,7 @@ import {getCategoriesParentSelectSelector} from 'redux/selectors/categories';
 import {categoriesActions} from 'redux/reducers';
 import {IMG_RATIO, LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
-const CategoriesLeftItem = ({item}) => {
+const CategoriesLeftItem = ({item, setBanner}) => {
   if (item && item.id === undefined) {
     return null;
   }
@@ -22,6 +22,7 @@ const CategoriesLeftItem = ({item}) => {
     : false;
 
   const clickItem = () => {
+    setBanner(item.banner);
     dispatch(categoriesActions.setCategoriesParentSelect(item));
     dispatch(
       categoriesActions.getListRightCategories({

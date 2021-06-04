@@ -32,6 +32,8 @@ export default {
     addStory: 'Đăng story',
     addPost: 'Đăng bài viết',
     addProduct: 'Đăng sản phẩm',
+    libraryButton: 'Thư viện ảnh',
+    cameraButton: 'Chụp hình',
   },
   headerTitle: {
     featured_store: 'Cửa hàng nổi bật',
@@ -154,6 +156,8 @@ export default {
     sizeHelp: 'Hướng dẫn kích thước',
     productCoordinated: 'Sản phẩm có thể phối hợp',
     seeMore: 'Xem thêm',
+    brand: 'Thương hiệu',
+    productStatus: ' Tình trạng sản phẩm',
   },
   cart: {
     title: 'Giỏ hàng',
