@@ -49,6 +49,10 @@ import categories, {
 
 import cart, {actions as cartActions, types as cartTypes} from './cart';
 import search, {actions as searchActions, types as searchTypes} from './search';
+import notification, {
+  actions as notificationActions,
+  types as notificationTypes,
+} from './notification';
 
 const rootReducer = combineReducers({
   common,
@@ -62,6 +66,7 @@ const rootReducer = combineReducers({
   categories,
   cart,
   search,
+  notification,
 });
 
 export {commonActions, commonSelectors, commonTypes};
@@ -75,5 +80,6 @@ export {statusActions, statusSelectors, statusTypes};
 export {categoriesActions, categoriesTypes};
 export {cartActions, cartTypes};
 export {searchActions, searchTypes};
+export {notificationActions, notificationTypes};
 
 export default rootReducer;

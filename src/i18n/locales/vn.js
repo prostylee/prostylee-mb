@@ -184,7 +184,6 @@ export default {
     updateProduct: 'Cập nhật sản phẩm',
     seeMore: 'Xem thêm',
     yourAddress: 'Địa điểm của bạn',
-    changeAddress: 'Thay đổi địa điểm',
   },
   error: {
     cannotUploadImage:
@@ -217,5 +216,9 @@ export default {
     categories: 'Danh mục',
     priceRange: 'Khoảng giá',
     size: 'Size',
+  },
+  Notification: {
+    noData: 'Hiện tại bạn không có thông báo nào',
+    titlePromotion: 'Mã khuyễn mãi',
   },
 };
