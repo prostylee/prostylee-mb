@@ -10,7 +10,7 @@ const styles = EStyleSheet.create({
     flexGrow: 1,
   },
   safeAreaBottomStyle: {
-    backgroundColor: '$white',
+    backgroundColor: 'transparent',
   },
 });
 

@@ -69,24 +69,6 @@ const DATA = [
     address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
     range: '0.2',
   },
-  {
-    id: '9',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
-  {
-    id: '10',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
-  {
-    id: '11',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
 ];
 const Item = ({item, onPress}) => {
   const [value, setValue] = React.useState('');
@@ -132,14 +114,12 @@ const ListStoreAddress = () => {
     return <Item item={item} onPress={() => setSelectedId(item.id)} />;
   };
   return (
-    <ScrollView>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        extraData={selectedId}
-      />
-    </ScrollView>
+    <FlatList
+      data={DATA}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      extraData={selectedId}
+    />
   );
 };
 
