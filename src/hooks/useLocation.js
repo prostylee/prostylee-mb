@@ -10,7 +10,7 @@ const useLocation = () => {
     address: '',
   });
   const requestLocationPermission = async () => {
-    Geocoder.init('AIzaSyDVZ9K6ioFOICN0P6wB832PE8kQhm_6PU4');
+    Geocoder.init('AIzaSyDIqkfXbjBkSQeAaFZchfHB9k6CzF6ctsI');
     if (Platform.OS === 'ios') {
       getOneTimeLocation();
     } else {

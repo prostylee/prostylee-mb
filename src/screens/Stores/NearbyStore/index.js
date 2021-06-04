@@ -25,11 +25,13 @@ import {storeActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 import TagList from './TagList';
+import useLocation from '../../../hooks/useLocation';
 
 const WIDTH = Dimensions.get('window').width;
 
 const NearbyStore = ({navigation}) => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const _handleFilterByTag = (queryObject) => {
     dispatch(
@@ -42,8 +44,14 @@ const NearbyStore = ({navigation}) => {
   };
 
   useEffect(() => {
-    dispatch(storeActions.getNearbyStore({}));
-  }, []);
+    console.log('LOCATION', location);
+    dispatch(
+      storeActions.getNearbyStore({
+        latitude: location.lat,
+        longtitude: location.lon,
+      }),
+    );
+  }, [location]);
   return (
     <ThemeView style={styles.container} isFullView>
       <Header

@@ -23,11 +23,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Avatar, Text} from 'react-native-paper';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {MapPin} from 'svg/common';
+import getDistanceFromLatLonInKm from '../../../../utils/locationUtils';
+import useLocation from '../../../../hooks/useLocation';
 
 const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
 
   const followed = false;
+  const location = useLocation();
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const isLoading = useSelector((state) =>
@@ -113,7 +116,13 @@ const FeaturedCategories = ({navigation}) => {
                         style={{flexDirection: 'row', alignItems: 'center'}}>
                         <MapPin width={12} height={12} />
                         <Text style={[styles.isAdvertising, {marginLeft: 2}]}>
-                          0.2 km
+                          {getDistanceFromLatLonInKm(
+                            location.lat,
+                            location.lon,
+                            item?.location?.latitude,
+                            item?.location?.longitude,
+                          )}
+                          km
                         </Text>
                       </View>
                     </View>
