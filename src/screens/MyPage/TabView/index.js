@@ -45,7 +45,7 @@ const TabViewContainer = ({navigation, style}) => {
         style={{flex: 1, padding: 10, paddingBottom: 100}}
         tabLabel={'menu'}>
         <NewFeed navigation={navigation}>
-          <FullView/>
+          <GridView/>
         </NewFeed>
       </View>
       <View style={{flex: 1, padding: 10}} tabLabel={'bag'}>
