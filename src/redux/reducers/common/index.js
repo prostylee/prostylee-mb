@@ -10,6 +10,7 @@ export const types = {
   SET_INITIAL_ROUTE_NAME: 'SET_INITIAL_ROUTE_NAME',
   TOGGLE_FOCUS_MAIN_TAB: 'TOGGLE_FOCUS_MAIN_TAB',
   TOGGLE_TAB_BUTTON: 'TOGGLE_TAB_BUTTON',
+  TOGGLE_ADD_PICTURE_OPTION: 'TOGGLE_ADD_PICTURE_OPTION',
 };
 
 export const actions = {
@@ -22,6 +23,7 @@ export const actions = {
   setInitialRouteName: createAction(types.SET_INITIAL_ROUTE_NAME),
   toggleFocusMainTab: createAction(types.TOGGLE_FOCUS_MAIN_TAB),
   toggleTabButton: createAction(types.TOGGLE_TAB_BUTTON),
+  toggleAddPictureOption: createAction(types.TOGGLE_ADD_PICTURE_OPTION),
 };
 
 export const selectors = {
@@ -32,6 +34,7 @@ export const selectors = {
   getInitialRouteName: (state) => state.common.initialRouteName,
   isFocusedMainTab: (state) => state.common.isFocusedMainTab,
   isShowTabButton: (state) => state.common.isShowTabButton,
+  isShowAddPictureOption: (state) => state.common.isShowAddPictureOption,
 };
 
 const intialState = {
@@ -44,6 +47,7 @@ const intialState = {
   initialRouteName: 'Welcome',
   isFullView: false,
   isShowTabButton: false,
+  isShowAddPictureOption: false,
 };
 
 export default handleActions(
@@ -71,6 +75,9 @@ export default handleActions(
     },
     [types.TOGGLE_TAB_BUTTON]: (state, {payload}) => {
       return {...state, isShowTabButton: payload};
+    },
+    [types.TOGGLE_ADD_PICTURE_OPTION]: (state, {payload}) => {
+      return {...state, isShowAddPictureOption: payload};
     },
   },
   intialState,

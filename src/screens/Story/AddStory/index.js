@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Animated,
-  PanResponder,
-  Alert,
-  Platform,
-} from 'react-native';
+import {View, Text, TouchableOpacity, Alert, Platform} from 'react-native';
 import {ContainerWithoutScrollView, ButtonRounded} from 'components';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {hasNotch} from 'react-native-device-info';
@@ -15,7 +7,6 @@ import {useTheme, useRoute} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
-import ViewShot, {captureRef} from 'react-native-view-shot';
 import {Storage, Auth} from 'aws-amplify';
 import styles from './styles';
 import i18n from 'i18n';
@@ -28,14 +19,12 @@ import {dim} from 'utils/common';
 
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
-const storyImageRatio = 16 / 9;
 
 const AddStory = (props) => {
   const dispatch = useDispatch();
   const cropViewRef = React.useRef();
   const [userId, setUserId] = React.useState('');
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
-  const viewShotRef = React.useRef();
 
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
@@ -49,57 +38,10 @@ const AddStory = (props) => {
   const route = useRoute();
   const image = route?.params.image || '';
 
-  const imageRatio = image.height / image.width;
-  const screenRatio = (HEIGHT + notchHeight) / WIDTH;
-  let imageStyle;
-  imageStyle =
-    imageRatio >= screenRatio
-      ? {width: WIDTH, height: WIDTH * imageRatio}
-      : {
-          width: (HEIGHT - notchHeight) / imageRatio,
-          height: HEIGHT - notchHeight,
-        };
   const storeSelected = useSelector((state) =>
     newFeedSelectors.getNewFeedStore(state),
   );
   const customPrefix = `/public/${userId}/stories/`;
-  const pan = React.useRef(new Animated.ValueXY()).current;
-
-  let panXValue;
-  panXValue =
-    imageRatio < screenRatio
-      ? pan.x.interpolate({
-          inputRange: [-((HEIGHT - notchHeight) / imageRatio - WIDTH), 0],
-          outputRange: [-((HEIGHT - notchHeight) / imageRatio - WIDTH), 0],
-          extrapolate: 'clamp',
-        })
-      : 0;
-
-  let panYValue;
-  panYValue =
-    imageRatio >= screenRatio
-      ? pan.y.interpolate({
-          inputRange: [-(WIDTH * imageRatio - (HEIGHT - notchHeight)), 0],
-          outputRange: [-(WIDTH * imageRatio - (HEIGHT - notchHeight)), 0],
-          extrapolate: 'clamp',
-        })
-      : 0;
-
-  const panResponder = React.useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        pan.setOffset({
-          x: pan.x._value,
-          y: pan.y._value,
-        });
-      },
-      onPanResponderMove: Animated.event([null, {dx: pan.x, dy: pan.y}]),
-      onPanResponderRelease: () => {
-        pan.flattenOffset();
-      },
-    }),
-  ).current;
 
   const removeStore = async () => {
     await dispatch(newFeedActions.removeNewFeedStore());
@@ -137,7 +79,7 @@ const AddStory = (props) => {
       removeStore();
       dispatch(commonActions.toggleLoading(false));
       setTimeout(() => {
-        props.navigation.navigate('Home');
+        props.navigation.navigate('StoryBoard');
       }, 600);
     }
   };
@@ -171,13 +113,6 @@ const AddStory = (props) => {
 
   const addStory = async () => {
     await cropViewRef.current.saveImage(90);
-    // captureRef(viewShotRef, {
-    //   format: 'jpg',
-    //   quality: 0.9,
-    // }).then(
-    //   (uri) => uploadToStorage(uri),
-    //   (error) => console.error('Oops, snapshot failed', error),
-    // );
   };
   //BackHandler handle
   useBackHandler(() => {
@@ -210,27 +145,6 @@ const AddStory = (props) => {
             keepAspectRatio
             aspectRatio={{width: 9, height: 16}}
           />
-          {/* <ViewShot
-            style={ViewShotStyle}
-            ref={viewShotRef}
-            options={{format: 'jpg', quality: 0.9}}>
-            <Animated.Image
-              source={{
-                uri: Platform.OS === 'ios' ? image.sourceURL : image.path,
-              }}
-              style={[
-                imageStyle,
-                {
-                  transform: [
-                    {translateX: imageRatio < screenRatio ? panXValue : 0},
-                    {translateY: imageRatio >= screenRatio ? panYValue : 0},
-                  ],
-                },
-              ]}
-              resizeMode={'contain'}
-              {...panResponder.panHandlers}
-            />
-          </ViewShot> */}
           <View style={styles.bottom}>
             <TouchableOpacity
               style={styles.addStore}

@@ -77,5 +77,8 @@ export default {
     order: 'Order',
     freeShip: 'Freeship',
     updateProduct: 'Update',
+    seeMore: 'More',
+    yourAddress: 'Your address',
+    changeAddress: 'Change address',
   },
 };

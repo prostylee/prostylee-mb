@@ -39,7 +39,9 @@ import GridImageReviewer from './GridImageReviewer';
 import TextInputArea from './TextInputArea';
 import NumberInputUpDown from './NumberInputUpDown';
 import RadioSelectGroup from './RadioSelectGroup';
+import SlideInModal from './SlideInModal';
 import ModalTabButton from './ModalTabButton';
+import ModalAddPictureMethod from './ModalAddPictureMethod';
 import Picker from './Picker';
 
 export {
@@ -82,8 +84,10 @@ export {
   GridImageReviewer,
   TextInputArea,
   ModalTabButton,
+  ModalAddPictureMethod,
   ProductLike,
-  Picker,
   NumberInputUpDown,
   RadioSelectGroup,
+  Picker,
+  SlideInModal,
 };

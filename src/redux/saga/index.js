@@ -8,6 +8,8 @@ import daynamicUsers from './dynamicUsers';
 import reviewRating from './reviewRating';
 import status from './status';
 import categories from './categories';
+import cart from './cart';
+
 import search from './search';
 import topSearch from './search/topSearch';
 import hintProductSearch from './search/hintProductSearch';
@@ -15,6 +17,8 @@ import featuredProductSearch from './search/featuredProductSearch';
 import storeSearch from './search/storeSearch';
 import productSearchMain from './search/productSearchMain';
 import productFilter from './search/productFilter';
+import storeMain from './stores/storeMain';
+
 export default function* rootSaga() {
   yield all([
     ...product,
@@ -25,6 +29,7 @@ export default function* rootSaga() {
     ...reviewRating,
     ...status,
     ...categories,
+    ...cart,
     ...search,
     ...topSearch,
     ...hintProductSearch,
@@ -32,5 +37,6 @@ export default function* rootSaga() {
     ...storeSearch,
     ...productSearchMain,
     ...productFilter,
+    ...storeMain,
   ]);
 }

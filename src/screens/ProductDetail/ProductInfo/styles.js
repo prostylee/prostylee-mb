@@ -33,12 +33,33 @@ export default EStyleSheet.create({
     paddingLeft: 8,
   },
   infoContent: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingBottom: 12,
     width: WIDTH,
   },
   infoContentText: {
     fontSize: 14,
     lineHeight: 20,
     color: '$lightGray',
+  },
+  infoMore: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    paddingBottom: 8,
+  },
+  infoMoreTitleText: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: 'bold',
+    color: '$black',
+  },
+  infoContentContent: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '$lightGray',
+    paddingVertical: 4,
   },
 });

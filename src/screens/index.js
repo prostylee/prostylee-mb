@@ -18,7 +18,7 @@ import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import ProductDetail from './ProductDetail';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
-import SearchProductFilter from './SearchProductFilter';
+
 import SearchProducts from './SearchProducts';
 import ReviewRating from './ReviewRating';
 import ChooseRateProduct from './ChooseRateProduct';
@@ -36,6 +36,13 @@ import SettingChat from './Setting/SettingChat';
 import SettingNotification from './Setting/SettingNotification';
 import SettingLanguage from './Setting/SettingLanguage';
 import SettingAddAddress from './Setting/AddAddress';
+import BestSeller from './Stores/BestSeller';
+import SearchProductFilter from './SearchProductFilter';
+import PersonalSalers from './Stores/PersonalSalers';
+import Vouchers from './Stores/Vouchers';
+import NearbyStore from './Stores/NearbyStore';
+import FlashSale from './Stores/FlashSale';
+import StoreAddress from './StoreAddress';
 import Search from './Search';
 import FilterProduct from './FilterProduct';
 import PromoNotification from './Notifications/PromoNotification';
@@ -50,6 +57,10 @@ export {
   Products,
   StoryBoard,
   Chat,
+  BestSeller,
+  PersonalSalers,
+  SearchProductFilter,
+  NearbyStore,
   SignUpViaPhone,
   SignInViaPhone,
   SignInOptions,
@@ -61,7 +72,6 @@ export {
   SimpleWebView,
   ProductDetail,
   UserProfile,
-  SearchProductFilter,
   SearchProducts,
   ReviewRating,
   ChooseRateProduct,
@@ -79,6 +89,9 @@ export {
   SettingNotification,
   SettingLanguage,
   SettingAddAddress,
+  Vouchers,
+  FlashSale,
+  StoreAddress,
   Search,
   FilterProduct,
   PromoNotification,

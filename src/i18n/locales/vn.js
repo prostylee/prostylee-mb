@@ -4,6 +4,8 @@ export default {
   cancel: 'Huỷ',
   stores: {
     titleTopStore: 'Cửa hàng nổi bật',
+    textNear: 'Cửa hàng gần đây',
+    flashSale: '🔥 Flash sale',
   },
   common: {
     textSeeMore: 'Xem thêm',
@@ -13,6 +15,7 @@ export default {
     textFollower: 'Người theo dõi',
     textFollowing: 'Đang theo dõi',
     textPost: 'Bài đăng',
+    textNear: '2.5km',
   },
   codePush: {
     installButton: 'Cập nhật',
@@ -29,6 +32,8 @@ export default {
     addStory: 'Đăng story',
     addPost: 'Đăng bài viết',
     addProduct: 'Đăng sản phẩm',
+    libraryButton: 'Thư viện ảnh',
+    cameraButton: 'Chụp hình',
   },
   headerTitle: {
     featured_store: 'Cửa hàng nổi bật',
@@ -151,6 +156,12 @@ export default {
     sizeHelp: 'Hướng dẫn kích thước',
     productCoordinated: 'Sản phẩm có thể phối hợp',
     seeMore: 'Xem thêm',
+    brand: 'Thương hiệu',
+    productStatus: ' Tình trạng sản phẩm',
+  },
+  storeAddress: {
+    title: 'Cửa hàng',
+    button: 'Mua tại cửa hàng',
   },
   cart: {
     title: 'Giỏ hàng',
@@ -178,6 +189,9 @@ export default {
     order: 'Đặt hàng',
     freeShip: 'Miễn phí',
     updateProduct: 'Cập nhật sản phẩm',
+    seeMore: 'Xem thêm',
+    yourAddress: 'Địa điểm của bạn',
+    changeAddress: 'Thay đổi địa điểm',
   },
   error: {
     cannotUploadImage:
