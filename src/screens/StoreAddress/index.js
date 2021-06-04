@@ -46,33 +46,17 @@ const StoreAddress = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView>
-      <ThemeView>
-        <Header
-          isDefault
-          containerStyle={{
-            paddingBottom: 10,
-            borderBottomWidth: 0,
-            height: 50,
-            borderBottomWidth: 1,
-          }}
-          leftStyle={{
-            height: 30,
-            fontWeight: 'bold',
-          }}
-          middleComponent={
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 18,
-                fontWeight: 'bold',
-              }}>
-              Cửa hàng
-            </Text>
-          }
-        />
-        <Dropdown />
-      </ThemeView>
+    <SafeAreaView style={{flex: 1}}>
+      <Header
+        isDefault
+        containerStyle={styles.headerContain}
+        leftStyle={{
+          height: 30,
+          fontWeight: 'bold',
+        }}
+        middleComponent={<Text style={styles.middleComponent}>Cửa hàng</Text>}
+      />
+      <Dropdown />
       <View style={styles.wrapper}>
         <ListStoreAddress style={styles.list} />
         <View style={styles.button}>
