@@ -17,6 +17,7 @@ const Item = ({product}) => {
   const {storeId, storeName, storeAvatar, data, amount, options} = product;
 
   const onChangeAttr = (pId) => {
+    console.log('pId', pId);
     setCurrentId(pId);
     setVisible(true);
   };
@@ -69,25 +70,25 @@ const Item = ({product}) => {
                   <Text numberOfLines={2} style={styles.name}>
                     {item.name}
                   </Text>
-                  {item?.price ? (
+                  {item?.priceSale ? (
                     <Text numberOfLines={1} style={styles.price}>
-                      {currencyFormat(item?.price, 'đ')}
+                      {currencyFormat(item?.priceSale, 'đ')}
                     </Text>
                   ) : null}
                 </View>
                 <View style={styles.wrapAmount}>
                   <View style={styles.wrapSize}>
                     <Text numberOfLines={1} style={styles.name}>
-                      {options.map((item) => {
+                      {options.map((op) => {
                         return (
                           <TouchableOpacity
                             style={styles.productAttr}
                             onPress={() => onChangeAttr(item.id)}>
                             <Text style={styles.name}>
-                              {`${item.label}:`}&nbsp;
+                              {`${op.label}:`}&nbsp;
                             </Text>
                             <Text style={styles.addButtonText}>
-                              &nbsp;{item.value.attrValue}&nbsp;
+                              &nbsp;{op.value.attrValue}&nbsp;
                             </Text>
                           </TouchableOpacity>
                         );
