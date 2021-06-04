@@ -100,9 +100,9 @@ export default handleActions(
         }) || [];
       if (!currentListItemId.includes(payload.item.id)) {
         currentCart.push(payload);
-        return {...state, cartLoading: currentCart};
+        return {...state, listCart: currentCart};
       } else {
-        return {...state, cartLoading: currentCart};
+        return {...state, listCart: currentCart};
       }
     },
     [types.SET_LIST_CART_SUCCESS]: (state, {payload}) => {
