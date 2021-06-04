@@ -268,6 +268,7 @@ const ProductDetail = (props) => {
       <Footer
         isLike={productData?.likeStatusOfUserLogin || false}
         productData={productData}
+        choiceSelect={choiceSelect}
       />
     </View>
   );
