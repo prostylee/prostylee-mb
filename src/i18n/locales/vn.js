@@ -159,6 +159,10 @@ export default {
     brand: 'Thương hiệu',
     productStatus: ' Tình trạng sản phẩm',
   },
+  storeAddress: {
+    title: 'Cửa hàng',
+    button: 'Mua tại cửa hàng',
+  },
   cart: {
     title: 'Giỏ hàng',
     payment: 'Thanh toán',
