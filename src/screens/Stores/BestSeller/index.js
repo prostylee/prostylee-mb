@@ -10,27 +10,36 @@ import {Colors} from 'components';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 import {useDispatch} from 'react-redux';
-import {storeActions} from 'redux/reducers';
 
-import ProductList from './ProductList';
-import SortDropDown from './SortDropDown';
-import TagList from './TagList';
-import FilterBar from './FilterBar';
 import ProductSearchList from '../../../components/ProductSearchList';
+
+import {
+  getBestSellersLoadingSelector,
+  getBestSellersSelector,
+  getCurrentBestSellersPageSelector,
+  hasBestSellersLoadmoreSelector,
+} from 'redux/selectors/storeMain/bestSellers';
+
+import {storeActions} from 'redux/reducers';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 const BestSellers = ({navigation}) => {
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) =>
+    getBestSellersLoadingSelector(state),
+  );
+  const hasLoadmore = useSelector((state) =>
+    hasBestSellersLoadmoreSelector(state),
+  );
+  const currentPage = useSelector((state) =>
+    getCurrentBestSellersPageSelector(state),
+  );
 
-  const [visible, setVisible] = useState(false);
-  const [action, setAction] = useState('filter');
-  const [valueSort, setValueSort] = useState(null);
-
-  const onChangeSearch = (query) => {
-    setSearchQuery(query);
-  };
+  const getDataFunctionSelector = useSelector((state) =>
+    getBestSellersSelector(state),
+  );
 
   const _handleSort = (value) => {
-    setValueSort(value);
     let sortOption = {};
     switch (value) {
       case 1: {
@@ -78,6 +87,13 @@ const BestSellers = ({navigation}) => {
     );
   };
 
+  const _initData = () =>
+    dispatch(
+      storeActions.getBestSellers({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
   useEffect(() => {
     dispatch(
       storeActions.getBestSellers({
@@ -98,7 +114,6 @@ const BestSellers = ({navigation}) => {
       tagFilterFunction={_handleFilterByTag}
       sortDataFunction={_handleSort}
       navigation={navigation}
-      getCurrentPageFunction={() => {}}
       isLoading={isLoading}
       hasLoadmore={hasLoadmore}
     />
