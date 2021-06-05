@@ -56,6 +56,7 @@ export default EStyleSheet.create({
   },
   wrapTextFlow: {
     alignItems: 'center',
+    justifyContent: 'center',
     height: 65,
     marginRight: 16,
   },

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 
 import styles from './styles';
-import {Colors, Image} from 'components';
+import {Colors, Image, FollowTextButton} from 'components';
 import i18n from 'i18n';
 
 import {
@@ -87,7 +87,6 @@ const FeaturedCategories = ({navigation}) => {
           <FlatList
             data={storeList?.content}
             renderItem={({item, index}) => {
-              console.log('ITEM STORE', JSON.stringify(item, null, 2));
               return (
                 <>
                   <View style={styles.wrapHeader}>
@@ -109,7 +108,7 @@ const FeaturedCategories = ({navigation}) => {
                       </View>
                     </View>
                     <View style={styles.wrapTextFlow}>
-                      <Text
+                      {/* <Text
                         style={[
                           styles.text,
                           !followed ? styles.textFollow : styles.textFollowed,
@@ -117,7 +116,8 @@ const FeaturedCategories = ({navigation}) => {
                         {!followed
                           ? i18n.t('common.textFollow')
                           : i18n.t('common.textFollowed')}
-                      </Text>
+                      </Text> */}
+                      <FollowTextButton item={item} />
                     </View>
                   </View>
                   <View style={styles.wrapList}>

@@ -225,6 +225,8 @@ export default {
     priceRange: 'Khoảng giá',
     size: 'Size',
     resultsNotfound: 'Không có kết quả',
+    follow: 'Theo dõi',
+    unfollow: 'Bỏ theo dõi',
   },
   mypage: {
     editProfile: 'Sửa hồ sơ',
