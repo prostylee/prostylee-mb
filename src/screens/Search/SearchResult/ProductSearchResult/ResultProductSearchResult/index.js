@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 import i18n from 'i18n';
+import {HintKeywordLoading} from 'components/Loading/contentLoader';
 
 import styles from './styles';
 import {Colors} from 'components';
@@ -97,7 +98,15 @@ const ResultProductSearchResult = ({navigation}) => {
             : null,
         ]}>
         {loading && !refreshing ? (
-          <ActivityIndicator />
+          <View style={styles.wrapChip}>
+            {[1, 2, 3, 4, 5, 6, 7].map((item, _i) => {
+              return (
+                <HintKeywordLoading
+                  style={{height: 32, marginTop: 8, marginRight: 8}}
+                />
+              );
+            })}
+          </View>
         ) : listHintProductSearch && listHintProductSearch.length ? (
           <View style={styles.wrapList}>
             <FlatList

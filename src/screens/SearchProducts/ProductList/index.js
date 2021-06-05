@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, FlatList, Text, ActivityIndicator} from 'react-native';
-
+import {SearchProductLoading} from 'components/Loading/contentLoader';
 import styles from './styles';
 import {Colors} from 'components';
 import ProductItem from './ProductItem';
@@ -87,7 +87,18 @@ const ProductList = ({navigation, data = []}) => {
   return (
     <View style={styles.container}>
       {isSearchLoading && !isRefreshing ? (
-        <ActivityIndicator animating color={Colors.$purple} size="small" />
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around',
+          }}>
+          {[1, 2, 3, 4].map((v) => (
+            <View style={{width: '50%', padding: 16}}>
+              <SearchProductLoading />
+            </View>
+          ))}
+        </View>
       ) : !searchResults || !searchResults?.content?.length ? (
         <Text style={{color: Colors['$lightGray']}}>
           {i18n.t('Search.resultsNotfound')}

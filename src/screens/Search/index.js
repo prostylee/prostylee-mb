@@ -24,7 +24,7 @@ const Search = ({navigation}) => {
     setSearchQuery(query);
     dispatch(searchActions.setHintProductSearchLoading(true));
     dispatch(searchActions.setStoreSearchLoading(true));
-    dispatch(searchActions.setFeaturedProductSearchLoading(true));
+
     timeoutSearch = setTimeout(() => {
       dispatch(
         searchActions.getHintProductSearch({
@@ -43,13 +43,7 @@ const Search = ({navigation}) => {
           numberOfProducts: 10,
         }),
       );
-      dispatch(
-        searchActions.getFeaturedProductSearch({
-          keyword: query,
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-        }),
-      );
+
       dispatch(searchActions.setCurrentKeyword(query));
     }, 1000);
   };

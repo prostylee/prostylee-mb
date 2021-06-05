@@ -95,9 +95,7 @@ const ResultProductSearchResult = ({navigation}) => {
           <Text style={styles.title}>{i18n.t('Search.featuredProduct')}</Text>
         </View>
         <View style={styles.wrapList}>
-          {loading && !refreshing ? (
-            <ActivityIndicator />
-          ) : listFeaturedProductSearch && listFeaturedProductSearch.length ? (
+          {listFeaturedProductSearch && listFeaturedProductSearch.length ? (
             <FlatList
               data={listFeaturedProductSearch}
               renderItem={({item, index}) => (

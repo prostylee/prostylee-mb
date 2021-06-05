@@ -5,7 +5,7 @@ import {View, ActivityIndicator, FlatList} from 'react-native';
 import styles from './styles';
 import {Colors, Image, FollowTextButton} from 'components';
 import i18n from 'i18n';
-
+import {StoreLoading} from 'components/Loading/contentLoader';
 import {
   getStoreSearchLoadingSelector,
   getStoreSearchListSelector,
@@ -82,7 +82,11 @@ const FeaturedCategories = ({navigation}) => {
     <>
       <View style={styles.container}>
         {loading && !refreshing ? (
-          <ActivityIndicator animating color={Colors.$purple} size="small" />
+          <View>
+            {[1, 2, 3, 4, 5, 6].map((v) => (
+              <StoreLoading />
+            ))}
+          </View>
         ) : storeList && storeList?.content?.length ? (
           <FlatList
             data={storeList?.content}
