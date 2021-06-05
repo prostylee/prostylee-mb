@@ -18,6 +18,8 @@ import storeSearch from './search/storeSearch';
 import productSearchMain from './search/productSearchMain';
 import productFilter from './search/productFilter';
 import listNotification from './notification';
+import storeMain from './stores/storeMain';
+
 export default function* rootSaga() {
   yield all([
     ...product,
@@ -37,5 +39,6 @@ export default function* rootSaga() {
     ...productSearchMain,
     ...productFilter,
     ...listNotification,
+    ...storeMain,
   ]);
 }

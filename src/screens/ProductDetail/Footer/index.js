@@ -8,11 +8,17 @@ import {cartActions} from 'reducers';
 import {useDispatch} from 'react-redux';
 
 const Footer = (props) => {
-  const item = props.item ? props.item : {};
+  const item = props.productData ? props.productData : {};
+  const choiceSelect = props.choiceSelect ? props.choiceSelect : [];
   const dispatch = useDispatch();
 
   const onAddToCart = () => {
-    dispatch(cartActions.setListCart(props.productData));
+    const productItem = {
+      item: item,
+      quantity: 1,
+      options: choiceSelect,
+    };
+    dispatch(cartActions.addItemToCart(productItem));
   };
 
   return (

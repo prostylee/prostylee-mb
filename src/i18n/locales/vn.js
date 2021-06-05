@@ -4,6 +4,8 @@ export default {
   cancel: 'Huỷ',
   stores: {
     titleTopStore: 'Cửa hàng nổi bật',
+    textNear: 'Cửa hàng gần đây',
+    flashSale: '🔥 Flash sale',
   },
   common: {
     textSeeMore: 'Xem thêm',
@@ -13,6 +15,7 @@ export default {
     textFollower: 'Người theo dõi',
     textFollowing: 'Đang theo dõi',
     textPost: 'Bài đăng',
+    textNear: '2.5km',
   },
   codePush: {
     installButton: 'Cập nhật',
@@ -156,6 +159,10 @@ export default {
     brand: 'Thương hiệu',
     productStatus: ' Tình trạng sản phẩm',
   },
+  storeAddress: {
+    title: 'Cửa hàng',
+    button: 'Mua tại cửa hàng',
+  },
   cart: {
     title: 'Giỏ hàng',
     payment: 'Thanh toán',
@@ -221,4 +228,58 @@ export default {
     noData: 'Hiện tại bạn không có thông báo nào',
     titlePromotion: 'Mã khuyễn mãi',
   },
+  mypage: {
+    editProfile: 'Sửa hồ sơ',
+    follower: 'Người theo dõi',
+    following: 'Đang theo dõi',
+    posts: 'Bài đăng',
+    isFollowed: 'Đã theo dõi',
+    isNotFollow: 'Theo dõi'
+  },
+  setting: {
+    title: 'Thiết lập tài khoản',
+    myaccount: 'Tài khoản của tôi',
+    profile: 'Hồ sơ của tôi',
+    address: 'Địa chỉ',
+    setting: 'Cài đặt',
+    settingChat: 'Cài đặt chat',
+    settingNotification: 'Cài đặt thông báo',
+    settingLanguage: 'Ngôn ngữ'
+  },
+  settingProfile: {
+    name: 'Tên',
+    bio: 'Bio',
+    gender: 'Giới tính',
+    birthday: 'Ngày sinh',
+    phone: 'Điện thoại',
+    email: 'Email',
+    changePass: 'Đổi mật khẩu',
+    buttonSave: 'Lưu thay đổi',
+    changeImage: 'Thay ảnh đại diện'
+  },
+  settingAddress: {
+    addAddress: 'Thêm địa chỉ',
+    province: 'Tỉnh/thành phố',
+    district: 'Quận/Huyện',
+    ward: 'Quận/Huyện',
+    noAddress: 'Hiện tại bạn không có địa chỉ đã lưu. Hãy bắt đầu thêm một địa chỉ mới ngay',
+    contact: 'Thông tin liên hệ',
+    default: 'Mặc định',
+    name: 'Họ và tên',
+    phone: 'Điện thoại',
+    address: 'Địa chỉ',
+    detailAddress: 'Số nhà, tên tòa nhà, tên đường, khu vực'
+  },
+  settingNotification: {
+    title: 'Thông báo',
+    allowNotification: 'Allow Notifications',
+    discountText: 'Chương trình giảm giá',
+    discountDescription: 'Không để bỏ lỡ những chương trình khuyến mãi mới nhất của chúng tôi',
+    socialNetworkNotifications: 'Thông báo mạng xã hội',
+    socialNetworkNotificationsDescription: 'Lời khuyên thời trang, tin tức và phong cách. Tương tác trong mạng xã hội',
+    orderTransport: 'Đơn hàng vận chuyển',
+    orderTransportDescription: 'Liên tục cập nhật cho bạn về trạng thái đặt hàng của bạn',
+    stockNotifications: 'Stock Notifications',
+    stockNotificationsDescription: 'Nhận thông báo các mặt hàng bạn quan tâm ngay khi có đơn hàng'
+  }
 };

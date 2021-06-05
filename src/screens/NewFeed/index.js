@@ -175,63 +175,63 @@ const NewFeed = ({navigation}) => {
 
   return (
     <ThemeView isFullView>
-      {/*{Platform.OS === 'android' && (*/}
-      {/*  <StatusBar barStyle="dark-content" translucent backgroundColor="#FFF" />*/}
-      {/*)}*/}
-      {/*<HeaderFeed*/}
-      {/*  targetType={targetType}*/}
-      {/*  changeTabStore={changeTabStore}*/}
-      {/*  changeTabUser={changeTabUser}*/}
-      {/*/>*/}
-      {/*{handleLoading() ? (*/}
-      {/*  <LoadingComponent />*/}
-      {/*) : (*/}
-      {/*  <ScrollView*/}
-      {/*    scrollEventThrottle={1}*/}
-      {/*    showsVerticalScrollIndicator={false}*/}
-      {/*    showsHorizontalScrollIndicator={false}*/}
-      {/*    refreshControl={*/}
-      {/*      <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />*/}
-      {/*    }>*/}
-      {/*    <StoryBoard*/}
-      {/*      targetType={targetType}*/}
-      {/*      stories={stories}*/}
-      {/*      loading={handleLoading()}*/}
-      {/*    />*/}
-      {/*    <VerticalFeed*/}
-      {/*      targetType={targetType}*/}
-      {/*      handleRefresh={() => {}}*/}
-      {/*      handleLoadMore={() => {}}*/}
-      {/*      newFeedList={threeFirstNewFeedItem}*/}
-      {/*      refreshing={false}*/}
-      {/*      loadMoreLoading={false}*/}
-      {/*      isFirst={true}*/}
-      {/*    />*/}
-      {/*    {targetType === TYPE_STORE && (*/}
-      {/*      <TopTrending*/}
-      {/*        targetType={targetType}*/}
-      {/*        navigation={navigation}*/}
-      {/*        topProduct={topProduct}*/}
-      {/*      />*/}
-      {/*    )}*/}
-      {/*    {targetType === TYPE_USER && (*/}
-      {/*      <DynamicUsers*/}
-      {/*        targetType={targetType}*/}
-      {/*        navigation={navigation}*/}
-      {/*        listDynamicUsers={listDynamicUsers}*/}
-      {/*      />*/}
-      {/*    )}*/}
-      {/*    <VerticalFeed*/}
-      {/*      targetType={targetType}*/}
-      {/*      loading={handleLoading()}*/}
-      {/*      handleRefresh={() => {}}*/}
-      {/*      handleLoadMore={handleLoadMore}*/}
-      {/*      newFeedList={newFeedList}*/}
-      {/*      refreshing={false}*/}
-      {/*      loadMoreLoading={loadMoreLoading}*/}
-      {/*    />*/}
-      {/*  </ScrollView>*/}
-      {/*)}*/}
+      {Platform.OS === 'android' && (
+        <StatusBar barStyle="dark-content" translucent backgroundColor="#FFF" />
+      )}
+      <HeaderFeed
+        targetType={targetType}
+        changeTabStore={changeTabStore}
+        changeTabUser={changeTabUser}
+      />
+      {handleLoading() ? (
+        <LoadingComponent />
+      ) : (
+        <ScrollView
+          scrollEventThrottle={1}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+          }>
+          <StoryBoard
+            targetType={targetType}
+            stories={stories}
+            loading={handleLoading()}
+          />
+          {/* <VerticalFeed
+            targetType={targetType}
+            handleRefresh={() => {}}
+            handleLoadMore={() => {}}
+            newFeedList={threeFirstNewFeedItem}
+            refreshing={false}
+            loadMoreLoading={false}
+            isFirst={true}
+          />
+          {targetType === TYPE_STORE && (
+            <TopTrending
+              targetType={targetType}
+              navigation={navigation}
+              topProduct={topProduct}
+            />
+          )}
+          {targetType === TYPE_USER && (
+            <DynamicUsers
+              targetType={targetType}
+              navigation={navigation}
+              listDynamicUsers={listDynamicUsers}
+            />
+          )}
+          <VerticalFeed
+            targetType={targetType}
+            loading={handleLoading()}
+            handleRefresh={() => {}}
+            handleLoadMore={handleLoadMore}
+            newFeedList={newFeedList}
+            refreshing={false}
+            loadMoreLoading={loadMoreLoading}
+          /> */}
+        </ScrollView>
+      )}
     </ThemeView>
   );
 };

@@ -33,20 +33,11 @@ export default EStyleSheet.create({
     color: '#333333',
   },
   footerCheckout: {},
-
-  imageThumbnail: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 60,
-    width: 60,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#E9EAEB',
-  },
   wrapSection: {
     backgroundColor: '$white',
     alignItems: 'flex-start',
     marginTop: 6,
+    padding: 10,
   },
   wrapHeader: {
     alignItems: 'center',
@@ -55,42 +46,7 @@ export default EStyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#E9EAEB',
   },
-  wrapItems: {
-    padding: 5,
-    flexDirection: 'row',
-    backgroundColor: '$white',
-    marginBottom: 5,
-  },
-  wrapImageThumbnail: {
-    position: 'relative',
-  },
-  productItem: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  productAvatar: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 60,
-    width: 60,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#E9EAEB',
-  },
-  wrapTextContent: {
-    flex: 1,
-    marginLeft: 5,
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-  },
-  wrapInfo: {
-    alignItems: 'flex-start',
-  },
-  wrapAmount: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
   wrapSize: {flex: 0.5},
   wrapUpdown: {flex: 0.5, alignItems: 'flex-end'},
   storeName: {flex: 1, alignItems: 'center', flexDirection: 'row'},
@@ -101,47 +57,6 @@ export default EStyleSheet.create({
     height: 16,
     width: 16,
     borderRadius: 8,
-  },
-  name: {
-    lineHeight: 18,
-    fontSize: 13,
-    fontFamily: '$font1',
-    fontWeight: 'normal',
-    fontStyle: 'normal',
-    textAlign: 'left',
-    color: '$black',
-    fontWeight: '400',
-    justifyContent: 'flex-start',
-  },
-  price: {
-    lineHeight: 18,
-    fontSize: 13,
-    fontFamily: '$font1',
-    fontWeight: 'normal',
-    fontStyle: 'normal',
-    textAlign: 'left',
-    color: '$black',
-    fontWeight: '400',
-  },
-  productColor: {
-    borderLeftWidth: 1,
-    borderColor: '#E9EAEB',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: -3,
-  },
-  textSpace: {
-    lineHeight: 25,
-    fontSize: 12,
-    color: '#F4F5F5',
-  },
-  wrapPriceRoot: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  viewFooter: {
-    marginBottom: 6,
   },
   modal: {
     justifyContent: 'flex-end',
@@ -225,11 +140,7 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
-  wrapInfo: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
+
   wrapRadioTitle: {
     flexDirection: 'column',
   },
@@ -262,5 +173,98 @@ export default EStyleSheet.create({
   },
   wrapLabelDelivery: {
     padding: 10,
+  },
+
+  wrapItems: {
+    padding: 5,
+    flexDirection: 'row',
+    backgroundColor: '$white',
+    marginBottom: 5,
+  },
+  productItem: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+  },
+  wrapImageThumbnail: {
+    position: 'relative',
+  },
+  wrapTextContent: {
+    flex: 1,
+    marginLeft: 5,
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  wrapInfo: {
+    alignItems: 'flex-start',
+  },
+  wrapAmount: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  wrapTextSale: {
+    position: 'absolute',
+    bottom: 8,
+    left: 8,
+    padding: 4,
+    borderRadius: 3,
+  },
+  textSale: {
+    fontFamily: '$font1',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: 11,
+    lineHeight: 16,
+    color: '$white',
+  },
+  imageThumbnail: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 60,
+    width: 60,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#E9EAEB',
+  },
+  name: {
+    lineHeight: 18,
+    fontSize: 13,
+    fontFamily: '$font1',
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    textAlign: 'left',
+    color: '$black',
+    fontWeight: '400',
+    justifyContent: 'flex-start',
+  },
+  price: {
+    lineHeight: 18,
+    fontSize: 13,
+    fontFamily: '$font1',
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    textAlign: 'left',
+    color: '$black',
+    fontWeight: '400',
+  },
+  productColor: {
+    borderLeftWidth: 1,
+    borderColor: '#E9EAEB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: -3,
+  },
+  textSpace: {
+    lineHeight: 25,
+    fontSize: 12,
+    color: '#F4F5F5',
+  },
+  wrapPriceRoot: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  viewFooter: {
+    marginBottom: 6,
   },
 });
