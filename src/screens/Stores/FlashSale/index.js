@@ -27,8 +27,9 @@ import {debounce} from 'lodash';
 import {MessageOutlined, Bell, BellWithNotiBadge} from 'svg/header';
 import ProductList from './ProductList';
 import SortDropDown from './SortDropDown';
-import FilterBar from '../BestSeller/FilterBar';
+
 import TagList from './TagList';
+import FilterBar from './FilterBar';
 
 const MockTag = [
   'Best seller',

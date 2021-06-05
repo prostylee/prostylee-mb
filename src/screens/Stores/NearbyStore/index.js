@@ -26,6 +26,7 @@ import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 import TagList from './TagList';
 import useLocation from '../../../hooks/useLocation';
+import ProductSearchList from '../../../components/ProductSearchList';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -44,7 +45,6 @@ const NearbyStore = ({navigation}) => {
   };
 
   useEffect(() => {
-    console.log('LOCATION', location);
     dispatch(
       storeActions.getNearbyStore({
         latitude: location.lat,
@@ -53,34 +53,47 @@ const NearbyStore = ({navigation}) => {
     );
   }, [location]);
   return (
-    <ThemeView style={styles.container} isFullView>
-      <Header
-        isDefault
-        containerStyle={{
-          paddingBottom: 10,
-          borderBottomWidth: 0,
-          // height: 50,
-          borderBottomWidth: 1,
-        }}
-        leftStyle={{
-          height: 30,
-          fontWeight: 'bold',
-        }}
-        middleComponent={
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}>
-            Cửa hàng gần đây
-          </Text>
-        }
-      />
-      <TagList onTagPress={_handleFilterByTag} />
-      <Divider />
-      <StoreResult />
-    </ThemeView>
+    // <ThemeView style={styles.container} isFullView>
+    //   <Header
+    //     isDefault
+    //     containerStyle={{
+    //       paddingBottom: 10,
+    //       borderBottomWidth: 0,
+    //       // height: 50,
+    //       borderBottomWidth: 1,
+    //     }}
+    //     leftStyle={{
+    //       height: 30,
+    //       fontWeight: 'bold',
+    //     }}
+    //     middleComponent={
+    //       <Text
+    //         style={{
+    //           textAlign: 'center',
+    //           fontSize: 18,
+    //           fontWeight: 'bold',
+    //         }}>
+    //         Cửa hàng gần đây
+    //       </Text>
+    //     }
+    //   />
+    //   <TagList onTagPress={_handleFilterByTag} />
+    //   <Divider />
+    //   <StoreResult />
+    // </ThemeView>
+    <ProductSearchList
+      title="Cửa hàng gần đây"
+      hasTagList
+      getDataFunction={getDataFunctionSelector}
+      refreshDataFunction={_initData}
+      loadmoreDataFuntion={loadMoreFunc}
+      tagFilterFunction={_handleFilterByTag}
+      sortDataFunction={_handleSort}
+      navigation={navigation}
+      getCurrentPageFunction={() => {}}
+      isLoading={isLoading}
+      hasLoadmore={hasLoadmore}
+    />
   );
 };
 

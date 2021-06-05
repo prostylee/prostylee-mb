@@ -19,10 +19,6 @@ const PopularBrands = ({data = []}) => {
         ]}>
         <View style={styles.wrapTitle}>
           <Text style={styles.title}>Thương hiệu nổi bật</Text>
-          <TouchableOpacity style={{flexDirection: 'row'}}>
-            <Text style={styles.seeMoreText}>Xem thêm</Text>
-            <ChevronRight />
-          </TouchableOpacity>
         </View>
         <View style={styles.wrapList}>
           <FlatList

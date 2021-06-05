@@ -1,15 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+import React, {useEffect} from 'react';
 
-import styles from './styles';
-import {Sort, Filter, CaretDown} from 'svg/common';
-import {ThemeView, Header, TextInputRounded} from 'components';
-import {Divider, Chip} from 'react-native-paper';
-import {Colors} from 'components';
-
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
-
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import ProductSearchList from '../../../components/ProductSearchList';
 
@@ -35,9 +26,8 @@ const BestSellers = ({navigation}) => {
     getCurrentBestSellersPageSelector(state),
   );
 
-  const getDataFunctionSelector = useSelector((state) =>
-    getBestSellersSelector(state),
-  );
+  const getDataFunctionSelector = () =>
+    useSelector((state) => getBestSellersSelector(state));
 
   const _handleSort = (value) => {
     let sortOption = {};
@@ -91,6 +81,13 @@ const BestSellers = ({navigation}) => {
     dispatch(
       storeActions.getBestSellers({
         page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+  const loadMoreFunc = () =>
+    dispatch(
+      storeActions.getBestSellersLoadmore({
+        page: currentPage,
         limit: LIMIT_DEFAULT,
       }),
     );
