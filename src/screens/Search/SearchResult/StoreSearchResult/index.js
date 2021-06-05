@@ -87,6 +87,7 @@ const FeaturedCategories = ({navigation}) => {
           <FlatList
             data={storeList?.content}
             renderItem={({item, index}) => {
+              console.log('ITEM STORE', JSON.stringify(item, null, 2));
               return (
                 <>
                   <View style={styles.wrapHeader}>
@@ -151,7 +152,7 @@ const FeaturedCategories = ({navigation}) => {
             showsHorizontalScrollIndicator={false}
           />
         ) : (
-          <Text>Không có kết quả tìm kiếm</Text>
+          <Text>{i18n.t('Search.resultsNotfound')}</Text>
         )}
       </View>
     </>

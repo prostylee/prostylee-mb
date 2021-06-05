@@ -3,11 +3,8 @@ import {View, FlatList, Text} from 'react-native';
 import styles from './styles';
 import ResultProductSearchResult from './ResultProductSearchResult';
 import FeaturedProductSearchResult from './FeaturedProductSearchResult';
-import { useDispatch,useSelector } from 'react-redux';
-import {
-  
-  getStoreSearchListSelector,
-} from 'redux/selectors/search/storeSearch';
+import {useSelector} from 'react-redux';
+import {getStoreSearchListSelector} from 'redux/selectors/search/storeSearch';
 
 const ProductSearchResult = ({navigation}) => {
   const listProduct = useSelector((state) => getStoreSearchListSelector(state));
