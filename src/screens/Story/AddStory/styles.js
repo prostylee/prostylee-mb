@@ -70,8 +70,8 @@ export default EStyleSheet.create({
   },
   selectStore: {
     position: 'absolute',
-    left: 10,
-    bottom: 86,
+    left: 24,
+    bottom: 112,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
     height: 30,
     borderRadius: 15,

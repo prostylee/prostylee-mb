@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 import React, {useEffect, useState, useRef, useMemo} from 'react';
+import {useSelector} from 'react-redux';
 import {View, ActivityIndicator, FlatList, Animated, Text} from 'react-native';
 import i18n from 'i18n';
 import {Colors} from 'components';
@@ -13,6 +14,7 @@ import {currencyFormat} from 'utils/currency';
 import Collapsible from 'react-native-collapsible';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {RadioButton} from 'react-native-paper';
+import {getListCartSelector} from 'redux/selectors/cart';
 
 const deliveries = [
   {label: 'Grab', content: 'Nhận hàng vào 29-12 đến 31-12', value: 25000},
@@ -30,6 +32,9 @@ const ListProduct = ({navigation, data}) => {
   const [refreshing, handleRefreshing] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [valueDelivery, setValueDelivery] = useState();
+  const [total, setTotal] = useState(0);
+
+  const cart = useSelector((state) => getListCartSelector(state)) || [];
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -37,6 +42,16 @@ const ListProduct = ({navigation, data}) => {
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
+
+  useEffect(() => {
+    if (cart.length) {
+      let sum = 0;
+      cart.forEach(function (c, index) {
+        sum += c.item.price * c.quantity;
+      });
+      setTotal(sum);
+    }
+  }, [JSON.stringify(cart)]);
 
   useEffect(() => {
     handleRefreshing(false);
@@ -95,7 +110,7 @@ const ListProduct = ({navigation, data}) => {
             </View>
             <View style={styles.colValueTotal}>
               <Text style={styles.valueTotal}>
-                {currencyFormat(9999999, 'đ')}
+                {currencyFormat(+total, 'đ')}
               </Text>
             </View>
           </View>
@@ -154,28 +169,6 @@ const ListProduct = ({navigation, data}) => {
     );
   };
 
-  /* Extract note */
-  const groupDataByStore = (list) => {
-    return list.reduce((acc, product) => {
-      const foundIndex = acc.findIndex(
-        (element) => element.key === product.storeId,
-      );
-      if (foundIndex === -1) {
-        return [
-          ...acc,
-          {
-            key: product.storeId,
-            storeName: product.storeName,
-            storeAvatar: product.storeAvatar,
-            data: [product],
-          },
-        ];
-      }
-      acc[foundIndex].data = [...acc[foundIndex].data, product];
-      return acc;
-    }, []);
-  };
-
   const renderHeader = () => {
     return <CardAddress />;
   };
@@ -184,9 +177,34 @@ const ListProduct = ({navigation, data}) => {
     navigation.navigate('Home');
   };
 
+  /* Extract note */
+  const groupDataByStore = (list) => {
+    return list.reduce((acc, product) => {
+      const {item, quantity, options} = product;
+      const {storeId, productOwnerResponse, id} = item;
+      const foundIndex = acc.findIndex((element) => element.key === storeId);
+      if (foundIndex === -1) {
+        return [
+          ...acc,
+          {
+            key: storeId,
+            storeName: productOwnerResponse.name,
+            storeAvatar: productOwnerResponse.logoUrl,
+            id: id,
+            data: [item],
+            amount: quantity,
+            options: options,
+          },
+        ];
+      }
+      acc[foundIndex].data = [...acc[foundIndex].data, item];
+      return acc;
+    }, []);
+  };
+
   const groupData = useMemo(
-    () => groupDataByStore(data),
-    [JSON.stringify(data)],
+    () => groupDataByStore(cart),
+    [JSON.stringify(cart)],
   );
 
   const listDelivery = useMemo(() => deliveries, [JSON.stringify(deliveries)]);
@@ -218,7 +236,7 @@ const ListProduct = ({navigation, data}) => {
           </View>
           <View style={styles.wrapFooter}>
             <CardFooter
-              buttonText={i18n.t('cart.orderˇ')}
+              buttonText={i18n.t('cart.order')}
               actionButton={onPayment}
             />
           </View>
@@ -235,80 +253,7 @@ const ListProduct = ({navigation, data}) => {
   );
 };
 
-ListProduct.defaultProps = {
-  data: [
-    {
-      id: 231,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'black',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2345,
-    },
-    {
-      id: 232,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'black',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2346,
-    },
-    {
-      id: 233,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'black',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2346,
-    },
-    {
-      id: 233,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'white',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2346,
-    },
-    {
-      id: 233,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'black',
-      storeName: 'Store',
-      storeAvatar:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      storeId: 2346,
-    },
-  ],
-};
+ListProduct.defaultProps = {};
 
 ListProduct.propTypes = {};
 

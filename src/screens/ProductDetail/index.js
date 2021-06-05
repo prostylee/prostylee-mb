@@ -206,16 +206,21 @@ const ProductDetail = (props) => {
           ) : null}
         </Animated.View>
         <ProductTitle
+          navigation={props.navigation}
+          productId={productData?.id}
           name={productData?.name}
           price={productData?.price}
-          priceOriginal={productData?.priceSale}
+          priceOriginal={productData?.price}
           rateValue={productData?.productStatisticResponse?.resultOfRating}
           numberOfRate={productData?.productStatisticResponse?.numberOfReview}
         />
         <View style={styles.lineHr} />
         {ProductChoiceMemo}
         <View style={styles.lineHr} />
-        <ProductInfo description={productData?.description} />
+        <ProductInfo
+          description={productData?.description}
+          brand={productData?.brandResponse || {}}
+        />
         {productData?.storeId ? (
           <>
             <View style={styles.lineHrBig} />
@@ -235,7 +240,11 @@ const ProductDetail = (props) => {
             setRatingPos(y);
           }}
         />
-        <ProductRating data={productComments} />
+        <ProductRating
+          navigation={props.navigation}
+          data={productComments}
+          productId={productData?.id}
+        />
         <View
           style={styles.lineHrBig}
           onLayout={({
@@ -256,7 +265,11 @@ const ProductDetail = (props) => {
           onSelect={selectRelatedProduct}
         />
       </Container>
-      <Footer item={productData} />
+      <Footer
+        isLike={productData?.likeStatusOfUserLogin || false}
+        productData={productData}
+        choiceSelect={choiceSelect}
+      />
     </View>
   );
 };

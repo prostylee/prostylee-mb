@@ -38,13 +38,26 @@ import {
   Products,
   Search,
   FilterProduct,
-  SearchProductFilter,
   SearchProducts,
   PromoNotification,
   ReviewRating,
   ChooseRateProduct,
   RateProduct,
   Cart,
+  Setting,
+  SettingMyAccount,
+  SettingAddress,
+  SettingChat,
+  SettingNotification,
+  SettingLanguage,
+  SettingAddAddress,
+  BestSeller,
+  PersonalSalers,
+  SearchProductFilter,
+  Vouchers,
+  FlashSale,
+  NearbyStore,
+  StoreAddress,
 } from 'screens';
 
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
@@ -82,18 +95,35 @@ function SignedIn() {
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="BestSeller" component={BestSeller} />
+      <Stack.Screen name="PersonalSalers" component={PersonalSalers} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="Vouchers" component={Vouchers} />
+      <Stack.Screen name="NearbyStore" component={NearbyStore} />
+      <Stack.Screen name="FlashSale" component={FlashSale} />
+      <Stack.Screen
+        name="SearchProductFilter"
+        component={SearchProductFilter}
+      />
+      <Stack.Screen name="StoreAddress" component={StoreAddress} />
       <Stack.Screen name="AddStory" component={AddStory} />
       <Stack.Screen name="AddStore" component={AddStore} />
       <Stack.Screen name="CropPicture" component={CropPicture} />
       <Stack.Screen name="AddStatus" component={AddStatus} />
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
+      <Stack.Screen name="Setting" component={Setting} />
+      <Stack.Screen name="SettingMyAccount" component={SettingMyAccount} />
+      <Stack.Screen name="SettingAddress" component={SettingAddress} />
+      <Stack.Screen name="SettingAddAddress" component={SettingAddAddress} />
+      <Stack.Screen name="SettingChat" component={SettingChat} />
+      <Stack.Screen
+        name="SettingNotification"
+        component={SettingNotification}
+      />
+      <Stack.Screen name="SettingLanguage" component={SettingLanguage} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="SearchProducts" component={SearchProducts} />
-      <Stack.Screen
-        name="SearchProductFilter"
-        component={SearchProductFilter}
-      />
+
       <Stack.Screen name="PromoNotification" component={PromoNotification} />
       <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
     </Stack.Navigator>

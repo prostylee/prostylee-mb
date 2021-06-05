@@ -71,14 +71,7 @@ const ModalTabButton = ({style, visible}) => {
     }).start();
   };
   const openStoryPicker = async () => {
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-    })
-      .then((res) => {
-        console.log(res);
-        RootNavigator.navigate('AddStory', {image: res});
-      })
-      .catch((e) => console.log(e));
+    dispatch(commonActions.toggleAddPictureOption(true));
   };
 
   const openStatusPicker = async () => {

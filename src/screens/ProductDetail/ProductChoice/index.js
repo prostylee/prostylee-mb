@@ -64,11 +64,11 @@ const ProductChoice = (props) => {
                       let choiceButtonStyle = styles.choiceButton;
                       let choiceButtonTextStyle = styles.choiceButtonText;
                       const choiceIsSelected = selectList.find(
-                        (selectItem) => selectItem.value === itemChoice.id,
+                        (selectItem) => selectItem.value.id === itemChoice.id,
                       );
                       if (
                         choiceIsSelected &&
-                        choiceIsSelected.value === itemChoice.id
+                        choiceIsSelected.value.id === itemChoice.id
                       ) {
                         choiceButtonStyle = [
                           styles.choiceButton,
@@ -86,7 +86,7 @@ const ProductChoice = (props) => {
                           <TouchableOpacity
                             style={choiceButtonStyle}
                             onPress={() => {
-                              selectChoice({...item, value: itemChoice.id});
+                              selectChoice({...item, value: itemChoice});
                             }}>
                             <Text style={choiceButtonTextStyle}>
                               {itemChoice.attrValue}

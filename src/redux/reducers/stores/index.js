@@ -1,6 +1,34 @@
 import {createAction, handleActions} from 'redux-actions';
 
+import {
+  types as typesStoreMain,
+  actions as actionsStoreMain,
+  defaultState as defaultStateStoreMain,
+  handleActions as handleActionsStoreMain,
+} from './storeMain';
+
+import {
+  types as typesNearbyStore,
+  actions as actionsNearbyStore,
+  defaultState as defaultStateNearbyStore,
+  handleActions as handleActionsNearbyStore,
+} from './nearbyStore';
+
+import {
+  types as typesPersonalSaler,
+  actions as actionsPersonalSaler,
+  defaultState as defaultStatePersonalSaler,
+  handleActions as handleActionsPersonalSaler,
+} from './personalSaler';
+
 export const types = {
+  // STORE MAIN
+  ...typesStoreMain,
+  // NEARBY STORE
+  ...typesNearbyStore,
+  // PERSONAL SALERS
+  ...typesPersonalSaler,
+
   SET_LOADING: 'SET_LOADING',
   GET_TOP_PRODUCT: 'GET_TOP_PRODUCT',
   GET_TOP_PRODUCT_SUCCESS: 'GET_TOP_PRODUCT_SUCCESS',
@@ -19,6 +47,13 @@ export const types = {
 };
 
 export const actions = {
+  //STORE MAIN
+  ...actionsStoreMain,
+  // NEARBY STORE
+  ...actionsNearbyStore,
+  // PERSONAL SALERS
+  ...actionsPersonalSaler,
+
   setLoading: createAction(types.SET_LOADING),
   setPageDefault: createAction(types.SET_PAGE_DEFAULT),
   getTopProduct: createAction(types.GET_TOP_PRODUCT),
@@ -49,6 +84,13 @@ const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
 
 const intialState = {
+  //STORE MAIN
+  ...defaultStateStoreMain,
+  // NEARBY STORE
+  ...defaultStateNearbyStore,
+  // PERSONAL SALERS
+  ...defaultStatePersonalSaler,
+
   isLoading: false,
   isLoadingFuturedStores: false,
   isLoadMoreLoading: false,
@@ -61,6 +103,13 @@ const intialState = {
 
 export default handleActions(
   {
+    //STORE MAIN
+    ...handleActionsStoreMain,
+    // NEARBY STORE
+    ...handleActionsNearbyStore,
+    // PERSONAL SALERS
+    ...handleActionsPersonalSaler,
+
     [types.SET_LOADING]: (state, {payload}) => {
       return {...state, isLoading: payload};
     },
