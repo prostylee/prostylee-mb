@@ -39,6 +39,7 @@ const FeaturedCategories = ({navigation}) => {
   );
 
   const handleRefresh = () => {
+    handleRefreshing(true);
     dispatch(
       searchActions.getStoreSearch({
         keyword: currentKeyword,
@@ -73,11 +74,14 @@ const FeaturedCategories = ({navigation}) => {
       );
     return null;
   };
+  useEffect(() => {
+    if (!loading) handleRefreshing(false);
+  }, [loading]);
 
   return (
     <>
       <View style={styles.container}>
-        {loading ? (
+        {loading && !refreshing ? (
           <ActivityIndicator animating color={Colors.$purple} size="small" />
         ) : storeList && storeList?.content?.length ? (
           <FlatList

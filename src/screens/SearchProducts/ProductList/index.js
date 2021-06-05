@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {View, FlatList, Text} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, FlatList, Text, ActivityIndicator} from 'react-native';
 
 import styles from './styles';
 import {Colors} from 'components';
@@ -13,10 +13,16 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {searchActions} from 'redux/reducers';
 import {getCurrentKeyword} from 'redux/selectors/search';
-import {ActivityIndicator} from 'react-native-paper';
+import i18n from 'i18n';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {getProductSearchListSelector} from 'redux/selectors/search/productSearchMain';
 const ProductList = ({navigation, data = []}) => {
   const dispatch = useDispatch();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const searchResults = useSelector((state) =>
+    getProductSearchListSelector(state),
+  );
 
   const hasLoadMore = useSelector((state) =>
     getProductSearchHasLoadmoreSelector(state),
@@ -24,7 +30,6 @@ const ProductList = ({navigation, data = []}) => {
   const isSearchLoading = useSelector((state) =>
     getProductSearchLoadingSelector(state),
   );
-  console.log('IS SEARCH LOADING', isSearchLoading, '\n\n\n');
   const isLoadMoreLoading = useSelector((state) =>
     getProductSearchLoadmoreLoadingSelector(state),
   );
@@ -42,7 +47,6 @@ const ProductList = ({navigation, data = []}) => {
     return null;
   };
   const _handleLoadMore = () => {
-    console.log('END REACHED', hasLoadMore, page);
     if (hasLoadMore) {
       dispatch(
         searchActions.getProductsSearchLoadmore({
@@ -55,8 +59,9 @@ const ProductList = ({navigation, data = []}) => {
     }
   };
   const _handleRefresh = () => {
+    setIsRefreshing(true);
     dispatch(
-      searchActions.getProductsSearchLoadmore({
+      searchActions.getProductsSearch({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         keyword: currentKeyword,
@@ -66,7 +71,7 @@ const ProductList = ({navigation, data = []}) => {
   };
   useEffect(() => {
     dispatch(
-      searchActions.getProductsSearchLoadmore({
+      searchActions.getProductsSearch({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         keyword: currentKeyword,
@@ -74,20 +79,25 @@ const ProductList = ({navigation, data = []}) => {
       }),
     );
   }, [currentKeyword]);
+
+  useEffect(() => {
+    if (!isSearchLoading) setIsRefreshing(false);
+  }, [isSearchLoading]);
+
   return (
     <View style={styles.container}>
-      {isSearchLoading ? (
+      {isSearchLoading && !isRefreshing ? (
         <ActivityIndicator animating color={Colors.$purple} size="small" />
-      ) : !data || !data?.content?.length ? (
+      ) : !searchResults || !searchResults?.content?.length ? (
         <Text style={{color: Colors['$lightGray']}}>
-          Không tìm thấy kết quả
+          {i18n.t('Search.resultsNotfound')}
         </Text>
       ) : (
         <FlatList
           contentContainerStyle={styles.listWrapper}
           data={
-            data && data?.content.length
-              ? data?.content
+            searchResults && searchResults?.content.length
+              ? searchResults?.content
               : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
           }
           numColumns={2}
@@ -99,7 +109,7 @@ const ProductList = ({navigation, data = []}) => {
           showsVerticalScrollIndicator={false}
           onEndReached={() => _handleLoadMore()}
           ListFooterComponent={renderFooter}
-          refreshing={isSearchLoading}
+          refreshing={isLoadMoreLoading}
           onRefresh={_handleRefresh}
         />
       )}

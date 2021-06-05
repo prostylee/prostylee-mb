@@ -54,12 +54,12 @@ export default EStyleSheet.create({
     fontWeight: '400',
     color: '$black',
   },
-  itemPrice: {
+  itemDiscountPrice: {
     fontSize: 14,
     fontWeight: '500',
     color: '$black',
   },
-  itemDiscountPrice: {
+  itemPrice: {
     fontSize: 13,
     color: '$lightGray',
     fontWeight: '200',

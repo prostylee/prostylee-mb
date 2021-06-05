@@ -12,9 +12,6 @@ const getProductSearch = function* ({payload}) {
   try {
     yield put(searchActions.setProductsSearchLoading(true));
     const res = yield call(getProductSearchResultsApi, payload);
-
-    console.log('VAO PRODUCT SEARCH SAGE', res);
-
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(searchActions.getProductsSearchSuccess(res?.data?.data));
     } else {

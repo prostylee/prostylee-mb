@@ -86,7 +86,9 @@ const FeaturedCategories = ({navigation}) => {
     <>
       <View style={styles.container}>
         <View style={styles.wrapHeader}>
-          <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
+          <Text style={styles.title}>
+            {i18n.t('Search.featuredCategories')}
+          </Text>
         </View>
         {loading && !listCategories.length === 0 ? (
           <>

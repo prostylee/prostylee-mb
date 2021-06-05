@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useState} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
+import i18n from 'i18n';
 
 import styles from './styles';
 import {Colors} from 'components';
@@ -13,11 +14,9 @@ import {
   getPageHintProductSearchSelector,
 } from 'redux/selectors/search/hintProductSearch';
 import {getCurrentKeyword} from 'redux/selectors/search';
-
 import ResultProductSearchResultItem from './item.js';
-
 import {useDispatch, useSelector} from 'react-redux';
-import {CategoriesRightLoading} from 'components/Loading/contentLoader';
+
 import {searchActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Text} from 'react-native-paper';
@@ -49,7 +48,7 @@ const ResultProductSearchResult = ({navigation}) => {
   const page = useSelector((state) => getPageHintProductSearchSelector(state));
 
   const handleRefresh = () => {
-    console.log('CURRENT KEYWORD ', currentKeyword);
+    handleRefreshing(true);
     dispatch(
       searchActions.getHintProductSearch({
         page: PAGE_DEFAULT,
@@ -61,8 +60,8 @@ const ResultProductSearchResult = ({navigation}) => {
   };
 
   useEffect(() => {
-    handleRefresh();
-  }, []);
+    if (!loading) handleRefreshing(false);
+  }, [loading]);
 
   const handleLoadMore = () => {
     if (hasLoadMore) {
@@ -88,8 +87,6 @@ const ResultProductSearchResult = ({navigation}) => {
       </View>
     );
   };
-  console.log('listHintProductSearch');
-  console.log(listHintProductSearch);
   return (
     <>
       <View
@@ -99,8 +96,8 @@ const ResultProductSearchResult = ({navigation}) => {
             ? {maxHeight: listHintProductSearch.length * 55}
             : null,
         ]}>
-        {loading ? (
-          <ActivityIndicator animating color={Colors.$purple} size="small" />
+        {loading && !refreshing ? (
+          <ActivityIndicator />
         ) : listHintProductSearch && listHintProductSearch.length ? (
           <View style={styles.wrapList}>
             <FlatList
@@ -123,7 +120,7 @@ const ResultProductSearchResult = ({navigation}) => {
             />
           </View>
         ) : (
-          <Text>Không có kết quả tìm kiếm</Text>
+          <Text>{i18n.t('Search.resultsNotfound')}</Text>
         )}
       </View>
     </>

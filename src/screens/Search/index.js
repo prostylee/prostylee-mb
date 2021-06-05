@@ -22,6 +22,9 @@ const Search = ({navigation}) => {
   const onChangeSearch = (query) => {
     clearTimeout(timeoutSearch);
     setSearchQuery(query);
+    dispatch(searchActions.setHintProductSearchLoading(true));
+    dispatch(searchActions.setStoreSearchLoading(true));
+    dispatch(searchActions.setFeaturedProductSearchLoading(true));
     timeoutSearch = setTimeout(() => {
       dispatch(
         searchActions.getHintProductSearch({
@@ -29,6 +32,15 @@ const Search = ({navigation}) => {
           type: 'product',
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
+        }),
+      );
+      dispatch(
+        searchActions.getStoreSearch({
+          keyword: query,
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          sorts: 'name',
+          numberOfProducts: 10,
         }),
       );
       dispatch(

@@ -24,7 +24,6 @@ import SortDropDown from './SortDropDown';
 import {useDispatch, useSelector} from 'react-redux';
 import {searchActions} from 'redux/reducers';
 import {getCurrentKeyword} from 'redux/selectors/search';
-import {getProductSearchListSelector} from 'redux/selectors/search/productSearchMain';
 
 const MockTag = [
   {
@@ -125,10 +124,8 @@ const SearchProducts = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
-  console.log('RERENDER ');
-  const searchResults = useSelector((state) =>
-    getProductSearchListSelector(state),
-  );
+  const [currentFilterValue, setCurrentFilterValue] = useState({});
+
   const handlerSearch = useCallback(
     debounce((query) => {
       dispatch(
@@ -171,6 +168,10 @@ const SearchProducts = ({navigation}) => {
         break;
       }
     }
+    setCurrentFilterValue({
+      ...currentFilterValue,
+      ...sortOption,
+    });
     dispatch(
       searchActions.getProductsSearch({
         keyword: searchQuery,
@@ -178,6 +179,7 @@ const SearchProducts = ({navigation}) => {
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...sortOption,
+        ...currentFilterValue,
       }),
     );
   };
@@ -185,16 +187,26 @@ const SearchProducts = ({navigation}) => {
   const onChangeSearch = (query) => {
     setSearchQuery(query);
     handlerSearch(query);
+    dispatch(searchActions.setProductsSearchLoading(true));
   };
   const _handleFilterByTag = (queryObject) => {
+    setCurrentFilterValue({
+      ...currentFilterValue,
+      ...queryObject,
+    });
     dispatch(
       searchActions.getProductsSearch({
         keyword: searchQuery,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         ...queryObject,
+        ...currentFilterValue,
       }),
     );
+  };
+
+  const resetSortAndFilter = () => {
+    setValueSort(null);
   };
 
   useEffect(() => {
@@ -280,7 +292,7 @@ const SearchProducts = ({navigation}) => {
         setValueSort={_handleSort}
         valueSort={valueSort}
       />
-      <ProductList data={searchResults} />
+      <ProductList currentFilterValue={currentFilterValue} />
     </ThemeView>
   );
 };
