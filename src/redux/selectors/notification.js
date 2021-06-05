@@ -27,3 +27,29 @@ export const getPageListNotificationSelector = createSelector(
   searchReducer,
   (data) => data?.pageListNotification,
 );
+
+//List notification discount
+export const getListNotificationDiscountLoadingSelector = createSelector(
+  searchReducer,
+  (data) => data?.listNotificationDiscountLoading,
+);
+
+export const getListNotificationDiscountSelector = createSelector(
+  searchReducer,
+  (data) => data?.listNotificationDiscount || {},
+);
+
+export const getLoadListNotificationDiscountMoreLoading = createSelector(
+  searchReducer,
+  (data) => data?.loadListNotificationDiscountMoreLoading || false,
+);
+
+export const getHasLoadMoreListNotificationDiscountSelector = createSelector(
+  searchReducer,
+  (data) => data?.hasLoadMoreListNotificationDiscount || false,
+);
+
+export const getPageListNotificationDiscountSelector = createSelector(
+  searchReducer,
+  (data) => data?.pageListNotificationDiscount,
+);
