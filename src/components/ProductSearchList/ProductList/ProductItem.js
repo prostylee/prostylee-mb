@@ -20,14 +20,7 @@ const ItemBadge = () => (
 );
 
 const ProductItem = ({item, index}) => (
-  <View
-    style={[
-      styles.itemWrapper,
-      {
-        marginTop: index !== 1 && index % 2 !== 0 ? 16 : 0,
-      },
-    ]}
-    key={`${item}-${index}`}>
+  <View style={styles.itemWrapper} key={`${item}-${index}`}>
     <View
       style={[
         styles.itemInner,
