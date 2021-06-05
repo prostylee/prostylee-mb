@@ -17,6 +17,7 @@ import featuredProductSearch from './search/featuredProductSearch';
 import storeSearch from './search/storeSearch';
 import productSearchMain from './search/productSearchMain';
 import productFilter from './search/productFilter';
+import listNotification from './notification';
 import storeMain from './stores/storeMain';
 
 export default function* rootSaga() {
@@ -37,6 +38,7 @@ export default function* rootSaga() {
     ...storeSearch,
     ...productSearchMain,
     ...productFilter,
+    ...listNotification,
     ...storeMain,
   ]);
 }
