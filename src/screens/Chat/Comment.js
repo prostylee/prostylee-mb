@@ -150,6 +150,7 @@ const Comment = (props) => {
             : DEFAULT_PARENT_COMMENT_ID,
           ownerId: user.attributes.sub,
           owner: user.username,
+          ownerFullname: 'Giang Phan',
           targetId: '1',
           targetType: 'PRODUCT',
           content: comment,

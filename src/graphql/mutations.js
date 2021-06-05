@@ -7,6 +7,7 @@ export const likeComment = /* GraphQL */ `
       id
       ownerId
       owner
+      ownerFullname
       targetId
       targetType
       content
@@ -18,6 +19,7 @@ export const likeComment = /* GraphQL */ `
         id
         ownerId
         owner
+        ownerFullname
         targetId
         targetType
         content
@@ -29,6 +31,7 @@ export const likeComment = /* GraphQL */ `
           id
           ownerId
           owner
+          ownerFullname
           targetId
           targetType
           content
@@ -48,6 +51,7 @@ export const likeComment = /* GraphQL */ `
           id
           ownerId
           owner
+          ownerFullname
           targetId
           targetType
           content
@@ -69,6 +73,7 @@ export const unlikeComment = /* GraphQL */ `
       id
       ownerId
       owner
+      ownerFullname
       targetId
       targetType
       content
@@ -80,6 +85,7 @@ export const unlikeComment = /* GraphQL */ `
         id
         ownerId
         owner
+        ownerFullname
         targetId
         targetType
         content
@@ -91,6 +97,7 @@ export const unlikeComment = /* GraphQL */ `
           id
           ownerId
           owner
+          ownerFullname
           targetId
           targetType
           content
@@ -110,6 +117,7 @@ export const unlikeComment = /* GraphQL */ `
           id
           ownerId
           owner
+          ownerFullname
           targetId
           targetType
           content
@@ -134,6 +142,7 @@ export const createComment = /* GraphQL */ `
       id
       ownerId
       owner
+      ownerFullname
       targetId
       targetType
       content
@@ -145,6 +154,7 @@ export const createComment = /* GraphQL */ `
         id
         ownerId
         owner
+        ownerFullname
         targetId
         targetType
         content
@@ -156,6 +166,7 @@ export const createComment = /* GraphQL */ `
           id
           ownerId
           owner
+          ownerFullname
           targetId
           targetType
           content
@@ -175,6 +186,7 @@ export const createComment = /* GraphQL */ `
           id
           ownerId
           owner
+          ownerFullname
           targetId
           targetType
           content
@@ -199,6 +211,7 @@ export const updateComment = /* GraphQL */ `
       id
       ownerId
       owner
+      ownerFullname
       targetId
       targetType
       content
@@ -210,6 +223,7 @@ export const updateComment = /* GraphQL */ `
         id
         ownerId
         owner
+        ownerFullname
         targetId
         targetType
         content
@@ -221,6 +235,7 @@ export const updateComment = /* GraphQL */ `
           id
           ownerId
           owner
+          ownerFullname
           targetId
           targetType
           content
@@ -240,6 +255,7 @@ export const updateComment = /* GraphQL */ `
           id
           ownerId
           owner
+          ownerFullname
           targetId
           targetType
           content
@@ -264,6 +280,7 @@ export const deleteComment = /* GraphQL */ `
       id
       ownerId
       owner
+      ownerFullname
       targetId
       targetType
       content
@@ -275,6 +292,7 @@ export const deleteComment = /* GraphQL */ `
         id
         ownerId
         owner
+        ownerFullname
         targetId
         targetType
         content
@@ -286,6 +304,7 @@ export const deleteComment = /* GraphQL */ `
           id
           ownerId
           owner
+          ownerFullname
           targetId
           targetType
           content
@@ -305,11 +324,195 @@ export const deleteComment = /* GraphQL */ `
           id
           ownerId
           owner
+          ownerFullname
           targetId
           targetType
           content
           numberOfLikes
           userIdLikes
+          createdAt
+          parentId
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const createChat = /* GraphQL */ `
+  mutation CreateChat(
+    $input: CreateChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    createChat(input: $input, condition: $condition) {
+      id
+      ownerId
+      owner
+      ownerFullname
+      content
+      participantUserIds
+      imageUrls
+      createdAt
+      parentId
+      parent {
+        id
+        ownerId
+        owner
+        ownerFullname
+        content
+        participantUserIds
+        imageUrls
+        createdAt
+        parentId
+        parent {
+          id
+          ownerId
+          owner
+          ownerFullname
+          content
+          participantUserIds
+          imageUrls
+          createdAt
+          parentId
+          updatedAt
+        }
+        childrens {
+          nextToken
+        }
+        updatedAt
+      }
+      childrens {
+        items {
+          id
+          ownerId
+          owner
+          ownerFullname
+          content
+          participantUserIds
+          imageUrls
+          createdAt
+          parentId
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const updateChat = /* GraphQL */ `
+  mutation UpdateChat(
+    $input: UpdateChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    updateChat(input: $input, condition: $condition) {
+      id
+      ownerId
+      owner
+      ownerFullname
+      content
+      participantUserIds
+      imageUrls
+      createdAt
+      parentId
+      parent {
+        id
+        ownerId
+        owner
+        ownerFullname
+        content
+        participantUserIds
+        imageUrls
+        createdAt
+        parentId
+        parent {
+          id
+          ownerId
+          owner
+          ownerFullname
+          content
+          participantUserIds
+          imageUrls
+          createdAt
+          parentId
+          updatedAt
+        }
+        childrens {
+          nextToken
+        }
+        updatedAt
+      }
+      childrens {
+        items {
+          id
+          ownerId
+          owner
+          ownerFullname
+          content
+          participantUserIds
+          imageUrls
+          createdAt
+          parentId
+          updatedAt
+        }
+        nextToken
+      }
+      updatedAt
+    }
+  }
+`;
+export const deleteChat = /* GraphQL */ `
+  mutation DeleteChat(
+    $input: DeleteChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    deleteChat(input: $input, condition: $condition) {
+      id
+      ownerId
+      owner
+      ownerFullname
+      content
+      participantUserIds
+      imageUrls
+      createdAt
+      parentId
+      parent {
+        id
+        ownerId
+        owner
+        ownerFullname
+        content
+        participantUserIds
+        imageUrls
+        createdAt
+        parentId
+        parent {
+          id
+          ownerId
+          owner
+          ownerFullname
+          content
+          participantUserIds
+          imageUrls
+          createdAt
+          parentId
+          updatedAt
+        }
+        childrens {
+          nextToken
+        }
+        updatedAt
+      }
+      childrens {
+        items {
+          id
+          ownerId
+          owner
+          ownerFullname
+          content
+          participantUserIds
+          imageUrls
           createdAt
           parentId
           updatedAt
