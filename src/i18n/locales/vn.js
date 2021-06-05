@@ -225,6 +225,14 @@ export default {
     priceRange: 'Khoảng giá',
     size: 'Size',
   },
+  mypage: {
+    editProfile: 'Sửa hồ sơ',
+    follower: 'Người theo dõi',
+    following: 'Đang theo dõi',
+    posts: 'Bài đăng',
+    isFollowed: 'Đã theo dõi',
+    isNotFollow: 'Theo dõi',
+  },
   setting: {
     title: 'Thiết lập tài khoản',
     myaccount: 'Tài khoản của tôi',

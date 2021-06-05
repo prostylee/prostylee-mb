@@ -27,6 +27,7 @@ const SettingItem = () => {
                     <TouchableOpacity
                       key={indexList}
                       onPress={() => onNavigateSetting(list.screen)}
+                      style={{alignContent: 'center'}}
                     >
                       <List.Item
                         style={styles.textItemList}

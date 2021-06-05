@@ -16,11 +16,13 @@ export const types = {
   SET_LIST_CART_SUCCESS: 'SET_LIST_CART_SUCCESS',
   SET_LIST_CART_FAILED: 'SET_LIST_CART_FAILED',
   ADD_ITEM_TO_CART: 'ADD_ITEM_TO_CART',
+  SET_VOUCHER_LOADING: 'SET_VOUCHER_LOADING',
 
   //List Payment
   GET_LIST_PAYMENT: 'GET_LIST_PAYMENT',
   GET_LIST_PAYMENT_SUCCESS: 'GET_LIST_PAYMENT_SUCCESS',
   GET_LIST_PAYMENT_FAILED: 'GET_LIST_PAYMENT_FAILED',
+  SET_PAYMENT_USE: 'SET_PAYMENT_USE',
 
   //List recent
   GET_LIST_RECENT: 'GET_LIST_RECENT',
@@ -39,6 +41,18 @@ export const types = {
   SET_CART_PAYMENT_METHOD: 'SET_CART_PAYMENT_METHOD',
   SET_CART_PAYMENT_METHOD_SUCCESS: 'SET_CART_PAYMENT_METHOD_SUCCESS',
   SET_CART_PAYMENT_METHOD_FAILED: 'SET_CART_PAYMENT_METHOD_FAILED',
+
+  //List voucher
+  SET_VOUCHER_LOADING: 'SET_VOUCHER_LOADING',
+  GET_LIST_VOUCHER: 'GET_LIST_VOUCHER',
+  GET_LIST_VOUCHER_SUCCESS: 'GET_LIST_VOUCHER_SUCCESS',
+  GET_LIST_VOUCHER_FAILED: 'GET_LIST_VOUCHER_FAILED',
+  SET_PAGE_VOUCHER_DEFAULT: 'SET_PAGE_VOUCHER_DEFAULT',
+  SET_LOADING_LOAD_MORE_VOUCHER: 'SET_LOADING_LOAD_MORE_VOUCHER',
+  GET_LIST_VOUCHER_LOAD_MORE: 'GET_LIST_VOUCHER_LOAD_MORE',
+  GET_LIST_VOUCHER_LOAD_MORE_SUCCESS: 'GET_LIST_VOUCHER_LOAD_MORE_SUCCESS',
+  GET_LIST_VOUCHER_LOAD_MORE_FAILED: 'GET_LIST_VOUCHER_LOAD_MORE_FAILED',
+  SET_VOUCHER_USE: 'SET_VOUCHER_USE',
 };
 
 export const actions = {
@@ -53,6 +67,7 @@ export const actions = {
   getListPayment: createAction(types.GET_LIST_PAYMENT),
   getListPaymentSuccess: createAction(types.GET_LIST_PAYMENT_SUCCESS),
   getListPaymentFailed: createAction(types.GET_LIST_PAYMENT_FAILED),
+  setPaymentUse: createAction(types.SET_PAYMENT_USE),
 
   //List Recent
   setRecentLoading: createAction(types.SET_RECENT_LOADING),
@@ -65,14 +80,29 @@ export const actions = {
   getListSuggestion: createAction(types.GET_LIST_SUGGESTION),
   getListSuggestionSuccess: createAction(types.GET_LIST_SUGGESTION_SUCCESS),
   getListSuggestionFailed: createAction(types.GET_LIST_SUGGESTION_FAILED),
+
+  //List Voucher
+  setVoucherLoading: createAction(types.SET_VOUCHER_LOADING),
+  getListVoucher: createAction(types.GET_LIST_VOUCHER),
+  getListVoucherSuccess: createAction(types.GET_LIST_VOUCHER_SUCCESS),
+  getListVoucherFailed: createAction(types.GET_LIST_VOUCHER_FAILED),
+  setPageVoucherDefault: createAction(types.SET_PAGE_VOUCHER_DEFAULT),
+
+  setLoadingLoadMoreVoucher: createAction(types.SET_LOADING_LOAD_MORE_VOUCHER),
+  getListVoucherLoadMore: createAction(types.GET_LIST_VOUCHER_LOAD_MORE),
+  getListVoucherLoadMoreSuccess: createAction(
+    types.GET_LIST_VOUCHER_LOAD_MORE_SUCCESS,
+  ),
+  getListVoucherLoadMoreFailed: createAction(
+    types.GET_LIST_VOUCHER_LOAD_MORE_FAILED,
+  ),
+
+  setVoucherUse: createAction(types.SET_VOUCHER_USE),
 };
 
 const intialState = {
   //List Cart
   cartLoading: false,
-  paymentLoading: false,
-  recentLoading: false,
-  suggestionLoading: false,
   loadCartMoreLoading: false,
   listCart: [],
   hasLoadMoreCart: false,
@@ -80,12 +110,35 @@ const intialState = {
   limitCart: 12,
   couponCart: null,
   paymentCart: null,
+
+  //List payment
+  paymentLoading: false,
   listPayment: [],
-  listDelivery: [],
+  paymentUse: null,
+
+  //List Recent
+  recentLoading: false,
   listRecent: [],
-  getListSuggestion: [],
+
+  //List suggestion
+  suggestionLoading: false,
+  listSuggestion: [],
+
+  //List Delivery
+  listDelivery: [],
+
+  //List Voucher
+  voucherLoading: false,
+  loadVoucherMoreLoading: false,
+  listVoucher: {},
+  hasLoadMoreVoucher: false,
+  pageVoucher: 0,
+  limitVoucher: 12,
+  voucherUse: null,
 };
 
+const PAGE_INIT = 0;
+const UNIT_INCREASE = 1;
 export default handleActions(
   {
     //List Cart
@@ -100,9 +153,17 @@ export default handleActions(
         }) || [];
       if (!currentListItemId.includes(payload.item.id)) {
         currentCart.push(payload);
-        return {...state, cartLoading: currentCart};
+        showMessage({
+          message: 'Thêm vào giỏ hàng thành công',
+          type: 'success',
+        });
+        return {...state, listCart: currentCart};
       } else {
-        return {...state, cartLoading: currentCart};
+        showMessage({
+          message: 'Thêm vào giỏ hàng thành công',
+          type: 'success',
+        });
+        return {...state, listCart: currentCart};
       }
     },
     [types.SET_LIST_CART_SUCCESS]: (state, {payload}) => {
@@ -139,6 +200,10 @@ export default handleActions(
         cartLoading: false,
       };
     },
+    [types.SET_PAYMENT_USE]: (state, {payload}) => {
+      return {...state, paymentUse: payload};
+    },
+
     //List Recent
     [types.SET_RECENT_LOADING]: (state, {payload}) => {
       return {...state, recentLoading: payload};
@@ -173,6 +238,51 @@ export default handleActions(
         ...state,
         suggestionLoading: false,
       };
+    },
+
+    //List Voucher
+    [types.SET_VOUCHER_LOADING]: (state, {payload}) => {
+      return {...state, voucherLoading: payload};
+    },
+    [types.GET_LIST_VOUCHER_SUCCESS]: (state, {payload}) => {
+      const {totalPages} = payload;
+      return {
+        ...state,
+        pageVoucher: PAGE_INIT,
+        hasLoadMoreVoucher: state.pageVoucher + 1 < totalPages ? true : false,
+        listVoucher: payload,
+      };
+    },
+    [types.GET_LIST_VOUCHER_FAILED]: (state, {payload}) => {
+      return {
+        ...state,
+        listVoucher: {},
+        hasLoadMoreVoucher: false,
+      };
+    },
+    [types.SET_PAGE_VOUCHER_DEFAULT]: (state, {payload}) => {
+      return {...state, pageVoucher: 0};
+    },
+    [types.SET_LOADING_LOAD_MORE_VOUCHER]: (state, {payload}) => {
+      return {...state, loadVoucherMoreLoading: payload};
+    },
+    [types.GET_LIST_VOUCHER_LOAD_MORE_SUCCESS]: (state, {payload}) => {
+      const {totalPages, content} = payload;
+      payload.content = state.listVoucher?.content.concat(content) || [];
+      return {
+        ...state,
+        listVoucher: payload,
+        pageVoucher: state.pageVoucher + UNIT_INCREASE,
+        hasLoadMoreVoucher:
+          state.pageVoucher + UNIT_INCREASE + 1 < totalPages ? true : false,
+      };
+    },
+    [types.GET_LIST_VOUCHER_LOAD_MORE_FAILED]: (state, {payload}) => {
+      return {...state};
+    },
+
+    [types.SET_VOUCHER_USE]: (state, {payload}) => {
+      return {...state, voucherUse: payload};
     },
   },
   intialState,

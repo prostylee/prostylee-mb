@@ -44,6 +44,11 @@ export const getListPaymentSelector = createSelector(
   (data) => data?.listPayment || [],
 );
 
+export const getPaymentUseSelector = createSelector(
+  cartReducer,
+  (data) => data?.paymentUse,
+);
+
 //List Recent
 export const getRecentLoadingSelector = createSelector(
   cartReducer,
@@ -64,4 +69,35 @@ export const getSuggestionLoadingSelector = createSelector(
 export const getListSuggestionSelector = createSelector(
   cartReducer,
   (data) => data?.listSuggestion || [],
+);
+
+//List Voucher
+export const getVoucherLoadingSelector = createSelector(
+  cartReducer,
+  (data) => data?.voucherLoading,
+);
+
+export const getListVoucherSelector = createSelector(
+  cartReducer,
+  (data) => data?.listVoucher || {},
+);
+
+export const getLoadVoucherMoreLoadingSelector = createSelector(
+  cartReducer,
+  (data) => data?.loadVoucherMoreLoading || false,
+);
+
+export const getHasLoadMoreVoucherSelector = createSelector(
+  cartReducer,
+  (data) => data?.hasLoadMoreVoucher || false,
+);
+
+export const getPageVoucherSelector = createSelector(
+  cartReducer,
+  (data) => data?.pageVoucher,
+);
+
+export const getVoucherUseSelector = createSelector(
+  cartReducer,
+  (data) => data?.voucherUse,
 );

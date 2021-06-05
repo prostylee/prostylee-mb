@@ -1,14 +1,22 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {ScrollView, View, Text, TouchableOpacity} from 'react-native';
 import {Header, ThemeView} from 'components';
 import {LocationIcon, RightArrow, PlusSign} from 'svg/common';
 import {Divider} from 'react-native-paper';
-import {Field, Formik} from 'formik';
 import styles from './styles';
 import addressList from './address';
 import I18n from 'i18n';
+import {useNavigation} from '@react-navigation/native';
 
 const SettingAddress = () => {
+  const navigation = useNavigation();
+
+  const [addressListCount, setAddressListCount] = useState(0);
+
+  useEffect(() => {
+    setAddressListCount(addressList.length);
+  });
+
   return (
     <ThemeView isFullView style={styles.container}>
       <Header title={I18n.t('setting.address')} isDefault/>
@@ -40,7 +48,7 @@ const SettingAddress = () => {
           })
         }
         <View style={{height: 6}}></View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('SettingAddAddress',{addressCount: addressListCount})}>
           <View style={styles.addAddressButtonView}>
             <PlusSign/>
             <Text style={{paddingLeft: 15}}>Thêm địa chỉ mới</Text>
