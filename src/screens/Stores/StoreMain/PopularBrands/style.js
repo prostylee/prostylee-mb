@@ -7,8 +7,8 @@ export default EStyleSheet.create({
   container: {
     width: '100%',
     height: 160,
-    backgroundColor: '#F7F7F7',
-    paddingBottom: 8,
+
+    marginBottom: 8,
   },
   wrapBackground: {
     backgroundColor: 'red',

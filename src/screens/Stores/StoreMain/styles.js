@@ -6,7 +6,7 @@ const WIDTH = Dimensions.get('window').width - 30;
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E82E46',
+    // backgroundColor: '$bgColor',
   },
   headerContainer: {
     display: 'flex',

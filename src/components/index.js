@@ -43,6 +43,7 @@ import SlideInModal from './SlideInModal';
 import ModalTabButton from './ModalTabButton';
 import ModalAddPictureMethod from './ModalAddPictureMethod';
 import Picker from './Picker';
+import contentLoader from './Loading/contentLoader';
 
 export {
   ContainerWithoutScrollView,
@@ -90,4 +91,5 @@ export {
   RadioSelectGroup,
   Picker,
   SlideInModal,
+  contentLoader,
 };

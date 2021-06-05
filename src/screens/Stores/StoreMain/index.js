@@ -52,14 +52,14 @@ const HeaderLeft = () => {
     </TouchableOpacity>
   );
 };
-const HeaderRight = () => {
+const HeaderRight = ({color = '#fff'}) => {
   return (
     <View style={styles.headerRightContainer}>
       <TouchableOpacity>
-        <MessageOutlined color="#fff" width={18} height={18} strokeWidth={2} />
+        <MessageOutlined color={color} width={18} height={18} strokeWidth={2} />
       </TouchableOpacity>
       <TouchableOpacity>
-        <Bag color="#fff" width={20} height={20} strokeWidth={2} />
+        <Bag color={color} width={20} height={20} strokeWidth={2} />
       </TouchableOpacity>
     </View>
   );
@@ -134,27 +134,30 @@ const Stores = (props) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#E82E46'}}>
       <HeaderAnimated
         bottomComponent={
           <View
             style={{
               width: '100%',
-              backgroundColor: '#E82E46',
+              backgroundColor: '#fff',
               padding: 16,
               flexDirection: 'row',
             }}>
-            <Searchbar style={{flex: 1, height: 40}} />
-            <HeaderRight />
+            <Searchbar
+              style={{flex: 1, height: 40}}
+              placeholder={i18n.t('search')}
+            />
+            <HeaderRight color={Colors['$icon']} />
           </View>
         }
         bottomHeight={0}
         hideBottomBorder={true}
-        heightShow={heightShow - 190}
+        heightShow={heightShow - 100}
         Animated={Animated}
         navigation={navigation}
         scrollAnimated={scrollAnimated}
-        backgroundColor={'#E82E46'}
+        backgroundColor={'#fff'}
       />
       <ScrollView
         style={styles.container}
@@ -162,8 +165,8 @@ const Stores = (props) => {
         showsVerticalScrollIndicator={false}
         onScroll={onScrollEvent}
         scrollEventThrottle={16}>
-        <View style={{backdropColor: Colors['$white']}}>
-          {/* <CustomBackground /> */}
+        <View style={{backgroundColor: Colors['$bgColor']}}>
+          <CustomBackground />
 
           <Header
             // title={i18n.t('headerTitle.featured_store')}

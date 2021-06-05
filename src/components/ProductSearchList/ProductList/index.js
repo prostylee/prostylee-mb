@@ -3,7 +3,7 @@ import {View, FlatList, Text, ActivityIndicator} from 'react-native';
 import styles from './styles';
 import ProductItem from './ProductItem';
 import {Colors} from 'components';
-
+import {SearchProductLoading} from '../../Loading/contentLoader';
 interface ProductListProps {
   getDataFunction: Function;
   refreshDataFunction: Function;
@@ -43,7 +43,17 @@ const ProductList = ({
   return (
     <View style={styles.container}>
       {isLoading && !isRefreshing ? (
-        <ActivityIndicator animating color={Colors.$purple} size="small" />
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingBottom: 16,
+            flexWrap: 'wrap',
+            justifyContent: 'space-around',
+          }}>
+          {[1, 2, 3, 4].map((v) => (
+            <SearchProductLoading />
+          ))}
+        </View>
       ) : data && data?.content?.length ? (
         <FlatList
           contentContainerStyle={styles.listWrapper}

@@ -3,9 +3,9 @@ import React, {useEffect, useState} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 
 import styles from './styles';
-import {Colors, Image} from 'components';
+import {Colors} from 'components';
 import i18n from 'i18n';
-
+import {StoreLoading} from 'components/Loading/contentLoader';
 import {
   getNearbyStoreLoadingSelector,
   getNearbyStoreLoadmoreLoadingSelector,
@@ -87,7 +87,12 @@ const FeaturedCategories = ({navigation}) => {
     <>
       <View style={styles.container}>
         {isLoading && !isRefreshing ? (
-          <ActivityIndicator animating color={Colors.$purple} size="small" />
+          <View>
+            {[1, 2, 3].map((v) => (
+              <StoreLoading />
+            ))}
+            <StoreLoading />
+          </View>
         ) : data && data?.content?.length ? (
           <FlatList
             data={data.content}

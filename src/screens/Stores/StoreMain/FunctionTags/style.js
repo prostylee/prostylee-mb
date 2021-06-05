@@ -8,8 +8,8 @@ export default EStyleSheet.create({
     width: '100%',
     height: 88,
     paddingHorizontal: 16,
-    paddingBottom: 8,
-    backgroundColor: '#F7F7F7',
+    marginBottom: 8,
+    // backgroundColor: '#F7F7F7',
   },
   tagListContainer: {
     backgroundColor: '$white',
