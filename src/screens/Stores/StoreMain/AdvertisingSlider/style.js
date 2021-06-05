@@ -8,7 +8,8 @@ export default EStyleSheet.create({
     width: '100%',
     height: 160,
     paddingHorizontal: 16,
-    marginBottom: 8,
+    paddingVertical: 8,
+    backgroundColor: '#F7F7F7',
   },
   sliderContainer: {
     // backgroundColor: '#fff',

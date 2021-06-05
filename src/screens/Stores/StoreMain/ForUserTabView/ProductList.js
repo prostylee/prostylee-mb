@@ -7,9 +7,16 @@ const ProductList = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.listWrapper}>
-        {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
+        {/* {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
           return <ProductItem item={item} index={index} />;
-        })}
+        })} */}
+        <FlatList
+          numColumns={2}
+          data={[1, 2, 3, 4, 5, 6, 7]}
+          renderItem={({item, index}) => (
+            <ProductItem item={item} index={index} />
+          )}
+        />
       </View>
     </View>
   );

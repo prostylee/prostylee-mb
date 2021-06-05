@@ -6,7 +6,6 @@ import {Heart} from 'svg/common';
 import styles from './styles';
 import picture from 'assets/images/signInBg.png';
 import {Colors} from 'components';
-
 import {currencyFormat} from 'utils/currency';
 const ItemBadge = () => (
   <View
@@ -40,14 +39,19 @@ const ProductItem = ({item, index}) => (
       <View style={[styles.imageContainer]}>
         <Image
           style={styles.imageStyle}
-          source={{
-            uri: item && item?.imageUrls?.length ? item.imageUrls[0] : picture,
-          }}
+          source={
+            item && item?.imageUrls?.length
+              ? {uri: item?.imageUrls[0]}
+              : picture
+          }
           resizeMode="cover"
         />
+        <ItemBadge />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.itemName}>{item?.name}</Text>
+        <Text style={styles.itemName} numberOfLines={1}>
+          {item?.name}
+        </Text>
         <View style={{flexDirection: 'column'}}>
           <Text style={styles.itemPrice}>
             {currencyFormat(item?.priceSale ? Number(item?.priceSale) : 0, 'đ')}
@@ -56,7 +60,7 @@ const ProductItem = ({item, index}) => (
         <View style={styles.toolContainer}>
           <View style={styles.ratingContainer}>
             <Text style={styles.itemDiscountPrice}>
-              {currencyFormat(item?.price ? Number(item?.price) : 0, 'đ')}
+              {currencyFormat(item?.priceSale ? Number(item?.price) : 0, 'đ')}
             </Text>
           </View>
           <TouchableOpacity>

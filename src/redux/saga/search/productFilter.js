@@ -27,7 +27,7 @@ const getProductFilter = function* ({payload}) {
       yield put(
         searchActions.setProductFilterState({
           attributes: initFilterState,
-          category: 0,
+          category: -1,
         }),
       );
     } else {
@@ -35,7 +35,7 @@ const getProductFilter = function* ({payload}) {
       yield put(
         searchActions.setProductFilterState({
           attributes: {},
-          category: 0,
+          category: -1,
         }),
       );
     }

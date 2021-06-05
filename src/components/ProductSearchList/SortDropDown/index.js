@@ -9,7 +9,6 @@ import {
 } from 'react-native-paper';
 import styles from './style';
 import {Colors} from 'components';
-import {View} from 'react-native';
 const MockSortItem = [
   {label: 'Liên quan nhất', value: 1},
   {label: 'Phổ biến nhất', value: 2},
@@ -33,7 +32,7 @@ const SortDropDown = ({
         onValueChange={(value) => setValueSort(value)}
         color="#823ffd">
         {MockSortItem?.map((v, i, arr) => (
-          <View style={{flexDirection: 'column'}} key={i}>
+          <>
             <Divider />
             <RadioButton.Item
               color={Colors['$purple']}
@@ -52,7 +51,7 @@ const SortDropDown = ({
               label={v.label}
             />
             {/* {i !== arr.length - 1 ? <Divider /> : null} */}
-          </View>
+          </>
         ))}
       </RadioButton.Group>
     </Picker>

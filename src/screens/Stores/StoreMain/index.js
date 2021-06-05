@@ -1,18 +1,21 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   ActivityIndicator,
   Text,
   TouchableOpacity,
   ScrollView,
+  Animated,
+  Dimensions,
+  StatusBar,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
 
 import styles from './styles';
 
-import {Header, Colors} from 'components';
+import {Header, Colors, HeaderAnimated} from 'components';
 
 import {storeActions} from 'redux/reducers';
 
@@ -37,7 +40,10 @@ import {
   getBrandListSelector,
   getCategoryListSelector,
 } from 'redux/selectors/storeMain';
-
+const heightShow = 334;
+const WIDTH = Dimensions.get('window').width;
+const WIDTH_IMAGE = WIDTH / 2 - 14;
+const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 const HeaderLeft = () => {
   return (
     <TouchableOpacity style={styles.headerLeftContainer}>
@@ -76,6 +82,13 @@ const Stores = (props) => {
 
   const location = useLocation();
   console.log('LOCATION', location);
+
+  const scrollAnimated = useRef(new Animated.Value(0)).current;
+
+  const onScrollEvent = Animated.event(
+    [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
+    {useNativeDriver: false},
+  );
 
   useEffect(() => {
     if (!topBannerList || !topBannerList?.content?.length)
@@ -121,48 +134,71 @@ const Stores = (props) => {
   };
 
   return (
-    <ScrollView
-      style={styles.container}
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}>
-      <CustomBackground />
-      <Header
-        // title={i18n.t('headerTitle.featured_store')}
-        leftComponent={<HeaderLeft />}
-        rightComponent={<HeaderRight />}
-        containerStyle={styles.headerContainer}
-      />
-      <CustomSearchBar />
-
-      <AdvertisingSlider
-        data={topBannerList?.content ? topBannerList?.content : []}
-      />
-
-      <FunctionTags navigation={navigation} />
-
-      <PopularBrands
-        data={brandList && brandList?.content?.length ? brandList.content : []}
-      />
-
-      <MidAdvertisingSlider
-        data={midBannerList?.content ? midBannerList?.content : []}
-      />
-      <FeaturedCategories
-        data={
-          categoryList?.content && categoryList?.content?.length
-            ? categoryList?.content
-            : []
+    <View style={{flex: 1}}>
+      <HeaderAnimated
+        bottomComponent={
+          <View
+            style={{
+              width: '100%',
+              backgroundColor: '#E82E46',
+              padding: 16,
+              flexDirection: 'row',
+            }}>
+            <Searchbar style={{flex: 1, height: 40}} />
+            <HeaderRight />
+          </View>
         }
+        bottomHeight={0}
+        hideBottomBorder={true}
+        heightShow={heightShow - 190}
+        Animated={Animated}
+        navigation={navigation}
+        scrollAnimated={scrollAnimated}
+        backgroundColor={'#E82E46'}
       />
-      <ForUserTabView />
-      <View
-        style={{
-          width: '100%',
-          height: 500,
-          backdropColor: 'red',
-          borderWidth: 1,
-        }}></View>
-    </ScrollView>
+      <ScrollView
+        style={styles.container}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        onScroll={onScrollEvent}
+        scrollEventThrottle={16}>
+        <View style={{backdropColor: Colors['$white']}}>
+          {/* <CustomBackground /> */}
+
+          <Header
+            // title={i18n.t('headerTitle.featured_store')}
+            leftComponent={<HeaderLeft />}
+            rightComponent={<HeaderRight />}
+            containerStyle={styles.headerContainer}
+          />
+          <CustomSearchBar />
+
+          <AdvertisingSlider
+            data={topBannerList?.content ? topBannerList?.content : []}
+          />
+
+          <FunctionTags navigation={navigation} />
+
+          <PopularBrands
+            data={
+              brandList && brandList?.content?.length ? brandList.content : []
+            }
+          />
+
+          <MidAdvertisingSlider
+            data={midBannerList?.content ? midBannerList?.content : []}
+          />
+          <FeaturedCategories
+            data={
+              categoryList?.content && categoryList?.content?.length
+                ? categoryList?.content
+                : []
+            }
+          />
+          <ForUserTabView />
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 

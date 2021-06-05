@@ -16,6 +16,7 @@ import ProductList from './ProductList';
 import SortDropDown from './SortDropDown';
 import TagList from './TagList';
 import FilterBar from './FilterBar';
+import ProductSearchList from '../../../components/ProductSearchList';
 
 const BestSellers = ({navigation}) => {
   const dispatch = useDispatch();
@@ -87,45 +88,20 @@ const BestSellers = ({navigation}) => {
   }, []);
 
   return (
-    <ThemeView style={styles.container} isFullView>
-      <Header
-        isDefault
-        containerStyle={{
-          paddingBottom: 10,
-          borderBottomWidth: 0,
-          borderBottomWidth: 1,
-        }}
-        leftStyle={{
-          height: 30,
-          fontWeight: 'bold',
-        }}
-        middleComponent={
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}>
-            Tất cả sản phẩm
-          </Text>
-        }
-      />
-      <FilterBar
-        setVisible={setVisible}
-        visible={visible}
-        navigation={navigation}
-      />
-      <Divider />
-      <TagList onTagPress={_handleFilterByTag} />
-      <SortDropDown
-        visible={visible}
-        setVisible={setVisible}
-        setAction={setAction}
-        setValueSort={_handleSort}
-        valueSort={valueSort}
-      />
-      <ProductList />
-    </ThemeView>
+    <ProductSearchList
+      title="Tất cả sản phẩm"
+      hasTagList
+      hasFilterBar
+      getDataFunction={getDataFunctionSelector}
+      refreshDataFunction={_initData}
+      loadmoreDataFuntion={loadMoreFunc}
+      tagFilterFunction={_handleFilterByTag}
+      sortDataFunction={_handleSort}
+      navigation={navigation}
+      getCurrentPageFunction={() => {}}
+      isLoading={isLoading}
+      hasLoadmore={hasLoadmore}
+    />
   );
 };
 

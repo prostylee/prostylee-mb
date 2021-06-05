@@ -1,39 +1,35 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {
-  Dimensions,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import i18n from 'i18n';
-import styles from './styles';
-import {Sort, Filter, CaretDown} from 'svg/common';
-import {ThemeView, Header} from 'components';
-import {Divider, Chip} from 'react-native-paper';
-import {Colors} from 'components';
 
-import {MessageOutlined, Bell, BellWithNotiBadge} from 'svg/header';
-import ProductList from './ProductList';
-import SortDropDown from './SortDropDown';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 import {storeActions} from 'redux/reducers';
-import {useDispatch} from 'react-redux';
-import TagList from './TagList';
-import FilterBar from '../BestSeller/FilterBar';
+
+import ProductSearchList from '../../../components/ProductSearchList';
+
+import {useDispatch, useSelector} from 'react-redux';
+
+import {
+  getPersonalSalersLoadingSelector,
+  getPersonalSalersSelector,
+  hasPersonalSalersLoadmoreSelector,
+  getPersonalSalersCurrentPageSelector,
+} from 'redux/selectors/storeMain/personalSalers';
 
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
 
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [visible, setVisible] = useState(false);
-  const [action, setAction] = useState('filter');
-  const [valueSort, setValueSort] = useState(null);
+  const currentPage = useSelector((state) =>
+    getPersonalSalersCurrentPageSelector(state),
+  );
+
+  const isLoading = useSelector((state) =>
+    getPersonalSalersLoadingSelector(state),
+  );
+  const hasLoadmore = useSelector((state) =>
+    hasPersonalSalersLoadmoreSelector(state),
+  );
 
   const _handleSort = (value) => {
-    setValueSort(value);
     let sortOption = {};
     switch (value) {
       case 1: {
@@ -81,55 +77,40 @@ const SearchProducts = ({navigation}) => {
     );
   };
 
-  useEffect(() => {
+  const getDataFunctionSelector = () =>
+    useSelector((state) => getPersonalSalersSelector(state));
+
+  const _initData = () =>
     dispatch(
       storeActions.getPersonalSalers({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
       }),
     );
-  }, []);
+
+  const loadMoreFunc = () =>
+    dispatch(
+      storeActions.getPersonalSalersLoadmore({
+        page: currentPage,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
 
   return (
-    <ThemeView style={styles.container} isFullView>
-      <Header
-        isDefault
-        containerStyle={{
-          paddingBottom: 10,
-          borderBottomWidth: 0,
-          borderBottomWidth: 1,
-        }}
-        leftStyle={{
-          height: 30,
-          fontWeight: 'bold',
-        }}
-        middleComponent={
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}>
-            Cá nhân đăng bán
-          </Text>
-        }
-      />
-      <FilterBar
-        setVisible={setVisible}
-        visible={visible}
-        navigation={navigation}
-      />
-      <Divider />
-      <TagList onTagPress={_handleFilterByTag} />
-      <SortDropDown
-        visible={visible}
-        setVisible={setVisible}
-        setAction={setAction}
-        setValueSort={_handleSort}
-        valueSort={valueSort}
-      />
-      <ProductList />
-    </ThemeView>
+    <ProductSearchList
+      title="Cá nhân đăng bán"
+      hasTagList
+      hasFilterBar
+      getDataFunction={getDataFunctionSelector}
+      refreshDataFunction={_initData}
+      loadmoreDataFuntion={loadMoreFunc}
+      tagFilterFunction={_handleFilterByTag}
+      sortDataFunction={_handleSort}
+      navigation={navigation}
+      getCurrentPageFunction={() => {}}
+      isLoading={isLoading}
+      hasLoadmore={hasLoadmore}
+    />
   );
 };
 

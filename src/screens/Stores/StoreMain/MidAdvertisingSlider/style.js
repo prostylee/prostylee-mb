@@ -7,14 +7,14 @@ export default EStyleSheet.create({
   container: {
     width: '100%',
     height: 192,
-    padding: 16,
-    backgroundColor: '$white',
-    marginBottom: 8,
+    backgroundColor: '#F7F7F7',
+    paddingBottom: 16,
   },
   sliderContainer: {
-    // borderWidth: 1,
     width: '100%',
     height: '100%',
+    backgroundColor: '#fff',
+    padding: 16,
   },
   sliderItem: {
     width: WIDTH - 32,

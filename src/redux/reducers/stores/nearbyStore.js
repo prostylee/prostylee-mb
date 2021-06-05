@@ -16,7 +16,7 @@ export const types = {
 export const actions = {
   setNearbyStoreLoading: createAction(types.SET_NEARBY_STORE_LOADING),
   setNearbyStoreLoadmoreLoading: createAction(
-    types.SET_NEARBY_LOADMORE_LOADING,
+    types.SET_NEARBY_STORE_LOADMORE_LOADING,
   ),
   getNearbyStore: createAction(types.GET_NEARBY_STORE),
   getNearbyStoreSuccess: createAction(types.GET_NEARBY_STORE_SUCCESS),

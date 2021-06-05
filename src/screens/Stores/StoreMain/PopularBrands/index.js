@@ -8,23 +8,33 @@ import BrandItem from './BrandItem';
 const PopularBrands = ({data = []}) => {
   return (
     <View style={styles.container}>
-      <View style={styles.wrapTitle}>
-        <Text style={styles.title}>Thương hiệu nổi bật</Text>
-        <TouchableOpacity style={{flexDirection: 'row'}}>
-          <Text style={styles.seeMoreText}>Xem thêm</Text>
-          <ChevronRight />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.wrapList}>
-        <FlatList
-          data={data && data.length ? data : [1, 2, 3, 4, 5, 6, 7, 8]}
-          horizontal
-          renderItem={({item, index}) => (
-            <BrandItem item={item} index={index} />
-          )}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.listInner}
-        />
+      <View
+        style={[
+          styles.wrapBackground,
+          {
+            backgroundColor: '#fff',
+            paddingVertical: 12,
+            paddingBottom: 8,
+          },
+        ]}>
+        <View style={styles.wrapTitle}>
+          <Text style={styles.title}>Thương hiệu nổi bật</Text>
+          <TouchableOpacity style={{flexDirection: 'row'}}>
+            <Text style={styles.seeMoreText}>Xem thêm</Text>
+            <ChevronRight />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.wrapList}>
+          <FlatList
+            data={data && data.length ? data : [1, 2, 3, 4, 5, 6, 7, 8]}
+            horizontal
+            renderItem={({item, index}) => (
+              <BrandItem item={item} index={index} />
+            )}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.listInner}
+          />
+        </View>
       </View>
     </View>
   );
