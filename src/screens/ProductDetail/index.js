@@ -206,6 +206,8 @@ const ProductDetail = (props) => {
           ) : null}
         </Animated.View>
         <ProductTitle
+          navigation={props.navigation}
+          productId={productData?.id}
           name={productData?.name}
           price={productData?.price}
           priceOriginal={productData?.price}
@@ -238,7 +240,11 @@ const ProductDetail = (props) => {
             setRatingPos(y);
           }}
         />
-        <ProductRating data={productComments} />
+        <ProductRating
+          navigation={props.navigation}
+          data={productComments}
+          productId={productData?.id}
+        />
         <View
           style={styles.lineHrBig}
           onLayout={({
@@ -262,6 +268,7 @@ const ProductDetail = (props) => {
       <Footer
         isLike={productData?.likeStatusOfUserLogin || false}
         productData={productData}
+        choiceSelect={choiceSelect}
       />
     </View>
   );

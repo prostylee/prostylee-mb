@@ -2,25 +2,36 @@
 import styles from './styles';
 
 import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {ActivityIndicator, Text, View} from 'react-native';
 import {Image} from 'components';
 import CardVoucher from '../CardVoucher';
 import {Button} from 'react-native-paper';
+import i18n from 'i18n';
+import {cartActions} from 'redux/reducers';
+import {getVoucherUseSelector} from 'redux/selectors/cart';
 
 const ProductItem = ({item, navigation}) => {
-  const onUse = () => {
+  const dispatch = useDispatch();
+
+  const voucherUsed = useSelector((state) => getVoucherUseSelector(state));
+
+  const onUse = async () => {
+    if (!voucherUsed || voucherUsed.id !== item.id) {
+      await dispatch(cartActions.setVoucherUse(item));
+    }
     navigation.goBack();
   };
 
   return (
-    <CardVoucher style={styles.cardItem}>
+    <CardVoucher style={styles.cardItem} key={item.key}>
       <View style={styles.wrapCardItem}>
         <View style={styles.wrapContentVoucher}>
           <View>
             <Image
               source={
-                item?.logoImage
-                  ? {uri: item?.logoImage}
+                item?.logo
+                  ? {uri: item?.logo}
                   : require('assets/images/default.png')
               }
               resizeMode="cover"
@@ -30,19 +41,19 @@ const ProductItem = ({item, navigation}) => {
           </View>
           <View style={styles.wrapInfo}>
             <Text numberOfLines={1} style={styles.textCategory}>
-              {item.category}
+              {item.voucherOwner}
             </Text>
             <Text numberOfLines={2} style={styles.textDescription}>
-              {item.description}
+              {item.name}
             </Text>
           </View>
         </View>
         <View style={styles.dashedLine}></View>
         <View style={styles.wrapExpiredVoucher}>
           <View style={styles.wrapExpiredText}>
-            <Text
-              numberOfLines={1}
-              style={styles.textExpired}>{`HSD: ${item.expired}`}</Text>
+            <Text numberOfLines={1} style={styles.textExpired}>{`HSD: ${
+              item.expiryDate ? item.expiryDate : 'Không có'
+            }`}</Text>
           </View>
           <View>
             <Button
