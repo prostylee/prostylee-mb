@@ -30,6 +30,7 @@ Assuming you have all the requirements installed, you can set up and run the pro
 - `cd ios`
 - `pod install` to install pod dependencies (remember to clear file Pods/Podfile.lock first)
 - `react-native run-ios` to run the iOS application (remember to start a simulator or connect an iPhone phone)
+- `react-native run-ios --simulator="iPhone X"` to run iPhone X simulator
 
 ---
 
