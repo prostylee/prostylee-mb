@@ -129,6 +129,10 @@ Contains utilities for the app, for example, convert date-time, currency, string
 
 - React native paper: https://callstack.github.io/react-native-paper/getting-started.html
 
+- Icon: 
+  + https://github.com/oblador/react-native-vector-icons
+  + https://materialdesignicons.com/
+
 - React Native Formik: https://formik.org/docs/guides/react-native
 
 - AWS Amplify:
