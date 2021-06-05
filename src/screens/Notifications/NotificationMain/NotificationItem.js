@@ -45,7 +45,8 @@ const NotificationItem = ({
             : Colors?.['$bgUnReadNoti'],
         },
       ]}
-      onPress={maskAsRead}>
+      onPress={maskAsRead}
+      key={`notify-${id}`}>
       <View style={styles.avatarContainer}>
         <View style={styles.avatarWrapper}>
           <Image

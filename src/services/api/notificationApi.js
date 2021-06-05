@@ -16,7 +16,7 @@ export const markReadAll = (payload) => {
   return _fetch(PUT, '/notifications', payload);
 };
 
-export const deleteNotification = (id) => {
+export const deleteNotificationService = (id) => {
   return _fetch(DELETE, `/notifications/${id}`);
 };
 

@@ -37,6 +37,9 @@ export const types = {
   //Mark read
   SET_MARK_AS_READ: 'SET_MARK_AS_READ',
   SET_MARK_ALL_AS_READ: 'SET_MARK_ALL_AS_READ',
+
+  //Delete notification
+  DELETE_NOTFICATION: 'DELETE_NOTFICATION',
 };
 
 export const actions = {
@@ -93,6 +96,9 @@ export const actions = {
   //Mark read
   setMarkAsRead: createAction(types.SET_MARK_AS_READ),
   setMarkAllAsRead: createAction(types.SET_MARK_ALL_AS_READ),
+
+  //Delete notification
+  deleteNotification: createAction(types.DELETE_NOTFICATION),
 };
 
 export const defaultState = {
@@ -221,7 +227,7 @@ export const handleActions = {
     const {
       listNotification: {content},
     } = state;
-    const objIndex = content.findIndex((obj) => obj.id == payload);
+    const objIndex = content.findIndex((item) => item.id == payload);
     content[objIndex].markAsRead = true;
     return {
       ...state,
@@ -232,9 +238,21 @@ export const handleActions = {
     const {
       listNotification: {content},
     } = state;
-    content.forEach(function (obj) {
-      obj.markAsRead = true;
+    content.forEach(function (item) {
+      item.markAsRead = true;
     });
+    return {
+      ...state,
+    };
+  },
+
+  //Delete Notification
+  [types.DELETE_NOTFICATION]: (state, {payload}) => {
+    const {
+      listNotification: {content},
+    } = state;
+    const newContent = content.filter((item) => item.id !== payload);
+    state.listNotification.content = newContent;
     return {
       ...state,
     };

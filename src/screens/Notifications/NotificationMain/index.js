@@ -1,7 +1,13 @@
 import styles from './styles';
 
 import React, {useEffect, useState} from 'react';
-import {View, Text, ActivityIndicator, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  FlatList,
+  LayoutAnimation,
+} from 'react-native';
 import {ThemeView, Header, Colors} from 'components';
 import {Divider} from 'react-native-paper';
 import {EmptyNotiOutlined} from '../../../svg/common';
@@ -10,20 +16,30 @@ import HeaderRight from './HeaderRight';
 import PromotionsInfo from './PromotionsInfo';
 import NotificationItem from './NotificationItem';
 import i18n from 'i18n';
-
+import {
+  SwipeableFlatList,
+  SwipeableQuickActions,
+} from 'react-native-swipe-list';
 import {
   getListNotificationLoadingSelector,
   getListNotificationSelector,
   getLoadListNotificationMoreLoading,
   getHasLoadMoreListNotificationSelector,
   getPageListNotificationSelector,
+  deleteNotification,
 } from 'redux/selectors/notification.js';
+import {
+  maskReadNotification,
+  deleteNotificationService,
+} from 'services/api/notificationApi';
 
 import {notificationActions} from 'redux/reducers';
 
 import {useDispatch, useSelector} from 'react-redux';
 
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {IconButton} from 'react-native-paper';
+import {showMessage} from 'react-native-flash-message';
 
 const Notifications = ({navigation}) => {
   const dispatch = useDispatch();
@@ -87,6 +103,53 @@ const Notifications = ({navigation}) => {
     );
   };
 
+  const onDeleteNotification = (id) => {
+    deleteNotificationService(id)
+      .then((res) => {
+        if (res.data.status !== 200) {
+          showMessage({
+            message: `Có lỗi xảy ra, vui lòng thử lại sau!`,
+            type: 'danger',
+          });
+          return;
+        }
+        dispatch(notificationActions.deleteNotification(id));
+        showMessage({
+          message: `Xóa thành công`,
+          type: 'success',
+        });
+      })
+      .catch((e) => {
+        console.log('error', e);
+        showMessage({
+          message: `Lỗi hệ thống`,
+          type: 'danger',
+        });
+      });
+  };
+
+  const markAsRead = (id, read) => {
+    if (!read) {
+      maskReadNotification(id)
+        .then((res) => {
+          if (res.data.status !== 200) {
+            showMessage({
+              message: `Có lỗi xảy ra, không thể đánh dấu đã đọc!`,
+              type: 'danger',
+            });
+            return;
+          }
+          dispatch(notificationActions.setMarkAsRead(id));
+        })
+        .catch(() => {
+          showMessage({
+            message: `Lỗi hệ thống!`,
+            type: 'danger',
+          });
+        });
+    }
+  };
+
   return (
     <ThemeView style={styles.container} isFullView>
       <Header
@@ -102,7 +165,7 @@ const Notifications = ({navigation}) => {
       />
       <Divider />
       {listListNotification && listListNotification.length ? (
-        <FlatList
+        <SwipeableFlatList
           data={listListNotification}
           renderItem={({item}) => (
             <>
@@ -123,8 +186,48 @@ const Notifications = ({navigation}) => {
           ListFooterComponent={renderFooter}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          renderRightActions={({item}) => (
+            <SwipeableQuickActions>
+              <View>
+                <IconButton
+                  icon="delete"
+                  color="#ED2727"
+                  size={20}
+                  onPress={() => onDeleteNotification(item.id)}
+                />
+                <IconButton
+                  icon="check-all"
+                  color="#3FBA44"
+                  size={20}
+                  onPress={() => markAsRead(item.id, item.markAsRead)}
+                />
+              </View>
+            </SwipeableQuickActions>
+          )}
         />
       ) : (
+        // <FlatList
+        //   data={listListNotification}
+        //   renderItem={({item}) => (
+        //     <>
+        //       <NotificationItem {...item} />
+        //       <Divider
+        //         style={{
+        //           backgroundColor:
+        //             item?.status !== 0 ? Colors?.bgColor : Colors?.white,
+        //         }}
+        //       />
+        //     </>
+        //   )}
+        //   numColumns={1}
+        //   keyExtractor={(item, index) => index}
+        //   refreshing={refreshing}
+        //   onRefresh={handleRefresh}
+        //   onEndReached={handleLoadMore}
+        //   ListFooterComponent={renderFooter}
+        //   showsVerticalScrollIndicator={false}
+        //   showsHorizontalScrollIndicator={false}
+        // />
         <View style={styles.emptyView}>
           <EmptyNotiOutlined />
           <Text style={styles.emptyText}>{i18n.t('Notification.noData')}</Text>
