@@ -47,6 +47,11 @@ export default EStyleSheet.create({
     padding: 4,
     borderRadius: 3,
   },
+  wrapUpDown: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   textSale: {
     fontFamily: '$font1',
     fontStyle: 'normal',

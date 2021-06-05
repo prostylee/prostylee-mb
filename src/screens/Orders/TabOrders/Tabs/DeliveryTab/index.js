@@ -2,7 +2,7 @@
 import styles from './styles';
 import React, {useRef, useMemo} from 'react';
 import {View, FlatList, Animated, Text} from 'react-native';
-import Product from '../../ProductItem';
+import Product from '../../../ProductItem';
 import {currencyFormat} from 'utils/currency';
 import i18n from 'i18n';
 

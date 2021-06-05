@@ -51,6 +51,7 @@ import {
   SettingNotification,
   SettingLanguage,
   Orders,
+  OrdersDetail,
   SettingAddAddress,
   BestSeller,
   PersonalSalers,
@@ -77,7 +78,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Orders"
+      initialRouteName="OrdersDetail"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -87,6 +88,7 @@ function SignedIn() {
       <Stack.Screen name="RateProduct" component={RateProduct} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="Orders" component={Orders} />
+      <Stack.Screen name="OrdersDetail" component={OrdersDetail} />
       <Stack.Screen name="PaymentMethodCart" component={PaymentMethodCart} />
       <Stack.Screen name="VoucherCart" component={VoucherCart} />
       <Stack.Screen name="CheckoutCart" component={CheckoutCart} />

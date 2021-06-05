@@ -2,7 +2,7 @@
 import styles from './styles';
 import React, {useRef, useMemo} from 'react';
 import {View, FlatList, Animated, Text} from 'react-native';
-import Product from '../../ProductItem';
+import Product from '../../../ProductItem';
 import {currencyFormat} from 'utils/currency';
 import {ButtonRounded, ButtonOutlined} from 'components';
 import {LocationOutline, LocationArrow} from 'svg/common';
@@ -132,16 +132,6 @@ const InhouseTab = ({navigation, status}) => {
     return (
       <>
         <View style={styles.wrapFooterItem}>
-          <View style={styles.colCountFooter}>
-            <Text style={styles.labelCountFooter}>2 sản phẩm</Text>
-          </View>
-          <View style={styles.colTotalFooter}>
-            <Text style={styles.labelTotalFooter}>
-              {currencyFormat(999999, 'đ')}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.wrapFooterItem}>
           <View style={styles.wrapFooterItemStore}>
             <Text style={styles.labelFooterItemStore}>Femi Clothing Store</Text>
           </View>
@@ -175,7 +165,11 @@ const InhouseTab = ({navigation, status}) => {
       <FlatList
         data={groupData}
         renderItem={({item}) => (
-          <Product navigation={navigation} product={item} status={status}>
+          <Product
+            navigation={navigation}
+            product={item}
+            status={status}
+            changeCount={true}>
             {renderFooter()}
           </Product>
         )}

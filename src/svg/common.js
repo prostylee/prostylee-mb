@@ -2227,3 +2227,31 @@ export const LocationArrow = (props) => (
     />
   </Svg>
 );
+
+export const OrderIdIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M13.333 10.667V3.333a2 2 0 00-2-2H4.667a2 2 0 00-2 2v9.334a2 2 0 002 2h4.666m4-4l-4 4m4-4h-3a1 1 0 00-1 1v3M4.667 3.333h6.666M4.667 5.333h6.666M4.667 7.333h4.666M4.667 9.333H8"
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const TrackingIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M.5 9V4a1 1 0 011-1h8a1 1 0 011 1v4M10.5 8V4h2a3 3 0 013 3v4a1 1 0 01-1 1H14"
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M15.5 8h-2a1 1 0 01-1-1V4M11 13a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM3 13a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM8 12H6"
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

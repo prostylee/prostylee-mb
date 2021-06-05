@@ -47,6 +47,7 @@ import Search from './Search';
 import FilterProduct from './FilterProduct';
 import PromoNotification from './Notifications/PromoNotification';
 import Orders from './Orders';
+import OrdersDetail from './Orders/Detail';
 
 export {
   Welcome,
@@ -97,4 +98,5 @@ export {
   FilterProduct,
   PromoNotification,
   Orders,
+  OrdersDetail,
 };

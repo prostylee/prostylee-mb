@@ -1,11 +1,17 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 import React, {useRef, useMemo} from 'react';
-import {View, FlatList, Animated, Text} from 'react-native';
-import Product from '../../../ProductItem';
-import {currencyFormat} from 'utils/currency';
-import {ButtonRounded, ButtonOutlined} from 'components';
+import {FlatList, Text, Animated, View} from 'react-native';
 import i18n from 'i18n';
+import {
+  Info,
+  Tracking,
+  UserInfo,
+  Payment,
+  Delivery,
+  Footer,
+} from '../CardDetail';
+import Product from '../../ProductItem';
+import {currencyFormat} from 'utils/currency';
 
 const data = [
   {
@@ -91,14 +97,13 @@ const data = [
   },
 ];
 
-const DoneTab = ({navigation, status}) => {
+const ListDetail = ({navigation}) => {
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
-
   /* Extract note */
   const groupDataByStore = (list) => {
     return list.reduce((acc, product) => {
@@ -126,37 +131,50 @@ const DoneTab = ({navigation, status}) => {
     [JSON.stringify(data)],
   );
 
+  const renderHeader = () => {
+    return (
+      <>
+        <View style={styles.wrapItem}>
+          <Info />
+        </View>
+        <View style={styles.wrapItem}>
+          <Tracking />
+        </View>
+        <View style={styles.wrapItem}>
+          <UserInfo />
+        </View>
+      </>
+    );
+  };
+
   const renderFooter = () => {
     return (
       <>
-        <View style={styles.wrapFooterItem}>
-          <View style={styles.colCountFooter}>
-            <Text style={styles.labelCountFooter}>2 sản phẩm</Text>
-          </View>
-          <View style={styles.colTotalFooter}>
-            <Text style={styles.labelTotalFooter}>
-              {currencyFormat(999999, 'đ')}
-            </Text>
-          </View>
+        <View style={styles.wrapItem}>
+          <Payment />
         </View>
-        <View style={styles.wrapFooterItem}>
-          <View style={styles.colButtonFooterRating}>
-            <ButtonOutlined
-              label="Đánh giá sản phẩm"
-              labelStyle={styles.labelBtnOutline}
-              onPress={() => console.log('Đánh giá sản phẩm')}
-            />
-          </View>
-          <View style={styles.colButtonFooterRepurchase}>
-            <ButtonRounded
-              label="Mua lại"
-              style={{marginLeft: 10}}
-              labelStyle={styles.labelBtnRounded}
-              onPress={() => console.log('Mua lại')}
-            />
-          </View>
+        <View style={styles.wrapItem}>
+          <Delivery />
+        </View>
+        <View style={styles.wrapItem}>
+          <Footer />
         </View>
       </>
+    );
+  };
+
+  const renderFooterProduct = () => {
+    return (
+      <View style={styles.wrapFooterItem}>
+        <View style={styles.colCountFooter}>
+          <Text style={styles.labelCountFooter}>2 sản phẩm</Text>
+        </View>
+        <View style={styles.colTotalFooter}>
+          <Text style={styles.labelTotalFooter}>
+            {currencyFormat(999999, 'đ')}
+          </Text>
+        </View>
+      </View>
     );
   };
 
@@ -165,8 +183,8 @@ const DoneTab = ({navigation, status}) => {
       <FlatList
         data={groupData}
         renderItem={({item}) => (
-          <Product navigation={navigation} product={item} status={status}>
-            {renderFooter()}
+          <Product navigation={navigation} product={item}>
+            {renderFooterProduct()}
           </Product>
         )}
         numColumns={1}
@@ -175,13 +193,15 @@ const DoneTab = ({navigation, status}) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         onScroll={onScrollEvent}
+        ListHeaderComponent={renderHeader()}
+        ListFooterComponent={renderFooter}
       />
     </View>
   );
 };
 
-DoneTab.defaultProps = {};
+ListDetail.defaultProps = {};
 
-DoneTab.propTypes = {};
+ListDetail.propTypes = {};
 
-export default DoneTab;
+export default ListDetail;
