@@ -1,6 +1,7 @@
+import styles from './styles';
+
 import React, {useEffect, useState} from 'react';
 import {View, Text, ActivityIndicator, FlatList} from 'react-native';
-import styles from './styles';
 import {ThemeView, Header, Colors} from 'components';
 import {Divider} from 'react-native-paper';
 import {EmptyNotiOutlined} from '../../../svg/common';
@@ -16,7 +17,7 @@ import {
   getLoadListNotificationMoreLoading,
   getHasLoadMoreListNotificationSelector,
   getPageListNotificationSelector,
-} from 'redux/selectors/notification/listNotification';
+} from 'redux/selectors/notification.js';
 
 import {notificationActions} from 'redux/reducers';
 
@@ -38,6 +39,7 @@ const Notifications = ({navigation}) => {
   );
 
   const listListNotification = listListNotificationSelector?.content || [];
+
   const loadMoreLoading = useSelector((state) =>
     getLoadListNotificationMoreLoading(state),
   );

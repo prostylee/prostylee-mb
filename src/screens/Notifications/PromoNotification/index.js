@@ -13,12 +13,12 @@ import {EmptyNotiOutlined} from '../../../svg/common';
 import NotificationItem from './NotificationItem';
 
 import {
-  getListNotificationLoadingSelector,
-  getListNotificationSelector,
-  getLoadListNotificationMoreLoading,
-  getHasLoadMoreListNotificationSelector,
-  getPageListNotificationSelector,
-} from 'redux/selectors/notification/listNotification';
+  getListNotificationDiscountLoadingSelector,
+  getListNotificationDiscountSelector,
+  getLoadListNotificationDiscountMoreLoading,
+  getHasLoadMoreListNotificationDiscountSelector,
+  getPageListNotificationDiscountSelector,
+} from 'redux/selectors/notification.js';
 
 import {notificationActions} from 'redux/reducers';
 
@@ -32,23 +32,26 @@ const PromoNotifications = () => {
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector((state) =>
-    getListNotificationLoadingSelector(state),
+    getListNotificationDiscountLoadingSelector(state),
   );
 
-  const listListNotificationSelector = useSelector((state) =>
-    getListNotificationSelector(state),
+  const listNotificationDiscountSelector = useSelector((state) =>
+    getListNotificationDiscountSelector(state),
   );
 
-  const listListNotification = listListNotificationSelector?.content || [];
+  const listNotification = listNotificationDiscountSelector?.content || [];
+
   const loadMoreLoading = useSelector((state) =>
-    getLoadListNotificationMoreLoading(state),
+    getLoadListNotificationDiscountMoreLoading(state),
   );
 
   const hasLoadMore = useSelector((state) =>
-    getHasLoadMoreListNotificationSelector(state),
+    getHasLoadMoreListNotificationDiscountSelector(state),
   );
 
-  const page = useSelector((state) => getPageListNotificationSelector(state));
+  const page = useSelector((state) =>
+    getPageListNotificationDiscountSelector(state),
+  );
 
   const handleRefresh = () => {
     handleRefreshing(true);
@@ -56,7 +59,7 @@ const PromoNotifications = () => {
 
   useEffect(() => {
     dispatch(
-      notificationActions.getListNotification({
+      notificationActions.getListNotificationDiscount({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
       }),
@@ -67,7 +70,7 @@ const PromoNotifications = () => {
   const handleLoadMore = () => {
     if (hasLoadMore) {
       dispatch(
-        notificationActions.getListNotification({
+        notificationActions.getListNotificationDiscount({
           page: page + 1,
           limit: LIMIT_DEFAULT,
         }),
@@ -96,9 +99,9 @@ const PromoNotifications = () => {
       <Divider />
 
       <Divider />
-      {listListNotification && listListNotification.length ? (
+      {listNotification && listNotification.length ? (
         <FlatList
-          data={listListNotification}
+          data={listNotification}
           renderItem={({item}) => (
             <>
               <NotificationItem {...item} />

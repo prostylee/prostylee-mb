@@ -1,6 +1,8 @@
+import styles from './styles';
+
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import styles from './styles';
+import moment from 'moment';
 import {Colors, Image} from 'components';
 import cmt1 from 'assets/images/cmt1.jpeg';
 import {CircleTicketOrange} from 'svg/common';
@@ -10,14 +12,13 @@ const NotificationItem = ({
   title = '',
   content = '',
   images = [],
-  date = '',
+  createdAt = '',
 }) => (
   <TouchableOpacity
     style={[
       styles.notiItemContainer,
       {
-        backgroundColor:
-          status === 1 ? Colors?.white : Colors?.bgUnReadNoti,
+        backgroundColor: status === 1 ? Colors?.white : Colors?.bgUnReadNoti,
       },
     ]}>
     <View style={styles.avatarContainer}>
@@ -67,7 +68,11 @@ const NotificationItem = ({
           ) : null,
         )}
       </View>
-      <Text style={styles.subTitle}>{date}</Text>
+      <Text style={styles.subTitle}>
+        {createdAt
+          ? moment(createdAt).format('DD/MM/YYYY')
+          : moment().format('DD/MM/YYYY')}
+      </Text>
     </View>
   </TouchableOpacity>
 );
