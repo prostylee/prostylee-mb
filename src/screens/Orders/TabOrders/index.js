@@ -16,12 +16,13 @@ const routes = [
   {key: 'cancel', title: 'Đã huỷ'},
 ];
 
-const TabOrders = ({navigation}) => {
+const TabOrders = ({navigation, status}) => {
   return (
-    <View style={styles.container} isFullView>
+    <View style={styles.container}>
       <ScrollableTabView
         tabBarActiveTextColor="#823FFD"
         tabBarUnderlineStyle={{backgroundColor: '#823FFD'}}
+        initialPage={routes.findIndex((item) => item.key === status)}
         renderTabBar={() => <ScrollableTabBar />}>
         {routes.map((item, index) => {
           switch (item.key) {

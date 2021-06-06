@@ -2255,3 +2255,177 @@ export const TrackingIcon = (props) => (
     />
   </Svg>
 );
+
+export const WaitingIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Rect
+      x={1.33337}
+      y={2}
+      width={13.3333}
+      height={12}
+      rx={2}
+      stroke="#8B9399"
+    />
+    <Path
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3.83337 10.1667L6.16671 10.1667"
+    />
+    <Path
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3.83337 11.5L5.50004 11.5"
+    />
+    <Path
+      d="M6 2v4.667l2-1.334 2 1.334V2"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const DoneIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M1.33337 6H14.66667V14.66667H1.33337z"
+    />
+    <Path
+      d="M10 8.667l-2.75 2.666L6 10.121M1.333 6l2-4.667h9.334l2 4.667M8 1.333V6"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const InhouseIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M13.855 1.681a.444.444 0 00-.434-.348H2.58a.445.445 0 00-.434.348l-.812 3.652a1.333 1.333 0 002.667 0 1.333 1.333 0 002.667 0 1.333 1.333 0 102.666 0 1.333 1.333 0 002.667 0 1.333 1.333 0 002.667 0l-.812-3.652z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M2.222 6.59V12a.889.889 0 00.89.889h2.742c.236 0 .462.094.628.26L8 14.667l1.518-1.518a.889.889 0 01.628-.26h2.743a.889.889 0 00.889-.889V6.59"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const CancelIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Circle cx={8.00004} cy={7.99998} r={6.16667} stroke="#8B9399" />
+    <Path
+      d="M10.667 5.333l-5.334 5.334M5.333 5.333l5.334 5.334"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const SaleIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M13 14.5h1.5a1 1 0 001-1V2.577A1.08 1.08 0 0014.423 1.5H1.57A1.075 1.075 0 00.5 2.571v10.852A1.08 1.08 0 001.577 14.5H3M.5 4.5h15"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M10.5 10.5H5.384a1 1 0 00-.933 1.35l.872 2.325a.499.499 0 00.467.325h4.306a.5.5 0 00.467-.325l.871-2.324A1 1 0 0010.5 10.5v0zM5.442 10.5l1-2.5M10.442 10.5l-1-2.5M7 13v-1M9 13v-1"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const SoldIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Rect
+      x={1.33337}
+      y={2}
+      width={13.3333}
+      height={12}
+      rx={2}
+      stroke="#8B9399"
+    />
+    <Path
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3.83337 10.1667L6.16671 10.1667"
+    />
+    <Path
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3.83337 11.5L5.50004 11.5"
+    />
+    <Path
+      d="M6 2v4.667l2-1.334 2 1.334V2"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const HeartIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M13.893 3.073a3.667 3.667 0 00-5.186 0L8 3.78l-.707-.707A3.668 3.668 0 002.107 8.26l.706.707L8 14.153l5.187-5.186.706-.707a3.667 3.667 0 000-5.187v0z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const SaveIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M12.667 14L8 10.667 3.333 14V3.333A1.333 1.333 0 014.667 2h6.666a1.333 1.333 0 011.334 1.333V14z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const SettingIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M14.45 6.49h-.581c-.474 0-.872-.409-.872-.894 0-.244.103-.466.287-.63l.374-.366a.937.937 0 000-1.333l-.852-.844a.959.959 0 00-.67-.267c-.252 0-.496.1-.668.267l-.36.36a.864.864 0 01-.65.293c-.49 0-.898-.397-.898-.867v-.584c0-.515-.417-.958-.937-.958H7.461c-.52 0-.933.439-.933.958v.58c0 .47-.41.867-.899.867a.855.855 0 01-.634-.282l-.371-.367a.943.943 0 00-.67-.267c-.252 0-.496.1-.668.267l-.86.84a.94.94 0 000 1.33l.359.358c.191.172.298.4.298.645 0 .49-.398.894-.872.894h-.58c-.525 0-.964.408-.964.928v1.16c0 .516.44.928.963.928h.581c.474 0 .872.409.872.894a.864.864 0 01-.298.645l-.36.355a.94.94 0 000 1.33l.853.847a.943.943 0 00.67.267c.251 0 .496-.1.668-.267l.371-.367c.16-.18.39-.282.635-.282.49 0 .898.397.898.866v.58c0 .516.413.96.937.96h1.162c.52 0 .933-.44.933-.96v-.58c0-.47.41-.866.899-.866a.89.89 0 01.65.294l.36.359a.966.966 0 00.668.267c.253 0 .497-.1.67-.267l.852-.848a.944.944 0 000-1.333l-.375-.366a.841.841 0 01-.287-.63c0-.489.398-.894.872-.894h.581c.52 0 .891-.408.891-.928V7.418c.008-.52-.363-.928-.883-.928z"
+      stroke="#8B9399"
+    />
+    <Circle cx={8.00004} cy={7.99998} r={2.66667} stroke="#8B9399" />
+  </Svg>
+);
+
+export const SupportIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M3 12h-.5a2 2 0 01-2-2V8a2 2 0 012-2H3a.5.5 0 01.5.5v5a.5.5 0 01-.5.5zM13.5 12H13a.5.5 0 01-.5-.5v-5A.5.5 0 0113 6h.5a2 2 0 012 2v2a2 2 0 01-2 2zM2.5 6A5.5 5.5 0 018 .5v0A5.5 5.5 0 0113.5 6M10 14.5h1.5a2 2 0 002-2V12"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M9 15.5H8a1 1 0 010-2h1a1 1 0 010 2z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

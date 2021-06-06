@@ -60,6 +60,7 @@ import {
   FlashSale,
   NearbyStore,
   StoreAddress,
+  MyPage,
 } from 'screens';
 
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
@@ -87,6 +88,7 @@ function SignedIn() {
       <Stack.Screen name="ChooseRateProduct" component={ChooseRateProduct} />
       <Stack.Screen name="RateProduct" component={RateProduct} />
       <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="MyPage" component={MyPage} />
       <Stack.Screen name="Orders" component={Orders} />
       <Stack.Screen name="OrdersDetail" component={OrdersDetail} />
       <Stack.Screen name="PaymentMethodCart" component={PaymentMethodCart} />
