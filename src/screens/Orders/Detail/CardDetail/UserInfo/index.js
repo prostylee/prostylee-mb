@@ -3,11 +3,12 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {LocationIcon} from 'svg/common';
 import Header from '../Header';
+import i18n from 'i18n';
 
 const UserInfo = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Header icon={<LocationIcon />} title="Địa chỉ giao hàng" />
+      <Header icon={<LocationIcon />} title={i18n.t('orders.orderAddress')} />
       <View style={styles.wrapUserBody}>
         <View>
           <Text style={styles.labelName}>Nguyễn Hữu Pháp</Text>

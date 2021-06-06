@@ -46,7 +46,7 @@ const data = [
     productColor: 'black',
     amount: 2,
     description: 'Áo thun nam cổ trụ hàn quốc 3',
-    id: 134,
+    id: 135,
     imageUrls: [
       'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
     ],
@@ -73,7 +73,7 @@ const data = [
     productColor: 'black',
     amount: 1,
     description: 'Áo thun nam cổ trụ hàn quốc 3',
-    id: 134,
+    id: 136,
     imageUrls: [
       'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
     ],
@@ -129,7 +129,7 @@ const DeliveryTab = ({navigation, status}) => {
     return (
       <View style={styles.wrapFooterItem}>
         <View style={styles.colCountFooter}>
-          <Text style={styles.labelCountFooter}>2 sản phẩm</Text>
+          <Text style={styles.labelCountFooter}>{i18n.t('orders.countProduct', {count: data.length})}</Text>
         </View>
         <View style={styles.colTotalFooter}>
           <Text style={styles.labelTotalFooter}>

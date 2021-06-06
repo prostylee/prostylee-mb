@@ -5,6 +5,7 @@ import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Image} from 'components';
 import {RightArrow} from 'svg/common';
 import {IconButton, Menu, Divider} from 'react-native-paper';
+import i18n from 'i18n';
 
 const HeaderStore = ({header, navigation, status}) => {
   const [visible, setVisible] = useState(false);
@@ -18,25 +19,25 @@ const HeaderStore = ({header, navigation, status}) => {
       case 'waiting':
         return (
           <Text style={{...styles.textHeaderStatus, color: '#ED2727'}}>
-            Chưa thanh toán
+            {i18n.t('orders.statusWaiting')}
           </Text>
         );
       case 'delivery':
         return (
           <Text style={{...styles.textHeaderStatus, color: '#F48231'}}>
-            Kiểm tra tiến độ
+            {i18n.t('orders.stautusCheckProgress')}
           </Text>
         );
       case 'done':
         return (
           <Text style={{...styles.textHeaderStatus, color: '#3FBA44'}}>
-            Hoàn thành
+            {i18n.t('orders.statusDone')}
           </Text>
         );
       case 'cancel':
         return (
           <Text style={{...styles.textHeaderStatus, color: '#ED2727'}}>
-            Đã hủy
+            {i18n.t('orders.statusCancel')}
           </Text>
         );
       case 'inhouse':
@@ -52,11 +53,11 @@ const HeaderStore = ({header, navigation, status}) => {
                 size={20}
               />
             }>
-            <Menu.Item onPress={() => {}} title="Đánh dấu đã mua" />
+            <Menu.Item onPress={() => {}} title={i18n.t('orders.markAsBuy')} />
             <Divider />
             <Menu.Item
               onPress={() => {}}
-              title="Xóa"
+              title={i18n.t('orders.delete')}
               titleStyle={{color: '#ED2727'}}
             />
           </Menu>
@@ -64,7 +65,7 @@ const HeaderStore = ({header, navigation, status}) => {
       default:
         return (
           <Text style={{...styles.textHeaderStatus, color: '#333333'}}>
-            Đã hủy
+            {i18n.t('orders.statusCancel')}
           </Text>
         );
     }

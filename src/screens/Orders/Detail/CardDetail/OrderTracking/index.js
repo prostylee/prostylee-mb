@@ -4,6 +4,7 @@ import {View, Text} from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import {TrackingIcon} from 'svg/common';
 import Header from '../Header';
+import i18n from 'i18n';
 
 const thirdIndicatorStyles = {
   stepIndicatorSize: 15,
@@ -63,7 +64,7 @@ const OrderTracking = ({navigation, currentPage}) => {
 
   return (
     <View style={styles.container}>
-      <Header icon={<TrackingIcon />} title="Theo dõi đơn hàng" />
+      <Header icon={<TrackingIcon />} title={i18n.t('orders.tracking')} />
       <View style={styles.stepIndicator}>
         <StepIndicator
           stepCount={dt.length || 0}

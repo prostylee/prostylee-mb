@@ -6,14 +6,23 @@ import {Image, NumberInputUpDown} from 'components';
 import HeaderStore from '../HeaderStore';
 import {currencyFormat} from 'utils/currency';
 import {DownArrow} from 'svg/common';
+import {useNavigation} from '@react-navigation/native';
 
 const Item = ({product, status, changeCount, onChangeCount, children}) => {
-  const [visible, setVisible] = useState(false);
+  const navigation = useNavigation();
 
   const {storeId, storeName, storeAvatar, data} = product;
 
-  return (
-    <View style={styles.wrapSection}>
+  const onViewDetail = () => {
+    navigation.navigate('OrdersDetail', {
+      dealId: null,
+      deal: {},
+      status: status,
+    });
+  };
+
+  const renderBody = () => (
+    <>
       <HeaderStore header={{storeId, storeName, storeAvatar}} status={status} />
       {data.map((item, index) => (
         <View style={styles.productItem} key={item.id}>
@@ -91,7 +100,14 @@ const Item = ({product, status, changeCount, onChangeCount, children}) => {
         </View>
       ))}
       {children}
-    </View>
+    </>
+  );
+  return status === 'inhouse' ? (
+    <View style={styles.wrapSection}>{renderBody()}</View>
+  ) : (
+    <TouchableOpacity style={styles.wrapSection} onPress={onViewDetail}>
+      {renderBody()}
+    </TouchableOpacity>
   );
 };
 

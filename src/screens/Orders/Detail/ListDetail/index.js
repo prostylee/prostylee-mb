@@ -9,6 +9,7 @@ import {
   Payment,
   Delivery,
   Summary,
+  Footer,
 } from '../CardDetail';
 import Product from '../../ProductItem';
 import {currencyFormat} from 'utils/currency';
@@ -53,34 +54,7 @@ const data = [
     productColor: 'black',
     amount: 2,
     description: 'Áo thun nam cổ trụ hàn quốc 3',
-    id: 134,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Áo thun nam cổ trụ hàn quốc 10',
-    price: 150000,
-    priceSale: 140000,
-    productOwnerResponse: {
-      id: 1,
-      logoUrl:
-        'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-      name: 'Store',
-    },
-    storeId: 2,
-  },
-  {
-    brandId: 1,
-    brandResponse: {
-      description: 'Adidas brand',
-      icon: 'https://psmedia224241-staging.s3-ap-southeast-1.amazonaws.com/public/27c3092c-9f1b-49eb-ba68-ab3f091d1347/brand/adidas.png',
-      id: 1,
-      name: 'Adidas',
-    },
-    productSize: 'L',
-    productColor: 'black',
-    amount: 1,
-    description: 'Áo thun nam cổ trụ hàn quốc 3',
-    id: 134,
+    id: 135,
     imageUrls: [
       'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
     ],
@@ -97,7 +71,7 @@ const data = [
   },
 ];
 
-const ListDetail = ({navigation}) => {
+const ListDetail = ({navigation, dealData}) => {
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const onScrollEvent = Animated.event(
@@ -135,7 +109,7 @@ const ListDetail = ({navigation}) => {
     return (
       <>
         <View style={styles.wrapItem}>
-          <Info />
+          <Info dealData={dealData} />
         </View>
         <View style={styles.wrapItem}>
           <Tracking />
@@ -159,6 +133,9 @@ const ListDetail = ({navigation}) => {
         <View style={styles.wrapItem}>
           <Summary />
         </View>
+        <View style={styles.wrapItemFooter}>
+          <Footer dealData={dealData} />
+        </View>
       </>
     );
   };
@@ -167,7 +144,9 @@ const ListDetail = ({navigation}) => {
     return (
       <View style={styles.wrapFooterItem}>
         <View style={styles.colCountFooter}>
-          <Text style={styles.labelCountFooter}>2 sản phẩm</Text>
+          <Text style={styles.labelCountFooter}>
+            {i18n.t('orders.countProduct', {count: data.length})}
+          </Text>
         </View>
         <View style={styles.colTotalFooter}>
           <Text style={styles.labelTotalFooter}>
@@ -200,7 +179,9 @@ const ListDetail = ({navigation}) => {
   );
 };
 
-ListDetail.defaultProps = {};
+ListDetail.defaultProps = {
+  dealData: {},
+};
 
 ListDetail.propTypes = {};
 
