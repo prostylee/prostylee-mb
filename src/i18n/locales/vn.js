@@ -191,7 +191,6 @@ export default {
     updateProduct: 'Cập nhật sản phẩm',
     seeMore: 'Xem thêm',
     yourAddress: 'Địa điểm của bạn',
-    changeAddress: 'Thay đổi địa điểm',
   },
   error: {
     cannotUploadImage:
@@ -227,6 +226,10 @@ export default {
     resultsNotfound: 'Không có kết quả',
     follow: 'Theo dõi',
     unfollow: 'Bỏ theo dõi',
+  },
+  Notification: {
+    noData: 'Hiện tại bạn không có thông báo nào',
+    titlePromotion: 'Mã khuyễn mãi',
   },
   mypage: {
     editProfile: 'Sửa hồ sơ',
