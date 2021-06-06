@@ -10,7 +10,7 @@ export const bottomTabs = {
 
 export const tabsSetting = {
   configs: {
-    initialRouteName: bottomTabs.account,
+    initialRouteName: bottomTabs.newFeed,
     tabBarColor: '#ffffff',
     activeColor: '#823FFD',
     inactiveColor: 'gray',
