@@ -1,11 +1,10 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useState} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 
 import styles from './styles';
-import {Colors, Image} from 'components';
+import {Colors, FollowTextButton} from 'components';
 import i18n from 'i18n';
-
+import {StoreLoading} from 'components/Loading/contentLoader';
 import {
   getStoreSearchLoadingSelector,
   getStoreSearchListSelector,
@@ -16,7 +15,6 @@ import {
 import StoreSearchResultItem from './item.js';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {CategoriesRightLoading} from 'components/Loading/contentLoader';
 import {getCurrentKeyword} from 'redux/selectors/search';
 
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
@@ -25,7 +23,6 @@ import {searchActions} from 'redux/reducers';
 
 const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
-  const followed = false;
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector((state) => getStoreSearchLoadingSelector(state));
@@ -39,6 +36,7 @@ const FeaturedCategories = ({navigation}) => {
   );
 
   const handleRefresh = () => {
+    handleRefreshing(true);
     dispatch(
       searchActions.getStoreSearch({
         keyword: currentKeyword,
@@ -51,7 +49,6 @@ const FeaturedCategories = ({navigation}) => {
   };
 
   const handleLoadMore = () => {
-    console.log('STORE END REAACHED', hasLoadMore);
     if (hasLoadMore) {
       dispatch(
         searchActions.getStoreSearch({
@@ -74,18 +71,23 @@ const FeaturedCategories = ({navigation}) => {
       );
     return null;
   };
+  useEffect(() => {
+    if (!loading) handleRefreshing(false);
+  }, [loading]);
 
-  console.log('STORE LIST \n\n\n', storeList);
   return (
     <>
       <View style={styles.container}>
-        {loading ? (
-          <ActivityIndicator animating color={Colors.$purple} size="small" />
+        {loading && !refreshing ? (
+          <View>
+            {[1, 2, 3, 4, 5, 6].map((v) => (
+              <StoreLoading />
+            ))}
+          </View>
         ) : storeList && storeList?.content?.length ? (
           <FlatList
             data={storeList?.content}
-            renderItem={({item, index}) => {
-              console.log('ITEM', index, '\n\n\n', item);
+            renderItem={({item}) => {
               return (
                 <>
                   <View style={styles.wrapHeader}>
@@ -107,15 +109,7 @@ const FeaturedCategories = ({navigation}) => {
                       </View>
                     </View>
                     <View style={styles.wrapTextFlow}>
-                      <Text
-                        style={[
-                          styles.text,
-                          !followed ? styles.textFollow : styles.textFollowed,
-                        ]}>
-                        {!followed
-                          ? i18n.t('common.textFollow')
-                          : i18n.t('common.textFollowed')}
-                      </Text>
+                      <FollowTextButton item={item} />
                     </View>
                   </View>
                   <View style={styles.wrapList}>
@@ -150,7 +144,7 @@ const FeaturedCategories = ({navigation}) => {
             showsHorizontalScrollIndicator={false}
           />
         ) : (
-          <Text>Không có kết quả tìm kiếm</Text>
+          <Text>{i18n.t('Search.resultsNotfound')}</Text>
         )}
       </View>
     </>

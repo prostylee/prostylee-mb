@@ -191,7 +191,6 @@ export default {
     updateProduct: 'Cập nhật sản phẩm',
     seeMore: 'Xem thêm',
     yourAddress: 'Địa điểm của bạn',
-    changeAddress: 'Thay đổi địa điểm',
   },
   error: {
     cannotUploadImage:
@@ -224,6 +223,13 @@ export default {
     categories: 'Danh mục',
     priceRange: 'Khoảng giá',
     size: 'Size',
+    resultsNotfound: 'Không có kết quả',
+    follow: 'Theo dõi',
+    unfollow: 'Bỏ theo dõi',
+  },
+  Notification: {
+    noData: 'Hiện tại bạn không có thông báo nào',
+    titlePromotion: 'Mã khuyễn mãi',
   },
   mypage: {
     editProfile: 'Sửa hồ sơ',
@@ -261,7 +267,28 @@ export default {
     ward: 'Quận/Huyện',
     noAddress:
       'Hiện tại bạn không có địa chỉ đã lưu. Hãy bắt đầu thêm một địa chỉ mới ngay',
+    contact: 'Thông tin liên hệ',
     default: 'Mặc định',
+    name: 'Họ và tên',
+    phone: 'Điện thoại',
+    address: 'Địa chỉ',
+    detailAddress: 'Số nhà, tên tòa nhà, tên đường, khu vực',
+  },
+  settingNotification: {
+    title: 'Thông báo',
+    allowNotification: 'Allow Notifications',
+    discountText: 'Chương trình giảm giá',
+    discountDescription:
+      'Không để bỏ lỡ những chương trình khuyến mãi mới nhất của chúng tôi',
+    socialNetworkNotifications: 'Thông báo mạng xã hội',
+    socialNetworkNotificationsDescription:
+      'Lời khuyên thời trang, tin tức và phong cách. Tương tác trong mạng xã hội',
+    orderTransport: 'Đơn hàng vận chuyển',
+    orderTransportDescription:
+      'Liên tục cập nhật cho bạn về trạng thái đặt hàng của bạn',
+    stockNotifications: 'Stock Notifications',
+    stockNotificationsDescription:
+      'Nhận thông báo các mặt hàng bạn quan tâm ngay khi có đơn hàng',
   },
   orders: {
     title: 'Đơn hàng',
@@ -296,6 +323,6 @@ export default {
     tracking: 'Theo dõi đơn hàng',
     delete: 'Xóa',
     markAsBuy: 'Đánh dấu đã mua',
-    findLocation:'Tìm đường'
+    findLocation: 'Tìm đường',
   },
 };

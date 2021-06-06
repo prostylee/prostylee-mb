@@ -63,6 +63,7 @@ export const handleActions = {
       productFilterState: {
         attributes: {},
         category: -1,
+        price: [0, 0],
       },
     };
   },

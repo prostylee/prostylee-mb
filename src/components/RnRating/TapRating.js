@@ -7,19 +7,19 @@ const TapRating = (props) => {
 
   useEffect(() => {
     const {defaultRating} = props;
-    if (!defaultRating ) {
+    if (!defaultRating) {
       setPosition(1);
     } else {
       setPosition(defaultRating);
     }
   }, [props.defaultRating]);
-  
+
   const renderStars = (rating_array) => {
     return _.map(rating_array, (star) => {
       return star;
     });
   };
-  
+
   const starSelectedInPosition = (position) => {
     const {onFinishRating} = props;
     if (typeof onFinishRating === 'function') {
@@ -27,7 +27,7 @@ const TapRating = (props) => {
     }
     setPosition(position);
   };
-  
+
   const {count, reviews, showRating, reviewColor, reviewSize} = props;
   const rating_array = [];
   const starContainerStyle = [styles.starContainer];
@@ -67,7 +67,7 @@ TapRating.defaultProps = {
   reviews: ['Terrible', 'Bad', 'Okay', 'Good', 'Great'],
   count: 5,
   showRating: true,
-  reviewColor: 'rgba(230, 196, 46, 1)',
+  reviewColor: '#F48231',
   reviewSize: 25,
 };
 const styles = StyleSheet.create({

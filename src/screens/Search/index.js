@@ -22,19 +22,14 @@ const Search = ({navigation}) => {
   const onChangeSearch = (query) => {
     clearTimeout(timeoutSearch);
     setSearchQuery(query);
+    dispatch(searchActions.setHintProductSearchLoading(true));
+    dispatch(searchActions.setStoreSearchLoading(true));
+
     timeoutSearch = setTimeout(() => {
       dispatch(
         searchActions.getHintProductSearch({
           keyword: query,
           type: 'product',
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-        }),
-      );
-      dispatch(
-        searchActions.getFeaturedProductSearch({
-          keyword: query,
-          // type: 'product',
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
         }),
@@ -48,6 +43,7 @@ const Search = ({navigation}) => {
           numberOfProducts: 10,
         }),
       );
+
       dispatch(searchActions.setCurrentKeyword(query));
     }, 1000);
   };
@@ -79,6 +75,15 @@ const Search = ({navigation}) => {
             value={searchQuery}
             onSubmitEditing={() => {
               navigation.navigate('SearchProducts');
+              dispatch(
+                searchActions.getStoreSearch({
+                  keyword: searchQuery,
+                  page: PAGE_DEFAULT,
+                  limit: LIMIT_DEFAULT,
+                  sorts: 'name',
+                  numberOfProducts: 10,
+                }),
+              );
             }}
           />
         }

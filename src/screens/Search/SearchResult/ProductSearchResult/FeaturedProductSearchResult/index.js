@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useState} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 
@@ -49,13 +48,15 @@ const ResultProductSearchResult = ({navigation}) => {
     getPageFeaturedProductSearchSelector(state),
   );
 
-  useEffect(() => {}, [dispatch, refreshing]);
+  useEffect(() => {
+    if (!loading) handleRefreshing(false);
+  }, [loading]);
 
   const handleRefresh = () => {
+    handleRefreshing(true);
     dispatch(
       searchActions.getFeaturedProductSearch({
         keyword: currentKeyword,
-        // type: 'product',
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
       }),
@@ -63,13 +64,11 @@ const ResultProductSearchResult = ({navigation}) => {
   };
 
   const handleLoadMore = () => {
-    console.log('END REACHED');
     if (hasLoadMore) {
       dispatch(
         searchActions.getFeaturedProductSearch({
           keyword: currentKeyword,
-          // type: 'product',
-          page: PAGE_DEFAULT,
+          page: page + 1,
           limit: LIMIT_DEFAULT,
         }),
       );
@@ -90,27 +89,31 @@ const ResultProductSearchResult = ({navigation}) => {
     <>
       <View style={styles.container}>
         <View style={styles.wrapHeader}>
-          <Text style={styles.title}>Sản phẩm phổ biến</Text>
+          <Text style={styles.title}>{i18n.t('Search.featuredProduct')}</Text>
         </View>
         <View style={styles.wrapList}>
-          <FlatList
-            data={listFeaturedProductSearch}
-            renderItem={({item, index}) => (
-              <FeaturedCategoriesItem
-                index={index}
-                navigation={navigation}
-                item={item}
-              />
-            )}
-            numColumns={1}
-            keyExtractor={(item, index) => index}
-            refreshing={loading}
-            onRefresh={handleRefresh}
-            onEndReached={handleLoadMore}
-            ListFooterComponent={renderFooter}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-          />
+          {listFeaturedProductSearch && listFeaturedProductSearch.length ? (
+            <FlatList
+              data={listFeaturedProductSearch}
+              renderItem={({item, index}) => (
+                <FeaturedCategoriesItem
+                  index={index}
+                  navigation={navigation}
+                  item={item}
+                />
+              )}
+              numColumns={1}
+              keyExtractor={(item, index) => index}
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              onEndReached={handleLoadMore}
+              ListFooterComponent={renderFooter}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+            />
+          ) : (
+            <Text>{i18n.t('Search.resultsNotfound')}</Text>
+          )}
         </View>
       </View>
     </>

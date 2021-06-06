@@ -15,7 +15,6 @@ const getProductFilter = function* ({payload}) {
   try {
     yield put(searchActions.setProductsFilterLoading(true));
     const res = yield call(getProductAttributesFilterResultsApi, payload);
-
     console.log('LONG MAIN FILTER PRODUCTS', res.data.data.content);
     let listProduct = res?.data?.data?.content;
 
@@ -28,6 +27,7 @@ const getProductFilter = function* ({payload}) {
         searchActions.setProductFilterState({
           attributes: initFilterState,
           category: 0,
+          price: [0, 0],
         }),
       );
     } else {
@@ -36,6 +36,7 @@ const getProductFilter = function* ({payload}) {
         searchActions.setProductFilterState({
           attributes: {},
           category: 0,
+          price: [0, 0],
         }),
       );
     }
