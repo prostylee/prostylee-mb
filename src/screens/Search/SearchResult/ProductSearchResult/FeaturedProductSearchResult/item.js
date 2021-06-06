@@ -1,11 +1,10 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Image, ProductLike, ProductRatingStar} from 'components';
 import styles from './styles';
 import {currencyFormat, priceSalePercent} from 'utils/currency';
 
-const FeaturedCategoriesItem = ({item, index, navigation}) => {
+const FeaturedCategoriesItem = ({item}) => {
   return (
     <View style={styles.wrapItems}>
       <TouchableOpacity>

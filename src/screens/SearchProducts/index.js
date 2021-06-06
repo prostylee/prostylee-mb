@@ -46,6 +46,7 @@ const MockTag = [
     },
   },
 ];
+
 const WIDTH = Dimensions.get('window').width;
 const GroupHeaderRightButton = ({haveNoti = false}) => {
   return (

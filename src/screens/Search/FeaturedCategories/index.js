@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useState} from 'react';
 import {View, ActivityIndicator, FlatList, Dimensions} from 'react-native';
 

@@ -1,7 +1,5 @@
 import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-
-const WIDTH = Dimensions.get('window').width - 32;
 const WIDTH_IMAGE = 90;
 const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 export default EStyleSheet.create({

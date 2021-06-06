@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import styles from './styles';
-import {Chip, Divider} from 'react-native-paper';
+import {Divider} from 'react-native-paper';
 
 const ResultProductSearchResultItem = ({item, index, navigation}) => {
   return (

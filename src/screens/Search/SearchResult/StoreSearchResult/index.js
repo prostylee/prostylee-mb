@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useState} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 
 import styles from './styles';
-import {Colors, Image, FollowTextButton} from 'components';
+import {Colors, FollowTextButton} from 'components';
 import i18n from 'i18n';
 import {StoreLoading} from 'components/Loading/contentLoader';
 import {
@@ -16,7 +15,6 @@ import {
 import StoreSearchResultItem from './item.js';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {CategoriesRightLoading} from 'components/Loading/contentLoader';
 import {getCurrentKeyword} from 'redux/selectors/search';
 
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
@@ -25,7 +23,6 @@ import {searchActions} from 'redux/reducers';
 
 const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
-  const followed = false;
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector((state) => getStoreSearchLoadingSelector(state));
@@ -90,7 +87,7 @@ const FeaturedCategories = ({navigation}) => {
         ) : storeList && storeList?.content?.length ? (
           <FlatList
             data={storeList?.content}
-            renderItem={({item, index}) => {
+            renderItem={({item}) => {
               return (
                 <>
                   <View style={styles.wrapHeader}>
@@ -112,15 +109,6 @@ const FeaturedCategories = ({navigation}) => {
                       </View>
                     </View>
                     <View style={styles.wrapTextFlow}>
-                      {/* <Text
-                        style={[
-                          styles.text,
-                          !followed ? styles.textFollow : styles.textFollowed,
-                        ]}>
-                        {!followed
-                          ? i18n.t('common.textFollow')
-                          : i18n.t('common.textFollowed')}
-                      </Text> */}
                       <FollowTextButton item={item} />
                     </View>
                   </View>
