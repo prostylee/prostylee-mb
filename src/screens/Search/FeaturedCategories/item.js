@@ -1,10 +1,10 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Image} from 'components';
 import styles from './styles';
 import {useDispatch} from 'react-redux';
 import {categoriesActions} from 'redux/reducers';
+
 const FeaturedCategoriesItem = ({item, index, navigation}) => {
   const paddingLeft = index % 2 ? 4 : 12;
   const paddingRight = index % 2 ? 12 : 0;

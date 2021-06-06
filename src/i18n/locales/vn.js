@@ -223,6 +223,9 @@ export default {
     categories: 'Danh mục',
     priceRange: 'Khoảng giá',
     size: 'Size',
+    resultsNotfound: 'Không có kết quả',
+    follow: 'Theo dõi',
+    unfollow: 'Bỏ theo dõi',
   },
   Notification: {
     noData: 'Hiện tại bạn không có thông báo nào',
@@ -234,7 +237,7 @@ export default {
     following: 'Đang theo dõi',
     posts: 'Bài đăng',
     isFollowed: 'Đã theo dõi',
-    isNotFollow: 'Theo dõi'
+    isNotFollow: 'Theo dõi',
   },
   setting: {
     title: 'Thiết lập tài khoản',
@@ -244,7 +247,7 @@ export default {
     setting: 'Cài đặt',
     settingChat: 'Cài đặt chat',
     settingNotification: 'Cài đặt thông báo',
-    settingLanguage: 'Ngôn ngữ'
+    settingLanguage: 'Ngôn ngữ',
   },
   settingProfile: {
     name: 'Tên',
@@ -255,31 +258,36 @@ export default {
     email: 'Email',
     changePass: 'Đổi mật khẩu',
     buttonSave: 'Lưu thay đổi',
-    changeImage: 'Thay ảnh đại diện'
+    changeImage: 'Thay ảnh đại diện',
   },
   settingAddress: {
     addAddress: 'Thêm địa chỉ',
     province: 'Tỉnh/thành phố',
     district: 'Quận/Huyện',
     ward: 'Quận/Huyện',
-    noAddress: 'Hiện tại bạn không có địa chỉ đã lưu. Hãy bắt đầu thêm một địa chỉ mới ngay',
+    noAddress:
+      'Hiện tại bạn không có địa chỉ đã lưu. Hãy bắt đầu thêm một địa chỉ mới ngay',
     contact: 'Thông tin liên hệ',
     default: 'Mặc định',
     name: 'Họ và tên',
     phone: 'Điện thoại',
     address: 'Địa chỉ',
-    detailAddress: 'Số nhà, tên tòa nhà, tên đường, khu vực'
+    detailAddress: 'Số nhà, tên tòa nhà, tên đường, khu vực',
   },
   settingNotification: {
     title: 'Thông báo',
     allowNotification: 'Allow Notifications',
     discountText: 'Chương trình giảm giá',
-    discountDescription: 'Không để bỏ lỡ những chương trình khuyến mãi mới nhất của chúng tôi',
+    discountDescription:
+      'Không để bỏ lỡ những chương trình khuyến mãi mới nhất của chúng tôi',
     socialNetworkNotifications: 'Thông báo mạng xã hội',
-    socialNetworkNotificationsDescription: 'Lời khuyên thời trang, tin tức và phong cách. Tương tác trong mạng xã hội',
+    socialNetworkNotificationsDescription:
+      'Lời khuyên thời trang, tin tức và phong cách. Tương tác trong mạng xã hội',
     orderTransport: 'Đơn hàng vận chuyển',
-    orderTransportDescription: 'Liên tục cập nhật cho bạn về trạng thái đặt hàng của bạn',
+    orderTransportDescription:
+      'Liên tục cập nhật cho bạn về trạng thái đặt hàng của bạn',
     stockNotifications: 'Stock Notifications',
-    stockNotificationsDescription: 'Nhận thông báo các mặt hàng bạn quan tâm ngay khi có đơn hàng'
-  }
+    stockNotificationsDescription:
+      'Nhận thông báo các mặt hàng bạn quan tâm ngay khi có đơn hàng',
+  },
 };

@@ -43,6 +43,8 @@ import SlideInModal from './SlideInModal';
 import ModalTabButton from './ModalTabButton';
 import ModalAddPictureMethod from './ModalAddPictureMethod';
 import Picker from './Picker';
+import ProductRatingStar from './ProductRatingStar';
+import FollowTextButton from './FollowTextButton';
 
 export {
   ContainerWithoutScrollView,
@@ -90,4 +92,6 @@ export {
   RadioSelectGroup,
   Picker,
   SlideInModal,
+  ProductRatingStar,
+  FollowTextButton,
 };
