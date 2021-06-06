@@ -46,6 +46,9 @@ import StoreAddress from './StoreAddress';
 import Search from './Search';
 import FilterProduct from './FilterProduct';
 import PromoNotification from './Notifications/PromoNotification';
+import Orders from './Orders';
+import OrdersDetail from './Orders/Detail';
+import MyPage from './MyPage'
 
 export {
   Welcome,
@@ -95,4 +98,7 @@ export {
   Search,
   FilterProduct,
   PromoNotification,
+  Orders,
+  OrdersDetail,
+  MyPage
 };
