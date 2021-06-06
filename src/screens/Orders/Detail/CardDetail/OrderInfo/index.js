@@ -43,22 +43,34 @@ const OrderInfo = ({dealData}) => {
     }
   };
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.wrapOrderId}>
-        <OrderIdIcon />
-        <Text style={styles.labelOrderId}>
-          &nbsp;{i18n.t('orders.dealId', {id: 1234567890})}
-        </Text>
-      </View>
-      <View style={styles.wrapOrderDate}>
-        <Text style={styles.labelOrderDate}>
-          {i18n.t('orders.dealDate', {date: '12:00, 01/01/2021'})}
-        </Text>
-      </View>
-      <View style={styles.wrapOrderStatus}>{renderStatus()}</View>
-    </View>
-  );
+  switch (status) {
+    case 'cancel':
+      return (
+        <View style={styles.container}>
+          <View style={styles.wrapOrderId}>
+            <OrderIdIcon />
+            <View style={styles.wrapOrderStatus}>&nbsp;{renderStatus()}</View>
+          </View>
+        </View>
+      );
+    default:
+      return (
+        <View style={styles.container}>
+          <View style={styles.wrapOrderId}>
+            <OrderIdIcon />
+            <Text style={styles.labelOrderId}>
+              &nbsp;{i18n.t('orders.dealId', {id: 1234567890})}
+            </Text>
+          </View>
+          <View style={styles.wrapOrderDate}>
+            <Text style={styles.labelOrderDate}>
+              {i18n.t('orders.dealDate', {date: '12:00, 01/01/2021'})}
+            </Text>
+          </View>
+          <View style={styles.wrapOrderStatus}>{renderStatus()}</View>
+        </View>
+      );
+  }
 };
 
 OrderInfo.defaultProps = {};
