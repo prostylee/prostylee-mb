@@ -8,7 +8,7 @@ import {
   UserInfo,
   Payment,
   Delivery,
-  Footer,
+  Summary,
 } from '../CardDetail';
 import Product from '../../ProductItem';
 import {currencyFormat} from 'utils/currency';
@@ -150,14 +150,14 @@ const ListDetail = ({navigation}) => {
   const renderFooter = () => {
     return (
       <>
-        <View style={styles.wrapItem}>
+        <View style={{...styles.wrapItem, marginTop: 10}}>
           <Payment />
         </View>
         <View style={styles.wrapItem}>
           <Delivery />
         </View>
         <View style={styles.wrapItem}>
-          <Footer />
+          <Summary />
         </View>
       </>
     );

@@ -1,9 +1,33 @@
 import styles from './styles';
 import React from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
+import {TrackingIcon} from 'svg/common';
+import Header from '../Header';
+import {currencyFormat} from 'utils/currency';
 
 const OrderDelivery = ({navigation}) => {
-  return <View style={styles.container} isFullView></View>;
+  return (
+    <View style={styles.container}>
+      <Header icon={<TrackingIcon />} title="Phương thức vận chuyển" />
+      <View style={styles.wrapBody}>
+        <View style={styles.wrapBodyTitle}>
+          <View style={styles.wrapBodyName}>
+            <Text style={styles.labelBodyName}>Grap</Text>
+          </View>
+          <View style={styles.wrapBodyPrice}>
+            <Text style={styles.labelBodyPrice}>
+              {currencyFormat(25000, 'đ')}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.wrapBodyContent}>
+          <Text style={styles.labelBodyContent}>
+            Nhận hàng vào 29-12 đến 31-12
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
 };
 
 OrderDelivery.defaultProps = {};
