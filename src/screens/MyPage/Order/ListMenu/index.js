@@ -43,13 +43,16 @@ const ListMenu = ({title, menu, style, titleStyle, rowStyle}) => {
             return (
               <TouchableOpacity
                 style={{...styles.wrapItems, rowStyle}}
-                onPress={() => onNavigate(item)}>
+                onPress={() => onNavigate(item)}
+                key={item.key || item.label}>
                 {renderBody(item)}
               </TouchableOpacity>
             );
           }
           return (
-            <View style={{...styles.wrapItems, rowStyle}}>
+            <View
+              style={{...styles.wrapItems, rowStyle}}
+              key={item.key || item.label}>
               {renderBody(item)}
             </View>
           );

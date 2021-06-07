@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Bag, Menu} from 'svg/common';
-import {Dimensions, View, TouchableOpacity} from 'react-native';
+import {Dimensions, View, TouchableOpacity, Animated} from 'react-native';
 import {Colors} from 'components';
 import NewFeed from '../NewFeed';
 import Order from '../Order';
@@ -11,11 +11,17 @@ import GridView from '../GridView';
 import FullView from '../FullView';
 
 const {height} = Dimensions.get('window').height;
+const HEADER_HEIGHT = 0;
 
-const TabViewContainer = ({navigation, style}) => {
+const TabViewContainer = ({navigation, style, scrollAnimated, viewType}) => {
   const RenderLabel = ({tabs, goToPage, activeTab}) => {
+    const translateY = scrollAnimated.interpolate({
+      inputRange: [0, HEADER_HEIGHT],
+      outputRange: [0, -HEADER_HEIGHT],
+      extrapolate: 'clamp',
+    });
     return (
-      <View style={styles.tabs}>
+      <Animated.View style={[{...styles.tabs}, {transform: [{translateY}]}]}>
         {tabs.map((tab, i) => {
           return (
             <TouchableOpacity
@@ -30,7 +36,7 @@ const TabViewContainer = ({navigation, style}) => {
             </TouchableOpacity>
           );
         })}
-      </View>
+      </Animated.View>
     );
   };
 
@@ -41,14 +47,12 @@ const TabViewContainer = ({navigation, style}) => {
       tabBarActiveTextColor="#823FFD"
       initialPage={0}
       renderTabBar={() => <RenderLabel />}>
-      <View
-        style={{flex: 1, padding: 10, paddingBottom: 100}}
-        tabLabel={'menu'}>
+      <View style={{flex: 1}} tabLabel={'menu'}>
         <NewFeed navigation={navigation}>
-          <GridView />
+          {viewType === 'grid' ? <GridView /> : <FullView />}
         </NewFeed>
       </View>
-      <View style={{flex: 1, padding: 10}} tabLabel={'bag'}>
+      <View style={{flex: 1, flexDirection:'column'}} tabLabel={'bag'}>
         <Order />
       </View>
     </ScrollableTabView>

@@ -9,6 +9,8 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '$white',
     marginBottom: 10,
+    
+    
   },
   wrapItems: {
     flexDirection: 'row',

@@ -23,6 +23,128 @@ import Full from './full';
 
 const {width} = Dimensions.get('window');
 
+const data = [
+  {
+    id: 134,
+    imageUrls: [
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    ],
+    name: 'Nguyễn Tuấn Vũ',
+    checkin: 'Sài Gòn - Việt Nam',
+    image:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    isFollowed: true,
+    store: 'H&M',
+    heartcount: 12,
+    commentcount: 2,
+    avatar:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+  },
+  {
+    id: 135,
+    imageUrls: [
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    ],
+  },
+  {
+    id: 136,
+    imageUrls: [
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    ],
+    name: 'Nguyễn Tuấn Vũ',
+    checkin: 'Sài Gòn - Việt Nam',
+    image:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    isFollowed: true,
+    store: 'H&M',
+    heartcount: 12,
+    commentcount: 2,
+    avatar:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+  },
+  {
+    id: 137,
+    imageUrls: [
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    ],
+    name: 'Nguyễn Tuấn Vũ',
+    checkin: 'Sài Gòn - Việt Nam',
+    image:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    isFollowed: true,
+    store: 'H&M',
+    heartcount: 12,
+    commentcount: 2,
+    avatar:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+  },
+  {
+    id: 138,
+    imageUrls: [
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    ],
+    name: 'Nguyễn Tuấn Vũ',
+    checkin: 'Sài Gòn - Việt Nam',
+    image:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    isFollowed: true,
+    store: 'H&M',
+    heartcount: 12,
+    commentcount: 2,
+    avatar:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+  },
+  {
+    id: 139,
+    imageUrls: [
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    ],
+    name: 'Nguyễn Tuấn Vũ',
+    checkin: 'Sài Gòn - Việt Nam',
+    image:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    isFollowed: true,
+    store: 'H&M',
+    heartcount: 12,
+    commentcount: 2,
+    avatar:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+  },
+  {
+    id: 140,
+    imageUrls: [
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    ],
+    name: 'Nguyễn Tuấn Vũ',
+    checkin: 'Sài Gòn - Việt Nam',
+    image:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    isFollowed: true,
+    store: 'H&M',
+    heartcount: 12,
+    commentcount: 2,
+    avatar:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+  },
+
+  {
+    id: 141,
+    imageUrls: [
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    ],
+    name: 'Nguyễn Tuấn Vũ',
+    checkin: 'Sài Gòn - Việt Nam',
+    image:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+    isFollowed: true,
+    store: 'H&M',
+    heartcount: 12,
+    commentcount: 2,
+    avatar:
+      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+  },
+];
+
 const FullView = ({column, wImage, hImage}) => {
   const loadMoreLoading = false;
 
@@ -49,7 +171,7 @@ const FullView = ({column, wImage, hImage}) => {
         columnWrapperStyle={styles.viewCol}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         keyExtractor={(item, index) => 'profileMeTab' + index}
-        data={postOfUser?.content || []}
+        data={data}
         renderItem={({item}) => (
           <Full
             name

@@ -1,17 +1,21 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {Dimensions} from 'react-native';
+const barHeight = getStatusBarHeight();
+const {height} = Dimensions.get('window');
 const HEADER_HEIGHT = 150;
 
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '$bgColor',
+    backgroundColor: '$white',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 30,
   },
   backgroundImageStyle: {
     width: 500,
-    height: 500,
-    position: 'absolute',
+    height: 500 - 80,
     top: 0,
     alignSelf: 'center',
     backgroundColor: 'lightblue',
@@ -19,16 +23,15 @@ export default EStyleSheet.create({
   avatarStyle: {
     top: HEADER_HEIGHT - 40,
     zIndex: 10,
-    position: 'absolute',
     alignSelf: 'center',
   },
   scrollViewStyle: {
     top: HEADER_HEIGHT,
     backgroundColor: '$white',
     alignSelf: 'stretch',
-    flex: 1,
     borderTopRightRadius: 8,
     borderTopLeftRadius: 8,
+    marginTop: -80,
   },
   followParentView: {
     padding: 16,
@@ -57,14 +60,26 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     width: 80,
     bottom: 7,
+    position: 'absolute',
+    zIndex: 99,
+  },
+  headerProfile: {
+    flexDirection: 'column',
+    backgroundColor: '$white',
+    marginTop: -barHeight,
+    borderBottomWidth: 1,
+    borderColor: '#E9EAEB',
   },
   headerFull: {
     position: 'absolute',
-    top: 50,
+    top: barHeight,
     zIndex: 11,
     right: 7,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  wrapTabView: {
+    height: height - HEADER_HEIGHT,
   },
 });
