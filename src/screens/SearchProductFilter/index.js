@@ -81,9 +81,9 @@ const FilterProduct = ({navigation}) => {
   };
 
   useEffect(() => {
-    // if (!filterAttributeList || !filterAttributeList.length) {
-    dispatch(searchActions.getProductsFilter({}));
-    //}
+    if (!filterAttributeList || !filterAttributeList.length) {
+      dispatch(searchActions.getProductsFilter({}));
+    }
   }, []);
 
   return (
