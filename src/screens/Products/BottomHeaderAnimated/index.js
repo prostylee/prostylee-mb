@@ -10,7 +10,13 @@ import SortDropDown from '../SortDropDown';
 import styles from './styles';
 import {RadioButton} from 'react-native-paper';
 import {RnRatingTap, Picker} from 'components';
-const BottomHeaderAnimated = ({navigation}) => {
+import TagList from '../TagList';
+
+const BottomHeaderAnimated = ({
+  navigation,
+  onTagPress = () => {},
+  onSortPress = () => {},
+}) => {
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
@@ -57,53 +63,13 @@ const BottomHeaderAnimated = ({navigation}) => {
         visible={visible}
         setVisible={setVisible}
         setAction={setAction}
-        setValueSort={setValueSort}
+        setValueSort={(value) => {
+          setValueSort(value);
+          onSortPress(value);
+        }}
         valueSort={valueSort}
       />
-      {/* <Picker visible={visible} setVisible={setVisible} setAction={setAction}>
-        <RadioButton.Group
-          value={valueSort}
-          onValueChange={(value) => setValueSort(value)}
-          color="#823ffd">
-          <RadioButton.Item label="Liên quan nhất" value="default" />
-          <RadioButton.Item label="Phổ biến nhất" value="new" />
-        </RadioButton.Group>
-      </Picker> */}
-      <View style={styles.wrapBlockChips}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <Chip
-            small
-            icon="map-marker"
-            onPress={() => console.log('Pressed')}
-            style={styles.itemChips}>
-            Example Chip
-          </Chip>
-          <Chip
-            small
-            onPress={() => console.log('Pressed')}
-            style={styles.itemChips}>
-            Best-seller
-          </Chip>
-          <Chip
-            small
-            onPress={() => console.log('Pressed')}
-            style={styles.itemChips}>
-            Best-seller
-          </Chip>
-          <Chip
-            small
-            onPress={() => console.log('Pressed')}
-            style={styles.itemChips}>
-            Best-seller
-          </Chip>
-          <Chip
-            small
-            onPress={() => console.log('Pressed')}
-            style={styles.itemChips}>
-            Best-seller
-          </Chip>
-        </ScrollView>
-      </View>
+      <TagList onTagPress={onTagPress} />
     </View>
   );
 };

@@ -7,8 +7,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
-  Dimensions,
-  StatusBar,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
@@ -24,16 +22,14 @@ import CustomBackground from './CustomBackground';
 import AdvertisingSlider from './AdvertisingSlider';
 import FunctionTags from './FunctionTags';
 
-import {MapPin, MessageOutlined, Bag, Search, MapPinFill} from 'svg/common';
+import {MessageOutlined, Bag, MapPinFill} from 'svg/common';
 import {Searchbar} from 'react-native-paper';
 
 import PopularBrands from './PopularBrands';
 import MidAdvertisingSlider from './MidAdvertisingSlider';
 import FeaturedCategories from './FeaturedCategories';
 import ForUserTabView from './ForUserTabView';
-
-import useLocation from '../../../hooks/useLocation';
-
+import useLocation from 'hooks/useLocation';
 import {
   getTopBannerSelector,
   getMidBannerSelector,
@@ -41,9 +37,6 @@ import {
   getCategoryListSelector,
 } from 'redux/selectors/storeMain';
 const heightShow = 334;
-const WIDTH = Dimensions.get('window').width;
-const WIDTH_IMAGE = WIDTH / 2 - 14;
-const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 const HeaderLeft = () => {
   return (
     <TouchableOpacity style={styles.headerLeftContainer}>
@@ -64,9 +57,14 @@ const HeaderRight = ({color = '#fff'}) => {
     </View>
   );
 };
-const CustomSearchBar = () => (
+const CustomSearchBar = ({navigation}) => (
   <View style={styles.searchBarContainer}>
-    <Searchbar placeholder={i18n.t('search')} />
+    <Searchbar
+      placeholder={i18n.t('search')}
+      onFocus={() => {
+        navigation.navigate('SearchProducts');
+      }}
+    />
   </View>
 );
 
@@ -147,6 +145,9 @@ const Stores = (props) => {
             <Searchbar
               style={{flex: 1, height: 40}}
               placeholder={i18n.t('search')}
+              onFocus={() => {
+                navigation.navigate('SearchProducts');
+              }}
             />
             <HeaderRight color={Colors['$icon']} />
           </View>
@@ -174,7 +175,7 @@ const Stores = (props) => {
             rightComponent={<HeaderRight />}
             containerStyle={styles.headerContainer}
           />
-          <CustomSearchBar />
+          <CustomSearchBar navigation={navigation} />
 
           <AdvertisingSlider
             data={topBannerList?.content ? topBannerList?.content : []}

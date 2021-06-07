@@ -21,6 +21,7 @@ const FollowTextButton = ({item}) => {
       setFollowed(!followed);
       console.log('FOLLOW RES', res);
     } catch (err) {
+      console.log('FOLLOW ERR', err);
       showMessage({
         message: `${res?.data?.status}: ${res?.data?.error}`,
         type: 'danger',

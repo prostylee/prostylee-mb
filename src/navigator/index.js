@@ -79,7 +79,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Search"
+      initialRouteName="Stores"
       mode="card"
       headerMode="none"
       animation="fade">
