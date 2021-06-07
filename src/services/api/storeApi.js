@@ -64,3 +64,14 @@ export const unFollowStoreService = (id) => {
     customFieldId3: 0,
   });
 };
+//BEST SELLER
+export const getBestSellers = (payload) => {
+  return _fetch(GET, '/products/best-seller', {
+    ...payload,
+  });
+};
+
+//VOUCHERS
+export const getVouchers = (payload) => {
+  return _fetch(GET, '/voucher/userLogin', {...payload});
+};

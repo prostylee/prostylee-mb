@@ -13,6 +13,7 @@ const HeaderAnimated = ({
   Animated,
   bottomHeight,
   hideBottomBorder,
+  backgroundColor,
 }) => {
   const [showView, handleShowView] = useState(false);
   /*Dimension header*/
@@ -48,9 +49,9 @@ const HeaderAnimated = ({
     <Animated.View
       style={{
         ...styles.container(WIDTH_HEADER, HEIGHT_HEADER),
-        backgroundColor: headerColor,
+        backgroundColor: backgroundColor ? backgroundColor : headerColor,
         borderBottomColor,
-        width: translateWidth
+        width: translateWidth,
       }}>
       <Animated.View
         style={{

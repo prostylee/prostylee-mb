@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Dimensions,
   View,
@@ -10,7 +10,7 @@ import {
 import i18n from 'i18n';
 import styles from './styles';
 import {Sort, Filter, CaretDown} from 'svg/common';
-import {ThemeView, Header, TextInputRounded} from 'components';
+import {ThemeView, Header, TextInputRounded, Colors} from 'components';
 import {
   IconButton,
   Searchbar,
@@ -18,41 +18,40 @@ import {
   Divider,
   Chip,
 } from 'react-native-paper';
-const WIDTH = Dimensions.get('window').width;
+
 import StoreResult from './StoreResult';
+import {useDispatch} from 'react-redux';
+import {storeActions} from 'redux/reducers';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
-const MockTag = [
-  'Best seller',
-  'Gần đây',
-  'Sale',
-  'Elegant',
-  'Best seller',
-  'Gần đây',
-  'Sale',
-  'Elegant',
-];
+import TagList from './TagList';
+import useLocation from '../../../hooks/useLocation';
+import ProductSearchList from '../../../components/ProductSearchList';
 
-const TagList = () => (
-  <View style={styles.wrapList}>
-    <FlatList
-      style={styles.wrapChip}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      data={MockTag}
-      renderItem={({item, index}) => (
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}
-          key={`${item}-${index}`}>
-          {item}
-        </Chip>
-      )}
-    />
-  </View>
-);
+const WIDTH = Dimensions.get('window').width;
 
-const SearchProducts = ({navigation}) => {
+const NearbyStore = ({navigation}) => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const _handleFilterByTag = (queryObject) => {
+    dispatch(
+      storeActions.getNearbyStore({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        ...queryObject,
+      }),
+    );
+  };
+
+  useEffect(() => {
+    dispatch(
+      storeActions.getNearbyStore({
+        latitude: location.lat,
+        longtitude: location.lon,
+      }),
+    );
+  }, [location]);
   return (
     <ThemeView style={styles.container} isFullView>
       <Header
@@ -78,14 +77,15 @@ const SearchProducts = ({navigation}) => {
           </Text>
         }
       />
-      <TagList />
+      <TagList onTagPress={_handleFilterByTag} />
+      <Divider />
       <StoreResult />
     </ThemeView>
   );
 };
 
-SearchProducts.defaultProps = {};
+NearbyStore.defaultProps = {};
 
-SearchProducts.propTypes = {};
+NearbyStore.propTypes = {};
 
-export default SearchProducts;
+export default NearbyStore;

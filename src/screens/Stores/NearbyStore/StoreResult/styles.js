@@ -8,6 +8,8 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   wrapHeader: {
     flexDirection: 'row',

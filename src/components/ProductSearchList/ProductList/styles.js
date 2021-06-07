@@ -5,6 +5,8 @@ export default EStyleSheet.create({
     flex: 1,
     backgroundColor: '$white',
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleContainer: {
     padding: 16,
@@ -20,8 +22,6 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     // justifyContent: 'flex-start',
     // alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
   },
   itemWrapper: {
     width: '$screenWidth/2',

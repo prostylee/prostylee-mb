@@ -2,7 +2,7 @@ import {createAction} from 'redux-actions';
 
 export const types = {
   SET_NEARBY_STORE_LOADING: 'SET_NEARBY_STORE_LOADING',
-  SET_NEARBY_LOADMORE_LOADING: 'SET_NEARBY_LOADMORE_LOADING',
+  SET_NEARBY_STORE_LOADMORE_LOADING: 'SET_NEARBY_STORE_LOADMORE_LOADING',
 
   GET_NEARBY_STORE: 'GET_NEARBY_STORE',
   GET_NEARBY_STORE_SUCCESS: 'GET_NEARBY_STORE_SUCCESS',
@@ -16,13 +16,11 @@ export const types = {
 export const actions = {
   setNearbyStoreLoading: createAction(types.SET_NEARBY_STORE_LOADING),
   setNearbyStoreLoadmoreLoading: createAction(
-    types.SET_NEARBY_LOADMORE_LOADING,
+    types.SET_NEARBY_STORE_LOADMORE_LOADING,
   ),
-
   getNearbyStore: createAction(types.GET_NEARBY_STORE),
   getNearbyStoreSuccess: createAction(types.GET_NEARBY_STORE_SUCCESS),
   getNearbyStoreFailed: createAction(types.GET_NEARBY_STORE_FAILED),
-
   getNearbyStoreLoadmore: createAction(types.GET_NEARBY_STORE_LOADMORE),
   getNearbyStoreLoadmoreSuccess: createAction(
     types.GET_NEARBY_STORE_LOADMORE_SUCCESS,
@@ -39,14 +37,12 @@ export const defaultState = {
   isNearbyStoreLoadmoreLoading: false,
   nearbyStoreData: {},
   nearbyStorePage: 0,
-  midBannerList: {},
-  brandList: {},
-  categoryList: {},
+
   hasNearbyStoreLoadmore: false,
 };
 
 export const handleActions = {
-  [types.SET_STORE_LOADING]: (state, {payload}) => {
+  [types.SET_NEARBY_STORE_LOADING]: (state, {payload}) => {
     return {...state, isNearbyStoreLoading: payload};
   },
   [types.SET_NEARBY_LOADMORE_LOADING]: (state, {payload}) => {

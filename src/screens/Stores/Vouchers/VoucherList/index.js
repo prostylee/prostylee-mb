@@ -1,17 +1,63 @@
-import React from 'react';
-import {View, FlatList, Text} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, FlatList, Text, ActivityIndicator} from 'react-native';
 
 import styles from './styles';
 
-import ProductItem from './VoucherItem';
-import FlashMessage from 'react-native-flash-message';
+import VoucherItem from './VoucherItem';
 import {showMessage} from 'react-native-flash-message';
+import {Colors} from 'components';
+import {
+  getVouchersLoadingSelector,
+  getVouchersSelector,
+  getCurrentVouchersPageSelector,
+  hasVouchersLoadmoreSelector,
+} from 'redux/selectors/storeMain/vouchers';
 
-import data from './data.json';
+import {storeActions} from 'redux/reducers';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+
+import {useDispatch, useSelector} from 'react-redux';
 
 const VoucherList = ({navigation}) => {
+  const dispatch = useDispatch();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const currentPage = useSelector((state) =>
+    getCurrentVouchersPageSelector(state),
+  );
+  const isLoading = useSelector((state) => getVouchersLoadingSelector(state));
+  const hasLoadmore = useSelector((state) =>
+    hasVouchersLoadmoreSelector(state),
+  );
+
+  const data = useSelector((state) => getVouchersSelector(state));
+
+  const _handleRefresh = () => {
+    setIsRefreshing(true);
+    dispatch(
+      storeActions.getVouchers({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+  };
+
+  const _handleLoadMore = () => {
+    if (hasLoadmore) {
+      dispatch(
+        storeActions.getVouchersLoadmore({
+          page: currentPage,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (!isLoading) setIsRefreshing(false);
+  }, [isLoading]);
+
   const _handleSavePress = () => {
-    console.log('Save');
     showMessage({
       titleStyle: {fontSize: 13, fontWeight: '500'},
       message: 'Thành công',
@@ -32,24 +78,32 @@ const VoucherList = ({navigation}) => {
   const _handUsePress = () => {
     navigation.navigate('FlashSale');
   };
-  console.log('Data ', data);
   return (
     <View style={styles.container}>
-      <FlatList
-        contentContainerStyle={styles.listWrapper}
-        data={data}
-        renderItem={({item, index}) => (
-          <ProductItem
-            item={item}
-            index={index}
-            onSavePress={_handleSavePress}
-            onUsePress={_handUsePress}
-          />
-        )}
-        keyExtractor={({brand, content}) => `${brand}-${content}`}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      />
+      {isLoading && !isRefreshing ? (
+        <ActivityIndicator animating color={Colors.$purple} size="small" />
+      ) : data && data?.content?.length ? (
+        <FlatList
+          contentContainerStyle={styles.listWrapper}
+          data={data?.content}
+          renderItem={({item, index}) => (
+            <VoucherItem
+              item={item}
+              index={index}
+              onSavePress={_handleSavePress}
+              onUsePress={_handUsePress}
+            />
+          )}
+          keyExtractor={(item, index) => `${item?.name}-${item?.id}`}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          refreshing={isRefreshing}
+          onEndReached={_handleLoadMore}
+          onRefresh={_handleRefresh}
+        />
+      ) : (
+        <Text>Không có dữ liệu</Text>
+      )}
     </View>
   );
 };
