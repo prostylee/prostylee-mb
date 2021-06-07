@@ -1,18 +1,6 @@
 import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 export default EStyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '$white',
-  },
-  headerGroupButtonRight: {
-    flexDirection: 'row',
-    height: 35,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    // borderWidth: 1,
-    width: 80,
-  },
   wrapBlockOne: {
     height: 45,
     width: '100%',
@@ -52,23 +40,5 @@ export default EStyleSheet.create({
   },
   wrapContent: {
     flex: 1,
-  },
-  wrapList: {
-    height: 50,
-  },
-  wrapChip: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    backgroundColor: '$white',
-    flex: 1,
-    // paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 16,
-  },
-  itemChips: {
-    height: 32,
-    marginTop: 8,
-    marginRight: 8,
-    backgroundColor: '$bgColor',
   },
 });

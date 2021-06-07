@@ -81,9 +81,19 @@ const FilterProduct = ({navigation}) => {
   };
 
   useEffect(() => {
-    // if (!filterAttributeList || !filterAttributeList.length) {
-    dispatch(searchActions.getProductsFilter({}));
-    //}
+    if (!filterAttributeList || !filterAttributeList.length) {
+      dispatch(searchActions.getProductsFilter({}));
+    }
+    if (!categories || !categories.length) {
+      dispatch(
+        searchActions.getSearchFeaturedCategories({
+          type: 'product',
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          keyword: '',
+        }),
+      );
+    }
   }, []);
 
   return (

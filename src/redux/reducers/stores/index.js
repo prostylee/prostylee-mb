@@ -21,6 +21,27 @@ import {
   handleActions as handleActionsPersonalSaler,
 } from './personalSaler';
 
+import {
+  types as typesBestSellers,
+  actions as actionsBestSellers,
+  defaultState as defaultStateBestSellers,
+  handleActions as handleActionsBestSellers,
+} from './bestSellers';
+
+import {
+  types as typesVouchers,
+  actions as actionsVouchers,
+  defaultState as defaultStateVouchers,
+  handleActions as handleActionsVouchers,
+} from './vouchers';
+
+import {
+  types as typesFlashSale,
+  actions as actionsFlashSale,
+  defaultState as defaultStateFlashSale,
+  handleActions as handleActionsFlashSale,
+} from './flashSale';
+
 export const types = {
   // STORE MAIN
   ...typesStoreMain,
@@ -28,6 +49,12 @@ export const types = {
   ...typesNearbyStore,
   // PERSONAL SALERS
   ...typesPersonalSaler,
+  // BEST SELLER
+  ...typesBestSellers,
+  //VOUCHERS
+  ...typesVouchers,
+  //FLASH_SALE
+  ...typesFlashSale,
 
   SET_LOADING: 'SET_LOADING',
   GET_TOP_PRODUCT: 'GET_TOP_PRODUCT',
@@ -49,10 +76,16 @@ export const types = {
 export const actions = {
   //STORE MAIN
   ...actionsStoreMain,
-  // NEARBY STORE
+  // // NEARBY STORE
   ...actionsNearbyStore,
-  // PERSONAL SALERS
+  // // PERSONAL SALERS
   ...actionsPersonalSaler,
+  // BEST SELLER
+  ...actionsBestSellers,
+  //VOUCHER
+  ...actionsVouchers,
+  //FLASH SALES
+  ...actionsFlashSale,
 
   setLoading: createAction(types.SET_LOADING),
   setPageDefault: createAction(types.SET_PAGE_DEFAULT),
@@ -88,8 +121,14 @@ const intialState = {
   ...defaultStateStoreMain,
   // NEARBY STORE
   ...defaultStateNearbyStore,
-  // PERSONAL SALERS
+  // // PERSONAL SALERS
   ...defaultStatePersonalSaler,
+  //BEST SELLER
+  ...defaultStateBestSellers,
+  //VOUCHERS
+  ...defaultStateVouchers,
+  // FLASH SALES
+  ...defaultStateFlashSale,
 
   isLoading: false,
   isLoadingFuturedStores: false,
@@ -107,8 +146,14 @@ export default handleActions(
     ...handleActionsStoreMain,
     // NEARBY STORE
     ...handleActionsNearbyStore,
-    // PERSONAL SALERS
+    // // PERSONAL SALERS
     ...handleActionsPersonalSaler,
+    //BEST SELLER
+    ...handleActionsBestSellers,
+    //VOUCHERS
+    ...handleActionsVouchers,
+    //FLASH SALE
+    ...handleActionsFlashSale,
 
     [types.SET_LOADING]: (state, {payload}) => {
       return {...state, isLoading: payload};

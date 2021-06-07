@@ -1,5 +1,5 @@
 import {_fetch} from '../config';
-import {GET, POST} from 'constants';
+import {GET, POST, PUT} from 'constants';
 
 export const getTopStore = (payload) => {
   return _fetch(GET, '/stores/top/products', payload);
@@ -63,4 +63,15 @@ export const unFollowStoreService = (id) => {
     customFieldId2: 0,
     customFieldId3: 0,
   });
+};
+//BEST SELLER
+export const getBestSellers = (payload) => {
+  return _fetch(GET, '/products/best-seller', {
+    ...payload,
+  });
+};
+
+//VOUCHERS
+export const getVouchers = (payload) => {
+  return _fetch(GET, '/voucher/userLogin', {...payload});
 };

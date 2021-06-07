@@ -45,6 +45,7 @@ import ModalAddPictureMethod from './ModalAddPictureMethod';
 import Picker from './Picker';
 import ProductRatingStar from './ProductRatingStar';
 import FollowTextButton from './FollowTextButton';
+import contentLoader from './Loading/contentLoader';
 
 export {
   ContainerWithoutScrollView,
@@ -94,4 +95,5 @@ export {
   SlideInModal,
   ProductRatingStar,
   FollowTextButton,
+  contentLoader,
 };

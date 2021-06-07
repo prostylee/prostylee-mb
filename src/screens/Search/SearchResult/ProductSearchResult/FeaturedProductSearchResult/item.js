@@ -36,7 +36,14 @@ const FeaturedCategoriesItem = ({item}) => {
 
           <View style={styles.wrapDetail}>
             <View style={styles.wrapTitle}>
-              <Text numberOfLines={1} style={styles.title}>
+              <Text
+                numberOfLines={1}
+                style={[
+                  styles.title,
+                  {
+                    color: '#333333',
+                  },
+                ]}>
                 {item?.name}
               </Text>
               <ProductLike item={item} />
