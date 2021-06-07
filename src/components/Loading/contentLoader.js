@@ -280,7 +280,7 @@ export const HintKeywordLoading = ({
   return (
     <View style={StyleSheet.flatten([styles.container, style])}>
       <ContentLoader
-        height={50}
+        height={height}
         width={width}
         speed={speed}
         viewBox="0 0 10 10"

@@ -238,17 +238,23 @@ const SearchProducts = ({navigation}) => {
             style={{
               minWidth: WIDTH - 140,
               backgroundColor: '#F4F5F5',
-              height: 35,
+              height: 32,
               borderRadius: 4,
               elevation: 0,
               padding: 0,
+              overflow: 'hidden',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
             inputStyle={{
-              height: 35,
+              height: '100%',
               fontSize: 14,
-              lineHeight: 18,
+              lineHeight: 16,
               elevation: 0,
+              numberOfLines: 1,
+              overflow: 'hidden',
             }}
+            multiline={false}
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
             value={searchQuery}

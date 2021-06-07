@@ -79,7 +79,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Home"
+      initialRouteName="Stores"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -110,6 +110,9 @@ function SignedIn() {
       <Stack.Screen
         name="SearchProductFilter"
         component={SearchProductFilter}
+        options={{
+          gestureEnabled: false,
+        }}
       />
       <Stack.Screen name="StoreAddress" component={StoreAddress} />
       <Stack.Screen name="AddStory" component={AddStory} />

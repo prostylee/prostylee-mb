@@ -20,6 +20,7 @@ export const getCategoryListSelector = createSelector(
   storeReducer,
   (data) => data?.categoryList || {},
 );
+
 // NEARBY STORE
 export const getNearbyStoreLoadingSelector = createSelector(
   storeReducer,
@@ -37,6 +38,11 @@ export const hasNearbyStoreLoadmoreSelector = createSelector(
   storeReducer,
   (data) => data?.hasNearbyStoreLoadmore || false,
 );
+export const getCurrentNearbyStorePageSelector = createSelector(
+  storeReducer,
+  (data) => data?.nearbyStorePage || 0,
+);
+
 // PERSONAL SALERS
 export const getPersonalSalersLoadingSelector = createSelector(
   storeReducer,
@@ -53,4 +59,9 @@ export const getPersonalSalersSelector = createSelector(
 export const hasPersonalSalersLoadmoreSelector = createSelector(
   storeReducer,
   (data) => data?.hasPersonalSalersLoadmore || false,
+);
+
+export const getPersonalSalersCurrentPageSelector = createSelector(
+  storeReducer,
+  (data) => data?.personalSalersPage || 0,
 );

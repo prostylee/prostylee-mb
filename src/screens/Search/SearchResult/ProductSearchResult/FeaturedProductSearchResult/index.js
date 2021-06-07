@@ -52,6 +52,9 @@ const ResultProductSearchResult = ({navigation}) => {
     if (!loading) handleRefreshing(false);
   }, [loading]);
 
+  useEffect(() => {
+    handleRefresh();
+  }, []);
   const handleRefresh = () => {
     handleRefreshing(true);
     dispatch(
@@ -94,6 +97,7 @@ const ResultProductSearchResult = ({navigation}) => {
         <View style={styles.wrapList}>
           {listFeaturedProductSearch && listFeaturedProductSearch.length ? (
             <FlatList
+              style={styles.wrapListInner}
               data={listFeaturedProductSearch}
               renderItem={({item, index}) => (
                 <FeaturedCategoriesItem

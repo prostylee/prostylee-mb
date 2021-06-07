@@ -19,27 +19,27 @@ const ItemTopSide = ({index, item}) => (
     <View style={styles.voucherInfoContainer}>
       <View style={styles.voucherImgWrapper}>
         <Image
-          source={
-            index % 3 === 1 ? voucher1 : index % 3 === 2 ? voucher2 : voucher3
-          }
+          source={item?.logo ? {uri: item?.logo} : voucher1}
           style={styles.voucherImg}
         />
       </View>
       <View style={styles.voucerDetailWrapper}>
-        <Text style={styles.brandName}>{item?.brand}</Text>
-        <Text style={styles.voucherDetail}>{item?.content}</Text>
+        <Text style={styles.brandName}>{item?.voucherOwner}</Text>
+        <Text style={styles.voucherDetail}>{item?.name}</Text>
       </View>
     </View>
   </View>
 );
-const ItemBottomSide = ({onPress, data}) => (
+const ItemBottomSide = ({onPress, item}) => (
   <View style={styles.bottomSideWrapper} onPress={onPress}>
     <View style={styles.leftCutPoint} />
     <View style={styles.rightCutPoint} />
-    <Text style={styles.expiredDate}>HSD: {data?.expiredDate}</Text>
+    <Text style={styles.expiredDate}>
+      HSD: {item?.expiryDate ? item?.expiryDate : '12-12-2020'}
+    </Text>
     <TouchableOpacity style={styles.takeButton} onPress={onPress}>
       <Text style={styles.buttonText}>
-        {data?.status === 1 ? 'Sử dụng' : 'Lưu'}
+        {item?.status === 1 ? 'Sử dụng' : 'Lưu'}
       </Text>
     </TouchableOpacity>
   </View>
@@ -63,8 +63,8 @@ const VoucherItem = ({
         <ItemTopSide index={index} item={item} />
         <TicketCutLine height={3} />
         <ItemBottomSide
-          data={item}
-          onPress={status === 0 ? onSavePress : onUsePress}
+          item={item}
+          onPress={status === 1 ? onUsePress : onSavePress}
         />
       </TouchableOpacity>
     </View>

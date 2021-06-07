@@ -7,14 +7,15 @@ export default EStyleSheet.create({
   container: {
     width: '100%',
     height: 192,
-    padding: 16,
-    backgroundColor: '$white',
+    // backgroundColor: '#F7F7F7',
     marginBottom: 8,
   },
   sliderContainer: {
-    // borderWidth: 1,
     width: '100%',
     height: '100%',
+    backgroundColor: '#fff',
+    padding: 16,
+    paddingBottom: 24,
   },
   sliderItem: {
     width: WIDTH - 32,
@@ -22,6 +23,7 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
+    overflow: 'hidden',
   },
   sliderItemImage: {
     width: WIDTH - 32,
