@@ -103,9 +103,11 @@ const FeaturedCategories = ({navigation}) => {
                         <Text numberOfLines={1} style={styles.storeName}>
                           {item?.company?.name}
                         </Text>
-                        <Text style={styles.isAdvertising}>
-                          {i18n.t('common.textAdvertisement')}
-                        </Text>
+                        {item?.isAdvertising ? (
+                          <Text style={styles.isAdvertising}>
+                            {i18n.t('common.textAdvertisement')}
+                          </Text>
+                        ) : null}
                       </View>
                     </View>
                     <View style={styles.wrapTextFlow}>
