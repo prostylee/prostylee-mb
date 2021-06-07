@@ -89,13 +89,7 @@ const ResultProductSearchResult = ({navigation}) => {
   };
   return (
     <>
-      <View
-        style={[
-          styles.container,
-          listHintProductSearch.length * 55 < 200
-            ? {maxHeight: listHintProductSearch.length * 55}
-            : null,
-        ]}>
+      <View style={styles.container}>
         {loading && !refreshing ? (
           <View style={styles.wrapChip}>
             {[1, 2, 3, 4, 5, 6, 7].map((item, _i) => {

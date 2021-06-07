@@ -26,6 +26,7 @@ import {searchActions} from 'redux/reducers';
 import {getCurrentKeyword} from 'redux/selectors/search';
 import TagList from './TagList';
 import GroupHeaderRightButton from './HeaderRightButton';
+import FilterBar from './FilterBar';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -167,33 +168,11 @@ const SearchProducts = ({navigation}) => {
         }
         rightComponent={<GroupHeaderRightButton haveNoti={true} />}
       />
-      <View style={styles.wrapBlockOne}>
-        <TouchableOpacity onPress={() => setVisible(!visible)}>
-          <View style={styles.contentBlockOne}>
-            <View>
-              <Sort />
-            </View>
-            <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('sort')}
-            </Text>
-            <View>
-              <CaretDown />
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('SearchProductFilter')}>
-          <View style={styles.wrapBlockFilter}>
-            <Text numberOfLines={1} style={styles.textSpace}>
-              |
-            </Text>
-            <Filter />
-            <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('filter')}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <FilterBar
+        setVisible={setVisible}
+        visible={visible}
+        navigation={navigation}
+      />
       <Divider />
       <TagList onTagPress={_handleFilterByTag} />
       <SortDropDown
@@ -203,7 +182,10 @@ const SearchProducts = ({navigation}) => {
         setValueSort={_handleSort}
         valueSort={valueSort}
       />
-      <ProductList currentFilterValue={currentFilterValue} />
+      <ProductList
+        currentFilterValue={currentFilterValue}
+        navigation={navigation}
+      />
     </ThemeView>
   );
 };
