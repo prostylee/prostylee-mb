@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Text, Animated, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  Animated,
+  ActivityIndicator,
+  Dimensions,
+} from 'react-native';
 import {Container} from 'components';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {hasNotch} from 'react-native-device-info';
@@ -24,6 +30,8 @@ import ProductSimilar from './ProductSimilar';
 import Footer from './Footer';
 
 import {dim} from 'utils/common';
+import {debounce} from 'lodash-es';
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 const WIDTH = dim.width;
 
@@ -36,9 +44,15 @@ const ProductDetail = (props) => {
 
   const imagesRef = React.useRef();
   const scrollViewRef = React.useRef();
+  const ratingRef = React.useRef();
+  const relatedRef = React.useRef();
+
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
   const [currentImage, setCurrentImage] = React.useState(1);
   const [choiceSelect, setChoiceSelect] = React.useState([]);
+  const [activeTab, setActiveTab] = React.useState('product');
+  const [ratingVerticalOffset, setRatingVerticalOffset] = React.useState(0);
+  const [relatedVerticalOffset, setRelatedVerticalOffset] = React.useState(0);
 
   /*Animated*/
   const HEIGHT_HEADER = (WIDTH * 4) / 3 + getStatusBarHeight();
@@ -54,7 +68,7 @@ const ProductDetail = (props) => {
     extrapolate: 'clamp',
   });
 
-  const productId = route?.params?.id || 0;
+  const productId = route?.params?.id || 232;
 
   React.useEffect(() => {
     dispatch(productActions.getProductById({id: productId}));
@@ -97,12 +111,38 @@ const ProductDetail = (props) => {
     scrollViewRef.current?.scrollTo({y: 0, animated: true});
   };
   const scrollToComment = () => {
-    scrollViewRef.current?.scrollToEnd({animated: true});
+    scrollViewRef.current?.scrollTo({
+      animated: true,
+      y: ratingVerticalOffset - SCREEN_HEIGHT / 4,
+    });
   };
   const scrollToRelated = () => {
-    scrollViewRef.current?.scrollToEnd({animated: true});
+    scrollViewRef.current?.scrollTo({
+      animated: true,
+      y: relatedVerticalOffset - SCREEN_HEIGHT / 4,
+    });
   };
-
+  const handleChangeTabActiveItemWhenScrolling = (currentOffset) => {
+    if (currentOffset + SCREEN_HEIGHT / 2 < ratingVerticalOffset) {
+      if (activeTab !== 'product') {
+        setActiveTab('product');
+      }
+    }
+    if (
+      currentOffset + SCREEN_HEIGHT / 2 > ratingVerticalOffset &&
+      currentOffset + SCREEN_HEIGHT / 2 < relatedVerticalOffset
+    ) {
+      if (activeTab !== 'rate') {
+        setActiveTab('rate');
+      }
+    }
+    if (currentOffset + SCREEN_HEIGHT / 2 > relatedVerticalOffset) {
+      if (activeTab !== 'suggest') {
+        setActiveTab('suggest');
+      }
+    }
+  };
+  debounce;
   const selectRelatedProduct = (id) => {
     setCurrentImage(1);
     setChoiceSelect([]);
@@ -124,7 +164,9 @@ const ProductDetail = (props) => {
     return (
       <Animated.Image
         style={styles.imageItem}
-        source={{original: item}}
+        source={{
+          uri: item,
+        }}
         resizeMode={'cover'}
       />
     );
@@ -132,6 +174,21 @@ const ProductDetail = (props) => {
   const discount = productData
     ? priceSalePercent(productData?.price, productData?.priceSale)
     : 0;
+
+  React.useEffect(() => {
+    if (!ratingVerticalOffset || !relatedVerticalOffset) {
+      if (ratingRef) {
+        ratingRef?.current?.measure((fx, fy) => {
+          setRatingVerticalOffset(fy);
+        });
+      }
+      if (relatedRef) {
+        relatedRef?.current?.measure((fx, fy) => {
+          setRelatedVerticalOffset(fy);
+        });
+      }
+    }
+  });
 
   return (
     <View style={styles.container}>
@@ -142,12 +199,17 @@ const ProductDetail = (props) => {
         scrollToComment={scrollToComment}
         scrollToRelated={scrollToRelated}
         discount={priceSalePercent(productData?.price, productData?.priceSale)}
+        activeTabProps={activeTab}
       />
       <Container
         style={styles.mainContent}
         scrollEventThrottle={16}
         scrollViewRef={scrollViewRef}
-        onScroll={onScrollEvent}>
+        onScroll={(e) => {
+          onScrollEvent(e);
+
+          handleChangeTabActiveItemWhenScrolling(e.nativeEvent.contentOffset.y);
+        }}>
         <Animated.View
           style={[
             styles.imageList,
@@ -157,7 +219,11 @@ const ProductDetail = (props) => {
           ]}>
           <Carousel
             ref={imagesRef}
-            data={productImage}
+            data={
+              productData?.imageUrls && productData?.imageUrls
+                ? productData.imageUrls
+                : []
+            }
             activeSlideAlignment={'start'}
             renderItem={renderImageItem}
             sliderWidth={WIDTH * productImage.length}
@@ -198,9 +264,12 @@ const ProductDetail = (props) => {
             />
           </>
         ) : null}
-        <View style={styles.lineHrBig} />
+        <View style={styles.lineHrBig} ref={ratingRef} />
+
         <ProductRating data={productComments} />
-        <View style={styles.lineHrBig} />
+
+        <View style={styles.lineHrBig} ref={relatedRef} />
+
         <ProductSimilar
           data={productRelated?.content || []}
           onSelect={selectRelatedProduct}
