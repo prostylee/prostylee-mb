@@ -24,98 +24,10 @@ import SortDropDown from './SortDropDown';
 import {useDispatch, useSelector} from 'react-redux';
 import {searchActions} from 'redux/reducers';
 import {getCurrentKeyword} from 'redux/selectors/search';
-
-const MockTag = [
-  {
-    label: 'Best seller',
-    value: {
-      bestSeller: true,
-    },
-  },
-  {
-    label: 'Gần đây',
-    value: {
-      latitude: 10.806406363857086,
-      longitude: 106.6634168400805,
-    },
-  },
-  {
-    label: 'Sale',
-    value: {
-      sale: true,
-    },
-  },
-];
+import TagList from './TagList';
+import GroupHeaderRightButton from './HeaderRightButton';
 
 const WIDTH = Dimensions.get('window').width;
-const GroupHeaderRightButton = ({haveNoti = false}) => {
-  return (
-    <View style={styles.headerGroupButtonRight}>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <MessageOutlined
-          width={20}
-          height={20}
-          color={Colors['$lightGray']}
-          strokeWidth={2}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        {haveNoti ? (
-          <BellWithNotiBadge
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        ) : (
-          <Bell
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        )}
-      </TouchableOpacity>
-    </View>
-  );
-};
-const TagList = ({onTagPress}) => {
-  const [active, setActive] = useState(null);
-  return (
-    <View style={styles.wrapList}>
-      <FlatList
-        style={styles.wrapChip}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={MockTag}
-        renderItem={({item, index}) => (
-          <Chip
-            selectedColor={Colors?.['$purple']}
-            selected={index === active}
-            small
-            onPress={() => {
-              setActive(index);
-              onTagPress(item.value);
-            }}
-            style={styles.itemChips}
-            key={`${item.label}-${index}`}>
-            {item.label}
-          </Chip>
-        )}
-      />
-    </View>
-  );
-};
 
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
@@ -212,14 +124,6 @@ const SearchProducts = ({navigation}) => {
 
   useEffect(() => {
     setSearchQuery(currentKeyword);
-    // dispatch(
-    //   searchActions.getFeaturedProductSearch({
-    //     keyword: currentKeyword,
-    //     // type: 'product',
-    //     page: PAGE_DEFAULT,
-    //     limit: LIMIT_DEFAULT,
-    //   }),
-    // );
   }, [currentKeyword]);
 
   return (
