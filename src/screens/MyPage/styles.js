@@ -9,52 +9,62 @@ export default EStyleSheet.create({
     alignItems: 'center',
   },
   backgroundImageStyle: {
-    width: 500, 
+    width: 500,
     height: 500,
     position: 'absolute',
     top: 0,
     alignSelf: 'center',
-    backgroundColor: 'lightblue'
+    backgroundColor: 'lightblue',
   },
   avatarStyle: {
-    top: HEADER_HEIGHT-40, 
-    zIndex: 10, 
-    position: 'absolute', 
-    alignSelf: 'center'
+    top: HEADER_HEIGHT - 40,
+    zIndex: 10,
+    position: 'absolute',
+    alignSelf: 'center',
   },
   scrollViewStyle: {
-    top: HEADER_HEIGHT, 
-    backgroundColor: '$white', 
-    alignSelf: 'stretch', 
-    flex: 1, 
-    borderTopRightRadius: 8, 
-    borderTopLeftRadius: 8
+    top: HEADER_HEIGHT,
+    backgroundColor: '$white',
+    alignSelf: 'stretch',
+    flex: 1,
+    borderTopRightRadius: 8,
+    borderTopLeftRadius: 8,
   },
   followParentView: {
-    paddingTop: 16, 
-    flex: 3, 
-    flexDirection: 'row', 
-    justifyContent: "space-around"
+    padding: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   followChildView: {
-    flex: 1, 
-    flexDirection: 'column', 
-    alignItems: 'center'
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  valueFollowChild: {
+    color: '#333333',
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: '500',
+  },
+  labelFollowChild: {
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: '400',
   },
   viewType: {
-    alignSelf: 'center', 
-    borderRadius: 100, 
-    backgroundColor: '$white', 
-    width: 80, 
-    bottom: 7
+    alignSelf: 'center',
+    borderRadius: 100,
+    backgroundColor: '$white',
+    width: 80,
+    bottom: 7,
   },
   headerFull: {
-    position: 'absolute', 
-    top: 50, 
-    zIndex: 11, 
-    right: 7, 
-    justifyContent: 'space-between', 
-    flexDirection: 'row', 
-    alignItems: 'center'
-  }
+    position: 'absolute',
+    top: 50,
+    zIndex: 11,
+    right: 7,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
