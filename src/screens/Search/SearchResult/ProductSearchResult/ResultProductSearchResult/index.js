@@ -100,9 +100,7 @@ const ResultProductSearchResult = ({navigation}) => {
           <View style={styles.wrapChip}>
             {[1, 2, 3, 4, 5, 6, 7].map((item, _i) => {
               return (
-                <HintKeywordLoading
-                  style={{height: 32, marginTop: 8, marginRight: 8}}
-                />
+                <HintKeywordLoading style={{height: 32, marginBottom: 8}} />
               );
             })}
           </View>

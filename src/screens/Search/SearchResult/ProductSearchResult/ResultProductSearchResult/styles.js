@@ -39,4 +39,10 @@ export default EStyleSheet.create({
   viewFooter: {
     marginBottom: 6,
   },
+  wrapChip: {
+    flex: 1,
+    paddingHorizontal: 6,
+    overflow: 'hidden',
+    width: WIDTH,
+  },
 });
