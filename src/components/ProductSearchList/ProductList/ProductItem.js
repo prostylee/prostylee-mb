@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, FlatList, Text} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {View, FlatList, Text, TouchableOpacity} from 'react-native';
+
 import {Image, Rating} from 'components';
 import {Heart} from 'svg/common';
 import styles from './styles';
@@ -19,8 +19,13 @@ const ItemBadge = () => (
   </View>
 );
 
-const ProductItem = ({item, index}) => (
-  <View style={styles.itemWrapper} key={`${item}-${index}`}>
+const ProductItem = ({item, index, navigation}) => (
+  <TouchableOpacity
+    style={styles.itemWrapper}
+    key={`${item}-${index}`}
+    onPress={() => {
+      navigation.navigate('ProductDetail', {id: item.id});
+    }}>
     <View
       style={[
         styles.itemInner,
@@ -62,6 +67,6 @@ const ProductItem = ({item, index}) => (
         </View>
       </View>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 export default ProductItem;

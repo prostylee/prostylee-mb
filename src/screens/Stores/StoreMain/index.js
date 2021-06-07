@@ -158,7 +158,6 @@ const Stores = (props) => {
         Animated={Animated}
         navigation={navigation}
         scrollAnimated={scrollAnimated}
-        backgroundColor={'#fff'}
       />
       <ScrollView
         style={styles.container}
@@ -198,8 +197,9 @@ const Stores = (props) => {
                 ? categoryList?.content
                 : []
             }
+            navigation={navigation}
           />
-          <ForUserTabView />
+          <ForUserTabView navigation={navigation} />
         </View>
       </ScrollView>
     </View>
