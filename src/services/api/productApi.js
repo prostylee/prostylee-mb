@@ -1,5 +1,5 @@
 import {_fetch} from '../config';
-import {POST, GET, PUT} from 'constants';
+import {POST, GET, PUT, DELETE} from 'constants';
 
 //PRODUCT API
 export const getProducts = (payload) => {
@@ -52,4 +52,14 @@ export const unLikeProductService = (id) => {
     customFieldId2: 0,
     customFieldId3: 0,
   });
+};
+
+export const bookmarkProductService = (id) => {
+  return _fetch(POST, '/user-wish-lists', {
+    productId: id,
+  });
+};
+
+export const unBookmarkProductService = (id) => {
+  return _fetch(DELETE, `/user-wish-lists/${id}`);
 };

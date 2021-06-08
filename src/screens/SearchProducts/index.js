@@ -55,6 +55,7 @@ const SearchProducts = ({navigation}) => {
   );
   const _handleSort = (value) => {
     setValueSort(value);
+    setVisible(false);
     let sortOption = {};
     switch (value) {
       case 1: {
@@ -117,10 +118,6 @@ const SearchProducts = ({navigation}) => {
         ...currentFilterValue,
       }),
     );
-  };
-
-  const resetSortAndFilter = () => {
-    setValueSort(null);
   };
 
   useEffect(() => {

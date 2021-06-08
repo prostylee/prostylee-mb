@@ -23,6 +23,7 @@ const Container = ({
   keyboardShouldPersistTaps,
   translucent,
   nestedScrollEnabled,
+  ...rest
 }) => (
   <KeyboardAvoidingView style={styles.wrapper}>
     <ScrollView
@@ -34,7 +35,8 @@ const Container = ({
       scrollEventThrottle={scrollEventThrottle}
       bounces={false}
       nestedScrollEnabled={nestedScrollEnabled}
-      ref={scrollViewRef}>
+      ref={scrollViewRef}
+      {...rest}>
       <SafeAreaView style={[styles.safeAreaTopStyle, safeAreaTopStyle]} />
       <StatusBar
         barStyle={barStyle}

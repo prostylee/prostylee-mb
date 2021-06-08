@@ -8,18 +8,18 @@ import {categoriesActions} from 'redux/reducers';
 const FeaturedCategoriesItem = ({item, index, navigation}) => {
   const paddingLeft = index % 2 ? 4 : 12;
   const paddingRight = index % 2 ? 12 : 0;
-  // const dispatch = useDispatch();
-  // const clickItem = () => {
-  //   dispatch(categoriesActions.setCategoriesSelect(item));
-  //   navigation.navigate('Products');
-  // };
+  const dispatch = useDispatch();
+  const clickItem = () => {
+    dispatch(categoriesActions.setCategoriesSelect(item));
+    navigation.navigate('Products');
+  };
   return (
     <View
       style={[
         styles.wrapItems,
         {paddingLeft: paddingLeft, paddingRight: paddingRight},
       ]}>
-      <TouchableOpacity style={styles.item}>
+      <TouchableOpacity style={styles.item} onPress={clickItem}>
         <Image
           source={
             item?.banner

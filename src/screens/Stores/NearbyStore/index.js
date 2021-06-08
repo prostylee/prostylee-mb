@@ -79,7 +79,7 @@ const NearbyStore = ({navigation}) => {
       />
       <TagList onTagPress={_handleFilterByTag} />
       <Divider />
-      <StoreResult />
+      <StoreResult navigation={navigation} />
     </ThemeView>
   );
 };

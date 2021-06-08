@@ -3,15 +3,16 @@ import {View, TouchableOpacity, Text} from 'react-native';
 import styles from './styles';
 import {useSelector} from 'react-redux';
 import {productSelectors} from 'reducers';
+import {ProductBookmark} from 'components';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import {useTheme} from '@react-navigation/native';
 import {currencyFormat} from 'utils/currency';
-import {BookMark} from 'svg/common';
 
 const ProductTitle = (props) => {
   const {colors} = useTheme();
+  const productId = props.productId ? props.productId : 0;
   const name = props.name ? props.name : '';
   const price = props.price ? props.price : 0;
   const priceOriginal = props.priceOriginal ? props.priceOriginal : 0;
@@ -62,7 +63,7 @@ const ProductTitle = (props) => {
       <View style={styles.titleRow}>
         <Text style={styles.name}>{name}</Text>
         <TouchableOpacity style={styles.bookmark} onPress={() => {}}>
-          <BookMark />
+          <ProductBookmark item={{id: productId}} />
         </TouchableOpacity>
       </View>
       <Text style={styles.price}>{currencyFormat(price, 'đ')}</Text>

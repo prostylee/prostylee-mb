@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, Text, ActivityIndicator} from 'react-native';
+import {
+  View,
+  FlatList,
+  Text,
+  ActivityIndicator,
+  Dimensions,
+} from 'react-native';
 
 import styles from './styles';
 
@@ -18,10 +24,12 @@ import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 import {useDispatch, useSelector} from 'react-redux';
 
+import {VouchersLoading} from 'components/Loading/contentLoader';
+
 const VoucherList = ({navigation}) => {
   const dispatch = useDispatch();
   const [isRefreshing, setIsRefreshing] = useState(false);
-
+  const SCREEN_HEIGHT = Dimensions.get('window').height;
   const currentPage = useSelector((state) =>
     getCurrentVouchersPageSelector(state),
   );
@@ -81,7 +89,11 @@ const VoucherList = ({navigation}) => {
   return (
     <View style={styles.container}>
       {isLoading && !isRefreshing ? (
-        <ActivityIndicator animating color={Colors.$purple} size="small" />
+        <View style={{flexDirection: 'column', overflow: 'hidden'}}>
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((v, i) =>
+            v < (SCREEN_HEIGHT - 150) / 125 ? <VouchersLoading /> : null,
+          )}
+        </View>
       ) : data && data?.content?.length ? (
         <FlatList
           contentContainerStyle={styles.listWrapper}

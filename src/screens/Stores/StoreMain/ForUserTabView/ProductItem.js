@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Image, Rating} from 'components';
+import {View, Text, TouchableOpacity} from 'react-native';
+
+import {Image, Rating, ProductLike} from 'components';
 import {Heart} from 'svg/common';
 import styles from './style';
 import picture from 'assets/images/signInBg.png';
@@ -18,8 +18,12 @@ const ItemBadge = () => (
   </View>
 );
 
-const ProductItem = ({item, index}) => (
-  <View style={styles.itemWrapper}>
+const ProductItem = ({item, index, navigation}) => (
+  <TouchableOpacity
+    style={styles.itemWrapper}
+    onPress={() => {
+      navigation.navigate('ProductDetail', {id: 1});
+    }}>
     <View
       style={[
         styles.itemInner,
@@ -41,12 +45,10 @@ const ProductItem = ({item, index}) => (
           <View style={styles.ratingContainer}>
             <Text style={styles.itemDiscountPrice}>99.000 đ</Text>
           </View>
-          <TouchableOpacity>
-            <Heart />
-          </TouchableOpacity>
+          <ProductLike item={{id: 2}} />
         </View>
       </View>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 export default ProductItem;
