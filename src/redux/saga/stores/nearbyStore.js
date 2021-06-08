@@ -11,7 +11,7 @@ import {SUCCESS} from 'constants';
 const getNearbyStore = function* ({payload}) {
   try {
     yield put(storeActions.setNearbyStoreLoading(true));
-    const res = yield call(getNearbyStore, payload);
+    const res = yield call(getNearbyStoreApi, payload);
     let listStore = res?.data?.data;
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getNearbyStoreSuccess(listStore));
@@ -27,7 +27,7 @@ const getNearbyStore = function* ({payload}) {
 const getNearbyStoreLoadmore = function* ({payload}) {
   try {
     yield put(storeActions.setNearbyStoreLoadmoreLoading(true));
-    const res = yield call(getNearbyStore, payload);
+    const res = yield call(getNearbyStoreApi, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getNearbyStoreLoadmoreSuccess(res?.data?.data));
     } else {

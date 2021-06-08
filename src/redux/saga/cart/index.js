@@ -6,6 +6,7 @@ import {
   getPaymentMethods,
   getRecentViewList,
   getSuggestionsList,
+  getVoucherList,
 } from 'services/api/cartApi';
 
 import {SUCCESS} from 'constants';
@@ -70,11 +71,58 @@ const getListSuggestion = function* ({payload}) {
   }
 };
 
+//List Voucher
+const getListVoucher = function* ({payload}) {
+  try {
+    yield put(cartActions.setVoucherLoading(true));
+    yield put(cartActions.setPageVoucherDefault());
+    const res = yield call(getVoucherList, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(cartActions.getListVoucherSuccess(res.data.data));
+    } else {
+      yield put(cartActions.getListVoucherFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(cartActions.setVoucherLoading(false));
+  }
+};
+
+const getLoadMoreListVoucher = function* ({payload}) {
+  try {
+    yield put(cartActions.setLoadingLoadMoreVoucher(true));
+    const res = yield call(getVoucherList, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(cartActions.getListVoucherLoadMoreSuccess(res.data.data));
+    } else {
+      yield put(cartActions.getListVoucherLoadMoreFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(cartActions.setLoadingLoadMoreVoucher(false));
+  }
+};
+
 const watcher = function* () {
   //List Cart
   yield takeLatest(cartTypes.SET_LIST_CART, setListCart);
+
+  //List Payment
   yield takeLatest(cartTypes.GET_LIST_PAYMENT, getListPayment);
+
+  //List Recent
   yield takeLatest(cartTypes.GET_LIST_RECENT, getListRecent);
+
+  //List Suggestion
   yield takeLatest(cartTypes.GET_LIST_SUGGESTION, getListSuggestion);
+
+  //List Voucher
+  yield takeLatest(cartTypes.GET_LIST_VOUCHER, getListVoucher);
+  yield takeLatest(
+    cartTypes.GET_LIST_VOUCHER_LOAD_MORE,
+    getLoadMoreListVoucher,
+  );
 };
 export default watcher();

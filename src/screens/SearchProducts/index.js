@@ -24,7 +24,6 @@ import SortDropDown from './SortDropDown';
 import {useDispatch, useSelector} from 'react-redux';
 import {searchActions} from 'redux/reducers';
 import {getCurrentKeyword} from 'redux/selectors/search';
-import {getProductSearchListSelector} from 'redux/selectors/search/productSearchMain';
 
 const MockTag = [
   {
@@ -36,7 +35,7 @@ const MockTag = [
   {
     label: 'Gần đây',
     value: {
-      atitude: 10.806406363857086,
+      latitude: 10.806406363857086,
       longitude: 106.6634168400805,
     },
   },
@@ -47,6 +46,7 @@ const MockTag = [
     },
   },
 ];
+
 const WIDTH = Dimensions.get('window').width;
 const GroupHeaderRightButton = ({haveNoti = false}) => {
   return (
@@ -125,10 +125,8 @@ const SearchProducts = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
-  console.log('RERENDER ');
-  const searchResults = useSelector((state) =>
-    getProductSearchListSelector(state),
-  );
+  const [currentFilterValue, setCurrentFilterValue] = useState({});
+
   const handlerSearch = useCallback(
     debounce((query) => {
       dispatch(
@@ -171,6 +169,10 @@ const SearchProducts = ({navigation}) => {
         break;
       }
     }
+    setCurrentFilterValue({
+      ...currentFilterValue,
+      ...sortOption,
+    });
     dispatch(
       searchActions.getProductsSearch({
         keyword: searchQuery,
@@ -178,6 +180,7 @@ const SearchProducts = ({navigation}) => {
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...sortOption,
+        ...currentFilterValue,
       }),
     );
   };
@@ -185,16 +188,26 @@ const SearchProducts = ({navigation}) => {
   const onChangeSearch = (query) => {
     setSearchQuery(query);
     handlerSearch(query);
+    dispatch(searchActions.setProductsSearchLoading(true));
   };
   const _handleFilterByTag = (queryObject) => {
+    setCurrentFilterValue({
+      ...currentFilterValue,
+      ...queryObject,
+    });
     dispatch(
       searchActions.getProductsSearch({
         keyword: searchQuery,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         ...queryObject,
+        ...currentFilterValue,
       }),
     );
+  };
+
+  const resetSortAndFilter = () => {
+    setValueSort(null);
   };
 
   useEffect(() => {
@@ -225,17 +238,23 @@ const SearchProducts = ({navigation}) => {
             style={{
               minWidth: WIDTH - 140,
               backgroundColor: '#F4F5F5',
-              height: 35,
+              height: 32,
               borderRadius: 4,
               elevation: 0,
               padding: 0,
+              overflow: 'hidden',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
             inputStyle={{
-              height: 35,
+              height: '100%',
               fontSize: 14,
-              lineHeight: 18,
+              lineHeight: 16,
               elevation: 0,
+              numberOfLines: 1,
+              overflow: 'hidden',
             }}
+            multiline={false}
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
             value={searchQuery}
@@ -280,7 +299,7 @@ const SearchProducts = ({navigation}) => {
         setValueSort={_handleSort}
         valueSort={valueSort}
       />
-      <ProductList data={searchResults} />
+      <ProductList currentFilterValue={currentFilterValue} />
     </ThemeView>
   );
 };

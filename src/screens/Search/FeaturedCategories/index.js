@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useState} from 'react';
 import {View, ActivityIndicator, FlatList, Dimensions} from 'react-native';
 
@@ -86,7 +85,9 @@ const FeaturedCategories = ({navigation}) => {
     <>
       <View style={styles.container}>
         <View style={styles.wrapHeader}>
-          <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
+          <Text style={styles.title}>
+            {i18n.t('Search.featuredCategories')}
+          </Text>
         </View>
         {loading && !listCategories.length === 0 ? (
           <>

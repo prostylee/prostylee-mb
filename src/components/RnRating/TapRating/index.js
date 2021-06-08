@@ -71,7 +71,7 @@ TapRating.defaultProps = {
   reviews: ['Terrible', 'Bad', 'Okay', 'Good', 'Great'],
   count: 5,
   showRating: true,
-  reviewColor: 'rgba(230, 196, 46, 1)',
+  reviewColor: '#F48231',
   reviewSize: 25,
 };
 

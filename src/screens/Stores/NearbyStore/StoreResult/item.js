@@ -19,8 +19,8 @@ const StoreSearchResultItem = ({item, index, navigation}) => {
         <View style={styles.item}>
           <Image
             source={
-              item?.icon
-                ? {uri: item?.icon}
+              item?.imageUrl
+                ? {uri: item?.imageUrl}
                 : require('assets/images/signInBg.png')
             }
             resizeMode="cover"
@@ -28,7 +28,7 @@ const StoreSearchResultItem = ({item, index, navigation}) => {
             PlaceholderContent={<ActivityIndicator />}
           />
           <Text numberOfLines={2} style={styles.titleProduct}>
-            Thời trang nam
+            {item?.name}
           </Text>
           <Divider />
         </View>

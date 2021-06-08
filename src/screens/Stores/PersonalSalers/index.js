@@ -1,177 +1,116 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
+
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+
+import {storeActions} from 'redux/reducers';
+
+import ProductSearchList from '../../../components/ProductSearchList';
+
+import {useDispatch, useSelector} from 'react-redux';
+
 import {
-  Dimensions,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import i18n from 'i18n';
-import styles from './styles';
-import {Sort, Filter, CaretDown} from 'svg/common';
-import {ThemeView, Header, TextInputRounded} from 'components';
-import {
-  IconButton,
-  Searchbar,
-  RadioButton,
-  Divider,
-  Chip,
-} from 'react-native-paper';
-import {Colors} from 'components';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {RnRatingTap, Picker} from 'components';
-
-const WIDTH = Dimensions.get('window').width;
-import {debounce} from 'lodash';
-import {MessageOutlined, Bell, BellWithNotiBadge} from 'svg/header';
-import ProductList from './ProductList';
-import SortDropDown from './SortDropDown';
-
-const MockTag = [
-  'Best seller',
-  'Gần đây',
-  'Sale',
-  'Elegant',
-  'Best seller',
-  'Gần đây',
-  'Sale',
-  'Elegant',
-];
-
-const GroupHeaderRightButton = ({haveNoti = false}) => {
-  return (
-    <View style={styles.headerGroupButtonRight}>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <MessageOutlined
-          width={20}
-          height={20}
-          color={Colors['$lightGray']}
-          strokeWidth={2}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        {haveNoti ? (
-          <BellWithNotiBadge
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        ) : (
-          <Bell
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        )}
-      </TouchableOpacity>
-    </View>
-  );
-};
-const TagList = () => (
-  <View style={styles.wrapList}>
-    <FlatList
-      style={styles.wrapChip}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      data={MockTag}
-      renderItem={({item, index}) => (
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}
-          key={`${item}-${index}`}>
-          {item}
-        </Chip>
-      )}
-    />
-  </View>
-);
+  getPersonalSalersLoadingSelector,
+  getPersonalSalersSelector,
+  hasPersonalSalersLoadmoreSelector,
+  getPersonalSalersCurrentPageSelector,
+} from 'redux/selectors/storeMain/personalSalers';
 
 const SearchProducts = ({navigation}) => {
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [visible, setVisible] = useState(false);
-  const [action, setAction] = useState('filter');
-  const [valueSort, setValueSort] = useState(null);
+  const dispatch = useDispatch();
 
-  const onChangeSearch = (query) => {
-    setSearchQuery(query);
+  const currentPage = useSelector((state) =>
+    getPersonalSalersCurrentPageSelector(state),
+  );
+
+  const isLoading = useSelector((state) =>
+    getPersonalSalersLoadingSelector(state),
+  );
+  const hasLoadmore = useSelector((state) =>
+    hasPersonalSalersLoadmoreSelector(state),
+  );
+
+  const _handleSort = (value) => {
+    let sortOption = {};
+    switch (value) {
+      case 1: {
+        sortOption.sorts = 'name';
+        break;
+      }
+      case 2: {
+        sortOption.bestSeller = true;
+        break;
+      }
+      case 3: {
+        sortOption.sorts = '-createdAt';
+        break;
+      }
+      case 4: {
+        sortOption.sorts = '-priceSale';
+        break;
+      }
+      case 5: {
+        sortOption.sorts = 'priceSale';
+        break;
+      }
+      default: {
+        sortOption.bestRating = true;
+        break;
+      }
+    }
+    dispatch(
+      storeActions.getPersonalSalers({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: 'name',
+        ...sortOption,
+      }),
+    );
   };
 
+  const _handleFilterByTag = (queryObject) => {
+    dispatch(
+      storeActions.getPersonalSalers({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        ...queryObject,
+      }),
+    );
+  };
+
+  const getDataFunctionSelector = () =>
+    useSelector((state) => getPersonalSalersSelector(state));
+
+  const _initData = () =>
+    dispatch(
+      storeActions.getPersonalSalers({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+
+  const loadMoreFunc = () =>
+    dispatch(
+      storeActions.getPersonalSalersLoadmore({
+        page: currentPage,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+
   return (
-    <ThemeView style={styles.container} isFullView>
-      <Header
-        isDefault
-        containerStyle={{
-          paddingBottom: 10,
-          borderBottomWidth: 0,
-          borderBottomWidth: 1,
-        }}
-        leftStyle={{
-          height: 30,
-          fontWeight: 'bold',
-        }}
-        middleComponent={
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}>
-            Cá nhân đăng bán
-          </Text>
-        }
-      />
-      <View style={styles.wrapBlockOne}>
-        <TouchableOpacity onPress={() => setVisible(!visible)}>
-          <View style={styles.contentBlockOne}>
-            <View>
-              <Sort />
-            </View>
-            <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('sort')}
-            </Text>
-            <View>
-              <CaretDown />
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('SearchProductFilter')}>
-          <View style={styles.wrapBlockFilter}>
-            <Text numberOfLines={1} style={styles.textSpace}>
-              |
-            </Text>
-            <Filter />
-            <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('filter')}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-      <Divider />
-      <TagList />
-      <SortDropDown
-        visible={visible}
-        setVisible={setVisible}
-        setAction={setAction}
-        setValueSort={setValueSort}
-        valueSort={valueSort}
-      />
-      <ProductList />
-    </ThemeView>
+    <ProductSearchList
+      title="Cá nhân đăng bán"
+      hasTagList
+      hasFilterBar
+      getDataFunction={getDataFunctionSelector}
+      refreshDataFunction={_initData}
+      loadmoreDataFuntion={loadMoreFunc}
+      tagFilterFunction={_handleFilterByTag}
+      sortDataFunction={_handleSort}
+      navigation={navigation}
+      getCurrentPageFunction={() => {}}
+      isLoading={isLoading}
+      hasLoadmore={hasLoadmore}
+    />
   );
 };
 

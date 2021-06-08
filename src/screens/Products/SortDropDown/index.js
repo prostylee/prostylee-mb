@@ -50,7 +50,6 @@ const SortDropDown = ({
               ]}
               label={v.label}
             />
-            {/* {i !== arr.length - 1 ? <Divider /> : null} */}
           </>
         ))}
       </RadioButton.Group>

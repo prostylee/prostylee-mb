@@ -191,7 +191,6 @@ export default {
     updateProduct: 'Cập nhật sản phẩm',
     seeMore: 'Xem thêm',
     yourAddress: 'Địa điểm của bạn',
-    changeAddress: 'Thay đổi địa điểm',
   },
   error: {
     cannotUploadImage:
@@ -224,6 +223,13 @@ export default {
     categories: 'Danh mục',
     priceRange: 'Khoảng giá',
     size: 'Size',
+    resultsNotfound: 'Không có kết quả',
+    follow: 'Theo dõi',
+    unfollow: 'Bỏ theo dõi',
+  },
+  Notification: {
+    noData: 'Hiện tại bạn không có thông báo nào',
+    titlePromotion: 'Mã khuyễn mãi',
   },
   mypage: {
     editProfile: 'Sửa hồ sơ',
@@ -231,7 +237,7 @@ export default {
     following: 'Đang theo dõi',
     posts: 'Bài đăng',
     isFollowed: 'Đã theo dõi',
-    isNotFollow: 'Theo dõi'
+    isNotFollow: 'Theo dõi',
   },
   setting: {
     title: 'Thiết lập tài khoản',
@@ -241,7 +247,7 @@ export default {
     setting: 'Cài đặt',
     settingChat: 'Cài đặt chat',
     settingNotification: 'Cài đặt thông báo',
-    settingLanguage: 'Ngôn ngữ'
+    settingLanguage: 'Ngôn ngữ',
   },
   settingProfile: {
     name: 'Tên',
@@ -252,31 +258,71 @@ export default {
     email: 'Email',
     changePass: 'Đổi mật khẩu',
     buttonSave: 'Lưu thay đổi',
-    changeImage: 'Thay ảnh đại diện'
+    changeImage: 'Thay ảnh đại diện',
   },
   settingAddress: {
     addAddress: 'Thêm địa chỉ',
     province: 'Tỉnh/thành phố',
     district: 'Quận/Huyện',
     ward: 'Quận/Huyện',
-    noAddress: 'Hiện tại bạn không có địa chỉ đã lưu. Hãy bắt đầu thêm một địa chỉ mới ngay',
+    noAddress:
+      'Hiện tại bạn không có địa chỉ đã lưu. Hãy bắt đầu thêm một địa chỉ mới ngay',
     contact: 'Thông tin liên hệ',
     default: 'Mặc định',
     name: 'Họ và tên',
     phone: 'Điện thoại',
     address: 'Địa chỉ',
-    detailAddress: 'Số nhà, tên tòa nhà, tên đường, khu vực'
+    detailAddress: 'Số nhà, tên tòa nhà, tên đường, khu vực',
   },
   settingNotification: {
     title: 'Thông báo',
     allowNotification: 'Allow Notifications',
     discountText: 'Chương trình giảm giá',
-    discountDescription: 'Không để bỏ lỡ những chương trình khuyến mãi mới nhất của chúng tôi',
+    discountDescription:
+      'Không để bỏ lỡ những chương trình khuyến mãi mới nhất của chúng tôi',
     socialNetworkNotifications: 'Thông báo mạng xã hội',
-    socialNetworkNotificationsDescription: 'Lời khuyên thời trang, tin tức và phong cách. Tương tác trong mạng xã hội',
+    socialNetworkNotificationsDescription:
+      'Lời khuyên thời trang, tin tức và phong cách. Tương tác trong mạng xã hội',
     orderTransport: 'Đơn hàng vận chuyển',
-    orderTransportDescription: 'Liên tục cập nhật cho bạn về trạng thái đặt hàng của bạn',
+    orderTransportDescription:
+      'Liên tục cập nhật cho bạn về trạng thái đặt hàng của bạn',
     stockNotifications: 'Stock Notifications',
-    stockNotificationsDescription: 'Nhận thông báo các mặt hàng bạn quan tâm ngay khi có đơn hàng'
-  }
+    stockNotificationsDescription:
+      'Nhận thông báo các mặt hàng bạn quan tâm ngay khi có đơn hàng',
+  },
+  orders: {
+    title: 'Đơn hàng',
+    countProduct: '%{count} sản phẩm',
+    ratingProduct: 'Đánh giá sản phẩm',
+    repurchase: 'Mua lại',
+    searchLocation: 'Tìm đường',
+    orderDetail: 'Chi tiết đơn hàng',
+    orderId: 'Mã đơn hàng',
+    orderDate: 'Ngày đặt hàng',
+    orderAddress: 'Địa chỉ giao hàng',
+    paymentMethod: 'Phương thức thanh toán',
+    deliveryMethod: 'Phương thức vận chuyển',
+    recieveRange: 'Nhận hàng vào %{startTime} đến %{endTime}',
+    cancelOrder: 'Hủy đơn hàng',
+    totalOrder: 'Tổng tiền hàng',
+    deliveryFee: 'Phí vận chuyển',
+    coupon: 'Mã giảm giá',
+    paymentTotal: 'Tổng thanh toán',
+    cancelDeal: 'Hủy đơn hàng',
+    statusWaiting: 'Chưa thanh toán',
+    statusDelivery: 'Đang giao hàng',
+    stautusCheckProgress: 'Kiểm tra tiến độ',
+    statusDone: 'Hoàn thành',
+    statusCancel: 'Đã hủy',
+    dealId: 'Mã đơn hàng: %{id}',
+    dealDate: 'Ngày đặt hàng: %{date}',
+    summaryTotal: 'Tổng tiền hàng',
+    summaryDeliveryFee: 'Phí vận chuyển',
+    summaryVoucher: 'Mã giảm giá',
+    summaryTotalPayment: 'Tổng thanh toán',
+    tracking: 'Theo dõi đơn hàng',
+    delete: 'Xóa',
+    markAsBuy: 'Đánh dấu đã mua',
+    findLocation: 'Tìm đường',
+  },
 };

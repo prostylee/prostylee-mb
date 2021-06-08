@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, FlatList, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Image, Rating} from 'components';
+import {Image, ProductLike, ProductRatingStar} from 'components';
 import {Heart} from 'svg/common';
 import styles from './styles';
 import picture from '../../../assets/images/signInBg.png';
@@ -55,21 +55,15 @@ const ProductItem = ({item, index}) => (
         </View>
         <View style={styles.toolContainer}>
           <View style={styles.ratingContainer}>
-            <Rating
-              imageSize={10}
-              showRating={false}
-              startingValue={item?.productStatisticResponse?.resultOfRating}
-            />
+            <ProductRatingStar value={3} />
             <Text style={styles.ratingPoint}>
               {item.productStatisticResponse
-                ? `${item?.productStatisticResponse?.resultOfRating}(
-                  ${item?.productStatisticResponse?.numberOfLike})`
+                ? `${item?.productStatisticResponse?.resultOfRating}(${item?.productStatisticResponse?.numberOfLike})`
                 : '0(0)'}
             </Text>
           </View>
-          <TouchableOpacity>
-            <Heart />
-          </TouchableOpacity>
+
+          <ProductLike item={item} />
         </View>
       </View>
     </View>

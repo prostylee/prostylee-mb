@@ -87,7 +87,7 @@ export default EStyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  wrapSize: {flex: 0.5},
+  wrapSize: {flex: 0.5, flexDirection: 'row'},
   wrapUpdown: {flex: 0.5, alignItems: 'flex-end'},
   storeName: {flex: 1, alignItems: 'center', flexDirection: 'row'},
   storeNameText: {fontSize: 11, lineHeight: 16},
@@ -118,6 +118,14 @@ export default EStyleSheet.create({
     textAlign: 'left',
     color: '$black',
     fontWeight: '400',
+  },
+  productAttr: {
+    borderLeftWidth: 1,
+    borderColor: '#E9EAEB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: -3,
+    flexDirection: 'row',
   },
   productColor: {
     borderLeftWidth: 1,
