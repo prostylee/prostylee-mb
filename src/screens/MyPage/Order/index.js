@@ -15,13 +15,14 @@ import {
   SettingIcon,
   SupportIcon,
 } from 'svg/common';
+import i18n from 'i18n';
 
 const Order = () => {
   const orderMenu = useMemo(
     () => [
       {
         icon: <WaitingIcon />,
-        label: 'Chờ xác nhận',
+        label: i18n.t('mypage.waiting'),
         navigateScreen: 'Orders',
         dataPush: {
           status: 'waiting',
@@ -29,7 +30,7 @@ const Order = () => {
       },
       {
         icon: <DeliveryIcon />,
-        label: 'Đang giao hàng',
+        label: i18n.t('mypage.delivery'),
         navigateScreen: 'Orders',
         dataPush: {
           status: 'delivery',
@@ -37,7 +38,7 @@ const Order = () => {
       },
       {
         icon: <DoneIcon />,
-        label: 'Đã hoàn thành',
+        label: i18n.t('mypage.done'),
         navigateScreen: 'Orders',
         dataPush: {
           status: 'done',
@@ -45,7 +46,7 @@ const Order = () => {
       },
       {
         icon: <InhouseIcon />,
-        label: 'Mua tại cửa hàng',
+        label: i18n.t('mypage.inhouse'),
         navigateScreen: 'Orders',
         dataPush: {
           status: 'inhouse',
@@ -53,7 +54,7 @@ const Order = () => {
       },
       {
         icon: <CancelIcon />,
-        label: 'Đã huỷ',
+        label: i18n.t('mypage.cancel'),
         navigateScreen: 'Orders',
         dataPush: {
           status: 'cancel',
@@ -67,13 +68,13 @@ const Order = () => {
     () => [
       {
         icon: <SaleIcon />,
-        label: 'Sản phẩm đang bán',
+        label: i18n.t('mypage.saleProduct'),
         navigateScreen: 'SoldList',
         dataPush: {status: 'sale'},
       },
       {
         icon: <SoldIcon />,
-        label: 'Sản phẩm đã bán',
+        label: i18n.t('mypage.soldProduct'),
         navigateScreen: 'SoldList',
         dataPush: {status: 'sold'},
       },
@@ -85,25 +86,25 @@ const Order = () => {
     () => [
       {
         icon: <HeartIcon />,
-        label: 'Sản phẩm đã thích',
+        label: i18n.t('mypage.wishList'),
         navigateScreen: 'WishList',
         dataPush: {},
       },
       {
         icon: <SaveIcon />,
-        label: 'Đã lưu',
+        label: i18n.t('mypage.saveList'),
         navigateScreen: 'SaveList',
         dataPush: {},
       },
       {
         icon: <SettingIcon />,
-        label: 'Thiết lập tài khoản',
+        label: i18n.t('mypage.accountSetting'),
         navigateScreen: 'Setting',
         dataPush: {},
       },
       {
         icon: <SupportIcon />,
-        label: 'Hỗ trợ',
+        label: i18n.t('mypage.support'),
         onPress: () => Linking.openURL(`tel:099999999`),
       },
     ],
@@ -111,8 +112,8 @@ const Order = () => {
   );
   return (
     <View style={styles.container}>
-      <ListMenu title="Đơn hàng" menu={orderMenu} />
-      <ListMenu title="Sản phẩm" menu={productMenu} />
+      <ListMenu title={i18n.t('mypage.orders')} menu={orderMenu} />
+      <ListMenu title={i18n.t('mypage.products')} menu={productMenu} />
       <ListMenu menu={settingMenu} />
     </View>
   );

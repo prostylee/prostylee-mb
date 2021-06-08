@@ -8,10 +8,10 @@ import TabSold from './TabSold';
 
 const SoldList = ({navigation, route: {params}}) => {
   const {status} = params;
-  console.log("status", status)
+  
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header isDefault title={'Sản phẩm'} />
+      <Header isDefault title={i18n.t('mypage.products')} />
       <View style={styles.wrapContent}>
         <TabSold status={status} />
       </View>

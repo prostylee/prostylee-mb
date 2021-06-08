@@ -2,7 +2,7 @@ import styles from './styles';
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import i18n from 'i18n';
-import {View, FlatList, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import {Divider, Text, List} from 'react-native-paper';
 import list from './items';
 import {RightArrow} from 'svg/common';
@@ -23,7 +23,7 @@ const SettingItem = () => {
     await dispatch(commonActions.setInitialRouteName('SignInOptions'));
     await dispatch(userActions.userLogout());
     showMessage({
-      message: `Đăng xuất thành công`,
+      message: i18n.t('logOutSuccess'),
       type: 'success',
     });
   };
@@ -61,7 +61,7 @@ const SettingItem = () => {
       </View>
       <View style={styles.wrapFooterButton}>
         <ButtonOutlined
-          label={'Đăng xuất'}
+          label={i18n.t('logOut')}
           style={styles.buttonOutlinedRed}
           labelStyle={styles.labelBtnOutlineRed}
           onPress={onSignOut}

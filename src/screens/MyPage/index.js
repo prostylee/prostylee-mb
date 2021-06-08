@@ -14,7 +14,7 @@ import {ThemeView, ButtonRounded, Container} from 'components';
 import HeaderFeed from './HeaderFeed';
 import I18n from 'i18n';
 import {useDispatch} from 'react-redux';
-import {commonActions, userActions} from 'reducers';
+import {commonActions} from 'reducers';
 import {Auth} from 'aws-amplify';
 import {Grid, Full, Setting} from 'svg/common';
 import {Message} from 'svg/social';
