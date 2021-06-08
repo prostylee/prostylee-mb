@@ -5,12 +5,10 @@ const {height, width} = Dimensions.get('window');
 
 export default EStyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'column',
     backgroundColor: '$white',
     marginBottom: 10,
-    
-    
+    padding: 10,
   },
   wrapItems: {
     flexDirection: 'row',
