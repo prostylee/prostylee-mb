@@ -40,6 +40,7 @@ import {
   FilterProduct,
   SearchProducts,
   PromoNotification,
+  MainNotification,
   ReviewRating,
   ChooseRateProduct,
   RateProduct,
@@ -138,7 +139,7 @@ function SignedIn() {
       <Stack.Screen name="SettingLanguage" component={SettingLanguage} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="SearchProducts" component={SearchProducts} />
-
+      <Stack.Screen name="MainNotification" component={MainNotification} />
       <Stack.Screen name="PromoNotification" component={PromoNotification} />
       <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
     </Stack.Navigator>

@@ -46,6 +46,7 @@ import StoreAddress from './StoreAddress';
 import Search from './Search';
 import FilterProduct from './FilterProduct';
 import PromoNotification from './Notifications/PromoNotification';
+import MainNotification from './Notifications';
 import Orders from './Orders';
 import OrdersDetail from './Orders/Detail';
 import MyPage from './MyPage';
@@ -101,6 +102,7 @@ export {
   Search,
   FilterProduct,
   PromoNotification,
+  MainNotification,
   Orders,
   OrdersDetail,
   MyPage,

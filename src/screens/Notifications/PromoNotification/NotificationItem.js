@@ -70,8 +70,8 @@ const NotificationItem = ({
       </View>
       <Text style={styles.subTitle}>
         {createdAt
-          ? moment(createdAt).format('DD/MM/YYYY')
-          : moment().format('DD/MM/YYYY')}
+          ? moment(createdAt).format('HH:mm DD-MM-YYYY')
+          : moment().format('HH:mm DD-MM-YYYY')}
       </Text>
     </View>
   </TouchableOpacity>
