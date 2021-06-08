@@ -7,6 +7,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {Container} from 'components';
+import {ProductDetailLoading} from 'components/Loading/contentLoader';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {hasNotch} from 'react-native-device-info';
 import {useTheme, useRoute} from '@react-navigation/native';
@@ -157,10 +158,10 @@ const ProductDetail = (props) => {
   };
   debounce;
   const selectRelatedProduct = (id) => {
+    scrollAnimated.setValue(0);
     setCurrentImage(1);
     setChoiceSelect([]);
     dispatch(productActions.getProductById({id: id}));
-    scrollToTop();
   };
 
   const ProductChoiceMemo = React.useMemo(() => {
@@ -203,7 +204,7 @@ const ProductDetail = (props) => {
   if (productDataLoading) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <ActivityIndicator size="large" color={colors['$purple']} />
+        <ProductDetailLoading />
       </View>
     );
   }
