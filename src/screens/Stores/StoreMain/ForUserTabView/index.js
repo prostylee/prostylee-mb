@@ -11,7 +11,7 @@ const ForUserTabView = ({navigation}) => {
   return (
     <View style={styles.contaner}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Dành cho bạn</Text>
+        <Text style={styles.title}>Dành riêng cho bạn</Text>
       </View>
       <ScrollableTabView
         tabBarBackgroundColor={Colors?.[`$white`]}

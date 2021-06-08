@@ -11,13 +11,26 @@ import FeaturedCategoriesItem from './item.js';
 import {CategoriesRightLoading} from 'components/Loading/contentLoader';
 
 import {Text} from 'react-native-paper';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const FeaturedCategories = ({navigation, data = []}) => {
   return (
     <>
       <View style={styles.container}>
         <View style={styles.wrapHeader}>
-          <Text style={styles.title}>Danh mục</Text>
+          <Text style={styles.title}>{i18n.t('headerTitle.categories')}</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Categories')}>
+            <Text
+              style={[
+                styles.title,
+                {
+                  fontWeight: '400',
+                  color: Colors?.['$purple'],
+                },
+              ]}>
+              Xem thêm
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.wrapList}>

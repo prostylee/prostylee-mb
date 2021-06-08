@@ -19,7 +19,7 @@ const MidAdvertisingSlider = ({data = []}) => {
           showPagination
           paginationStyle={{
             position: 'absolute',
-            bottom: -10,
+            bottom: 0,
             alignSelf: 'center',
           }}
           paginationStyleItem={{

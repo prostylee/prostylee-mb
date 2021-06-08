@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
-import {Image, Rating} from 'components';
+import {Image, Rating, ProductLike} from 'components';
 import {Heart} from 'svg/common';
 import styles from './style';
 import picture from 'assets/images/signInBg.png';
@@ -45,9 +45,7 @@ const ProductItem = ({item, index, navigation}) => (
           <View style={styles.ratingContainer}>
             <Text style={styles.itemDiscountPrice}>99.000 đ</Text>
           </View>
-          <TouchableOpacity>
-            <Heart />
-          </TouchableOpacity>
+          <ProductLike item={{id: 2}} />
         </View>
       </View>
     </View>

@@ -141,6 +141,7 @@ const SearchProducts = ({navigation}) => {
   );
   const _handleSort = (value) => {
     setValueSort(value);
+    setVisible(false);
     let sortOption = {};
     switch (value) {
       case 1: {
