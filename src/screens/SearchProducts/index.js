@@ -24,97 +24,11 @@ import SortDropDown from './SortDropDown';
 import {useDispatch, useSelector} from 'react-redux';
 import {searchActions} from 'redux/reducers';
 import {getCurrentKeyword} from 'redux/selectors/search';
-
-const MockTag = [
-  {
-    label: 'Best seller',
-    value: {
-      bestSeller: true,
-    },
-  },
-  {
-    label: 'Gần đây',
-    value: {
-      latitude: 10.806406363857086,
-      longitude: 106.6634168400805,
-    },
-  },
-  {
-    label: 'Sale',
-    value: {
-      sale: true,
-    },
-  },
-];
+import TagList from './TagList';
+import GroupHeaderRightButton from './HeaderRightButton';
+import FilterBar from './FilterBar';
 
 const WIDTH = Dimensions.get('window').width;
-const GroupHeaderRightButton = ({haveNoti = false}) => {
-  return (
-    <View style={styles.headerGroupButtonRight}>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <MessageOutlined
-          width={20}
-          height={20}
-          color={Colors['$lightGray']}
-          strokeWidth={2}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        {haveNoti ? (
-          <BellWithNotiBadge
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        ) : (
-          <Bell
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        )}
-      </TouchableOpacity>
-    </View>
-  );
-};
-const TagList = ({onTagPress}) => {
-  const [active, setActive] = useState(null);
-  return (
-    <View style={styles.wrapList}>
-      <FlatList
-        style={styles.wrapChip}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={MockTag}
-        renderItem={({item, index}) => (
-          <Chip
-            selected={index === active}
-            small
-            onPress={() => {
-              setActive(index);
-              onTagPress(item.value);
-            }}
-            style={styles.itemChips}
-            key={`${item.label}-${index}`}>
-            {item.label}
-          </Chip>
-        )}
-      />
-    </View>
-  );
-};
 
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
@@ -251,33 +165,11 @@ const SearchProducts = ({navigation}) => {
         }
         rightComponent={<GroupHeaderRightButton haveNoti={true} />}
       />
-      <View style={styles.wrapBlockOne}>
-        <TouchableOpacity onPress={() => setVisible(!visible)}>
-          <View style={styles.contentBlockOne}>
-            <View>
-              <Sort />
-            </View>
-            <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('sort')}
-            </Text>
-            <View>
-              <CaretDown />
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('SearchProductFilter')}>
-          <View style={styles.wrapBlockFilter}>
-            <Text numberOfLines={1} style={styles.textSpace}>
-              |
-            </Text>
-            <Filter />
-            <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('filter')}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <FilterBar
+        setVisible={setVisible}
+        visible={visible}
+        navigation={navigation}
+      />
       <Divider />
       <TagList onTagPress={_handleFilterByTag} />
       <SortDropDown
@@ -287,7 +179,10 @@ const SearchProducts = ({navigation}) => {
         setValueSort={_handleSort}
         valueSort={valueSort}
       />
-      <ProductList currentFilterValue={currentFilterValue} />
+      <ProductList
+        currentFilterValue={currentFilterValue}
+        navigation={navigation}
+      />
     </ThemeView>
   );
 };

@@ -4,10 +4,13 @@ import {Image, ProductLike, ProductRatingStar} from 'components';
 import styles from './styles';
 import {currencyFormat, priceSalePercent} from 'utils/currency';
 
-const FeaturedCategoriesItem = ({item}) => {
+const FeaturedCategoriesItem = ({item, navigation}) => {
+  const onItemClick = () => {
+    navigation.navigate('ProductDetail', {id: item.id});
+  };
   return (
     <View style={styles.wrapItems}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onItemClick}>
         <View style={styles.item}>
           <View style={styles.wrapImage}>
             <Image

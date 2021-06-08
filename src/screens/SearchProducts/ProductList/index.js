@@ -113,7 +113,7 @@ const ProductList = ({navigation, data = []}) => {
           }
           numColumns={2}
           renderItem={({item, index}) => (
-            <ProductItem item={item} index={index} />
+            <ProductItem item={item} index={index} navigation={navigation} />
           )}
           keyExtractor={(item, index) => item.id + '-' + index}
           showsHorizontalScrollIndicator={false}
