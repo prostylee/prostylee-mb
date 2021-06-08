@@ -60,7 +60,7 @@ const ProductList = ({
           data={data?.content}
           numColumns={2}
           renderItem={({item, index}) => (
-            <ProductItem item={item} index={index} />
+            <ProductItem item={item} index={index} navigation={navigation} />
           )}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}

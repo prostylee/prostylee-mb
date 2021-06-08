@@ -11,7 +11,8 @@ export default EStyleSheet.create({
   wrapHeader: {
     backgroundColor: '$white',
     padding: 16,
-    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   wrapList: {
     flex: 1,

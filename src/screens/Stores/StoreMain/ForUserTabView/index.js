@@ -3,15 +3,15 @@ import {View, Text} from 'react-native';
 import styles from './style';
 import ProductList from './ProductList';
 import ScrollableTabView, {
-  DefaultTabBar,
-} from 'react-native-scrollable-tab-view';
+  ScrollableTabBar,
+} from 'components/ForkReactNativeSrollableTabView';
 import {Colors} from 'components';
 
-const ForUserTabView = () => {
+const ForUserTabView = ({navigation}) => {
   return (
     <View style={styles.contaner}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Dành cho bạn</Text>
+        <Text style={styles.title}>Dành riêng cho bạn</Text>
       </View>
       <ScrollableTabView
         tabBarBackgroundColor={Colors?.[`$white`]}
@@ -20,11 +20,12 @@ const ForUserTabView = () => {
         tabBarInactiveTextColor={Colors?.['$lightGray']}
         tabBarTextStyle={{fontSize: 14, fontWeight: '500', textAlign: 'center'}}
         initialPage={0}
-        renderTabBar={() => <DefaultTabBar />}>
-        <ProductList tabLabel="Tất cả" />
-        <ProductList tabLabel="🔥 Deal Hot" />
-        <ProductList tabLabel="Thời trang nam" />
-        <ProductList tabLabel="Giày dép" />
+        renderTabBar={() => <ScrollableTabBar />}
+        locked={false}>
+        <ProductList navigation={navigation} tabLabel="Tất cả" />
+        <ProductList navigation={navigation} tabLabel="🔥 Deal Hot" />
+        <ProductList navigation={navigation} tabLabel="Thời trang nam" />
+        <ProductList navigation={navigation} tabLabel="Giày dép" />
       </ScrollableTabView>
     </View>
   );

@@ -99,5 +99,6 @@ export {
   ProductRatingStar,
   FollowTextButton,
   contentLoader,
+  ForkReactNativeSrollableTabView,
   ListMenu,
 };

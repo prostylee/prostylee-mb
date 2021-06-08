@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
+  RefreshControl,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
@@ -35,7 +36,9 @@ import {
   getMidBannerSelector,
   getBrandListSelector,
   getCategoryListSelector,
+  getStoreMainLoadingSelector,
 } from 'redux/selectors/storeMain';
+import AppScrollViewIOSBounceColorsWrapper from './AppScrollViewIOSBounceColorsWrapper';
 const heightShow = 334;
 const HeaderLeft = () => {
   return (
@@ -61,6 +64,7 @@ const CustomSearchBar = ({navigation}) => (
   <View style={styles.searchBarContainer}>
     <Searchbar
       placeholder={i18n.t('search')}
+      style={{elevation: 0}}
       onFocus={() => {
         navigation.navigate('SearchProducts');
       }}
@@ -78,8 +82,9 @@ const Stores = (props) => {
   const brandList = useSelector((state) => getBrandListSelector(state));
   const categoryList = useSelector((state) => getCategoryListSelector(state));
 
+  const loading = useSelector((state) => getStoreMainLoadingSelector(state));
+
   const location = useLocation();
-  console.log('LOCATION', location);
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -120,17 +125,38 @@ const Stores = (props) => {
         }),
       );
   }, []);
-  const handleRefresh = () => {
+  const _handleRefresh = () => {
     handleRefreshing(true);
-  };
-  const renderFooter = () => {
-    return (
-      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-        <ActivityIndicator animating color={Colors.$purple} size="small" />
-      </View>
+    dispatch(
+      storeActions.getTopBanner({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+    dispatch(
+      storeActions.getMidBanner({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+    dispatch(
+      storeActions.getBrandList({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+    dispatch(
+      storeActions.getCategoryList({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        hotStatus: true,
+        sorts: '+order',
+      }),
     );
   };
-
+  useEffect(() => {
+    if (!loading) handleRefreshing(false);
+  }, [loading]);
   return (
     <View style={{flex: 1, backgroundColor: '#E82E46'}}>
       <HeaderAnimated
@@ -138,12 +164,24 @@ const Stores = (props) => {
           <View
             style={{
               width: '100%',
-              backgroundColor: '#fff',
               padding: 16,
               flexDirection: 'row',
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.2,
+              shadowRadius: 1.0,
+              elevation: 1,
             }}>
             <Searchbar
-              style={{flex: 1, height: 40}}
+              style={{
+                flex: 1,
+                height: 40,
+                elevation: 0,
+                backgroundColor: '#F4F5F5',
+              }}
               placeholder={i18n.t('search')}
               onFocus={() => {
                 navigation.navigate('SearchProducts');
@@ -152,56 +190,67 @@ const Stores = (props) => {
             <HeaderRight color={Colors['$icon']} />
           </View>
         }
-        bottomHeight={0}
+        bottomHeight={30}
         hideBottomBorder={true}
-        heightShow={heightShow - 100}
+        heightShow={heightShow - 200}
         Animated={Animated}
         navigation={navigation}
         scrollAnimated={scrollAnimated}
-        backgroundColor={'#fff'}
       />
-      <ScrollView
-        style={styles.container}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        onScroll={onScrollEvent}
-        scrollEventThrottle={16}>
-        <View style={{backgroundColor: Colors['$bgColor']}}>
-          <CustomBackground />
 
-          <Header
-            // title={i18n.t('headerTitle.featured_store')}
-            leftComponent={<HeaderLeft />}
-            rightComponent={<HeaderRight />}
-            containerStyle={styles.headerContainer}
-          />
-          <CustomSearchBar navigation={navigation} />
+      <AppScrollViewIOSBounceColorsWrapper
+        style={{flex: 1}}
+        topBounceColor="#E82E46"
+        bottomBounceColor="#fff">
+        <ScrollView
+          style={styles.container}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          onScroll={onScrollEvent}
+          scrollEventThrottle={16}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={_handleRefresh}
+            />
+          }>
+          <View style={{backgroundColor: Colors['$bgColor']}}>
+            <CustomBackground />
 
-          <AdvertisingSlider
-            data={topBannerList?.content ? topBannerList?.content : []}
-          />
+            <Header
+              leftComponent={<HeaderLeft />}
+              rightComponent={<HeaderRight />}
+              containerStyle={styles.headerContainer}
+            />
+            <CustomSearchBar navigation={navigation} />
 
-          <FunctionTags navigation={navigation} />
+            <AdvertisingSlider
+              data={topBannerList?.content ? topBannerList?.content : []}
+            />
 
-          <PopularBrands
-            data={
-              brandList && brandList?.content?.length ? brandList.content : []
-            }
-          />
+            <FunctionTags navigation={navigation} />
 
-          <MidAdvertisingSlider
-            data={midBannerList?.content ? midBannerList?.content : []}
-          />
-          <FeaturedCategories
-            data={
-              categoryList?.content && categoryList?.content?.length
-                ? categoryList?.content
-                : []
-            }
-          />
-          <ForUserTabView />
-        </View>
-      </ScrollView>
+            <PopularBrands
+              data={
+                brandList && brandList?.content?.length ? brandList.content : []
+              }
+            />
+
+            <MidAdvertisingSlider
+              data={midBannerList?.content ? midBannerList?.content : []}
+            />
+            <FeaturedCategories
+              data={
+                categoryList?.content && categoryList?.content?.length
+                  ? categoryList?.content
+                  : []
+              }
+              navigation={navigation}
+            />
+            <ForUserTabView navigation={navigation} />
+          </View>
+        </ScrollView>
+      </AppScrollViewIOSBounceColorsWrapper>
     </View>
   );
 };
