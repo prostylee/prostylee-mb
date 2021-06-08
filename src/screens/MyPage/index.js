@@ -3,35 +3,20 @@ import React, {useRef, useState} from 'react';
 import styles from './styles';
 
 import {
-  ScrollView,
   View,
-  StatusBar,
-  Platform,
-  RefreshControl,
   Text,
-  Image,
   Animated,
-  Dimensions,
   TouchableOpacity,
   ImageBackground,
-  SafeAreaView,
 } from 'react-native';
 
-import {
-  ThemeView,
-  ButtonOutlined,
-  ButtonRounded,
-  HeaderAnimated,
-  Colors,
-  Container,
-} from 'components';
+import {ThemeView, ButtonRounded, Container} from 'components';
 import HeaderFeed from './HeaderFeed';
 import I18n from 'i18n';
 import {useDispatch} from 'react-redux';
 import {commonActions, userActions} from 'reducers';
 import {Auth} from 'aws-amplify';
-import {reduce} from 'lodash';
-import {Grid, Full, Setting, ChevronLeft} from 'svg/common';
+import {Grid, Full, Setting} from 'svg/common';
 import {Message} from 'svg/social';
 
 import {Avatar, ToggleButton} from 'react-native-paper';
@@ -41,6 +26,7 @@ const heightShow = 334;
 const Index = ({navigation}) => {
   const dispatch = useDispatch();
   const [viewType, setViewType] = useState('grid');
+  const [activeTab, setActivedTab] = useState('menu');
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -59,14 +45,6 @@ const Index = ({navigation}) => {
     dispatch(commonActions.toggleLoading(false));
   }, []);
 
-  //funcs
-  const onSignOut = async () => {
-    console.log('onSignOut');
-    await dispatch(commonActions.setInitialRouteName('SignInOptions'));
-    await dispatch(userActions.userLogout());
-  };
-
-  console.log(styles);
   return (
     <ThemeView isFullView style={styles.container}>
       <HeaderFeed
@@ -136,7 +114,10 @@ const Index = ({navigation}) => {
                     </Text>
                   </View>
                   <View style={{paddingTop: 16}}>
-                    <ButtonRounded label={I18n.t('mypage.editProfile')} />
+                    <ButtonRounded
+                      label={I18n.t('mypage.editProfile')}
+                      onPress={() => navigation.navigate('SettingMyAccount')}
+                    />
                   </View>
                   <View style={styles.followParentView}>
                     <View style={styles.followChildView}>
@@ -167,27 +148,30 @@ const Index = ({navigation}) => {
           <TabViewContainer
             scrollAnimated={scrollAnimated}
             viewType={viewType}
+            setActivedTab={setActivedTab}
           />
         </View>
       </Container>
-      <View style={styles.viewType}>
-        <ToggleButton.Row
-          value={viewType}
-          style={{padding: 9, justifyContent: 'space-around'}}>
-          <TouchableOpacity onPress={() => setViewType('grid')}>
-            <Grid
-              color={viewType == 'grid' ? '#333333' : '#8B9399'}
-              fill={viewType == 'grid' ? '#333333' : 'none'}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setViewType('full')}>
-            <Full
-              color={viewType == 'full' ? '#333333' : '#8B9399'}
-              fill={viewType == 'full' ? '#333333' : 'none'}
-            />
-          </TouchableOpacity>
-        </ToggleButton.Row>
-      </View>
+      {activeTab === 'menu' && (
+        <View style={styles.viewType}>
+          <ToggleButton.Row
+            value={viewType}
+            style={{padding: 9, justifyContent: 'space-around'}}>
+            <TouchableOpacity onPress={() => setViewType('grid')}>
+              <Grid
+                color={viewType == 'grid' ? '#333333' : '#8B9399'}
+                fill={viewType == 'grid' ? '#333333' : 'none'}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setViewType('full')}>
+              <Full
+                color={viewType == 'full' ? '#333333' : '#8B9399'}
+                fill={viewType == 'full' ? '#333333' : 'none'}
+              />
+            </TouchableOpacity>
+          </ToggleButton.Row>
+        </View>
+      )}
     </ThemeView>
   );
 };
