@@ -1,7 +1,7 @@
 import styles from './styles';
 import React, {useMemo} from 'react';
-import {ScrollView, Text} from 'react-native';
-import ListMenu from './ListMenu';
+import {View} from 'react-native';
+import {ListMenu} from 'components';
 import {
   WaitingIcon,
   DeliveryIcon,
@@ -24,7 +24,7 @@ const Order = () => {
         label: 'Chờ xác nhận',
         navigateScreen: 'Orders',
         dataPush: {
-          status: "waiting",
+          status: 'waiting',
         },
       },
       {
@@ -32,7 +32,7 @@ const Order = () => {
         label: 'Đang giao hàng',
         navigateScreen: 'Orders',
         dataPush: {
-          status: "delivery",
+          status: 'delivery',
         },
       },
       {
@@ -40,7 +40,7 @@ const Order = () => {
         label: 'Đã hoàn thành',
         navigateScreen: 'Orders',
         dataPush: {
-          status: "done",
+          status: 'done',
         },
       },
       {
@@ -48,7 +48,7 @@ const Order = () => {
         label: 'Mua tại cửa hàng',
         navigateScreen: 'Orders',
         dataPush: {
-          status: "inhouse",
+          status: 'inhouse',
         },
       },
       {
@@ -56,7 +56,7 @@ const Order = () => {
         label: 'Đã huỷ',
         navigateScreen: 'Orders',
         dataPush: {
-          status: "cancel",
+          status: 'cancel',
         },
       },
     ],
@@ -96,7 +96,7 @@ const Order = () => {
       {
         icon: <SettingIcon />,
         label: 'Thiết lập tài khoản',
-        navigateScreen: 'Orders',
+        navigateScreen: 'Setting',
         dataPush: {},
       },
       {
@@ -109,11 +109,11 @@ const Order = () => {
     [],
   );
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <ListMenu title="Đơn hàng" menu={orderMenu} />
       <ListMenu title="Sản phẩm" menu={productMenu} />
       <ListMenu menu={settingMenu} />
-    </ScrollView>
+    </View>
   );
 };
 

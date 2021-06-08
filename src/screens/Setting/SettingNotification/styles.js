@@ -7,19 +7,33 @@ export default EStyleSheet.create({
     backgroundColor: '$bgColor',
   },
   viewStyle: {
-    flex: 3, 
-    marginTop: 6, 
+    flex: 1,
+    marginTop: 6,
     flexDirection: 'row',
-    paddingVertical: 7, 
-    backgroundColor: '$white', 
-    alignItems: 'center', 
-    justifyContent: 'space-around'
+    paddingVertical: 7,
+    backgroundColor: '$white',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   subText: {
-    color: '#8B9399',
-    marginLeft: 16
+    color: '$lightGray',
+  },
+  wrapLabel: {
+    flex: 1,
+    flexDirection: 'column',
   },
   primaryText: {
-    marginLeft: 16
-  }
+    paddingRight: 10,
+    color: '$black',
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  subText: {
+    paddingRight: 10,
+    color: '$lightGray',
+    fontSize: 14,
+    lineHeight: 20,
+  },
 });
