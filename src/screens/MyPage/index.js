@@ -59,8 +59,8 @@ const Index = ({navigation}) => {
               transform: [
                 {
                   translateY: scrollAnimated.interpolate({
-                    inputRange: [0, 20],
-                    outputRange: [0, -20],
+                    inputRange: [0, 1],
+                    outputRange: [0, -1],
                     extrapolate: 'clamp',
                   }),
                 },
