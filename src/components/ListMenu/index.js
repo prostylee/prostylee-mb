@@ -24,7 +24,7 @@ const ListMenu = ({title, menu, style, titleStyle, rowStyle}) => {
 
   const onNavigate = (item) => {
     if (typeof item.onPress === 'function') {
-      onPress();
+      item.onPress();
       return;
     }
     navigation.navigate(item.navigateScreen, item.dataPush);

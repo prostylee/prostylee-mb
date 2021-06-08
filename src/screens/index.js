@@ -49,6 +49,9 @@ import PromoNotification from './Notifications/PromoNotification';
 import Orders from './Orders';
 import OrdersDetail from './Orders/Detail';
 import MyPage from './MyPage';
+import WishList from './MyPage/WishList';
+import SoldList from './MyPage/SoldList';
+import SaveList from './MyPage/SaveList';
 
 export {
   Welcome,
@@ -101,4 +104,7 @@ export {
   Orders,
   OrdersDetail,
   MyPage,
+  WishList,
+  SaveList,
+  SoldList,
 };

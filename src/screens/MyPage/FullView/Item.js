@@ -1,26 +1,33 @@
+import styles from './styles';
 import React from 'react';
+
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {Avatar} from 'react-native-paper';
 import {MapPin, Heart, HorizontalDot, StoreIcon} from 'svg/common';
 import {Message} from 'svg/social';
-import styles from './styles';
 import I18n from 'i18n';
-const FullView = ({
-  name,
-  checkin,
-  image,
-  isFollowed,
-  store,
-  heartcount,
-  commentcount,
-  avatar,
-}) => {
+
+const FullView = ({item}) => {
+  const {
+    name,
+    checkin,
+    image,
+    isFollowed,
+    store,
+    heartcount,
+    commentcount,
+    avatar,
+  } = item;
+
+  const dispatch=useDispatch();
+
+
   return (
-    <View>
+    <View style={styles.containerItem}>
       <View style={styles.firstRowView}>
-        <View style={{flex: 1, height: 56}}>
-          <View style={{flex: 3, flexDirection: 'row'}}>
-            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.viewHeaderItem}>
+          <View style={styles.wrapHeaderItem}>
+            <View style={styles.wrapUserInfoItem}>
               <Avatar.Image source={{uri: avatar}} size={32} />
               <View style={{paddingLeft: 10}}>
                 <Text>{name}</Text>
@@ -28,27 +35,29 @@ const FullView = ({
                   <View style={styles.subTextCheckin}>
                     <MapPin width={11} height={11} />
                     <Text style={[styles.subText, {fontSize: 11}]}>
-                      {checkin}
+                      &nbsp;&nbsp;{checkin}
                     </Text>
                   </View>
                 )}
               </View>
             </View>
-            <View style={styles.followView}>
-              {isFollowed == 1 ? (
+            <View style={styles.wrapFollow}>
+              {isFollowed ? (
                 <Text style={styles.subText}>
                   {I18n.t('mypage.isFollowed')}
                 </Text>
               ) : (
                 <TouchableOpacity>
-                  <Text>{I18n.t('mypage.isNotFollowed')}</Text>
+                  <Text style={styles.btnFollowText}>
+                    {I18n.t('mypage.isNotFollow')}
+                  </Text>
                 </TouchableOpacity>
               )}
             </View>
           </View>
         </View>
-        <View style={{flex: 2}}>
-          <Image style={{width: 375, height: 375}} source={image} />
+        <View style={styles.viewBodyItem}>
+          <Image style={{width: 375, height: 375}} source={{uri: image}} />
           <View style={styles.storeName}>
             <StoreIcon />
             <Text style={{paddingLeft: 7, color: 'white', fontSize: 13}}>
@@ -56,7 +65,7 @@ const FullView = ({
             </Text>
           </View>
         </View>
-        <View style={{flex: 1, height: 48}}>
+        <View style={styles.viewFooterItem}>
           <View style={{flex: 3, flexDirection: 'row'}}>
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity

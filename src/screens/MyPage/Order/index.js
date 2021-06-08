@@ -1,6 +1,6 @@
 import styles from './styles';
 import React, {useMemo} from 'react';
-import {View} from 'react-native';
+import {View, Linking} from 'react-native';
 import {ListMenu} from 'components';
 import {
   WaitingIcon,
@@ -62,35 +62,37 @@ const Order = () => {
     ],
     [],
   );
+
   const productMenu = useMemo(
     () => [
       {
         icon: <SaleIcon />,
         label: 'Sản phẩm đang bán',
-        navigateScreen: 'Orders',
-        dataPush: {},
+        navigateScreen: 'SoldList',
+        dataPush: {status: 'sale'},
       },
       {
         icon: <SoldIcon />,
         label: 'Sản phẩm đã bán',
-        navigateScreen: 'Orders',
-        dataPush: {},
+        navigateScreen: 'SoldList',
+        dataPush: {status: 'sold'},
       },
     ],
     [],
   );
+
   const settingMenu = useMemo(
     () => [
       {
         icon: <HeartIcon />,
         label: 'Sản phẩm đã thích',
-        navigateScreen: 'Orders',
+        navigateScreen: 'WishList',
         dataPush: {},
       },
       {
         icon: <SaveIcon />,
         label: 'Đã lưu',
-        navigateScreen: 'Orders',
+        navigateScreen: 'SaveList',
         dataPush: {},
       },
       {
@@ -102,8 +104,7 @@ const Order = () => {
       {
         icon: <SupportIcon />,
         label: 'Hỗ trợ',
-        navigateScreen: 'Orders',
-        dataPush: {},
+        onPress: () => Linking.openURL(`tel:099999999`),
       },
     ],
     [],

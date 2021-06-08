@@ -22,12 +22,6 @@ export default EStyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  followView: {
-    flex: 2,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
   storeName: {
     flexDirection: 'row',
     backgroundColor: '#000000',
@@ -46,4 +40,16 @@ export default EStyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
+  viewHeaderItem: {flex: 1, height: 56, paddingLeft: 16, paddingRight: 16},
+  viewBodyItem: {flex: 2},
+  viewFooterItem: {flex: 1, height: 48},
+  wrapFollow: {
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  wrapHeaderItem: {flex: 3, flexDirection: 'row'},
+  wrapUserInfoItem: {flex: 1, flexDirection: 'row', alignItems: 'center'},
+  btnFollowText: {color: '$purple', fontSize: 14, lineHeight: 20},
 });
