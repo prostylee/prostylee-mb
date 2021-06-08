@@ -50,7 +50,7 @@ const HeaderAnimated = ({
         ...styles.container(WIDTH_HEADER, HEIGHT_HEADER),
         backgroundColor: headerColor,
         borderBottomColor,
-        width: translateWidth
+        width: translateWidth,
       }}>
       <Animated.View
         style={{

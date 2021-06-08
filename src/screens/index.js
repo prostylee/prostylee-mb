@@ -33,6 +33,10 @@ import PostProductCategory from './PostProduct/ProductCategory';
 import Search from './Search';
 import FilterProduct from './FilterProduct';
 import PromoNotification from './Notifications/PromoNotification';
+import AddProductsCategories from './PostProduct/AddProductsCategories';
+import BrandFashions from './PostProduct/BrandFashions';
+import GeneralInformation from './PostProduct/GeneralInformation';
+import ProductInformations from './PostProduct/ProductInformations';
 
 export {
   Welcome,
@@ -70,4 +74,8 @@ export {
   Search,
   FilterProduct,
   PromoNotification,
+  AddProductsCategories,
+  BrandFashions,
+  GeneralInformation,
+  ProductInformations,
 };

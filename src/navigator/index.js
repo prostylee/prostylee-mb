@@ -46,6 +46,10 @@ import {
   ChooseRateProduct,
   RateProduct,
   Cart,
+  AddProductsCategories,
+  BrandFashions,
+  GeneralInformation,
+  ProductInformations,
 } from 'screens';
 
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
@@ -64,7 +68,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Home"
+      initialRouteName="ProductInformations"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -89,6 +93,16 @@ function SignedIn() {
       <Stack.Screen name="CropPicture" component={CropPicture} />
       <Stack.Screen name="AddStatus" component={AddStatus} />
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
+      <Stack.Screen
+        name="AddProductsCategories"
+        component={AddProductsCategories}
+      />
+      <Stack.Screen name="BrandFashions" component={BrandFashions} />
+      <Stack.Screen name="GeneralInformation" component={GeneralInformation} />
+      <Stack.Screen
+        name="ProductInformations"
+        component={ProductInformations}
+      />
       <Stack.Screen
         name="PostProductCategory"
         component={PostProductCategory}
