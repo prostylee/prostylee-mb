@@ -31,6 +31,7 @@ import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 const heightShow = 334;
 import {ProductLoading} from 'components/Loading/contentLoader';
+
 const WIDTH = Dimensions.get('window').width;
 const WIDTH_IMAGE = WIDTH / 2 - 14;
 const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
@@ -103,7 +104,52 @@ const Products = ({navigation}) => {
       );
     }
   };
-
+  const _handleSort = (value) => {
+    let sortOption = {};
+    switch (value) {
+      case 1: {
+        sortOption.sorts = 'name';
+        break;
+      }
+      case 2: {
+        sortOption.bestSeller = true;
+        break;
+      }
+      case 3: {
+        sortOption.sorts = '-createdAt';
+        break;
+      }
+      case 4: {
+        sortOption.sorts = '-priceSale';
+        break;
+      }
+      case 5: {
+        sortOption.sorts = 'priceSale';
+        break;
+      }
+      default: {
+        sortOption.bestRating = true;
+        break;
+      }
+    }
+    dispatch(
+      productActions.getListProduct({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: 'name',
+        ...sortOption,
+      }),
+    );
+  };
+  const _handleFilterByTag = (queryObject) => {
+    dispatch(
+      productActions.getListProduct({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        ...queryObject,
+      }),
+    );
+  };
   const renderFooter = () => {
     if (!loadMoreLoading) {
       return <View style={styles.viewFooter} />;
@@ -153,7 +199,13 @@ const Products = ({navigation}) => {
                 {categoriesSelect?.name}
               </Text>
             }
-            bottomComponent={<BottomHeaderAnimated />}
+            bottomComponent={
+              <BottomHeaderAnimated
+                navigation={navigation}
+                onSortPress={_handleSort}
+                onTagPress={_handleFilterByTag}
+              />
+            }
             bottomHeight={100}
             hideBottomBorder={true}
             heightShow={heightShow - 190}

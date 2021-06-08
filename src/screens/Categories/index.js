@@ -9,19 +9,17 @@ import RightCategories from './Right';
 import LeftCategories from './Left';
 
 const Categories = ({navigation}) => {
+  const [banner, setBanner] = React.useState('');
   return (
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('headerTitle.categories')} />
       <View style={styles.wrapContent}>
         <View style={styles.wrapLeftContent}>
-          <LeftCategories />
+          <LeftCategories setBanner={setBanner} />
         </View>
         <View style={styles.wrapRightContent}>
           <View style={styles.wrapRightBanner}>
-            <Image
-              style={styles.imageBanner}
-              source={require('assets/images/data/saleOff.png')}
-            />
+            <Image style={styles.imageBanner} source={{uri: banner}} />
           </View>
           <RightCategories navigation={navigation} />
         </View>

@@ -8,8 +8,6 @@ import {
   Alert,
 } from 'react-native';
 import {Container, ButtonRounded, HeaderBack} from 'components';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {hasNotch} from 'react-native-device-info';
 import {useTheme, useRoute, useNavigation} from '@react-navigation/native';
 import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
@@ -28,10 +26,9 @@ const WIDTH = dim.width;
 
 const AddStatus = (props) => {
   const dispatch = useDispatch();
-  const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
   const inputRef = React.useRef();
+  const inputValueRef = React.useRef();
   const imagesRef = React.useRef();
-  const [textValue, setTextValue] = React.useState('');
   const [uploadList, setUploadList] = React.useState([]);
   const [doneUpload, setDoneUpload] = React.useState(false);
   const [userId, setUserId] = React.useState('');
@@ -53,10 +50,6 @@ const AddStatus = (props) => {
     statusSelectors.getStatusStore(state),
   );
   const customPrefix = `/public/${userId}/posts/`;
-  const userProfile = useSelector((state) => userTokenSelector(state));
-  const userData = userProfile
-    ? userProfile.signInUserSession?.idToken.payload.identities?.[0]
-    : {};
 
   const removeStore = async () => {
     await dispatch(statusActions.removeStatusStore());
@@ -91,33 +84,38 @@ const AddStatus = (props) => {
   };
 
   const postStatus = React.useCallback(async () => {
-    const imagesList = uploadList.map((item) => {
-      return {
-        name: item.name,
-        path: customPrefix,
-      };
-    });
-    if (!isEmpty(storeSelected)) {
-      await dispatch(
-        statusActions.postStatus({
-          description: textValue,
-          storeId: storeSelected.id,
-          images: imagesList,
-          targetType: 'user',
-        }),
-      );
-      removeStore();
-    } else {
-      await dispatch(
-        statusActions.postStatus({
-          description: textValue,
-          images: imagesList,
-          targetType: 'user',
-        }),
-      );
-      removeStore();
+    try {
+      const imagesList = uploadList.map((item) => {
+        return {
+          name: item.name,
+          path: customPrefix,
+        };
+      });
+      if (!isEmpty(storeSelected)) {
+        await dispatch(
+          statusActions.postStatus({
+            description: inputValueRef.current,
+            storeId: storeSelected.id,
+            images: imagesList,
+            targetType: 'user',
+          }),
+        );
+        removeStore();
+      } else {
+        await dispatch(
+          statusActions.postStatus({
+            description: inputValueRef.current,
+            images: imagesList,
+            targetType: 'user',
+          }),
+        );
+        removeStore();
+      }
+    } finally {
+      dispatch(commonActions.toggleLoading(false));
+      props.navigation.pop(2);
     }
-  }, [JSON.stringify(uploadList), textValue, storeSelected]);
+  }, [JSON.stringify(uploadList), inputValueRef.current, storeSelected]);
 
   const uploadToStorage = async (image) => {
     try {
@@ -143,25 +141,19 @@ const AddStatus = (props) => {
             };
             return newList;
           });
-          getUrl(result.key);
         }
       } catch (err) {
+        dispatch(commonActions.toggleLoading(false));
         Alert.alert(i18n.t('error.cannotUploadImage'));
       }
     } catch (err) {
+      dispatch(commonActions.toggleLoading(false));
       Alert.alert(i18n.t('error.cannotGetImage'));
     } finally {
       if (image.index === images.length - 1) {
         setDoneUpload(true);
-        dispatch(commonActions.toggleLoading(false));
       }
     }
-  };
-
-  const getUrl = async (key) => {
-    const signedURL = await Storage.get(key);
-    // setUploadedPhoto(signedURL);
-    // console.log('signedURL ' + signedURL);
   };
 
   const addStatus = () => {
@@ -185,7 +177,7 @@ const AddStatus = (props) => {
           itemWidth={WIDTH}
           onSnapToItem={(index) => setActiveImage(index + 1)}
         />
-        {images.length > 1 ? (
+        {images.length >= 1 ? (
           <View style={styles.imagesCount}>
             <Text
               style={
@@ -197,24 +189,34 @@ const AddStatus = (props) => {
     );
   };
 
+  const InputStatusText = () => {
+    const [textValue, setTextValue] = React.useState('');
+    return (
+      <TextInput
+        ref={inputRef}
+        multiline={true}
+        underlineColorAndroid="transparent"
+        style={styles.textInput}
+        placeholder={i18n.t('addStatus.textPlaceholder')}
+        onChangeText={(text) => {
+          setTextValue(text);
+          inputValueRef.current = text;
+        }}
+        value={textValue}
+        blurOnSubmit={true}
+        placeholderTextColor={colors['$lightGray']}
+      />
+    );
+  };
+
   return (
     <View style={styles.container}>
       <HeaderBack
         onBack={navigation.goBack}
         title={i18n.t('addStatus.title')}
       />
+      <InputStatusText />
       <Container style={styles.mainContent}>
-        <TextInput
-          ref={inputRef}
-          multiline={true}
-          underlineColorAndroid="transparent"
-          style={styles.textInput}
-          placeholder={i18n.t('addStatus.textPlaceholder')}
-          onChangeText={(text) => setTextValue(text)}
-          value={textValue}
-          blurOnSubmit={true}
-          placeholderTextColor={colors['$lightGray']}
-        />
         <View style={styles.imagesList}>
           <ImageSlideList />
           {!isEmpty(storeSelected) ? (

@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, Image, Dimensions} from 'react-native';
-import IconIcons from 'react-native-vector-icons/Ionicons';
 import i18n from 'i18n';
 import ImageView from 'react-native-image-viewing';
 import {useSelector} from 'react-redux';
@@ -72,7 +71,13 @@ const ProductRating = (props) => {
         <Text style={styles.rateTitleText}>
           {i18n.t('productDetail.rating')}
         </Text>
-        <TouchableOpacity style={styles.ratingTotal} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.ratingTotal}
+          onPress={() => {
+            props.navigation.navigate('ReviewRating', {
+              productId: props.productId,
+            });
+          }}>
           <Rating value={totalRate} />
           <Text
             style={

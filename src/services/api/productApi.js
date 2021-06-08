@@ -25,6 +25,11 @@ export const getProductRelated = (payload) => {
   });
 };
 
+// TODO: update api sau khi ráp màn hình store
+export const getProductCoordinated = (payload) => {
+  return _fetch(GET, '/products', payload);
+};
+
 export const getListProductService = (payload) => {
   return _fetch(GET, '/products', payload);
 };
@@ -40,7 +45,7 @@ export const likeProductService = (id) => {
 };
 
 export const unLikeProductService = (id) => {
-  return _fetch(PUT, '/user-likes/unLike', {
+  return _fetch(PUT, '/user-likes/unlike', {
     targetId: id,
     targetType: 'PRODUCT',
     customFieldId1: 0,

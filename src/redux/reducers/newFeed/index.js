@@ -23,6 +23,7 @@ export const types = {
   GET_PRODUCT_OF_STORIES_SUCCESS: 'GET_PRODUCT_OF_STORIES_SUCCESS',
   GET_PRODUCT_OF_STORIES_FAILED: 'GET_PRODUCT_OF_STORIES_FAILED',
 
+  GET_STORE_MINI_LOADING: 'GET_STORE_MINI_LOADING',
   GET_STORE_MINI: 'GET_STORE_MINI',
   GET_STORE_MINI_SUCCESS: 'GET_STORE_MINI_SUCCESS',
   GET_STORE_MINI_FAIL: 'GET_STORE_MINI_FAIL',
@@ -57,6 +58,7 @@ export const actions = {
   getProductOfStorySuccess: createAction(types.GET_PRODUCT_OF_STORIES_SUCCESS),
   getProductOfStoryFailed: createAction(types.GET_PRODUCT_OF_STORIES_FAILED),
 
+  getStoreMiniLoading: createAction(types.GET_STORE_MINI_LOADING),
   getStoreMini: createAction(types.GET_STORE_MINI),
   getStoreMiniSuccess: createAction(types.GET_STORE_MINI_SUCCESS),
   getStoreMiniFail: createAction(types.GET_STORE_MINI_FAIL),
@@ -81,6 +83,7 @@ const intialState = {
   productOfStory: {},
   storeOfStory: {},
   storeMini: {},
+  storeMiniLoading: false,
   page: PAGE_DEFAULT,
   limit: LIMIT_DEFAULT,
   hasLoadMore: false,
@@ -88,6 +91,7 @@ const intialState = {
 
 export const selectors = {
   getStoreMini: (state) => state.newFeed.storeMini,
+  getStoreMiniLoading: (state) => state.newFeed.storeMiniLoading,
   getNewFeedStore: (state) => state.newFeed.newFeedStoreSelect,
 };
 
@@ -154,6 +158,9 @@ export default handleActions(
     },
     [types.GET_PRODUCT_OF_STORIES_FAILED]: (state, {payload}) => {
       return {...state, productOfStory: {}};
+    },
+    [types.GET_STORE_MINI_LOADING]: (state, {payload}) => {
+      return {...state, storeMiniLoading: payload};
     },
     [types.GET_STORE_MINI_SUCCESS]: (state, {payload}) => {
       return {...state, storeMini: payload};

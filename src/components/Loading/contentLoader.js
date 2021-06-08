@@ -3,6 +3,7 @@ import {Dimensions, View, StyleSheet, Platform} from 'react-native';
 import ContentLoader, {Circle, Rect} from 'react-content-loader/native';
 
 const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
 export const NewFeedContentLoading = ({
   width,
@@ -190,6 +191,171 @@ export const ProductLoading = ({
   );
 };
 
+export const TopSearchLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([style])}>
+      <ContentLoader
+        speed={2}
+        width={60}
+        height={30}
+        viewBox="0 0 60 30"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect rx="15" ry="15" width="60" height="30" />
+      </ContentLoader>
+    </View>
+  );
+};
+
+export const ReviewRatingLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([styles.container, style])}>
+      <ContentLoader
+        height={50}
+        width={width}
+        speed={speed}
+        viewBox="0 0 10 10"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y={10} width={width} height={10} />
+      </ContentLoader>
+      <ContentLoader
+        height={50}
+        width={width}
+        speed={speed}
+        viewBox={'0 0 ' + width + ' 50'}
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y={10} width={width} height={10} />
+        <Rect y={30} width={width} height={5} />
+        <Rect y={40} width={width} height={5} />
+      </ContentLoader>
+    </View>
+  );
+};
+
+export const FeaturedCategoriesLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <ContentLoader
+      speed={2}
+      width={width}
+      height={height}
+      viewBox={'0 0 ' + width + ' ' + height}
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}>
+      <Rect rx="15" ry="15" width={width} height={height} />
+    </ContentLoader>
+  );
+};
+
+export const HintKeywordLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([styles.container, style])}>
+      <ContentLoader
+        height={height}
+        width={width}
+        speed={speed}
+        viewBox="0 0 10 10"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y={10} width={width * 0.9} height={10} />
+      </ContentLoader>
+      <ContentLoader
+        height={50}
+        width={width}
+        speed={speed}
+        viewBox={'0 0 ' + width + ' 50'}
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y={10} width={width * 0.7} height={10} />
+        <Rect y={30} width={width * 0.6} height={8} />
+        <Rect y={40} width={width} height={8} />
+      </ContentLoader>
+    </View>
+  );
+};
+
+export const SearchProductLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([styles.container, style])}>
+      <ContentLoader
+        height={height - 100}
+        width={width}
+        speed={speed}
+        viewBox="0 0 10 10"
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect width={width} height={25} />
+      </ContentLoader>
+      <ContentLoader
+        height={100}
+        width={width}
+        speed={speed}
+        viewBox={'0 0 ' + width + ' 30'}
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y={0} width={width} height={10} />
+        <Rect y={15} width={width} height={10} />
+        <Rect y={30} width={width * 0.7} height={10} />
+        <Rect y={45} width={width * 0.4} height={10} />
+      </ContentLoader>
+    </View>
+  );
+};
+
+HintKeywordLoading.defaultProps = {
+  height: 10,
+  width: deviceWidth,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+
+ReviewRatingLoading.defaultProps = {
+  height: 10,
+  width: deviceWidth,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+
 NewFeedContentLoading.defaultProps = {
   height: 190,
   width: deviceWidth,
@@ -238,6 +404,32 @@ CategoriesRightLoading.defaultProps = {
 ProductLoading.defaultProps = {
   height: 100,
   width: 100,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+
+TopSearchLoading.defaultProps = {
+  height: 100,
+  width: 100,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+
+FeaturedCategoriesLoading.defaultProps = {
+  height: 100,
+  width: 100,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+SearchProductLoading.defaultProps = {
+  height: (deviceHeight - 200) / 2,
+  width: deviceWidth / 2 - 32,
   backgroundColor: '#d9d9d9',
   foregroundColor: '#ecebeb',
   style: {},

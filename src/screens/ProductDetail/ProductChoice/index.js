@@ -2,12 +2,14 @@ import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
+import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '@react-navigation/native';
-import {currencyFormat} from 'utils/currency';
+import envConfig from 'config';
 import {Ruler} from 'svg/common';
 
 const ProductChoice = (props) => {
   const {colors} = useTheme();
+  const navigation = useNavigation();
   const choiceList = props.choiceList ? props.choiceList : [];
   const selectList = props.choiceSelect ? props.choiceSelect : [];
   const selectChoice = (item) => {
@@ -41,7 +43,12 @@ const ProductChoice = (props) => {
                   {item.key === 'kich_co' ? (
                     <TouchableOpacity
                       style={styles.linkSupport}
-                      onPress={() => {}}>
+                      onPress={() => {
+                        navigation.navigate('SimpleWebView', {
+                          url: envConfig.sizeHelp,
+                          title: i18n.t('productDetail.sizeHelp'),
+                        });
+                      }}>
                       <Ruler color={colors['$linkBlue']} />
                       <Text style={styles.linkSupportText}>
                         {i18n.t('productDetail.sizeSupport')}
@@ -57,11 +64,11 @@ const ProductChoice = (props) => {
                       let choiceButtonStyle = styles.choiceButton;
                       let choiceButtonTextStyle = styles.choiceButtonText;
                       const choiceIsSelected = selectList.find(
-                        (selectItem) => selectItem.value === itemChoice.id,
+                        (selectItem) => selectItem.value.id === itemChoice.id,
                       );
                       if (
                         choiceIsSelected &&
-                        choiceIsSelected.value === itemChoice.id
+                        choiceIsSelected.value.id === itemChoice.id
                       ) {
                         choiceButtonStyle = [
                           styles.choiceButton,
@@ -79,7 +86,7 @@ const ProductChoice = (props) => {
                           <TouchableOpacity
                             style={choiceButtonStyle}
                             onPress={() => {
-                              selectChoice({...item, value: itemChoice.id});
+                              selectChoice({...item, value: itemChoice});
                             }}>
                             <Text style={choiceButtonTextStyle}>
                               {itemChoice.attrValue}

@@ -18,11 +18,37 @@ import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import ProductDetail from './ProductDetail';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
+
+import SearchProducts from './SearchProducts';
+import ReviewRating from './ReviewRating';
+import ChooseRateProduct from './ChooseRateProduct';
+import RateProduct from './RateProduct';
+import Cart from './Cart';
 import AddStory from './Story/AddStory';
 import AddStore from './Story/AddStore';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
+import Setting from './Setting';
+import SettingMyAccount from './Setting/SettingMyAccount';
+import SettingAddress from './Setting/SettingAddress';
+import SettingChat from './Setting/SettingChat';
+import SettingNotification from './Setting/SettingNotification';
+import SettingLanguage from './Setting/SettingLanguage';
+import SettingAddAddress from './Setting/AddAddress';
+import BestSeller from './Stores/BestSeller';
+import SearchProductFilter from './SearchProductFilter';
+import PersonalSalers from './Stores/PersonalSalers';
+import Vouchers from './Stores/Vouchers';
+import NearbyStore from './Stores/NearbyStore';
+import FlashSale from './Stores/FlashSale';
+import StoreAddress from './StoreAddress';
+import Search from './Search';
+import FilterProduct from './FilterProduct';
+import PromoNotification from './Notifications/PromoNotification';
+import Orders from './Orders';
+import OrdersDetail from './Orders/Detail';
+import MyPage from './MyPage'
 
 export {
   Welcome,
@@ -34,6 +60,10 @@ export {
   Products,
   StoryBoard,
   Chat,
+  BestSeller,
+  PersonalSalers,
+  SearchProductFilter,
+  NearbyStore,
   SignUpViaPhone,
   SignInViaPhone,
   SignInOptions,
@@ -45,9 +75,30 @@ export {
   SimpleWebView,
   ProductDetail,
   UserProfile,
+  SearchProducts,
+  ReviewRating,
+  ChooseRateProduct,
+  RateProduct,
+  Cart,
   AddStory,
   AddStore,
   CropPicture,
   AddStatus,
   AddStoreForStatus,
+  Setting,
+  SettingMyAccount,
+  SettingAddress,
+  SettingChat,
+  SettingNotification,
+  SettingLanguage,
+  SettingAddAddress,
+  Vouchers,
+  FlashSale,
+  StoreAddress,
+  Search,
+  FilterProduct,
+  PromoNotification,
+  Orders,
+  OrdersDetail,
+  MyPage
 };

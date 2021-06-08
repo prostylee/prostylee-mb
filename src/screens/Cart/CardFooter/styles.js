@@ -1,0 +1,111 @@
+import EStyleSheet from 'react-native-extended-stylesheet';
+
+export default EStyleSheet.create({
+  container: {
+    backgroundColor: '$white',
+    flexDirection: 'column',
+  },
+  viewHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
+  },
+  viewBody: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  viewCredit: {
+    flex: 0.5,
+    borderRightWidth: 1,
+    borderColor: '#E9EAEB',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  viewCoupon: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 0.5,
+  },
+  viewTemp: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    paddingLeft: 10,
+    flex: 0.5,
+  },
+  viewCheckout: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 0,
+    flex: 0.5,
+  },
+
+  btnCredit: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  btnCoupon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  btnCheckout: {
+    flex: 1,
+  },
+  labelCredit: {
+    color: '#333333',
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: '400',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    alignSelf: 'center',
+  },
+  labelCoupon: {
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: '400',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    alignSelf: 'center',
+  },
+  viewTempTitle: {
+    color: '#8B9399',
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  viewTempValue: {
+    color: '#333333',
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  wrapChip: {
+    backgroundColor: 'transparent',
+  },
+  chipText: {
+    color: '$purple',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+});
