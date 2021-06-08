@@ -48,7 +48,7 @@ import FilterProduct from './FilterProduct';
 import PromoNotification from './Notifications/PromoNotification';
 import Orders from './Orders';
 import OrdersDetail from './Orders/Detail';
-import MyPage from './MyPage'
+import MyPage from './MyPage';
 
 export {
   Welcome,
@@ -100,5 +100,5 @@ export {
   PromoNotification,
   Orders,
   OrdersDetail,
-  MyPage
+  MyPage,
 };

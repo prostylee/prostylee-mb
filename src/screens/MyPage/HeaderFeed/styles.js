@@ -82,8 +82,6 @@ export default EStyleSheet.create({
     ...flexRow,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '$bgColor',
-    borderRadius: 20,
     padding: 2,
   },
   grayBg: {

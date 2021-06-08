@@ -1,7 +1,7 @@
 import styles from './styles';
 import React, {useMemo} from 'react';
 import {View} from 'react-native';
-import ListMenu from './ListMenu';
+import {ListMenu} from 'components';
 import {
   WaitingIcon,
   DeliveryIcon,
@@ -96,7 +96,7 @@ const Order = () => {
       {
         icon: <SettingIcon />,
         label: 'Thiết lập tài khoản',
-        navigateScreen: 'Orders',
+        navigateScreen: 'Setting',
         dataPush: {},
       },
       {
