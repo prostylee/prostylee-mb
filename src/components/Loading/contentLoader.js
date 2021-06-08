@@ -337,6 +337,47 @@ export const SearchProductLoading = ({
     </View>
   );
 };
+export const ProductDetailLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([styles.container, style])}>
+      <ContentLoader
+        height={height * 0.6}
+        width={width * 0.95}
+        speed={speed}
+        viewBox={`0 0 1 1`}
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect width={width} height={25} />
+      </ContentLoader>
+      <ContentLoader
+        height={height * 0.4}
+        width={width * 0.95}
+        speed={speed}
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect y={10} width={width * 0.7} height={20} />
+        <Rect y={10} x={width * 0.8} width={width * 0.2} height={20} />
+        <Rect y={40} width={width * 0.4} height={20} />
+        <Rect y={70} width={width * 0.35} height={20} />
+        <Rect y={70} x={width * 0.3} width={width * 0.7} height={20} />
+        <Rect y={100} width={width * 0.9} height={20} />
+        <Rect y={130} width={width} height={20} />
+        <Rect y={160} width={width * 0.5} height={20} />
+        <Rect y={190} width={width * 0.8} height={20} />
+        <Rect y={220} width={width * 0.7} height={20} />
+        <Rect y={250} width={width} height={20} />
+        <Rect y={280} width={width * 0.5} height={20} />
+      </ContentLoader>
+    </View>
+  );
+};
 
 export const VouchersLoading = ({
   backgroundColor,
@@ -463,6 +504,17 @@ SearchProductLoading.defaultProps = {
   style: {},
   speed: 1.2,
 };
+ProductDetailLoading.defaultProps = {
+  height: deviceHeight,
+  width: deviceWidth,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {
+    height: deviceHeight,
+  },
+  speed: 1.2,
+};
+
 VouchersLoading.defaultProps = {
   height: deviceWidth / 2,
   width: deviceWidth,
