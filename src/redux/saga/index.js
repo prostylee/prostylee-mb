@@ -9,6 +9,7 @@ import reviewRating from './reviewRating';
 import status from './status';
 import categories from './categories';
 import cart from './cart';
+import address from './address';
 
 import search from './search';
 import topSearch from './search/topSearch';
@@ -30,6 +31,7 @@ export default function* rootSaga() {
     ...status,
     ...categories,
     ...cart,
+    ...address,
     ...search,
     ...topSearch,
     ...hintProductSearch,
