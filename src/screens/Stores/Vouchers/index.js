@@ -25,6 +25,7 @@ const Vouchers = ({navigation}) => {
   ];
 
   const _handleSort = (value) => {
+    setVisible(false);
     setValueSort(value);
     let sortOption = {};
     switch (value) {

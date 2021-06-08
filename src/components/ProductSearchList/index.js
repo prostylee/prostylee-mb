@@ -109,6 +109,7 @@ const ProductSearchList = ({
         loadmoreDataFuntion={loadmoreDataFuntion}
         isLoading={isLoading}
         hasLoadmore={hasLoadmore}
+        navigation={navigation}
       />
     </ThemeView>
   );

@@ -285,6 +285,7 @@ const ProductDetail = (props) => {
             <ProductLocation
               info={productData?.productOwnerResponse}
               location={productData?.location}
+              productId={productData?.id}
             />
           </>
         ) : null}

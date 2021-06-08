@@ -15,7 +15,7 @@ const FilterBar = ({setVisible = () => {}, visible = false, navigation}) => {
   let count = 0;
   count += categoryFilterState !== -1 ? 1 : 0;
   count += Object.keys(attributeFilterState).length;
-  //   count += price?.[1] !== 0 ? 1 : 0;
+  count += price?.[1] !== 0 ? 1 : 0;
   return (
     <View style={styles.wrapBlockOne}>
       <TouchableOpacity onPress={() => setVisible(!visible)}>

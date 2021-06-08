@@ -24,7 +24,8 @@ export default EStyleSheet.create({
     width: '100%',
     flexDirection: 'column',
     minHeight: 140,
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
   },
   itemInner: {
     backgroundColor: '$white',

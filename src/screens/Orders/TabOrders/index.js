@@ -5,7 +5,7 @@ import {View, Text} from 'react-native';
 import i18n from 'i18n';
 import ScrollableTabView, {
   ScrollableTabBar,
-} from 'react-native-scrollable-tab-view';
+} from 'components/ForkReactNativeSrollableTabView';
 import {Waiting, Delivery, Done, Cancel, Inhouse} from './Tabs';
 
 const routes = [

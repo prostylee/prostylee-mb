@@ -10,8 +10,7 @@ import {Divider} from 'react-native-paper';
 const StoreSearchResultItem = ({item, index, navigation}) => {
   const dispatch = useDispatch();
   const clickItem = () => {
-    dispatch(categoriesActions.setCategoriesSelect(item));
-    navigation.navigate('Products');
+    navigation.navigate('ProductDetail', {id: item.id});
   };
   return (
     <View style={[styles.wrapItems]}>

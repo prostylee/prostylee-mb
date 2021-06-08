@@ -379,6 +379,34 @@ export const ProductDetailLoading = ({
   );
 };
 
+export const VouchersLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <View style={StyleSheet.flatten([styles.container])}>
+      <ContentLoader
+        speed={2}
+        width={width * 0.95}
+        height={124}
+        viewBox={`0 0 ${width} 124`}
+        backgroundColor={backgroundColor}
+        foregroundColor={foregroundColor}>
+        <Rect x="64" y="8" rx="3" ry="3" width="87" height="10" />
+        <Rect x="65" y="26" rx="3" ry="3" width="330" height="10" />
+        <Rect x="9" y="67" rx="3" ry="3" width="305" height="8" />
+        <Rect x="331" y="66" rx="3" ry="3" width="60" height="26" />
+        <Circle cx="31" cy="23" r="23" />
+        <Rect x="9" y="82" rx="3" ry="3" width="241" height="8" />
+      </ContentLoader>
+    </View>
+  );
+};
+
 HintKeywordLoading.defaultProps = {
   height: 10,
   width: deviceWidth,
@@ -487,6 +515,14 @@ ProductDetailLoading.defaultProps = {
   speed: 1.2,
 };
 
+VouchersLoading.defaultProps = {
+  height: deviceWidth / 2,
+  width: deviceWidth,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
 const styles = StyleSheet.create({
   container: {
     display: 'flex',

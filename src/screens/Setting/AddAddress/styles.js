@@ -4,26 +4,49 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '$white',
   },
   viewStyle: {
-    paddingHorizontal: 16, 
-    paddingTop: 16
+    paddingHorizontal: 16,
+    paddingTop: 16,
   },
   viewDivider: {
-    height: 6, 
-    backgroundColor: "$bgColor"
+    height: 6,
+    backgroundColor: '$bgColor',
   },
   viewSwitch: {
-    flex: 3, 
-    flexDirection: 'row', 
-    justifyContent: 'space-around'
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '$white',
   },
   viewSwitchText: {
-    flex: 2, 
-    paddingLeft: 16
+    flex: 1,
+    flexDirection: 'row',
   },
   viewSwitchButton: {
-    flex: 1
-  }
+    justifyContent: 'flex-end',
+  },
+  viewContactInfo: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  viewAddressInfo: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  labelSwitchText: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+
+  wrapContactInfo: {
+    backgroundColor: '$white',
+    marginTop: 6,
+  },
+  wrapAddressInfo: {
+    marginTop: 6,
+    backgroundColor: '$white',
+  },
 });
