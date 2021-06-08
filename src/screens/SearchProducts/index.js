@@ -100,7 +100,6 @@ const TagList = ({onTagPress}) => {
         data={MockTag}
         renderItem={({item, index}) => (
           <Chip
-            selectedColor={Colors?.['$purple']}
             selected={index === active}
             small
             onPress={() => {
@@ -206,20 +205,8 @@ const SearchProducts = ({navigation}) => {
     );
   };
 
-  const resetSortAndFilter = () => {
-    setValueSort(null);
-  };
-
   useEffect(() => {
     setSearchQuery(currentKeyword);
-    // dispatch(
-    //   searchActions.getFeaturedProductSearch({
-    //     keyword: currentKeyword,
-    //     // type: 'product',
-    //     page: PAGE_DEFAULT,
-    //     limit: LIMIT_DEFAULT,
-    //   }),
-    // );
   }, [currentKeyword]);
 
   return (

@@ -154,7 +154,7 @@ const Stores = (props) => {
         }
         bottomHeight={0}
         hideBottomBorder={true}
-        heightShow={heightShow - 100}
+        heightShow={heightShow - 200}
         Animated={Animated}
         navigation={navigation}
         scrollAnimated={scrollAnimated}
