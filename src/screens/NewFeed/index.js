@@ -183,7 +183,7 @@ const NewFeed = ({navigation}) => {
         changeTabStore={changeTabStore}
         changeTabUser={changeTabUser}
       />
-      {handleLoading() ? (
+      {/* {handleLoading() ? (
         <LoadingComponent />
       ) : (
         <ScrollView
@@ -231,7 +231,7 @@ const NewFeed = ({navigation}) => {
             loadMoreLoading={loadMoreLoading}
           />
         </ScrollView>
-      )}
+      )} */}
     </ThemeView>
   );
 };

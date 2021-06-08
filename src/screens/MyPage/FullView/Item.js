@@ -19,9 +19,6 @@ const FullView = ({item}) => {
     avatar,
   } = item;
 
-  const dispatch=useDispatch();
-
-
   return (
     <View style={styles.containerItem}>
       <View style={styles.firstRowView}>

@@ -80,6 +80,6 @@ export default EStyleSheet.create({
     alignItems: 'center',
   },
   wrapTabView: {
-    height: height - HEADER_HEIGHT,
+    height: height - HEADER_HEIGHT - 50,
   },
 });
