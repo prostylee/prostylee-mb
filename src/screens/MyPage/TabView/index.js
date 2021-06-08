@@ -5,7 +5,7 @@ import {Colors} from 'components';
 import NewFeed from '../NewFeed';
 import Order from '../Order';
 import styles from './styles';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+import ScrollableTabView from 'components/ForkReactNativeSrollableTabView';
 import I18n from 'i18n';
 import GridView from '../GridView';
 import FullView from '../FullView';

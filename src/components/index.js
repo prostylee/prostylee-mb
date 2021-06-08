@@ -46,7 +46,7 @@ import Picker from './Picker';
 import ProductRatingStar from './ProductRatingStar';
 import FollowTextButton from './FollowTextButton';
 import contentLoader from './Loading/contentLoader';
-
+import ForkReactNativeSrollableTabView from './ForkReactNativeSrollableTabView';
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -96,4 +96,5 @@ export {
   ProductRatingStar,
   FollowTextButton,
   contentLoader,
+  ForkReactNativeSrollableTabView,
 };

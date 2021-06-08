@@ -4,7 +4,7 @@ import styles from './style';
 import ProductList from './ProductList';
 import ScrollableTabView, {
   ScrollableTabBar,
-} from 'react-native-scrollable-tab-view';
+} from 'components/ForkReactNativeSrollableTabView';
 import {Colors} from 'components';
 
 const ForUserTabView = ({navigation}) => {

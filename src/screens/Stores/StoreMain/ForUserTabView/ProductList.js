@@ -10,9 +10,11 @@ const ProductList = ({navigation}) => {
         <FlatList
           numColumns={2}
           data={[1, 2, 3, 4, 5, 6, 7]}
-          renderItem={({item, index}) => (
-            <ProductItem item={item} index={index} navigation={navigation} />
-          )}
+          renderItem={({item, index}) => {
+            return (
+              <ProductItem item={item} index={index} navigation={navigation} />
+            );
+          }}
         />
       </View>
     </View>

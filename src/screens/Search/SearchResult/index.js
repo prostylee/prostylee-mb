@@ -7,7 +7,7 @@ import styles from './styles';
 
 import ScrollableTabView, {
   DefaultTabBar,
-} from 'react-native-scrollable-tab-view';
+} from 'components/ForkReactNativeSrollableTabView';
 import ProductSearchResult from './ProductSearchResult';
 import StoreSearchResult from './StoreSearchResult';
 
