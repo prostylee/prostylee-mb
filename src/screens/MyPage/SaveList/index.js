@@ -53,7 +53,7 @@ const SaveList = (props) => {
 
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header isDefault title={'Sản phẩm đã lưu'} />
+      <Header isDefault title={i18n.t('mypage.saveList')} />
       <View style={styles.wrapSaveList}>
         <FlatList
           data={data}

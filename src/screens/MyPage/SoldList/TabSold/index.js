@@ -9,12 +9,11 @@ import ScrollableTabView, {
 import {Sale, Sold} from './Tabs';
 
 const routes = [
-  {key: 'sale', title: 'Đang bán'},
-  {key: 'sold', title: 'Đã bán'},
+  {key: 'sale', title: i18n.t('mypage.saleProduct')},
+  {key: 'sold', title: i18n.t('mypage.soldProduct')},
 ];
 
 const TabSold = ({navigation, status}) => {
-  console.log('status', status);
   return (
     <View style={styles.container}>
       <ScrollableTabView

@@ -1,14 +1,13 @@
 import styles from './styles';
 import React from 'react';
 import {Bag, Menu} from 'svg/common';
-import {Dimensions, View, TouchableOpacity, Animated} from 'react-native';
+import {View, TouchableOpacity, Animated} from 'react-native';
 import NewFeed from '../NewFeed';
 import Order from '../Order';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import GridView from '../GridView';
 import FullView from '../FullView';
 
-const {height} = Dimensions.get('window').height;
 const HEADER_HEIGHT = 0;
 
 const TabViewContainer = ({

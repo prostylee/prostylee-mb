@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {View, TouchableOpacity, Text, FlatList} from 'react-native';
+import {View, FlatList} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import ProductItem from './ProductItem';
@@ -53,7 +52,7 @@ const WishList = (props) => {
 
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header isDefault title={'Sản phẩm đã thích'} />
+      <Header isDefault title={i18n.t('mypage.wishList')} />
       <View style={styles.wrapWishList}>
         <FlatList
           data={data}

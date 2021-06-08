@@ -109,7 +109,7 @@ const addAddress = ({route, navigation}) => {
               <View style={styles.viewSwitch}>
                 <View style={styles.viewSwitchText}>
                   <Text style={styles.labelSwitchText}>
-                    Địa chỉ làm mặc định
+                    {I18n.t('setting.setAddressAsDefault')}
                   </Text>
                 </View>
                 <View style={styles.viewSwitchButton}>

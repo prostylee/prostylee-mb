@@ -19,44 +19,53 @@ const SettingAddress = () => {
 
   return (
     <ThemeView isFullView style={styles.container}>
-      <Header title={I18n.t('setting.address')} isDefault/>
+      <Header title={I18n.t('setting.address')} isDefault />
       <ScrollView>
-        {
-          addressList.map((address, index) => {
-            return (
-              <View>
-                <View style={styles.addressView} key={index}>
-                  <View style={styles.addressIconView}>
-                    <LocationIcon color="#8B9399"/>
-                  </View>
-                  <View style={styles.addressDetailView}>
-                    <Text>{address.name}   {address.phone}</Text>
-                    <Text style={styles.subText}>{address.address}</Text>
-                    <Text style={styles.subText}>{address.ward}</Text>
-                    <Text style={styles.subText}>{address.district}</Text>
-                    <Text style={styles.subText}>{address.province}</Text>
-                  </View>
-                  <View style={styles.addressDefaultView}>
-                    <Text style={styles.isDefaultText}>{address.isDefault==1?'Mặc định':''}</Text>
-                    <Text></Text>
-                    <RightArrow/>
-                  </View>
+        {addressList.map((address, index) => {
+          return (
+            <View>
+              <View style={styles.addressView} key={index}>
+                <View style={styles.addressIconView}>
+                  <LocationIcon color="#8B9399" />
                 </View>
-                {index!=addressList.length-1?<Divider></Divider>:<></>}
+                <View style={styles.addressDetailView}>
+                  <Text>
+                    {address.name} {address.phone}
+                  </Text>
+                  <Text style={styles.subText}>{address.address}</Text>
+                  <Text style={styles.subText}>{address.ward}</Text>
+                  <Text style={styles.subText}>{address.district}</Text>
+                  <Text style={styles.subText}>{address.province}</Text>
+                </View>
+                <View style={styles.addressDefaultView}>
+                  <Text style={styles.isDefaultText}>
+                    {address.isDefault == 1 ? I18n.t('setting.default') : ''}
+                  </Text>
+                  <Text></Text>
+                  <RightArrow />
+                </View>
               </View>
-            );
-          })
-        }
+              {index != addressList.length - 1 ? <Divider></Divider> : <></>}
+            </View>
+          );
+        })}
         <View style={{height: 6}}></View>
-        <TouchableOpacity onPress={() => navigation.navigate('SettingAddAddress',{addressCount: addressListCount})}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('SettingAddAddress', {
+              addressCount: addressListCount,
+            })
+          }>
           <View style={styles.addAddressButtonView}>
-            <PlusSign/>
-            <Text style={{paddingLeft: 15}}>Thêm địa chỉ mới</Text>
+            <PlusSign />
+            <Text style={{paddingLeft: 15}}>
+              {I18n.t('setting.newAddress')}
+            </Text>
           </View>
         </TouchableOpacity>
       </ScrollView>
     </ThemeView>
   );
-}
+};
 
 export default SettingAddress;
