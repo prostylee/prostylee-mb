@@ -198,7 +198,7 @@ const NewFeed = ({navigation}) => {
             stories={stories}
             loading={handleLoading()}
           />
-          <VerticalFeed
+          {/* <VerticalFeed
             targetType={targetType}
             handleRefresh={() => {}}
             handleLoadMore={() => {}}
@@ -229,7 +229,7 @@ const NewFeed = ({navigation}) => {
             newFeedList={newFeedList}
             refreshing={false}
             loadMoreLoading={loadMoreLoading}
-          />
+          /> */}
         </ScrollView>
       )}
     </ThemeView>
