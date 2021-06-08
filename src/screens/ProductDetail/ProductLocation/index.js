@@ -11,11 +11,13 @@ import {
 import IconIcons from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
 import i18n from 'i18n';
+import {FollowTextButton} from 'components';
 import {useTheme} from '@react-navigation/native';
 import styles from './styles';
 
 const ProductLocation = (props) => {
   const {colors} = useTheme();
+  const productId = props.productId ? props.productId : 0;
   const info = props.info ? props.info : {};
   const location = props.location ? props.location : {};
   const address = `${location.address ? location.address : ''}, ${
@@ -40,11 +42,7 @@ const ProductLocation = (props) => {
           <Image source={{uri: info?.logoUrl}} style={styles.infoLogo} />
           <Text style={styles.infoNameText}>{info?.name}</Text>
         </View>
-        <TouchableOpacity style={styles.infoFollow} onPress={() => {}}>
-          <Text style={styles.followText}>
-            {i18n.t('productDetail.follow')}
-          </Text>
-        </TouchableOpacity>
+        <FollowTextButton item={{id: productId}} />
       </View>
       <View style={styles.mapPlaceholder}>
         <MapView

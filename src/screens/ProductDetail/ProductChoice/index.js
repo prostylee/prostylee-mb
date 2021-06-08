@@ -40,7 +40,7 @@ const ProductChoice = (props) => {
                 ]}>
                 <View key={`choice_${index}`} style={styles.titleRow}>
                   <Text style={styles.itemLabel}>{item.label}</Text>
-                  {item.key === 'kich_co' ? (
+                  {item.key === 'kich_co' || item.key === 'size' ? (
                     <TouchableOpacity
                       style={styles.linkSupport}
                       onPress={() => {
