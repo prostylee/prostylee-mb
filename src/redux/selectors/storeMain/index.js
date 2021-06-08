@@ -2,6 +2,11 @@ import {createSelector} from 'reselect';
 
 export const storeReducer = (state) => state.store;
 
+export const getStoreMainLoadingSelector = createSelector(
+  storeReducer,
+  (data) => data?.isStoreLoading || false,
+);
+
 //List FEATURED_PRODUCT_SEARCH
 export const getTopBannerSelector = createSelector(
   storeReducer,

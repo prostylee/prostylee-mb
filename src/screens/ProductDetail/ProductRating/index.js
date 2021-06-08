@@ -66,7 +66,7 @@ const ProductRating = (props) => {
     setImageListVisible(true);
   };
   return (
-    <View style={styles.container}>
+    <View style={styles.container} ref={props?.ref}>
       <View style={styles.rateTitle}>
         <Text style={styles.rateTitleText}>
           {i18n.t('productDetail.rating')}

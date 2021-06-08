@@ -58,6 +58,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
     height: 65,
     marginRight: 16,
+    justifyContent: 'center',
   },
   viewFooter: {
     marginBottom: 6,

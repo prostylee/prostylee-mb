@@ -6,9 +6,10 @@ const WIDTH = Dimensions.get('window').width;
 export default EStyleSheet.create({
   container: {
     width: '100%',
-    height: 160,
+    height: WIDTH / 2,
     paddingHorizontal: 16,
     paddingVertical: 8,
+    // borderWidth: 1,
   },
   sliderContainer: {
     // borderWidth: 1,

@@ -17,6 +17,7 @@ const AnimatedHeader = ({
   scrollToTop,
   scrollToComment,
   scrollToRelated,
+  activeTabProps = 'product',
 }) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
@@ -131,6 +132,7 @@ const AnimatedHeader = ({
         scrollToTop={scrollToTop}
         scrollToComment={scrollToComment}
         scrollToRelated={scrollToRelated}
+        activeTabProps={activeTabProps}
       />
     </Animated.View>
   );
