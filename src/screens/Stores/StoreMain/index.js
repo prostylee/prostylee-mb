@@ -138,12 +138,24 @@ const Stores = (props) => {
           <View
             style={{
               width: '100%',
-              backgroundColor: '#fff',
               padding: 16,
               flexDirection: 'row',
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.2,
+              shadowRadius: 1.0,
+              elevation: 1,
             }}>
             <Searchbar
-              style={{flex: 1, height: 40}}
+              style={{
+                flex: 1,
+                height: 40,
+                elevation: 0,
+                backgroundColor: '#F4F5F5',
+              }}
               placeholder={i18n.t('search')}
               onFocus={() => {
                 navigation.navigate('SearchProducts');
@@ -152,7 +164,7 @@ const Stores = (props) => {
             <HeaderRight color={Colors['$icon']} />
           </View>
         }
-        bottomHeight={0}
+        bottomHeight={30}
         hideBottomBorder={true}
         heightShow={heightShow - 200}
         Animated={Animated}
