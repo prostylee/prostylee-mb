@@ -48,6 +48,7 @@ import ProductRatingStar from './ProductRatingStar';
 import FollowTextButton from './FollowTextButton';
 import contentLoader from './Loading/contentLoader';
 import ListMenu from './ListMenu';
+import ForkReactNativeSrollableTabView from './ForkReactNativeSrollableTabView';
 
 export {
   ContainerWithoutScrollView,
