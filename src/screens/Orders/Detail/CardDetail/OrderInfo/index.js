@@ -49,7 +49,9 @@ const OrderInfo = ({dealData}) => {
         <View style={styles.container}>
           <View style={styles.wrapOrderId}>
             <OrderIdIcon />
-            <View style={styles.wrapOrderStatus}>&nbsp;{renderStatus()}</View>
+            <View style={styles.wrapOrderStatus}>
+              <Text>&nbsp;{renderStatus()}</Text>
+            </View>
           </View>
         </View>
       );
