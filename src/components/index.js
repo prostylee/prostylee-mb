@@ -49,7 +49,7 @@ import FollowTextButton from './FollowTextButton';
 import contentLoader from './Loading/contentLoader';
 import ListMenu from './ListMenu';
 import ForkReactNativeSrollableTabView from './ForkReactNativeSrollableTabView';
-
+import Bag from './Bag';
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -102,4 +102,5 @@ export {
   contentLoader,
   ForkReactNativeSrollableTabView,
   ListMenu,
+  Bag,
 };

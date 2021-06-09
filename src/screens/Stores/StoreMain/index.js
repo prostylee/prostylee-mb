@@ -14,16 +14,17 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {Header, Colors, HeaderAnimated} from 'components';
+import {Header, Colors, HeaderAnimated, Bag} from 'components';
 
-import {storeActions} from 'redux/reducers';
+import {storeActions, searchActions} from 'redux/reducers';
 
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 import CustomBackground from './CustomBackground';
 import AdvertisingSlider from './AdvertisingSlider';
 import FunctionTags from './FunctionTags';
 
-import {MessageOutlined, Bag, MapPinFill} from 'svg/common';
+import {MapPinFill} from 'svg/common';
+import {Message} from 'svg/social';
 import {Searchbar} from 'react-native-paper';
 
 import PopularBrands from './PopularBrands';
@@ -48,26 +49,31 @@ const HeaderLeft = () => {
     </TouchableOpacity>
   );
 };
-const HeaderRight = ({color = '#fff'}) => {
+const HeaderRight = ({color = '#fff', navigation, isAnimated = false}) => {
   return (
     <View style={styles.headerRightContainer}>
       <TouchableOpacity>
-        <MessageOutlined color={color} width={18} height={18} strokeWidth={2} />
+        <Message color={color} />
       </TouchableOpacity>
-      <TouchableOpacity>
-        <Bag color={color} width={20} height={20} strokeWidth={2} />
-      </TouchableOpacity>
+      <Bag
+        color={color}
+        width={20}
+        height={20}
+        strokeWidth={2}
+        badgeColor={isAnimated ? '#E82E46' : '#fff'}
+        badgeTextColor={isAnimated ? '#fff' : '#000'}
+        navigation={navigation}
+      />
     </View>
   );
 };
-const CustomSearchBar = ({navigation}) => (
+const CustomSearchBar = ({navigation, onSearchFocus = () => {}}) => (
   <View style={styles.searchBarContainer}>
     <Searchbar
+      style={styles.wrapSearchBar}
+      inputStyle={styles.wrapSearchBarInput}
       placeholder={i18n.t('search')}
-      style={{elevation: 0}}
-      onFocus={() => {
-        navigation.navigate('SearchProducts');
-      }}
+      onFocus={onSearchFocus}
     />
   </View>
 );
@@ -92,6 +98,11 @@ const Stores = (props) => {
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
+
+  const onSearchFocus = () => {
+    dispatch(searchActions.setCurrentKeyword(''));
+    navigation.navigate('SearchProducts');
+  };
 
   useEffect(() => {
     if (!topBannerList || !topBannerList?.content?.length)
@@ -176,18 +187,22 @@ const Stores = (props) => {
               elevation: 1,
             }}>
             <Searchbar
-              style={{
-                flex: 1,
-                height: 40,
-                elevation: 0,
-                backgroundColor: '#F4F5F5',
-              }}
+              style={[
+                styles.wrapSearchBar,
+                {
+                  flex: 1,
+                  backgroundColor: '#F4F5F5',
+                },
+              ]}
+              inputStyle={styles.wrapSearchBarInput}
               placeholder={i18n.t('search')}
-              onFocus={() => {
-                navigation.navigate('SearchProducts');
-              }}
+              onFocus={onSearchFocus}
             />
-            <HeaderRight color={Colors['$icon']} />
+            <HeaderRight
+              isAnimated
+              color={Colors['$icon']}
+              navigation={navigation}
+            />
           </View>
         }
         bottomHeight={30}
@@ -219,10 +234,13 @@ const Stores = (props) => {
 
             <Header
               leftComponent={<HeaderLeft />}
-              rightComponent={<HeaderRight />}
+              rightComponent={<HeaderRight navigation={navigation} />}
               containerStyle={styles.headerContainer}
             />
-            <CustomSearchBar navigation={navigation} />
+            <CustomSearchBar
+              navigation={navigation}
+              onSearchFocus={onSearchFocus}
+            />
 
             <AdvertisingSlider
               data={topBannerList?.content ? topBannerList?.content : []}

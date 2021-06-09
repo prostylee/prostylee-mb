@@ -40,8 +40,23 @@ export default EStyleSheet.create({
   },
   searchBarContainer: {
     width: '100%',
+    height: 35,
+    borderRadius: 0,
+    elevation: 0,
     paddingHorizontal: 16,
-    // height: 32,
-    marginBottom: 8,
+  },
+  wrapSearchBar: {
+    width: '100%',
+    backgroundColor: '#F4F5F5',
+    height: 35,
+    borderRadius: 4,
+    elevation: 0,
+    padding: 0,
+  },
+  wrapSearchBarInput: {
+    height: 35,
+    fontSize: 14,
+    lineHeight: 18,
+    elevation: 0,
   },
 });
