@@ -19,6 +19,14 @@ export default EStyleSheet.create({
   },
   wrapList: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 0,
+  },
+  wrapListInner: {
+    flex: 1,
+    padding: 0,
+    width: WIDTH,
   },
   wrapItems: {
     flex: 1,
@@ -26,6 +34,7 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     paddingBottom: 4,
     paddingTop: 4,
+    width: '100%',
   },
   item: {
     flexDirection: 'row',
@@ -44,10 +53,12 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingRight: 12,
+    width: '100%',
   },
   title: {
     color: '$icon',
     paddingRight: 10,
+    maxWidth: '90%',
   },
   wrapImage: {
     position: 'relative',
@@ -111,6 +122,7 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginTop: 12,
+    alignItems: 'center',
   },
   resultRating: {
     lineHeight: 20,

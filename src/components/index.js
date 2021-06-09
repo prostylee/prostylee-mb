@@ -14,6 +14,7 @@ import RnDateTimePicker from './RnDateTimePicker';
 import Rating from './RnRating/SwipeRating';
 import AirbnbRating from './RnRating/TapRating';
 import ProductLike from './ProductLike';
+import ProductBookmark from './ProductBookmark';
 // import {RnRatingTap} from './RnRatingTap';
 // import {ModalImagePicker} from './ModalImagePicker';
 import ModalZoomImage from './ModalZoomImage';
@@ -43,7 +44,12 @@ import SlideInModal from './SlideInModal';
 import ModalTabButton from './ModalTabButton';
 import ModalAddPictureMethod from './ModalAddPictureMethod';
 import Picker from './Picker';
-
+import ProductRatingStar from './ProductRatingStar';
+import FollowTextButton from './FollowTextButton';
+import contentLoader from './Loading/contentLoader';
+import ListMenu from './ListMenu';
+import ForkReactNativeSrollableTabView from './ForkReactNativeSrollableTabView';
+import Bag from './Bag';
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -86,8 +92,15 @@ export {
   ModalTabButton,
   ModalAddPictureMethod,
   ProductLike,
+  ProductBookmark,
   NumberInputUpDown,
   RadioSelectGroup,
   Picker,
   SlideInModal,
+  ProductRatingStar,
+  FollowTextButton,
+  contentLoader,
+  ForkReactNativeSrollableTabView,
+  ListMenu,
+  Bag,
 };

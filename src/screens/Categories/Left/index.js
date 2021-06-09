@@ -46,6 +46,19 @@ const LeftCategories = ({setBanner}) => {
 
   const page = useSelector((state) => getPageLeftCategoriesSelector(state));
 
+  if (
+    (!categoryParentSelect || !categoryParentSelect.id) &&
+    listLeftCategories &&
+    listLeftCategories.length
+  ) {
+    setBanner(
+      listLeftCategories[0]?.banner ? listLeftCategories[0]?.banner : '',
+    );
+    dispatch(
+      categoriesActions.setCategoriesParentSelect(listLeftCategories?.[0]),
+    );
+  }
+
   useEffect(() => {
     if (categoryParentSelect && categoryParentSelect.banner) {
       setBanner(categoryParentSelect.banner);
@@ -108,7 +121,11 @@ const LeftCategories = ({setBanner}) => {
         <FlatList
           data={listLeftCategories}
           renderItem={({item}) => (
-            <CategoriesRightItem item={item} setBanner={setBanner} />
+            <CategoriesRightItem
+              item={item}
+              setBanner={setBanner}
+              listLeftCategories={listLeftCategories}
+            />
           )}
           numColumns={1}
           keyExtractor={(item, index) => index}

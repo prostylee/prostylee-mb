@@ -14,6 +14,15 @@ export default EStyleSheet.create({
   },
   activeTab: {
     borderBottomWidth: 1,
-    borderBottomColor: '#823FFD'
-  }
+    borderBottomColor: '#823FFD',
+  },
+  viewType: {
+    alignSelf: 'center',
+    borderRadius: 100,
+    backgroundColor: '$white',
+    width: 80,
+    bottom: 7,
+    position: 'absolute',
+    zIndex: 99,
+  },
 });

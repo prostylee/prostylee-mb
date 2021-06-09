@@ -14,7 +14,7 @@ const AdvertisingSlider = ({data = []}) => {
           autoplayDelay={3}
           autoplayLoop
           autoplayLoopKeepAnimation
-          scrollEnabled={false}
+          scrollEnabled
           data={data && data.length ? data : [0, 1, 2, 3, 5, 6, 7]}
           showPagination
           paginationStyle={{

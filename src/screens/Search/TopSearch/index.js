@@ -32,6 +32,36 @@ const TopSearch = ({navigation}) => {
     handleRefreshing(true);
   };
 
+  const _handleTagPress = (item) => {
+    dispatch(searchActions.setCurrentKeyword(item));
+    dispatch(
+      searchActions.getProductsSearch({
+        keyword: item,
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: 'name',
+      }),
+    );
+    dispatch(
+      searchActions.getStoreSearch({
+        keyword: item,
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: 'name',
+        numberOfProducts: 10,
+      }),
+    );
+    dispatch(
+      searchActions.getHintProductSearch({
+        keyword: item,
+        type: 'product',
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+    navigation.navigate('SearchProducts');
+  };
+
   return (
     <>
       <View style={styles.wrapHeader}>
@@ -63,26 +93,7 @@ const TopSearch = ({navigation}) => {
                   <Chip
                     small
                     onPress={() => {
-                      dispatch(searchActions.setCurrentKeyword(item));
-                      dispatch(
-                        searchActions.getProductsSearch({
-                          keyword: item,
-                          page: PAGE_DEFAULT,
-                          limit: LIMIT_DEFAULT,
-                          sorts: 'name',
-                        }),
-                      );
-                      dispatch(
-                        searchActions.getStoreSearch({
-                          keyword: item,
-                          page: PAGE_DEFAULT,
-                          limit: LIMIT_DEFAULT,
-                          sorts: 'name',
-                          numberOfProducts: 10,
-                        }),
-                      );
-
-                      navigation.navigate('SearchProducts');
+                      _handleTagPress(item);
                     }}
                     style={styles.itemChips}>
                     {item}

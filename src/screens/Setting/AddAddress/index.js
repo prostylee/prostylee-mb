@@ -4,101 +4,124 @@ import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import I18n from 'i18n';
 import styles from './styles';
 import {Field, Formik} from 'formik';
-import { Switch } from 'react-native-paper';
+import {Switch} from 'react-native-paper';
+import {MapIcon} from 'svg/common';
 
-const addAddress = ({ route, navigation }) => {
-  const { addressCount } = route.params;
+const addAddress = ({route, navigation}) => {
+  const {addressCount} = route.params;
 
-  const onChangeProvince = () => {
+  const onChangeProvince = () => {};
 
-  }
+  const onChangeDistrict = () => {};
 
-  const onChangeDistrict = () => {
-
-  }
-
-  const onChangeWard = () => {
-
-  }
+  const onChangeWard = () => {};
 
   return (
     <ThemeView isFullView style={styles.container}>
-      <Header title={I18n.t('settingAddress.addAddress')} isDefault/>
+      <Header
+        title={I18n.t('settingAddress.addAddress')}
+        rightIcon={<MapIcon />}
+        rightPress={() => console.log('right pressed')}
+        isDefault
+      />
       <View style={{paddingHorizontal: 16, paddingTop: 16}}>
-        {addressCount!=0?<Text style={{color: '#8B9399'}}>{I18n.t('settingAddress.noAddress')}</Text>:<></>}
+        {addressCount != 0 ? (
+          <Text style={{color: '#8B9399'}}>
+            {I18n.t('settingAddress.noAddress')}
+          </Text>
+        ) : (
+          <></>
+        )}
       </View>
-      <Formik>
-        <ScrollView>
-          <View>
-            <View style={styles.viewStyle}>
-              <Text style={{color: '#8B9399'}}>{I18n.t('settingAddress.contact')}</Text>
-            </View>
-            <Field
-              component={CustomTextInput}
-              name="name"
-              label={I18n.t('settingProfile.name')}
-            />
-            <Field
-              component={CustomTextInput}
-              name="phone"
-              label={I18n.t('settingProfile.phone')}
-            />
+      <ScrollView>
+        <Formik
+          validateOnMount={true}
+          initialValues={{
+            name: '',
+            province: '',
+            district: '',
+            ward: '',
+          }}
+          onSubmit={(values) => console.log(values)}>
+          {({handleSubmit, values, isValid}) => (
+            <View>
+              <View style={styles.viewContactInfo}>
+                <View style={styles.viewStyle}>
+                  <Text style={{color: '#8B9399'}}>
+                    {I18n.t('settingAddress.contact')}
+                  </Text>
+                </View>
+                <View style={styles.wrapContactInfo}>
+                  <Field
+                    component={CustomTextInput}
+                    name="name"
+                    label={I18n.t('settingProfile.name')}
+                  />
+                  <Field
+                    component={CustomTextInput}
+                    name="phone"
+                    label={I18n.t('settingProfile.phone')}
+                  />
+                </View>
+              </View>
+              <View style={styles.viewAddressInfo}>
+                <View style={styles.viewStyle}>
+                  <Text style={{color: '#8B9399'}}>
+                    {I18n.t('settingAddress.address')}
+                  </Text>
+                </View>
+                <View style={styles.wrapAddressInfo}>
+                  <TouchableOpacity onPress={() => onChangeProvince()}>
+                    <Field
+                      component={CustomTextInput}
+                      disabled
+                      name="province"
+                      label={I18n.t('settingAddress.province')}
+                    />
+                  </TouchableOpacity>
 
-            <View style={styles.viewStyle}>
-              <Text style={{color: '#8B9399'}}>{I18n.t('settingAddress.address')}</Text>
-            </View>
-            
-            <TouchableOpacity
-              onPress={() => onChangeProvince()}
-            >
-              <Field
-                component={CustomTextInput}
-                disabled
-                name="province"
-                label={I18n.t('settingAddress.province')}
-              />
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              onPress={() => onChangeDistrict()}
-            >
-              <Field
-                component={CustomTextInput}
-                disabled
-                name="district"
-                label={I18n.t('settingAddress.district')}
-              />
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              onPress={() => onChangeWard()}
-            >
-              <Field
-                component={CustomTextInput}
-                disabled
-                name="ward"
-                label={I18n.t('settingAddress.ward')}
-              />
-            </TouchableOpacity>
-            <Field
-              component={CustomTextInput}
-              name="detailAddress"
-              label={I18n.t('settingAddress.detailAddress')}
-            />
-            <View style={styles.viewDivider}></View>
-            <View style={styles.viewSwitch}>
-              <View style={styles.viewSwitchText}>
-                <Text>Địa chỉ làm mặc định</Text>
+                  <TouchableOpacity onPress={() => onChangeDistrict()}>
+                    <Field
+                      component={CustomTextInput}
+                      disabled
+                      name="district"
+                      label={I18n.t('settingAddress.district')}
+                    />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => onChangeWard()}>
+                    <Field
+                      component={CustomTextInput}
+                      disabled
+                      name="ward"
+                      label={I18n.t('settingAddress.ward')}
+                    />
+                  </TouchableOpacity>
+                  <Field
+                    component={CustomTextInput}
+                    name="detailAddress"
+                    label={I18n.t('settingAddress.detailAddress')}
+                  />
+                </View>
               </View>
-              <View style={styles.viewSwitchButton}>
-                <Switch value={true} />
+
+              <View style={styles.viewDivider}></View>
+              <View style={styles.viewSwitch}>
+                <View style={styles.viewSwitchText}>
+                  <Text style={styles.labelSwitchText}>
+                    {I18n.t('setting.setAddressAsDefault')}
+                  </Text>
+                </View>
+                <View style={styles.viewSwitchButton}>
+                  <Switch value={true} />
+                </View>
               </View>
             </View>
-          </View>
-        </ScrollView>
-      </Formik>
+          )}
+        </Formik>
+      </ScrollView>
     </ThemeView>
   );
-}
+};
 
 export default addAddress;

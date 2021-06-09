@@ -8,6 +8,8 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   wrapHeader: {
     flexDirection: 'row',
@@ -56,6 +58,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
     height: 65,
     marginRight: 16,
+    justifyContent: 'center',
   },
   viewFooter: {
     marginBottom: 6,

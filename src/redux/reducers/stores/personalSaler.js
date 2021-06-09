@@ -18,11 +18,9 @@ export const actions = {
   setPersonalSalersLoadmoreLoading: createAction(
     types.SET_PERSONAL_SALERS_LOADMORE_LOADING,
   ),
-
   getPersonalSalers: createAction(types.GET_PERSONAL_SALERS),
   getPersonalSalersSuccess: createAction(types.GET_PERSONAL_SALERS_SUCCESS),
   getPersonalSalersFailed: createAction(types.GET_PERSONAL_SALERS_FAILED),
-
   getPersonalSalersLoadmore: createAction(types.GET_PERSONAL_SALERS_LOADMORE),
   getPersonalSalersLoadmoreSuccess: createAction(
     types.GET_PERSONAL_SALERS_LOADMORE_SUCCESS,

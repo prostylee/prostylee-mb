@@ -40,6 +40,7 @@ import {
   FilterProduct,
   SearchProducts,
   PromoNotification,
+  MainNotification,
   ReviewRating,
   ChooseRateProduct,
   RateProduct,
@@ -50,6 +51,8 @@ import {
   SettingChat,
   SettingNotification,
   SettingLanguage,
+  Orders,
+  OrdersDetail,
   SettingAddAddress,
   BestSeller,
   PersonalSalers,
@@ -58,6 +61,10 @@ import {
   FlashSale,
   NearbyStore,
   StoreAddress,
+  MyPage,
+  WishList,
+  SoldList,
+  SaveList,
 } from 'screens';
 
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
@@ -76,7 +83,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Cart"
+      initialRouteName="Home"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -85,6 +92,12 @@ function SignedIn() {
       <Stack.Screen name="ChooseRateProduct" component={ChooseRateProduct} />
       <Stack.Screen name="RateProduct" component={RateProduct} />
       <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="MyPage" component={MyPage} />
+      <Stack.Screen name="WishList" component={WishList} />
+      <Stack.Screen name="SaveList" component={SaveList} />
+      <Stack.Screen name="SoldList" component={SoldList} />
+      <Stack.Screen name="Orders" component={Orders} />
+      <Stack.Screen name="OrdersDetail" component={OrdersDetail} />
       <Stack.Screen name="PaymentMethodCart" component={PaymentMethodCart} />
       <Stack.Screen name="VoucherCart" component={VoucherCart} />
       <Stack.Screen name="CheckoutCart" component={CheckoutCart} />
@@ -104,6 +117,9 @@ function SignedIn() {
       <Stack.Screen
         name="SearchProductFilter"
         component={SearchProductFilter}
+        options={{
+          gestureEnabled: false,
+        }}
       />
       <Stack.Screen name="StoreAddress" component={StoreAddress} />
       <Stack.Screen name="AddStory" component={AddStory} />
@@ -123,7 +139,7 @@ function SignedIn() {
       <Stack.Screen name="SettingLanguage" component={SettingLanguage} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="SearchProducts" component={SearchProducts} />
-
+      <Stack.Screen name="MainNotification" component={MainNotification} />
       <Stack.Screen name="PromoNotification" component={PromoNotification} />
       <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
     </Stack.Navigator>

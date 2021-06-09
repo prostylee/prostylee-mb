@@ -7,9 +7,12 @@ export default EStyleSheet.create({
   container: {
     width: '100%',
     height: 160,
-    paddingVertical: 12,
-    backgroundColor: '$white',
+
     marginBottom: 8,
+  },
+  wrapBackground: {
+    backgroundColor: 'red',
+    flex: 1,
   },
   wrapTitle: {
     paddingHorizontal: 16,

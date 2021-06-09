@@ -103,4 +103,21 @@ export default EStyleSheet.create({
     fontWeight: '400',
     marginTop: 30,
   },
+  wrapSwipe: {},
+  wrapSeen: {},
+  wrapDelete: {},
+  buttonSeen: {
+    backgroundColor: '$purple',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 80,
+    flex: 1,
+  },
+  buttonDelete: {
+    backgroundColor: '$red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 80,
+    flex: 1,
+  },
 });

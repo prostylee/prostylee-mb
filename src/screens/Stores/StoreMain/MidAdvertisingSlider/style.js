@@ -6,22 +6,27 @@ const WIDTH = Dimensions.get('window').width;
 export default EStyleSheet.create({
   container: {
     width: '100%',
-    height: 192,
-    padding: 16,
-    backgroundColor: '$white',
+    height: WIDTH / 2 + 32,
     marginBottom: 8,
+    // borderWidth: 1,
   },
   sliderContainer: {
-    // borderWidth: 1,
     width: '100%',
     height: '100%',
+    backgroundColor: '#fff',
+    padding: 16,
+    paddingBottom: 24,
+    // borderWidth: 1,
   },
   sliderItem: {
     width: WIDTH - 32,
+    height: WIDTH / 2 - 16,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
+    overflow: 'hidden',
+    // borderWidth: 1,
   },
   sliderItemImage: {
     width: WIDTH - 32,
@@ -32,7 +37,7 @@ export default EStyleSheet.create({
     position: 'absolute',
     bottom: 10,
     left: 10,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: '#fff',
   },
 });

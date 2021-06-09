@@ -7,10 +7,16 @@ import {
   ActivityIndicator,
   FlatList,
   LayoutAnimation,
+  TouchableOpacity,
 } from 'react-native';
 import {ThemeView, Header, Colors} from 'components';
 import {Divider} from 'react-native-paper';
-import {EmptyNotiOutlined} from '../../../svg/common';
+import {
+  EmptyNotiOutlined,
+  DeleteIcon,
+  SeenIcon,
+  MapIcon,
+} from '../../../svg/common';
 import HeaderLeft from './HeaderLeft';
 import HeaderRight from './HeaderRight';
 import PromotionsInfo from './PromotionsInfo';
@@ -188,19 +194,21 @@ const Notifications = ({navigation}) => {
           showsHorizontalScrollIndicator={false}
           renderRightActions={({item}) => (
             <SwipeableQuickActions>
-              <View>
-                <IconButton
-                  icon="delete"
-                  color="#ED2727"
-                  size={20}
-                  onPress={() => onDeleteNotification(item.id)}
-                />
-                <IconButton
-                  icon="check-all"
-                  color="#3FBA44"
-                  size={20}
-                  onPress={() => markAsRead(item.id, item.markAsRead)}
-                />
+              <View style={{flexDirection: 'row'}}>
+                <View style={styles.wrapSeen}>
+                  <TouchableOpacity
+                    style={styles.buttonSeen}
+                    onPress={() => markAsRead(item.id, item.markAsRead)}>
+                    <SeenIcon />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.wrapDelete}>
+                  <TouchableOpacity
+                    style={styles.buttonDelete}
+                    onPress={() => onDeleteNotification(item.id)}>
+                    <DeleteIcon />
+                  </TouchableOpacity>
+                </View>
               </View>
             </SwipeableQuickActions>
           )}
