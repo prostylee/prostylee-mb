@@ -7,6 +7,7 @@ import i18n from 'i18n';
 import {currencyFormat} from 'utils/currency';
 import {Heart, HeartFill} from 'svg/common';
 import {cartActions} from 'reducers';
+import _ from 'lodash';
 
 import {
   getRecentLoadingSelector,
@@ -18,12 +19,8 @@ const ProductSimilar = (props) => {
   const imagesRef = React.useRef();
   const selectItem = props.onSelect ? props.onSelect : () => {};
 
-  const loading = useSelector((state) => getRecentLoadingSelector(state));
+  //const loading = useSelector((state) => getRecentLoadingSelector(state));
   const recentList = useSelector((state) => getListRecentSelector(state));
-
-  useEffect(() => {
-    dispatch(cartActions.getListRecent());
-  }, []);
 
   const renderItem = ({item, index}) => {
     return (

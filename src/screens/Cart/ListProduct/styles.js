@@ -130,7 +130,7 @@ export default EStyleSheet.create({
   },
   productAttr: {
     borderLeftWidth: 1,
-    borderColor: '#E9EAEB',
+    borderColor: 'rgba(0, 0, 0, 0.1)',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: -3,
