@@ -3,7 +3,7 @@ import {View, Dimensions, TouchableOpacity, Animated} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import IconIcons from 'react-native-vector-icons/Ionicons';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {Bag} from 'svg/common';
+import {Bag} from 'components';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import TabNav from './TabNav';
 import {useTheme, useNavigation} from '@react-navigation/native';
@@ -74,11 +74,7 @@ const AnimatedHeader = ({
           />
         </View>
         <View style={styles.rightIcons}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Cart')}
-            style={styles.bagIcon}>
-            <Bag color={colors['$black']} />
-          </TouchableOpacity>
+          <Bag navigation={navigation} />
           <TouchableOpacity
             // onPress={navigation.goBack}
             style={styles.ellipsisIcon}>
@@ -111,11 +107,7 @@ const AnimatedHeader = ({
           />
         </View>
         <View style={styles.rightIcons}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Cart')}
-            style={styles.bagIcon}>
-            <Bag color={colors['$white']} />
-          </TouchableOpacity>
+          <Bag navigation={navigation} />
           <TouchableOpacity
             // onPress={navigation.goBack}
             style={styles.ellipsisIcon}>
@@ -188,7 +180,8 @@ const styles = EStyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 20,
+    // paddingLeft: 20,
+    // borderWidth:1,
   },
   centerImgStyle: {
     width: 32,
