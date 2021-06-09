@@ -44,4 +44,10 @@ export default EStyleSheet.create({
     // height: 32,
     marginBottom: 8,
   },
+  wrapSearchBarInput: {
+    height: 35,
+    fontSize: 14,
+    lineHeight: 18,
+    elevation: 0,
+  },
 });

@@ -12,14 +12,23 @@ import {CategoriesRightLoading} from 'components/Loading/contentLoader';
 
 import {Text} from 'react-native-paper';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useDispatch} from 'react-redux';
+import {categoriesActions} from 'redux/reducers';
 
 const FeaturedCategories = ({navigation, data = []}) => {
+  const dispatch = useDispatch();
   return (
     <>
       <View style={styles.container}>
         <View style={styles.wrapHeader}>
           <Text style={styles.title}>{i18n.t('headerTitle.categories')}</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Categories')}>
+          <TouchableOpacity
+            onPress={() => {
+              dispatch(
+                categoriesActions.setCategoriesParentSelect({id: undefined}),
+              );
+              navigation.navigate('Categories');
+            }}>
             <Text
               style={[
                 styles.title,

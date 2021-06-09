@@ -19,9 +19,10 @@ export default EStyleSheet.create({
     padding: 0,
   },
   wrapSearchBarInput: {
+    flex: 1,
     height: 35,
     fontSize: 14,
     lineHeight: 18,
     elevation: 0,
-  }
+  },
 });

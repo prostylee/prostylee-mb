@@ -5,13 +5,21 @@ import {Image} from 'components';
 import styles from './styles';
 import {useDispatch} from 'react-redux';
 import {categoriesActions} from 'redux/reducers';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 const FeaturedCategoriesItem = ({item, index, navigation}) => {
   const paddingLeft = index % 2 ? 4 : 12;
   const paddingRight = index % 2 ? 12 : 0;
   const dispatch = useDispatch();
   const clickItem = () => {
-    dispatch(categoriesActions.setCategoriesSelect(item));
-    navigation.navigate('Products');
+    dispatch(categoriesActions.setCategoriesParentSelect(item));
+    dispatch(
+      categoriesActions.getListRightCategories({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        parentId: item?.id,
+      }),
+    );
+    navigation.navigate('Categories');
   };
   return (
     <View
