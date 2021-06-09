@@ -14,12 +14,12 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingTop: 12,
   },
   title: {
     fontSize: 14,
     lineHeight: 20,
-    fontWeight: 'bold',
+    fontWeight: '600',
     color: '$black',
   },
   carouselContainer: {

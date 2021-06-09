@@ -14,16 +14,16 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingTop: 12,
   },
   title: {
     fontSize: 14,
     lineHeight: 20,
-    fontWeight: 'bold',
+    fontWeight: '600',
     color: '$black',
   },
   listMore: {
-    paddingVertical: 8,
+    // paddingVertical: 8,
     paddingLeft: 16,
     display: 'flex',
     flexDirection: 'row',
@@ -37,6 +37,9 @@ export default EStyleSheet.create({
     paddingLeft: 4,
   },
   listContainer: {
-    paddingHorizontal: 8,
+    // paddingHorizontal: 8,
+  },
+  wrapProduct: {
+    // borderWidth: 1,
   },
 });

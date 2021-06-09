@@ -53,13 +53,19 @@ export default EStyleSheet.create({
     borderColor: '#E9EAEB',
   },
   wrapItems: {
-    padding: 5,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     flexDirection: 'row',
     backgroundColor: '$white',
     marginBottom: 5,
+    width: '100%',
+    height: width / 3.3,
+    flex: 1,
   },
   wrapImageThumbnail: {
     position: 'relative',
+    height: '100%',
+    flex: 10,
   },
   productItem: {
     flex: 1,
@@ -69,17 +75,19 @@ export default EStyleSheet.create({
   productAvatar: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 60,
-    width: 60,
+    height: '100%',
+    width: '100%',
     borderRadius: 4,
-    borderWidth: 1,
     borderColor: '#E9EAEB',
   },
   wrapTextContent: {
-    flex: 1,
-    marginLeft: 5,
+    flex: 35,
+    paddingLeft: 12,
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+  },
+  wrapText: {
+    flex: 3,
   },
   wrapAmount: {
     flex: 1,
@@ -117,7 +125,8 @@ export default EStyleSheet.create({
     fontStyle: 'normal',
     textAlign: 'left',
     color: '$black',
-    fontWeight: '400',
+    fontWeight: '500',
+    marginTop: 8,
   },
   productAttr: {
     borderLeftWidth: 1,
@@ -177,12 +186,10 @@ export default EStyleSheet.create({
   },
   wrapProductSimilar: {
     backgroundColor: '$white',
-    padding: 10,
     marginBottom: 5,
   },
   wrapProductSuggestion: {
     backgroundColor: '$white',
-    padding: 10,
     marginBottom: 5,
   },
   textMore: {

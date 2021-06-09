@@ -66,7 +66,7 @@ const Item = ({product}) => {
                 />
               </View>
               <View style={styles.wrapTextContent}>
-                <View>
+                <View style={styles.wrapText}>
                   <Text numberOfLines={2} style={styles.name}>
                     {item.name}
                   </Text>
