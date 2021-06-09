@@ -36,7 +36,6 @@ import {
   Categories,
   ProductDetail,
   Products,
-  PostProductCategory,
   Search,
   FilterProduct,
   SearchProducts,
@@ -46,14 +45,14 @@ import {
   ChooseRateProduct,
   RateProduct,
   Cart,
-  AddProductsCategories,
-  BrandFashions,
-  GeneralInformation,
-  ProductInformations,
-  PaymentShipping,
-  AddressRecent,
-  AddressTyping,
-  Maps,
+  AddProductsCategories, // Post Product
+  BrandFashions, // Post Product
+  GeneralInformation, // Post Product
+  ProductInformations, // Post Product
+  PaymentShipping, // Post Product
+  AddressRecent, // Post Product
+  AddressTyping, // Post Product
+  Maps, // Post Product
   Setting,
   SettingMyAccount,
   SettingAddress,
@@ -90,7 +89,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Maps"
+      initialRouteName="AddressTyping"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -148,12 +147,6 @@ function SignedIn() {
         name="ProductInformations"
         component={ProductInformations}
       />
-      <Stack.Screen
-        name="PostProductCategory"
-        component={PostProductCategory}
-      />
-      <Stack.Screen name="Search" component={Search} />
-      <Stack.Screen name="SearchProducts" component={SearchProducts} />
       <Stack.Screen name="Setting" component={Setting} />
       <Stack.Screen name="SettingMyAccount" component={SettingMyAccount} />
       <Stack.Screen name="SettingAddress" component={SettingAddress} />

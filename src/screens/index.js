@@ -29,7 +29,6 @@ import AddStore from './Story/AddStore';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
-import PostProductCategory from './PostProduct/ProductCategory';
 import AddProductsCategories from './PostProduct/AddProductsCategories';
 import BrandFashions from './PostProduct/BrandFashions';
 import GeneralInformation from './PostProduct/GeneralInformation';
@@ -98,7 +97,6 @@ export {
   CropPicture,
   AddStatus,
   AddStoreForStatus,
-  PostProductCategory,
   AddProductsCategories,
   BrandFashions,
   GeneralInformation,
