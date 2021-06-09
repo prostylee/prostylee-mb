@@ -38,7 +38,7 @@ export default EStyleSheet.create({
     height: 24,
     width: 24,
     borderWidth: 1,
-    borderColor: '#E9EAEB',
+    borderColor: '$line',
     marginRight: 12,
   },
   title: {

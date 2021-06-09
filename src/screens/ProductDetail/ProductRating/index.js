@@ -66,12 +66,18 @@ const ProductRating = (props) => {
     setImageListVisible(true);
   };
   return (
-    <View style={styles.container}>
+    <View style={styles.container} ref={props?.ref}>
       <View style={styles.rateTitle}>
         <Text style={styles.rateTitleText}>
           {i18n.t('productDetail.rating')}
         </Text>
-        <TouchableOpacity style={styles.ratingTotal} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.ratingTotal}
+          onPress={() => {
+            props.navigation.navigate('ReviewRating', {
+              productId: props.productId,
+            });
+          }}>
           <Rating value={totalRate} />
           <Text
             style={

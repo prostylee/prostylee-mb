@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Dimensions, TouchableOpacity, Text, Animated} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import IconIcons from 'react-native-vector-icons/Ionicons';
@@ -9,10 +9,16 @@ import {useTheme, useNavigation} from '@react-navigation/native';
 
 const {width: WIDTH_HEADER} = Dimensions.get('window');
 
-const TabNav = ({opacity, scrollToTop, scrollToComment, scrollToRelated}) => {
+const TabNav = ({
+  opacity,
+  scrollToTop,
+  scrollToComment,
+  scrollToRelated,
+  activeTabProps = 'product',
+}) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
-  const [activeTab, setActiveTab] = React.useState('product');
+  const [activeTab, setActiveTab] = React.useState(activeTabProps);
 
   const tabButtonStyle = (tabName) => {
     if (activeTab === tabName) {
@@ -29,7 +35,11 @@ const TabNav = ({opacity, scrollToTop, scrollToComment, scrollToRelated}) => {
       return styles.tabButtonText;
     }
   };
-
+  useEffect(() => {
+    if (activeTabProps !== activeTab) {
+      setActiveTab(activeTabProps);
+    }
+  }, [activeTabProps]);
   return (
     <Animated.View
       style={[

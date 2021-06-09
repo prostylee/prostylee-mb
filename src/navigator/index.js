@@ -39,9 +39,9 @@ import {
   PostProductCategory,
   Search,
   FilterProduct,
-  SearchProductFilter,
   SearchProducts,
   PromoNotification,
+  MainNotification,
   ReviewRating,
   ChooseRateProduct,
   RateProduct,
@@ -54,6 +54,26 @@ import {
   AddressRecent,
   AddressTyping,
   Maps,
+  Setting,
+  SettingMyAccount,
+  SettingAddress,
+  SettingChat,
+  SettingNotification,
+  SettingLanguage,
+  Orders,
+  OrdersDetail,
+  SettingAddAddress,
+  BestSeller,
+  PersonalSalers,
+  SearchProductFilter,
+  Vouchers,
+  FlashSale,
+  NearbyStore,
+  StoreAddress,
+  MyPage,
+  WishList,
+  SoldList,
+  SaveList,
 } from 'screens';
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
 import VoucherCart from 'screens/Cart/Voucher';
@@ -79,6 +99,12 @@ function SignedIn() {
       <Stack.Screen name="ChooseRateProduct" component={ChooseRateProduct} />
       <Stack.Screen name="RateProduct" component={RateProduct} />
       <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="MyPage" component={MyPage} />
+      <Stack.Screen name="WishList" component={WishList} />
+      <Stack.Screen name="SaveList" component={SaveList} />
+      <Stack.Screen name="SoldList" component={SoldList} />
+      <Stack.Screen name="Orders" component={Orders} />
+      <Stack.Screen name="OrdersDetail" component={OrdersDetail} />
       <Stack.Screen name="PaymentMethodCart" component={PaymentMethodCart} />
       <Stack.Screen name="VoucherCart" component={VoucherCart} />
       <Stack.Screen name="CheckoutCart" component={CheckoutCart} />
@@ -89,7 +115,20 @@ function SignedIn() {
       <Stack.Screen name="Stores" component={Stores} />
       <Stack.Screen name="StoryBoard" component={StoryBoard} />
       <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="BestSeller" component={BestSeller} />
+      <Stack.Screen name="PersonalSalers" component={PersonalSalers} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="Vouchers" component={Vouchers} />
+      <Stack.Screen name="NearbyStore" component={NearbyStore} />
+      <Stack.Screen name="FlashSale" component={FlashSale} />
+      <Stack.Screen
+        name="SearchProductFilter"
+        component={SearchProductFilter}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen name="StoreAddress" component={StoreAddress} />
       <Stack.Screen name="AddStory" component={AddStory} />
       <Stack.Screen name="AddStore" component={AddStore} />
       <Stack.Screen name="CropPicture" component={CropPicture} />
@@ -115,10 +154,19 @@ function SignedIn() {
       />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="SearchProducts" component={SearchProducts} />
+      <Stack.Screen name="Setting" component={Setting} />
+      <Stack.Screen name="SettingMyAccount" component={SettingMyAccount} />
+      <Stack.Screen name="SettingAddress" component={SettingAddress} />
+      <Stack.Screen name="SettingAddAddress" component={SettingAddAddress} />
+      <Stack.Screen name="SettingChat" component={SettingChat} />
       <Stack.Screen
-        name="SearchProductFilter"
-        component={SearchProductFilter}
+        name="SettingNotification"
+        component={SettingNotification}
       />
+      <Stack.Screen name="SettingLanguage" component={SettingLanguage} />
+      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="SearchProducts" component={SearchProducts} />
+      <Stack.Screen name="MainNotification" component={MainNotification} />
       <Stack.Screen name="PromoNotification" component={PromoNotification} />
       <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
     </Stack.Navigator>

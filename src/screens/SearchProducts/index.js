@@ -1,12 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {
-  Dimensions,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import {Dimensions, KeyboardAvoidingView} from 'react-native';
 import i18n from 'i18n';
 
 import styles from './styles';
@@ -24,98 +17,11 @@ import SortDropDown from './SortDropDown';
 import {useDispatch, useSelector} from 'react-redux';
 import {searchActions} from 'redux/reducers';
 import {getCurrentKeyword} from 'redux/selectors/search';
-import {getProductSearchListSelector} from 'redux/selectors/search/productSearchMain';
+import TagList from './TagList';
+import GroupHeaderRightButton from './HeaderRightButton';
+import FilterBar from './FilterBar';
 
-const MockTag = [
-  {
-    label: 'Best seller',
-    value: {
-      bestSeller: true,
-    },
-  },
-  {
-    label: 'Gần đây',
-    value: {
-      atitude: 10.806406363857086,
-      longitude: 106.6634168400805,
-    },
-  },
-  {
-    label: 'Sale',
-    value: {
-      sale: true,
-    },
-  },
-];
 const WIDTH = Dimensions.get('window').width;
-const GroupHeaderRightButton = ({haveNoti = false}) => {
-  return (
-    <View style={styles.headerGroupButtonRight}>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <MessageOutlined
-          width={20}
-          height={20}
-          color={Colors['$lightGray']}
-          strokeWidth={2}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        {haveNoti ? (
-          <BellWithNotiBadge
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        ) : (
-          <Bell
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        )}
-      </TouchableOpacity>
-    </View>
-  );
-};
-const TagList = ({onTagPress}) => {
-  const [active, setActive] = useState(null);
-  return (
-    <View style={styles.wrapList}>
-      <FlatList
-        style={styles.wrapChip}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={MockTag}
-        renderItem={({item, index}) => (
-          <Chip
-            selectedColor={Colors?.['$purple']}
-            selected={index === active}
-            small
-            onPress={() => {
-              setActive(index);
-              onTagPress(item.value);
-            }}
-            style={styles.itemChips}
-            key={`${item.label}-${index}`}>
-            {item.label}
-          </Chip>
-        )}
-      />
-    </View>
-  );
-};
 
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
@@ -125,10 +31,8 @@ const SearchProducts = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
-  console.log('RERENDER ');
-  const searchResults = useSelector((state) =>
-    getProductSearchListSelector(state),
-  );
+  const [currentFilterValue, setCurrentFilterValue] = useState({});
+
   const handlerSearch = useCallback(
     debounce((query) => {
       dispatch(
@@ -144,6 +48,7 @@ const SearchProducts = ({navigation}) => {
   );
   const _handleSort = (value) => {
     setValueSort(value);
+    setVisible(false);
     let sortOption = {};
     switch (value) {
       case 1: {
@@ -171,6 +76,10 @@ const SearchProducts = ({navigation}) => {
         break;
       }
     }
+    setCurrentFilterValue({
+      ...currentFilterValue,
+      ...sortOption,
+    });
     dispatch(
       searchActions.getProductsSearch({
         keyword: searchQuery,
@@ -178,6 +87,7 @@ const SearchProducts = ({navigation}) => {
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...sortOption,
+        ...currentFilterValue,
       }),
     );
   };
@@ -185,32 +95,30 @@ const SearchProducts = ({navigation}) => {
   const onChangeSearch = (query) => {
     setSearchQuery(query);
     handlerSearch(query);
+    dispatch(searchActions.setProductsSearchLoading(true));
   };
   const _handleFilterByTag = (queryObject) => {
+    setCurrentFilterValue({
+      ...currentFilterValue,
+      ...queryObject,
+    });
     dispatch(
       searchActions.getProductsSearch({
         keyword: searchQuery,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         ...queryObject,
+        ...currentFilterValue,
       }),
     );
   };
 
   useEffect(() => {
     setSearchQuery(currentKeyword);
-    // dispatch(
-    //   searchActions.getFeaturedProductSearch({
-    //     keyword: currentKeyword,
-    //     // type: 'product',
-    //     page: PAGE_DEFAULT,
-    //     limit: LIMIT_DEFAULT,
-    //   }),
-    // );
   }, [currentKeyword]);
 
   return (
-    <ThemeView style={styles.container} isFullView>
+    <KeyboardAvoidingView style={styles.container} behavior="height">
       <Header
         isDefault
         containerStyle={{
@@ -225,17 +133,23 @@ const SearchProducts = ({navigation}) => {
             style={{
               minWidth: WIDTH - 140,
               backgroundColor: '#F4F5F5',
-              height: 35,
+              height: 32,
               borderRadius: 4,
               elevation: 0,
               padding: 0,
+              overflow: 'hidden',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
             inputStyle={{
-              height: 35,
+              height: '100%',
               fontSize: 14,
-              lineHeight: 18,
+              lineHeight: 16,
               elevation: 0,
+              numberOfLines: 1,
+              overflow: 'hidden',
             }}
+            multiline={false}
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
             value={searchQuery}
@@ -244,33 +158,11 @@ const SearchProducts = ({navigation}) => {
         }
         rightComponent={<GroupHeaderRightButton haveNoti={true} />}
       />
-      <View style={styles.wrapBlockOne}>
-        <TouchableOpacity onPress={() => setVisible(!visible)}>
-          <View style={styles.contentBlockOne}>
-            <View>
-              <Sort />
-            </View>
-            <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('sort')}
-            </Text>
-            <View>
-              <CaretDown />
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('SearchProductFilter')}>
-          <View style={styles.wrapBlockFilter}>
-            <Text numberOfLines={1} style={styles.textSpace}>
-              |
-            </Text>
-            <Filter />
-            <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('filter')}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <FilterBar
+        setVisible={setVisible}
+        visible={visible}
+        navigation={navigation}
+      />
       <Divider />
       <TagList onTagPress={_handleFilterByTag} />
       <SortDropDown
@@ -280,8 +172,11 @@ const SearchProducts = ({navigation}) => {
         setValueSort={_handleSort}
         valueSort={valueSort}
       />
-      <ProductList data={searchResults} />
-    </ThemeView>
+      <ProductList
+        currentFilterValue={currentFilterValue}
+        navigation={navigation}
+      />
+    </KeyboardAvoidingView>
   );
 };
 

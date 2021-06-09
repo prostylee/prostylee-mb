@@ -17,6 +17,7 @@ const AnimatedHeader = ({
   scrollToTop,
   scrollToComment,
   scrollToRelated,
+  activeTabProps = 'product',
 }) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
@@ -74,7 +75,7 @@ const AnimatedHeader = ({
         </View>
         <View style={styles.rightIcons}>
           <TouchableOpacity
-            // onPress={navigation.goBack}
+            onPress={() => navigation.navigate('Cart')}
             style={styles.bagIcon}>
             <Bag color={colors['$black']} />
           </TouchableOpacity>
@@ -111,7 +112,7 @@ const AnimatedHeader = ({
         </View>
         <View style={styles.rightIcons}>
           <TouchableOpacity
-            // onPress={navigation.goBack}
+            onPress={() => navigation.navigate('Cart')}
             style={styles.bagIcon}>
             <Bag color={colors['$white']} />
           </TouchableOpacity>
@@ -131,6 +132,7 @@ const AnimatedHeader = ({
         scrollToTop={scrollToTop}
         scrollToComment={scrollToComment}
         scrollToRelated={scrollToRelated}
+        activeTabProps={activeTabProps}
       />
     </Animated.View>
   );

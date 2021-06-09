@@ -18,7 +18,7 @@ import SimpleWebView from './Auth/SimpleWebView';
 import UserProfile from './UserProfile';
 import ProductDetail from './ProductDetail';
 import SignUpOTPVerification from './Auth/SignUpOTPVerification';
-import SearchProductFilter from './SearchProductFilter';
+
 import SearchProducts from './SearchProducts';
 import ReviewRating from './ReviewRating';
 import ChooseRateProduct from './ChooseRateProduct';
@@ -30,9 +30,6 @@ import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
 import PostProductCategory from './PostProduct/ProductCategory';
-import Search from './Search';
-import FilterProduct from './FilterProduct';
-import PromoNotification from './Notifications/PromoNotification';
 import AddProductsCategories from './PostProduct/AddProductsCategories';
 import BrandFashions from './PostProduct/BrandFashions';
 import GeneralInformation from './PostProduct/GeneralInformation';
@@ -41,6 +38,31 @@ import PaymentShipping from './PostProduct/PaymentShipping';
 import AddressRecent from './PostProduct/AddressRecent';
 import AddressTyping from './PostProduct/AddressTyping';
 import Maps from './PostProduct/Maps';
+import Setting from './Setting';
+import SettingMyAccount from './Setting/SettingMyAccount';
+import SettingAddress from './Setting/SettingAddress';
+import SettingChat from './Setting/SettingChat';
+import SettingNotification from './Setting/SettingNotification';
+import SettingLanguage from './Setting/SettingLanguage';
+import SettingAddAddress from './Setting/AddAddress';
+import BestSeller from './Stores/BestSeller';
+import SearchProductFilter from './SearchProductFilter';
+import PersonalSalers from './Stores/PersonalSalers';
+import Vouchers from './Stores/Vouchers';
+import NearbyStore from './Stores/NearbyStore';
+import FlashSale from './Stores/FlashSale';
+import StoreAddress from './StoreAddress';
+import Search from './Search';
+import FilterProduct from './FilterProduct';
+import PromoNotification from './Notifications/PromoNotification';
+import MainNotification from './Notifications';
+import Orders from './Orders';
+import OrdersDetail from './Orders/Detail';
+import MyPage from './MyPage';
+import WishList from './MyPage/WishList';
+import SoldList from './MyPage/SoldList';
+import SaveList from './MyPage/SaveList';
+
 export {
   Welcome,
   Onboarding,
@@ -51,6 +73,10 @@ export {
   Products,
   StoryBoard,
   Chat,
+  BestSeller,
+  PersonalSalers,
+  SearchProductFilter,
+  NearbyStore,
   SignUpViaPhone,
   SignInViaPhone,
   SignInOptions,
@@ -62,7 +88,6 @@ export {
   SimpleWebView,
   ProductDetail,
   UserProfile,
-  SearchProductFilter,
   SearchProducts,
   ReviewRating,
   ChooseRateProduct,
@@ -74,9 +99,6 @@ export {
   AddStatus,
   AddStoreForStatus,
   PostProductCategory,
-  Search,
-  FilterProduct,
-  PromoNotification,
   AddProductsCategories,
   BrandFashions,
   GeneralInformation,
@@ -85,4 +107,24 @@ export {
   AddressRecent,
   AddressTyping,
   Maps,
+  Setting,
+  SettingMyAccount,
+  SettingAddress,
+  SettingChat,
+  SettingNotification,
+  SettingLanguage,
+  SettingAddAddress,
+  Vouchers,
+  FlashSale,
+  StoreAddress,
+  Search,
+  FilterProduct,
+  PromoNotification,
+  MainNotification,
+  Orders,
+  OrdersDetail,
+  MyPage,
+  WishList,
+  SaveList,
+  SoldList,
 };

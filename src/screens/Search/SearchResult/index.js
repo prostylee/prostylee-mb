@@ -7,7 +7,7 @@ import styles from './styles';
 
 import ScrollableTabView, {
   DefaultTabBar,
-} from 'react-native-scrollable-tab-view';
+} from 'components/ForkReactNativeSrollableTabView';
 import ProductSearchResult from './ProductSearchResult';
 import StoreSearchResult from './StoreSearchResult';
 
@@ -29,7 +29,7 @@ const SearchResult = ({navigation}) => {
           </View>
           <View style={{flex: 1}} tabLabel={i18n.t('Search.searchResultStore')}>
             <View style={styles.wrapContent}>
-              <StoreSearchResult />
+              <StoreSearchResult navigation={navigation} />
             </View>
           </View>
         </ScrollableTabView>

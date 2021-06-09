@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TouchableOpacity, Image, Platform} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import i18n from 'i18n';
 import {ContainerWithoutScrollView} from 'components';
@@ -96,7 +96,7 @@ const CropPicture = () => {
   const RenderCropView = ({item, index}) => {
     return (
       <CropView
-        sourceUrl={item.sourceURL}
+        sourceUrl={Platform.OS === 'ios' ? item.sourceURL : item.path}
         style={CropViewStyle}
         ref={cropViewRefList[index]}
         onImageCrop={(res) => {

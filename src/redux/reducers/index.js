@@ -52,8 +52,19 @@ import postProduct, {
   selectors as postProductSelectors,
   types as postProductTypes,
 } from './postProduct';
+
+import address, {
+  actions as addressActions,
+  selectors as addressSelectors,
+  types as addressTypes,
+} from './address';
+
 import cart, {actions as cartActions, types as cartTypes} from './cart';
 import search, {actions as searchActions, types as searchTypes} from './search';
+import notification, {
+  actions as notificationActions,
+  types as notificationTypes,
+} from './notification';
 
 const rootReducer = combineReducers({
   common,
@@ -66,8 +77,10 @@ const rootReducer = combineReducers({
   status,
   categories,
   postProduct,
+  address,
   cart,
   search,
+  notification,
 });
 
 export {commonActions, commonSelectors, commonTypes};
@@ -80,7 +93,9 @@ export {reviewRatingActions, reviewRatingSelectors, reviewRatingTypes};
 export {statusActions, statusSelectors, statusTypes};
 export {categoriesActions, categoriesTypes};
 export {postProductActions, postProductSelectors, postProductTypes};
+export {addressActions, addressSelectors, addressTypes};
 export {cartActions, cartTypes};
 export {searchActions, searchTypes};
+export {notificationActions, notificationTypes};
 
 export default rootReducer;

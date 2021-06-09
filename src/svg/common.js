@@ -1,5 +1,19 @@
 import React from 'react';
-import Svg, {Path, Circle, Rect, ClipPath, G, Defs} from 'react-native-svg';
+import Svg, {
+  Path,
+  Circle,
+  Rect,
+  G,
+  Defs,
+  LinearGradient,
+  Stop,
+  Line,
+  ClipPath,
+  Pattern,
+  Use,
+  Image,
+  Mask,
+} from 'react-native-svg';
 
 export const Search = ({width = 24, height = 24, color = '#8B9399'}) => {
   return (
@@ -27,7 +41,12 @@ export const Search = ({width = 24, height = 24, color = '#8B9399'}) => {
   );
 };
 
-export const Bag = ({width = 24, height = 24, color = '#8B9399'}) => {
+export const Bag = ({
+  width = 24,
+  height = 24,
+  color = '#8B9399',
+  strokeWidth = 1.5,
+}) => {
   return (
     <Svg
       width={width}
@@ -38,14 +57,14 @@ export const Bag = ({width = 24, height = 24, color = '#8B9399'}) => {
       <Path
         d="M4.63797 7.9266C4.67683 7.26589 5.22397 6.75 5.88581 6.75H18.1142C18.776 6.75 19.3232 7.26589 19.362 7.9266L20.0645 19.8679C20.1405 21.1602 19.1129 22.25 17.8183 22.25H6.18166C4.88707 22.25 3.85952 21.1602 3.93554 19.8679L4.63797 7.9266Z"
         stroke={color}
-        stroke-width="1.5"
+        strokeWidth={`${strokeWidth}`}
       />
       <Path
         d="M16 10V5C16 2.79086 14.2091 1 12 1V1C9.79086 1 8 2.79086 8 5V10"
         stroke={color}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth={`${strokeWidth}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </Svg>
   );
@@ -205,6 +224,33 @@ export const MapPin = ({width = 16, height = 16, color = '#8B9399'}) => {
         stroke={color}
         stroke-linecap="round"
         stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+export const MapPinFill = ({
+  width = 16,
+  height = 16,
+  color = '#8B9399',
+  backdropColor = '#8B9399',
+}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 12 12"
+      fill={color}
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M10.5 5C10.5 8.5 6 11.5 6 11.5C6 11.5 1.5 8.5 1.5 5C1.5 3.80653 1.97411 2.66193 2.81802 1.81802C3.66193 0.974106 4.80653 0.5 6 0.5C7.19347 0.5 8.33807 0.974106 9.18198 1.81802C10.0259 2.66193 10.5 3.80653 10.5 5Z"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M6 6.5C6.82843 6.5 7.5 5.82843 7.5 5C7.5 4.17157 6.82843 3.5 6 3.5C5.17157 3.5 4.5 4.17157 4.5 5C4.5 5.82843 5.17157 6.5 6 6.5Z"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill={backdropColor}
       />
     </Svg>
   );
@@ -733,6 +779,26 @@ export const BookMark = ({width = 24, height = 24, color = '#8B9399'}) => {
   );
 };
 
+export const BookMarkFill = ({width = 24, height = 24, color = '#F46F2F'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 16 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M15 19L8 14L1 19V3C1 2.46957 1.21071 1.96086 1.58579 1.58579C1.96086 1.21071 2.46957 1 3 1H13C13.5304 1 14.0391 1.21071 14.4142 1.58579C14.7893 1.96086 15 2.46957 15 3V19Z"
+        fill={color}
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};
+
 export const Ruler = ({width = 16, height = 16, color = '#333333'}) => {
   return (
     <Svg
@@ -848,13 +914,18 @@ export const GridSolid = ({width = 24, height = 24, color = '#333333'}) => {
   );
 };
 
-export const Grid = ({width = 24, height = 24, color = '#8B9399'}) => {
+export const Grid = ({
+  width = 24,
+  height = 24,
+  color = '#8B9399',
+  fill = 'none',
+}) => {
   return (
     <Svg
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
+      fill={fill}
       xmlns="http://www.w3.org/2000/svg">
       <Path
         d="M9 3H4C3.44772 3 3 3.44772 3 4V9C3 9.55228 3.44772 10 4 10H9C9.55228 10 10 9.55228 10 9V4C10 3.44772 9.55228 3 9 3Z"
@@ -884,13 +955,18 @@ export const Grid = ({width = 24, height = 24, color = '#8B9399'}) => {
   );
 };
 
-export const Full = ({width = 24, height = 24, color = '#8B9399'}) => {
+export const Full = ({
+  width = 24,
+  height = 24,
+  color = '#8B9399',
+  fill = 'none',
+}) => {
   return (
     <Svg
       width={width}
       height={height}
       viewBox="0 0 24 24"
-      fill="none"
+      fill={fill}
       xmlns="http://www.w3.org/2000/svg">
       <Path
         d="M20 3H4C3.44772 3 3 3.44772 3 4V9C3 9.55228 3.44772 10 4 10H20C20.5523 10 21 9.55228 21 9V4C21 3.44772 20.5523 3 20 3Z"
@@ -1065,6 +1141,327 @@ export const CaretDown = ({width = 24, height = 24, color = '#333333'}) => {
     </Svg>
   );
 };
+export const Bell = ({
+  width = 24,
+  height = 24,
+  color = '#9B9B9B',
+  strokeWidth = 1.5,
+}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"
+        strokeWidth={`${strokeWidth}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        stroke={color}
+      />
+      <Path
+        d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21"
+        strokeWidth={`${strokeWidth}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        stroke={color}
+      />
+    </Svg>
+  );
+};
+export const BellWithNotiBadge = ({
+  width = 24,
+  height = 24,
+  color = '#9B9B9B',
+  strokeWidth = 1.5,
+}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"
+        strokeWidth={`${strokeWidth}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        stroke={color}
+      />
+      <Path
+        d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21"
+        strokeWidth={`${strokeWidth}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        stroke={color}
+      />
+      <Circle cx="19" cy="17" r="3" fill="#ED2727" />
+    </Svg>
+  );
+};
+export const MessageOutlined = ({
+  width = 24,
+  height = 24,
+  color = '#9B9B9B',
+  strokeWidth = 1.5,
+}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M19 13C19 13.5304 18.7893 14.0391 18.4142 14.4142C18.0391 14.7893 17.5304 15 17 15H5L1 19V3C1 2.46957 1.21071 1.96086 1.58579 1.58579C1.96086 1.21071 2.46957 1 3 1H17C17.5304 1 18.0391 1.21071 18.4142 1.58579C18.7893 1.96086 19 2.46957 19 3V13Z"
+        stroke={color}
+        strokeWidth={`${strokeWidth}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};
+export const MapIconWithColor = ({width = 28, height = 28}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 28 28"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Path
+      d="M5.1565 21.5039C5.33455 21.1923 5.66589 21 6.02475 21H21.9752C22.3341 21 22.6654 21.1923 22.8435 21.5039L24.8117 24.9483C25.1927 25.615 24.7113 26.4444 23.9435 26.4444H4.0565C3.28867 26.4444 2.8073 25.615 3.18825 24.9483L5.1565 21.5039Z"
+      fill="#6EA8F2"
+    />
+    <Path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M14 23.3333C14 23.3333 23.3334 17.3939 23.3334 10.4646C23.3334 8.10179 22.35 5.83573 20.5997 4.16495C18.8493 2.49418 16.4754 1.55554 14 1.55554C11.5247 1.55554 9.1507 2.49418 7.40036 4.16495C5.65002 5.83573 4.66669 8.10179 4.66669 10.4646C4.66669 17.3939 14 23.3333 14 23.3333ZM17.8889 10.1111C17.8889 12.2589 16.1478 14 14 14C11.8522 14 10.1111 12.2589 10.1111 10.1111C10.1111 7.96332 11.8522 6.22221 14 6.22221C16.1478 6.22221 17.8889 7.96332 17.8889 10.1111Z"
+      fill="url(#paint0_linear)"
+    />
+    <Defs>
+      <LinearGradient
+        id="paint0_linear"
+        x1="9.33335"
+        y1="2.72221"
+        x2="15.9445"
+        y2="21"
+        gradientUnits="userSpaceOnUse">
+        <Stop stopColor="#81B8FD" />
+        <Stop offset="1" stopColor="#3280E0" />
+      </LinearGradient>
+    </Defs>
+  </Svg>
+);
+export const DashLine = ({width = 1, height = 50, color = '#E9EAEB'}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 1 50"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Line
+      x1="0.5"
+      y1="-1.6756e-08"
+      x2="0.500002"
+      y2="50"
+      stroke={color}
+      strokeDasharray="4 4"
+    />
+  </Svg>
+);
+export const TicketIconWithColor = ({width = 28, height = 28}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 28 28"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <G clipPath="url(#clip0)">
+      <Path
+        d="M11.1 10.3471C11.1 9.06733 11.7124 7.86484 12.7473 7.11213L15.6418 5.00707C17.0444 3.98699 18.9446 3.98699 20.3472 5.00707L23.2417 7.11213C24.2766 7.86484 24.889 9.06733 24.889 10.3471V22.4865C24.889 24.6956 23.0981 26.4865 20.889 26.4865H15.1C12.8909 26.4865 11.1 24.6956 11.1 22.4865V10.3471Z"
+        fill="url(#paint0_linear)"
+      />
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M13.804 1.19256C12.5313 1.32694 11.3997 2.06215 10.7599 3.17045L3.01293 16.5885C1.90836 18.5017 2.56386 20.9481 4.47703 22.0526L11.6942 26.2195C13.6074 27.3241 16.0538 26.6686 17.1583 24.7554L24.9053 11.3373C25.5451 10.229 25.6161 8.88145 25.0961 7.71209L23.0027 3.00424C22.2981 1.41952 20.6525 0.469439 18.9278 0.651548L13.804 1.19256ZM16.6237 9.34765C17.689 9.96271 19.0512 9.5977 19.6662 8.53239C20.2813 7.46708 19.9163 6.10487 18.851 5.48981C17.7857 4.87475 16.4235 5.23976 15.8084 6.30507C15.1934 7.37038 15.5584 8.73259 16.6237 9.34765Z"
+        fill="url(#paint1_linear)"
+      />
+    </G>
+    <Defs>
+      <LinearGradient
+        id="paint0_linear"
+        x1="17.8889"
+        y1="7.00005"
+        x2="22.9444"
+        y2="25.6667"
+        gradientUnits="userSpaceOnUse">
+        <Stop stopColor="#FEF3ED" />
+        <Stop offset="1" stopColor="#FFB0A2" />
+      </LinearGradient>
+      <LinearGradient
+        id="paint1_linear"
+        x1="21.3478"
+        y1="1.16533"
+        x2="8.08562"
+        y2="24.1361"
+        gradientUnits="userSpaceOnUse">
+        <Stop stopColor="#FE9452" />
+        <Stop offset="1" stopColor="#EF3333" />
+      </LinearGradient>
+      <ClipPath id="clip0">
+        <Rect width="28" height="28" fill="white" />
+      </ClipPath>
+    </Defs>
+  </Svg>
+);
+export const BestSellerIcon = ({width = 28, height = 28}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 28 28"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <G clip-path="url(#clip0)">
+      <Path
+        d="M8.1406 1.55554H8.98616C9.68049 1.55554 10.3202 1.93198 10.6574 2.53893C12.1143 5.1613 15.8857 5.1613 17.3426 2.53893C17.6798 1.93198 18.3195 1.55554 19.0138 1.55554H19.8594C20.5941 1.55554 21.3033 1.82518 21.8525 2.31331L25.7978 5.82026C27.0204 6.90702 27.147 8.77288 26.0825 10.0149L23.8662 12.6005C23.553 12.9659 23.0314 13.0712 22.6009 12.856C22.2375 12.6743 21.8144 12.9571 21.8433 13.3624L22.471 22.1495C22.5225 22.8706 22.1483 23.5554 21.5137 23.9016C16.8303 26.4562 11.1697 26.4562 6.48635 23.9016C5.85167 23.5554 5.47749 22.8706 5.529 22.1495L6.15665 13.3624C6.1856 12.9571 5.76251 12.6743 5.39908 12.856C4.96864 13.0712 4.44695 12.9659 4.13376 12.6005L1.91751 10.0149C0.852958 8.77288 0.979588 6.90702 2.20219 5.82026L6.14751 2.31331C6.69666 1.82518 7.40585 1.55554 8.1406 1.55554Z"
+        fill="url(#paint0_linear)"
+      />
+      <Path
+        d="M13.5516 9.46403C13.735 9.09241 14.2649 9.09241 14.4483 9.46403L15.2551 11.0988C15.328 11.2464 15.4688 11.3486 15.6316 11.3723L17.4357 11.6344C17.8458 11.694 18.0095 12.198 17.7128 12.4873L16.4073 13.7598C16.2895 13.8746 16.2357 14.0401 16.2635 14.2023L16.5717 15.9991C16.6418 16.4075 16.2131 16.719 15.8462 16.5262L14.2327 15.6779C14.087 15.6013 13.913 15.6013 13.7673 15.6779L12.1537 16.5262C11.7869 16.719 11.3582 16.4075 11.4282 15.9991L11.7364 14.2023C11.7642 14.0401 11.7105 13.8746 11.5926 13.7598L10.2872 12.4873C9.99043 12.198 10.1542 11.694 10.5643 11.6344L12.3683 11.3723C12.5312 11.3486 12.672 11.2464 12.7448 11.0988L13.5516 9.46403Z"
+        fill="white"
+      />
+    </G>
+    <Defs>
+      <LinearGradient
+        id="paint0_linear"
+        x1="5.44444"
+        y1="2.33332"
+        x2="21"
+        y2="24.8889"
+        gradientUnits="userSpaceOnUse">
+        <Stop stopColor="#B052F5" />
+        <Stop offset="1" stopColor="#882AE4" />
+      </LinearGradient>
+      <ClipPath id="clip0">
+        <Rect width="28" height="28" fill="white" />
+      </ClipPath>
+    </Defs>
+  </Svg>
+);
+export const CartIconColor = ({width = 28, height = 28}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 28 28"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M0.388916 2.33329C0.388916 1.68896 0.91125 1.16663 1.55558 1.16663H4.57242C5.15763 1.16663 5.6523 1.60019 5.72902 2.18035L6.1092 5.05551H23.6779C25.8469 5.05551 27.4936 7.00801 27.1278 9.14586L25.6637 17.7014C25.3761 19.3822 23.9191 20.6111 22.2139 20.6111H8.88015C7.1245 20.6111 5.6405 19.3104 5.41035 17.5699L3.54987 3.49996H1.55558C0.91125 3.49996 0.388916 2.97762 0.388916 2.33329ZM7.7778 26.4444C9.06647 26.4444 10.1111 25.3997 10.1111 24.1111C10.1111 22.8224 9.06647 21.7777 7.7778 21.7777C6.48914 21.7777 5.44447 22.8224 5.44447 24.1111C5.44447 25.3997 6.48914 26.4444 7.7778 26.4444ZM23.3334 26.4444C24.622 26.4444 25.6667 25.3997 25.6667 24.1111C25.6667 22.8224 24.622 21.7777 23.3334 21.7777C22.0447 21.7777 21 22.8224 21 24.1111C21 25.3997 22.0447 26.4444 23.3334 26.4444Z"
+      fill="url(#paint0_linear)"
+    />
+    <G opacity="0.9">
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M15.4444 12.7215C15.9858 12.2942 16.3333 11.6321 16.3333 10.8889C16.3333 9.60021 15.2887 8.55554 14 8.55554C12.7113 8.55554 11.6667 9.60021 11.6667 10.8889C11.6667 11.6321 12.0142 12.2942 12.5556 12.7215C11.4221 13.1752 10.552 14.147 10.2381 15.344C10.098 15.8782 10.5588 16.3333 11.1111 16.3333H16.8889C17.4412 16.3333 17.9021 15.8782 17.7619 15.344C17.448 14.147 16.5779 13.1752 15.4444 12.7215Z"
+        fill="white"
+      />
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M17.4003 10.8889C17.4003 11.6321 17.0329 12.2941 16.4605 12.7214C17.6595 13.1752 18.5798 14.1476 18.9115 15.3452C19.0589 15.8775 18.5976 16.3333 18.0454 16.3333H20.7135C21.2658 16.3333 21.7267 15.8782 21.5866 15.344C21.2726 14.147 20.4025 13.1752 19.269 12.7215C19.8105 12.2942 20.158 11.6321 20.158 10.8889C20.158 9.60021 19.1133 8.55554 17.8246 8.55554C17.2969 8.55554 16.8101 8.73074 16.4192 9.02614C17.0152 9.45208 17.4003 10.1279 17.4003 10.8889Z"
+        fill="white"
+      />
+    </G>
+    <Defs>
+      <LinearGradient
+        id="paint0_linear"
+        x1="0.777805"
+        y1="1.55551"
+        x2="24.1111"
+        y2="24.8888"
+        gradientUnits="userSpaceOnUse">
+        <Stop stopColor="#FFBF5A" />
+        <Stop offset="1" stopColor="#FF8114" />
+      </LinearGradient>
+    </Defs>
+  </Svg>
+);
+export const ChevronRight = ({
+  width = 16,
+  height = 16,
+  color = '#823FFD',
+  strokeWidth = 1.5,
+}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Path
+      d="M6 12L10 8L6 4"
+      stroke={color}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={`${strokeWidth}`}
+    />
+  </Svg>
+);
+export const TicketCutLine = ({width = 279, height = 2, color = '#E9EAEB'}) => (
+  <Svg
+    width={width}
+    height="1"
+    viewBox="0 0 279 1"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Line
+      y1="0.5"
+      x2={width}
+      y2="0.5"
+      stroke={color}
+      strokeWidth={`${height}`}
+      strokeDasharray="5 5"
+    />
+  </Svg>
+);
+export const CloseOutLined = ({
+  width = 28,
+  height = 28,
+  color = 'black',
+  strokeWidth = 2,
+}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M18 10L10 18"
+        stroke={color}
+        strokeWidth={`${strokeWidth}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M10 10L18 18"
+        stroke={color}
+        strokeWidth={`${strokeWidth}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};
 
 export const Remove = ({width = 24, height = 24, color = '#333333'}) => {
   return (
@@ -1223,6 +1620,158 @@ export const EmptyNotiOutlined = ({
   </Svg>
 );
 
+export const Setting = ({width = 24, height = 24, color = '#8B9399'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M21.675 9.7347H20.8033C20.0921 9.7347 19.4957 9.12184 19.4957 8.39443C19.4957 8.02786 19.6505 7.69565 19.9258 7.44936L20.4879 6.89951C21.0442 6.34965 21.0442 5.4504 20.4879 4.90055L19.2089 3.63473C18.9566 3.38271 18.5838 3.23379 18.2053 3.23379C17.8268 3.23379 17.4597 3.38271 17.2016 3.63473L16.6625 4.17313C16.4045 4.45952 16.0604 4.61416 15.6876 4.61416C14.9535 4.61416 14.3398 4.01848 14.3398 3.31398V2.43765C14.3398 1.66441 13.7147 1 12.9347 1H11.1913C10.4113 1 9.7919 1.65868 9.7919 2.43765V3.30825C9.7919 4.01276 9.17825 4.60844 8.44415 4.60844C8.07711 4.60844 7.73874 4.45379 7.49213 4.18459L6.93582 3.63473C6.68348 3.37698 6.3107 3.23379 5.93218 3.23379C5.55367 3.23379 5.18662 3.38271 4.92854 3.63473L3.63814 4.89482C3.08757 5.44468 3.08757 6.34392 3.63814 6.88805L4.17724 7.42645C4.464 7.6842 4.62458 8.02786 4.62458 8.39443C4.62458 9.12757 4.02813 9.7347 3.31698 9.7347H2.44524C1.65954 9.7347 1 10.3476 1 11.1265V11.9971V12.8677C1 13.641 1.65954 14.2596 2.44524 14.2596H3.31698C4.02813 14.2596 4.62458 14.8724 4.62458 15.5998C4.62458 15.9664 4.464 16.3101 4.17724 16.5678L3.63814 17.1005C3.08757 17.6504 3.08757 18.5496 3.63814 19.0937L4.91707 20.3653C5.16941 20.623 5.5422 20.7662 5.92071 20.7662C6.29923 20.7662 6.66627 20.6173 6.92435 20.3653L7.48066 19.8154C7.72153 19.5462 8.06564 19.3916 8.43268 19.3916C9.16678 19.3916 9.78043 19.9872 9.78043 20.6917V21.5624C9.78043 22.3356 10.3998 23 11.1855 23H12.929C13.709 23 14.3284 22.3413 14.3284 21.5624V20.6917C14.3284 19.9872 14.942 19.3916 15.6761 19.3916C16.0432 19.3916 16.3873 19.5519 16.6511 19.8326L17.1902 20.371C17.4483 20.623 17.8153 20.7719 18.1938 20.7719C18.5723 20.7719 18.9394 20.623 19.1975 20.371L20.4764 19.0995C21.027 18.5496 21.027 17.6504 20.4764 17.1005L19.9143 16.5506C19.6391 16.3043 19.4842 15.9664 19.4842 15.6056C19.4842 14.8724 20.0807 14.2653 20.7918 14.2653H21.6635C22.4435 14.2653 22.9998 13.6524 22.9998 12.8735V11.9971V11.1265C23.0113 10.3476 22.455 9.7347 21.675 9.7347Z"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Circle
+        cx={'12'}
+        cy={'12'}
+        r={'4'}
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const Camera = ({width = 24, height = 24, color = '#8B9399'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M2 19V8C2 7.44772 2.44772 7 3 7H6L7.70313 4.4453C7.8886 4.1671 8.20083 4 8.53518 4H15.4648C15.7992 4 16.1114 4.1671 16.2969 4.4453L18 7H21C21.5523 7 22 7.44772 22 8V19C22 19.5523 21.5523 20 21 20H3C2.44772 20 2 19.5523 2 19Z"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Circle cx="12" cy="13" r="3.5" stroke={color} />
+      <Circle cx="20" cy="9" r="0.5" stroke={color} />
+    </Svg>
+  );
+};
+
+export const PlusSign = ({width = 16, height = 16, color = '#333333'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M8 3.33337V12.6667"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M3.3335 8H12.6668"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const HorizontalDot = ({width = 24, height = 24, color = '#333333'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+        fill={color}
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13Z"
+        fill={color}
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13Z"
+        fill={color}
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const StoreIcon = ({width = 16, height = 16, color = 'white'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M13.8548 1.68117C13.8329 1.58245 13.778 1.49415 13.6991 1.4309C13.6202 1.36764 13.5221 1.33321 13.421 1.33331H2.57894C2.47779 1.3333 2.37964 1.36774 2.30068 1.43097C2.22172 1.49421 2.16666 1.58245 2.14457 1.68117L1.33331 5.33331C1.33331 5.68693 1.47379 6.02607 1.72384 6.27612C1.97389 6.52617 2.31302 6.66665 2.66665 6.66665C3.02027 6.66665 3.35941 6.52617 3.60946 6.27612C3.8595 6.02607 3.99998 5.68693 3.99998 5.33331C3.99998 5.68693 4.14046 6.02607 4.3905 6.27612C4.64055 6.52617 4.97969 6.66665 5.33331 6.66665C5.68693 6.66665 6.02607 6.52617 6.27612 6.27612C6.52617 6.02607 6.66665 5.68693 6.66665 5.33331C6.66665 5.68693 6.80712 6.02607 7.05717 6.27612C7.30722 6.52617 7.64636 6.66665 7.99998 6.66665C8.3536 6.66665 8.69274 6.52617 8.94279 6.27612C9.19284 6.02607 9.33331 5.68693 9.33331 5.33331C9.33331 5.68693 9.47379 6.02607 9.72384 6.27612C9.97389 6.52617 10.313 6.66665 10.6666 6.66665C11.0203 6.66665 11.3594 6.52617 11.6095 6.27612C11.8595 6.02607 12 5.68693 12 5.33331C12 5.68693 12.1405 6.02607 12.3905 6.27612C12.6406 6.52617 12.9797 6.66665 13.3333 6.66665C13.6869 6.66665 14.0261 6.52617 14.2761 6.27612C14.5262 6.02607 14.6666 5.68693 14.6666 5.33331L13.8548 1.68117Z"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M2.22217 6.59021V12C2.22217 12.2357 2.31582 12.4618 2.48252 12.6285C2.64922 12.7952 2.87531 12.8889 3.11106 12.8889H5.85417C6.08975 12.8889 6.31568 12.9825 6.48232 13.149L7.99995 14.6667L9.51758 13.149C9.68421 12.9825 9.91014 12.8889 10.1457 12.8889H12.8888C13.1246 12.8889 13.3507 12.7952 13.5174 12.6285C13.6841 12.4618 13.7777 12.2357 13.7777 12V6.59021"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const RightArrow = ({width = 16, height = 16, color = '#8B9399'}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M6 12L10 8L6 4"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
 export const CartEmpty = (props) => (
   <Svg width={64} height={64} viewBox="0 0 64 64" fill="none" {...props}>
     <Path
@@ -1333,17 +1882,6 @@ export const EmptyCart = (props) => (
       d="M40 7.5C39.508 3.554 36.08 1 32 1c-3.012 0-5.135 1.04-6.5 3.5"
       stroke="#BBC0C3"
       strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </Svg>
-);
-
-export const RightArrow = (props) => (
-  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
-    <Path
-      d="M6 12l4-4-4-4"
-      stroke="#8B9399"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -1694,5 +2232,355 @@ export const UploadIcon = (props) => (
         <Path fill="#fff" d="M0 0H24V24H0z" />
       </ClipPath>
     </Defs>
+  </Svg>
+);
+
+export const LocationOutline = (props) => (
+  <Svg width={12} height={12} viewBox="0 0 12 12" fill="none" {...props}>
+    <Path
+      d="M10.5 5c0 3.5-4.5 6.5-4.5 6.5S1.5 8.5 1.5 5a4.5 4.5 0 019 0z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M6 6.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const LocationArrow = (props) => (
+  <Svg width={12} height={12} viewBox="0 0 12 12" fill="none" {...props}>
+    <Path
+      d="M11.5.5l-11 4 5.75 1.25L7.5 11.5l4-11z"
+      stroke="#823FFD"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const OrderIdIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M13.333 10.667V3.333a2 2 0 00-2-2H4.667a2 2 0 00-2 2v9.334a2 2 0 002 2h4.666m4-4l-4 4m4-4h-3a1 1 0 00-1 1v3M4.667 3.333h6.666M4.667 5.333h6.666M4.667 7.333h4.666M4.667 9.333H8"
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const TrackingIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M.5 9V4a1 1 0 011-1h8a1 1 0 011 1v4M10.5 8V4h2a3 3 0 013 3v4a1 1 0 01-1 1H14"
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M15.5 8h-2a1 1 0 01-1-1V4M11 13a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM3 13a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM8 12H6"
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const WaitingIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Rect
+      x={1.33337}
+      y={2}
+      width={13.3333}
+      height={12}
+      rx={2}
+      stroke="#8B9399"
+    />
+    <Path
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3.83337 10.1667L6.16671 10.1667"
+    />
+    <Path
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3.83337 11.5L5.50004 11.5"
+    />
+    <Path
+      d="M6 2v4.667l2-1.334 2 1.334V2"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const DoneIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M1.33337 6H14.66667V14.66667H1.33337z"
+    />
+    <Path
+      d="M10 8.667l-2.75 2.666L6 10.121M1.333 6l2-4.667h9.334l2 4.667M8 1.333V6"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const InhouseIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M13.855 1.681a.444.444 0 00-.434-.348H2.58a.445.445 0 00-.434.348l-.812 3.652a1.333 1.333 0 002.667 0 1.333 1.333 0 002.667 0 1.333 1.333 0 102.666 0 1.333 1.333 0 002.667 0 1.333 1.333 0 002.667 0l-.812-3.652z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M2.222 6.59V12a.889.889 0 00.89.889h2.742c.236 0 .462.094.628.26L8 14.667l1.518-1.518a.889.889 0 01.628-.26h2.743a.889.889 0 00.889-.889V6.59"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const CancelIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Circle cx={8.00004} cy={7.99998} r={6.16667} stroke="#8B9399" />
+    <Path
+      d="M10.667 5.333l-5.334 5.334M5.333 5.333l5.334 5.334"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const SaleIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M13 14.5h1.5a1 1 0 001-1V2.577A1.08 1.08 0 0014.423 1.5H1.57A1.075 1.075 0 00.5 2.571v10.852A1.08 1.08 0 001.577 14.5H3M.5 4.5h15"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M10.5 10.5H5.384a1 1 0 00-.933 1.35l.872 2.325a.499.499 0 00.467.325h4.306a.5.5 0 00.467-.325l.871-2.324A1 1 0 0010.5 10.5v0zM5.442 10.5l1-2.5M10.442 10.5l-1-2.5M7 13v-1M9 13v-1"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const SoldIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Rect
+      x={1.33337}
+      y={2}
+      width={13.3333}
+      height={12}
+      rx={2}
+      stroke="#8B9399"
+    />
+    <Path
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3.83337 10.1667L6.16671 10.1667"
+    />
+    <Path
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3.83337 11.5L5.50004 11.5"
+    />
+    <Path
+      d="M6 2v4.667l2-1.334 2 1.334V2"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const HeartIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M13.893 3.073a3.667 3.667 0 00-5.186 0L8 3.78l-.707-.707A3.668 3.668 0 002.107 8.26l.706.707L8 14.153l5.187-5.186.706-.707a3.667 3.667 0 000-5.187v0z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const SaveIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M12.667 14L8 10.667 3.333 14V3.333A1.333 1.333 0 014.667 2h6.666a1.333 1.333 0 011.334 1.333V14z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const SettingIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M14.45 6.49h-.581c-.474 0-.872-.409-.872-.894 0-.244.103-.466.287-.63l.374-.366a.937.937 0 000-1.333l-.852-.844a.959.959 0 00-.67-.267c-.252 0-.496.1-.668.267l-.36.36a.864.864 0 01-.65.293c-.49 0-.898-.397-.898-.867v-.584c0-.515-.417-.958-.937-.958H7.461c-.52 0-.933.439-.933.958v.58c0 .47-.41.867-.899.867a.855.855 0 01-.634-.282l-.371-.367a.943.943 0 00-.67-.267c-.252 0-.496.1-.668.267l-.86.84a.94.94 0 000 1.33l.359.358c.191.172.298.4.298.645 0 .49-.398.894-.872.894h-.58c-.525 0-.964.408-.964.928v1.16c0 .516.44.928.963.928h.581c.474 0 .872.409.872.894a.864.864 0 01-.298.645l-.36.355a.94.94 0 000 1.33l.853.847a.943.943 0 00.67.267c.251 0 .496-.1.668-.267l.371-.367c.16-.18.39-.282.635-.282.49 0 .898.397.898.866v.58c0 .516.413.96.937.96h1.162c.52 0 .933-.44.933-.96v-.58c0-.47.41-.866.899-.866a.89.89 0 01.65.294l.36.359a.966.966 0 00.668.267c.253 0 .497-.1.67-.267l.852-.848a.944.944 0 000-1.333l-.375-.366a.841.841 0 01-.287-.63c0-.489.398-.894.872-.894h.581c.52 0 .891-.408.891-.928V7.418c.008-.52-.363-.928-.883-.928z"
+      stroke="#8B9399"
+    />
+    <Circle cx={8.00004} cy={7.99998} r={2.66667} stroke="#8B9399" />
+  </Svg>
+);
+
+export const SupportIcon = (props) => (
+  <Svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <Path
+      d="M3 12h-.5a2 2 0 01-2-2V8a2 2 0 012-2H3a.5.5 0 01.5.5v5a.5.5 0 01-.5.5zM13.5 12H13a.5.5 0 01-.5-.5v-5A.5.5 0 0113 6h.5a2 2 0 012 2v2a2 2 0 01-2 2zM2.5 6A5.5 5.5 0 018 .5v0A5.5 5.5 0 0113.5 6M10 14.5h1.5a2 2 0 002-2V12"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M9 15.5H8a1 1 0 010-2h1a1 1 0 010 2z"
+      stroke="#8B9399"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+export const LinearCircle = ({width = 208, height = 221}) => (
+  <Svg
+    width="208"
+    height="221"
+    viewBox="0 0 208 221"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Circle cx="48" cy="71" r="160" fill="url(#paint0_linear)" />
+    <Defs>
+      <LinearGradient
+        id="paint0_linear"
+        x1="20.3779"
+        y1="-56.6873"
+        x2="-6.72311"
+        y2="192.954"
+        gradientUnits="userSpaceOnUse">
+        <Stop stopColor="white" stopOpacity="0" />
+        <Stop offset="1" stopColor="white" />
+      </LinearGradient>
+    </Defs>
+  </Svg>
+);
+export const TopMaskBackground = ({
+  width = 375,
+  height = 221,
+  color = '#74B5D8',
+}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 375 221"
+    fill="none"
+    scale={2}
+    scaleY={5}
+    xmlns="http://www.w3.org/2000/svg">
+    <G opacity="0.3">
+      <Mask
+        id="mask0"
+        mask-type="alpha"
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width={width}
+        height={height}>
+        <Path
+          d="M101 221C200.144 221 293.458 196.038 375 152.055V0H0V212.206C32.7963 217.985 66.5461 221 101 221Z"
+          fill={color}
+        />
+      </Mask>
+      <G mask="url(#mask0)">
+        <Circle cx="48" cy="71" r="160" fill="url(#paint0_linear)" />
+      </G>
+    </G>
+    <Defs>
+      <LinearGradient
+        id="paint0_linear"
+        x1="20.3779"
+        y1="-20"
+        x2="-6.72311"
+        y2="192.954"
+        gradientUnits="userSpaceOnUse">
+        <Stop stopColor="white" stopOpacity="0" />
+        <Stop offset="1" stopColor="white" />
+      </LinearGradient>
+    </Defs>
+  </Svg>
+);
+export const MapIcon = ({
+  height = 24,
+  width = 24,
+  color = '#8B9399',
+  strokeWidth = 1.5,
+  ...rest
+}) => (
+  <Svg width={width} height={height} viewBox="0 0 24 24" fill="none" {...rest}>
+    <Path
+      d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4zM8 2v16M16 6v16"
+      stroke={color}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const SeenIcon = ({
+  height = 24,
+  width = 24,
+  color = '#FFFFFF',
+  strokeWidth = 1.5,
+  ...rest
+}) => (
+  <Svg width={width} height={height} viewBox="0 0 16 16" fill="none" {...rest}>
+    <Path
+      d="M13.333 4L6 11.333 2.667 8"
+      stroke={color}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const DeleteIcon = ({
+  height = 24,
+  width = 24,
+  color = '#FFFFFF',
+  strokeWidth = 1.5,
+  ...rest
+}) => (
+  <Svg width={width} height={height} viewBox="0 0 24 24" fill="none" {...rest}>
+    <Path
+      d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14zM10 11v6M14 11v6"
+      stroke={color}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </Svg>
 );

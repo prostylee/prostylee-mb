@@ -64,9 +64,7 @@ export const handleActions = {
       productsSearchStatus: true,
       pageProductSearch: PAGE_INIT,
       hasProductSearchLoadMore:
-        state.hasProductSearchLoadMore + UNIT_INCREASE + 1 < totalPages
-          ? true
-          : false,
+        state.pageProductSearch + UNIT_INCREASE + 1 < totalPages ? true : false,
     };
   },
   [types.SET_PRODUCTS_SEARCH_LOADMORE_LOADING]: (state, {payload}) => {
@@ -75,7 +73,6 @@ export const handleActions = {
   [types.GET_PRODUCTS_SEARCH_LOADMORE_SUCCESS]: (state, {payload}) => {
     const {totalPages, content} = payload;
     payload.content = state.productSearchList?.content.concat(content) || [];
-    console.log('PAGE', state.pageProductSearch, '\n\n\n\n');
     return {
       ...state,
       productSearchList: payload,

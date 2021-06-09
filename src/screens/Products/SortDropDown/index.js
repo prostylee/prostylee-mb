@@ -29,7 +29,10 @@ const SortDropDown = ({
     <Picker visible={visible} setVisible={setVisible} setAction={setAction}>
       <RadioButton.Group
         value={valueSort}
-        onValueChange={(value) => setValueSort(value)}
+        onValueChange={(value) => {
+          setValueSort(value);
+          setVisible(false);
+        }}
         color="#823ffd">
         {MockSortItem?.map((v, i, arr) => (
           <>
@@ -50,7 +53,6 @@ const SortDropDown = ({
               ]}
               label={v.label}
             />
-            {/* {i !== arr.length - 1 ? <Divider /> : null} */}
           </>
         ))}
       </RadioButton.Group>

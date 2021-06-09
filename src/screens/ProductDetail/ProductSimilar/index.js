@@ -3,8 +3,8 @@ import {View, TouchableOpacity, Text, Image} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import Carousel from 'react-native-snap-carousel';
+import {ProductLike} from 'components';
 import {currencyFormat} from 'utils/currency';
-import {Heart, HeartFill} from 'svg/common';
 
 const ProductSimilar = (props) => {
   const imagesRef = React.useRef();
@@ -34,7 +34,7 @@ const ProductSimilar = (props) => {
           </View>
           <View style={styles.likeButton}>
             <TouchableOpacity style={styles.likeButtonStyle}>
-              {item.likeStatusOfUserLogin ? <HeartFill /> : <Heart />}
+              <ProductLike item={item} />
             </TouchableOpacity>
           </View>
         </View>

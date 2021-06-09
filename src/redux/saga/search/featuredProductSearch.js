@@ -15,7 +15,7 @@ const getFeaturedProductSearch = function* ({payload}) {
     yield put(searchActions.setFeaturedProductSearchLoading(true));
     yield put(searchActions.setPageFeaturedProductSearchDefault());
     const res = yield call(getFeaturedProductSearchApi, payload);
-    console.log('LONG RESS', res);
+    console.log('FEATURED PRODUCT SEARCH', res);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(searchActions.getFeaturedProductSearchSuccess(res.data.data));
     } else {
