@@ -66,7 +66,7 @@ const Item = ({product}) => {
                 />
               </View>
               <View style={styles.wrapTextContent}>
-                <View>
+                <View style={styles.wrapText}>
                   <Text numberOfLines={2} style={styles.name}>
                     {item.name}
                   </Text>
@@ -79,14 +79,19 @@ const Item = ({product}) => {
                 <View style={styles.wrapAmount}>
                   <View style={styles.wrapSize}>
                     <Text numberOfLines={1} style={styles.name}>
-                      {options.map((op) => {
+                      {options.map((op, idx) => {
                         return (
                           <TouchableOpacity
-                            style={styles.productAttr}
+                            style={[
+                              styles.productAttr,
+                              {
+                                borderLeftWidth: idx !== 0 ? 1 : 0,
+                              },
+                            ]}
                             onPress={() => onChangeAttr(item.id)}>
-                            <Text style={styles.name}>
+                            {/* <Text style={styles.name}>
                               {`${op.label}:`}&nbsp;
-                            </Text>
+                            </Text> */}
                             <Text style={styles.addButtonText}>
                               &nbsp;{op.value.attrValue}&nbsp;
                             </Text>

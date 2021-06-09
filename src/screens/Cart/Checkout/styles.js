@@ -37,14 +37,15 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     alignItems: 'flex-start',
     marginTop: 6,
-    padding: 10,
   },
   wrapHeader: {
     alignItems: 'center',
     flexDirection: 'row',
-    padding: 10,
+    paddingVertical: 10,
     borderBottomWidth: 1,
     borderColor: '#E9EAEB',
+    paddingHorizontal: 16,
+    marginBottom: 8,
   },
 
   wrapSize: {flex: 0.5},
@@ -186,6 +187,7 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 5,
+    paddingHorizontal: 16,
   },
   wrapImageThumbnail: {
     position: 'relative',

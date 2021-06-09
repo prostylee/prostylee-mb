@@ -97,6 +97,8 @@ const ListProduct = ({navigation, data}) => {
                     value={item.value}
                     color="#823ffd"
                     style={styles.wrapRadioButton}
+                    mode="android"
+                    position="leading"
                   />
                 ))}
             </RadioButton.Group>

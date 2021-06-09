@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useRef, useMemo} from 'react';
+import React, {useRef, useEffect, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {View, FlatList, Animated, Text} from 'react-native';
 import Product from './Item';
@@ -10,11 +10,26 @@ import ProductSimilar from '../ProductSimilar';
 import ProductSuggestion from '../ProductSuggestion';
 import i18n from 'i18n';
 
+import {
+  getListCartSelector,
+  getSuggestionLoadingSelector,
+  getRecentLoadingSelector,
+} from 'redux/selectors/cart';
+import {cartActions} from 'reducers';
+
 import {CartEmpty} from 'svg/common';
-import {getListCartSelector} from 'redux/selectors/cart';
+
+import {useDispatch} from 'react-redux';
 
 const ListProduct = ({navigation}) => {
+  const dispatch = useDispatch();
+  const [refreshing, handleRefreshing] = useState(false);
+
   const cart = useSelector((state) => getListCartSelector(state)) || [];
+  const isSuggestionLoading =
+    useSelector((state) => getSuggestionLoadingSelector(state)) || false;
+  const isRecentLoading =
+    useSelector((state) => getRecentLoadingSelector(state)) || false;
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -22,8 +37,13 @@ const ListProduct = ({navigation}) => {
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
-
-  const renderFooter = () => {
+  const handleRefresh = () => {
+    console.log('REFRSH');
+    handleRefreshing(true);
+    dispatch(cartActions.getListRecent());
+    dispatch(cartActions.getListSuggestion());
+  };
+  const RenderFooter = () => {
     return (
       <>
         <View style={styles.wrapMore}>
@@ -73,7 +93,14 @@ const ListProduct = ({navigation}) => {
   const onCheckout = () => {
     navigation.navigate('CheckoutCart');
   };
+  useEffect(() => {
+    if (!isSuggestionLoading && !isRecentLoading) handleRefreshing(false);
+  }, [isSuggestionLoading, isRecentLoading]);
 
+  useEffect(() => {
+    dispatch(cartActions.getListRecent());
+    dispatch(cartActions.getListSuggestion());
+  }, []);
   return (
     <View style={styles.container}>
       {Object.keys(groupData).length > 0 ? (
@@ -87,11 +114,13 @@ const ListProduct = ({navigation}) => {
                 )}
                 numColumns={1}
                 keyExtractor={(item, index) => index}
-                ListFooterComponent={renderFooter}
+                ListFooterComponent={<RenderFooter />}
                 style={styles.flatList}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 onScroll={onScrollEvent}
+                refreshing={refreshing}
+                onRefresh={() => handleRefresh()}
               />
             </View>
           </View>

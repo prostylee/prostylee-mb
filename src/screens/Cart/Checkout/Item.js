@@ -41,14 +41,18 @@ const Item = ({product, navigation}) => {
               </View>
               <View style={styles.wrapAttribute}>
                 <Text numberOfLines={1} style={styles.name}>
-                  {options.map((op) => {
+                  {options.map((op, idx) => {
                     return (
-                      <>
-                        <Text style={styles.name}>{`${op.label}:`}&nbsp;</Text>
+                      <View
+                        style={{
+                          borderColor: 'rgba(0,0,0,0.1)',
+                          borderLeftWidth: idx !== 0 ? 1 : 0,
+                        }}>
+                        {/* <Text style={styles.name}>{`${op.label}:`}&nbsp;</Text> */}
                         <Text style={styles.addButtonText}>
                           &nbsp;{op.value.attrValue}&nbsp;
                         </Text>
-                      </>
+                      </View>
                     );
                   })}
                 </Text>
