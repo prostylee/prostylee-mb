@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, shallowEqual} from 'react-redux';
 import {Bag as Bags} from 'svg/common';
 import {getListCartSelector} from 'redux/selectors/cart';
 const Bag = ({
@@ -9,8 +9,10 @@ const Bag = ({
   navigation,
   color,
 }) => {
-  const listCart = useSelector((state) => getListCartSelector(state));
-
+  const listCart = useSelector(
+    (state) => getListCartSelector(state),
+    () => {},
+  );
   const onNavigateCart = () => {
     navigation.navigate('Cart');
   };
