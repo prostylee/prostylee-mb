@@ -11,7 +11,8 @@ import {
   validatePassword,
 } from '../../../utils/validatorUtils';
 
-const SettingMyAccount = () => {
+const SettingMyAccount = ({data}) => {
+  const {name, bio, gender, birthday, phone, email} = data;
   return (
     <ThemeView isFullView style={styles.container}>
       <Header title={I18n.t('setting.profile')} isDefault />
@@ -29,12 +30,12 @@ const SettingMyAccount = () => {
         <Formik
           validateOnMount={true}
           initialValues={{
-            name: '',
-            bio: '',
-            gender: '',
-            birthday: '',
-            phone: '',
-            email: '',
+            name,
+            bio,
+            gender,
+            birthday,
+            phone,
+            email,
           }}
           onSubmit={(values) => console.log(values)}>
           {({handleSubmit, values, isValid}) => (
@@ -104,6 +105,14 @@ const SettingMyAccount = () => {
       </ScrollView>
     </ThemeView>
   );
+};
+
+SettingMyAccount.defaultProps = {
+  data: {
+    name: 'Vũ Nguyễn',
+    bio: 'I’m only a morning person on Christmas morning You are not just a Follower.',
+    gender: 'Nam',
+  },
 };
 
 export default SettingMyAccount;
