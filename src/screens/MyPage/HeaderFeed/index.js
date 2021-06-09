@@ -59,13 +59,7 @@ const HeaderFeed = ({scrollAnimated, heightShow}) => {
           paddingTop: getStatusBarHeight(),
           ...styles.content,
         }}>
-        <View style={styles.left}>
-          <Animated.View style={{...styles.leftHeader, opacity}}>
-            <TouchableOpacity style={styles.leftHeader}>
-              <ChevronLeft />
-            </TouchableOpacity>
-          </Animated.View>
-        </View>
+        <View style={styles.left}></View>
         <View style={styles.mid}>
           <Animated.View style={{...styles.midHeader, opacity}}>
             <View style={styles.midBorder}>

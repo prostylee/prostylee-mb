@@ -21,6 +21,7 @@ import {Message} from 'svg/social';
 
 import {Avatar, ToggleButton} from 'react-native-paper';
 import TabViewContainer from './TabView';
+import {ScrollView} from 'react-native';
 
 const heightShow = 334;
 const Index = ({navigation}) => {
@@ -52,7 +53,10 @@ const Index = ({navigation}) => {
         navigation={navigation}
         scrollAnimated={scrollAnimated}
       />
-      <Container onScroll={onScrollEvent} scrollEventThrottle={1}>
+      <ScrollView
+        onScroll={onScrollEvent}
+        scrollEventThrottle={1}
+        style={styles.viewScroll}>
         <Animated.View
           style={[
             {
@@ -76,28 +80,23 @@ const Index = ({navigation}) => {
               <Setting color="#ffffff" />
             </TouchableOpacity>
           </View>
-          <View>
+          <View style={styles.wrapScroll}>
             <ImageBackground
               style={styles.backgroundImageStyle}
-              source={{uri: 'https://reactjs.org/logo-og.png'}}>
-              <Avatar.Image
-                source={{uri: 'https://reactjs.org/logo-og.png'}}
-                size={80}
-                style={styles.avatarStyle}
-              />
-              <View
-                style={styles.scrollViewStyle}
-                contentContainerStyle={{flex: 1}}>
-                <View style={{alignItems: 'center'}}>
-                  <Text
-                    style={{
-                      marginTop: 56,
-                      fontSize: 20,
-                      lineHeight: 28,
-                      fontWeight: '500',
-                    }}>
-                    Alyssa Gardner
-                  </Text>
+              source={{uri: 'https://reactjs.org/logo-og.png'}}
+              blurRadius={10}>
+              <View style={styles.scrollViewStyle}>
+                <View style={styles.wrapAvatar}>
+                  <Avatar.Image
+                    source={{uri: 'https://reactjs.org/logo-og.png'}}
+                    size={80}
+                    style={styles.avatarStyle}
+                  />
+                </View>
+                <View style={styles.viewInfoUser}>
+                  <View style={styles.wrapUserNameText}>
+                    <Text style={styles.userNameText}>Alyssa Gardner</Text>
+                  </View>
                   <View style={{paddingHorizontal: 16}}>
                     <Text
                       style={{
@@ -115,6 +114,8 @@ const Index = ({navigation}) => {
                   </View>
                   <View style={{paddingTop: 16}}>
                     <ButtonRounded
+                      style={styles.editButton}
+                      labelStyle={styles.editLabelButton}
                       label={I18n.t('mypage.editProfile')}
                       onPress={() => navigation.navigate('SettingMyAccount')}
                     />
@@ -151,7 +152,7 @@ const Index = ({navigation}) => {
             setActivedTab={setActivedTab}
           />
         </View>
-      </Container>
+      </ScrollView>
       {activeTab === 'menu' && (
         <View style={styles.viewType}>
           <ToggleButton.Row

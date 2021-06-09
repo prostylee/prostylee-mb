@@ -2,17 +2,17 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
   container: {
-    flex: 0,
+    flex: 1,
     backgroundColor: '$white',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
   },
   inputStyle: {
-    display: 'flex',
-    flex: 0,
+    flex: 1,
     width: 30,
     height: 30,
+    minWidth: 30,
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',

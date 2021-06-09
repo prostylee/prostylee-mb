@@ -7,7 +7,8 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#F7F7F7',
-    marginBottom: 106,
+    backgroundColor: '$bgColorTwo',
+    paddingTop: 6,
+    paddingBottom: 6,
   },
 });
