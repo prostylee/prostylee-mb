@@ -8,6 +8,7 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: WIDTH,
+    overflow: 'hidden',
   },
   listWrapper: {
     justifyContent: 'flex-start',

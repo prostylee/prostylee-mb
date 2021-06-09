@@ -14,11 +14,9 @@ const FilterBar = ({setVisible = () => {}, visible = false, navigation}) => {
   const price = filterState.price;
   let count = 0;
   count += categoryFilterState !== -1 ? 1 : 0;
-  console.log('COUNT 1', count, categoryFilterState);
   count += Object.keys(
     attributeFilterState ? attributeFilterState : {},
   )?.length;
-  console.log('COUNT 2', count, categoryFilterState);
   count += price?.[1] !== 0 ? 1 : 0;
   return (
     <View style={styles.wrapBlockOne}>

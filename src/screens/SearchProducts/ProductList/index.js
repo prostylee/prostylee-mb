@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, Text, ActivityIndicator} from 'react-native';
+import {
+  View,
+  FlatList,
+  Text,
+  ActivityIndicator,
+  Dimensions,
+  Platform,
+} from 'react-native';
 import {SearchProductLoading} from 'components/Loading/contentLoader';
 import styles from './styles';
 import {Colors} from 'components';
@@ -16,6 +23,7 @@ import {getCurrentKeyword} from 'redux/selectors/search';
 import i18n from 'i18n';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {getProductSearchListSelector} from 'redux/selectors/search/productSearchMain';
+
 const ProductList = ({navigation, data = []}) => {
   const dispatch = useDispatch();
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -36,6 +44,7 @@ const ProductList = ({navigation, data = []}) => {
   const page = useSelector((state) =>
     getProductSearchCurrentPageSelector(state),
   );
+
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
   const renderFooter = () => {
     if (isLoadMoreLoading)
@@ -93,11 +102,13 @@ const ProductList = ({navigation, data = []}) => {
             flexWrap: 'wrap',
             justifyContent: 'space-around',
           }}>
-          {[1, 2, 3, 4].map((v) => (
-            <View style={{width: '50%', padding: 16}}>
-              <SearchProductLoading />
-            </View>
-          ))}
+          {[1, 2, 3, 4].map((v) => {
+            return (
+              <View style={{width: '50%', padding: 16}}>
+                <SearchProductLoading />
+              </View>
+            );
+          })}
         </View>
       ) : !searchResults || !searchResults?.content?.length ? (
         <Text style={{color: Colors['$lightGray']}}>

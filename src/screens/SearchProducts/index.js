@@ -1,12 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {
-  Dimensions,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import {Dimensions, KeyboardAvoidingView} from 'react-native';
 import i18n from 'i18n';
 
 import styles from './styles';
@@ -125,7 +118,7 @@ const SearchProducts = ({navigation}) => {
   }, [currentKeyword]);
 
   return (
-    <ThemeView style={styles.container} isFullView>
+    <KeyboardAvoidingView style={styles.container} behavior="height">
       <Header
         isDefault
         containerStyle={{
@@ -183,7 +176,7 @@ const SearchProducts = ({navigation}) => {
         currentFilterValue={currentFilterValue}
         navigation={navigation}
       />
-    </ThemeView>
+    </KeyboardAvoidingView>
   );
 };
 
