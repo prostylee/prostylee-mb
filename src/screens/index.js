@@ -37,7 +37,10 @@ import AddProductsCategories from './PostProduct/AddProductsCategories';
 import BrandFashions from './PostProduct/BrandFashions';
 import GeneralInformation from './PostProduct/GeneralInformation';
 import ProductInformations from './PostProduct/ProductInformations';
-
+import PaymentShipping from './PostProduct/PaymentShipping';
+import AddressRecent from './PostProduct/AddressRecent';
+import AddressTyping from './PostProduct/AddressTyping';
+import Maps from './PostProduct/Maps';
 export {
   Welcome,
   Onboarding,
@@ -78,4 +81,8 @@ export {
   BrandFashions,
   GeneralInformation,
   ProductInformations,
+  PaymentShipping,
+  AddressRecent,
+  AddressTyping,
+  Maps,
 };

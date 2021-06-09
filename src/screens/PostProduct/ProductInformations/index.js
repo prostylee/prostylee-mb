@@ -14,44 +14,9 @@ import RadioForm from 'react-native-simple-radio-button';
 import Modal from 'react-native-modalbox';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-const COLOR = [
-  {
-    id: '0',
-    title: 'Đen',
-  },
-  {
-    id: '1',
-    title: 'Trắng',
-  },
-  {
-    id: '2',
-    title: 'Xám ',
-  },
-  {
-    id: '3',
-    title: 'Cam',
-  },
-  {
-    id: '4',
-    title: 'Hồng',
-  },
-  {
-    id: '5',
-    title: 'Đỏ',
-  },
-  {
-    id: '6',
-    title: 'Tím',
-  },
-  {
-    id: '7',
-    title: 'xanh lá cây',
-  },
-  {
-    id: '8',
-    title: 'Khác',
-  },
-];
+import ColorInfor from './Color';
+import SizeInfor from './Size';
+
 const ProductInfor = () => {
   var radio_props = [
     {label: 'Mới', value: 0},
@@ -60,22 +25,7 @@ const ProductInfor = () => {
   const [number, onChangeNumber] = React.useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleColor, setModalVisibleColor] = useState(false);
-  const [isSelected, setSelection] = useState(false);
-  const Item = ({item, onPress}) => {
-    return (
-      <TouchableOpacity onPress={onPress}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            margin: -10,
-          }}>
-          <CheckBox value={isSelected} onValueChange={setSelection} />
-          <Text>{item.title}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
+
   const Size = () => {
     return (
       <Modal
@@ -92,20 +42,14 @@ const ProductInfor = () => {
               <Icon name="close" size={20} />
             </TouchableOpacity>
           </View>
-          <View></View>
-          <View style={styles.button}>
-            <TouchableOpacity>
-              <ButtonRounded label="Chọn" />
-            </TouchableOpacity>
+          <View>
+            <SizeInfor />
           </View>
         </View>
       </Modal>
     );
   };
-  const [selectedId, setSelectedId] = useState(null);
-  const renderItem = ({item}) => {
-    return <Item item={item} onPress={() => setSelectedId(item.id)} />;
-  };
+
   const Color = () => {
     return (
       <Modal
@@ -114,7 +58,7 @@ const ProductInfor = () => {
         isOpen={modalVisibleColor}
         style={styles.modalBox}
         onClosed={() => setModalVisibleColor(false)}>
-        <View style={styles.content}>
+        <View style={styles.contentColors}>
           <View style={styles.headerModal}>
             <Text></Text>
             <Text style={styles.titleModal}>Màu sắc</Text>
@@ -123,16 +67,7 @@ const ProductInfor = () => {
             </TouchableOpacity>
           </View>
           <View>
-            <FlatList
-              data={COLOR}
-              renderItem={renderItem}
-              style={{paddingTop: 10}}
-            />
-          </View>
-          <View style={styles.button}>
-            <TouchableOpacity>
-              <ButtonRounded label="Chọn" />
-            </TouchableOpacity>
+            <ColorInfor />
           </View>
         </View>
       </Modal>
@@ -175,24 +110,28 @@ const ProductInfor = () => {
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
           style={styles.boxWrap}>
-          <Text style={styles.title}>Kích thước</Text>
+          <View style={styles.status}>
+            <Text style={styles.title}>Kích thước</Text>
+            <View style={styles.viewStatus}>
+              <Text>one-size</Text>
+            </View>
+          </View>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => setModalVisibleColor(true)}
           style={styles.boxWrap}>
-          <Text style={styles.title}>Màu</Text>
+          <View style={styles.status}>
+            <Text style={styles.title}>Màu</Text>
+            <View style={styles.viewStatus}>
+              <Text>Đen</Text>
+            </View>
+          </View>
         </TouchableOpacity>
 
         <View style={styles.boxWrap}>
           <Text style={styles.title}>Giá sản phẩm</Text>
-          <View
-            style={{
-              borderBottomWidth: 0.3,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
+          <View style={styles.inputPrice}>
             <TextInput
               style={styles.input}
               onChangeText={onChangeNumber}

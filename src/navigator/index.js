@@ -50,12 +50,14 @@ import {
   BrandFashions,
   GeneralInformation,
   ProductInformations,
+  PaymentShipping,
+  AddressRecent,
+  AddressTyping,
+  Maps,
 } from 'screens';
-
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
 import VoucherCart from 'screens/Cart/Voucher';
 import CheckoutCart from 'screens/Cart/Checkout';
-
 import BottomTabs from './bottomTab';
 
 const Stack = createStackNavigator();
@@ -68,7 +70,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="ProductInformations"
+      initialRouteName="Maps"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -97,7 +99,11 @@ function SignedIn() {
         name="AddProductsCategories"
         component={AddProductsCategories}
       />
+      <Stack.Screen name="Maps" component={Maps} />
+      <Stack.Screen name="AddressTyping" component={AddressTyping} />
+      <Stack.Screen name="AddressRecent" component={AddressRecent} />
       <Stack.Screen name="BrandFashions" component={BrandFashions} />
+      <Stack.Screen name="PaymentShipping" component={PaymentShipping} />
       <Stack.Screen name="GeneralInformation" component={GeneralInformation} />
       <Stack.Screen
         name="ProductInformations"
