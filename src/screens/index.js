@@ -29,6 +29,14 @@ import AddStore from './Story/AddStore';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
+import AddProductsCategories from './PostProduct/AddProductsCategories';
+import BrandFashions from './PostProduct/BrandFashions';
+import GeneralInformation from './PostProduct/GeneralInformation';
+import ProductInformations from './PostProduct/ProductInformations';
+import PaymentShipping from './PostProduct/PaymentShipping';
+import AddressRecent from './PostProduct/AddressRecent';
+import AddressTyping from './PostProduct/AddressTyping';
+import Maps from './PostProduct/Maps';
 import Setting from './Setting';
 import SettingMyAccount from './Setting/SettingMyAccount';
 import SettingAddress from './Setting/SettingAddress';
@@ -89,6 +97,14 @@ export {
   CropPicture,
   AddStatus,
   AddStoreForStatus,
+  AddProductsCategories,
+  BrandFashions,
+  GeneralInformation,
+  ProductInformations,
+  PaymentShipping,
+  AddressRecent,
+  AddressTyping,
+  Maps,
   Setting,
   SettingMyAccount,
   SettingAddress,

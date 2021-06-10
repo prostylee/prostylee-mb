@@ -45,6 +45,14 @@ import {
   ChooseRateProduct,
   RateProduct,
   Cart,
+  AddProductsCategories, // Post Product
+  BrandFashions, // Post Product
+  GeneralInformation, // Post Product
+  ProductInformations, // Post Product
+  PaymentShipping, // Post Product
+  AddressRecent, // Post Product
+  AddressTyping, // Post Product
+  Maps, // Post Product
   Setting,
   SettingMyAccount,
   SettingAddress,
@@ -66,11 +74,9 @@ import {
   SoldList,
   SaveList,
 } from 'screens';
-
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
 import VoucherCart from 'screens/Cart/Voucher';
 import CheckoutCart from 'screens/Cart/Checkout';
-
 import BottomTabs from './bottomTab';
 
 const Stack = createStackNavigator();
@@ -127,6 +133,20 @@ function SignedIn() {
       <Stack.Screen name="CropPicture" component={CropPicture} />
       <Stack.Screen name="AddStatus" component={AddStatus} />
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
+      <Stack.Screen
+        name="AddProductsCategories"
+        component={AddProductsCategories}
+      />
+      <Stack.Screen name="Maps" component={Maps} />
+      <Stack.Screen name="AddressTyping" component={AddressTyping} />
+      <Stack.Screen name="AddressRecent" component={AddressRecent} />
+      <Stack.Screen name="BrandFashions" component={BrandFashions} />
+      <Stack.Screen name="PaymentShipping" component={PaymentShipping} />
+      <Stack.Screen name="GeneralInformation" component={GeneralInformation} />
+      <Stack.Screen
+        name="ProductInformations"
+        component={ProductInformations}
+      />
       <Stack.Screen name="Setting" component={Setting} />
       <Stack.Screen name="SettingMyAccount" component={SettingMyAccount} />
       <Stack.Screen name="SettingAddress" component={SettingAddress} />

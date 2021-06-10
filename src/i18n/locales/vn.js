@@ -343,4 +343,7 @@ export default {
     markAsBuy: 'Đánh dấu đã mua',
     findLocation: 'Tìm đường',
   },
+  addProduct: {
+    categoryScreenTitle: 'Thêm sản phẩm',
+  },
 };
