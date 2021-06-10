@@ -72,10 +72,13 @@ const ProductDetail = (props) => {
   const productId = route?.params?.id || 232;
 
   React.useEffect(() => {
-    dispatch(productActions.getProductById({id: productId}));
-    dispatch(productActions.getProductComments({id: productId}));
-    dispatch(productActions.getProductRelated({id: productId}));
-  }, []);
+    if (productId) {
+      scrollAnimated.setValue(0);
+      dispatch(productActions.getProductById({id: productId}));
+      dispatch(productActions.getProductComments({id: productId}));
+      dispatch(productActions.getProductRelated({id: productId}));
+    }
+  }, [productId]);
 
   React.useEffect(() => {
     if (productData && productData.storeId && productData.categoryId) {
