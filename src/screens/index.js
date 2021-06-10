@@ -62,6 +62,8 @@ import WishList from './MyPage/WishList';
 import SoldList from './MyPage/SoldList';
 import SaveList from './MyPage/SaveList';
 
+import CropPostProductImage from './PostProduct/CropPostProductImage';
+
 export {
   Welcome,
   Onboarding,
@@ -125,4 +127,5 @@ export {
   WishList,
   SaveList,
   SoldList,
+  CropPostProductImage,
 };

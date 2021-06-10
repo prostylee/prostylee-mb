@@ -7,20 +7,21 @@ import {ThemeView, Header, ButtonRounded} from 'components';
 import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {categoriesActions} from 'redux/reducers';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector, shallowEqual} from 'react-redux';
 import ListParentCategories from './ListParentCategories';
 import ListChildCategories from './ListChildCategories';
+import _ from 'lodash';
 const AddProducts = ({navigation}) => {
   const dispatch = useDispatch();
 
-  const postProductInfo = useSelector((state) =>
-    getPostProductInfoSelector(state),
+  const postProductInfo = useSelector(
+    (state) => getPostProductInfoSelector(state),
+    shallowEqual,
   );
   const [selectedCategory, setSelectedCategory] = React.useState();
   const [parentId, setParentId] = React.useState(
     postProductInfo?.category?.id || null,
   );
-
   useEffect(() => {
     dispatch(
       categoriesActions.getListLeftCategories({
@@ -31,7 +32,6 @@ const AddProducts = ({navigation}) => {
   }, []);
   useEffect(() => {
     if (parentId) {
-      console.log('PARENT ID CHANGE', postProductInfo);
       dispatch(
         categoriesActions.getListRightCategories({
           page: PAGE_DEFAULT,
@@ -42,10 +42,19 @@ const AddProducts = ({navigation}) => {
     }
   }, [parentId]);
 
+  useEffect(() => {
+    if (postProductInfo?.category?.id) {
+      setParentId(postProductInfo?.category?.id);
+    }
+  }, [postProductInfo?.category?.id]);
+
   return (
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('addProduct.categoryScreenTitle')} />
-      <ListChildCategories selectAction={setSelectedCategory} />
+      {parentId ? (
+        <ListChildCategories selectAction={setSelectedCategory} />
+      ) : null}
+
       <ListParentCategories selectedCategory={selectedCategory} />
     </ThemeView>
   );

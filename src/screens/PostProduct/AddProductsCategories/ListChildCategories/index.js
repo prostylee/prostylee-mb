@@ -6,50 +6,56 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {useTheme} from '@react-navigation/native';
+
 import styles from './styles';
 import i18n from 'i18n';
-import {useSelector} from 'react-redux';
+import {useSelector, shallowEqual, useDispatch} from 'react-redux';
 import {
   getRightLoadingSelector,
   getListRightCategoriesSelector,
 } from 'redux/selectors/categories';
 import {ActivityIndicator} from 'react-native-paper';
+import Item from './item';
+import {Colors} from 'components';
+import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
+import {postProductActions} from 'redux/reducers';
+import {useNavigation} from '@react-navigation/native';
 
-const DATA = [];
-const Item = ({item, index, onPress}) => {
-  const {colors} = useTheme();
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <View
-        style={[
-          styles.itemContainer,
-          {
-            borderTopColor: index !== 0 ? colors['$bgColor'] : 'transparent',
-          },
-        ]}>
-        <Icon name="tshirt" size={16} />
-        <Text style={styles.itemText}>{item.label}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
 const ListChildCategories = (props) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const postProductInfo = useSelector(
+    (state) => getPostProductInfoSelector(state),
+    shallowEqual,
+  );
   const loading = useSelector((state) => getRightLoadingSelector(state));
   const listChildCategoriesSelector = useSelector((state) =>
     getListRightCategoriesSelector(state),
   );
-
+  const ParentName = postProductInfo?.category?.name || '';
   const listChildCategories = listChildCategoriesSelector?.content || [];
 
-  console.log('List child category ', listChildCategories);
-
-  const renderItem = ({item, index}) => {
-    return <Item item={item} index={index} />;
+  const onChildCategoryPress = (item) => {
+    dispatch(
+      postProductActions.setProductInfo({
+        childrenCategory: item,
+      }),
+    );
+    navigation.navigate('GeneralInformation');
   };
+  const renderItem = ({item, index}) => {
+    return (
+      <Item
+        item={item}
+        index={index}
+        parentName={ParentName}
+        onPress={() => onChildCategoryPress(item)}
+      />
+    );
+  };
+
   return (
-    <SafeAreaView>
+    <View style={styles.container}>
       <View style={styles.spaceHeader}>
         <Text style={styles.textSpace}>
           {i18n.t('addProduct.productCategory')}
@@ -57,7 +63,7 @@ const ListChildCategories = (props) => {
       </View>
       {loading ? (
         <ActivityIndicator />
-      ) : (
+      ) : listChildCategories && listChildCategories.length ? (
         <FlatList
           data={listChildCategories}
           renderItem={renderItem}
@@ -65,8 +71,12 @@ const ListChildCategories = (props) => {
           contentContainerStyle={styles.contentStyle}
           style={styles.flatlistStyle}
         />
+      ) : (
+        <Text style={styles.notFoundText}>
+          {i18n.t('Search.resultsNotfound')}
+        </Text>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

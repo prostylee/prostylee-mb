@@ -62,6 +62,7 @@ const defaultState = {
 
   //phase1
   category: null,
+  childrenCategory: null,
   //phase2
   images: null,
   productName: '',

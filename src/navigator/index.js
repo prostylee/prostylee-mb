@@ -75,6 +75,7 @@ import {
   WishList,
   SoldList,
   SaveList,
+  CropPostProductImage,
 } from 'screens';
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
 import VoucherCart from 'screens/Cart/Voucher';
@@ -91,7 +92,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="AddProductsCategories"
+      initialRouteName="Home"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -149,6 +150,10 @@ function SignedIn() {
       <Stack.Screen
         name="ProductInformations"
         component={ProductInformations}
+      />
+      <Stack.Screen
+        name="CropPostProductImage"
+        component={CropPostProductImage}
       />
       {/******** Post Product ********/}
       <Stack.Screen name="Setting" component={Setting} />

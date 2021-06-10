@@ -37,4 +37,8 @@ export default EStyleSheet.create({
     alignSelf: 'center',
     paddingBottom: 20,
   },
+  notFoundText: {
+    fontWeight: '400',
+    color: '$gray',
+  },
 });

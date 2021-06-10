@@ -75,6 +75,7 @@ export default EStyleSheet.create({
     width: (WIDTH - 54) / 4,
     height: (WIDTH - 54) / 4,
     borderRadius: 5,
+    marginHorizontal: 5,
   },
   brandWrap: {
     height: 62,
