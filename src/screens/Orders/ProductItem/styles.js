@@ -9,7 +9,8 @@ export default EStyleSheet.create({
     alignItems: 'flex-start',
     marginTop: 6,
     flex: 1,
-    padding: 10,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   wrapItems: {
     padding: 5,
