@@ -8,11 +8,12 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  wrapInput: {
+    height: 30,
+    width: 30,
+  },
   inputStyle: {
     flex: 1,
-    width: 30,
-    height: 30,
-    minWidth: 30,
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
@@ -21,6 +22,8 @@ export default EStyleSheet.create({
     borderColor: '#E9EAEB',
     color: '#333333',
     borderRadius: 0,
+    fontSize: 6,
+    paddingVertical: 0,
   },
   minusIcon: {
     height: 30,
