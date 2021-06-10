@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Dimensions, TouchableOpacity, Animated} from 'react-native';
+import {
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Animated,
+  Platform,
+} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import IconIcons from 'react-native-vector-icons/Ionicons';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
@@ -135,7 +141,7 @@ const styles = EStyleSheet.create({
     position: 'absolute',
     top: 0,
     width: WIDTH_HEADER,
-    height: 50 + getStatusBarHeight(),
+    height: 50 + getStatusBarHeight() + (Platform.OS === 'ios' ? 0 : 36),
     paddingTop: getStatusBarHeight(),
     display: 'flex',
     flexDirection: 'column',
