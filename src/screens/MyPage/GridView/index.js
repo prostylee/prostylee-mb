@@ -144,7 +144,7 @@ const data = [
   },
 ];
 
-const GridView = ({column, wImage, hImage}) => {
+const GridView = ({column, wImage, hImage, scrollEnabled}) => {
   const loadMoreLoading = false;
 
   const postOfUser = useSelector((state) => postOfUserSlector(state));
@@ -161,41 +161,40 @@ const GridView = ({column, wImage, hImage}) => {
     );
   };
   return (
-    <Container fluid style={styles.container}>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        key={column}
-        numColumns={column}
-        columnWrapperStyle={styles.viewCol}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        keyExtractor={(item, index) => 'profileMeTab' + index}
-        data={data || []}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            activeOpacity={1}
-            style={styles.viewImage}
-            onPress={() => {}}>
-            <Image
-              source={
-                item?.imageUrls.length
-                  ? {uri: item?.imageUrls[0]}
-                  : require('assets/images/default.png')
-              }
-              resizeMode="cover"
-              style={{height: wImage, width: hImage, borderRadius: 4}}
-              PlaceholderContent={<ActivityIndicator />}
-            />
-          </TouchableOpacity>
-        )}
-        // onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.5}
-        initialNumToRender={10}
-        ListFooterComponent={renderFooter}
-        // refreshing={refreshing}
-        // onRefresh={handleRefresh}
-      />
-    </Container>
+    <FlatList
+        scrollEnabled={scrollEnabled !== undefined ? scrollEnabled:false}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+      key={column}
+      numColumns={column}
+      columnWrapperStyle={styles.viewCol}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+      keyExtractor={(item, index) => 'profileMeTab' + index}
+      data={data || []}
+      renderItem={({item}) => (
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.viewImage}
+          onPress={() => {}}>
+          <Image
+            source={
+              item?.imageUrls.length
+                ? {uri: item?.imageUrls[0]}
+                : require('assets/images/default.png')
+            }
+            resizeMode="cover"
+            style={{height: wImage, width: hImage, borderRadius: 4}}
+            PlaceholderContent={<ActivityIndicator />}
+          />
+        </TouchableOpacity>
+      )}
+      // onEndReached={handleLoadMore}
+      onEndReachedThreshold={0.5}
+      initialNumToRender={10}
+      ListFooterComponent={renderFooter}
+      // refreshing={refreshing}
+      // onRefresh={handleRefresh}
+    />
   );
 };
 
