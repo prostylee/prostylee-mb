@@ -1,6 +1,6 @@
 import styles from './styles';
 import React, {useMemo} from 'react';
-import {View, Linking} from 'react-native';
+import {Linking, ScrollView} from 'react-native';
 import {ListMenu} from 'components';
 import {
   WaitingIcon,
@@ -111,11 +111,11 @@ const Order = () => {
     [],
   );
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <ListMenu title={i18n.t('mypage.orders')} menu={orderMenu} />
       <ListMenu title={i18n.t('mypage.products')} menu={productMenu} />
       <ListMenu menu={settingMenu} />
-    </View>
+    </ScrollView>
   );
 };
 
