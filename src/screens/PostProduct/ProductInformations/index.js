@@ -1,15 +1,8 @@
 import React, {useState} from 'react';
-import {
-  TextInput,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
-} from 'react-native';
-import {CheckBox} from 'react-native-elements';
+import {TextInput, Text, View, TouchableOpacity} from 'react-native';
+import i18n from 'i18n';
 import {ProgressBar, Button} from 'react-native-paper';
-import {Header, ButtonRounded, HeaderBack} from 'components';
+import {Header, ButtonRounded, ThemeView} from 'components';
 import RadioForm from 'react-native-simple-radio-button';
 import Modal from 'react-native-modalbox';
 import styles from './styles';
@@ -74,22 +67,10 @@ const ProductInfor = () => {
     );
   };
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <Header
-        isDefault
-        containerStyle={styles.headerContain}
-        leftStyle={{
-          height: 30,
-          fontWeight: 'bold',
-        }}
-        middleComponent={
-          <Text style={styles.middleComponent}>Thông tin sản phẩm</Text>
-        }
-      />
-      <ProgressBar progress={0.6} color="#823FFD" />
+    <ThemeView style={styles.container} isFullView>
+      <Header isDefault title={i18n.t('addProduct.productInformationTitle')} />
+      <ProgressBar progress={0.67} color="#823FFD" />
       <View style={styles.container}>
-        {Size()}
-        {Color()}
         <View style={styles.boxWrap}>
           <Text style={styles.title}>Tình trạng sản phẩm</Text>
           <View style={{paddingTop: 10}}>
@@ -148,7 +129,9 @@ const ProductInfor = () => {
           <ButtonRounded label="Tiếp tục" />
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+      <Size />
+      <Color />
+    </ThemeView>
   );
 };
 export default ProductInfor;

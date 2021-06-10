@@ -1,5 +1,5 @@
-import {StyleSheet, StatusBar} from 'react-native';
-export default StyleSheet.create({
+import EStyleSheet from 'react-native-extended-stylesheet';
+export default EStyleSheet.create({
   headerContain: {
     paddingBottom: 10,
     borderBottomWidth: 0,
@@ -8,14 +8,6 @@ export default StyleSheet.create({
   middleComponent: {
     textAlign: 'center',
     fontSize: 18,
-    fontWeight: 'bold',
-  },
-  spaceHeader: {
-    padding: 10,
-    textAlign: 'center',
-  },
-  textSpace: {
-    color: '#8B9399',
     fontWeight: 'bold',
   },
 });

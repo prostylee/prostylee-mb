@@ -1,10 +1,10 @@
-import {StyleSheet, StatusBar} from 'react-native';
-export default StyleSheet.create({
-  MainContainer: {
-    justifyContent: 'center',
-    flex: 1,
-    margin: 10,
-    paddingTop: Platform.OS === 'ios' ? 20 : 0,
+import EStyleSheet from 'react-native-extended-stylesheet';
+import {Dimensions} from 'react-native';
+const {width: WIDTH} = Dimensions.get('window');
+
+export default EStyleSheet.create({
+  header: {
+    borderBottomColor: 'transparent',
   },
   headerContain: {
     paddingBottom: 10,
@@ -16,9 +16,24 @@ export default StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-
+  searchBarContainer: {
+    backgroundColor: '$white',
+    borderBottomWidth: 1,
+    borderBottomColor: '$bgColor',
+  },
+  searchBarStyle: {
+    width: WIDTH - 32,
+    height: 35,
+    alignSelf: 'center',
+    marginBottom: 5,
+    elevation: 0,
+    backgroundColor: '$bgColor',
+  },
+  searchBarInput: {
+    fontSize: 14,
+  },
   button: {
-    width: '90%',
+    width: WIDTH - 32,
     alignSelf: 'center',
     paddingBottom: 20,
   },

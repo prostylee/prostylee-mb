@@ -1,38 +1,18 @@
-import React, {useCallback, useState} from 'react';
-import {
-  Dimensions,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
-} from 'react-native';
+import React from 'react';
+import {View, Text} from 'react-native';
 import styles from './styles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import i18n from 'i18n';
 import {ThemeView, Header, ButtonRounded} from 'components';
 import ListSelected from './ListSelected';
 import ListProduct from './ListProducts';
 const AddProducts = ({navigation}) => {
+  const [selectedCategory, setSelectedCategory] = React.useState();
   return (
-    <SafeAreaView>
-      <Header
-        isDefault
-        containerStyle={styles.headerContain}
-        leftStyle={{
-          height: 30,
-          fontWeight: 'bold',
-        }}
-        middleComponent={
-          <Text style={styles.middleComponent}>Thêm sản phẩm</Text>
-        }
-      />
-      <View style={styles.spaceHeader}>
-        <Text style={styles.textSpace}>Danh mục đã chọn</Text>
-      </View>
-      <ListSelected />
-      <ListProduct />
-    </SafeAreaView>
+    <ThemeView style={styles.container} isFullView>
+      <Header isDefault title={i18n.t('addProduct.categoryScreenTitle')} />
+      <ListSelected selectedCategory={selectedCategory} />
+      <ListProduct selectAction={setSelectedCategory} />
+    </ThemeView>
   );
 };
 export default AddProducts;
