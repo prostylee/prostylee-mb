@@ -87,7 +87,6 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     marginBottom: 5,
     marginTop: 5,
-    padding: 10,
   },
   buttonCollapseHeader: {
     flexDirection: 'row',
@@ -95,10 +94,22 @@ export default EStyleSheet.create({
     flex: 1,
   },
   wrapCollapseHeader: {
+    flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  wrapCollapseHeaderLabel: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleCollapseHeader: {
-    color: '#333333',
+    color: '$black',
     fontSize: 14,
     lineHeight: 20,
     fontWeight: '400',
@@ -129,15 +140,25 @@ export default EStyleSheet.create({
   wrapRadioGroup: {
     flexDirection: 'row',
     backgroundColor: '$white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   wrapRadioButton: {
+    flex: 1,
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: '#F4F5F5',
     backgroundColor: '$white',
   },
+  wrapLabelRadioButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    textAlign: 'left',
+  },
   wrapRadio: {
-    width: '100%',
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
@@ -151,6 +172,7 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
+
   iconRadioSub: {
     marginLeft: 5,
   },
@@ -161,7 +183,7 @@ export default EStyleSheet.create({
     lineHeight: 16,
   },
   priceRadio: {
-    color: '#ED2727',
+    color: '$red',
     fontWeight: '400',
     fontSize: 11,
     lineHeight: 16,
@@ -171,6 +193,45 @@ export default EStyleSheet.create({
     fontWeight: '400',
     fontSize: 11,
     lineHeight: 16,
+  },
+  wrapDeliveryChosen: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 16,
+  },
+  wrapInfoChosen: {
+    flexDirection: 'column',
+    marginRight: 10,
+  },
+  wrapTitleChosen: {flexDirection: 'column'},
+  wrapContentChosen: {
+    flexDirection: 'row',
+  },
+  titleChosen: {
+    color: '$black',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '400',
+  },
+  contentChosen: {
+    color: '$lightGray',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '400',
+  },
+  priceRadioChosen: {
+    color: '$red',
+    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  wrapCollapse: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
   },
   wrapLabelDelivery: {
     padding: 10,

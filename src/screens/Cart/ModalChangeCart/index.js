@@ -63,40 +63,44 @@ const ModalChangeCart = ({images, productId}) => {
   return (
     <View style={styles.container}>
       <View style={styles.carouselImgs}>
-        <Carousel
-          sliderWidth={width}
-          sliderHeight={width}
-          itemWidth={WIDTH_IMAGE}
-          data={imageUrls}
-          renderItem={renderItem}
-          hasParallaxImages={true}
-          scrollEnabled={true}
-          enableSnap={true}
-        />
-        <View style={styles.wrapName}>
-          <Text style={styles.name}>{name}</Text>
+        <View style={{flex: 1}}>
+          <Carousel
+            sliderWidth={width}
+            sliderHeight={width}
+            itemWidth={WIDTH_IMAGE}
+            data={imageUrls}
+            renderItem={renderItem}
+            hasParallaxImages={true}
+            scrollEnabled={true}
+            enableSnap={true}
+          />
         </View>
-        <View style={styles.wrapPrice}>
-          <Text numberOfLines={1} style={styles.price}>
-            {currencyFormat(price, 'đ')}
-          </Text>
-        </View>
-        {productAttributeOptionResponse.map((item) => {
-          return (
-            <View style={styles.wrapSize}>
-              <RadioSelectGroup
-                key={item.id}
-                title={item.label}
-                onValueChange={(value) => setValue(value, item)}
-                data={item.productAttributeResponses.map((item) => {
-                  return {label: item.attrValue, value: item.id};
-                })}
-              />
-            </View>
-          );
-        })}
 
-        {/* <View style={styles.wrapColor}>
+        <View style={styles.wrapInfo}>
+          <View style={styles.wrapName}>
+            <Text style={styles.name}>{name}</Text>
+          </View>
+          <View style={styles.wrapPrice}>
+            <Text numberOfLines={1} style={styles.price}>
+              {currencyFormat(price, 'đ')}
+            </Text>
+          </View>
+          {productAttributeOptionResponse.map((item) => {
+            return (
+              <View style={styles.wrapSize}>
+                <RadioSelectGroup
+                  key={item.id}
+                  title={item.label}
+                  onValueChange={(value) => setValue(value, item)}
+                  data={item.productAttributeResponses.map((item) => {
+                    return {label: item.attrValue, value: item.id};
+                  })}
+                />
+              </View>
+            );
+          })}
+
+          {/* <View style={styles.wrapColor}>
           <RadioSelectGroup
             value="black"
             title={i18n.t('cart.color')}
@@ -106,6 +110,8 @@ const ModalChangeCart = ({images, productId}) => {
             ]}
           />
         </View> */}
+        </View>
+
         <View style={styles.wrapCheckout}>
           <ButtonRounded
             label={i18n.t('cart.updateProduct')}

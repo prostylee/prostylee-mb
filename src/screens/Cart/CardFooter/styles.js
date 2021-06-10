@@ -2,53 +2,57 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '$white',
     flexDirection: 'column',
+    paddingTop: 18,
+    paddingBottom: 32,
   },
   viewHeader: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    height: 50,
+    justifyContent: 'space-between',
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 16,
   },
   viewBody: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
+    justifyContent: 'space-between',
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   viewCredit: {
-    flex: 0.5,
+    flex: 1,
     borderRightWidth: 1,
     borderColor: '#E9EAEB',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  viewCoupon: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 0.5,
+  },
+  viewCoupon: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   viewTemp: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    paddingLeft: 10,
-    flex: 0.5,
+    flex: 1,
   },
+
   viewCheckout: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 0,
-    flex: 0.5,
+    flex: 1,
   },
 
   btnCredit: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -64,7 +68,7 @@ export default EStyleSheet.create({
     flex: 1,
   },
   labelCredit: {
-    color: '#333333',
+    color: '$black',
     fontSize: 13,
     lineHeight: 18,
     fontWeight: '400',
@@ -77,6 +81,7 @@ export default EStyleSheet.create({
     alignSelf: 'center',
   },
   labelCoupon: {
+    color: '$black',
     fontSize: 13,
     lineHeight: 18,
     fontWeight: '400',

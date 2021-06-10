@@ -20,6 +20,7 @@ import {cartActions} from 'reducers';
 import {CartEmpty} from 'svg/common';
 
 import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/core';
 
 const ListProduct = ({navigation}) => {
   const dispatch = useDispatch();

@@ -28,7 +28,7 @@ import ProductRating from './ProductRating';
 import ProductSimilar from './ProductSimilar';
 import ProductCoordinated from './ProductCoordinated';
 import Footer from './Footer';
-
+import defaultImg from '../../assets/images/default.png';
 import {dim} from 'utils/common';
 import {debounce} from 'lodash-es';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -72,10 +72,13 @@ const ProductDetail = (props) => {
   const productId = route?.params?.id || 232;
 
   React.useEffect(() => {
-    dispatch(productActions.getProductById({id: productId}));
-    dispatch(productActions.getProductComments({id: productId}));
-    dispatch(productActions.getProductRelated({id: productId}));
-  }, []);
+    if (productId) {
+      scrollAnimated.setValue(0);
+      dispatch(productActions.getProductById({id: productId}));
+      dispatch(productActions.getProductComments({id: productId}));
+      dispatch(productActions.getProductRelated({id: productId}));
+    }
+  }, [productId]);
 
   React.useEffect(() => {
     if (productData && productData.storeId && productData.categoryId) {
@@ -184,6 +187,7 @@ const ProductDetail = (props) => {
         style={styles.imageItem}
         source={{uri: item}}
         resizeMode={'cover'}
+        defaultSource={defaultImg}
       />
     );
   };
