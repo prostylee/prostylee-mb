@@ -1,5 +1,12 @@
 import React, {useEffect} from 'react';
-import {View, Dimensions, TouchableOpacity, Text, Animated} from 'react-native';
+import {
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Text,
+  Animated,
+  Platform,
+} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import IconIcons from 'react-native-vector-icons/Ionicons';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
@@ -84,8 +91,8 @@ const TabNav = ({
 
 const styles = EStyleSheet.create({
   container: {
-    height: 36 + 50 + getStatusBarHeight(),
-    paddingTop: 50 + getStatusBarHeight(),
+    height: 36 + 50 + (Platform.OS === 'ios' ? getStatusBarHeight() : 0),
+    paddingTop: 50 + (Platform.OS === 'ios' ? getStatusBarHeight() : 0),
     width: '100%',
     display: 'flex',
     flexDirection: 'row',

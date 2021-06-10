@@ -47,6 +47,12 @@ import categories, {
   types as categoriesTypes,
 } from './categories';
 
+import postProduct, {
+  actions as postProductActions,
+  selectors as postProductSelectors,
+  types as postProductTypes,
+} from './postProduct';
+
 import address, {
   actions as addressActions,
   selectors as addressSelectors,
@@ -70,6 +76,7 @@ const rootReducer = combineReducers({
   reviewRating,
   status,
   categories,
+  postProduct,
   address,
   cart,
   search,
@@ -85,6 +92,7 @@ export {dynamicUsersActions, dynamicUsersTypes};
 export {reviewRatingActions, reviewRatingSelectors, reviewRatingTypes};
 export {statusActions, statusSelectors, statusTypes};
 export {categoriesActions, categoriesTypes};
+export {postProductActions, postProductSelectors, postProductTypes};
 export {addressActions, addressSelectors, addressTypes};
 export {cartActions, cartTypes};
 export {searchActions, searchTypes};
