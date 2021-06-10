@@ -121,6 +121,8 @@ const ProductItem = ({item, navigation}) => {
             <Button
               contentStyle={styles.button}
               labelStyle={styles.labelStyle}
+              contentStyle={styles.contentStyle}
+              uppercase={false}
               mode="contained"
               color="#823FFD"
               onPress={onUse}>
