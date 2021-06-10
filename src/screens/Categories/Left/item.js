@@ -23,15 +23,17 @@ const CategoriesLeftItem = ({item, setBanner}) => {
     : false;
 
   const clickItem = () => {
-    setBanner(item.banner);
-    dispatch(categoriesActions.setCategoriesParentSelect(item));
-    dispatch(
-      categoriesActions.getListRightCategories({
-        page: PAGE_DEFAULT,
-        limit: LIMIT_DEFAULT,
-        parentId: item?.id,
-      }),
-    );
+    if (!active) {
+      setBanner(item.banner);
+      dispatch(categoriesActions.setCategoriesParentSelect(item));
+      dispatch(
+        categoriesActions.getListRightCategories({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          parentId: item?.id,
+        }),
+      );
+    }
   };
 
   return (
@@ -45,16 +47,19 @@ const CategoriesLeftItem = ({item, setBanner}) => {
                 : require('assets/images/default.png')
             }
             resizeMode="cover"
-            style={[
-              styles.imageThumbnail,
-              {
-                tintColor: active ? Colors['$purple'] : Colors['$lightGray'],
-              },
-            ]}
+            style={styles.imageThumbnail}
+            tintColor={active ? Colors['$purple'] : Colors['$black']}
             PlaceholderContent={<ActivityIndicator />}
           />
           <View style={{height: 32}}>
-            <Text numberOfLines={2} style={styles.title}>
+            <Text
+              numberOfLines={2}
+              style={[
+                styles.title,
+                {
+                  color: active ? Colors['$purple'] : Colors['$black'],
+                },
+              ]}>
               {item?.name}
             </Text>
           </View>

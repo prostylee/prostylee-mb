@@ -28,7 +28,7 @@ import ProductRating from './ProductRating';
 import ProductSimilar from './ProductSimilar';
 import ProductCoordinated from './ProductCoordinated';
 import Footer from './Footer';
-
+import defaultImg from '../../assets/images/default.png';
 import {dim} from 'utils/common';
 import {debounce} from 'lodash-es';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -187,6 +187,7 @@ const ProductDetail = (props) => {
         style={styles.imageItem}
         source={{uri: item}}
         resizeMode={'cover'}
+        defaultSource={defaultImg}
       />
     );
   };
