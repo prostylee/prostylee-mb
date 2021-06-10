@@ -2584,3 +2584,39 @@ export const DeleteIcon = ({
     />
   </Svg>
 );
+
+export const MinusIcon = ({
+  height = 16,
+  width = 16,
+  color = '#333',
+  strokeWidth = 2,
+  ...rest
+}) => (
+  <Svg width={width} height={height} viewBox="0 0 16 16" fill="none" {...rest}>
+    <Path
+      d="M3.333 8h9.334"
+      stroke={color}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const PlusIcon = ({
+  height = 16,
+  width = 16,
+  color = '#333',
+  strokeWidth = 1.5,
+  ...rest
+}) => (
+  <Svg width={width} height={height} viewBox="0 0 16 16" fill="none" {...rest}>
+    <Path
+      d="M8 3.333v9.334M3.333 8h9.334"
+      stroke={color}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
