@@ -17,13 +17,21 @@ export default EStyleSheet.create({
   disabledButton: {
     backgroundColor: '$line',
   },
-
+  contentStyle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 0,
+  },
   labelStyle: {
     fontSize: 14,
+    fontWeight: '500',
     lineHeight: 20,
     fontFamily: '$font1',
     textAlign: 'center',
     color: '$white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   container: {
     flex: 1,

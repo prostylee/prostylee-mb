@@ -6,9 +6,17 @@ const WIDTH_IMAGE = width / 2 - 14;
 const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 
 export default EStyleSheet.create({
-  container: {},
-  carouselImgs: {},
-
+  container: {
+    flex: 1,
+    width: width,
+  },
+  carouselImgs: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  wrapInfo: {
+    flex: 1,
+  },
   item: {
     width: WIDTH_IMAGE,
     height: HEIGHT_IMAGE,
@@ -25,9 +33,9 @@ export default EStyleSheet.create({
     resizeMode: 'cover',
   },
   wrapName: {
-    marginTop: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
+    marginTop: 6,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   name: {
     color: '#333333',
@@ -36,9 +44,9 @@ export default EStyleSheet.create({
     fontWeight: '400',
   },
   wrapPrice: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    marginTop: 5,
+    paddingLeft: 16,
+    paddingRight: 16,
+    marginTop: 6,
   },
   price: {
     color: '#333333',
@@ -54,5 +62,5 @@ export default EStyleSheet.create({
   wrapColor: {
     padding: 10,
   },
-  wrapCheckout: {padding: 10},
+  wrapCheckout: {position: 'absolute', bottom: 44, right: 16, left: 16},
 });
