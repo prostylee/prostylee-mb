@@ -36,14 +36,18 @@ export default StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 15,
   },
-  input: {
-    width: '90%',
-  },
+
   inputPrice: {
-    borderBottomWidth: 0.3,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
+    height: 46,
+    paddingHorizontal: 16,
+  },
+  input: {
+    width: '100%',
+    height: '100%',
+    borderBottomWidth: 0.3,
   },
   modalBox: {
     overflow: 'hidden',
@@ -54,7 +58,9 @@ export default StyleSheet.create({
     backgroundColor: 'transparent',
   },
   content: {
+    position: 'absolute',
     bottom: 0,
+    left: 0,
     width,
     height: '60%',
     borderTopLeftRadius: 10,

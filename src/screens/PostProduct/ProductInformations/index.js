@@ -1,15 +1,22 @@
 import React, {useState} from 'react';
-import {TextInput, Text, View, TouchableOpacity} from 'react-native';
+import {
+  TextInput,
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import i18n from 'i18n';
 import {ProgressBar, Button} from 'react-native-paper';
 import {Header, ButtonRounded, ThemeView} from 'components';
 import RadioForm from 'react-native-simple-radio-button';
-import Modal from 'react-native-modalbox';
+import Modal from 'react-native-modal';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ColorInfor from './Color';
 import SizeInfor from './Size';
-
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 const ProductInfor = () => {
   var radio_props = [
     {label: 'Mới', value: 0},
@@ -22,11 +29,16 @@ const ProductInfor = () => {
   const Size = () => {
     return (
       <Modal
-        entry="bottom"
-        backdropPressToClose={true}
-        isOpen={modalVisible}
-        style={styles.modalBox}
-        onClosed={() => setModalVisible(false)}>
+        transparent={true}
+        animationOut="slideOutDown"
+        isVisible={modalVisible}
+        backdropOpacity={0.3}
+        style={{justifyContent: 'flex-end', margin: 0}}
+        testID={'modal'}
+        deviceHeight={HEIGHT}
+        deviceWidth={WIDTH}
+        onBackdropPress={() => setModalVisible(false)}
+        animationOutTiming={400}>
         <View style={styles.content}>
           <View style={styles.headerModal}>
             <Text style={{color: '#823FFD', fontSize: 14}}>Chọn toàn bộ</Text>
@@ -46,11 +58,16 @@ const ProductInfor = () => {
   const Color = () => {
     return (
       <Modal
-        entry="bottom"
-        backdropPressToClose={true}
-        isOpen={modalVisibleColor}
-        style={styles.modalBox}
-        onClosed={() => setModalVisibleColor(false)}>
+        transparent={true}
+        animationOut="slideOutDown"
+        isVisible={modalVisibleColor}
+        backdropOpacity={0.3}
+        style={{justifyContent: 'flex-end', margin: 0}}
+        testID={'modal'}
+        deviceHeight={HEIGHT}
+        deviceWidth={WIDTH}
+        onBackdropPress={() => setModalVisibleColor(false)}
+        animationOutTiming={400}>
         <View style={styles.contentColors}>
           <View style={styles.headerModal}>
             <Text></Text>
@@ -77,10 +94,9 @@ const ProductInfor = () => {
             <RadioForm
               radio_props={radio_props}
               onPress={(value) => {
-                this.setState({value: value});
+                // this.setState({value: value});
               }}
-              borderWidth={0.3}
-              animation={true}
+              borderWidth={1}
               buttonColor={'#BBC0C3'}
               buttonOuterSize={20}
               buttonSize={10}

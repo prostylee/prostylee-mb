@@ -26,7 +26,12 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     height: 48,
-    borderTopWidth: 1,
+    // borderWidth: 1,
+  },
+  categoryIcon: {
+    height: 16,
+    width: 16,
+    marginRight: 12,
   },
   itemText: {
     fontSize: 16,

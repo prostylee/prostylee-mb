@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 
 import {FlatList, Text, View, TouchableOpacity, Image} from 'react-native';
 import {useTheme} from '@react-navigation/native';
+import {Check} from 'svg/common';
+
 import styles from './styles';
 const DATA = [
   {
@@ -92,22 +94,45 @@ const DATA = [
 ];
 const Item = ({item, selectedBrand, onPress}) => {
   const {colors} = useTheme();
+  const active = selectedBrand === item?.id;
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.itemcontainer}>
-        <Image
-          source={require('../../../../assets/images/uniqlo.png')}
-          resizeMode={'cover'}
+        {active ? (
+          <View
+            style={[
+              styles.img,
+              {
+                backgroundColor: colors['$purple'],
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+            ]}>
+            <Check />
+          </View>
+        ) : (
+          <Image
+            source={require('../../../../assets/images/uniqlo.png')}
+            resizeMode={'cover'}
+            style={[
+              styles.img,
+              {
+                borderWidth: 4,
+                borderColor: active ? colors['$purple'] : 'transparent',
+              },
+            ]}
+          />
+        )}
+
+        <Text
           style={[
-            styles.img,
+            styles.Card,
             {
-              borderWidth: 4,
-              borderColor:
-                item.id == selectedBrand ? colors['$purple'] : 'transparent',
+              color: active ? colors['$purple'] : colors['$black'],
             },
-          ]}
-        />
-        <Text style={styles.Card}>{item.title}</Text>
+          ]}>
+          {item.title}
+        </Text>
       </View>
     </TouchableOpacity>
   );

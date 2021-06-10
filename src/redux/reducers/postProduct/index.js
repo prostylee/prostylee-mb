@@ -1,6 +1,8 @@
 import {createAction, handleActions} from 'redux-actions';
 
 export const types = {
+  //Category
+
   GET_CATEGORY: 'GET_CATEGORY',
   GET_CATEGORY_SUCCESS: 'GET_CATEGORY_SUCCESS',
   GET_CATEGORY_FAIL: 'GET_CATEGORY_FAIL',
@@ -10,6 +12,25 @@ export const types = {
   GET_MORE_CATEGORY_SUCCESS: 'GET_MORE_CATEGORY_SUCCESS',
   GET_MORE_CATEGORY_FAIL: 'GET_MORE_CATEGORY_FAIL',
   SET_CATEGORY_LOADING_LOAD_MORE: 'SET_CATEGORY_LOADING_LOAD_MORE',
+
+  //Brand -> STORE MAIN ALREADY EXIST
+  SET_PRODUCT_INFO: 'SET_PRODUCT_INFO',
+  CLEAR_PRODUCT_INFO: 'CLEAR_PRODUCT_INFO',
+
+  SET_PRODUCT_CATEGORY: 'SET_PRODUCT_CATEGORY',
+  SET_PRODUCT_IMAGES: 'SET_PRODUCT_IMAGES',
+  SET_PRODUCT_NAME: 'SET_PRODUCT_NAME',
+  SET_PRODUCT_DESCRIPTION: 'SET_PRODUCT_DESCRIPTION',
+  SET_PRODUCT_BRAND: 'SET_PRODUCT_BRAND',
+  SET_PRODUCT_STATUS: 'SET_PRODUCT_STATUS',
+  SET_PRODUCT_SIZES: 'SET_PRODUCT_SIZES',
+  SET_PRODUCT_COLORS: 'SET_PRODUCT_COLORS',
+  SET_PRODUCT_PRICE: 'SET_PRODUCT_PRICE',
+  SET_PRODUCT_ADDRESS: 'SET_PRODUCT_ADDRESS',
+  SET_PRODUCT_LAT: 'SET_PRODUCT_LAT',
+  SET_PRODUCT_LON: 'SET_PRODUCT_LON',
+  SET_PRODUCT_PAYMENT_METHOD: 'SET_PRODUCT_PAYMENT_METHOD',
+  SET_PRODUCT_DELIVERY_TYPE: 'SET_PRODUCT_DELIVERY_TYPE',
 };
 
 export const actions = {
@@ -22,6 +43,7 @@ export const actions = {
   getMoreCategoryFail: createAction(types.GET_MORE_CATEGORY_FAIL),
   setCategoryMoreLoading: createAction(types.SET_CATEGORY_LOADING_LOAD_MORE),
   setPageCategoryDefault: createAction(types.SET_PAGE_CATEGORY_DEFAULT),
+  setProductInfo: createAction(types.SET_PRODUCT_INFO),
 };
 
 export const selectors = {
@@ -36,6 +58,26 @@ const defaultState = {
   hasMoreCategory: false,
   pageCategory: 0,
   limitCategory: 10,
+  // POST PRODUCT INFO
+
+  //phase1
+  category: null,
+  //phase2
+  images: null,
+  productName: '',
+  description: '',
+  brand: null,
+  //phase3
+  status: null,
+  sizes: null,
+  colors: null,
+  price: 0,
+  //phase4
+  address: '',
+  latitude: 0,
+  longtitude: 0,
+  paymentMethod: null,
+  deliveryType: null,
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -77,15 +119,15 @@ export default handleActions(
     [types.GET_MORE_CATEGORY_FAIL]: (state, {payload}) => {
       return state;
     },
-    // [types.SET_PAGE_PRODUCT_DEFAULT]: (state, {payload}) => {
-    //   return {...state, pageProduct: 0};
-    // },
-    // [types.SET_LOADING_LOAD_MORE_PRODUCT]: (state, {payload}) => {
-    //   return {...state, loadProductMoreLoading: payload};
-    // },
-    // [types.GET_LIST_PRODUCT_LOAD_MORE_FAILED]: (state, {payload}) => {
-    //   return {...state};
-    // },
+    [types.SET_PRODUCT_INFO]: (state, {payload}) => {
+      return {
+        ...state,
+        ...payload,
+      };
+    },
+    [types.CLEAR_PRODUCT_INFO]: (state) => {
+      return defaultState;
+    },
   },
   defaultState,
 );

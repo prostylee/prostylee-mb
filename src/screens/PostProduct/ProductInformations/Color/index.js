@@ -7,7 +7,8 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native';
-import {CheckBox} from 'react-native-elements';
+import {Checkbox} from 'react-native-paper';
+
 import {Header, ButtonRounded, HeaderBack} from 'components';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -53,7 +54,7 @@ const Item = ({item, onPress}) => {
   const [isSelected, setSelection] = useState(false);
   return (
     <View style={styles.item}>
-      <CheckBox value={isSelected} onValueChange={setSelection} />
+      <Checkbox.Android status="unchecked" color="#3470FB" />
       <Text>{item.title}</Text>
     </View>
   );
@@ -64,24 +65,24 @@ const ColorInfor = () => {
     return <Item item={item} onPress={() => setSelectedId(item.id)} />;
   };
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={COLOR}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
-        style={{height: '55%'}}
+        style={styles.listWrapper}
+        ListFooterComponent={
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Placeholder"
+              keyboardType="numeric"
+            />
+          </View>
+        }
       />
-      <View
-        style={{
-          borderBottomWidth: 0.3,
-        }}>
-        <TextInput
-          style={styles.input}
-          placeholder="Placeholder"
-          keyboardType="numeric"
-        />
-      </View>
+
       <View style={styles.button}>
         <TouchableOpacity>
           <ButtonRounded label="Chọn" />

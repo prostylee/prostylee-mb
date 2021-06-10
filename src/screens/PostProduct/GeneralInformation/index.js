@@ -23,35 +23,11 @@ const AddProductsInfor = (props) => {
             {i18n.t('addProduct.generalDescription')}
           </Text>
           <View style={styles.wrapperBorder}>
-            <View
-              style={[
-                styles.shapes,
-                {
-                  borderWidth: 0,
-                },
-              ]}>
-              <Image
-                source={require('../../../assets/images/cmt3.jpeg')}
-                resizeMode={'cover'}
-                style={styles.imgSelected}
-              />
-            </View>
-            <View
-              style={[
-                styles.shapes,
-                {
-                  borderWidth: 0,
-                },
-              ]}>
-              <Image
-                source={require('../../../assets/images/cmt3.jpeg')}
-                resizeMode={'cover'}
-                style={styles.imgSelected}
-              />
-            </View>
             <View style={styles.shapesSelected}>
               <IconMeterial name="image-plus" size={30} />
             </View>
+            <View style={styles.shapes} />
+            <View style={styles.shapes} />
             <View style={styles.shapes} />
           </View>
           <Text style={styles.textPrimary}>Primary</Text>

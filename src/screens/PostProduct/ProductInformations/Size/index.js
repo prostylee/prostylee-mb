@@ -30,41 +30,39 @@ const MockSize = [
 const Size = ({navigation}) => {
   const [activeItem, setActiveItem] = useState(null);
   return (
-    <>
-      <View>
-        <View style={styles.wrapChip}>
-          {MockSize.map((v, i) => (
-            <TouchableOpacity
-              onPress={() => setActiveItem(i)}
+    <View style={styles.container}>
+      <View style={styles.wrapChip}>
+        {MockSize.map((v, i) => (
+          <TouchableOpacity
+            onPress={() => setActiveItem(i)}
+            style={[
+              styles.itemChips,
+              {
+                borderColor:
+                  activeItem === i ? Colors['$purple'] : Colors['$line'],
+              },
+            ]}
+            key={`${v}-${i}`}>
+            <Text
               style={[
-                styles.itemChips,
+                styles.priceText,
                 {
-                  borderColor:
-                    activeItem === i ? Colors['$purple'] : Colors['$line'],
+                  color:
+                    activeItem === i ? Colors['$purple'] : Colors['$black'],
                 },
-              ]}
-              key={`${v}-${i}`}>
-              <Text
-                style={[
-                  styles.priceText,
-                  {
-                    color:
-                      activeItem === i ? Colors['$purple'] : Colors['$black'],
-                  },
-                ]}>
-                {v}
-              </Text>
-            </TouchableOpacity>
-          ))}
-          <Divider />
-        </View>
-        <View style={styles.button}>
-          <TouchableOpacity>
-            <ButtonRounded label="Chọn" />
+              ]}>
+              {v}
+            </Text>
           </TouchableOpacity>
-        </View>
+        ))}
+        <Divider />
       </View>
-    </>
+      <View style={styles.button}>
+        <TouchableOpacity>
+          <ButtonRounded label="Chọn" />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 

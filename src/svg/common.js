@@ -2584,3 +2584,19 @@ export const DeleteIcon = ({
     />
   </Svg>
 );
+export const Check = ({width = 36, height = 36}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 36 36"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Path
+      d="M30 9L13.5 25.5L6 18"
+      stroke="white"
+      strokeWidth="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </Svg>
+);
