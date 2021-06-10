@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getCategoriesParentSelectSelector} from 'redux/selectors/categories';
 import {categoriesActions} from 'redux/reducers';
 import {IMG_RATIO, LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {Colors} from 'components';
 
 const CategoriesLeftItem = ({item, setBanner}) => {
   if (item && item.id === undefined) {
@@ -44,7 +45,12 @@ const CategoriesLeftItem = ({item, setBanner}) => {
                 : require('assets/images/default.png')
             }
             resizeMode="cover"
-            style={styles.imageThumbnail}
+            style={[
+              styles.imageThumbnail,
+              {
+                tintColor: active ? Colors['$purple'] : Colors['$lightGray'],
+              },
+            ]}
             PlaceholderContent={<ActivityIndicator />}
           />
           <View style={{height: 32}}>
