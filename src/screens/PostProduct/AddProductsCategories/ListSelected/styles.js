@@ -1,18 +1,36 @@
-import {StyleSheet, StatusBar} from 'react-native';
-export default StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
+import EStyleSheet from 'react-native-extended-stylesheet';
+export default EStyleSheet.create({
+  flatlistStyle: {
+    backgroundColor: '$white',
+  },
+  contentStyle: {
+    paddingHorizontal: 16,
+  },
+  spaceHeader: {
+    display: 'flex',
     flexDirection: 'column',
-    marginVertical: 0.5,
-    backgroundColor: 'white',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    height: 48,
   },
-  fomatItem: {
+  textSpace: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#8B9399',
+    fontWeight: 'bold',
+  },
+  itemContainer: {
+    flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    height: 48,
+    borderTopWidth: 1,
   },
-  Card: {
+  itemText: {
     fontSize: 16,
-    color: 'black',
-    marginHorizontal: 1,
+    lineHeight: 24,
+    color: '$black',
   },
 });

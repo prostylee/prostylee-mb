@@ -1,5 +1,7 @@
-import {StyleSheet, StatusBar} from 'react-native';
-export default StyleSheet.create({
+import EStyleSheet from 'react-native-extended-stylesheet';
+import {Dimensions} from 'react-native';
+const {width: WIDTH} = Dimensions.get('window');
+export default EStyleSheet.create({
   container: {
     flex: 1,
   },
@@ -22,24 +24,28 @@ export default StyleSheet.create({
     flexDirection: 'row',
     paddingTop: 10,
     alignSelf: 'center',
+    paddingHorizontal: 16,
   },
   title: {
-    fontSize: 16,
-    color: 'gray',
+    fontSize: 14,
     lineHeight: 20,
+    color: '$lightGray',
+  },
+  productNameInput: {
+    marginTop: 12,
   },
   shapes: {
-    width: 90,
-    height: 90,
-    borderColor: 'gray',
+    width: (WIDTH - 54) / 4,
+    height: (WIDTH - 54) / 4,
+    borderColor: '$lightGray',
     borderWidth: 1,
     borderRadius: 5,
     borderStyle: 'dashed',
     marginHorizontal: 5,
   },
   shapesSelected: {
-    width: 90,
-    height: 90,
+    width: (WIDTH - 54) / 4,
+    height: (WIDTH - 54) / 4,
     borderColor: 'gray',
     backgroundColor: '#F4F5F5',
     borderWidth: 1,
@@ -61,21 +67,24 @@ export default StyleSheet.create({
   boxWrap: {
     backgroundColor: 'white',
     flexDirection: 'column',
-    marginVertical: 5,
-    paddingVertical: 30,
-    paddingHorizontal: 15,
+    marginTop: 8,
+    paddingVertical: 20,
+    paddingHorizontal: 16,
   },
   imgSelected: {
-    width: 90,
-    height: 90,
+    width: (WIDTH - 54) / 4,
+    height: (WIDTH - 54) / 4,
+    borderRadius: 5,
   },
   brandWrap: {
+    height: 62,
+    display: 'flex',
     flexDirection: 'row',
-    backgroundColor: 'white',
     justifyContent: 'space-between',
-    marginVertical: 5,
-    paddingVertical: 30,
-    paddingHorizontal: 15,
+    alignItems: 'center',
+    backgroundColor: '$white',
+    marginTop: 8,
+    paddingHorizontal: 16,
   },
   brand: {
     flexDirection: 'row',

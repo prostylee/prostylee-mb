@@ -1,16 +1,7 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  FlatList,
-  TouchableOpacity,
-  Animated,
-  Image,
-  ScrollView,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import i18n from 'i18n';
+import {useTheme, useNavigation} from '@react-navigation/native';
 import styles from './styles';
 
 const DATA = [
@@ -30,33 +21,48 @@ const DATA = [
     products: 'Áo hoodies nam',
   },
 ];
-const Item = ({item, onPress}) => {
+const Item = ({item, index, selectedCategory}) => {
+  const {colors} = useTheme();
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={styles.container}>
-        <View style={styles.fomatItem}>
-          <Text style={styles.Card}>{item.categories}</Text>
-          <Text style={styles.Card}>/</Text>
-          <Text style={styles.Card}>{item.products}</Text>
-        </View>
+    <TouchableOpacity onPress={() => navigation.navigate('GeneralInformation')}>
+      <View
+        style={[
+          styles.itemContainer,
+          {
+            borderTopColor: index !== 0 ? colors['$bgColor'] : 'transparent',
+          },
+        ]}>
+        <Text
+          style={
+            styles.itemText
+          }>{`${selectedCategory.label} / ${item.products}`}</Text>
       </View>
     </TouchableOpacity>
   );
 };
-const ListStoreAddress = () => {
-  const [selectedId, setSelectedId] = useState(null);
-  const renderItem = ({item}) => {
-    return <Item item={item} onPress={() => setSelectedId(item.id)} />;
+const ListStoreAddress = (props) => {
+  const selectedCategory = props.selectedCategory ? props.selectedCategory : {};
+  const renderItem = ({item, index}) => {
+    return (
+      <Item item={item} index={index} selectedCategory={selectedCategory} />
+    );
   };
   return (
-    <SafeAreaView>
+    <View>
+      <View style={styles.spaceHeader}>
+        <Text style={styles.textSpace}>
+          {i18n.t('addProduct.selectedCategory')}
+        </Text>
+      </View>
       <FlatList
         data={DATA}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        extraData={selectedId}
+        contentContainerStyle={styles.contentStyle}
+        style={styles.flatlistStyle}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

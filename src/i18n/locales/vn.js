@@ -345,5 +345,16 @@ export default {
   },
   addProduct: {
     categoryScreenTitle: 'Thêm sản phẩm',
+    selectedCategory: 'Danh mục đã chọn',
+    productCategory: 'Danh mục sản phẩm',
+    generalInformationTitle: 'Thông tin chung',
+    generalDescription:
+      'Upload up to 4 photos and complete the item description.',
+    descriptionName: 'Tên sản phẩm',
+    descriptionContent: 'Mô tả sản phẩm',
+    descriptionBrand: 'Thương hiệu',
+    descriptionButton: 'Tiếp tục',
+    brandFashionsTitle: 'Thương hiệu',
+    productInformationTitle: 'Thông tin sản phẩm',
   },
 };

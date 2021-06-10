@@ -45,14 +45,16 @@ import {
   ChooseRateProduct,
   RateProduct,
   Cart,
-  AddProductsCategories, // Post Product
-  BrandFashions, // Post Product
-  GeneralInformation, // Post Product
-  ProductInformations, // Post Product
-  PaymentShipping, // Post Product
-  AddressRecent, // Post Product
-  AddressTyping, // Post Product
-  Maps, // Post Product
+  //-------- Post Product --------
+  AddProductsCategories,
+  BrandFashions,
+  GeneralInformation,
+  ProductInformations,
+  PaymentShipping,
+  AddressRecent,
+  AddressTyping,
+  Maps,
+  //-------- Post Product --------
   Setting,
   SettingMyAccount,
   SettingAddress,
@@ -133,6 +135,7 @@ function SignedIn() {
       <Stack.Screen name="CropPicture" component={CropPicture} />
       <Stack.Screen name="AddStatus" component={AddStatus} />
       <Stack.Screen name="AddStoreForStatus" component={AddStoreForStatus} />
+      {/******** Post Product ********/}
       <Stack.Screen
         name="AddProductsCategories"
         component={AddProductsCategories}
@@ -147,6 +150,7 @@ function SignedIn() {
         name="ProductInformations"
         component={ProductInformations}
       />
+      {/******** Post Product ********/}
       <Stack.Screen name="Setting" component={Setting} />
       <Stack.Screen name="SettingMyAccount" component={SettingMyAccount} />
       <Stack.Screen name="SettingAddress" component={SettingAddress} />

@@ -97,6 +97,7 @@ const ModalTabButton = ({style, visible}) => {
           openStatusPicker();
           break;
         case 'product':
+          RootNavigator.navigate('AddProductsCategories');
           break;
         default:
           return;

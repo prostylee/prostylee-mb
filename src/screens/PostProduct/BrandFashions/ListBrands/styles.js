@@ -1,20 +1,22 @@
-import {StyleSheet, StatusBar} from 'react-native';
-export default StyleSheet.create({
-  MainContainer: {
-    flex: 1,
-    width: '100%',
-    backgroundColor: 'white',
-    paddingTop: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+import EStyleSheet from 'react-native-extended-stylesheet';
+import {Dimensions} from 'react-native';
+const {width: WIDTH} = Dimensions.get('window');
+export default EStyleSheet.create({
   container: {
     flex: 1,
+    width: WIDTH,
+    paddingVertical: 16,
+  },
+  itemcontainer: {
+    width: WIDTH / 3,
+    display: 'flex',
     flexDirection: 'column',
-    alignSelf: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 25,
-    marginVertical: 15,
+    paddingVertical: 16,
+  },
+  containerContent: {
+    paddingBottom: 40,
   },
   Card: {
     fontSize: 14,
@@ -27,8 +29,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     width: 88,
     height: 88,
-    borderRadius: 50,
-    borderColor: 'black',
-    borderWidth: 0.5,
+    borderRadius: 44,
+    padding: 4,
   },
 });
