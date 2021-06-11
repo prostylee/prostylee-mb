@@ -343,6 +343,13 @@ export default {
     markAsBuy: 'Đánh dấu đã mua',
     findLocation: 'Tìm đường',
   },
+  chat: {
+    chatListTitle: 'Tin nhắn',
+    searchPlaceholder: 'Tìm kiếm',
+    justNow: 'Vừa xong',
+    yesterday: 'Hôm qua',
+    inputPlaceholder: 'Để lại tin nhắn của bạn',
+  },
   addProduct: {
     categoryScreenTitle: 'Thêm sản phẩm',
     selectedCategory: 'Danh mục đã chọn',

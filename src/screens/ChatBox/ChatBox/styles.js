@@ -10,10 +10,6 @@ export default EStyleSheet.create({
   },
   headerRight: {
     flexDirection: 'row',
-    paddingRight: 20,
-  },
-  headerRightIcon: {
-    paddingLeft: 16,
   },
   avatar: {
     height: 30,
@@ -22,9 +18,12 @@ export default EStyleSheet.create({
     paddingLeft: 30,
   },
   leftHeader: {
-    paddingLeft: 15,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  headerLeftBackIcon: {
+    paddingLeft: 16,
+    height: '100%',
   },
   title: {
     flexDirection: 'row',
@@ -34,6 +33,16 @@ export default EStyleSheet.create({
   name: {
     paddingLeft: 8,
     color: 'white',
+  },
+  headerRightCallIcon: {
+    height: '100%',
+    paddingLeft: 16,
+    paddingRight: 6,
+  },
+  headerRightDotIcon: {
+    height: '100%',
+    paddingLeft: 6,
+    paddingRight: 16,
   },
 
   footer: {

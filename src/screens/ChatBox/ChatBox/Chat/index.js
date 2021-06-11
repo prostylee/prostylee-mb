@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View, ScrollView, Text, Image, StyleSheet} from 'react-native';
 import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
 import styles from './styles';
-import img from '../../../assets/images/avatar.jpg';
+import img from 'assets/images/avatar.jpg';
 
 const ChatScreen = () => {
   return (

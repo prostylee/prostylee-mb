@@ -72,8 +72,10 @@ import {
   NearbyStore,
   StoreAddress,
   MyPage,
+  //-------- Chat Box --------
   ChatBox,
-  Message,
+  ChatList,
+  //-------- Chat Box --------
   WishList,
   SoldList,
   SaveList,
@@ -105,7 +107,7 @@ function SignedIn() {
       <Stack.Screen name="MyPage" component={MyPage} />
       {/******** Chat & Message ********/}
       <Stack.Screen name="ChatBox" component={ChatBox} />
-      <Stack.Screen name="Message" component={Message} />
+      <Stack.Screen name="ChatList" component={ChatList} />
       {/******** Chat & Message ********/}
       <Stack.Screen name="WishList" component={WishList} />
       <Stack.Screen name="SaveList" component={SaveList} />

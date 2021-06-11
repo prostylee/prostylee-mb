@@ -15,7 +15,7 @@ const Product = (navigaton) => {
     <View style={styles.productItem}>
       <Image
         style={{width: 30, height: 40, borderRadius: 3}}
-        source={require('../../../assets/images/signInBg.png')}
+        source={require('../../../../assets/images/signInBg.png')}
       />
       <View style={{paddingLeft: 10}}>
         <Text style={{paddingBottom: 5}}>Áo flannel xám form rộng</Text>

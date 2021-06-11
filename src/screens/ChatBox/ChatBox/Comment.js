@@ -1,16 +1,14 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
 
-import {ButtonOutlined} from 'components';
-
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
-import {TextButton, TextInputBorderBottom} from '../../components';
-import {createComment, deleteComment, likeComment, unlikeComment} from '../../graphql/mutations';
-import {getComment, listComments} from '../../graphql/queries';
-import {onCreateComment, onDeleteComment} from '../../graphql/subscriptions';
-import {formatTime} from '../../utils/datetime';
+import {TextButton, TextInputBorderBottom, ButtonOutlined} from 'components';
+import {createComment, deleteComment, likeComment, unlikeComment} from 'graphql/mutations';
+import {getComment, listComments} from 'graphql/queries';
+import {onCreateComment, onDeleteComment} from 'graphql/subscriptions';
+import {formatTime} from 'utils/datetime';
 import {Button, Divider, List, overlay, Text, useTheme} from 'react-native-paper';
 
 const DEFAULT_PARENT_COMMENT_ID = 'PROD_1'; // Rule: <targetType>_<targetId>

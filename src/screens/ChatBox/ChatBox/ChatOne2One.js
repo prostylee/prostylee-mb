@@ -7,11 +7,18 @@ import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {TextButton, TextInputBorderBottom} from 'components';
-import {createChat, deleteChat} from '../../graphql/mutations';
-import {getChat, listChats} from '../../graphql/queries';
-import {onCreateChat, onDeleteChat} from '../../graphql/subscriptions';
-import {formatTime} from '../../utils/datetime';
-import {Button, Divider, List, overlay, Text, useTheme} from 'react-native-paper';
+import {createChat, deleteChat} from 'graphql/mutations';
+import {getChat, listChats} from 'graphql/queries';
+import {onCreateChat, onDeleteChat} from 'graphql/subscriptions';
+import {formatTime} from 'utils/datetime';
+import {
+  Button,
+  Divider,
+  List,
+  overlay,
+  Text,
+  useTheme,
+} from 'react-native-paper';
 
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
 
@@ -147,8 +154,11 @@ const ChatOne2One = (props) => {
           parentId: parentChat ? parentChat.id : DEFAULT_CHAT_GROUP_ID,
           ownerId: user.attributes.sub,
           owner: user.username,
-          ownerFullname: 'Giang Phan',
-          participantUserIds: ['27c3092c-9f1b-49eb-ba68-ab3f091d1347', 'c2ec8d7f-6f7f-4c21-b02a-380d2eaaea1a'], // ['created-user-id', 'participant-user-id'], // TODO fill user id would like to chat
+          ownerFullname: user.username,
+          participantUserIds: [
+            '27c3092c-9f1b-49eb-ba68-ab3f091d1347',
+            'c2ec8d7f-6f7f-4c21-b02a-380d2eaaea1a',
+          ], // ['created-user-id', 'participant-user-id'], // TODO fill user id would like to chat
           imageUrls: [
             'https://pbs.twimg.com/profile_images/3390520999/c167795c6ab9ccad370ce53dbe85fd05.jpeg',
             'https://s3.amazonaws.com/ionic-marketplace/m-fashion/icon.jpg',
