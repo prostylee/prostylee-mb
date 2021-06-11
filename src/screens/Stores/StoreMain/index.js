@@ -44,12 +44,7 @@ const heightShow = 334;
 const HeaderLeft = () => {
   return (
     <TouchableOpacity style={styles.headerLeftContainer}>
-      <MapPinFill
-        color="#E82E46"
-        width={18}
-        height={18}
-        backgroundColor="#fff"
-      />
+      <MapPinFill color="#fff" width={18} height={18} backdropColor="#E82E46" />
       <Text style={styles.locationText}>100 Nguyễn Công Trứ</Text>
     </TouchableOpacity>
   );
