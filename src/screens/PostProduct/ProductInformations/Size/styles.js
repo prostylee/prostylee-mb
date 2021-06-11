@@ -35,4 +35,9 @@ export default EStyleSheet.create({
     position: 'absolute',
     bottom: 100,
   },
+  checkAllButton: {
+    position: 'absolute',
+    top: -31,
+    left: 16,
+  },
 });

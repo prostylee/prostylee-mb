@@ -41,6 +41,20 @@ const ListChildCategories = (props) => {
         childrenCategory: item,
       }),
     );
+    dispatch(
+      postProductActions.getListAttributes({
+        id: item.id,
+      }),
+    );
+    dispatch(postProductActions.getListProductStatus());
+    dispatch(postProductActions.getListDeliveryType());
+    dispatch(postProductActions.getListPaymentMethod());
+    // dispatch(
+    //   postProductActions.getListLocation({
+    //     page: 0,
+    //     limit: 12,
+    //   }),
+    // );
     navigation.navigate('GeneralInformation');
   };
   const renderItem = ({item, index}) => {

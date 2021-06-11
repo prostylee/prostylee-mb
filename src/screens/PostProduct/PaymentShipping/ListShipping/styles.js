@@ -5,6 +5,24 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     textAlign: 'center',
-    marginVertical: -12,
+    paddingHorizontal: 16,
+  },
+  itemTitle: {
+    fontSize: 14,
+    paddingBottom: 3,
+    fontWeight: '400',
+  },
+  status: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  rightTitle: {
+    color: '#823FFD',
+    fontSize: 14,
+  },
+  title: {
+    fontSize: 14,
+    color: 'gray',
   },
 });

@@ -232,14 +232,14 @@ export const MapPinFill = ({
   width = 16,
   height = 16,
   color = '#8B9399',
-  backdropColor = '#8B9399',
+  backgroundColor = '#8B9399',
 }) => {
   return (
     <Svg
       width={width}
       height={height}
       viewBox="0 0 12 12"
-      fill={color}
+      fill={backgroundColor}
       xmlns="http://www.w3.org/2000/svg">
       <Path
         d="M10.5 5C10.5 8.5 6 11.5 6 11.5C6 11.5 1.5 8.5 1.5 5C1.5 3.80653 1.97411 2.66193 2.81802 1.81802C3.66193 0.974106 4.80653 0.5 6 0.5C7.19347 0.5 8.33807 0.974106 9.18198 1.81802C10.0259 2.66193 10.5 3.80653 10.5 5Z"
@@ -250,7 +250,7 @@ export const MapPinFill = ({
         d="M6 6.5C6.82843 6.5 7.5 5.82843 7.5 5C7.5 4.17157 6.82843 3.5 6 3.5C5.17157 3.5 4.5 4.17157 4.5 5C4.5 5.82843 5.17157 6.5 6 6.5Z"
         stroke-linecap="round"
         stroke-linejoin="round"
-        fill={backdropColor}
+        fill={color}
       />
     </Svg>
   );

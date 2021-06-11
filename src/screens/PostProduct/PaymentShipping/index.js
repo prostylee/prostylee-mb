@@ -16,7 +16,15 @@ import styles from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListShippingMethod from './ListShipping';
 import ListPayment from './ListPayment';
+import {useNavigation} from '@react-navigation/native';
 const ProductInfor = () => {
+  const navigation = useNavigation();
+  const [selectedPaymentMethods, setSelectedPaymentMethods] = useState([]);
+  const [selectedDeliveryType, setSelectedDeliveryType] = useState([]);
+
+  const onChangeLocationPress = () => {
+    navigation.navigate('AddressRecent');
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header
@@ -38,7 +46,7 @@ const ProductInfor = () => {
               <Icon name="ios-location-sharp" size={20} color="grey" />
               <Text style={styles.title}>Địa điểm của bạn</Text>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={onChangeLocationPress}>
               <Text style={styles.rightTitle}>Thay đổi địa điểm</Text>
             </TouchableOpacity>
           </View>
@@ -50,23 +58,17 @@ const ProductInfor = () => {
         </View>
 
         <View style={styles.boxWrap}>
-          <View style={styles.status}>
-            <Text style={styles.title}>Phương thức thanh toán</Text>
-            <TouchableOpacity>
-              <Text style={styles.rightTitle}>Chọn toàn bộ</Text>
-            </TouchableOpacity>
-          </View>
-          <ListPayment />
+          <ListPayment
+            setSelectedPaymentMethods={setSelectedPaymentMethods}
+            selectedPaymentMethods={selectedPaymentMethods}
+          />
         </View>
 
         <View style={styles.boxWrap}>
-          <View style={styles.status}>
-            <Text style={styles.title}>Phương thức vận chuyển</Text>
-            <TouchableOpacity>
-              <Text style={styles.rightTitle}>Chọn toàn bộ</Text>
-            </TouchableOpacity>
-          </View>
-          <ListShippingMethod />
+          <ListShippingMethod
+            setSelectedDeliveryType={setSelectedDeliveryType}
+            selectedDeliveryType={selectedDeliveryType}
+          />
         </View>
       </View>
       <View style={styles.button}>

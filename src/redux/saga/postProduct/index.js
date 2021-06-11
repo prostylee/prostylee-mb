@@ -1,94 +1,112 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
+
 import {
-  getParentCategories,
-  getChildCategories,
-} from 'services/api/categoriesApi';
+  getListAttributesByCategoryId,
+  getListProductStatus as getListProductStatusApi,
+  getListPaymentMethod as getListPaymentMethodApi,
+  getListDeliveryType as getListDeliveryTypeApi,
+  getListLocation as getListLocationApi,
+} from 'services/api/postProductApi';
 import {postProductActions, postProductTypes} from 'reducers';
 import {SUCCESS} from 'constants';
 
-//Left
-const getListLeftCategories = function* ({payload}) {
+const getListAttributes = function* ({payload}) {
   try {
-    yield put(postProductActions.setCategoryLoading(true));
-    yield put(postProductActions.setPageCategoryDefault());
-    const res = yield call(getParentCategories, payload);
+    yield put(postProductActions.setListAttributesLoading(true));
+    const res = yield call(getListAttributesByCategoryId, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      yield put(postProductActions.getCategorySuccess(res.data.data));
+      yield put(postProductActions.getListAttributesSuccess(res.data.data));
     } else {
-      yield put(postProductActions.getCategoryFail());
+      yield put(postProductActions.getListAttributesFailed());
     }
   } catch (e) {
     console.error(e);
   } finally {
-    yield put(postProductActions.setCategoryLoading(false));
+    yield put(postProductActions.setListAttributesLoading(false));
   }
 };
 
-const getLoadMoreListLeftCategories = function* ({payload}) {
+const getListProductStatus = function* ({payload}) {
   try {
-    yield put(postProductActions.setCategoryMoreLoading(true));
-    const res = yield call(getParentCategories, payload);
+    yield put(postProductActions.setListProductStatusLoading(true));
+    const res = yield call(getListProductStatusApi, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      yield put(postProductActions.getMoreCategorySuccess(res.data.data));
+      yield put(postProductActions.getListProductStatusFailed(res.data.data));
     } else {
-      yield put(postProductActions.getMoreCategoryFail());
+      yield put(postProductActions.getListProductStatusFailed());
     }
   } catch (e) {
     console.error(e);
   } finally {
-    yield put(postProductActions.setCategoryMoreLoading(false));
+    yield put(postProductActions.setListProductStatusLoading(false));
   }
 };
 
-// const getListRightCategories = function* ({payload}) {
-//   try {
-//     yield put(categoriesActions.setRightLoading(true));
-//     yield put(categoriesActions.setPageRightCategoriesDefault());
-//     const res = yield call(getChildCategories, payload);
-//     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-//       yield put(categoriesActions.getListRightCategoriesSuccess(res.data.data));
-//     } else {
-//       yield put(categoriesActions.getListRightCategoriesFailed());
-//     }
-//   } catch (e) {
-//     console.error(e);
-//   } finally {
-//     yield put(categoriesActions.setRightLoading(false));
-//   }
-// };
+const getListDeliveryType = function* ({payload}) {
+  try {
+    yield put(postProductActions.setListDeliveryTypeLoading(true));
+    const res = yield call(getListDeliveryTypeApi, payload);
 
-// const getLoadMoreListRightCategories = function* ({payload}) {
-//   try {
-//     yield put(categoriesActions.setLoadingLoadMoreRightCategories(true));
-//     const res = yield call(getChildCategories, payload);
-//     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-//       yield put(
-//         categoriesActions.getListRightCategoriesLoadMoreSuccess(res.data.data),
-//       );
-//     } else {
-//       yield put(categoriesActions.getListRightCategoriesLoadMoreFailed());
-//     }
-//   } catch (e) {
-//     console.error(e);
-//   } finally {
-//     yield put(categoriesActions.setLoadingLoadMoreRightCategories(false));
-//   }
-// };
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(postProductActions.getListDeliveryTypeSuccess(res.data.data));
+    } else {
+      yield put(postProductActions.getListDeliveryTypeFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(postProductActions.setListDeliveryTypeLoading(false));
+  }
+};
+
+const getListPaymentMethod = function* ({payload}) {
+  try {
+    yield put(postProductActions.setListPaymentMethodLoading(true));
+    const res = yield call(getListPaymentMethodApi, payload);
+
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(postProductActions.getListPaymentMethodSuccess(res.data.data));
+    } else {
+      yield put(postProductActions.getListPaymentMethodFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(postProductActions.setListPaymentMethodLoading(false));
+  }
+};
+
+const getListLocation = function* ({payload}) {
+  try {
+    yield put(postProductActions.setListLocationLoading(true));
+    const res = yield call(getListLocationApi, payload);
+
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(postProductActions.getListLocationSuccess(res.data.data));
+    } else {
+      yield put(postProductActions.getListLocationFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(postProductActions.setListLocationLoading(false));
+  }
+};
 
 const watcher = function* () {
-  yield takeLatest(postProductTypes.GET_CATEGORY, getListLeftCategories);
+  yield takeLatest(postProductTypes.GET_LIST_ATTIBUTES, getListAttributes);
   yield takeLatest(
-    postProductTypes.GET_MORE_CATEGORY,
-    getLoadMoreListLeftCategories,
+    postProductTypes.GET_LIST_PRODUCT_STATUS,
+    getListProductStatus,
   );
-  // //Right
-  // yield takeLatest(
-  //   postProductTypes.GET_LIST_RIGHT_CATEGORIES,
-  //   getListRightCategories,
-  // );
-  // yield takeLatest(
-  //   postProductTypes.GET_LIST_RIGHT_CATEGORIES_LOAD_MORE,
-  //   getLoadMoreListRightCategories,
-  // );
+  yield takeLatest(
+    postProductTypes.GET_LIST_DELIVERY_TYPE,
+    getListDeliveryType,
+  );
+  yield takeLatest(
+    postProductTypes.GET_LIST_PAYMENT_METHOD,
+    getListPaymentMethod,
+  );
+  yield takeLatest(postProductTypes.GET_LIST_LOCATION, getListLocation);
 };
 export default watcher();
