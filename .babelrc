@@ -27,7 +27,7 @@
           "contants": "./src/contants",
           "svg": "./src/svg",
           "hooks": "./src/hooks",
-          "graphql": "./src/graphql",
+          "graphQL": "./src/graphql",
           "utils": "./src/utils"
         }
       }
