@@ -6,8 +6,14 @@ import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 import styles from './styles';
 import {useSelector} from 'react-redux';
+import {Colors} from 'components';
 
-const FilterBar = ({setVisible = () => {}, visible = false, navigation}) => {
+const FilterBar = ({
+  setVisible = () => {},
+  visible = false,
+  navigation,
+  sortActiveItem = '',
+}) => {
   const filterState = useSelector((state) => getProductFilterState(state));
   const attributeFilterState = filterState?.attributes;
   const categoryFilterState = filterState.category;
@@ -26,7 +32,17 @@ const FilterBar = ({setVisible = () => {}, visible = false, navigation}) => {
             <Sort />
           </View>
           <Text numberOfLines={1} style={styles.textSort}>
-            {i18n.t('sort')}
+            {i18n.t('sort')}:
+          </Text>
+          <Text
+            numberOfLines={1}
+            style={[
+              styles.textSort,
+              {
+                color: Colors['$black'],
+              },
+            ]}>
+            {sortActiveItem}
           </Text>
           <View>
             <CaretDown />

@@ -92,7 +92,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Maps"
+      initialRouteName="Stores"
       mode="card"
       headerMode="none"
       animation="fade">
