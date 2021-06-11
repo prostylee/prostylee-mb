@@ -45,7 +45,7 @@ const Maps = () => {
             <MapPinFill
               width={32}
               height={32}
-              backgroundColor={Colors['$purple']}
+              backdropColor={Colors['$purple']}
               color={'#fff'}
             />
           </Marker>
