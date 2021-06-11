@@ -7,8 +7,7 @@ export default EStyleSheet.create({
   container: {
     flexDirection: 'column',
     backgroundColor: '$white',
-    marginBottom: 10,
-    padding: 10,
+    marginBottom: 6,
   },
   wrapItems: {
     flexDirection: 'row',
@@ -16,8 +15,10 @@ export default EStyleSheet.create({
     borderColor: '#F4F5F5',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   wrapInfo: {flex: 1, flexDirection: 'row'},
   labelHeader: {
@@ -25,6 +26,9 @@ export default EStyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     fontWeight: '500',
-    marginBottom: 5,
+    marginBottom: 6,
+    marginTop: 6,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
 });

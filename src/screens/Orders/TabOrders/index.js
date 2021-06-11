@@ -23,7 +23,7 @@ const TabOrders = ({navigation, status}) => {
         tabBarActiveTextColor="#823FFD"
         tabBarUnderlineStyle={{backgroundColor: '#823FFD'}}
         initialPage={routes.findIndex((item) => item.key === status)}
-        renderTabBar={() => <ScrollableTabBar />}>
+        renderTabBar={() => <ScrollableTabBar backgroundColor="#ffffff" />}>
         {routes.map((item, index) => {
           switch (item.key) {
             case 'waiting':

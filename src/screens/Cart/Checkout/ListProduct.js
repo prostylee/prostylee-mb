@@ -17,14 +17,35 @@ import {RadioButton} from 'react-native-paper';
 import {getListCartSelector} from 'redux/selectors/cart';
 
 const deliveries = [
-  {label: 'Grab', content: 'Nhận hàng vào 29-12 đến 31-12', value: 25000},
-  {label: 'Viettel Post', content: 'Nhận hàng trong ngày', value: 45000},
-  {label: 'VN Express', content: 'Nhận hàng trong ngày', value: 35000},
-  {label: 'Giao hàng tiết kiệm', content: 'Nhận hàng trong ngày', value: 30000},
+  {
+    label: 'Grab',
+    content: 'Nhận hàng vào 29-12 đến 31-12',
+    value: 25000,
+    key: 'grab',
+  },
+  {
+    label: 'Viettel Post',
+    content: 'Nhận hàng trong ngày',
+    value: 45000,
+    key: 'viettel-post',
+  },
+  {
+    label: 'VN Express',
+    content: 'Nhận hàng trong ngày',
+    value: 35000,
+    key: 'vn-express',
+  },
+  {
+    label: 'Giao hàng tiết kiệm',
+    content: 'Nhận hàng trong ngày',
+    value: 30000,
+    key: 'ghtk',
+  },
   {
     label: 'Tự lấy hàng',
     content: 'Bạn có thể tự đến lấy hàng tại địa chỉ của người bán.',
     value: 0,
+    key: 'seft-shipping',
   },
 ];
 
@@ -33,6 +54,7 @@ const ListProduct = ({navigation, data}) => {
   const [collapsed, setCollapsed] = useState(false);
   const [valueDelivery, setValueDelivery] = useState();
   const [total, setTotal] = useState(0);
+  const [valueChosen, setValueChosen] = useState();
 
   const cart = useSelector((state) => getListCartSelector(state)) || [];
 
@@ -64,8 +86,10 @@ const ListProduct = ({navigation, data}) => {
   const handleLoadMore = () => {};
 
   const onChangeDelivery = (vl) => {
-    setValueDelivery(vl);
+    const items = deliveries.find((item) => item.key === vl);
+    setValueChosen(items);
     setCollapsed(true);
+    setValueDelivery(vl);
   };
 
   const renderFooter = () => {
@@ -76,13 +100,23 @@ const ListProduct = ({navigation, data}) => {
             style={styles.buttonCollapseHeader}
             onPress={() => setCollapsed(!collapsed)}>
             <View style={styles.wrapCollapseHeader}>
-              <DeliveryIcon />
-              <Text style={styles.titleCollapseHeader}>
-                &nbsp;{i18n.t('cart.deliveryMethod')}
-              </Text>
+              <View style={styles.wrapCollapseHeaderLabel}>
+                <DeliveryIcon />
+                <Text style={styles.titleCollapseHeader}>
+                  &nbsp;{i18n.t('cart.deliveryMethod')}
+                </Text>
+              </View>
+
+              <View style={styles.wrapCollapseHeaderIcon}>
+                {collapsed ? <DownIcon /> : <RightIcon />}
+              </View>
             </View>
-            <View>{collapsed ? <DownIcon /> : <RightIcon />}</View>
           </TouchableOpacity>
+          {collapsed && valueChosen && (
+            <TouchableOpacity onPress={() => setCollapsed(!collapsed)}>
+              {renderDeliveryChosen(valueChosen)}
+            </TouchableOpacity>
+          )}
           <Collapsible collapsed={collapsed}>
             <RadioButton.Group
               onValueChange={onChangeDelivery}
@@ -92,11 +126,14 @@ const ListProduct = ({navigation, data}) => {
               {listDelivery?.length > 0 &&
                 listDelivery.map((item) => (
                   <RadioButton.Item
-                    key={item.value}
+                    key={`radio-${item.key}`}
                     label={renderDelivery(item)}
-                    value={item.value}
+                    value={item.key}
                     color="#823ffd"
                     style={styles.wrapRadioButton}
+                    mode="android"
+                    position="leading"
+                    labelStyle={styles.wrapLabelRadioButton}
                   />
                 ))}
             </RadioButton.Group>
@@ -164,6 +201,32 @@ const ListProduct = ({navigation, data}) => {
 
         <View style={styles.wrapRadioContent}>
           <Text style={styles.contentRadio}>{item.content}</Text>
+        </View>
+      </View>
+    );
+  };
+
+  const renderDeliveryChosen = (item) => {
+    return (
+      <View style={styles.wrapDeliveryChosen}>
+        <View style={styles.wrapInfoChosen}>
+          <View>
+            <View style={styles.wrapTitleChosen}>
+              <Text style={styles.titleChosen}>{item.label}</Text>
+            </View>
+          </View>
+          <View>
+            <View style={styles.wrapContentChosen}>
+              <Text style={styles.contentChosen}>{item.content}</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.wrapPriceChosen}>
+          <Text style={styles.priceRadioChosen}>
+            {item.value
+              ? currencyFormat(item.value, 'đ')
+              : i18n.t('cart.freeShip')}
+          </Text>
         </View>
       </View>
     );

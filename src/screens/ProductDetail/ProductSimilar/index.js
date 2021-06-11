@@ -22,7 +22,9 @@ const ProductSimilar = (props) => {
           resizeMode={'cover'}
           source={{uri: item.imageUrls[0]}}
         />
-        <Text style={styles.relatedName}>{item.name || ''}</Text>
+        <Text style={styles.relatedName} numberOfLines={2}>
+          {item.name || ''}
+        </Text>
         <View style={styles.relatedInfo}>
           <View style={styles.relatedPriceGroup}>
             <Text style={styles.relatedPriceSale}>

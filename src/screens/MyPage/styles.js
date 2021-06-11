@@ -2,8 +2,11 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Dimensions} from 'react-native';
 const barHeight = getStatusBarHeight();
-const {height} = Dimensions.get('window');
-const HEADER_HEIGHT = 150;
+const {height, width} = Dimensions.get('window');
+const TABS_HEIGHT = 45;
+const HEIGHT_HEADER = 50 + getStatusBarHeight();
+const ANDROID_HEADER =
+  Platform.OS === 'ios' ? getStatusBarHeight() + 10 : getStatusBarHeight();
 
 export default EStyleSheet.create({
   container: {
@@ -15,33 +18,43 @@ export default EStyleSheet.create({
   },
   backgroundImageStyle: {
     width: 500,
-    height: 500 - 80,
+    height: 500,
     top: 0,
     alignSelf: 'center',
-    backgroundColor: 'lightblue',
+  },
+  wrapAvatar: {
+    marginBottom: -40,
+    zIndex: 10,
   },
   avatarStyle: {
-    top: HEADER_HEIGHT - 40,
-    zIndex: 10,
     alignSelf: 'center',
   },
   scrollViewStyle: {
-    top: HEADER_HEIGHT,
-    backgroundColor: '$white',
-    alignSelf: 'stretch',
-    borderTopRightRadius: 8,
-    borderTopLeftRadius: 8,
-    marginTop: -80,
-  },
-  followParentView: {
-    padding: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  followChildView: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  viewInfoUser: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '$white',
+    borderTopRightRadius: 8,
+    borderTopLeftRadius: 8,
+    width: width,
+  },
+
+  followParentView: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: width,
+    paddingTop: 24,
+    paddingBottom: 24,
+  },
+  followChildView: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   valueFollowChild: {
     color: '#333333',
@@ -66,9 +79,7 @@ export default EStyleSheet.create({
   headerProfile: {
     flexDirection: 'column',
     backgroundColor: '$white',
-    marginTop: -barHeight,
-    borderBottomWidth: 1,
-    borderColor: '#E9EAEB',
+    flex: 1,
   },
   headerFull: {
     position: 'absolute',
@@ -80,6 +91,33 @@ export default EStyleSheet.create({
     alignItems: 'center',
   },
   wrapTabView: {
-    height: height - HEADER_HEIGHT - 50,
+    height: height - TABS_HEIGHT - HEIGHT_HEADER - ANDROID_HEADER,
+    borderTopWidth: 1,
+    borderColor: '#E9EAEB',
+  },
+  userNameText: {
+    marginTop: 56,
+    fontSize: 20,
+    lineHeight: 28,
+    fontWeight: '500',
+  },
+  viewScroll: {
+    flex: 1,
+    flexDirection: 'column',
+    width: width,
+  },
+  wrapScroll: {
+    flex: 1,
+  },
+  editButton: {
+    height: 36,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+  },
+  editLabelButton: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
   },
 });

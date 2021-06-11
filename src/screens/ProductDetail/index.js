@@ -5,6 +5,7 @@ import {
   Animated,
   ActivityIndicator,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 import {Container} from 'components';
 import {ProductDetailLoading} from 'components/Loading/contentLoader';
@@ -27,7 +28,7 @@ import ProductRating from './ProductRating';
 import ProductSimilar from './ProductSimilar';
 import ProductCoordinated from './ProductCoordinated';
 import Footer from './Footer';
-
+import defaultImg from '../../assets/images/default.png';
 import {dim} from 'utils/common';
 import {debounce} from 'lodash-es';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -53,7 +54,7 @@ const ProductDetail = (props) => {
   const [relatedVerticalOffset, setRelatedVerticalOffset] = React.useState(0);
   const [ratingPos, setRatingPos] = React.useState(0);
   const [suggestPos, setSuggestPos] = React.useState(0);
-
+  const [refreshing, handleRefreshing] = React.useState(false);
   /*Animated*/
   const HEIGHT_HEADER = (WIDTH * 4) / 3 + getStatusBarHeight();
   const scrollAnimated = React.useRef(new Animated.Value(0)).current;
@@ -71,10 +72,13 @@ const ProductDetail = (props) => {
   const productId = route?.params?.id || 232;
 
   React.useEffect(() => {
-    dispatch(productActions.getProductById({id: productId}));
-    dispatch(productActions.getProductComments({id: productId}));
-    dispatch(productActions.getProductRelated({id: productId}));
-  }, []);
+    if (productId) {
+      scrollAnimated.setValue(0);
+      dispatch(productActions.getProductById({id: productId}));
+      dispatch(productActions.getProductComments({id: productId}));
+      dispatch(productActions.getProductRelated({id: productId}));
+    }
+  }, [productId]);
 
   React.useEffect(() => {
     if (productData && productData.storeId && productData.categoryId) {
@@ -137,20 +141,20 @@ const ProductDetail = (props) => {
     });
   };
   const handleChangeTabActiveItemWhenScrolling = (currentOffset) => {
-    if (currentOffset + SCREEN_HEIGHT / 2 < ratingVerticalOffset) {
+    if (currentOffset + 140 < ratingVerticalOffset) {
       if (activeTab !== 'product') {
         setActiveTab('product');
       }
     }
     if (
-      currentOffset + SCREEN_HEIGHT / 2 > ratingVerticalOffset &&
-      currentOffset + SCREEN_HEIGHT / 2 < relatedVerticalOffset
+      currentOffset + 140 > ratingVerticalOffset &&
+      currentOffset + 140 < relatedVerticalOffset
     ) {
       if (activeTab !== 'rate') {
         setActiveTab('rate');
       }
     }
-    if (currentOffset + SCREEN_HEIGHT / 2 > relatedVerticalOffset) {
+    if (currentOffset + 140 > relatedVerticalOffset) {
       if (activeTab !== 'suggest') {
         setActiveTab('suggest');
       }
@@ -163,7 +167,10 @@ const ProductDetail = (props) => {
     setChoiceSelect([]);
     dispatch(productActions.getProductById({id: id}));
   };
-
+  const handleRefresh = () => {
+    handleRefreshing(true);
+    selectRelatedProduct(productId);
+  };
   const ProductChoiceMemo = React.useMemo(() => {
     return (
       <ProductChoice
@@ -180,12 +187,17 @@ const ProductDetail = (props) => {
         style={styles.imageItem}
         source={{uri: item}}
         resizeMode={'cover'}
+        defaultSource={defaultImg}
       />
     );
   };
   const discount = productData
     ? priceSalePercent(productData?.price, productData?.priceSale)
     : 0;
+
+  React.useEffect(() => {
+    if (!productDataLoading) handleRefreshing(false);
+  }, [productDataLoading]);
 
   React.useEffect(() => {
     if (!ratingVerticalOffset || !relatedVerticalOffset) {
@@ -201,7 +213,7 @@ const ProductDetail = (props) => {
       }
     }
   });
-  if (productDataLoading) {
+  if (productDataLoading && !refreshing) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <ProductDetailLoading />
@@ -224,11 +236,15 @@ const ProductDetail = (props) => {
         style={styles.mainContent}
         scrollEventThrottle={16}
         scrollViewRef={scrollViewRef}
+        overLapStatusBar
         onScroll={(e) => {
           onScrollEvent(e);
-
           handleChangeTabActiveItemWhenScrolling(e.nativeEvent.contentOffset.y);
-        }}>
+        }}
+        hasRefreshing
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }>
         <Animated.View
           style={[
             styles.imageList,

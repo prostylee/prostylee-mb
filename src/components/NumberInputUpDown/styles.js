@@ -2,17 +2,18 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
   container: {
-    flex: 0,
+    flex: 1,
     backgroundColor: '$white',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
   },
-  inputStyle: {
-    display: 'flex',
-    flex: 0,
-    width: 30,
+  wrapInput: {
     height: 30,
+    width: 30,
+  },
+  inputStyle: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
@@ -21,6 +22,8 @@ export default EStyleSheet.create({
     borderColor: '#E9EAEB',
     color: '#333333',
     borderRadius: 0,
+    fontSize: 6,
+    paddingVertical: 0,
   },
   minusIcon: {
     height: 30,

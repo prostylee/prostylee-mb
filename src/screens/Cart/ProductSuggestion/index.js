@@ -24,20 +24,12 @@ const ProductSimilar = (props) => {
     getListSuggestionSelector(state),
   );
 
-  useEffect(() => {
-    dispatch(cartActions.getListSuggestion());
-  }, []);
-
   return (
     <View style={styles.container}>
       <View style={styles.titleRow}>
-        <Text style={styles.title}>
-          {i18n.t('cart.forYou')}
-        </Text>
+        <Text style={styles.title}>{i18n.t('cart.forYou')}</Text>
         <TouchableOpacity style={styles.listMore} onPress={() => {}}>
-          <Text style={styles.listMoreText}>
-            {i18n.t('cart.seeMore')}
-          </Text>
+          <Text style={styles.listMoreText}>{i18n.t('cart.seeMore')}</Text>
           <IonIcons
             name={'ios-chevron-forward'}
             size={18}

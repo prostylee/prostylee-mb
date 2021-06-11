@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Text, View, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {Image, NumberInputUpDown} from 'components';
 import HeaderStore from './HeaderStore';
@@ -8,7 +7,7 @@ import {currencyFormat} from 'utils/currency';
 import Modal from 'react-native-modal';
 import {IconButton, Colors} from 'react-native-paper';
 import ModalChangeCart from '../ModalChangeCart';
-import {DownArrow} from 'svg/common';
+import {DownArrow, Close} from 'svg/common';
 
 const Item = ({product}) => {
   const [visible, setVisible] = useState(false);
@@ -17,19 +16,21 @@ const Item = ({product}) => {
   const {storeId, storeName, storeAvatar, data, amount, options} = product;
 
   const onChangeAttr = (pId) => {
-    console.log('pId', pId);
     setCurrentId(pId);
     setVisible(true);
   };
 
+  console.log('vi', visible);
+
   return (
     <>
       <Modal
-        animationIn="fadeIn"
-        animationOut="fadeOut"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
         transparent={true}
         isVisible={visible}
-        animationOutTiming={20}
+        animationInTiming={100}
+        animationOutTiming={100}
         backdropOpacity={0.3}
         style={{padding: 0}}
         testID={'modal'}
@@ -38,12 +39,14 @@ const Item = ({product}) => {
         <View style={styles.modalChangeColor}>
           <View style={styles.contentBox}>
             <View style={styles.modalHeader}>
-              <IconButton
-                icon="close"
-                color={Colors.black500}
-                size={20}
-                onPress={() => setVisible(false)}
-              />
+              <View style={styles.wrapButtonEmpty}></View>
+              <View style={styles.wrapButtonClose}>
+                <TouchableOpacity
+                  style={styles.buttonClose}
+                  onPress={() => setVisible(false)}>
+                  <Close />
+                </TouchableOpacity>
+              </View>
             </View>
             <ModalChangeCart productId={currentId} />
           </View>
@@ -66,7 +69,7 @@ const Item = ({product}) => {
                 />
               </View>
               <View style={styles.wrapTextContent}>
-                <View>
+                <View style={styles.wrapText}>
                   <Text numberOfLines={2} style={styles.name}>
                     {item.name}
                   </Text>
@@ -79,14 +82,19 @@ const Item = ({product}) => {
                 <View style={styles.wrapAmount}>
                   <View style={styles.wrapSize}>
                     <Text numberOfLines={1} style={styles.name}>
-                      {options.map((op) => {
+                      {options.map((op, idx) => {
                         return (
                           <TouchableOpacity
-                            style={styles.productAttr}
+                            style={[
+                              styles.productAttr,
+                              {
+                                borderLeftWidth: idx !== 0 ? 1 : 0,
+                              },
+                            ]}
                             onPress={() => onChangeAttr(item.id)}>
-                            <Text style={styles.name}>
+                            {/* <Text style={styles.name}>
                               {`${op.label}:`}&nbsp;
-                            </Text>
+                            </Text> */}
                             <Text style={styles.addButtonText}>
                               &nbsp;{op.value.attrValue}&nbsp;
                             </Text>
@@ -94,7 +102,9 @@ const Item = ({product}) => {
                         );
                       })}
                     </Text>
-                    <DownArrow />
+                    <TouchableOpacity onPress={() => onChangeAttr(item.id)}>
+                      <DownArrow />
+                    </TouchableOpacity>
                   </View>
                   <View style={styles.wrapUpdown}>
                     <NumberInputUpDown value={+amount} minValue={0} />

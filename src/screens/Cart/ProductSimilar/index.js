@@ -7,37 +7,38 @@ import i18n from 'i18n';
 import {currencyFormat} from 'utils/currency';
 import {Heart, HeartFill} from 'svg/common';
 import {cartActions} from 'reducers';
+import _ from 'lodash';
 
 import {
   getRecentLoadingSelector,
   getListRecentSelector,
 } from 'redux/selectors/cart';
+import {useNavigation} from '@react-navigation/native';
 
 const ProductSimilar = (props) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const imagesRef = React.useRef();
-  const selectItem = props.onSelect ? props.onSelect : () => {};
+  //const selectItem = props.onSelect ? props.onSelect : () => {};
 
-  const loading = useSelector((state) => getRecentLoadingSelector(state));
+  //const loading = useSelector((state) => getRecentLoadingSelector(state));
   const recentList = useSelector((state) => getListRecentSelector(state));
-
-  useEffect(() => {
-    dispatch(cartActions.getListRecent());
-  }, []);
 
   const renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
         style={styles.carouselItem}
         onPress={() => {
-          selectItem(item.id);
+          navigation.navigate('ProductDetail', {id: item.id});
         }}>
         <Image
           style={styles.relatedImage}
           resizeMode={'cover'}
           source={{uri: item.imageUrls[0]}}
         />
-        <Text style={styles.relatedName}>{item.name || ''}</Text>
+        <Text style={styles.relatedName} numberOfLines={2}>
+          {item.name || ''}
+        </Text>
         <View style={styles.relatedInfo}>
           <View style={styles.relatedPriceGroup}>
             <Text style={styles.relatedPriceSale}>

@@ -21,19 +21,50 @@ import {Message} from 'svg/social';
 
 import {Avatar, ToggleButton} from 'react-native-paper';
 import TabViewContainer from './TabView';
+import {ScrollView} from 'react-native';
 
 const heightShow = 334;
+let scrollFlag = true;
+const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+  const paddingToBottom = 150;
+  return (
+    layoutMeasurement.height + contentOffset.y >=
+    contentSize.height - paddingToBottom
+  );
+};
 const Index = ({navigation}) => {
   const dispatch = useDispatch();
+  const [scrollEnabled, setScrollEnabled] = useState(true);
   const [viewType, setViewType] = useState('grid');
   const [activeTab, setActivedTab] = useState('menu');
+  const scrollViewRef = useRef();
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
-    {useNativeDriver: false},
+    {
+      listener: (event) => {
+        const {contentOffset} = event.nativeEvent;
+        if (isCloseToBottom(event.nativeEvent) && scrollFlag) {
+          scrollFlag = false;
+          scrollViewRef.current.scrollToEnd({animated: true});
+          setScrollEnabled(false);
+        }
+        if (contentOffset.y === 0) {
+          scrollFlag = true;
+        }
+      },
+      useNativeDriver: false,
+    },
   );
+  const restoreScrollTop = () => {
+    scrollViewRef.current.scrollTo({
+      y: 0,
+      animated: true,
+    });
+    setScrollEnabled(true);
+  };
 
   React.useEffect(() => {
     // TODO remove
@@ -51,8 +82,16 @@ const Index = ({navigation}) => {
         heightShow={heightShow}
         navigation={navigation}
         scrollAnimated={scrollAnimated}
+        restoreScrollTop={restoreScrollTop}
       />
-      <Container onScroll={onScrollEvent} scrollEventThrottle={1}>
+      <ScrollView
+        ref={scrollViewRef}
+        onScroll={onScrollEvent}
+        scrollEnabled={scrollEnabled}
+        scrollEventThrottle={1}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        style={styles.viewScroll}>
         <Animated.View
           style={[
             {
@@ -76,28 +115,23 @@ const Index = ({navigation}) => {
               <Setting color="#ffffff" />
             </TouchableOpacity>
           </View>
-          <View>
+          <View style={styles.wrapScroll}>
             <ImageBackground
               style={styles.backgroundImageStyle}
-              source={{uri: 'https://reactjs.org/logo-og.png'}}>
-              <Avatar.Image
-                source={{uri: 'https://reactjs.org/logo-og.png'}}
-                size={80}
-                style={styles.avatarStyle}
-              />
-              <View
-                style={styles.scrollViewStyle}
-                contentContainerStyle={{flex: 1}}>
-                <View style={{alignItems: 'center'}}>
-                  <Text
-                    style={{
-                      marginTop: 56,
-                      fontSize: 20,
-                      lineHeight: 28,
-                      fontWeight: '500',
-                    }}>
-                    Alyssa Gardner
-                  </Text>
+              source={{uri: 'https://reactjs.org/logo-og.png'}}
+              blurRadius={10}>
+              <View style={styles.scrollViewStyle}>
+                <View style={styles.wrapAvatar}>
+                  <Avatar.Image
+                    source={{uri: 'https://reactjs.org/logo-og.png'}}
+                    size={80}
+                    style={styles.avatarStyle}
+                  />
+                </View>
+                <View style={styles.viewInfoUser}>
+                  <View style={styles.wrapUserNameText}>
+                    <Text style={styles.userNameText}>Alyssa Gardner</Text>
+                  </View>
                   <View style={{paddingHorizontal: 16}}>
                     <Text
                       style={{
@@ -115,6 +149,8 @@ const Index = ({navigation}) => {
                   </View>
                   <View style={{paddingTop: 16}}>
                     <ButtonRounded
+                      style={styles.editButton}
+                      labelStyle={styles.editLabelButton}
                       label={I18n.t('mypage.editProfile')}
                       onPress={() => navigation.navigate('SettingMyAccount')}
                     />
@@ -148,10 +184,11 @@ const Index = ({navigation}) => {
           <TabViewContainer
             scrollAnimated={scrollAnimated}
             viewType={viewType}
+            scrollEnabled={!scrollEnabled}
             setActivedTab={setActivedTab}
           />
         </View>
-      </Container>
+      </ScrollView>
       {activeTab === 'menu' && (
         <View style={styles.viewType}>
           <ToggleButton.Row

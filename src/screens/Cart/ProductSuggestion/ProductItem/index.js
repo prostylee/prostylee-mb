@@ -7,12 +7,20 @@ import {useNavigation} from '@react-navigation/native';
 import {Image, ProductLike} from 'components';
 import {currencyFormat, priceSalePercent} from 'utils/currency';
 
-const ProductItem = ({item}) => {
+const ProductItem = ({item, index}) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.wrapItems}>
+    <View
+      style={[
+        styles.wrapItems,
+        {
+          paddingLeft: index % 2 === 0 ? 16 : 6,
+          paddingRight: index % 2 === 1 ? 16 : 6,
+        },
+      ]}>
       <TouchableOpacity
         onPress={() => {
+          console.log('NAVIGATION ID', item?.id);
           navigation.navigate('ProductDetail', {id: item.id});
         }}>
         <View style={styles.item}>
@@ -35,23 +43,27 @@ const ProductItem = ({item}) => {
               </View>
             ) : null}
           </View>
-          <Text numberOfLines={2} style={styles.title}>
-            {item.name}
-          </Text>
-          {item?.priceSale ? (
-            <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(item?.priceSale, 'đ')}
+          <View style={styles.informationWrapper}>
+            <Text numberOfLines={2} style={styles.title}>
+              {item.name}
             </Text>
-          ) : null}
+            <View>
+              {item?.priceSale ? (
+                <Text numberOfLines={1} style={styles.price}>
+                  {currencyFormat(item?.priceSale, 'đ')}
+                </Text>
+              ) : null}
 
-          <View style={styles.wrapPriceRoot}>
-            {item?.price ? (
-              <Text numberOfLines={1} style={styles.priceRoot}>
-                {currencyFormat(item?.price, 'đ')}
-              </Text>
-            ) : null}
+              <View style={styles.wrapPriceRoot}>
+                {item?.price ? (
+                  <Text numberOfLines={1} style={styles.priceRoot}>
+                    {currencyFormat(item?.price, 'đ')}
+                  </Text>
+                ) : null}
 
-            <ProductLike item={item} />
+                <ProductLike item={item} />
+              </View>
+            </View>
           </View>
         </View>
       </TouchableOpacity>

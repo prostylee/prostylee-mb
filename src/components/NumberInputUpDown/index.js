@@ -1,8 +1,10 @@
-import style from './styles';
+import styles from './styles';
 
 import React, {useState, useEffect, useRef} from 'react';
-import {View, TextInput, Text} from 'react-native';
+import {View, TextInput, TouchableOpacity} from 'react-native';
 import {IconButton} from 'react-native-paper';
+import {MinusIcon} from 'svg/common';
+import {PlusIcon} from '../../svg/common';
 
 const NumberInputUpDown = ({
   value,
@@ -28,6 +30,10 @@ const NumberInputUpDown = ({
   }, [value]);
 
   const onChangeValue = (vl) => {
+    if (!vl) {
+      setCurrentValue(null);
+      return;
+    }
     if (regex.test(vl)) {
       setCurrentValue(+vl);
       if (typeof onChange === 'function') {
@@ -41,6 +47,10 @@ const NumberInputUpDown = ({
   const onFocus = () => {};
 
   const inc = () => {
+    if (!currentValue) {
+      setCurrentValue('0');
+      return;
+    }
     if (regex.test(currentValue)) {
       if (
         minValue === undefined ||
@@ -54,6 +64,10 @@ const NumberInputUpDown = ({
   };
 
   const dec = () => {
+    if (!currentValue) {
+      setCurrentValue('0');
+      return;
+    }
     if (regex.test(currentValue)) {
       if (
         maxValue === undefined ||
@@ -67,37 +81,34 @@ const NumberInputUpDown = ({
   };
 
   return (
-    <View style={{...style.container, ...containerStyle}}>
-      <IconButton
+    <View style={{...styles.container, ...containerStyle}}>
+      <TouchableOpacity
+        style={{...styles.minusIcon, ...minusStyle}}
         onPress={inc}
-        style={{...style.minusIcon, ...minusStyle}}
-        size={12}
-        icon={minusIcon || 'minus'}
-        disabled={+minValue >= +currentValue}
-      />
-
-      <TextInput
-        editable={editable}
-        returnKeyType="done"
-        underlineColorAndroid="rgba(0,0,0,0)"
-        keyboardType="numeric"
-        defaultValue={currentValue.toString()}
-        value={currentValue.toString()}
-        onChangeText={onChangeValue}
-        style={{...style.inputStyle, ...inputStyle}}
-        ref={ref || refNumberic}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        autoFocus={true}
-        {...rest}
-      />
-      <IconButton
+        disabled={+minValue >= +currentValue}>
+        {minusIcon ? minusIcon : <MinusIcon />}
+      </TouchableOpacity>
+      <View style={styles.wrapInput}>
+        <TextInput
+          editable={editable}
+          returnKeyType="done"
+          underlineColorAndroid="rgba(0,0,0,0)"
+          keyboardType="numeric"
+          defaultValue={currentValue && currentValue.toString()}
+          value={currentValue && currentValue.toString()}
+          onChangeText={onChangeValue}
+          style={{...styles.inputStyle, ...inputStyle}}
+          ref={ref || refNumberic}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          {...rest}
+        />
+      </View>
+      <TouchableOpacity
         onPress={dec}
-        style={{...style.plusIcon, ...plusStyle}}
-        size={12}
-        icon={plusIcon || 'plus'}
-        disabled={+maxValue <= +currentValue}
-      />
+        style={{...styles.plusIcon, ...plusStyle}}>
+        {plusIcon ? plusIcon : <PlusIcon />}
+      </TouchableOpacity>
     </View>
   );
 };

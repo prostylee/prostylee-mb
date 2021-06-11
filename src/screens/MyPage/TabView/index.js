@@ -2,7 +2,6 @@ import styles from './styles';
 import React from 'react';
 import {Bag, Menu} from 'svg/common';
 import {View, TouchableOpacity, Animated} from 'react-native';
-import NewFeed from '../NewFeed';
 import Order from '../Order';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import GridView from '../GridView';
@@ -16,6 +15,7 @@ const TabViewContainer = ({
   style,
   scrollAnimated,
   setActivedTab,
+  scrollEnabled,
 }) => {
   const RenderLabel = ({tabs, goToPage, activeTab}) => {
     const translateY = scrollAnimated.interpolate({
@@ -54,9 +54,11 @@ const TabViewContainer = ({
       initialPage={0}
       renderTabBar={() => <RenderLabel />}>
       <View style={{flex: 1}} tabLabel={'menu'}>
-        <NewFeed navigation={navigation}>
-          {viewType === 'grid' ? <GridView /> : <FullView />}
-        </NewFeed>
+        {viewType === 'grid' ? (
+          <GridView scrollEnabled={scrollEnabled} />
+        ) : (
+          <FullView scrollEnabled={scrollEnabled} />
+        )}
       </View>
       <View style={{flex: 1, flexDirection: 'column'}} tabLabel={'bag'}>
         <Order />
