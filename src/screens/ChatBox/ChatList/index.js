@@ -9,9 +9,9 @@ import ListMessage from './ListMessage';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
-import {createChat, deleteChat} from 'graphQL/mutations';
-import {getChat, listChats} from 'graphQL/queries';
-import {onCreateChat, onDeleteChat} from 'graphQL/subscriptions';
+import {createChat, deleteChat} from 'graphqlLocal/mutations';
+import {getChat, listChats} from 'graphqlLocal/queries';
+import {onCreateChat, onDeleteChat} from 'graphqlLocal/subscriptions';
 import {getUserAWSAvatar} from 'services/api/userApi';
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
 /******** chat aws ********/
