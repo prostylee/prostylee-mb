@@ -49,6 +49,9 @@ const NumberInputUpDown = ({
   const inc = () => {
     if (!currentValue) {
       setCurrentValue('0');
+      if (typeof onChange === 'function') {
+        onChange(0);
+      }
       return;
     }
     if (regex.test(currentValue)) {
@@ -59,6 +62,9 @@ const NumberInputUpDown = ({
       ) {
         const newValue = +currentValue - 1;
         setCurrentValue(newValue);
+        if (typeof onChange === 'function') {
+          onChange(+newValue);
+        }
       }
     }
   };
@@ -66,6 +72,9 @@ const NumberInputUpDown = ({
   const dec = () => {
     if (!currentValue) {
       setCurrentValue('0');
+      if (typeof onChange === 'function') {
+        onChange(0);
+      }
       return;
     }
     if (regex.test(currentValue)) {
@@ -76,6 +85,9 @@ const NumberInputUpDown = ({
       ) {
         const newValue = +currentValue + 1;
         setCurrentValue(newValue);
+        if (typeof onChange === 'function') {
+          onChange(+newValue);
+        }
       }
     }
   };

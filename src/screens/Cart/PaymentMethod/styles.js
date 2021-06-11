@@ -37,6 +37,13 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
+  wrapLabelRadioButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    textAlign: 'left',
+  },
   iconRadioSub: {
     marginLeft: 5,
   },
