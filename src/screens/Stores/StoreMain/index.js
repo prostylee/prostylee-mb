@@ -44,7 +44,12 @@ const heightShow = 334;
 const HeaderLeft = () => {
   return (
     <TouchableOpacity style={styles.headerLeftContainer}>
-      <MapPinFill color="#fff" width={18} height={18} backdropColor="#E82E46" />
+      <MapPinFill
+        color="#E82E46"
+        width={18}
+        height={18}
+        backgroundColor="#fff"
+      />
       <Text style={styles.locationText}>100 Nguyễn Công Trứ</Text>
     </TouchableOpacity>
   );
@@ -110,6 +115,7 @@ const Stores = (props) => {
         storeActions.getTopBanner({
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
+          position: 'mobile_store',
         }),
       );
     if (!midBannerList || !midBannerList?.content?.length)
@@ -117,6 +123,8 @@ const Stores = (props) => {
         storeActions.getMidBanner({
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
+          position: 'mobile_store',
+          targetType: 'ads_fee',
         }),
       );
     if (!brandList || !brandList?.content?.length)

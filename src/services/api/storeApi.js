@@ -16,11 +16,17 @@ export const getStoreMiniApi = () => {
 export const getBannerGroups = (payload) => {
   return _fetch(GET, '/ads-groups', {...payload});
 };
-export const getBannerImageByGroupId = (payload) => {
+export const getBannerAds = (payload) => {
   return _fetch(GET, '/ads-banners', {
     ...payload,
   });
 };
+export const getBannerCampaigns = (payload) => {
+  return _fetch(GET, '/ads-campaigns', {
+    ...payload,
+  });
+};
+
 export const getBrandList = (payload) => {
   return _fetch(GET, '/brands', {
     ...payload,
