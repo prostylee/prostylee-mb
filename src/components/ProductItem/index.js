@@ -28,8 +28,8 @@ const ProductItem = ({wImage, item}) => {
       onPress={() => {}}>
       <Image
         source={
-          item?.imageUrls.length
-            ? {uri: item?.imageUrls[0]}
+          item?.imageUrls?.length
+            ? {uri: item?.imageUrls?.[0]}
             : require('assets/images/default.png')
         }
         resizeMode="cover"

@@ -1,8 +1,9 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {
-  getBannerImageByGroupId,
+  getBannerAds,
   getBrandList as getBrandListApi,
   getCategories,
+  getBannerCampaigns,
 } from 'services/api/storeApi';
 import {storeActions, storeTypes} from 'reducers';
 import {SUCCESS} from 'constants';
@@ -10,8 +11,8 @@ import {SUCCESS} from 'constants';
 const getTopBanner = function* ({payload}) {
   try {
     yield put(storeActions.setStoreLoading(true));
-    const res = yield call(getBannerImageByGroupId, payload);
-
+    const res = yield call(getBannerAds, payload);
+    console.log('BANNER ADS', res.data.data);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getTopBannerSuccess(res.data.data));
     } else {
@@ -27,7 +28,8 @@ const getTopBanner = function* ({payload}) {
 const getMidBanner = function* ({payload}) {
   try {
     yield put(storeActions.setStoreLoading(true));
-    const res = yield call(getBannerImageByGroupId, payload);
+    const res = yield call(getBannerCampaigns, payload);
+    console.log('BANNER CAMPAIGNS', res.data.data);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getMidBannerSuccess(res.data.data));
     } else {

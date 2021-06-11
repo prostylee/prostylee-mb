@@ -110,6 +110,7 @@ const Stores = (props) => {
         storeActions.getTopBanner({
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
+          position: 'mobile_store',
         }),
       );
     if (!midBannerList || !midBannerList?.content?.length)
@@ -117,6 +118,8 @@ const Stores = (props) => {
         storeActions.getMidBanner({
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
+          position: 'mobile_store',
+          targetType: 'ads_fee',
         }),
       );
     if (!brandList || !brandList?.content?.length)

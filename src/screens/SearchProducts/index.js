@@ -22,6 +22,14 @@ import GroupHeaderRightButton from './HeaderRightButton';
 import FilterBar from './FilterBar';
 
 const WIDTH = Dimensions.get('window').width;
+const MockSortItem = [
+  {label: 'Liên quan nhất', value: 1},
+  {label: 'Phổ biến nhất', value: 2},
+  {label: 'Hàng mới về', value: 3},
+  {label: 'Giá thấp', value: 4},
+  {label: 'Giá cao nhất', value: 5},
+  {label: 'Đánh giá tốt', value: 6},
+];
 
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
@@ -162,6 +170,9 @@ const SearchProducts = ({navigation}) => {
         setVisible={setVisible}
         visible={visible}
         navigation={navigation}
+        sortActiveItem={
+          valueSort ? MockSortItem.find((v) => v.value === valueSort).label : ''
+        }
       />
       <Divider />
       <TagList onTagPress={_handleFilterByTag} />
