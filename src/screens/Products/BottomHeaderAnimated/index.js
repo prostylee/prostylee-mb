@@ -6,11 +6,22 @@ import {Chip, Divider} from 'react-native-paper';
 import {Sort, Filter, CaretDown} from 'svg/common';
 import i18n from 'i18n';
 import SortDropDown from '../SortDropDown';
+import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 import styles from './styles';
 import {RadioButton} from 'react-native-paper';
-import {RnRatingTap, Picker} from 'components';
+import {RnRatingTap, Picker, Colors} from 'components';
+import {useSelector} from 'react-redux';
 import TagList from '../TagList';
+
+const MockSortItem = [
+  {label: 'Liên quan nhất', value: 1},
+  {label: 'Phổ biến nhất', value: 2},
+  {label: 'Hàng mới về', value: 3},
+  {label: 'Giá thấp', value: 4},
+  {label: 'Giá cao nhất', value: 5},
+  {label: 'Đánh giá tốt', value: 6},
+];
 
 const BottomHeaderAnimated = ({
   navigation,
@@ -20,6 +31,18 @@ const BottomHeaderAnimated = ({
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
+
+  const filterState = useSelector((state) => getProductFilterState(state));
+  const attributeFilterState = filterState?.attributes;
+  const categoryFilterState = filterState.category;
+  const price = filterState.price;
+  let count = 0;
+  count += categoryFilterState !== -1 ? 1 : 0;
+  count += Object.keys(
+    attributeFilterState ? attributeFilterState : {},
+  )?.length;
+  count += price?.[1] !== 0 ? 1 : 0;
+
   const renderStar = (star) => (
     <RnRatingTap
       onChangeValue={() => {}}
@@ -38,8 +61,21 @@ const BottomHeaderAnimated = ({
               <Sort />
             </View>
             <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('sort')}
+              {i18n.t('sort')}:
             </Text>
+            <Text
+              numberOfLines={1}
+              style={[
+                styles.textSort,
+                {
+                  color: Colors['$black'],
+                },
+              ]}>
+              {valueSort
+                ? MockSortItem.find((v) => v.value === valueSort).label
+                : ''}
+            </Text>
+
             <View>
               <CaretDown />
             </View>
@@ -51,7 +87,29 @@ const BottomHeaderAnimated = ({
             <Text numberOfLines={1} style={styles.textSpace}>
               |
             </Text>
-            <Filter />
+            <View style={{position: 'relative'}}>
+              <Filter />
+              {count !== 0 ? (
+                <View
+                  style={{
+                    position: 'absolute',
+                    width: 14,
+                    height: 14,
+                    backgroundColor: '#333333',
+                    right: 0,
+                    bottom: 0,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 7,
+                  }}>
+                  <Text
+                    style={{color: '#fff', fontSize: 10, textAlign: 'center'}}>
+                    {count}
+                  </Text>
+                </View>
+              ) : null}
+            </View>
+
             <Text numberOfLines={1} style={styles.textSort}>
               {i18n.t('filter')}
             </Text>

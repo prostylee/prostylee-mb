@@ -11,6 +11,8 @@ import {
 import styles from './styles';
 
 import {ThemeView, Colors, HeaderAnimated} from 'components';
+import {SearchProductLoading} from 'components/Loading/contentLoader';
+import i18n from 'i18n';
 
 import ProductItem from './ProductItem';
 import {getCategoriesSelectSelector} from 'redux/selectors/categories';
@@ -58,10 +60,14 @@ const Products = ({navigation}) => {
 
   const [refreshing, handleRefreshing] = useState(false);
 
-  const loading = useSelector((state) => getListProductLoadingSelector(state));
+  const loading = useSelector(
+    (state) => getListProductLoadingSelector(state),
+    () => {},
+  );
 
-  const listProductSelector = useSelector((state) =>
-    getListProductSelector(state),
+  const listProductSelector = useSelector(
+    (state) => getListProductSelector(state),
+    () => {},
   );
 
   const listProduct = listProductSelector?.content || [];
@@ -77,6 +83,7 @@ const Products = ({navigation}) => {
   const page = useSelector((state) => getPageProductSelector(state));
 
   useEffect(() => {
+    console.log('DISPATCH');
     dispatch(
       productActions.getListProduct({
         page: PAGE_DEFAULT,
@@ -85,15 +92,24 @@ const Products = ({navigation}) => {
         sorts: 'name',
       }),
     );
-    handleRefreshing(false);
-  }, [categoriesSelect.id, dispatch, refreshing]);
+    // handleRefreshing(false);
+  }, [categoriesSelect.id]);
 
   const handleRefresh = () => {
     handleRefreshing(true);
+    dispatch(
+      productActions.getListProduct({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        categoryId: categoriesSelect?.id,
+        sorts: 'name',
+      }),
+    );
   };
 
   const handleLoadMore = () => {
     if (hasLoadMore) {
+      console.log('LOAD MORE NE');
       dispatch(
         productActions.getListProductLoadMore({
           page: page + 1,
@@ -104,6 +120,9 @@ const Products = ({navigation}) => {
       );
     }
   };
+  useEffect(() => {
+    if (!loading) handleRefreshing(false);
+  }, [loading]);
   const _handleSort = (value) => {
     let sortOption = {};
     switch (value) {
@@ -161,87 +180,94 @@ const Products = ({navigation}) => {
       </View>
     );
   };
+  const NotFound = () => (
+    <View style={styles.notFoundContainer}>
+      <Text style={styles.notFoundText}>
+        {i18n.t('Search.resultsNotfound')}
+      </Text>
+    </View>
+  );
   return (
     <ThemeView style={styles.container} isFullView>
-      {loading && !listProduct.length ? (
+      <>
+        <HeaderAnimated
+          leftComponent={
+            <Touch style={styles.leftTouch} onPress={leftPress}>
+              <ChevronLeft color={Colors.$black} />
+            </Touch>
+          }
+          midComponent={
+            <Text numberOfLines={1} style={styles.textTitle}>
+              {categoriesSelect?.name}
+            </Text>
+          }
+          bottomComponent={
+            <BottomHeaderAnimated
+              navigation={navigation}
+              onSortPress={_handleSort}
+              onTagPress={_handleFilterByTag}
+            />
+          }
+          bottomHeight={100}
+          hideBottomBorder={true}
+          heightShow={heightShow - 190}
+          Animated={Animated}
+          navigation={navigation}
+          scrollAnimated={scrollAnimated}
+        />
+
         <FlatList
-          data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
+          data={
+            loading
+              ? [0]
+              : listProduct && listProduct.length
+              ? listProduct
+              : [0]
+          }
           ListHeaderComponent={
             <HeaderList
               leftPress={leftPress}
               navigation={navigation}
               heightShow={heightShow}
+              categoryId={categoriesSelect?.id}
             />
           }
-          renderItem={({item}) => {
-            return (
+          renderItem={({item, index}) => {
+            return loading ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  paddingBottom: 16,
+                  flexWrap: 'wrap',
+                  justifyContent: 'space-around',
+                }}>
+                {[1, 2, 3, 4].map((v) => (
+                  <SearchProductLoading />
+                ))}
+              </View>
+            ) : !listProduct || !listProduct.length ? (
+              <NotFound />
+            ) : (
               <View style={styles.wrapProduct}>
-                <ProductLoading width={WIDTH_IMAGE} height={HEIGHT_IMAGE} />
+                <ProductItem index={index} item={item} />
               </View>
             );
           }}
           numColumns={2}
+          onScroll={onScrollEvent}
           scrollEventThrottle={1}
           keyExtractor={(item, index) => index}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          onEndReached={() => {
+            if (loading) return;
+            handleLoadMore();
+          }}
+          ListFooterComponent={renderFooter}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         />
-      ) : (
-        <>
-          <HeaderAnimated
-            leftComponent={
-              <Touch style={styles.leftTouch} onPress={leftPress}>
-                <ChevronLeft color={Colors.$black} />
-              </Touch>
-            }
-            midComponent={
-              <Text numberOfLines={1} style={styles.textTitle}>
-                {categoriesSelect?.name}
-              </Text>
-            }
-            bottomComponent={
-              <BottomHeaderAnimated
-                navigation={navigation}
-                onSortPress={_handleSort}
-                onTagPress={_handleFilterByTag}
-              />
-            }
-            bottomHeight={100}
-            hideBottomBorder={true}
-            heightShow={heightShow - 190}
-            Animated={Animated}
-            navigation={navigation}
-            scrollAnimated={scrollAnimated}
-          />
-          <FlatList
-            data={listProduct}
-            ListHeaderComponent={
-              <HeaderList
-                leftPress={leftPress}
-                navigation={navigation}
-                heightShow={heightShow}
-              />
-            }
-            renderItem={({item, index}) => {
-              return (
-                <View style={styles.wrapProduct}>
-                  <ProductItem index={index} item={item} />
-                </View>
-              );
-            }}
-            numColumns={2}
-            onScroll={onScrollEvent}
-            scrollEventThrottle={1}
-            keyExtractor={(item, index) => index}
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            onEndReached={() => handleLoadMore()}
-            ListFooterComponent={renderFooter}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-          />
-        </>
-      )}
+      </>
     </ThemeView>
   );
 };

@@ -9,53 +9,34 @@ import ProductsCategories from '../Categories';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Searchbar} from 'react-native-paper';
 import {ChevronLeft} from 'svg/common';
-import {searchActions} from 'redux/reducers';
+import {productActions} from 'redux/reducers';
 import {getCategoriesSelectSelector} from 'redux/selectors/categories';
 import {useDispatch, useSelector} from 'react-redux';
 let timeoutSearch = null;
 
-const HeaderList = ({heightShow, leftPress, navigation}) => {
+const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
   const dispatch = useDispatch();
   const categoriesSelect = useSelector((state) =>
     getCategoriesSelectSelector(state),
   );
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => {
+    dispatch(productActions.setListProductLoading(true));
     clearTimeout(timeoutSearch);
     setSearchQuery(query);
     timeoutSearch = setTimeout(() => {
       dispatch(
-        searchActions.getHintProductSearch({
-          keyword: query,
-          type: 'product',
+        productActions.getListProduct({
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
-        }),
-      );
-      dispatch(
-        searchActions.getFeaturedProductSearch({
-          keyword: query,
-          // type: 'product',
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-        }),
-      );
-      dispatch(
-        searchActions.getStoreSearch({
-          keyword: query,
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
+          categoryId: categoryId,
           sorts: 'name',
-          numberOfProducts: 10,
+          keyword: query,
         }),
       );
-      dispatch(searchActions.setCurrentKeyword(query));
     }, 1000);
     setSearchQuery(query);
   };
-  // const onChangeSearch = (query) => setSearchQuery(query);
-  console.log('categoriesSelect');
-  console.log(categoriesSelect);
   return (
     <View
       style={{

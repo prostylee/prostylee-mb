@@ -43,4 +43,15 @@ export default EStyleSheet.create({
   wrapProduct: {
     width: '50%',
   },
+  notFoundContainer: {
+    flex: 1,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notFoundText: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '$lightGray',
+  },
 });
