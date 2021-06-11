@@ -16,9 +16,9 @@ import FooterItem from './FooterItem';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
-import {createChat, deleteChat} from 'graphql/mutations';
-import {getChat, listChats} from 'graphql/queries';
-import {onCreateChat, onDeleteChat} from 'graphql/subscriptions';
+import {createChat, deleteChat} from 'graphQL/mutations';
+import {getChat, listChats} from 'graphQL/queries';
+import {onCreateChat, onDeleteChat} from 'graphQL/subscriptions';
 import {getUserAWSAvatar} from 'services/api/userApi';
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
 import configEnv from 'config';
