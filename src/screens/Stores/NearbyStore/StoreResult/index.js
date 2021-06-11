@@ -111,17 +111,21 @@ const FeaturedCategories = ({navigation}) => {
                       <Text numberOfLines={1} style={styles.storeName}>
                         {item?.name}
                       </Text>
+
                       <View
                         style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <MapPin width={12} height={12} />
-                        <Text style={[styles.isAdvertising, {marginLeft: 2}]}>
-                          {getDistanceFromLatLonInKm(
-                            location.lat,
-                            location.lon,
-                            item?.location?.latitude,
-                            item?.location?.longitude,
-                          )}
-                          km
+                        {!item?.isAdvertising ? (
+                          <MapPin width={12} height={12} />
+                        ) : null}
+                        <Text style={styles.isAdvertising}>
+                          {item?.isAdvertising
+                            ? i18n.t('common.textAdvertisement')
+                            : getDistanceFromLatLonInKm(
+                                location.lat,
+                                location.lon,
+                                item?.location?.latitude,
+                                item?.location?.longitude,
+                              ) + 'km'}
                         </Text>
                       </View>
                     </View>

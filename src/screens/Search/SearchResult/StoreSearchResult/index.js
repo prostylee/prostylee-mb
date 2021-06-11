@@ -20,11 +20,14 @@ import {getCurrentKeyword} from 'redux/selectors/search';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Avatar, Text} from 'react-native-paper';
 import {searchActions} from 'redux/reducers';
+import getDistanceFromLatLonInKm from 'utils/locationUtils';
+import useLocation from 'hooks/useLocation';
+import {MapPin} from 'svg/common';
 
 const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
   const [refreshing, handleRefreshing] = useState(false);
-
+  const location = useLocation();
   const loading = useSelector((state) => getStoreSearchLoadingSelector(state));
   const storeList = useSelector((state) => getStoreSearchListSelector(state));
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
@@ -88,6 +91,7 @@ const FeaturedCategories = ({navigation}) => {
           <FlatList
             data={storeList?.content}
             renderItem={({item}) => {
+              console.log('ITEM ', item);
               return (
                 <>
                   <View style={styles.wrapHeader}>
@@ -103,11 +107,22 @@ const FeaturedCategories = ({navigation}) => {
                         <Text numberOfLines={1} style={styles.storeName}>
                           {item?.company?.name}
                         </Text>
-                        {item?.isAdvertising ? (
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          {!item?.isAdvertising ? (
+                            <MapPin width={12} height={12} />
+                          ) : null}
                           <Text style={styles.isAdvertising}>
-                            {i18n.t('common.textAdvertisement')}
+                            {item?.isAdvertising
+                              ? i18n.t('common.textAdvertisement')
+                              : getDistanceFromLatLonInKm(
+                                  location.lat,
+                                  location.lon,
+                                  item?.location?.latitude,
+                                  item?.location?.longitude,
+                                ) + 'km'}
                           </Text>
-                        ) : null}
+                        </View>
                       </View>
                     </View>
                     <View style={styles.wrapTextFlow}>
