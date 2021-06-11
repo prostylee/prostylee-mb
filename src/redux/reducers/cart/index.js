@@ -17,6 +17,8 @@ export const types = {
   SET_LIST_CART_FAILED: 'SET_LIST_CART_FAILED',
   ADD_ITEM_TO_CART: 'ADD_ITEM_TO_CART',
   SET_VOUCHER_LOADING: 'SET_VOUCHER_LOADING',
+  //AMOUNT
+  SET_CART_COUPON_AMOUNT: 'SET_CART_AMOUNT',
 
   //List Payment
   GET_LIST_PAYMENT: 'GET_LIST_PAYMENT',
@@ -98,6 +100,9 @@ export const actions = {
   ),
 
   setVoucherUse: createAction(types.SET_VOUCHER_USE),
+
+  //AMOUN
+  setCartAmount: createAction(types.SET_CART_COUPON_AMOUNT),
 };
 
 const intialState = {
@@ -166,6 +171,20 @@ export default handleActions(
         return {...state, listCart: currentCart};
       }
     },
+    [types.SET_CART_COUPON_AMOUNT]: (state, {payload}) => {
+      const {item, newAmount} = payload;
+      const currentCart = state.listCart;
+      const findCartIndex = currentCart.findIndex(
+        (element) => element.item.id === item.id,
+      );
+      if (findCartIndex >= 0) {
+        currentCart[findCartIndex].quantity = newAmount;
+        return {...state, listCart: currentCart};
+      } else {
+        return {...state, listCart: currentCart};
+      }
+    },
+
     [types.SET_LIST_CART_SUCCESS]: (state, {payload}) => {
       showMessage({
         message: 'Thêm vào giỏ hàng thành công',

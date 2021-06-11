@@ -11,22 +11,22 @@ import {useNavigation} from '@react-navigation/native';
 import {currencyFormat} from 'utils/currency';
 import {cartActions} from 'redux/reducers';
 import {
-  getVoucherUseSelector,
-  getPaymentUseSelector,
   getListPaymentSelector,
   getListCartSelector,
 } from 'redux/selectors/cart';
 
 const CardFooter = ({buttonText, actionButton}) => {
   const [total, setTotal] = useState(0);
+  const [voucher, setVoucher] = useState();
+  const [payment, setPayment] = useState();
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const voucherUsed = useSelector((state) => getVoucherUseSelector(state));
-  const paymentUsed = useSelector((state) => getPaymentUseSelector(state));
   const paymentList = useSelector((state) => getListPaymentSelector(state));
   const cart = useSelector((state) => getListCartSelector(state)) || [];
+
+  console.log("cart", cart)
 
   useEffect(() => {
     if (cart.length) {
@@ -48,19 +48,33 @@ const CardFooter = ({buttonText, actionButton}) => {
   const onRemoveCoupon = () => {
     dispatch(cartActions.setVoucherUse(null));
   };
-  const payment = paymentList.filter((item) => item.id === paymentUsed);
+
+  const onChangeVoucher = () => {
+    navigation.navigate('VoucherCart', {
+      onUseVoucher: (item) => setVoucher(item),
+    });
+  };
+
+  const onChangePayment = () => {
+    navigation.navigate('PaymentMethodCart', {
+      paymentUsed: payment,
+      onUsePayment: (item) => setPayment(item),
+    });
+  };
+
+  const paymentUsed = paymentList.filter((item) => item.id === payment);
+
   return (
     <View style={styles.container}>
       <View style={styles.viewHeader}>
         <View style={styles.viewCredit}>
-          <TouchableOpacity
-            style={styles.btnCredit}
-            onPress={() => navigation.navigate('PaymentMethodCart')}>
+          <TouchableOpacity style={styles.btnCredit} onPress={onChangePayment}>
             <View style={styles.labelCredit}>
               <CreditSvg />
               <Text>
                 &nbsp;
-                {paymentUsed ? payment[0].name : 'Credit card'}&nbsp;
+                {paymentUsed.length ? paymentUsed[0].name : 'Thanh toán'}
+                &nbsp;
               </Text>
               <RightArrow />
             </View>
@@ -70,16 +84,13 @@ const CardFooter = ({buttonText, actionButton}) => {
           <TouchableOpacity
             mode="text"
             style={styles.btnCoupon}
-            onPress={() => navigation.navigate('VoucherCart')}>
+            onPress={onChangeVoucher}>
             <View style={styles.labelCoupon}>
-              {voucherUsed ? (
+              {voucher ? (
                 <>
                   <CouponSvg />
-                  <Chip
-                    onPress={() => navigation.navigate('VoucherCart')}
-                    style={styles.wrapChip}
-                    onClose={onRemoveCoupon}>
-                    <Text style={styles.chipText}>&nbsp;{voucherUsed.key}</Text>
+                  <Chip style={styles.wrapChip} onClose={onRemoveCoupon}>
+                    <Text style={styles.chipText}>&nbsp;{voucher.key}</Text>
                   </Chip>
                 </>
               ) : (

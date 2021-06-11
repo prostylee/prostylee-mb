@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 import React, {useRef, useEffect, useMemo, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import {View, FlatList, Animated, Text} from 'react-native';
 import Product from './Item';
@@ -19,9 +20,6 @@ import {cartActions} from 'reducers';
 
 import {CartEmpty} from 'svg/common';
 
-import {useDispatch} from 'react-redux';
-import {useNavigation} from '@react-navigation/core';
-
 const ListProduct = ({navigation}) => {
   const dispatch = useDispatch();
   const [refreshing, handleRefreshing] = useState(false);
@@ -38,12 +36,14 @@ const ListProduct = ({navigation}) => {
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
+
   const handleRefresh = () => {
     console.log('REFRSH');
     handleRefreshing(true);
     dispatch(cartActions.getListRecent());
     dispatch(cartActions.getListSuggestion());
   };
+
   const RenderFooter = () => {
     return (
       <>
@@ -102,6 +102,7 @@ const ListProduct = ({navigation}) => {
     dispatch(cartActions.getListRecent());
     dispatch(cartActions.getListSuggestion());
   }, []);
+
   return (
     <View style={styles.container}>
       {Object.keys(groupData).length > 0 ? (
@@ -135,6 +136,7 @@ const ListProduct = ({navigation}) => {
         </>
       ) : (
         <EmptyCart
+          navigation={navigation}
           icon={<CartEmpty />}
           title={i18n.t('cart.notfound')}
           subTitle={i18n.t('cart.subNotFound')}

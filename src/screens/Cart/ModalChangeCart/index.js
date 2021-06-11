@@ -13,11 +13,10 @@ import {getProductById} from 'services/api/productApi';
 const {width} = Dimensions.get('window');
 const WIDTH_IMAGE = width / 2 - 14;
 
-const ModalChangeCart = ({images, productId}) => {
+const ModalChangeCart = ({currentOptions, productId}) => {
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState({});
-
-  console.log('producId', productId);
+  const [optChosen, setOptChosen] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -45,6 +44,12 @@ const ModalChangeCart = ({images, productId}) => {
     imageUrls,
     productAttributeOptionResponse = [],
   } = product;
+
+  const onChangeValue = (vl, id) => {
+    optChosen = [...optChosen, {id: id, attrValue: vl}];
+  };
+
+  console.log('options', currentOptions);
 
   const renderItem = ({item, index}, parallaxProps) => {
     return (
@@ -85,15 +90,17 @@ const ModalChangeCart = ({images, productId}) => {
               {currencyFormat(price, 'đ')}
             </Text>
           </View>
-          {productAttributeOptionResponse.map((item) => {
+          {currentOptions.map((item) => {
+            console.log('item', item);
             return (
-              <View style={styles.wrapSize}>
+              <View style={styles.wrapSize} key={item.id}>
                 <RadioSelectGroup
                   key={item.id}
                   title={item.label}
-                  onValueChange={(value) => setValue(value, item)}
-                  data={item.productAttributeResponses.map((item) => {
-                    return {label: item.attrValue, value: item.id};
+                  defaultValue={item.value.id}
+                  onValueChange={(value) => onChangeValue(value, item)}
+                  data={item.productAttributeResponses.map((opt) => {
+                    return {label: opt.attrValue, value: opt.id};
                   })}
                 />
               </View>
@@ -125,25 +132,7 @@ const ModalChangeCart = ({images, productId}) => {
   );
 };
 
-ModalChangeCart.defaultProps = {
-  images: [
-    {
-      id: 'WpIAc9by5iU',
-      thumbnail: 'https://mai.wedding/wp-content/uploads/2020/12/IMG_1122.jpg',
-      title: 'Led Zeppelin - Stairway To Heaven',
-    },
-    {
-      id: 'sNPnbI1arSE',
-      thumbnail: 'https://img.youtube.com/vi/sNPnbI1arSE/hqdefault.jpg',
-      title: 'Eminem - My Name Is',
-    },
-    {
-      id: 'VOgFZfRVaww',
-      thumbnail: 'https://img.youtube.com/vi/VOgFZfRVaww/hqdefault.jpg',
-      title: '',
-    },
-  ],
-};
+ModalChangeCart.defaultProps = {};
 
 ModalChangeCart.propTypes = {};
 
