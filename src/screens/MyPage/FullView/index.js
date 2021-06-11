@@ -155,7 +155,7 @@ const data = [
   },
 ];
 
-const FullView = ({column, wImage, hImage}) => {
+const FullView = ({column, wImage, hImage, scrollEnabled}) => {
   const loadMoreLoading = false;
 
   const postOfUser = useSelector((state) => postOfUserSlector(state));
@@ -174,6 +174,7 @@ const FullView = ({column, wImage, hImage}) => {
   return (
     <Container fluid style={styles.container}>
       <FlatList
+        scrollEnabled={scrollEnabled !== undefined ? scrollEnabled : false}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         key={column}

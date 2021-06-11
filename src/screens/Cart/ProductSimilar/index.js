@@ -13,11 +13,13 @@ import {
   getRecentLoadingSelector,
   getListRecentSelector,
 } from 'redux/selectors/cart';
+import {useNavigation} from '@react-navigation/native';
 
 const ProductSimilar = (props) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const imagesRef = React.useRef();
-  const selectItem = props.onSelect ? props.onSelect : () => {};
+  //const selectItem = props.onSelect ? props.onSelect : () => {};
 
   //const loading = useSelector((state) => getRecentLoadingSelector(state));
   const recentList = useSelector((state) => getListRecentSelector(state));
@@ -27,7 +29,7 @@ const ProductSimilar = (props) => {
       <TouchableOpacity
         style={styles.carouselItem}
         onPress={() => {
-          selectItem(item.id);
+          navigation.navigate('ProductDetail', {id: item.id});
         }}>
         <Image
           style={styles.relatedImage}

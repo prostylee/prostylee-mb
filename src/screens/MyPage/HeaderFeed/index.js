@@ -9,7 +9,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 const {width, height} = Dimensions.get('window');
 
-const HeaderFeed = ({scrollAnimated, heightShow}) => {
+const HeaderFeed = ({scrollAnimated, heightShow, restoreScrollTop}) => {
   const navigation = useNavigation();
 
   const onNavigateSetting = () => {
@@ -24,18 +24,18 @@ const HeaderFeed = ({scrollAnimated, heightShow}) => {
   });
 
   const headerColor = scrollAnimated.interpolate({
-    inputRange: [0, heightShow ? heightShow : HEIGHT_HEADER],
+    inputRange: [0, heightShow],
     outputRange: ['#F4F5F5', '#ffffff'],
     extrapolate: 'clamp',
   });
   const borderBottomColor = scrollAnimated.interpolate({
-    inputRange: [0, heightShow ? heightShow : HEIGHT_HEADER],
+    inputRange: [0, heightShow],
     outputRange: ['transparent', '#F4F5F5'],
     extrapolate: 'clamp',
   });
 
   const opacity = scrollAnimated.interpolate({
-    inputRange: [0, heightShow ? heightShow : HEIGHT_HEADER],
+    inputRange: [100, heightShow],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   });
@@ -53,25 +53,28 @@ const HeaderFeed = ({scrollAnimated, heightShow}) => {
         backgroundColor: headerColor,
         borderBottomColor,
         width: translateWidth,
+        opacity: opacity,
       }}>
       <Animated.View
         style={{
           paddingTop: getStatusBarHeight(),
           ...styles.content,
         }}>
-        <View style={styles.left}></View>
+        <View style={styles.left} />
         <View style={styles.mid}>
           <Animated.View style={{...styles.midHeader, opacity}}>
-            <View style={styles.midBorder}>
-              <View style={styles.headerUser}>
-                <Avatar.Image
-                  source={{uri: 'https://reactjs.org/logo-og.png'}}
-                  size={24}
-                  style={styles.avatarStyle}
-                />
-                <Text style={styles.labelUserName}>&nbsp;Alyssa Gardner</Text>
+            <TouchableOpacity onPress={() => {restoreScrollTop()}}>
+              <View style={styles.midBorder}>
+                <View style={styles.headerUser}>
+                  <Avatar.Image
+                    source={{uri: 'https://reactjs.org/logo-og.png'}}
+                    size={24}
+                    style={styles.avatarStyle}
+                  />
+                  <Text style={styles.labelUserName}>&nbsp;Alyssa Gardner</Text>
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           </Animated.View>
         </View>
         <View style={styles.right}>

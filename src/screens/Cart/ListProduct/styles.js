@@ -12,13 +12,12 @@ export default EStyleSheet.create({
   flatList: {},
 
   wrapFooter: {
-    flex: 0,
+    flex: 1,
     position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
     zIndex: 99,
-    height: 150,
     backgroundColor: '$white',
   },
   viewLoadingFooter: {
@@ -174,9 +173,16 @@ export default EStyleSheet.create({
     flexDirection: 'column',
   },
   modalHeader: {
-    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  wrapButtonEmpty: {
+    flex: 1,
+  },
+  wrapButtonClose: {
     alignItems: 'flex-end',
-    marginRight: 10,
+    justifyContent: 'flex-end',
   },
   wrapMore: {
     padding: 10,

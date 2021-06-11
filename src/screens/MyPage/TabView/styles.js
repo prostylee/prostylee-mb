@@ -1,5 +1,7 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
+const TABS_HEIGHT = 45;
+
 export default EStyleSheet.create({
   tab: {
     flex: 1,
@@ -8,7 +10,7 @@ export default EStyleSheet.create({
     paddingBottom: 10,
   },
   tabs: {
-    height: 45,
+    height: TABS_HEIGHT,
     flexDirection: 'row',
     paddingTop: 5,
   },

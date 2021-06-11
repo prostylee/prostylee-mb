@@ -3,7 +3,7 @@ import styles from './styles';
 
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {ButtonRounded} from 'components';
 import {Button, Chip} from 'react-native-paper';
 import {CreditSvg, CouponSvg, RightArrow} from 'svg/common';
@@ -53,8 +53,7 @@ const CardFooter = ({buttonText, actionButton}) => {
     <View style={styles.container}>
       <View style={styles.viewHeader}>
         <View style={styles.viewCredit}>
-          <Button
-            mode="text"
+          <TouchableOpacity
             style={styles.btnCredit}
             onPress={() => navigation.navigate('PaymentMethodCart')}>
             <View style={styles.labelCredit}>
@@ -63,13 +62,12 @@ const CardFooter = ({buttonText, actionButton}) => {
                 &nbsp;
                 {paymentUsed ? payment[0].name : 'Credit card'}&nbsp;
               </Text>
-
               <RightArrow />
             </View>
-          </Button>
+          </TouchableOpacity>
         </View>
         <View style={styles.viewCoupon}>
-          <Button
+          <TouchableOpacity
             mode="text"
             style={styles.btnCoupon}
             onPress={() => navigation.navigate('VoucherCart')}>
@@ -91,7 +89,7 @@ const CardFooter = ({buttonText, actionButton}) => {
                 </>
               )}
             </View>
-          </Button>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.viewBody}>

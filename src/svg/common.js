@@ -232,14 +232,14 @@ export const MapPinFill = ({
   width = 16,
   height = 16,
   color = '#8B9399',
-  backgroundColor = '#8B9399',
+  backdropColor = '#8B9399',
 }) => {
   return (
     <Svg
       width={width}
       height={height}
       viewBox="0 0 12 12"
-      fill={backgroundColor}
+      fill={backdropColor}
       xmlns="http://www.w3.org/2000/svg">
       <Path
         d="M10.5 5C10.5 8.5 6 11.5 6 11.5C6 11.5 1.5 8.5 1.5 5C1.5 3.80653 1.97411 2.66193 2.81802 1.81802C3.66193 0.974106 4.80653 0.5 6 0.5C7.19347 0.5 8.33807 0.974106 9.18198 1.81802C10.0259 2.66193 10.5 3.80653 10.5 5Z"
@@ -2601,6 +2601,24 @@ export const Check = ({width = 36, height = 36}) => (
   </Svg>
 );
 
+export const MinusIcon = ({
+  height = 16,
+  width = 16,
+  color = '#333',
+  strokeWidth = 2,
+  ...rest
+}) => (
+  <Svg width={width} height={height} viewBox="0 0 16 16" fill="none" {...rest}>
+    <Path
+      d="M3.333 8h9.334"
+      stroke={color}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
 export const AddImageIcon = ({width = 24, height = 24, color = '#333333'}) => (
   <Svg
     width={width}
@@ -2631,5 +2649,22 @@ export const AddImageIcon = ({width = 24, height = 24, color = '#333333'}) => (
         <Rect width="24" height="24" fill="white" />
       </ClipPath>
     </Defs>
+  </Svg>
+);
+export const PlusIcon = ({
+  height = 16,
+  width = 16,
+  color = '#333',
+  strokeWidth = 1.5,
+  ...rest
+}) => (
+  <Svg width={width} height={height} viewBox="0 0 16 16" fill="none" {...rest}>
+    <Path
+      d="M8 3.333v9.334M3.333 8h9.334"
+      stroke={color}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </Svg>
 );

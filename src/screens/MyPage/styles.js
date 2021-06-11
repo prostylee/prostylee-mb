@@ -3,7 +3,10 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Dimensions} from 'react-native';
 const barHeight = getStatusBarHeight();
 const {height, width} = Dimensions.get('window');
-const HEADER_HEIGHT = 150;
+const TABS_HEIGHT = 45;
+const HEIGHT_HEADER = 50 + getStatusBarHeight();
+const ANDROID_HEADER =
+  Platform.OS === 'ios' ? getStatusBarHeight() + 10 : getStatusBarHeight();
 
 export default EStyleSheet.create({
   container: {
@@ -88,7 +91,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
   },
   wrapTabView: {
-    height: height - HEADER_HEIGHT - 55,
+    height: height - TABS_HEIGHT - HEIGHT_HEADER - ANDROID_HEADER,
     borderTopWidth: 1,
     borderColor: '#E9EAEB',
   },

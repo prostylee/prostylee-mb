@@ -24,17 +24,47 @@ import TabViewContainer from './TabView';
 import {ScrollView} from 'react-native';
 
 const heightShow = 334;
+let scrollFlag = true;
+const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+  const paddingToBottom = 150;
+  return (
+    layoutMeasurement.height + contentOffset.y >=
+    contentSize.height - paddingToBottom
+  );
+};
 const Index = ({navigation}) => {
   const dispatch = useDispatch();
+  const [scrollEnabled, setScrollEnabled] = useState(true);
   const [viewType, setViewType] = useState('grid');
   const [activeTab, setActivedTab] = useState('menu');
+  const scrollViewRef = useRef();
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
-    {useNativeDriver: false},
+    {
+      listener: (event) => {
+        const {contentOffset} = event.nativeEvent;
+        if (isCloseToBottom(event.nativeEvent) && scrollFlag) {
+          scrollFlag = false;
+          scrollViewRef.current.scrollToEnd({animated: true});
+          setScrollEnabled(false);
+        }
+        if (contentOffset.y === 0) {
+          scrollFlag = true;
+        }
+      },
+      useNativeDriver: false,
+    },
   );
+  const restoreScrollTop = () => {
+    scrollViewRef.current.scrollTo({
+      y: 0,
+      animated: true,
+    });
+    setScrollEnabled(true);
+  };
 
   React.useEffect(() => {
     // TODO remove
@@ -52,10 +82,15 @@ const Index = ({navigation}) => {
         heightShow={heightShow}
         navigation={navigation}
         scrollAnimated={scrollAnimated}
+        restoreScrollTop={restoreScrollTop}
       />
       <ScrollView
+        ref={scrollViewRef}
         onScroll={onScrollEvent}
+        scrollEnabled={scrollEnabled}
         scrollEventThrottle={1}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         style={styles.viewScroll}>
         <Animated.View
           style={[
@@ -149,6 +184,7 @@ const Index = ({navigation}) => {
           <TabViewContainer
             scrollAnimated={scrollAnimated}
             viewType={viewType}
+            scrollEnabled={!scrollEnabled}
             setActivedTab={setActivedTab}
           />
         </View>
