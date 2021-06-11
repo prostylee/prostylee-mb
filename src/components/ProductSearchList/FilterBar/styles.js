@@ -20,7 +20,7 @@ export default EStyleSheet.create({
   },
   contentBlockOne: {
     height: 45,
-    width: 80,
+    width: 150,
     alignItems: 'center',
     paddingLeft: 16,
     flexDirection: 'row',

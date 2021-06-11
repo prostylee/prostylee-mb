@@ -32,7 +32,14 @@ interface ProductSearchListProps {
   hasLoadmore: Boolean;
   searchDataFunction: Function;
 }
-
+const MockSortItem = [
+  {label: 'Liên quan nhất', value: 1},
+  {label: 'Phổ biến nhất', value: 2},
+  {label: 'Hàng mới về', value: 3},
+  {label: 'Giá thấp', value: 4},
+  {label: 'Giá cao nhất', value: 5},
+  {label: 'Đánh giá tốt', value: 6},
+];
 const ProductSearchList = ({
   title,
   navigation,
@@ -89,6 +96,11 @@ const ProductSearchList = ({
             setVisible={setVisible}
             visible={visible}
             navigation={navigation}
+            activeSortItem={
+              valueSort
+                ? MockSortItem.find((v) => v.value === valueSort).label
+                : ''
+            }
           />
           <Divider />
           <SortDropDown
