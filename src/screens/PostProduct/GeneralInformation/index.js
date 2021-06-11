@@ -12,6 +12,7 @@ import styles from './styles';
 import {useSelector, shallowEqual, useDispatch} from 'react-redux';
 import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
 import {postProductActions} from 'redux/reducers';
+import {showMessage} from 'react-native-flash-message';
 
 const AddProductsInfor = ({navigation}) => {
   const dispatch = useDispatch();
@@ -45,6 +46,13 @@ const AddProductsInfor = ({navigation}) => {
       .catch((e) => console.log(e));
   };
   const onSubmitPress = () => {
+    if (!productName || !productDescription || !images.length) {
+      showMessage({
+        message: i18n.t('addProduct.pleaseFillInformation'),
+        type: 'danger',
+      });
+      return;
+    }
     dispatch(
       postProductActions.setProductInfo({
         name: productName,

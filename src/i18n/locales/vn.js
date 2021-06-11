@@ -356,5 +356,7 @@ export default {
     descriptionButton: 'Tiếp tục',
     brandFashionsTitle: 'Thương hiệu',
     productInformationTitle: 'Thông tin sản phẩm',
+    pleaseFillInformation: 'Vui lòng nhập đầy đủ thông tin',
+    postProduct: 'Đăng sản phẩm',
   },
 };

@@ -18,6 +18,7 @@ import SizeInfor from './Size';
 import {useDispatch} from 'react-redux';
 import {postProductActions} from 'redux/reducers';
 import {useNavigation} from '@react-navigation/native';
+import {showMessage} from 'react-native-flash-message';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 const ProductInfor = () => {
@@ -106,6 +107,13 @@ const ProductInfor = () => {
   };
 
   const onSubmitPress = () => {
+    if (!selectedSizes.length || !selectedColors.length || !productPrice) {
+      showMessage({
+        message: i18n.t('addProduct.pleaseFillInformation'),
+        type: 'danger',
+      });
+      return;
+    }
     dispatch(
       postProductActions.setProductInfo({
         colors: [...selectedColors],

@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ListShippingMethod from './ListShipping';
 import ListPayment from './ListPayment';
 import {useNavigation} from '@react-navigation/native';
+import i18n from 'i18n';
 const ProductInfor = () => {
   const navigation = useNavigation();
   const [selectedPaymentMethods, setSelectedPaymentMethods] = useState([]);
@@ -73,7 +74,7 @@ const ProductInfor = () => {
       </View>
       <View style={styles.button}>
         <TouchableOpacity>
-          <ButtonRounded label="Tiếp tục" />
+          <ButtonRounded label={i18n.t('addProduct.postProduct')} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
