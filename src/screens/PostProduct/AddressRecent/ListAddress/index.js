@@ -2,19 +2,16 @@ import React, {useState} from 'react';
 
 import {FlatList, Text, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {useSelector} from 'react-redux';
 import styles from './styles';
-const DATA = [
-  {
-    id: '0',
-    address: '56 Nguyễn Đình Chiểu',
-    hintLocation: 'Phường 25, Bình Thạnh, Thành phố Hồ Chí Minh',
-  },
-  {
-    id: '1',
-    address: '100 Nguyễn Công Trứ',
-    hintLocation: 'Phường Nguyễn Cư Trinh, Quận 1, Thành phố Hồ...',
-  },
-];
+import {
+  getProductLocationSelector,
+  getProductLocationLoadingSelector,
+} from 'redux/selectors/postProduct';
+import {ActivityIndicator} from 'react-native-paper';
+import i18n from 'i18n';
+import {Colors} from 'components';
+
 const Item = ({item, onPress}) => {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -32,19 +29,39 @@ const Item = ({item, onPress}) => {
   );
 };
 
-const Project = () => {
-  const [selectedId, setSelectedId] = useState(null);
+const Project = ({isSearch = false}) => {
+  const loading = useSelector((state) =>
+    getProductLocationLoadingSelector(state),
+  );
+  const listLocationSelector = useSelector((state) =>
+    getProductLocationSelector(state),
+  );
+  const listLocation = listLocationSelector.content || [];
+
+  console.log('LIST LOCATION', listLocationSelector);
+
   const renderItem = ({item}) => {
-    return <Item item={item} onPress={() => setSelectedId(item.id)} />;
+    return <Item item={item} />;
   };
   return (
     <View style={styles.mainContainer}>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        extraData={selectedId}
-      />
+      {!isSearch ? (
+        loading ? (
+          <ActivityIndicator />
+        ) : listLocation.length ? (
+          <FlatList
+            data={listLocation}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
+        ) : (
+          <Text style={{color: Colors['$gray']}}>
+            {i18n.t('Search.resultsNotfound')}
+          </Text>
+        )
+      ) : (
+        <View></View>
+      )}
     </View>
   );
 };

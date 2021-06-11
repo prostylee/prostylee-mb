@@ -2,6 +2,8 @@ import {StyleSheet, StatusBar} from 'react-native';
 export default StyleSheet.create({
   mainContainer: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   container: {
     flex: 1,

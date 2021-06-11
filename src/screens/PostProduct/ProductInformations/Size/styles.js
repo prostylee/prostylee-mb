@@ -2,6 +2,10 @@ import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
+  container: {
+    height: '100%',
+    position: 'relative',
+  },
   wrapChip: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -28,6 +32,12 @@ export default EStyleSheet.create({
   button: {
     width: '90%',
     alignSelf: 'center',
-    paddingVertical: 15,
+    position: 'absolute',
+    bottom: 100,
+  },
+  checkAllButton: {
+    position: 'absolute',
+    top: -31,
+    left: 16,
   },
 });

@@ -32,18 +32,22 @@ export default StyleSheet.create({
   boxWrap: {
     backgroundColor: 'white',
     flexDirection: 'column',
-    marginVertical: 4,
     paddingVertical: 20,
     paddingHorizontal: 15,
   },
-  input: {
-    width: '90%',
-  },
+
   inputPrice: {
-    borderBottomWidth: 0.3,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
+    height: 46,
+    paddingHorizontal: 16,
+  },
+  input: {
+    width: '100%',
+    height: '100%',
+    borderBottomWidth: 0.3,
+    padding: 0,
   },
   modalBox: {
     overflow: 'hidden',
@@ -54,7 +58,9 @@ export default StyleSheet.create({
     backgroundColor: 'transparent',
   },
   content: {
+    position: 'absolute',
     bottom: 0,
+    left: 0,
     width,
     height: '60%',
     borderTopLeftRadius: 10,
@@ -75,7 +81,7 @@ export default StyleSheet.create({
   status: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   viewStatus: {
     borderColor: 'black',
@@ -83,21 +89,47 @@ export default StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 10,
+    marginRight: 5,
+    marginBottom: 5,
   },
   headerModal: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    borderBottomWidth: 0.5,
+    borderColor: '#F4F5F5',
   },
   titleModal: {
     textAlign: 'center',
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: '500',
   },
   button: {
     width: '90%',
     alignSelf: 'center',
     paddingVertical: 20,
+  },
+  currencyUnitText: {
+    textDecorationLine: 'underline',
+    fontSize: 14,
+    fontWeight: '400',
+    marginLeft: 5,
+  },
+  verticalLine: {
+    color: '#333333',
+    fontSize: 14,
+    fontWeight: '400',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 15,
+    right: 15,
+  },
+  selectItemContainer: {
+    maxWidth: width - 132,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
   },
 });

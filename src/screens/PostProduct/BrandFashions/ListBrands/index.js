@@ -2,128 +2,70 @@ import React, {useState} from 'react';
 
 import {FlatList, Text, View, TouchableOpacity, Image} from 'react-native';
 import {useTheme} from '@react-navigation/native';
+import {Check} from 'svg/common';
+
 import styles from './styles';
-const DATA = [
-  {
-    id: '0',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '1',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '2',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '3',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '4',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '5',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '6',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '7',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '8',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '9',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '10',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '11',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '12',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '13',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '14',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '15',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-  {
-    id: '16',
-    title: 'Uniqlo',
-    url: '../../../../assets/images/uniqlo.png',
-  },
-];
+
 const Item = ({item, selectedBrand, onPress}) => {
   const {colors} = useTheme();
+  const active = selectedBrand.id === item.id;
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.itemcontainer}>
-        <Image
-          source={require('../../../../assets/images/uniqlo.png')}
-          resizeMode={'cover'}
+        {active ? (
+          <View
+            style={[
+              styles.img,
+              {
+                backgroundColor: colors['$purple'],
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+            ]}>
+            <Check />
+          </View>
+        ) : (
+          <Image
+            source={
+              item.icon
+                ? {uri: item.icon}
+                : require('../../../../assets/images/uniqlo.png')
+            }
+            resizeMode={'cover'}
+            style={[
+              styles.img,
+              {
+                borderWidth: 4,
+                borderColor: active ? colors['$purple'] : 'transparent',
+              },
+            ]}
+          />
+        )}
+
+        <Text
           style={[
-            styles.img,
+            styles.Card,
             {
-              borderWidth: 4,
-              borderColor:
-                item.id == selectedBrand ? colors['$purple'] : 'transparent',
+              color: active ? colors['$purple'] : colors['$black'],
             },
-          ]}
-        />
-        <Text style={styles.Card}>{item.title}</Text>
+          ]}>
+          {item.name}
+        </Text>
       </View>
     </TouchableOpacity>
   );
 };
 
-const ListBrand = (props) => {
-  const selectedBrand = props.selectedBrand ? props.selectedBrand : {};
-  const setSelectedBrand = props.setSelectedBrand
-    ? props.setSelectedBrand
-    : () => {};
+const ListBrand = ({selectedBrand, setSelectedBrand, data}) => {
+  const activeBrand = selectedBrand ? selectedBrand : {};
+  const setActiveBrand = setSelectedBrand ? setSelectedBrand : () => {};
+  // console.log('DATA NE', JSON.stringify(data, null, 2));
   const renderItem = ({item}) => {
     return (
       <Item
         item={item}
-        selectedBrand={selectedBrand}
-        onPress={() => setSelectedBrand(item.id)}
+        selectedBrand={activeBrand}
+        onPress={() => setActiveBrand(item)}
       />
     );
   };
@@ -131,7 +73,7 @@ const ListBrand = (props) => {
     <FlatList
       style={styles.container}
       contentContainerStyle={styles.containerContent}
-      data={DATA}
+      data={data}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       numColumns={3}

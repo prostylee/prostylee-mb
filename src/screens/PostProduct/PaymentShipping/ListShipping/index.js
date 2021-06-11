@@ -1,65 +1,94 @@
 import React, {useState} from 'react';
-import {
-  TextInput,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
-} from 'react-native';
+import {TextInput, Text, View, TouchableOpacity, FlatList} from 'react-native';
 import {CheckBox} from 'react-native-elements';
-import {Header, ButtonRounded, HeaderBack} from 'components';
-import styles from './styles';
-import Icon from 'react-native-vector-icons/AntDesign';
 
-const COLOR = [
-  {
-    id: '0',
-    title: 'Grab',
-  },
-  {
-    id: '1',
-    title: 'Viettel Post',
-  },
-  {
-    id: '2',
-    title: 'VN Express ',
-  },
-  {
-    id: '3',
-    title: 'Giao hàng tiết kiệm',
-  },
-  {
-    id: '4',
-    title: 'Tự lấy hàng',
-  },
-];
-const Item = ({item, onPress}) => {
-  const [isSelected, setSelection] = useState(false);
-  return (
-    <View style={styles.item}>
-      <CheckBox value={isSelected} onValueChange={setSelection} />
-      <View style={{marginLeft: -15}}>
-        <Text style={{fontSize: 16, paddingBottom: 3}}>{item.title}</Text>
-      </View>
-    </View>
+import styles from './styles';
+
+import {
+  getProductDeliveryTypeSelector,
+  getProductDeliveryTypeLoadingSelector,
+} from 'redux/selectors/postProduct';
+import {useSelector} from 'react-redux';
+import {Checkbox} from 'react-native-paper';
+
+const ColorInfor = ({
+  setSelectedDeliveryType = () => {},
+  selectedDeliveryType = [],
+}) => {
+  const [isCheckAll, setIsCheckAll] = useState(false);
+
+  const loading = useSelector((state) =>
+    getProductDeliveryTypeLoadingSelector(state),
   );
-};
-const ColorInfor = () => {
-  const [selectedId, setSelectedId] = useState(null);
+  const deliveryTypeSelector = useSelector((state) =>
+    getProductDeliveryTypeSelector(state),
+  );
+  const listDeliveryType = deliveryTypeSelector.content || [];
+
+  const _handleChecked = (item) => {
+    let idx = selectedDeliveryType.findIndex((v) => v.id === item.id);
+    if (idx === -1) {
+      if (selectedDeliveryType.length + 1 === listDeliveryType.length) {
+        setIsCheckAll(true);
+      }
+      setSelectedDeliveryType([...selectedDeliveryType, item]);
+    } else {
+      let newSelectedList = [...selectedDeliveryType];
+      newSelectedList.splice(idx, 1);
+
+      setSelectedDeliveryType([...newSelectedList]);
+    }
+  };
+
+  const isActiveItems = (item) => {
+    return selectedDeliveryType.findIndex((v) => v.id === item.id) !== -1;
+  };
+
+  React.useEffect(() => {
+    if (selectedDeliveryType.length < listDeliveryType.length) {
+      setIsCheckAll(false);
+    }
+  }, [selectedDeliveryType]);
+
   const renderItem = ({item}) => {
-    return <Item item={item} onPress={() => setSelectedId(item.id)} />;
+    return (
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => _handleChecked(item)}>
+        <Checkbox.Android
+          color="#3470FB"
+          status={isActiveItems(item) ? 'checked' : 'unchecked'}
+        />
+
+        <Text style={styles.itemTitle}>{item.name}</Text>
+      </TouchableOpacity>
+    );
   };
   return (
-    <SafeAreaView>
+    <>
+      <View style={styles.status}>
+        <Text style={styles.title}>Phương thức vận chuyển</Text>
+        <TouchableOpacity
+          onPress={() => {
+            if (!isCheckAll) {
+              setSelectedDeliveryType([...listDeliveryType]);
+            } else {
+              setSelectedDeliveryType([]);
+            }
+            setIsCheckAll(!isCheckAll);
+          }}>
+          <Text style={styles.rightTitle}>
+            {!isCheckAll ? 'Chọn toàn bộ' : 'Bỏ chọn toàn bộ'}
+          </Text>
+        </TouchableOpacity>
+      </View>
       <FlatList
-        data={COLOR}
+        data={listDeliveryType}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        extraData={selectedId}
         style={{paddingTop: 10, marginHorizontal: -20}}
       />
-    </SafeAreaView>
+    </>
   );
 };
 export default ColorInfor;

@@ -7,83 +7,112 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native';
-import {CheckBox} from 'react-native-elements';
+import {ActivityIndicator, Checkbox} from 'react-native-paper';
+
 import {Header, ButtonRounded, HeaderBack} from 'components';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-const COLOR = [
-  {
-    id: '0',
-    title: 'Đen',
-  },
-  {
-    id: '1',
-    title: 'Trắng',
-  },
-  {
-    id: '2',
-    title: 'Xám ',
-  },
-  {
-    id: '3',
-    title: 'Cam',
-  },
-  {
-    id: '4',
-    title: 'Hồng',
-  },
-  {
-    id: '5',
-    title: 'Đỏ',
-  },
-  {
-    id: '6',
-    title: 'Tím',
-  },
-  {
-    id: '7',
-    title: 'Xanh lá cây',
-  },
-  {
-    id: '8',
-    title: 'Khác',
-  },
-];
-const Item = ({item, onPress}) => {
-  const [isSelected, setSelection] = useState(false);
+import {useDispatch, useSelector, shallowEqual} from 'react-redux';
+import {
+  getListAttributesSelector,
+  getListAttributesLoadingSelector,
+} from 'redux/selectors/postProduct';
+import {postProductActions} from 'redux/reducers';
+
+const Item = ({item, onPress = () => {}, active}) => {
   return (
-    <View style={styles.item}>
-      <CheckBox value={isSelected} onValueChange={setSelection} />
-      <Text>{item.title}</Text>
-    </View>
+    <TouchableOpacity style={styles.item} onPress={onPress}>
+      <Checkbox.Android
+        status={active ? 'checked' : 'unchecked'}
+        color="#3470FB"
+      />
+      <Text>{item.name}</Text>
+    </TouchableOpacity>
   );
 };
-const ColorInfor = () => {
-  const [selectedId, setSelectedId] = useState(null);
+const ColorInfor = ({
+  selectedColors = [],
+  defaultState = [],
+  setSelectedColors = () => {},
+  setModalVisibleColor = () => {},
+}) => {
+  const dispatch = useDispatch();
+
+  const loading = useSelector((state) =>
+    getListAttributesLoadingSelector(state),
+  );
+  const listAttributesSelector = useSelector(
+    (state) => getListAttributesSelector(state),
+    shallowEqual,
+  );
+  const listAttributes = listAttributesSelector.content || [];
+  const attributesId =
+    listAttributes.filter((v) => v.key === 'color')?.[0]?.id || 0;
+  const listColors =
+    listAttributes.filter((v) => v.key === 'color')?.[0]?.attributeOptions ||
+    [];
+
+  const [selectedItem, setSelectedItem] = useState(defaultState);
+
+  const _handleChecked = (item) => {
+    let idx = selectedItem.findIndex((v) => v.id === item.id);
+    if (idx === -1) {
+      setSelectedItem([...selectedItem, item]);
+    } else {
+      let newSelectedList = [...selectedItem];
+      newSelectedList.splice(idx, 1);
+      setSelectedItem([...newSelectedList]);
+    }
+  };
+
+  const onSubmitPress = () => {
+    let submitData = [...selectedItem].map((v) => ({
+      ...v,
+      attributeId: attributesId || 0,
+      attrValue: v?.value || '',
+    }));
+    setSelectedColors(submitData);
+    setModalVisibleColor(false);
+  };
+
   const renderItem = ({item}) => {
-    return <Item item={item} onPress={() => setSelectedId(item.id)} />;
+    return (
+      <Item
+        item={item}
+        active={selectedItem.findIndex((v) => v.id === item.id) !== -1}
+        onPress={() => {
+          _handleChecked(item);
+        }}
+      />
+    );
   };
   return (
-    <SafeAreaView>
-      <FlatList
-        data={COLOR}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        extraData={selectedId}
-        style={{height: '55%'}}
-      />
-      <View
-        style={{
-          borderBottomWidth: 0.3,
-        }}>
-        <TextInput
-          style={styles.input}
-          placeholder="Placeholder"
-          keyboardType="numeric"
+    <SafeAreaView style={styles.container}>
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          data={[...listColors, {name: 'Khác', id: -1}] || []}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          extraData={selectedItem}
+          style={styles.listWrapper}
+          ListFooterComponent={
+            selectedItem.indexOf(-1) !== -1 ? (
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Placeholder"
+                  keyboardType="numeric"
+                />
+              </View>
+            ) : null
+          }
         />
-      </View>
+      )}
+
       <View style={styles.button}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onSubmitPress}>
           <ButtonRounded label="Chọn" />
         </TouchableOpacity>
       </View>

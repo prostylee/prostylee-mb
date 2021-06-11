@@ -6,6 +6,7 @@ export default EStyleSheet.create({
     flex: 1,
     width: WIDTH,
     paddingVertical: 16,
+    backgroundColor: '$white',
   },
   itemcontainer: {
     width: WIDTH / 3,

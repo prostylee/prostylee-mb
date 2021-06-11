@@ -6,28 +6,50 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
+  StyleSheet,
 } from 'react-native';
-import {ProgressBar, Colors} from 'react-native-paper';
-import {Header, ButtonRounded} from 'components';
-import IconMeterial from 'react-native-vector-icons/MaterialCommunityIcons';
-import IconFont from 'react-native-vector-icons/FontAwesome';
+
+import {Header, ButtonRounded, ThemeView, Colors} from 'components';
+
+import useLocation from '../../../hooks/useLocation';
+
+import MapView, {Marker} from 'react-native-maps';
 import styles from './styles';
+import {MapPinFill} from 'svg/common';
+
 const Maps = () => {
+  const [coordinate, setCoordinate] = useState(null);
+
+  const location = useLocation();
+  console.log('LOCATION', location);
+
+  const _handleMapPress = (e) => {
+    setCoordinate(e.nativeEvent.coordinate);
+    console.log('COORDINATE', e.nativeEvent.coordinate);
+  };
+
   return (
-    <SafeAreaView style={styles.wrapper}>
-      <Header
-        isDefault
-        containerStyle={styles.headerContain}
-        leftStyle={{
-          height: 30,
-          fontWeight: 'bold',
-        }}
-        middleComponent={
-          <Text style={styles.middleComponent}>Chọn điạ điểm</Text>
-        }
-      />
+    <ThemeView style={styles.wrapper} isFullView>
+      <Header isDefault title="Chọn địa điểm" />
       <View style={styles.cotainer}>
-        <Text>Maps</Text>
+        <MapView
+          style={{...StyleSheet.absoluteFillObject}}
+          initialRegion={{
+            latitude: location.lat,
+            longitude: location.lon,
+            // latitudeDelta: 0.015,
+            // longitudeDelta: 0.0121,
+          }}
+          onPress={_handleMapPress}>
+          <Marker coordinate={coordinate} pinColor={'red'}>
+            <MapPinFill
+              width={32}
+              height={32}
+              backdropColor={Colors['$purple']}
+              color={'#fff'}
+            />
+          </Marker>
+        </MapView>
       </View>
       <View style={styles.footer}>
         <View style={styles.textFooter}>
@@ -43,7 +65,7 @@ const Maps = () => {
           <ButtonRounded label="Sử dụng địa chỉ này" />
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </ThemeView>
   );
 };
 export default Maps;

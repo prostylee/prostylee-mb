@@ -7,82 +7,108 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import {CheckBox} from 'react-native-elements';
-import {Divider} from 'react-native-paper';
+
+import {ActivityIndicator, Checkbox, Divider} from 'react-native-paper';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-const Item = ({item, onPress}) => {
-  const [isSelected, setSelection] = useState(false);
+
+import {
+  getProductPaymentMethodSelector,
+  getProductPaymentMethodLoadingSelector,
+} from 'redux/selectors/postProduct';
+import {useSelector} from 'react-redux';
+
+const ListPayment = ({
+  item,
+  onPress,
+  setSelectedPaymentMethods = () => {},
+  selectedPaymentMethods = [],
+}) => {
+  const [isCheckAll, setIsCheckAll] = useState(false);
+
+  const loading = useSelector((state) =>
+    getProductPaymentMethodLoadingSelector(state),
+  );
+  const paymentMethodSelector = useSelector((state) =>
+    getProductPaymentMethodSelector(state),
+  );
+  const listPaymentMethod = paymentMethodSelector.content || [];
+
+  const _handleChecked = (item) => {
+    let idx = selectedPaymentMethods.findIndex((v) => v.id === item.id);
+    if (idx === -1) {
+      if (selectedPaymentMethods.length + 1 === listPaymentMethod.length) {
+        setIsCheckAll(true);
+      }
+      setSelectedPaymentMethods([...selectedPaymentMethods, item]);
+    } else {
+      let newSelectedList = [...selectedPaymentMethods];
+      newSelectedList.splice(idx, 1);
+      setSelectedPaymentMethods([...newSelectedList]);
+    }
+  };
+
+  const isActiveItems = (item) => {
+    return selectedPaymentMethods.findIndex((v) => v.id === item.id) !== -1;
+  };
+
+  React.useEffect(() => {
+    if (selectedPaymentMethods.length < listPaymentMethod.length) {
+      setIsCheckAll(false);
+    }
+  }, [selectedPaymentMethods]);
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.itemPayment}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <CheckBox value={isSelected} onValueChange={setSelection} />
-          <View style={{marginLeft: -15}}>
-            <Text style={{fontSize: 16, paddingBottom: 3}}>Credit Card</Text>
-          </View>
-        </View>
-
-        <View style={{flexDirection: 'row'}}>
-          <Image
-            source={require('../../../../assets/images/visa.png')}
-            resizeMode={'cover'}
-            style={styles.image}
-          />
-          <Image
-            source={require('../../../../assets/images/master.png')}
-            resizeMode={'cover'}
-            style={styles.image}
-          />
-          <Image
-            source={require('../../../../assets/images/american.png')}
-            resizeMode={'cover'}
-            style={styles.image}
-          />
-          <Image
-            source={require('../../../../assets/images/discovery.png')}
-            resizeMode={'cover'}
-            style={styles.image}
-          />
-        </View>
-      </View>
-      <Divider />
-
-      <View style={styles.itemPayment}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <CheckBox value={isSelected} onValueChange={setSelection} />
-          <View style={{marginLeft: -15}}>
-            <Text style={{fontSize: 16, paddingBottom: 3}}>Momo</Text>
-          </View>
-        </View>
-
-        <View>
-          <Image
-            source={require('../../../../assets/images/momo.png')}
-            resizeMode={'cover'}
-            style={styles.img}
-          />
-        </View>
-      </View>
-
-      <Divider />
-      <View style={styles.item}>
-        <CheckBox value={isSelected} onValueChange={setSelection} />
-        <View style={{marginLeft: -15}}>
-          <Text style={{fontSize: 16, paddingBottom: 3}}>COD</Text>
-        </View>
-      </View>
-      <Divider />
-
-      <View style={styles.item}>
-        <CheckBox value={isSelected} onValueChange={setSelection} />
-        <View style={{marginLeft: -15}}>
-          <Text style={{fontSize: 16, paddingBottom: 3}}>
-            Thanh toán tại cửa hàng
+    <>
+      <View style={styles.status}>
+        <Text style={styles.title}>Phương thức thanh toán</Text>
+        <TouchableOpacity
+          onPress={() => {
+            if (!isCheckAll) {
+              setSelectedPaymentMethods([...listPaymentMethod]);
+            } else {
+              setSelectedPaymentMethods([]);
+            }
+            setIsCheckAll(!isCheckAll);
+          }}>
+          <Text style={styles.rightTitle}>
+            {!isCheckAll ? 'Chọn toàn bộ' : 'Bỏ chọn toàn bộ'}
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
-    </View>
+      <View style={styles.wrapper}>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          listPaymentMethod.map((v) => (
+            <>
+              <View style={styles.itemPayment}>
+                <TouchableOpacity
+                  onPress={() => _handleChecked(v)}
+                  style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Checkbox.Android
+                    status={isActiveItems(v) ? 'checked' : 'unchecked'}
+                    color="#3470FB"
+                  />
+                  <Text style={styles.itemTitle}>{v.name}</Text>
+                </TouchableOpacity>
+                {v.imageUrls && v.imageUrls.length ? (
+                  <View style={{flexDirection: 'row'}}>
+                    {v.imageUrls.map((item) => (
+                      <Image
+                        source={require('../../../../assets/images/visa.png')}
+                        resizeMode={'cover'}
+                        style={styles.image}
+                      />
+                    ))}
+                  </View>
+                ) : null}
+              </View>
+              <Divider />
+            </>
+          ))
+        )}
+      </View>
+    </>
   );
 };
-export default Item;
+export default ListPayment;

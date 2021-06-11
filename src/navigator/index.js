@@ -75,6 +75,7 @@ import {
   WishList,
   SoldList,
   SaveList,
+  CropPostProductImage,
 } from 'screens';
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
 import VoucherCart from 'screens/Cart/Voucher';
@@ -149,6 +150,10 @@ function SignedIn() {
       <Stack.Screen
         name="ProductInformations"
         component={ProductInformations}
+      />
+      <Stack.Screen
+        name="CropPostProductImage"
+        component={CropPostProductImage}
       />
       {/******** Post Product ********/}
       <Stack.Screen name="Setting" component={Setting} />

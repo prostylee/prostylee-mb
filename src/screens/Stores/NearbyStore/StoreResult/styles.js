@@ -67,6 +67,7 @@ export default EStyleSheet.create({
     color: '$lightGray',
     fontSize: 11,
     lineHeight: 16,
+    marginLeft: 4,
   },
   storeName: {
     color: '$black',

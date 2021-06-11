@@ -11,6 +11,7 @@ export default StyleSheet.create({
     marginVertical: -5,
     marginLeft: -20,
   },
+  itemTitle: {fontSize: 14, paddingBottom: 3, fontWeight: '400'},
   itemPayment: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -18,6 +19,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     marginVertical: -5,
     marginLeft: -20,
+    paddingHorizontal: 16,
   },
   image: {
     width: 38,
@@ -34,5 +36,18 @@ export default StyleSheet.create({
   payment: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  status: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  rightTitle: {
+    color: '#823FFD',
+    fontSize: 14,
+  },
+  title: {
+    fontSize: 14,
+    color: 'gray',
   },
 });
