@@ -218,6 +218,16 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:17.2.1'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
+
+     // Overrides an auth dependency to ensure correct behavior
+     implementation 'com.google.android.gms:play-services-auth:15.0.1'
+
+     implementation 'com.google.firebase:firebase-messaging:17.3.0'
+
+     implementation 'com.amazonaws:aws-android-sdk-pinpoint:2.15.+'
+     implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.15.+@aar') { transitive = true }
+
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }

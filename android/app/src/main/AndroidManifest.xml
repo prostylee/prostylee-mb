@@ -53,6 +53,11 @@
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyC4jYt4jOXd8LJhoVWcZMOU20pCN0JP5Yg"/>
       <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+      <service android:name=".PushListenerService">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+        </intent-filter>
+      </service>
     </application>
 
 </manifest>
