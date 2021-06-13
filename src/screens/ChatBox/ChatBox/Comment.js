@@ -5,9 +5,9 @@ import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {TextButton, TextInputBorderBottom, ButtonOutlined} from 'components';
-import {createComment, deleteComment, likeComment, unlikeComment} from 'graphQL/mutations';
-import {getComment, listComments} from 'graphQL/queries';
-import {onCreateComment, onDeleteComment} from 'graphQL/subscriptions';
+import {createComment, deleteComment, likeComment, unlikeComment} from 'graphqlLocal/mutations';
+import {getComment, listComments} from 'graphqlLocal/queries';
+import {onCreateComment, onDeleteComment} from 'graphqlLocal/subscriptions';
 import {formatTime} from 'utils/datetime';
 import {Button, Divider, List, overlay, Text, useTheme} from 'react-native-paper';
 
