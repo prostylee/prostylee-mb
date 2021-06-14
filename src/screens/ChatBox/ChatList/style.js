@@ -15,7 +15,7 @@ export default EStyleSheet.create({
   },
   searchBarStyle: {
     width: '100%',
-    height: 35,
+    height: 38,
     alignSelf: 'center',
     marginBottom: 5,
     elevation: 0,
@@ -23,6 +23,7 @@ export default EStyleSheet.create({
   },
   searchBarInput: {
     fontSize: 14,
+    lineHeight: 18,
   },
   middleComponent: {
     textAlign: 'center',
