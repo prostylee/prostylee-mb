@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Text, View, Image} from 'react-native';
 import {Storage} from 'aws-amplify';
@@ -16,37 +17,40 @@ const ChatBubble = (props) => {
     index < chatHistory.length - 1
       ? JSON.parse(chatHistory[index + 1].content)
       : {};
+  const afterMessageId =
+    index < chatHistory.length - 1 ? chatHistory[index + 1].ownerId : '';
+  const priorMessageId = index > 0 ? chatHistory[index - 1].ownerId : '';
   const paddingTopCalc = () => {
     if (priorMessage && priorMessage.type_view) {
-      return priorMessage.type_view === itemContent.type_view ? 2 : 24;
+      return priorMessageId === item.ownerId ? 2 : 24;
     } else {
       return 0;
     }
   };
   const borderTopRightCalc = () => {
     if (isUser && priorMessage && priorMessage.type_view) {
-      return priorMessage.type_view === itemContent.type_view ? 6 : 21;
+      return priorMessageId === item.ownerId ? 6 : 21;
     } else {
       return 21;
     }
   };
   const borderBottomRightCalc = () => {
     if (isUser && afterMessage && afterMessage.type_view) {
-      return afterMessage.type_view === itemContent.type_view ? 6 : 21;
+      return afterMessageId === item.ownerId ? 6 : 21;
     } else {
       return 21;
     }
   };
   const borderTopLeftCalc = () => {
     if (!isUser && priorMessage && priorMessage.type_view) {
-      return priorMessage.type_view === itemContent.type_view ? 6 : 21;
+      return priorMessageId === item.ownerId ? 6 : 21;
     } else {
       return 21;
     }
   };
   const borderBottomLeftCalc = () => {
     if (!isUser && afterMessage && afterMessage.type_view) {
-      return afterMessage.type_view === itemContent.type_view ? 6 : 21;
+      return afterMessageId === item.ownerId ? 6 : 21;
     } else {
       return 21;
     }
@@ -69,7 +73,7 @@ const ChatBubble = (props) => {
         styles.chatBubbleContainer,
         {
           alignItems: isUser ? 'flex-end' : 'flex-start',
-          paddingLeft: isUser ? 60 : 20,
+          paddingLeft: isUser ? 60 : 24,
           paddingRight: isUser ? 0 : 60,
           paddingTop: paddingTopCalc(),
         },
@@ -93,7 +97,6 @@ const ChatBubble = (props) => {
               styles.chatBubbleImage,
               {
                 height: imageHeight,
-                backgroundColor: 'red',
               },
             ]}
             style={[
@@ -130,15 +133,15 @@ const ChatBubble = (props) => {
               {itemContent?.content || ''}
             </Text>
           </View>
-          {!isUser && afterMessage?.type_view !== itemContent.type_view ? (
-            <View style={styles.chatSmallIcon}>
-              <Image
-                containerStyle={styles.chatSmallIconStyle}
-                source={{uri: otherUserAvatar}}
-              />
-            </View>
-          ) : null}
         </>
+      ) : null}
+      {!isUser && afterMessageId !== item.ownerId ? (
+        <View style={styles.chatSmallIcon}>
+          <Image
+            style={styles.chatSmallIconStyle}
+            source={{uri: otherUserAvatar}}
+          />
+        </View>
       ) : null}
     </View>
   );

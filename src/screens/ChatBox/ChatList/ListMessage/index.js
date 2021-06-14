@@ -9,6 +9,7 @@ import configEnv from 'config';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
 import * as dateTime from 'utils/datetime';
+import {ChatListLoading} from 'components/Loading/contentLoader';
 
 const Item = ({item, index, userData, onPress}) => {
   const {colors} = useTheme();
@@ -46,8 +47,8 @@ const Item = ({item, index, userData, onPress}) => {
       </RectButton>
     );
   };
-  const borderItemStyle = (index) => ({
-    borderTopColor: index > 0 ? colors['$bgColor'] : 'transparent',
+  const borderItemStyle = (itemIndex) => ({
+    borderTopColor: itemIndex > 0 ? colors['$bgColor'] : 'transparent',
   });
 
   return (
@@ -76,7 +77,12 @@ const Item = ({item, index, userData, onPress}) => {
               {`${itemContent.name} • ${getNewChatTime()}`}
             </Text>
           </View>
-          <Icon name="ellipse-sharp" size={7} style={styles.newMessageDot} />
+          <Icon
+            name="ellipse-sharp"
+            size={7}
+            color={'transparent'}
+            style={styles.newMessageDot}
+          />
         </View>
       </TouchableOpacity>
     </Swipeable>
@@ -86,6 +92,11 @@ const ListMessage = (props) => {
   const currentUser = props.currentUser ? props.currentUser : {};
   const chatList = props.chatList ? props.chatList : [];
   const userData = props.userData ? props.userData : {};
+  const loading = props.loading ? props.loading : false;
+  const refreshing = props.refreshing ? props.refreshing : false;
+  const refreshChatList = props.refreshChatList
+    ? props.refreshChatList
+    : () => {};
 
   const deleteChatHandler = props.deleteChatHandler
     ? props.deleteChatHandler
@@ -105,6 +116,9 @@ const ListMessage = (props) => {
       </View>
     );
   };
+  if (loading && !refreshing) {
+    return <ChatListLoading />;
+  }
   return (
     <FlatList
       data={chatList}
@@ -112,6 +126,8 @@ const ListMessage = (props) => {
       keyExtractor={(item) => item.id}
       style={styles.listContainer}
       contentContainerStyle={styles.listContent}
+      refreshing={refreshing}
+      onRefresh={refreshChatList}
     />
   );
 };

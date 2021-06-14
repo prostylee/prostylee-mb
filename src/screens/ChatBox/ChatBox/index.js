@@ -16,12 +16,9 @@ import FooterItem from './FooterItem';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
-import {createChat, deleteChat} from 'graphqlLocal/mutations';
-import {getChat, listChats} from 'graphqlLocal/queries';
+import {getChat} from 'graphqlLocal/queries';
 import {onCreateChat, onDeleteChat} from 'graphqlLocal/subscriptions';
-import {getUserAWSAvatar} from 'services/api/userApi';
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
-import ChatOne2One from './ChatOne2One';
 import configEnv from 'config';
 /******** chat aws ********/
 import Chat from './Chat';
@@ -39,12 +36,13 @@ const ChatBox = ({navigation, route}) => {
   const dispatch = useDispatch();
   const [currentUser, setCurrentUser] = React.useState();
   const [chatDataList, setChatDataList] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((user) => {
         setCurrentUser(user);
-        console.log(JSON.stringify(user, null, 4));
       })
       .catch((err) => console.log(err));
     executeGetChat();
@@ -91,20 +89,31 @@ const ChatBox = ({navigation, route}) => {
     };
   }, [chatDataList, dispatch]);
 
-  const executeGetChat = () => {
-    dispatch(commonActions.toggleLoading(true));
-    API.graphql(
-      graphqlOperation(getChat, {
-        id: chatId,
-      }),
-    )
-      .then((result) => {
+  const refreshChatList = async () => {
+    setRefreshing(true);
+    try {
+      await executeGetChat();
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  const executeGetChat = async () => {
+    setLoading(true);
+    try {
+      const result = await API.graphql(
+        graphqlOperation(getChat, {
+          id: chatId,
+        }),
+      );
+      if (result) {
         setChatDataList(result.data.getChat.childrens.items);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    dispatch(commonActions.toggleLoading(false));
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const callUser = (phoneNumber) => {
@@ -154,12 +163,17 @@ const ChatBox = ({navigation, route}) => {
           </View>
         }
       />
-      <ProductItem data={productData} navigation={navigation} />
+      {loading && !refreshing ? null : (
+        <ProductItem data={productData} navigation={navigation} />
+      )}
       <View style={{flex: 1, width: '100%'}}>
         <Chat
           user={currentUser}
           chatData={chatDataList}
           otherUserAvatar={otherUserAvatar}
+          loading={loading}
+          refreshing={refreshing}
+          refreshChatList={refreshChatList}
         />
       </View>
       <FooterItem user={currentUser} chatId={chatId} />
