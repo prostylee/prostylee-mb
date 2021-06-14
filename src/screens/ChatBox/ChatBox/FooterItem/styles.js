@@ -1,4 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {isIphoneX} from 'utils/ui';
 export default EStyleSheet.create({
   footer: {
     backgroundColor: 'white',
@@ -16,7 +17,15 @@ export default EStyleSheet.create({
     backgroundColor: '#F4F5F5',
     flex: 1,
   },
+  iconRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   iconFooter: {
     paddingLeft: 13,
+  },
+  emoji: {
+    paddingBottom: isIphoneX() ? 20 : 0,
+    height: isIphoneX() ? 290 : 280,
   },
 });

@@ -1,0 +1,318 @@
+{
+  "id": 134,
+  "brandId": 1,
+  "categoryId": 4,
+  "name": "Áo thun nam cổ trụ hàn quốc 10",
+  "description": "Áo thun nam cổ trụ hàn quốc 3",
+  "locationId": 25,
+  "storeId": 1,
+  "price": 150000,
+  "priceSale": 140000,
+  "imageUrls": [
+    "https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg"
+  ],
+  "productOwnerResponse": {
+    "id": 1,
+    "name": "Store",
+    "logoUrl": "https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg"
+  },
+  "location": {
+    "id": 25,
+    "address": "30 Mai chí Thọ",
+    "latitude": 830,
+    "longitude": 110,
+    "state": "Quận 2",
+    "city": "TP.HCM",
+    "country": "Việt NAm",
+    "zipcode": "700000",
+    "distance": null
+  },
+  "isAdvertising": false,
+  "productStatisticResponse": {
+    "id": 134,
+    "numberOfSold": 0,
+    "numberOfLike": 0,
+    "numberOfComment": 0,
+    "resultOfRating": 0,
+    "numberOfReview": 0
+  },
+  "categoryResponse": {
+    "id": 4,
+    "parentId": 3,
+    "attachmentId": null,
+    "name": "Áo thun nam",
+    "description": "Áo thun nam",
+    "order": 1,
+    "icon": "https://psmedia211437-dev.s3-ap-southeast-1.amazonaws.com/public/%C3%A1o+thun+nam+logo.jpeg",
+    "active": true,
+    "languageCode": "vi",
+    "hotStatus": false,
+    "attributes": [
+      {
+        "id": 8,
+        "key": "material",
+        "order": 2,
+        "label": "Chất liệu",
+        "description": "Chất liệu",
+        "type": 1,
+        "allowsMultipleSelection": false,
+        "languageCode": "vi",
+        "attributeOptions": [
+          {
+            "id": 23,
+            "name": "Jeans",
+            "value": "Jeans",
+            "label": "Jeans",
+            "languageCode": "vi"
+          },
+          {
+            "id": 21,
+            "name": "Cotton",
+            "value": "Cotton",
+            "label": "Cotton",
+            "languageCode": "vi"
+          },
+          {
+            "id": 24,
+            "name": "Kaki",
+            "value": "Kaki",
+            "label": "Kaki",
+            "languageCode": "vi"
+          },
+          {
+            "id": 22,
+            "name": "Lụa",
+            "value": "Lụa",
+            "label": "Lụa",
+            "languageCode": "vi"
+          },
+          {
+            "id": 25,
+            "name": "Nỉ",
+            "value": "Nỉ",
+            "label": "Nỉ",
+            "languageCode": "vi"
+          },
+          {
+            "id": 26,
+            "name": "Polyester (PE)",
+            "value": "Polyester (PE)",
+            "label": "Polyester (PE)",
+            "languageCode": "vi"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "key": "textures",
+        "order": 1,
+        "label": "Hoạ tiết",
+        "description": "Hoạ tiết",
+        "type": 1,
+        "allowsMultipleSelection": false,
+        "languageCode": "vi",
+        "attributeOptions": [
+          {
+            "id": 18,
+            "name": "Hình học",
+            "value": "Hình học",
+            "label": "Hình học",
+            "languageCode": "vi"
+          },
+          {
+            "id": 17,
+            "name": "Hoa lá",
+            "value": "Hoa lá",
+            "label": "Hoa lá",
+            "languageCode": "vi"
+          },
+          {
+            "id": 19,
+            "name": "Kẻ sọc",
+            "value": "Kẻ sọc",
+            "label": "Kẻ sọc",
+            "languageCode": "vi"
+          },
+          {
+            "id": 20,
+            "name": "Chấm bi",
+            "value": "Chấm bi",
+            "label": "Chấm bi",
+            "languageCode": "vi"
+          },
+          {
+            "id": 15,
+            "name": "Caro",
+            "value": "Caro",
+            "label": "Caro",
+            "languageCode": "vi"
+          },
+          {
+            "id": 16,
+            "name": "Trơn",
+            "value": "Trơn",
+            "label": "Trơn",
+            "languageCode": "vi"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "key": "color",
+        "order": 3,
+        "label": "Màu săc",
+        "description": "Màu săc",
+        "type": 1,
+        "allowsMultipleSelection": false,
+        "languageCode": "vi",
+        "attributeOptions": [
+          {
+            "id": 28,
+            "name": "Xanh",
+            "value": "Xanh",
+            "label": "Xanh",
+            "languageCode": "vi"
+          },
+          {
+            "id": 31,
+            "name": "Xám",
+            "value": "Xám",
+            "label": "Xám",
+            "languageCode": "vi"
+          },
+          {
+            "id": 27,
+            "name": "Vàng",
+            "value": "Vàng",
+            "label": "Vàng",
+            "languageCode": "vi"
+          },
+          {
+            "id": 30,
+            "name": "Trắng",
+            "value": "Trắng",
+            "label": "Trắng",
+            "languageCode": "vi"
+          },
+          {
+            "id": 32,
+            "name": "Đen",
+            "value": "Đen",
+            "label": "Đen",
+            "languageCode": "vi"
+          },
+          {
+            "id": 29,
+            "name": "Nâu",
+            "value": "Nâu",
+            "label": "Nâu",
+            "languageCode": "vi"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "key": "size",
+        "order": 4,
+        "label": "Kích cỡ",
+        "description": "Kích cỡ",
+        "type": 1,
+        "allowsMultipleSelection": false,
+        "languageCode": "vi",
+        "attributeOptions": [
+          {
+            "id": 35,
+            "name": "XL",
+            "value": "xl",
+            "label": "XL",
+            "languageCode": "vi"
+          },
+          {
+            "id": 36,
+            "name": "M",
+            "value": "m",
+            "label": "M",
+            "languageCode": "vi"
+          },
+          {
+            "id": 38,
+            "name": "3XL",
+            "value": "3xl",
+            "label": "3XL",
+            "languageCode": "vi"
+          },
+          {
+            "id": 34,
+            "name": "XXL",
+            "value": "xxl",
+            "label": "XXL",
+            "languageCode": "vi"
+          },
+          {
+            "id": 33,
+            "name": "L",
+            "value": "l",
+            "label": "L",
+            "languageCode": "vi"
+          },
+          {
+            "id": 37,
+            "name": "S",
+            "value": "s",
+            "label": "S",
+            "languageCode": "vi"
+          }
+        ]
+      }
+    ],
+    "banner": "https://psmedia211437-dev.s3-ap-southeast-1.amazonaws.com/public/%C3%A1o+thun+nam+banner.jpg"
+  },
+  "brandResponse": {
+    "id": 1,
+    "description": "Adidas brand",
+    "name": "Adidas",
+    "icon": "https://psmedia224241-staging.s3-ap-southeast-1.amazonaws.com/public/27c3092c-9f1b-49eb-ba68-ab3f091d1347/brand/adidas.png",
+    "order": null
+  },
+  "productAttributeOptionResponse": [
+    {
+      "id": 10,
+      "key": "size",
+      "order": 4,
+      "label": "Kích cỡ",
+      "description": "Kích cỡ",
+      "type": 1,
+      "languageCode": "vi",
+      "productAttributeResponses": [
+        {
+          "id": 27,
+          "attrValue": "S"
+        },
+        {
+          "id": 28,
+          "attrValue": "M"
+        }
+      ]
+    }
+  ],
+  "productPriceResponseList": [
+    {
+      "id": 14,
+      "name": "string",
+      "sku": "string",
+      "price": 150000,
+      "priceSale": 149000,
+      "productAttributes": [
+        {
+          "id": 27,
+          "attrValue": "S"
+        },
+        {
+          "id": 28,
+          "attrValue": "M"
+        }
+      ]
+    }
+  ],
+  "likeStatusOfUserLogin": false
+}

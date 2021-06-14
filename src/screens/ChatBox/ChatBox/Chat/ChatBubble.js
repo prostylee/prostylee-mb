@@ -1,71 +1,91 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {Image} from 'react-native-elements';
+import {Text, View, Image} from 'react-native';
+import {Storage} from 'aws-amplify';
 
 import styles from './stylesChatBubble';
 
-const ChatBubble = ({item, index, isUser, chatHistory}) => {
+const ChatBubble = (props) => {
+  const {item, index, isUser, chatHistory, otherUserAvatar} = props;
+  const itemContent = JSON.parse(item.content);
   const [imageHeight, setImageHeight] = React.useState(200);
-  const priorMessage = chatHistory[index - 1];
-  const afterMessage = chatHistory[index + 1];
+  const [imageUri, setImageUri] = React.useState('');
+
+  const priorMessage =
+    index > 0 ? JSON.parse(chatHistory[index - 1].content) : {};
+  const afterMessage =
+    index < chatHistory.length - 1
+      ? JSON.parse(chatHistory[index + 1].content)
+      : {};
   const paddingTopCalc = () => {
-    if (priorMessage && priorMessage.type_message) {
-      return priorMessage.type_message === item.type_message ? 2 : 24;
+    if (priorMessage && priorMessage.type_view) {
+      return priorMessage.type_view === itemContent.type_view ? 2 : 24;
     } else {
       return 0;
     }
   };
   const borderTopRightCalc = () => {
-    if (isUser && priorMessage && priorMessage.type_message) {
-      return priorMessage.type_message === item.type_message ? 6 : 21;
+    if (isUser && priorMessage && priorMessage.type_view) {
+      return priorMessage.type_view === itemContent.type_view ? 6 : 21;
     } else {
       return 21;
     }
   };
   const borderBottomRightCalc = () => {
-    if (isUser && afterMessage && afterMessage.type_message) {
-      return afterMessage.type_message === item.type_message ? 6 : 21;
+    if (isUser && afterMessage && afterMessage.type_view) {
+      return afterMessage.type_view === itemContent.type_view ? 6 : 21;
     } else {
       return 21;
     }
   };
   const borderTopLeftCalc = () => {
-    if (!isUser && priorMessage && priorMessage.type_message) {
-      return priorMessage.type_message === item.type_message ? 6 : 21;
+    if (!isUser && priorMessage && priorMessage.type_view) {
+      return priorMessage.type_view === itemContent.type_view ? 6 : 21;
     } else {
       return 21;
     }
   };
   const borderBottomLeftCalc = () => {
-    if (!isUser && afterMessage && afterMessage.type_message) {
-      return afterMessage.type_message === item.type_message ? 6 : 21;
+    if (!isUser && afterMessage && afterMessage.type_view) {
+      return afterMessage.type_view === itemContent.type_view ? 6 : 21;
     } else {
       return 21;
     }
   };
+
+  const getUrl = async (key) => {
+    const signedURL = await Storage.get(key);
+    setImageUri(signedURL);
+  };
+
+  React.useEffect(() => {
+    if (itemContent.type_view === 'image') {
+      getUrl(itemContent.content);
+    }
+  }, []);
+
   return (
     <View
       style={[
         styles.chatBubbleContainer,
         {
           alignItems: isUser ? 'flex-end' : 'flex-start',
-          paddingLeft: isUser ? 60 : 0,
+          paddingLeft: isUser ? 60 : 20,
           paddingRight: isUser ? 0 : 60,
           paddingTop: paddingTopCalc(),
         },
       ]}>
-      {item.type_view === 'image' ? (
+      {itemContent.type_view === 'image' ? (
         <View
           style={[
             styles.chatBubbleImageContainer,
             {
-              opacity: item.disconnected ? 0.5 : 1,
+              opacity: itemContent.disconnected ? 0.5 : 1,
               height: imageHeight,
             },
           ]}>
           <Image
             onLoadStart={async () => {
-              await Image.getSize(item.message, (width, height) => {
+              await Image.getSize(imageUri, (width, height) => {
                 setImageHeight((height / width) * 200);
               });
             }}
@@ -73,6 +93,7 @@ const ChatBubble = ({item, index, isUser, chatHistory}) => {
               styles.chatBubbleImage,
               {
                 height: imageHeight,
+                backgroundColor: 'red',
               },
             ]}
             style={[
@@ -82,10 +103,10 @@ const ChatBubble = ({item, index, isUser, chatHistory}) => {
               },
             ]}
             resizeMode={'contain'}
-            source={{uri: item.message}}
+            source={{uri: imageUri}}
           />
         </View>
-      ) : item.type_view === 'text' ? (
+      ) : itemContent.type_view === 'text' ? (
         <>
           <View
             style={[
@@ -96,7 +117,7 @@ const ChatBubble = ({item, index, isUser, chatHistory}) => {
                 borderBottomRightRadius: borderBottomRightCalc(),
                 borderTopLeftRadius: borderTopLeftCalc(),
                 borderBottomLeftRadius: borderBottomLeftCalc(),
-                opacity: item.disconnected ? 0.5 : 1,
+                opacity: itemContent.disconnected ? 0.5 : 1,
               },
             ]}>
             <Text
@@ -106,14 +127,14 @@ const ChatBubble = ({item, index, isUser, chatHistory}) => {
                 opacity: 0.6,
                 color: isUser ? '#000000' : '#FFFFFF',
               }}>
-              {item?.content || ''}
+              {itemContent?.content || ''}
             </Text>
           </View>
-          {!isUser && afterMessage?.type_message !== item.type_message ? (
+          {!isUser && afterMessage?.type_view !== itemContent.type_view ? (
             <View style={styles.chatSmallIcon}>
               <Image
                 containerStyle={styles.chatSmallIconStyle}
-                source={{uri: ''}}
+                source={{uri: otherUserAvatar}}
               />
             </View>
           ) : null}

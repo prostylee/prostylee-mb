@@ -10,9 +10,10 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
 import * as dateTime from 'utils/datetime';
 
-const Item = ({item, index, isUser, onPress}) => {
+const Item = ({item, index, userData, onPress}) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
+  const itemContent = JSON.parse(item.content) || {};
   const getNewChatTime = () => {
     if (
       dateTime.checkTimeBetween(
@@ -48,33 +49,31 @@ const Item = ({item, index, isUser, onPress}) => {
   const borderItemStyle = (index) => ({
     borderTopColor: index > 0 ? colors['$bgColor'] : 'transparent',
   });
-  const otherChatUserId = isUser
-    ? item.participantUserIds.find((userId) => item.ownerId !== userId) || ''
-    : item.ownerId;
+
   return (
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ChatBox', {
             chatId: item.id,
-            otherChatUserId: otherChatUserId,
-            userName: isUser ? item.ownerFullname : 'TODO: other user',
+            otherChatUserId: userData.id,
+            userName: userData.fullName,
+            userPhone: userData.phoneNumber,
+            productData: itemContent,
           });
         }}>
         <View style={[styles.itemStyle, borderItemStyle(index)]}>
           <Image
             source={{
-              uri: `${configEnv.api_url}/profile/${otherChatUserId}/avatar`,
+              uri: `${configEnv.api_url}/profile/${userData.id}/avatar`,
             }}
             resizeMode={'cover'}
             style={styles.img}
           />
           <View style={styles.itemInfo}>
-            <Text style={styles.Card}>
-              {isUser ? item.ownerFullname : 'TODO: other user'}
-            </Text>
+            <Text style={styles.Card}>{userData.fullName}</Text>
             <Text style={styles.fomat} numberOfLines={2}>
-              {`${item.content} • ${getNewChatTime()}`}
+              {`${itemContent.name} • ${getNewChatTime()}`}
             </Text>
           </View>
           <Icon name="ellipse-sharp" size={7} style={styles.newMessageDot} />
@@ -84,18 +83,23 @@ const Item = ({item, index, isUser, onPress}) => {
   );
 };
 const ListMessage = (props) => {
-  const currentUserName = props.currentUserName ? props.currentUserName : '';
+  const currentUser = props.currentUser ? props.currentUser : {};
   const chatList = props.chatList ? props.chatList : [];
+  const userData = props.userData ? props.userData : {};
+
   const deleteChatHandler = props.deleteChatHandler
     ? props.deleteChatHandler
     : () => {};
   const renderItem = ({item, index}) => {
+    const otherUserId = item.participantUserIds?.find(
+      (userId) => userId !== currentUser.attributes['custom:userId'],
+    );
     return (
       <View style={styles.itemContainer}>
         <Item
           item={item}
+          userData={userData[otherUserId]}
           index={index}
-          isUser={currentUserName === item.owner}
           onPress={deleteChatHandler}
         />
       </View>

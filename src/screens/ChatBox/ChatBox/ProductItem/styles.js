@@ -8,7 +8,6 @@ export default EStyleSheet.create({
     marginHorizontal: 15,
     marginVertical: 8,
     borderRadius: 5,
-    marginBottom: 100,
   },
   priceItem: {
     fontWeight: 'bold',

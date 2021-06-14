@@ -19,8 +19,8 @@ import {commonActions} from 'reducers';
 import {createChat, deleteChat} from 'graphQL/mutations';
 import {getChat, listChats} from 'graphQL/queries';
 import {onCreateChat, onDeleteChat} from 'graphQL/subscriptions';
-import {getUserAWSAvatar} from 'services/api/userApi';
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
+import ChatOne2One from './ChatOne2One';
 import configEnv from 'config';
 /******** chat aws ********/
 import Chat from './Chat';
@@ -30,19 +30,65 @@ const ChatBox = ({navigation, route}) => {
     ? route.params.otherChatUserId
     : '';
   const userName = route?.params?.userName ? route.params.userName : '';
+  const userPhone = route?.params?.userPhone ? route.params.userPhone : '';
+  const productData = route?.params?.productData
+    ? route.params.productData
+    : {};
 
   const dispatch = useDispatch();
-  const [chatData, setChatData] = React.useState([]);
+  const [currentUser, setCurrentUser] = React.useState();
+  const [chatDataList, setChatDataList] = React.useState([]);
 
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((user) => {
-        console.log('USER ' + JSON.stringify(user, null, 4));
-        // setCurrentUserName(user.username);
+        setCurrentUser(user);
+        console.log(JSON.stringify(user, null, 4));
       })
       .catch((err) => console.log(err));
     executeGetChat();
   }, []);
+
+  React.useEffect(() => {
+    const createChatListener = API.graphql(
+      graphqlOperation(onCreateChat),
+    ).subscribe({
+      next: (chatData) => {
+        const addedChat = chatData.value.data.onCreateChat;
+
+        if (addedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
+          const updatedChats = [...chatDataList];
+          updatedChats.push(addedChat);
+          setChatDataList(updatedChats);
+        }
+      },
+    });
+
+    const deleteChatListener = API.graphql(
+      graphqlOperation(onDeleteChat),
+    ).subscribe({
+      next: (chatData) => {
+        const deletedChat = chatData.value.data.onDeleteChat;
+        if (deletedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
+          const updatedChats = chatData.filter(
+            (cmt) => cmt.id !== deletedChat.id,
+          );
+          setChatDataList(updatedChats);
+        }
+      },
+    });
+
+    dispatch(commonActions.toggleLoading(false));
+
+    return () => {
+      if (createChatListener) {
+        createChatListener.unsubscribe();
+      }
+      if (deleteChatListener) {
+        deleteChatListener.unsubscribe();
+      }
+    };
+  }, [chatDataList, dispatch]);
 
   const executeGetChat = () => {
     dispatch(commonActions.toggleLoading(true));
@@ -52,7 +98,7 @@ const ChatBox = ({navigation, route}) => {
       }),
     )
       .then((result) => {
-        setChatData(result.data.getChat.childrens.items);
+        setChatDataList(result.data.getChat.childrens.items);
       })
       .catch((err) => {
         console.log(err);
@@ -67,7 +113,9 @@ const ChatBox = ({navigation, route}) => {
       Alert.alert('User do note have phone number!');
     }
   };
-  console.log('chatData', JSON.stringify(chatData, null, 4));
+
+  const otherUserAvatar = `${configEnv.api_url}/profile/${otherChatUserId}/avatar`;
+
   return (
     <ThemeView style={styles.wrapper} isFullView>
       <Header
@@ -83,7 +131,7 @@ const ChatBox = ({navigation, route}) => {
               <Image
                 style={styles.avatar}
                 source={{
-                  uri: `${configEnv.api_url}/profile/${otherChatUserId}/avatar`,
+                  uri: otherUserAvatar,
                 }}
               />
               <Text style={styles.name}>{userName}</Text>
@@ -94,7 +142,7 @@ const ChatBox = ({navigation, route}) => {
           <View style={styles.headerRight}>
             <TouchableOpacity
               style={styles.headerRightCallIcon}
-              onPress={() => callUser('')}>
+              onPress={() => callUser(userPhone)}>
               <Icon name="call-outline" size={22} color="white" />
             </TouchableOpacity>
             <TouchableOpacity
@@ -105,11 +153,15 @@ const ChatBox = ({navigation, route}) => {
           </View>
         }
       />
-      <ProductItem />
-      <View style={{flex: 1}}>
-        <Chat />
+      <ProductItem data={productData} navigation={navigation} />
+      <View style={{flex: 1, width: '100%'}}>
+        <Chat
+          user={currentUser}
+          chatData={chatDataList}
+          otherUserAvatar={otherUserAvatar}
+        />
       </View>
-      <FooterItem />
+      <FooterItem user={currentUser} chatId={chatId} />
     </ThemeView>
   );
 };

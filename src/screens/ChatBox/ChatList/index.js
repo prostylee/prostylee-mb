@@ -9,18 +9,20 @@ import ListMessage from './ListMessage';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
-import {createChat, deleteChat} from 'graphQL/mutations';
-import {getChat, listChats} from 'graphQL/queries';
+import {deleteChat} from 'graphQL/mutations';
+import {listChats} from 'graphQL/queries';
 import {onCreateChat, onDeleteChat} from 'graphQL/subscriptions';
-import {getUserAWSAvatar} from 'services/api/userApi';
+import {getProfile} from 'services/api/userApi';
+import {SUCCESS} from 'constants';
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
 /******** chat aws ********/
 
 const Message = (props) => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [currentUserName, setCurrentUserName] = React.useState('');
+  const [currentUser, setCurrentUser] = React.useState({});
   const [chatList, setChatList] = React.useState([]);
+  const [userData, setUserData] = React.useState({});
 
   React.useEffect(() => {
     executeListChats();
@@ -77,26 +79,49 @@ const Message = (props) => {
     };
   }, [chatList, dispatch]);
 
+  const getUserDataList = async (list, userId) => {
+    list.forEach(async (e) => {
+      const otherUserId = e.participantUserIds?.find((item) => item !== userId);
+      try {
+        const res = await getProfile(otherUserId);
+        if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+          setUserData((prev) => ({
+            ...prev,
+            [otherUserId]: res.data.data,
+          }));
+        }
+      } catch (err) {
+        console.log(`cannot get profile ${otherUserId}`, err);
+      } finally {
+        setChatList(list);
+      }
+    });
+  };
+
   const executeListChats = async () => {
     dispatch(commonActions.toggleLoading(true));
     try {
       const user = await Auth.currentAuthenticatedUser();
       if (user.username) {
-        // console.log('USER ' + JSON.stringify(user, null, 4));
-        setCurrentUserName(user.username);
+        setCurrentUser(user);
         API.graphql(
           graphqlOperation(listChats, {
             filter: {
               parentId: {eq: DEFAULT_CHAT_GROUP_ID},
-              participantUserIds: {contains: user.attributes.sub},
+              participantUserIds: {
+                contains: `${user.attributes['custom:userId']}`,
+              },
               // ownerFullname: {contains: 'Loc Nguyen'}, // TODO used for search
             },
             // limit: 4, // paging
             // nextToken: null, // fill token to get data of next page
           }),
         )
-          .then((result) => {
-            setChatList(result.data.listChats.items);
+          .then(async (result) => {
+            getUserDataList(
+              result.data.listChats.items,
+              user.attributes['custom:userId'],
+            );
           })
           .catch((err) => {
             console.log(err);
@@ -135,8 +160,9 @@ const Message = (props) => {
       </View>
       <ListMessage
         chatList={chatList}
-        currentUserName={currentUserName}
+        currentUser={currentUser}
         deleteChatHandler={deleteChatHandler}
+        userData={userData}
       />
     </ThemeView>
   );
