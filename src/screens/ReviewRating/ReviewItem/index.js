@@ -3,7 +3,7 @@ import styles from './styles';
 
 import React from 'react';
 import {ActivityIndicator, Text, View, TouchableOpacity} from 'react-native';
-import {Image, AirbnbRating, GridImageReviewer} from 'components';
+import {Image, AirbnbRating, GridImageReviewer, CustomRating} from 'components';
 
 const ReviewItem = ({item, navigation}) => {
   const renderGridImage = (item) => {
@@ -42,14 +42,7 @@ const ReviewItem = ({item, navigation}) => {
             <Text style={styles.textAuthor}>{item.user.fullName}</Text>
           </View>
           <View style={styles.rating}>
-            <AirbnbRating
-              isDisabled={true}
-              size={20}
-              showRating={false}
-              defaultRating={item.value}
-              reviewColor="#333333"
-              reviewSize={14}
-            />
+            <CustomRating rate={parseFloat(item.value).toFixed(1)} size={20} />
           </View>
         </View>
         <View style={styles.content}>

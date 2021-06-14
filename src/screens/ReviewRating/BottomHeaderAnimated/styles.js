@@ -49,4 +49,11 @@ export default EStyleSheet.create({
     marginTop: 5,
     marginRight: 10,
   },
+  wrapLabelRadioButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    textAlign: 'left',
+  },
 });

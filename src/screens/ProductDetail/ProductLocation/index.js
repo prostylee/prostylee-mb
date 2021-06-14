@@ -25,6 +25,7 @@ const ProductLocation = (props) => {
   }, ${location.city ? location.city : ''}, ${
     location.country ? location.country : ''
   }`;
+
   const findPathMapsApp = () => {
     const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
     const latLng = `${location.latitude},${location.longitude}`;
@@ -35,6 +36,9 @@ const ProductLocation = (props) => {
     });
     Linking.openURL(url);
   };
+
+  console.log('locations', location);
+
   return (
     <View style={styles.container}>
       <View style={styles.locationName}>

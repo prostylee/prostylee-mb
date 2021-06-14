@@ -225,24 +225,25 @@ export const ReviewRatingLoading = ({
   return (
     <View style={StyleSheet.flatten([styles.container, style])}>
       <ContentLoader
-        height={50}
+        height={height - 100}
         width={width}
         speed={speed}
         viewBox="0 0 10 10"
         backgroundColor={backgroundColor}
         foregroundColor={foregroundColor}>
-        <Rect y={10} width={width} height={10} />
+        <Rect width={width} height={25} />
       </ContentLoader>
       <ContentLoader
-        height={50}
+        height={100}
         width={width}
         speed={speed}
-        viewBox={'0 0 ' + width + ' 50'}
+        viewBox={'0 0 ' + width + ' 30'}
         backgroundColor={backgroundColor}
         foregroundColor={foregroundColor}>
-        <Rect y={10} width={width} height={10} />
-        <Rect y={30} width={width} height={5} />
-        <Rect y={40} width={width} height={5} />
+        <Rect y={0} width={width} height={10} />
+        <Rect y={15} width={width} height={10} />
+        <Rect y={30} width={width * 0.7} height={10} />
+        <Rect y={45} width={width * 0.4} height={10} />
       </ContentLoader>
     </View>
   );
