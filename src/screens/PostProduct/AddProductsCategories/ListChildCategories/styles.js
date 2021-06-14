@@ -3,6 +3,7 @@ export default EStyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+    height: 250,
   },
   flatlistStyle: {
     backgroundColor: '$white',

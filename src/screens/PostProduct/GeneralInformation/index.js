@@ -46,13 +46,13 @@ const AddProductsInfor = ({navigation}) => {
       .catch((e) => console.log(e));
   };
   const onSubmitPress = () => {
-    // if (!productName || !productDescription || !images.length || !brand) {
-    //   showMessage({
-    //     message: i18n.t('addProduct.pleaseFillInformation'),
-    //     type: 'danger',
-    //   });
-    //   return;
-    // }
+    if (!productName || !productDescription || !images.length || !brand) {
+      showMessage({
+        message: i18n.t('addProduct.pleaseFillInformation'),
+        type: 'danger',
+      });
+      return;
+    }
     dispatch(
       postProductActions.setProductInfo({
         name: productName,

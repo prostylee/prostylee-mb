@@ -8,12 +8,11 @@ import {
   getLeftLoadingSelector,
   getListLeftCategoriesSelector,
 } from 'redux/selectors/categories';
-import {Image} from 'components';
+import {PostProductCategoryLoading} from 'components/Loading/contentLoader';
+
 import {postProductActions} from 'redux/reducers';
-import defaultIcon from '../../../../assets/icons/gallery.png';
-import {ActivityIndicator} from 'react-native-paper';
+
 import Item from './item';
-import {Colors} from 'components';
 
 const ListParentCategories = (props) => {
   const dispatch = useDispatch();
@@ -50,7 +49,9 @@ const ListParentCategories = (props) => {
         </Text>
       </View>
       {loading ? (
-        <ActivityIndicator />
+        <View style={{paddingHorizontal: 16, overflow: 'hidden'}}>
+          <PostProductCategoryLoading />
+        </View>
       ) : listCaterories && listCaterories.length ? (
         <FlatList
           data={listCaterories}
