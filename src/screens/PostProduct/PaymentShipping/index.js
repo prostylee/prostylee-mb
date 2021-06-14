@@ -60,12 +60,7 @@ const PaymentShipping = () => {
   };
 
   const _handleSubmit = () => {
-    if (
-      !selectedPaymentMethods ||
-      !selectedPaymentMethods.length ||
-      !setSelectedDeliveryType ||
-      !setSelectedDeliveryType.length
-    ) {
+    if (!selectedPaymentMethods.length || !selectedDeliveryType.length) {
       showMessage({
         message: i18n.t('addProduct.pleaseFillInformation'),
         type: 'danger',
