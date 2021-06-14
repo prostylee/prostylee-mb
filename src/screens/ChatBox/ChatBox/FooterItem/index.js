@@ -14,9 +14,9 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {API, graphqlOperation, Storage} from 'aws-amplify';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
-import {createChat, deleteChat} from 'graphQL/mutations';
-import {getChat, listChats} from 'graphQL/queries';
-import {onCreateChat, onDeleteChat} from 'graphQL/subscriptions';
+import {createChat, deleteChat} from 'graphqlLocal/mutations';
+import {getChat, listChats} from 'graphqlLocal/queries';
+import {onCreateChat, onDeleteChat} from 'graphqlLocal/subscriptions';
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
 import configEnv from 'config';
 /******** chat aws ********/
