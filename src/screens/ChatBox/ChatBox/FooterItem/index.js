@@ -5,8 +5,6 @@ import i18n from 'i18n';
 import {useTheme} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconFeather from 'react-native-vector-icons/Feather';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import Modal from 'react-native-modal';
 import EmojiBoard from 'react-native-emoji-board';
 import {isIphoneX} from 'utils/ui';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -14,11 +12,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {API, graphqlOperation, Storage} from 'aws-amplify';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
-import {createChat, deleteChat} from 'graphqlLocal/mutations';
-import {getChat, listChats} from 'graphqlLocal/queries';
-import {onCreateChat, onDeleteChat} from 'graphqlLocal/subscriptions';
-const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
-import configEnv from 'config';
+import {createChat} from 'graphqlLocal/mutations';
 /******** chat aws ********/
 
 const FooterItem = (props) => {
@@ -31,7 +25,6 @@ const FooterItem = (props) => {
   const [emojiShow, setEmojiShow] = React.useState(false);
 
   const _keyboardDidShow = () => {
-    console.log('keyboad show');
     if (emojiShow) {
       setEmojiShow(false);
     }
@@ -46,7 +39,6 @@ const FooterItem = (props) => {
   }, []);
 
   const uploadToStorage = async (uri) => {
-    console.log('uri', uri);
     try {
       if (!uri) {
         return;
@@ -78,7 +70,7 @@ const FooterItem = (props) => {
     if (!key) {
       return;
     }
-    const response = await API.graphql(
+    await API.graphql(
       graphqlOperation(createChat, {
         input: {
           parentId: chatId,
@@ -102,7 +94,7 @@ const FooterItem = (props) => {
     if (!text) {
       return;
     }
-    const response = await API.graphql(
+    await API.graphql(
       graphqlOperation(createChat, {
         input: {
           parentId: chatId,
@@ -160,14 +152,14 @@ const FooterItem = (props) => {
             onPress={openCamera}
           />
         </View>
-        <View style={styles.iconFooter}>
+        {/* <View style={styles.iconFooter}>
           <MaterialIcon
             name="alternate-email"
             color={colors['$black']}
             size={25}
             onPress={() => {}}
           />
-        </View>
+        </View> */}
         <View style={styles.iconFooter}>
           <IconFeather
             name="smile"

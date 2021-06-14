@@ -62,6 +62,6 @@ export default EStyleSheet.create({
     backgroundColor: '$red',
   },
   newMessageDot: {
-    color: '$red',
+    // color: '$red',
   },
 });

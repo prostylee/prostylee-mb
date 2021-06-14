@@ -12,10 +12,7 @@ const Product = (props) => {
         props.navigation.navigate('ProductDetail', {id: data.id});
       }}>
       <View style={styles.productItem}>
-        <Image
-          style={{width: 30, height: 40, borderRadius: 3}}
-          source={{uri: data?.imageUrls[0] || ''}}
-        />
+        <Image style={styles.image} source={{uri: data?.imageUrls[0] || ''}} />
         <View style={{paddingLeft: 10}}>
           <Text style={{paddingBottom: 5}}>{data?.name}</Text>
           <Text style={styles.priceItem}>

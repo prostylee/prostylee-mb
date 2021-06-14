@@ -10,7 +10,7 @@ export default EStyleSheet.create({
   },
   chatBubble: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 8,
   },
   chatSmallIcon: {
     position: 'absolute',
@@ -21,8 +21,8 @@ export default EStyleSheet.create({
     borderRadius: 12,
   },
   chatSmallIconStyle: {
-    width: 20,
-    height: 20,
+    width: 24,
+    height: 24,
     borderRadius: 10,
     borderWidth: 0.8,
     borderColor: '#E0E0E0',
@@ -41,10 +41,11 @@ export default EStyleSheet.create({
     opacity: 0.5,
   },
   chatBubbleImageContainer: {
-    marginVertical: 12,
+    // marginVertical: 12,
   },
   chatBubbleImage: {
     width: 200,
+    backgroundColor: '#E0E0E0',
   },
   chatConnectError: {
     width: '100%',

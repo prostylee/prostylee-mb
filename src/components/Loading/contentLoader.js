@@ -303,6 +303,67 @@ export const HintKeywordLoading = ({
   );
 };
 
+export const ChatListLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => (
+  <View style={StyleSheet.flatten([styles.container, style])}>
+    <ContentLoader
+      speed={speed}
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} 182`}
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}>
+      <Rect x="64" y="8" rx="3" ry="3" width="88" height="6" />
+      <Rect x="64" y="26" rx="3" ry="3" width="178" height="6" />
+      <Circle cx="34" cy="24" r="18" />
+      <Rect x="16" y="52" rx="0" ry="0" width={width - 32} height="1" />
+      <Rect x="64" y="70" rx="3" ry="3" width="88" height="6" />
+      <Rect x="64" y="88" rx="3" ry="3" width="178" height="6" />
+      <Circle cx="34" cy="86" r="18" />
+      <Rect x="16" y="114" rx="0" ry="0" width={width - 32} height="1" />
+      <Rect x="64" y="132" rx="3" ry="3" width="88" height="6" />
+      <Rect x="64" y="150" rx="3" ry="3" width="178" height="6" />
+      <Circle cx="34" cy="148" r="18" />
+      <Rect x="16" y="176" rx="0" ry="0" width={width - 32} height="1" />
+    </ContentLoader>
+  </View>
+);
+
+export const ChatDetailLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => (
+  <View style={StyleSheet.flatten([styles.container, style])}>
+    <ContentLoader
+      speed={speed}
+      width={width}
+      height={height}
+      viewBox="0 0 400 600"
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}>
+      <Rect x="22" y="8" rx="6" ry="6" width={width - 32} height="50" />
+      <Circle cx="35" cy="134" r="10" />
+      <Rect x="53" y="71" rx="5" ry="5" width="133" height="34" />
+      <Rect x="53" y="110" rx="5" ry="5" width="201" height="34" />
+      <Rect x={width - 140} y="170" rx="5" ry="5" width="133" height="34" />
+      <Rect x={width - 208} y="208" rx="5" ry="5" width="201" height="34" />
+      <Circle cx="35" cy="332" r="10" />
+      <Rect x="53" y="270" rx="5" ry="5" width="133" height="34" />
+      <Rect x="53" y="308" rx="5" ry="5" width="201" height="34" />
+    </ContentLoader>
+  </View>
+);
+
 export const SearchProductLoading = ({
   backgroundColor,
   foregroundColor,
@@ -499,6 +560,22 @@ FeaturedCategoriesLoading.defaultProps = {
 SearchProductLoading.defaultProps = {
   height: (deviceHeight - 200) / 2,
   width: deviceWidth / 2 - 32,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+ChatListLoading.defaultProps = {
+  height: 186,
+  width: deviceWidth,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {},
+  speed: 1.2,
+};
+ChatDetailLoading.defaultProps = {
+  height: deviceWidth * 1.5,
+  width: deviceWidth,
   backgroundColor: '#d9d9d9',
   foregroundColor: '#ecebeb',
   style: {},
