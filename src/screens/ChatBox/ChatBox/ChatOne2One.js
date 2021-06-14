@@ -7,9 +7,9 @@ import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {TextButton, TextInputBorderBottom} from 'components';
-import {createChat, deleteChat} from 'graphQL/mutations';
-import {getChat, listChats} from 'graphQL/queries';
-import {onCreateChat, onDeleteChat} from 'graphQL/subscriptions';
+import {createChat, deleteChat} from 'graphqlLocal/mutations';
+import {getChat, listChats} from 'graphqlLocal/queries';
+import {onCreateChat, onDeleteChat} from 'graphqlLocal/subscriptions';
 import {formatTime} from 'utils/datetime';
 import {
   Button,
