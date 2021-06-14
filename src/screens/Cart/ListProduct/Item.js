@@ -1,26 +1,31 @@
 import styles from './styles';
 import React, {useState} from 'react';
+
+import {useDispatch} from 'react-redux';
 import {Text, View, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {Image, NumberInputUpDown} from 'components';
 import HeaderStore from './HeaderStore';
 import {currencyFormat} from 'utils/currency';
 import Modal from 'react-native-modal';
-import {IconButton, Colors} from 'react-native-paper';
 import ModalChangeCart from '../ModalChangeCart';
 import {DownArrow, Close} from 'svg/common';
+import {cartActions} from 'reducers';
 
 const Item = ({product}) => {
+  const {storeId, storeName, storeAvatar, data, amount, options} = product;
   const [visible, setVisible] = useState(false);
   const [currentId, setCurrentId] = useState();
 
-  const {storeId, storeName, storeAvatar, data, amount, options} = product;
+  const dispatch = useDispatch();
 
   const onChangeAttr = (pId) => {
     setCurrentId(pId);
     setVisible(true);
   };
 
-  console.log('vi', visible);
+  const onChaneAmount = (amount, item) => {
+    dispatch(cartActions.setCartAmount({item: item, newAmount: amount}));
+  };
 
   return (
     <>
@@ -48,7 +53,7 @@ const Item = ({product}) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <ModalChangeCart productId={currentId} />
+            <ModalChangeCart productId={currentId} currentOptions={options} />
           </View>
         </View>
       </Modal>
@@ -96,7 +101,7 @@ const Item = ({product}) => {
                               {`${op.label}:`}&nbsp;
                             </Text> */}
                             <Text style={styles.addButtonText}>
-                              &nbsp;{op.value.attrValue}&nbsp;
+                              {op.value.attrValue}
                             </Text>
                           </TouchableOpacity>
                         );
@@ -107,7 +112,11 @@ const Item = ({product}) => {
                     </TouchableOpacity>
                   </View>
                   <View style={styles.wrapUpdown}>
-                    <NumberInputUpDown value={+amount} minValue={0} />
+                    <NumberInputUpDown
+                      value={+amount}
+                      minValue={0}
+                      onChange={(value) => onChaneAmount(value, item)}
+                    />
                   </View>
                 </View>
               </View>

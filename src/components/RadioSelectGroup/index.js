@@ -18,10 +18,16 @@ const RadioSelect = ({
   ...rest
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [valueChoose, setValueChoose] = useState(defaultValue || value);
+  const [valueChoose, setValueChoose] = useState();
 
   useEffect(() => {
-    setValueChoose(value);
+    setValueChoose(defaultValue);
+  }, []);
+
+  useEffect(() => {
+    if (value) {
+      setValueChoose(value);
+    }
   }, [value]);
 
   const onChangeValue = (vl) => {
@@ -72,6 +78,7 @@ const RadioSelect = ({
 
 RadioSelect.defaultProps = {
   data: [],
+  value: null,
 };
 
 RadioSelect.propTypes = {};

@@ -21,7 +21,7 @@ import {cartActions} from 'redux/reducers';
 
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
-const ListVoucher = ({navigation, data}) => {
+const ListVoucher = ({navigation, params}) => {
   const dispatch = useDispatch();
 
   const loading = useSelector((state) => getVoucherLoadingSelector(state));
@@ -105,7 +105,9 @@ const ListVoucher = ({navigation, data}) => {
       ) : (
         <FlatList
           data={listVoucher}
-          renderItem={({item}) => <Item navigation={navigation} item={item} />}
+          renderItem={({item}) => (
+            <Item navigation={navigation} item={item} params={params} />
+          )}
           numColumns={1}
           keyExtractor={(item, index) => index}
           refreshing={refreshing}
@@ -122,50 +124,7 @@ const ListVoucher = ({navigation, data}) => {
   );
 };
 
-ListVoucher.defaultProps = {
-  data: [
-    {
-      id: 231,
-      logoImage:
-        'https://bcassetcdn.com/public/blog/wp-content/uploads/2020/03/20174653/mens-tuxedo-by-fishdesign61025-brandcrowd.png',
-      category: 'Pull&Bear',
-      description: 'Giảm 500K Cho đơn hàng từ 5 triệu',
-      expired: '26/06/2020',
-    },
-    {
-      id: 232,
-      logoImage:
-        'https://cdn.theorg.com/3b035172-f960-40c2-b417-e6300da1383b_thumb.png',
-      category: 'Prostylee',
-      description: 'Giảm 20% Đơn Tối Thiểu ₫0 Giảm tối đa ₫10k',
-      expired: '29/06/2020',
-    },
-    {
-      id: 233,
-      logoImage:
-        'https://bcassetcdn.com/public/blog/wp-content/uploads/2020/03/20174653/mens-tuxedo-by-fishdesign61025-brandcrowd.png',
-      category: 'Johnson & Johnson',
-      description: 'Giảm 500K Cho đơn hàng từ 5 triệu',
-      expired: '02/07/2020',
-    },
-    {
-      id: 234,
-      logoImage:
-        'https://bcassetcdn.com/public/blog/wp-content/uploads/2020/03/20174653/mens-tuxedo-by-fishdesign61025-brandcrowd.png',
-      category: 'Pull&Bear',
-      description: 'Giảm 20% Đơn Tối Thiểu ₫0 Giảm tối đa ₫10k',
-      expired: '23/07/2020',
-    },
-    {
-      id: 235,
-      logoImage:
-        'https://bcassetcdn.com/public/blog/wp-content/uploads/2020/03/20174653/mens-tuxedo-by-fishdesign61025-brandcrowd.png',
-      category: 'Pull&Bear',
-      description: 'Giảm 20% Đơn Tối Thiểu ₫0 Giảm tối đa ₫10k',
-      expired: '30/07/2020',
-    },
-  ],
-};
+ListVoucher.defaultProps = {};
 
 ListVoucher.propTypes = {};
 

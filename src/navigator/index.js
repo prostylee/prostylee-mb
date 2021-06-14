@@ -72,6 +72,10 @@ import {
   NearbyStore,
   StoreAddress,
   MyPage,
+  //-------- Chat Box --------
+  ChatBox,
+  ChatList,
+  //-------- Chat Box --------
   WishList,
   SoldList,
   SaveList,
@@ -92,7 +96,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Stores"
+      initialRouteName="Categories"
       mode="card"
       headerMode="none"
       animation="fade">
@@ -102,6 +106,10 @@ function SignedIn() {
       <Stack.Screen name="RateProduct" component={RateProduct} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="MyPage" component={MyPage} />
+      {/******** Chat & Message ********/}
+      <Stack.Screen name="ChatBox" component={ChatBox} />
+      <Stack.Screen name="ChatList" component={ChatList} />
+      {/******** Chat & Message ********/}
       <Stack.Screen name="WishList" component={WishList} />
       <Stack.Screen name="SaveList" component={SaveList} />
       <Stack.Screen name="SoldList" component={SoldList} />

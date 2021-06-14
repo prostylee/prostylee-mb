@@ -7,9 +7,15 @@ import {useRoute} from '@react-navigation/native';
 import I18n from 'i18n';
 
 /*Components*/
-import {View, Text} from 'react-native';
+import {View, Text, ActivityIndicator} from 'react-native';
 import ListReview from './ListReview';
-import {Header, ThemeView, AirbnbRating} from 'components';
+import {
+  Header,
+  ThemeView,
+  AirbnbRating,
+  Colors,
+  CustomRating,
+} from 'components';
 
 /*Api*/
 import {getAverage} from 'services/api/reviewRatingApi';
@@ -20,6 +26,7 @@ import {getListReviewRatingSelector} from 'redux/selectors/reviewRating';
 const ReviewRating = ({navigation}) => {
   const route = useRoute();
   const productId = route?.params?.productId || 0;
+  const [loading, setLoading] = useState(true);
   const [rate, setRate] = useState(0);
 
   const listReviewRatingSelector = useSelector((state) =>
@@ -31,33 +38,40 @@ const ReviewRating = ({navigation}) => {
   useEffect(() => {
     getAverage(productId)
       .then((res) => {
-        setRate(res.data.data);
+        setLoading(false);
+        setRate(res.data.data || 0);
       })
       .catch(() => {
+        setLoading(false);
         console.log('Có lỗi xảy ra!');
       });
   }, [productId]);
 
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header
-        title={I18n.t('reviewRating.count', {count: listReviewRating.length})}
-        isDefault
-      />
-      <View style={styles.ratingWrapper}>
-        <Text style={styles.label}>{rate}</Text>
-        <View style={styles.row}>
-          <AirbnbRating
-            isDisabled={true}
-            size={20}
-            defaultRating={rate}
-            showRating={false}
-            reviewColor="#E5E5E5"
-            reviewSize={14}
-          />
+      {loading ? (
+        <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+          <ActivityIndicator animating color={Colors.$purple} size="small" />
         </View>
-      </View>
-      <ListReview navigation={navigation} productId={productId} />
+      ) : (
+        <>
+          <Header
+            title={I18n.t('reviewRating.count', {
+              count: listReviewRating.length,
+            })}
+            isDefault
+          />
+          <View style={styles.ratingWrapper}>
+            <View style={styles.wrapLabel}>
+              <Text style={styles.label}>{parseFloat(rate).toFixed(1)}</Text>
+            </View>
+            <View style={styles.row}>
+              <CustomRating rate={parseFloat(rate).toFixed(1)} size={24} />
+            </View>
+          </View>
+          <ListReview navigation={navigation} productId={productId} />
+        </>
+      )}
     </ThemeView>
   );
 };

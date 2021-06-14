@@ -9,21 +9,18 @@ import {RadioButton} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {cartActions} from 'reducers';
 
-import {
-  getListPaymentSelector,
-  getPaymentLoadingSelector,
-  getPaymentUseSelector,
-} from 'redux/selectors/cart';
+import {getListPaymentSelector} from 'redux/selectors/cart';
 
-const PaymentMethod = ({data}) => {
+const PaymentMethod = ({route}) => {
+  const {
+    params: {onUsePayment, paymentUsed},
+  } = route;
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const [value, setValue] = useState();
 
-  const loading = useSelector((state) => getPaymentLoadingSelector(state));
   const paymentList = useSelector((state) => getListPaymentSelector(state));
-  const paymentUsed = useSelector((state) => getPaymentUseSelector(state));
 
   useEffect(() => {
     dispatch(cartActions.getListPayment());
@@ -35,8 +32,10 @@ const PaymentMethod = ({data}) => {
 
   const onChange = (vl) => {
     setValue(vl);
-    dispatch(cartActions.setPaymentUse(vl));
-    navigation.goBack();
+    if (typeof onUsePayment === 'function') {
+      onUsePayment(vl);
+      navigation.goBack();
+    }
   };
 
   const renderLabel = (item) => {
@@ -103,6 +102,7 @@ const PaymentMethod = ({data}) => {
           onValueChange={onChange}
           value={value}
           color="#823ffd"
+          mode="android"
           style={styles.wrapRadioGroup}>
           {paymentList?.length > 0 &&
             paymentList.map((item) => (
@@ -111,7 +111,10 @@ const PaymentMethod = ({data}) => {
                 label={renderLabel(item)}
                 value={item.id}
                 color="#823ffd"
+                mode="android"
+                position="leading"
                 style={styles.wrapRadioButton}
+                labelStyle={styles.wrapLabelRadioButton}
               />
             ))}
         </RadioButton.Group>
@@ -121,7 +124,7 @@ const PaymentMethod = ({data}) => {
 };
 
 PaymentMethod.defaultProps = {
-  data: [],
+  route: {},
 };
 
 PaymentMethod.propTypes = {};

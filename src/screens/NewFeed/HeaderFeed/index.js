@@ -45,7 +45,9 @@ const HeaderFeed = ({changeTabStore, changeTabUser, targetType}) => {
       }
       rightComponent={
         <View style={styles.rightHeader}>
-          <TouchableOpacity style={styles.touch}>
+          <TouchableOpacity
+            style={styles.touch}
+            onPress={() => navigation.navigate('ChatList')}>
             <Message />
           </TouchableOpacity>
           <View style={styles.touch}>

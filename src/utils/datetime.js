@@ -68,6 +68,10 @@ export const currentDate = () => {
   return moment();
 };
 
+export const checkTimeBetween = (checkTime, timeA, timeB) => {
+  return moment(checkTime).isBetween(timeB, timeA);
+};
+
 export const format = (timestamp, pattern) => {
   if (timestamp) {
     return moment(timestamp).format(pattern);

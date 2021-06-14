@@ -58,6 +58,8 @@ import MainNotification from './Notifications';
 import Orders from './Orders';
 import OrdersDetail from './Orders/Detail';
 import MyPage from './MyPage';
+import ChatBox from './ChatBox/ChatBox';
+import ChatList from './ChatBox/ChatList';
 import WishList from './MyPage/WishList';
 import SoldList from './MyPage/SoldList';
 import SaveList from './MyPage/SaveList';
@@ -124,6 +126,8 @@ export {
   Orders,
   OrdersDetail,
   MyPage,
+  ChatBox,
+  ChatList,
   WishList,
   SaveList,
   SoldList,

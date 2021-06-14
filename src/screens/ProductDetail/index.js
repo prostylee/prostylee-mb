@@ -94,15 +94,19 @@ const ProductDetail = (props) => {
   const productData = useSelector((state) =>
     productSelectors.getProductDetail(state),
   );
+
   const productDataLoading = useSelector((state) =>
     productSelectors.getProductDetailLoading(state),
   );
+
   const productComments = useSelector((state) =>
     productSelectors.getProductComments(state),
   );
+
   const productRelated = useSelector((state) =>
     productSelectors.getProductRelated(state),
   );
+
   const productCoordinated = useSelector((state) =>
     productSelectors.getProductCoordinated(state),
   );
@@ -160,7 +164,9 @@ const ProductDetail = (props) => {
       }
     }
   };
+
   debounce;
+
   const selectRelatedProduct = (id) => {
     scrollAnimated.setValue(0);
     setCurrentImage(1);
@@ -343,6 +349,7 @@ const ProductDetail = (props) => {
         />
       </Container>
       <Footer
+        navigation={props.navigation}
         isLike={productData?.likeStatusOfUserLogin || false}
         productData={productData}
         choiceSelect={choiceSelect}
