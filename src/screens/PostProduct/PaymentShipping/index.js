@@ -215,6 +215,7 @@ const PaymentShipping = () => {
         message: i18n.t('addProduct.postFailed'),
         type: 'danger',
       });
+      dispatch(postProductActions.setProductInfo({postProductStatus: ''}));
       return;
     }
     if (postProductStatus === 'success') {
