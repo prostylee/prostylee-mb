@@ -11,9 +11,9 @@ export default StyleSheet.create({
     padding: 15,
   },
   headerContain: {
-    paddingBottom: 10,
-    borderBottomWidth: 0,
-    height: 50,
+    // paddingBottom: 10,
+    // borderBottomWidth: 0,
+    // height: 50,
   },
   middleComponent: {
     textAlign: 'center',

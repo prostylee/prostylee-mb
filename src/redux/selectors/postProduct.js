@@ -51,3 +51,15 @@ export const getProductLocationLoadingSelector = createSelector(
   postProductReducer,
   (data) => data.listLocationLoading || false,
 );
+
+// Post PRODUCT
+
+export const getPostProductLoadingSelector = createSelector(
+  postProductReducer,
+  (data) => data.postProductLoading || false,
+);
+
+export const getPostProductStatusSelector = createSelector(
+  postProductReducer,
+  (data) => data.postProductStatus || null,
+);

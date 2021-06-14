@@ -40,3 +40,6 @@ export const IMG_PRODUCT = 3 / 2;
 export const IMG_RATIO = 4 / 3;
 //NEW FEED
 export const FIRST_SLICE_ITEM = 3;
+
+//ROLE
+export const BUYER = 'BUYER';

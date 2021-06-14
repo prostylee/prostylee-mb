@@ -22,3 +22,7 @@ export const getListDeliveryType = () => {
 export const getListLocation = (payload) => {
   return _fetch(GET, `/user-addresses/userLogin`, {...payload});
 };
+
+export const postProduct = (payload) => {
+  return _fetch(POST, `/products`, payload);
+};
