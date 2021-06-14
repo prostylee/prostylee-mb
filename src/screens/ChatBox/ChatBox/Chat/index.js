@@ -1,40 +1,58 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {View, ScrollView, Text, Image, StyleSheet} from 'react-native';
-import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
+import React from 'react';
+import {View, FlatList} from 'react-native';
+import ChatBubble from './ChatBubble';
 import styles from './styles';
-import img from 'assets/images/avatar.jpg';
 
-const ChatScreen = () => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.messLeft}>
-        <View style={styles.messContentLeft}>
-          <View
-            style={{
-              paddingLeft: 10,
+const ChatScreen = (props) => {
+  const user = props.user ? props.user : {};
+  const otherUserAvatar = props.otherUserAvatar ? props.otherUserAvatar : '';
+  const [hasMore, setHasMore] = React.useState(true);
+  const messageListRef = React.useRef();
 
-              justifyContent: 'flex-end',
-            }}>
-            <Image source={img} resizeMode={'cover'} style={styles.img}></Image>
-          </View>
-          <View style={{paddingLeft: 5}}>
-            <View style={styles.contentLeft}>
-              <Text>Class aptent taciti sociosqu</Text>
-            </View>
-            <Image
-              source={img}
-              resizeMode={'cover'}
-              style={styles.imgContent}
-            />
-          </View>
-        </View>
-      </View>
-      <View style={styles.messRight}>
-        <View style={styles.contentRight}>
-          <Text>Class aptent taciti sociosqu</Text>
-        </View>
-      </View>
-    </View>
-  );
+  const ChatMessageList = React.useMemo(() => {
+    const isCloseToBottom = ({
+      layoutMeasurement,
+      contentOffset,
+      contentSize,
+    }) => {
+      const paddingToBottom = 50;
+      return (
+        layoutMeasurement.height + contentOffset.y >=
+        contentSize.height - paddingToBottom
+      );
+    };
+    const lastReadMessage = props.chatData.findIndex((item) => {
+      return item.type_message === 'user' && item.status_read;
+    });
+    if (!props.chatData?.length) {
+      return null;
+    }
+    return (
+      <FlatList
+        ref={messageListRef}
+        style={styles.listContainer}
+        contentContainerStyle={styles.listContent}
+        data={props.chatData}
+        renderItem={(itemData) => (
+          <ChatBubble
+            item={itemData.item}
+            index={itemData.index}
+            isUser={user.attributes.sub === itemData.item.ownerId}
+            chatHistory={props.chatData}
+            otherUserAvatar={otherUserAvatar}
+          />
+        )}
+        keyExtractor={(_, index) => `text_${index}`}
+        maxToRenderPerBatch={10}
+        initialNumToRender={40}
+        onContentSizeChange={() => {
+          messageListRef.current.scrollToEnd({animated: false});
+        }}
+        scrollEventThrottle={400}
+      />
+    );
+  }, [props.chatData, hasMore]);
+
+  return ChatMessageList;
 };
 export default ChatScreen;

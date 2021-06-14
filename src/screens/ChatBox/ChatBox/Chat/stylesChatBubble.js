@@ -15,10 +15,10 @@ export default EStyleSheet.create({
   chatSmallIcon: {
     position: 'absolute',
     left: -7,
-    bottom: -7,
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    bottom: 0,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
   },
   chatSmallIconStyle: {
     width: 20,
