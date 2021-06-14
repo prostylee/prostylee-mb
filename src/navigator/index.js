@@ -96,7 +96,7 @@ function SignedIn() {
         gestureDirection: 'horizontal',
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
-      initialRouteName="Home"
+      initialRouteName="Categories"
       mode="card"
       headerMode="none"
       animation="fade">

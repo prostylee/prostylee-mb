@@ -50,6 +50,8 @@ import contentLoader from './Loading/contentLoader';
 import ListMenu from './ListMenu';
 import ForkReactNativeSrollableTabView from './ForkReactNativeSrollableTabView';
 import Bag from './Bag';
+import CustomRating from './Rating';
+
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -103,4 +105,5 @@ export {
   ForkReactNativeSrollableTabView,
   ListMenu,
   Bag,
+  CustomRating,
 };

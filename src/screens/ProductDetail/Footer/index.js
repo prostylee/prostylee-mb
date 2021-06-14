@@ -21,6 +21,10 @@ const Footer = (props) => {
     dispatch(cartActions.addItemToCart(productItem));
   };
 
+  const goToStore = () => {
+    props.navigation.navigate('Stores');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.likeButton}>
@@ -32,7 +36,7 @@ const Footer = (props) => {
           contentStyle={{}}
           labelStyle={{}}
           label={i18n.t('productDetail.buttonStore')}
-          onPress={() => {}}
+          onPress={goToStore}
         />
       </View>
       <View style={{}}>
