@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, TouchableOpacity, Alert} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  Image,
+  Dimensions,
+} from 'react-native';
 
 import {ActivityIndicator, ProgressBar} from 'react-native-paper';
 import {Header, ButtonRounded, ThemeView} from 'components';
@@ -24,6 +31,7 @@ import {Storage, Auth} from 'aws-amplify';
 import {postProductActions} from 'redux/reducers';
 
 const PaymentShipping = () => {
+  const WIDTH = Dimensions.get('window').width;
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -125,7 +133,7 @@ const PaymentShipping = () => {
     const {
       childrenCategory,
       attributeOptions,
-      productName,
+      name,
       description,
       brand,
       price,
@@ -137,49 +145,24 @@ const PaymentShipping = () => {
         path: customPrefix,
       };
     });
-
-    console.log(
-      'POST INFO',
-      JSON.stringify(
-        {
-          brandId: brand?.id * 1,
-          categoryId: childrenCategory?.id * 1,
-          storeId: null,
-          name: productName,
-          description: description,
-          price: price * 1,
-          productPriceRequest: {
-            name: null,
-            productId: null,
-            sku: null,
-            price: price * 1,
-            priceSale: null,
-            productAttributes: [...attributeOptions],
-          },
-          paymentTypes: [...selectedPaymentMethods?.map((v) => v.id)],
-          shippingProviders: [...selectedDeliveryType?.map((v) => v.id)],
-          productImageRequests: [...imagesList],
-        },
-        null,
-        2,
-      ),
-    );
     dispatch(
       postProductActions.getPostProduct({
         brandId: brand?.id * 1,
         categoryId: childrenCategory?.id * 1,
         storeId: null,
-        name: productName,
+        name: name,
         description: description,
         price: price * 1,
-        productPriceRequest: {
-          name: null,
-          productId: null,
-          sku: null,
-          price: price * 1,
-          priceSale: 0,
-          productAttributes: [...attributeOptions],
-        },
+        productPriceRequest: [
+          {
+            name: null,
+            productId: null,
+            sku: null,
+            price: price * 1,
+            priceSale: 0,
+            productAttributes: [...attributeOptions],
+          },
+        ],
         paymentTypes: [...selectedPaymentMethods?.map((v) => v.id)],
         shippingProviders: [...selectedDeliveryType?.map((v) => v.id)],
         productImageRequests: [...imagesList],
@@ -193,7 +176,6 @@ const PaymentShipping = () => {
       uploadList.length === images.length &&
       uploadList.every((image) => Boolean(image))
     ) {
-      console.log('VAO USEEFFECT', doneUpload, uploadList);
       postProduct();
     }
   }, [doneUpload, JSON.stringify(uploadList)]);
@@ -204,7 +186,6 @@ const PaymentShipping = () => {
     }
   }, [postProductLoading]);
   useEffect(() => {
-    console.log('POST PRODUCT STATUS', postProductStatus);
     if (postProductStatus === 'failed') {
       showMessage({
         message: i18n.t('addProduct.postFailed'),
@@ -215,6 +196,33 @@ const PaymentShipping = () => {
     }
     if (postProductStatus === 'success') {
       navigation.navigate('Home');
+      showMessage({
+        titleStyle: {...styles.notiTitle},
+        message: i18n.t('addProduct.postSuccess'),
+        textStyle: {...styles.notiSubTitle},
+        description: postProductInfo.name,
+        type: 'success',
+        position: {
+          bottom: 90,
+          left: 0,
+        },
+        icon: {icon: 'success', position: 'left'},
+        style: {
+          ...styles.notiContainer,
+        },
+        renderFlashMessageIcon: () => (
+          <Image
+            style={styles.notiImage}
+            source={
+              images && images.length
+                ? {
+                    uri: 'file:///Users/longnguyen/Library/Developer/CoreSimulator/Devices/0001DE1B-F23C-48AA-8DF0-EFF5BFC90C54/data/Containers/Data/Application/CF7E642E-2626-4888-9F59-90B405022035/Library/Caches/6CD7D77F-6A86-4B7D-B8D3-C0F7A7BBC533.jpg',
+                  }
+                : require('assets/images/default.png')
+            }
+          />
+        ),
+      });
       dispatch(postProductActions.clearPostInfo());
     }
   }, [postProductStatus]);

@@ -365,8 +365,8 @@ export default {
     productInformationTitle: 'Thông tin sản phẩm',
     pleaseFillInformation: 'Vui lòng nhập đầy đủ thông tin',
     postProduct: 'Đăng sản phẩm',
-    postFailed: 'Đăng sản phẩm không thành công',
-    postSuccess: 'Đăng sản phẩm thất bại',
+    postSuccess: 'Đăng sản phẩm thành công',
+    postFailed: 'Đăng sản phẩm thất bại',
   },
   voucher: {
     use: 'Sử dụng',

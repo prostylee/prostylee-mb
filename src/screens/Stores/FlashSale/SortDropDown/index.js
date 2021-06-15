@@ -9,7 +9,7 @@ import {
 } from 'react-native-paper';
 import styles from './style';
 import {Colors} from 'components';
-import {PRODUCT_SORT_ITEM} from 'constant';
+import {PRODUCT_SORT_ITEM} from 'constants';
 
 const SortDropDown = ({
   visible = false,

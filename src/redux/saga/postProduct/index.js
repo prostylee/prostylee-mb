@@ -9,7 +9,7 @@ import {
   postProduct as postProductApi,
 } from 'services/api/postProductApi';
 import {postProductActions, postProductTypes} from 'reducers';
-import {SUCCESS} from 'constants';
+import {SUCCESS, POST_SUCCESS} from 'constants';
 
 const getListAttributes = function* ({payload}) {
   try {
@@ -98,12 +98,9 @@ const postProduct = function* ({payload}) {
   try {
     yield put(postProductActions.setPostProductLoading(true));
     const res = yield call(postProductApi, payload);
-    console.log('RESSSS', res);
-    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      console.log('POST SUCCESS');
+    if (res.ok && res.data.status === POST_SUCCESS && !res.data.error) {
       yield put(postProductActions.getPostProductSuccess());
     } else {
-      console.log('POST FAILED');
       yield put(postProductActions.getPostProductFailed());
     }
   } catch (e) {

@@ -8,9 +8,8 @@ import SortDropDown from './SortDropDown';
 import VoucherList from './VoucherList';
 import {useDispatch} from 'react-redux';
 import {storeActions} from 'redux/reducers';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {LIMIT_DEFAULT, PAGE_DEFAULT, VOUCHER_SORT_ITEM} from 'constants';
 
-import {VOUCHER_SORT_ITEM} from 'constant';
 const Vouchers = ({navigation}) => {
   const dispatch = useDispatch();
 
