@@ -1,16 +1,12 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Text} from 'react-native';
 
 import styles from './styles';
-import {Sort, Filter, CaretDown} from 'svg/common';
-import {ThemeView, Header, TextInputRounded} from 'components';
-import {Divider, Chip} from 'react-native-paper';
-import {Colors} from 'components';
 
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {ThemeView, Header} from 'components';
+import {Divider} from 'react-native-paper';
 
 import {useDispatch} from 'react-redux';
-import {storeActions} from 'redux/reducers';
 
 import ProductList from './ProductList';
 import SortDropDown from './SortDropDown';
@@ -19,13 +15,13 @@ import FilterBar from './FilterBar';
 
 interface ProductSearchListProps {
   title: String;
-  hasTagList: Boolean;
-  hasFilterBar: Boolean;
+  hasTagList?: Boolean;
+  hasFilterBar?: Boolean;
   getDataFunction: Function;
   refreshDataFunction: Function;
   loadmoreDataFuntion: Function;
   tagFilterFunction: Function;
-  sortDataFunction: Function;
+  sortDataFunction?: Function;
   navigation: Object;
   getCurrentPageFunction: Function;
   isLoading: Boolean;
