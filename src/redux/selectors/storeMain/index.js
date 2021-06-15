@@ -70,3 +70,9 @@ export const getPersonalSalersCurrentPageSelector = createSelector(
   storeReducer,
   (data) => data?.personalSalersPage || 0,
 );
+
+//BOTTOM TAB
+export const getBottomTabListSelector = createSelector(
+  storeReducer,
+  (data) => data?.bottomTabList || [],
+);

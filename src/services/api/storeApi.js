@@ -81,3 +81,7 @@ export const getBestSellers = (payload) => {
 export const getVouchers = (payload) => {
   return _fetch(GET, '/voucher/userLogin', {...payload});
 };
+// BOTTOM TAB LIST
+export const getBottomTabList = (payload) => {
+  return _fetch(GET, '/products/allTabs', {...payload});
+};

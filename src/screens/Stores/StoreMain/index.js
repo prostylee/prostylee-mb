@@ -139,6 +139,7 @@ const Stores = (props) => {
           sorts: '+order',
         }),
       );
+    dispatch(storeActions.getBottomTabList());
   }, []);
   const _handleRefresh = () => {
     handleRefreshing(true);
@@ -210,6 +211,7 @@ const Stores = (props) => {
         topBounceColor="#E82E46"
         bottomBounceColor="#fff">
         <ScrollView
+          nestedScrollEnabled={true}
           style={styles.container}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
