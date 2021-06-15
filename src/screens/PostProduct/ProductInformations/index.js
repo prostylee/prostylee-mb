@@ -1,24 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {
-  TextInput,
-  Text,
-  View,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import {TextInput, Text, View, TouchableOpacity} from 'react-native';
 import i18n from 'i18n';
-import {ProgressBar, Button} from 'react-native-paper';
+import {ProgressBar} from 'react-native-paper';
 import {Header, ButtonRounded, ThemeView} from 'components';
-import RadioForm from 'react-native-simple-radio-button';
-import Modal from 'react-native-modal';
+
 import styles from './styles';
-import Icon from 'react-native-vector-icons/AntDesign';
-import CheckBoxAttributes from './CheckBoxAttributes';
-import ButtonAttributes from './ButtonAttributes';
 
 import {postProductActions} from 'redux/reducers';
 import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
+
+import ModalSelectAttributes from './ModalSelectAttributes';
 
 import {useDispatch, useSelector, shallowEqual} from 'react-redux';
 import {
@@ -27,8 +19,6 @@ import {
   getPostProductInfoSelector,
 } from 'redux/selectors/postProduct';
 
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
 const ProductInfor = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -67,49 +57,11 @@ const ProductInfor = () => {
     setSelectedRadioAttributes({...temp});
   };
 
-  const DynamicModal = ({item = {}}) => {
-    return (
-      <Modal
-        transparent={true}
-        animationOut="slideOutDown"
-        isVisible={Object.keys(selectedModalItem).length}
-        backdropOpacity={0.3}
-        style={{justifyContent: 'flex-end', margin: 0}}
-        testID={'modal'}
-        deviceHeight={HEIGHT}
-        deviceWidth={WIDTH}
-        onBackdropPress={() => setSelectedModalItem({})}
-        animationOutTiming={400}>
-        <View style={styles.contentColors}>
-          <View style={styles.headerModal}>
-            <Text></Text>
-            <Text style={styles.titleModal}>{item.label}</Text>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setSelectedModalItem({})}>
-              <Icon name="close" size={20} />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <ButtonAttributes
-              data={item}
-              setModalVisible={() => setSelectedModalItem({})}
-              defaultState={selectedAttributes?.[item.key]}
-              submitSelect={_handleSelectAttributes}
-              allowSelectMultiple={false}
-            />
-
-            {/* <CheckBoxAttributes
-              data={item}
-              setModalVisible={() => setSelectedModalItem({})}
-              defaultState={selectedAttributes?.[item.key]}
-              submitSelect={_handleSelectAttributes}
-              allowSelectMultiple={item?.allowsMultipleSelection}
-            /> */}
-          </View>
-        </View>
-      </Modal>
-    );
+  const _handleChangePrice = (value) => {
+    if (`${value * 1}` === 'NaN') {
+      return;
+    }
+    setProductPrice(value);
   };
 
   const onSubmitPress = () => {
@@ -171,32 +123,6 @@ const ProductInfor = () => {
       <Header isDefault title={i18n.t('addProduct.productInformationTitle')} />
       <ProgressBar progress={0.67} color="#823FFD" />
       <View style={styles.container}>
-        {/* {listAttributes && listAttributes.length
-          ? listAttributes.map((item) =>
-              item?.type === 3 ? (
-                <View style={styles.boxWrap}>
-                  <Text style={styles.title}>{item?.label}</Text>
-                  <View style={{paddingTop: 10}}>
-                    <RadioForm
-                      radio_props={[
-                        ...item?.attributeOptions.map((v) => ({
-                          label: v.value,
-                          value: {attributeId: v.id, attrValue: v.value},
-                        })),
-                      ]}
-                      onPress={(value) => {
-                        _handleSelectedRadioAttributes(item?.key, value);
-                      }}
-                      buttonColor={'#BBC0C3'}
-                      buttonSize={8}
-                      buttonOuterSize={18}
-                    />
-                  </View>
-                </View>
-              ) : null,
-            )
-          : null} */}
-
         {listAttributes && listAttributes.length
           ? listAttributes.map((item) => (
               <TouchableOpacity
@@ -223,7 +149,7 @@ const ProductInfor = () => {
           <View style={styles.inputPrice}>
             <TextInput
               style={styles.input}
-              onChangeText={setProductPrice}
+              onChangeText={_handleChangePrice}
               value={productPrice}
               placeholder="0"
               keyboardType="numeric"
@@ -235,10 +161,17 @@ const ProductInfor = () => {
       </View>
       <View style={styles.button}>
         <TouchableOpacity onPress={onSubmitPress}>
-          <ButtonRounded label="Tiếp tục" />
+          <ButtonRounded label={i18n.t('addProduct.descriptionButton')} />
         </TouchableOpacity>
       </View>
-      <DynamicModal item={selectedModalItem} key={selectedModalItem?.key} />
+      <ModalSelectAttributes
+        item={selectedModalItem}
+        key={selectedModalItem?.key}
+        setSelectedModalItem={setSelectedModalItem}
+        _handleSelectAttributes={_handleSelectAttributes}
+        selectedAttributes={selectedAttributes}
+        selectedModalItem={selectedModalItem}
+      />
     </ThemeView>
   );
 };

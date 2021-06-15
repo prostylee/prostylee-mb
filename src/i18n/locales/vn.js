@@ -383,6 +383,8 @@ export default {
     postSuccess: 'Đăng sản phẩm thành công',
     postFailed: 'Đăng sản phẩm thất bại',
     choose: 'Chọn',
+    yourLocation: 'Địa điểm của bạn',
+    changeLocation: 'Thay đổi địa điểm',
   },
   voucher: {
     use: 'Sử dụng',

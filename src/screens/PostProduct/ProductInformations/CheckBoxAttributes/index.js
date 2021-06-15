@@ -7,16 +7,11 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native';
-import {ActivityIndicator, Checkbox} from 'react-native-paper';
+import {Checkbox} from 'react-native-paper';
 
-import {Header, ButtonRounded, HeaderBack} from 'components';
+import {ButtonRounded} from 'components';
 import styles from './styles';
-import Icon from 'react-native-vector-icons/AntDesign';
-import {useDispatch, useSelector, shallowEqual} from 'react-redux';
-import {
-  getListAttributesSelector,
-  getListAttributesLoadingSelector,
-} from 'redux/selectors/postProduct';
+
 import i18n from 'i18n';
 
 const Item = ({item, onPress = () => {}, active}) => {
