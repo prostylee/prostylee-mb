@@ -368,4 +368,8 @@ export default {
     postFailed: 'Đăng sản phẩm không thành công',
     postSuccess: 'Đăng sản phẩm thất bại',
   },
+  voucher: {
+    use: 'Sử dụng',
+    save: 'Lưu',
+  },
 };

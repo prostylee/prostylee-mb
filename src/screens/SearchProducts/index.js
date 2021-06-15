@@ -20,18 +20,11 @@ import {getCurrentKeyword} from 'redux/selectors/search';
 import TagList from './TagList';
 import GroupHeaderRightButton from './HeaderRightButton';
 import FilterBar from './FilterBar';
+import {PRODUCT_SORT_ITEM} from 'constants';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const WIDTH = Dimensions.get('window').width;
-const MockSortItem = [
-  {label: 'Liên quan nhất', value: 1},
-  {label: 'Phổ biến nhất', value: 2},
-  {label: 'Hàng mới về', value: 3},
-  {label: 'Giá thấp', value: 4},
-  {label: 'Giá cao nhất', value: 5},
-  {label: 'Đánh giá tốt', value: 6},
-];
 
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
@@ -157,7 +150,9 @@ const SearchProducts = ({navigation}) => {
         visible={visible}
         navigation={navigation}
         sortActiveItem={
-          valueSort ? MockSortItem.find((v) => v.value === valueSort).label : ''
+          valueSort
+            ? PRODUCT_SORT_ITEM.find((v) => v.value === valueSort).label
+            : ''
         }
       />
       <Divider />

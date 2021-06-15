@@ -13,15 +13,7 @@ import {RadioButton} from 'react-native-paper';
 import {RnRatingTap, Picker, Colors} from 'components';
 import {useSelector} from 'react-redux';
 import TagList from '../TagList';
-
-const MockSortItem = [
-  {label: 'Liên quan nhất', value: 1},
-  {label: 'Phổ biến nhất', value: 2},
-  {label: 'Hàng mới về', value: 3},
-  {label: 'Giá thấp', value: 4},
-  {label: 'Giá cao nhất', value: 5},
-  {label: 'Đánh giá tốt', value: 6},
-];
+import {PRODUCT_SORT_ITEM} from 'constants';
 
 const BottomHeaderAnimated = ({
   navigation,
@@ -72,7 +64,7 @@ const BottomHeaderAnimated = ({
                 },
               ]}>
               {valueSort
-                ? MockSortItem.find((v) => v.value === valueSort).label
+                ? PRODUCT_SORT_ITEM.find((v) => v.value === valueSort).label
                 : ''}
             </Text>
 

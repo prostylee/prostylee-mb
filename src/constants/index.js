@@ -43,3 +43,22 @@ export const FIRST_SLICE_ITEM = 3;
 
 //ROLE
 export const BUYER = 'BUYER';
+// PRODUCT SORT
+
+export const PRODUCT_SORT_ITEM = [
+  {label: 'Liên quan nhất', value: 1},
+  {label: 'Phổ biến nhất', value: 2},
+  {label: 'Hàng mới về', value: 3},
+  {label: 'Giá thấp', value: 4},
+  {label: 'Giá cao nhất', value: 5},
+  {label: 'Đánh giá tốt', value: 6},
+];
+// VOUCHER SORT
+export const VOUCHER_SORT_ITEM = [
+  {label: 'Tất cả', value: 0},
+  {label: 'Của Prostylee', value: 1},
+  {label: 'Của store', value: 2},
+  {label: 'Ưu đãi nhất', value: 3},
+  {label: 'Sắp hết hạn', value: 4},
+  {label: 'Sử dụng nhiều nhất', value: 5},
+];

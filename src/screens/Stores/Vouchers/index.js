@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {ThemeView, Header, Colors} from 'components';
-import {Sort, Filter, CaretDown} from 'svg/common';
+import {Sort, CaretDown} from 'svg/common';
 import i18n from 'i18n';
 import styles from './style';
 import SortDropDown from './SortDropDown';
@@ -9,20 +9,14 @@ import VoucherList from './VoucherList';
 import {useDispatch} from 'react-redux';
 import {storeActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+
+import {VOUCHER_SORT_ITEM} from 'constant';
 const Vouchers = ({navigation}) => {
   const dispatch = useDispatch();
 
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(0);
-  const sortOptions = [
-    {label: 'Tất cả', value: 0},
-    {label: 'Của Prostylee', value: 1},
-    {label: 'Của store', value: 2},
-    {label: 'Ưu đãi nhất', value: 3},
-    {label: 'Sắp hết hạn', value: 4},
-    {label: 'Sử dụng nhiều nhất', value: 5},
-  ];
 
   const _handleSort = (value) => {
     setVisible(false);
@@ -88,7 +82,7 @@ const Vouchers = ({navigation}) => {
                   color: Colors['$black'],
                 },
               ]}>
-              {sortOptions[valueSort].label}
+              {VOUCHER_SORT_ITEM[valueSort].label}
             </Text>
             <View>
               <CaretDown />
@@ -97,7 +91,7 @@ const Vouchers = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <SortDropDown
-        options={sortOptions}
+        options={VOUCHER_SORT_ITEM}
         visible={visible}
         setVisible={setVisible}
         setAction={setAction}
