@@ -19,7 +19,7 @@ import {Ruler} from 'svg/common';
 /*Proptypes*/
 import PropTypes from 'prop-types';
 
-const ProductChoice = ({choiceSelect, choiceList}) => {
+const ProductChoice = ({choiceSelect, choiceList, setChoiceSelect}) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
 
