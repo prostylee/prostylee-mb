@@ -17,7 +17,6 @@ const PriceFilter = ({
 }) => {
   const filterState = useSelector((state) => getProductFilterState(state));
   const priceState = filterState.price;
-  console.log('PRICE STATE', priceState);
 
   const _handleValueChangeDebounce = debounce(
     (value) => {

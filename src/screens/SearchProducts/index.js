@@ -31,6 +31,7 @@ const SearchProducts = ({navigation}) => {
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
   const [currentFilterValue, setCurrentFilterValue] = useState({});
+  const [currentSortValue, setCurrentSortValue] = useState({});
 
   const handlerSearch = useCallback(
     debounce((query) => {
@@ -75,8 +76,7 @@ const SearchProducts = ({navigation}) => {
         break;
       }
     }
-    setCurrentFilterValue({
-      ...currentFilterValue,
+    setCurrentSortValue({
       ...sortOption,
     });
     dispatch(
@@ -84,7 +84,6 @@ const SearchProducts = ({navigation}) => {
         keyword: searchQuery,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
-        sorts: 'name',
         ...sortOption,
         ...currentFilterValue,
       }),
@@ -98,7 +97,6 @@ const SearchProducts = ({navigation}) => {
   };
   const _handleFilterByTag = (queryObject) => {
     setCurrentFilterValue({
-      ...currentFilterValue,
       ...queryObject,
     });
     dispatch(
@@ -107,7 +105,7 @@ const SearchProducts = ({navigation}) => {
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         ...queryObject,
-        ...currentFilterValue,
+        ...currentSortValue,
       }),
     );
   };

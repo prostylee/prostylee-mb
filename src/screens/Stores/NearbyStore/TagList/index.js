@@ -7,7 +7,7 @@ import {FILTER_TAGS} from 'constants';
 
 const TagList = ({onTagPress}) => {
   const [active, setActive] = React.useState(null);
-  console.log('TAG LIST', FILTER_TAGS);
+
   return (
     <View style={styles.wrapList}>
       <FlatList

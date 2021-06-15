@@ -1,3 +1,5 @@
+import styles from './styles';
+
 import React from 'react';
 import {
   View,
@@ -8,18 +10,25 @@ import {
   Platform,
   Linking,
 } from 'react-native';
+
+/*Hooks*/
+import {useTheme} from '@react-navigation/native';
+
+/*Components*/
 import IconIcons from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
-import i18n from 'i18n';
-import {FollowTextButton} from 'components';
-import {useTheme} from '@react-navigation/native';
-import styles from './styles';
 
-const ProductLocation = (props) => {
+/*Transalte*/
+import i18n from 'i18n';
+
+/*Components*/
+import {FollowTextButton} from 'components';
+
+/*Proptypes*/
+import PropTypes from 'prop-types';
+
+const ProductLocation = ({productId, info, location}) => {
   const {colors} = useTheme();
-  const productId = props.productId ? props.productId : 0;
-  const info = props.info ? props.info : {};
-  const location = props.location ? props.location : {};
   const address = `${location.address ? location.address : ''}, ${
     location.state ? location.state : ''
   }, ${location.city ? location.city : ''}, ${
@@ -36,8 +45,6 @@ const ProductLocation = (props) => {
     });
     Linking.openURL(url);
   };
-
-  console.log('locations', location);
 
   return (
     <View style={styles.container}>
@@ -83,6 +90,18 @@ const ProductLocation = (props) => {
       </View>
     </View>
   );
+};
+
+ProductLocation.defaultProps = {
+  productId: 0,
+  info: {},
+  location: {},
+};
+
+ProductLocation.PropTypes = {
+  productId: PropTypes.number.isRequired,
+  info: PropTypes.object,
+  location: PropTypes.object,
 };
 
 export default ProductLocation;

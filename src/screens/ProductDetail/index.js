@@ -1,25 +1,21 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  Animated,
-  ActivityIndicator,
-  Dimensions,
-  RefreshControl,
-} from 'react-native';
-import {Container} from 'components';
-import {ProductDetailLoading} from 'components/Loading/contentLoader';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {hasNotch} from 'react-native-device-info';
-import {useTheme, useRoute} from '@react-navigation/native';
-import Carousel from 'react-native-snap-carousel';
-import AnimatedHeader from './AnimatedHeader';
 import styles from './styles';
-import i18n from 'i18n';
-import {useBackHandler} from '@react-native-community/hooks';
-import {productActions, productSelectors} from 'reducers';
+
+import React from 'react';
+import {View, Text, Animated, RefreshControl} from 'react-native';
+
+/*Hooks*/
 import {useDispatch, useSelector} from 'react-redux';
-import {priceSalePercent} from 'utils/currency';
+import {useBackHandler} from '@react-native-community/hooks';
+import {useRoute} from '@react-navigation/native';
+
+/*Translate*/
+import i18n from 'i18n';
+
+/*Components*/
+import Carousel from 'react-native-snap-carousel';
+import {ProductDetailLoading} from 'components/Loading/contentLoader';
+import {Container} from 'components';
+import AnimatedHeader from './AnimatedHeader';
 import ProductTitle from './ProductTitle';
 import ProductChoice from './ProductChoice';
 import ProductInfo from './ProductInfo';
@@ -28,10 +24,22 @@ import ProductRating from './ProductRating';
 import ProductSimilar from './ProductSimilar';
 import ProductCoordinated from './ProductCoordinated';
 import Footer from './Footer';
-import defaultImg from '../../assets/images/default.png';
-import {dim} from 'utils/common';
+
+/*Helpers*/
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {hasNotch} from 'react-native-device-info';
 import {debounce} from 'lodash-es';
-const SCREEN_HEIGHT = Dimensions.get('window').height;
+import PropTypes from 'prop-types';
+
+/*Utils*/
+import {priceSalePercent} from 'utils/currency';
+import {dim} from 'utils/common';
+
+/*Reducers*/
+import {productActions, productSelectors} from 'reducers';
+
+/*Assets*/
+import defaultImg from '../../assets/images/default.png';
 
 const WIDTH = dim.width;
 
@@ -39,7 +47,6 @@ const ProductDetail = (props) => {
   const dispatch = useDispatch();
   //route
   const route = useRoute();
-  const {colors} = useTheme();
 
   const imagesRef = React.useRef();
   const scrollViewRef = React.useRef();
@@ -356,6 +363,12 @@ const ProductDetail = (props) => {
       />
     </View>
   );
+};
+
+ProductDetail.defaultProps = {};
+
+ProductDetail.propTypes = {
+  navigation: PropTypes.object,
 };
 
 export default ProductDetail;

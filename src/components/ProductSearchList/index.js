@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Text} from 'react-native';
+
 import {ThemeView, Header} from 'components';
 import {Divider} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import styles from './styles';
+
 import ProductList from './ProductList';
 import SortDropDown from './SortDropDown';
 import TagList from './TagList';
@@ -12,13 +13,13 @@ import {PRODUCT_SORT_ITEM} from 'constants';
 
 interface ProductSearchListProps {
   title: String;
-  hasTagList: Boolean;
-  hasFilterBar: Boolean;
+  hasTagList?: Boolean;
+  hasFilterBar?: Boolean;
   getDataFunction: Function;
   refreshDataFunction: Function;
   loadmoreDataFuntion: Function;
   tagFilterFunction: Function;
-  sortDataFunction: Function;
+  sortDataFunction?: Function;
   navigation: Object;
   getCurrentPageFunction: Function;
   isLoading: Boolean;

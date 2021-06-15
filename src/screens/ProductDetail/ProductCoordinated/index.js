@@ -1,16 +1,18 @@
+import styles from './styles';
+
 import React from 'react';
 import {View, TouchableOpacity, Text, FlatList} from 'react-native';
-import styles from './styles';
+
+/*Translate*/
 import i18n from 'i18n';
+
+/*Components*/
 import ProductItem from './ProductItem';
 
-import IonIcons from 'react-native-vector-icons/Ionicons';
-import {useTheme} from '@react-navigation/native';
+/*Proptypes*/
+import PropTypes from 'prop-types';
 
-const ProductSimilar = (props) => {
-  const {colors} = useTheme();
-  const listProduct = props.data ? props.data : [];
-  const selectItem = props.onSelect ? props.onSelect : () => {};
+const ProductSimilar = ({data, onSelect}) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleRow}>
@@ -30,11 +32,11 @@ const ProductSimilar = (props) => {
         </TouchableOpacity>
       </View>
       <FlatList
-        data={listProduct}
+        data={data}
         renderItem={({item, index}) => {
           return (
             <View style={styles.wrapProduct}>
-              <ProductItem index={index} item={item} onSelect={selectItem} />
+              <ProductItem index={index} item={item} onSelect={onSelect} />
             </View>
           );
         }}
@@ -47,6 +49,15 @@ const ProductSimilar = (props) => {
       />
     </View>
   );
+};
+
+ProductSimilar.defaultProps = {
+  data: [],
+  onSelect: () => {},
+};
+
+ProductSimilar.PropType = {
+  onSelect: PropTypes.func,
 };
 
 export default ProductSimilar;

@@ -8,7 +8,7 @@ import Item from './item';
 const ListBrand = ({selectedBrand, setSelectedBrand, data}) => {
   const activeBrand = selectedBrand ? selectedBrand : {};
   const setActiveBrand = setSelectedBrand ? setSelectedBrand : () => {};
-  // console.log('DATA NE', JSON.stringify(data, null, 2));
+
   const renderItem = ({item}) => {
     return (
       <Item

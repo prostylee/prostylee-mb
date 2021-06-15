@@ -28,6 +28,8 @@ import vouchers from './stores/vouchers';
 
 import postProduct from './postProduct';
 
+import myPage from './myPage';
+
 export default function* rootSaga() {
   yield all([
     ...product,
@@ -55,5 +57,6 @@ export default function* rootSaga() {
     ...flashSale,
     ...vouchers,
     ...postProduct,
+    ...myPage,
   ]);
 }

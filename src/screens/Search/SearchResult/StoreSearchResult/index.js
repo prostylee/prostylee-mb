@@ -91,7 +91,6 @@ const FeaturedCategories = ({navigation}) => {
           <FlatList
             data={storeList?.content}
             renderItem={({item}) => {
-              console.log('ITEM ', item);
               return (
                 <>
                   <View style={styles.wrapHeader}>

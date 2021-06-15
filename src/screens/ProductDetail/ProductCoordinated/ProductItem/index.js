@@ -1,19 +1,23 @@
-/* eslint-disable react-hooks/rules-of-hooks */
+import styles from './styles';
+
 import React from 'react';
 import {ActivityIndicator, Text, TouchableOpacity, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+
+/*Components*/
 import {Image, ProductLike} from 'components';
-import styles from './styles';
+
+/*Utils*/
 import {currencyFormat, priceSalePercent} from 'utils/currency';
 
+/*Proptypes*/
+import PropTypes from 'prop-types';
+
 const ProductItem = ({item, onSelect}) => {
-  const navigation = useNavigation();
-  const selectItem = onSelect ? onSelect : () => {};
   return (
     <View style={styles.wrapItems}>
       <TouchableOpacity
         onPress={() => {
-          selectItem(item.id);
+          onSelect(item.id);
         }}>
         <View style={styles.item}>
           <View style={styles.wrapImageThumbnail}>
@@ -59,8 +63,14 @@ const ProductItem = ({item, onSelect}) => {
   );
 };
 
-ProductItem.defaultProps = {};
+ProductItem.defaultProps = {
+  item: {},
+  onSelect: () => {},
+};
 
-ProductItem.propTypes = {};
+ProductItem.propTypes = {
+  item: PropTypes.object,
+  onSelect: PropTypes.func,
+};
 
 export default ProductItem;

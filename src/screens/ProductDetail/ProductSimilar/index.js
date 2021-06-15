@@ -1,21 +1,29 @@
+import styles from './styles';
+
 import React from 'react';
 import {View, TouchableOpacity, Text, Image} from 'react-native';
-import styles from './styles';
+
+/*Translates*/
 import i18n from 'i18n';
+
+/*Components*/
 import Carousel from 'react-native-snap-carousel';
 import {ProductLike} from 'components';
+
+/*Utils*/
 import {currencyFormat} from 'utils/currency';
 
-const ProductSimilar = (props) => {
+/*Proptypes*/
+import PropTypes from 'prop-types';
+
+const ProductSimilar = ({data, onSelect}) => {
   const imagesRef = React.useRef();
-  const data = props.data ? props.data : [];
-  const selectItem = props.onSelect ? props.onSelect : () => {};
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
         style={styles.carouselItem}
         onPress={() => {
-          selectItem(item.id);
+          onSelect(item.id);
         }}>
         <Image
           style={styles.relatedImage}
@@ -63,6 +71,16 @@ const ProductSimilar = (props) => {
       />
     </View>
   );
+};
+
+ProductSimilar.defaultProps = {
+  data: [],
+  onSelect: () => {},
+};
+
+ProductSimilar.PropTypes = {
+  data: PropTypes.array,
+  onSelect: PropTypes.func,
 };
 
 export default ProductSimilar;

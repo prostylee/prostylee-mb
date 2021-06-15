@@ -1,23 +1,35 @@
+import styles from './styles';
+
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
-import styles from './styles';
-import {useSelector} from 'react-redux';
-import {productSelectors} from 'reducers';
-import {ProductBookmark} from 'components';
 
+/*Hooks*/
+import {useSelector} from 'react-redux';
+import {useTheme} from '@react-navigation/native';
+
+/*Reducers*/
+import {productSelectors} from 'reducers';
+
+/*Components*/
+import {ProductBookmark} from 'components';
 import Entypo from 'react-native-vector-icons/Entypo';
 import IonIcons from 'react-native-vector-icons/Ionicons';
-import {useTheme} from '@react-navigation/native';
+
+/*Utils*/
 import {currencyFormat} from 'utils/currency';
 
-const ProductTitle = (props) => {
+/*Proptypes*/
+import PropTypes from 'prop-types';
+
+const ProductTitle = ({
+  productId,
+  name,
+  price,
+  priceOriginal,
+  numberOfRate,
+  navigation,
+}) => {
   const {colors} = useTheme();
-  const productId = props.productId ? props.productId : 0;
-  const name = props.name ? props.name : '';
-  const price = props.price ? props.price : 0;
-  const priceOriginal = props.priceOriginal ? props.priceOriginal : 0;
-  const rateValue = props.rateValue ? props.rateValue : 0;
-  const numberOfRate = props.numberOfRate ? props.numberOfRate : 0;
 
   const totalRate = useSelector((state) =>
     productSelectors.getProductCommentsAverage(state),
@@ -74,8 +86,8 @@ const ProductTitle = (props) => {
         <TouchableOpacity
           style={styles.rating}
           onPress={() => {
-            props.navigation.navigate('ReviewRating', {
-              productId: props.productId,
+            navigation.navigate('ReviewRating', {
+              productId: productId,
             });
           }}>
           <Rating rate={totalRate} />
@@ -92,6 +104,22 @@ const ProductTitle = (props) => {
       </View>
     </View>
   );
+};
+
+ProductTitle.defaultProps = {
+  productId: null,
+  name: null,
+  price: 0,
+  priceOriginal: 0,
+  numberOfRate: 0,
+};
+
+ProductTitle.PropTypes = {
+  productId: PropTypes.number.isRequired,
+  name: PropTypes.string,
+  price: PropTypes.number,
+  priceOriginal: PropTypes.number,
+  numberOfRate: PropTypes.number,
 };
 
 export default ProductTitle;

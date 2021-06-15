@@ -50,6 +50,7 @@ import contentLoader from './Loading/contentLoader';
 import ListMenu from './ListMenu';
 import ForkReactNativeSrollableTabView from './ForkReactNativeSrollableTabView';
 import Bag from './Bag';
+import ChatIcon from './ChatIcon';
 import CustomRating from './Rating';
 
 export {
@@ -105,5 +106,6 @@ export {
   ForkReactNativeSrollableTabView,
   ListMenu,
   Bag,
+  ChatIcon,
   CustomRating,
 };

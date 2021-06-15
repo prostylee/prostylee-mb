@@ -76,7 +76,7 @@ const PaymentShipping = () => {
       return;
     }
     const {images} = postProductInfo;
-    console.log('LIST IMAGE', images);
+
     if (uploadList && uploadList.length) {
       postProduct();
       return;
@@ -216,7 +216,7 @@ const PaymentShipping = () => {
             source={
               images && images.length
                 ? {
-                    uri: 'file:///Users/longnguyen/Library/Developer/CoreSimulator/Devices/0001DE1B-F23C-48AA-8DF0-EFF5BFC90C54/data/Containers/Data/Application/CF7E642E-2626-4888-9F59-90B405022035/Library/Caches/6CD7D77F-6A86-4B7D-B8D3-C0F7A7BBC533.jpg',
+                    uri: images[0].uri,
                   }
                 : require('assets/images/default.png')
             }
@@ -250,10 +250,14 @@ const PaymentShipping = () => {
             <View style={styles.status}>
               <View style={{flexDirection: 'row'}}>
                 <Icon name="ios-location-sharp" size={20} color="grey" />
-                <Text style={styles.title}>Địa điểm của bạn</Text>
+                <Text style={styles.title}>
+                  {i18n.t('addProduct.yourLocation')}
+                </Text>
               </View>
               <TouchableOpacity onPress={onChangeLocationPress}>
-                <Text style={styles.rightTitle}>Thay đổi địa điểm</Text>
+                <Text style={styles.rightTitle}>
+                  {i18n.t('addProduct.changeLocation')}
+                </Text>
               </TouchableOpacity>
             </View>
             <View style={styles.location}>

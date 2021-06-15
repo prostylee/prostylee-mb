@@ -1,19 +1,15 @@
 import React, {useState} from 'react';
-import {Dimensions, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 
 import styles from './styles';
 
-import {Header, ButtonRounded, HeaderBack} from 'components';
-import {ActivityIndicator, Chip, Divider, Text} from 'react-native-paper';
+import {ButtonRounded} from 'components';
+import {Divider, Text} from 'react-native-paper';
 import {Colors} from 'components';
 
-import {useDispatch, useSelector, shallowEqual} from 'react-redux';
-import {
-  getListAttributesSelector,
-  getListAttributesLoadingSelector,
-} from 'redux/selectors/postProduct';
-import {postProductActions} from 'redux/reducers';
-const Size = ({
+import i18n from 'i18n';
+
+const ButtonAttributes = ({
   defaultState = [],
   submitSelect = () => {},
   setModalVisible = () => {},
@@ -82,7 +78,9 @@ const Size = ({
             setIsCheckAll(!isCheckAll);
           }}>
           <Text style={{color: '#823FFD', fontSize: 14}}>
-            {!isCheckAll ? 'Chọn toàn bộ' : 'Bỏ chọn toàn bộ'}
+            {!isCheckAll
+              ? i18n.t('addProduct.selectAll')
+              : i18n.t('addProduct.unselectAll')}
           </Text>
         </TouchableOpacity>
       ) : null}
@@ -117,11 +115,11 @@ const Size = ({
       </View>
       <View style={styles.button}>
         <TouchableOpacity onPress={onSubmitPress}>
-          <ButtonRounded label="Chọn" />
+          <ButtonRounded label={i18n.t('addProduct.choose')} />
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-export default Size;
+export default ButtonAttributes;

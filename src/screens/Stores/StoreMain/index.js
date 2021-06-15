@@ -14,7 +14,7 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {Header, Colors, HeaderAnimated, Bag} from 'components';
+import {Header, Colors, HeaderAnimated, Bag, ChatIcon} from 'components';
 
 import {storeActions, searchActions} from 'redux/reducers';
 
@@ -24,7 +24,6 @@ import AdvertisingSlider from './AdvertisingSlider';
 import FunctionTags from './FunctionTags';
 
 import {MapPinFill} from 'svg/common';
-import {Message} from 'svg/social';
 import {Searchbar} from 'react-native-paper';
 
 import PopularBrands from './PopularBrands';
@@ -52,9 +51,7 @@ const HeaderLeft = () => {
 const HeaderRight = ({color = '#fff', navigation, isAnimated = false}) => {
   return (
     <View style={styles.headerRightContainer}>
-      <TouchableOpacity>
-        <Message color={color} />
-      </TouchableOpacity>
+      <ChatIcon color={color} />
       <Bag
         color={color}
         width={20}
