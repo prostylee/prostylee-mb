@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   TextInput,
   Text,
@@ -13,93 +13,101 @@ import RadioForm from 'react-native-simple-radio-button';
 import Modal from 'react-native-modal';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-import ColorInfor from './Color';
-import SizeInfor from './Size';
-import {useDispatch} from 'react-redux';
+import CheckBoxAttributes from './CheckBoxAttributes';
+import ButtonAttributes from './ButtonAttributes';
+
 import {postProductActions} from 'redux/reducers';
 import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
+
+import {useDispatch, useSelector, shallowEqual} from 'react-redux';
+import {
+  getListAttributesSelector,
+  getListAttributesLoadingSelector,
+  getPostProductInfoSelector,
+} from 'redux/selectors/postProduct';
+
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 const ProductInfor = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  var radio_props = [
-    {label: 'Mới', value: 0},
-    {label: 'Đã qua sử dụng', value: 1},
-  ];
+
+  const postProductInfo = useSelector(
+    (state) => getPostProductInfoSelector(state),
+    shallowEqual,
+  );
+
   const [productPrice, setProductPrice] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalVisibleColor, setModalVisibleColor] = useState(false);
+  const [selectedRadioAttributes, setSelectedRadioAttributes] = useState([]);
+  const [selectedAttributes, setSelectedAttributes] = useState({});
 
-  const [status, setStatus] = useState(0);
+  const loading = useSelector((state) =>
+    getListAttributesLoadingSelector(state),
+  );
 
-  const [selectedSizes, setSelectedSizes] = useState([]);
-  const [selectedColors, setSelectedColors] = useState([]);
+  const listAttributesSelector = useSelector(
+    (state) => getListAttributesSelector(state),
+    shallowEqual,
+  );
 
-  const Size = () => {
-    return (
-      <Modal
-        transparent={true}
-        animationOut="slideOutDown"
-        isVisible={modalVisible}
-        backdropOpacity={0.3}
-        style={{justifyContent: 'flex-end', margin: 0}}
-        testID={'modal'}
-        deviceHeight={HEIGHT}
-        deviceWidth={WIDTH}
-        onBackdropPress={() => setModalVisible(false)}
-        animationOutTiming={400}>
-        <View style={styles.content}>
-          <View style={styles.headerModal}>
-            <Text style={styles.titleModal}>Kích thước</Text>
-            <TouchableOpacity
-              onPress={() => setModalVisible(false)}
-              style={styles.closeButton}>
-              <Icon name="close" size={20} />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <SizeInfor
-              setModalVisible={setModalVisible}
-              setSelectedSizes={setSelectedSizes}
-              defaultState={selectedSizes}
-            />
-          </View>
-        </View>
-      </Modal>
-    );
+  const listAttributes = listAttributesSelector.content || [];
+
+  const [selectedModalItem, setSelectedModalItem] = useState(false);
+
+  const _handleSelectAttributes = (key, value) => {
+    setSelectedAttributes({
+      ...selectedAttributes,
+      [key]: value,
+    });
+  };
+  const _handleSelectedRadioAttributes = (key, value) => {
+    let temp = {...selectedRadioAttributes};
+    temp[key] = [value];
+    setSelectedRadioAttributes({...temp});
   };
 
-  const Color = () => {
+  const DynamicModal = ({item = {}}) => {
     return (
       <Modal
         transparent={true}
         animationOut="slideOutDown"
-        isVisible={modalVisibleColor}
+        isVisible={Object.keys(selectedModalItem).length}
         backdropOpacity={0.3}
         style={{justifyContent: 'flex-end', margin: 0}}
         testID={'modal'}
         deviceHeight={HEIGHT}
         deviceWidth={WIDTH}
-        onBackdropPress={() => setModalVisibleColor(false)}
+        onBackdropPress={() => setSelectedModalItem({})}
         animationOutTiming={400}>
         <View style={styles.contentColors}>
           <View style={styles.headerModal}>
             <Text></Text>
-            <Text style={styles.titleModal}>Màu sắc</Text>
+            <Text style={styles.titleModal}>{item.label}</Text>
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={() => setModalVisibleColor(false)}>
+              onPress={() => setSelectedModalItem({})}>
               <Icon name="close" size={20} />
             </TouchableOpacity>
           </View>
           <View>
-            <ColorInfor
-              setSelectedColors={setSelectedColors}
-              setModalVisibleColor={setModalVisibleColor}
-              defaultState={selectedColors}
-            />
+            {item.type === 2 ? (
+              <ButtonAttributes
+                data={item}
+                setModalVisible={() => setSelectedModalItem({})}
+                defaultState={selectedAttributes?.[item.key]}
+                submitSelect={_handleSelectAttributes}
+                allowSelectMultiple={item?.allowsMultipleSelection}
+              />
+            ) : item.type === 1 ? (
+              <CheckBoxAttributes
+                data={item}
+                setModalVisible={() => setSelectedModalItem({})}
+                defaultState={selectedAttributes?.[item.key]}
+                submitSelect={_handleSelectAttributes}
+                allowSelectMultiple={item?.allowsMultipleSelection}
+              />
+            ) : null}
           </View>
         </View>
       </Modal>
@@ -107,81 +115,112 @@ const ProductInfor = () => {
   };
 
   const onSubmitPress = () => {
-    if (!selectedSizes.length || !selectedColors.length || !productPrice) {
+    const idx = Object.values(selectedAttributes).findIndex(
+      (item) => !item.length,
+    );
+    if (!productPrice) {
       showMessage({
         message: i18n.t('addProduct.pleaseFillInformation'),
         type: 'danger',
       });
       return;
     }
+    const arrayAttributesClone = []
+      .concat(...Object.values(selectedAttributes))
+      .concat(...Object.values(selectedRadioAttributes))
+      .map((v) => ({
+        id: null,
+        attrValue: v.attrValue,
+        attributeId: v.attributeId,
+      }));
+    console.log('SUBMIT ATTRI', arrayAttributesClone);
+    navigation.navigate('PaymentShipping');
     dispatch(
       postProductActions.setProductInfo({
-        colors: [...selectedColors],
-        sizes: [...selectedSizes],
-        status: status,
+        attributeOptions: arrayAttributesClone,
         price: productPrice,
       }),
     );
-    navigation.navigate('PaymentShipping');
   };
+
+  useEffect(() => {
+    if (
+      listAttributes &&
+      listAttributes.length &&
+      !Object.keys(selectedAttributes).length
+    ) {
+      let newAttributesObject = [...listAttributes].reduce((obj, item) => {
+        if (item.type !== 3) {
+          obj[item.key] = [];
+          return obj;
+        }
+        return obj;
+      }, {});
+      let radioAttributes = [...listAttributes].reduce((obj, item) => {
+        if (item.type === 3) {
+          obj[item.key] = [];
+          return obj;
+        }
+        return obj;
+      }, {});
+      setSelectedAttributes({...newAttributesObject});
+      setSelectedRadioAttributes({...radioAttributes});
+    }
+  }, [listAttributes]);
 
   return (
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('addProduct.productInformationTitle')} />
       <ProgressBar progress={0.67} color="#823FFD" />
       <View style={styles.container}>
-        <View style={styles.boxWrap}>
-          <Text style={styles.title}>Tình trạng sản phẩm</Text>
-          <View style={{paddingTop: 10}}>
-            <RadioForm
-              radio_props={radio_props}
-              onPress={(value) => {
-                setStatus(value);
-              }}
-              buttonColor={'#BBC0C3'}
-              buttonSize={8}
-              buttonOuterSize={18}
-            />
-          </View>
-        </View>
-
-        <TouchableOpacity
-          onPress={() => setModalVisible(true)}
-          style={styles.boxWrap}>
-          <View style={styles.status}>
-            <Text style={styles.title}>Kích thước</Text>
-            <View style={styles.selectItemContainer}>
-              {selectedSizes?.map((v) => (
-                <View style={styles.viewStatus}>
-                  <Text>{v.name}</Text>
+        {listAttributes && listAttributes.length
+          ? listAttributes.map((item) =>
+              item?.type === 3 ? (
+                <View style={styles.boxWrap}>
+                  <Text style={styles.title}>{item?.label}</Text>
+                  <View style={{paddingTop: 10}}>
+                    <RadioForm
+                      radio_props={[
+                        ...item?.attributeOptions.map((v) => ({
+                          label: v.value,
+                          value: {attributeId: v.id, attrValue: v.value},
+                        })),
+                      ]}
+                      onPress={(value) => {
+                        _handleSelectedRadioAttributes(item?.key, value);
+                      }}
+                      buttonColor={'#BBC0C3'}
+                      buttonSize={8}
+                      buttonOuterSize={18}
+                    />
+                  </View>
                 </View>
-              ))}
-            </View>
-          </View>
-        </TouchableOpacity>
+              ) : null,
+            )
+          : null}
 
-        <TouchableOpacity
-          onPress={() => setModalVisibleColor(true)}
-          style={styles.boxWrap}>
-          <View style={styles.status}>
-            <Text
-              style={[
-                styles.title,
-                {
-                  width: 100,
-                },
-              ]}>
-              Màu
-            </Text>
-            <View style={styles.selectItemContainer}>
-              {selectedColors?.map((v) => (
-                <View style={styles.viewStatus}>
-                  <Text>{v.name}</Text>
-                </View>
-              ))}
-            </View>
-          </View>
-        </TouchableOpacity>
+        {listAttributes && listAttributes.length
+          ? listAttributes.map((item) =>
+              item?.type !== 3 ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelectedModalItem(item);
+                  }}
+                  style={styles.boxWrap}>
+                  <View style={styles.status}>
+                    <Text style={styles.title}>{item?.label}</Text>
+                    <View style={styles.selectItemContainer}>
+                      {selectedAttributes?.[item?.key]?.map((v) => (
+                        <View style={styles.viewStatus}>
+                          <Text>{v.name}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              ) : null,
+            )
+          : null}
 
         <View style={styles.boxWrap}>
           <Text style={styles.title}>Giá sản phẩm</Text>
@@ -203,8 +242,7 @@ const ProductInfor = () => {
           <ButtonRounded label="Tiếp tục" />
         </TouchableOpacity>
       </View>
-      <Size />
-      <Color />
+      <DynamicModal item={selectedModalItem} key={selectedModalItem?.key} />
     </ThemeView>
   );
 };

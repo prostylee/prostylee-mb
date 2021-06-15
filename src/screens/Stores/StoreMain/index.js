@@ -44,7 +44,7 @@ const heightShow = 334;
 const HeaderLeft = () => {
   return (
     <TouchableOpacity style={styles.headerLeftContainer}>
-      <MapPinFill color="#fff" width={18} height={18} backdropColor="#E82E46" />
+      <MapPinFill color="#E82E46" width={18} height={18} backdropColor="#fff" />
       <Text style={styles.locationText}>100 Nguyễn Công Trứ</Text>
     </TouchableOpacity>
   );
@@ -74,6 +74,7 @@ const CustomSearchBar = ({navigation, onSearchFocus = () => {}}) => (
       inputStyle={styles.wrapSearchBarInput}
       placeholder={i18n.t('search')}
       onFocus={onSearchFocus}
+      placeholderTextColor={Colors['$lightGray']}
     />
   </View>
 );
@@ -175,20 +176,7 @@ const Stores = (props) => {
     <View style={{flex: 1, backgroundColor: '#E82E46'}}>
       <HeaderAnimated
         bottomComponent={
-          <View
-            style={{
-              width: '100%',
-              padding: 16,
-              flexDirection: 'row',
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 1,
-              },
-              shadowOpacity: 0.2,
-              shadowRadius: 1.0,
-              elevation: 1,
-            }}>
+          <View style={styles.animatedSearchBarContainer}>
             <Searchbar
               style={[
                 styles.wrapSearchBar,
@@ -200,6 +188,7 @@ const Stores = (props) => {
               inputStyle={styles.wrapSearchBarInput}
               placeholder={i18n.t('search')}
               onFocus={onSearchFocus}
+              placeholderTextColor={Colors['$lightGray']}
             />
             <HeaderRight
               isAnimated

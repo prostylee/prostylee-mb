@@ -1,10 +1,15 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {commonActions, userActions, userTypes} from 'reducers';
 import {Auth} from 'aws-amplify';
-import {getProductsByUser, getProfile, getStatistics, getUserPost,} from 'services/api/userApi';
+import {
+  getProductsByUser,
+  getProfile,
+  getStatistics,
+  getUserPost,
+} from 'services/api/userApi';
 
 import {showMessage} from 'react-native-flash-message';
-import {UNKNOWN_MESSAGE} from 'constants';
+import {UNKNOWN_MESSAGE, SUCCESS} from 'constants';
 
 import messaging from '@react-native-firebase/messaging';
 import I18n from '../../../i18n';
@@ -120,7 +125,10 @@ const resendOtpSignUp = function* ({payload: {email, onSuccess}}) {
     console.log(e);
 
     let errorMessage = UNKNOWN_MESSAGE;
-    if (e.code === 'InvalidParameterException' || e.code === 'NotAuthorizedException') {
+    if (
+      e.code === 'InvalidParameterException' ||
+      e.code === 'NotAuthorizedException'
+    ) {
       errorMessage = I18n.t('userAlreadyVerified');
     } else if (e.code === 'LimitExceededException') {
       errorMessage = I18n.t('tooManyRequest');
@@ -161,6 +169,7 @@ const userChangePassword = function* ({
 const fetchProfile = function* ({payload}) {
   try {
     const res = yield call(getProfile, payload);
+    console.log('GET PROFILE RES', res.data);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(userActions.getProfileSuccess(res.data.data));
     } else {

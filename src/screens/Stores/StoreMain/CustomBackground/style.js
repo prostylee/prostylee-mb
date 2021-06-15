@@ -11,6 +11,6 @@ export default EStyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    borderBottomEndRadius: 300,
+    borderBottomEndRadius: 100,
   },
 });

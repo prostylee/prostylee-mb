@@ -469,6 +469,34 @@ export const VouchersLoading = ({
   );
 };
 
+export const PostProductCategoryLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <ContentLoader
+      speed={2}
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}>
+      <Rect x="35" y="10" rx="5" ry="5" width={width} height="10" />
+      <Rect x="35" y="45" rx="5" ry="5" width={width} height="10" />
+      <Rect x="35" y="80" rx="5" ry="5" width={width} height="10" />
+      <Rect x="35" y="115" rx="5" ry="5" width={width} height="10" />
+      <Rect x="3" y="5" rx="4" ry="4" width="20" height="20" />
+      <Rect x="3" y="40" rx="4" ry="4" width="20" height="20" />
+      <Rect x="3" y="75" rx="4" ry="4" width="20" height="20" />
+      <Rect x="3" y="110" rx="4" ry="4" width="20" height="20" />
+    </ContentLoader>
+  );
+};
+
 HintKeywordLoading.defaultProps = {
   height: 10,
   width: deviceWidth,
@@ -599,6 +627,17 @@ VouchersLoading.defaultProps = {
   backgroundColor: '#d9d9d9',
   foregroundColor: '#ecebeb',
   style: {},
+  speed: 1.2,
+};
+
+PostProductCategoryLoading.defaultProps = {
+  height: 150,
+  width: deviceWidth * 0.9,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {
+    height: deviceHeight,
+  },
   speed: 1.2,
 };
 const styles = StyleSheet.create({

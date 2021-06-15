@@ -6,9 +6,10 @@ import {
   getListPaymentMethod as getListPaymentMethodApi,
   getListDeliveryType as getListDeliveryTypeApi,
   getListLocation as getListLocationApi,
+  postProduct as postProductApi,
 } from 'services/api/postProductApi';
 import {postProductActions, postProductTypes} from 'reducers';
-import {SUCCESS} from 'constants';
+import {SUCCESS, POST_SUCCESS} from 'constants';
 
 const getListAttributes = function* ({payload}) {
   try {
@@ -93,6 +94,22 @@ const getListLocation = function* ({payload}) {
   }
 };
 
+const postProduct = function* ({payload}) {
+  try {
+    yield put(postProductActions.setPostProductLoading(true));
+    const res = yield call(postProductApi, payload);
+    if (res.ok && res.data.status === POST_SUCCESS && !res.data.error) {
+      yield put(postProductActions.getPostProductSuccess());
+    } else {
+      yield put(postProductActions.getPostProductFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(postProductActions.setPostProductLoading(false));
+  }
+};
+
 const watcher = function* () {
   yield takeLatest(postProductTypes.GET_LIST_ATTIBUTES, getListAttributes);
   yield takeLatest(
@@ -108,5 +125,6 @@ const watcher = function* () {
     getListPaymentMethod,
   );
   yield takeLatest(postProductTypes.GET_LIST_LOCATION, getListLocation);
+  yield takeLatest(postProductTypes.GET_POST_PRODUCT, postProduct);
 };
 export default watcher();

@@ -34,10 +34,17 @@ export const types = {
   GET_LIST_LOCATION: 'GET_LIST_LOCATION',
   GET_LIST_LOCATION_SUCCESS: 'GET_LIST_LOCATION_SUCCESS',
   GET_LIST_LOCATION_FAILED: 'GET_LIST_LOCATION_FAILED',
+
+  // POST PRODUCT
+  SET_POST_PRODUCT_LOADING: 'SET_POST_PRODUCT_LOADING',
+  GET_POST_PRODUCT: 'GET_POST_PRODUCT_LOADING',
+  GET_POST_PRODUCT_SUCCESS: 'GET_POST_PRODUCT_SUCCESS',
+  GET_POST_PRODUCT_FAILED: 'GET_POST_PRODUCT_FAILED',
 };
 
 export const actions = {
   setProductInfo: createAction(types.SET_PRODUCT_INFO),
+  clearPostInfo: createAction(types.CLEAR_PRODUCT_INFO),
 
   // ATTRIBUTES
   setListAttributesLoading: createAction(types.SET_LIST_ATTRIBUTES_LOADING),
@@ -85,6 +92,12 @@ export const actions = {
   getListLocation: createAction(types.GET_LIST_LOCATION),
   getListLocationSuccess: createAction(types.GET_LIST_LOCATION_SUCCESS),
   getListLocationFailed: createAction(types.GET_LIST_LOCATION_FAILED),
+
+  //POST PRODUCT
+  setPostProductLoading: createAction(types.SET_POST_PRODUCT_LOADING),
+  getPostProduct: createAction(types.GET_POST_PRODUCT),
+  getPostProductFailed: createAction(types.GET_POST_PRODUCT_FAILED),
+  getPostProductSuccess: createAction(types.GET_POST_PRODUCT_SUCCESS),
 };
 
 export const selectors = {
@@ -117,22 +130,30 @@ const defaultState = {
   //phase1
   category: null,
   childrenCategory: null,
+
   //phase2
   images: null,
   productName: '',
   description: '',
   brand: null,
+
   //phase3
   status: null,
   sizes: null,
   colors: null,
+  attributeOptions: null,
   price: 0,
+
   //phase4
   address: '',
   latitude: 0,
   longtitude: 0,
   paymentMethod: null,
   deliveryType: null,
+
+  //end phase
+  postProductLoading: false,
+  postProductStatus: '',
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -238,6 +259,24 @@ export default handleActions(
     [types.GET_LIST_LOCATION_FAILED]: (state, {payload}) => {
       return {
         ...state,
+      };
+    },
+    [types.SET_POST_PRODUCT_LOADING]: (state, {payload}) => {
+      return {
+        ...state,
+        postProductLoading: payload,
+      };
+    },
+    [types.GET_POST_PRODUCT_SUCCESS]: (state, {payload}) => {
+      return {
+        ...state,
+        postProductStatus: 'success',
+      };
+    },
+    [types.GET_POST_PRODUCT_FAILED]: (state, {payload}) => {
+      return {
+        ...state,
+        postProductStatus: 'failed',
       };
     },
   },

@@ -1,16 +1,15 @@
 import React from 'react';
-import {View, FlatList, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 
-import {Image, Rating, SlideInModal} from 'components';
-import {Heart} from 'svg/common';
+import {Image, SlideInModal} from 'components';
+
+import i18n from 'i18n';
+
 import styles from './styles';
 
-import {Colors} from 'components';
 import {TicketCutLine} from 'svg/common';
 
 import voucher1 from 'assets/images/voucher1.png';
-import voucher2 from 'assets/images/voucher2.png';
-import voucher3 from 'assets/images/voucher3.png';
 
 import VoucherDetail from '../VoucherDetail';
 
@@ -39,7 +38,7 @@ const ItemBottomSide = ({onPress, item}) => (
     </Text>
     <TouchableOpacity style={styles.takeButton} onPress={onPress}>
       <Text style={styles.buttonText}>
-        {item?.status === 1 ? 'Sử dụng' : 'Lưu'}
+        {item?.status === 1 ? i18n.t('voucher.use') : i18n.t('voucher.save')}
       </Text>
     </TouchableOpacity>
   </View>

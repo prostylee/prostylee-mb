@@ -4,6 +4,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 10,
+    height: '100%',
   },
   wrapper: {
     marginTop: 15,
@@ -34,6 +35,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     paddingVertical: 20,
     paddingHorizontal: 15,
+    marginBottom: 6,
   },
 
   inputPrice: {
@@ -48,6 +50,7 @@ export default StyleSheet.create({
     height: '100%',
     borderBottomWidth: 0.3,
     padding: 0,
+    borderColor: '#BBC0C3',
   },
   modalBox: {
     overflow: 'hidden',

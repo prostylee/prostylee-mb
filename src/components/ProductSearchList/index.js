@@ -1,21 +1,14 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
-
-import styles from './styles';
-import {Sort, Filter, CaretDown} from 'svg/common';
-import {ThemeView, Header, TextInputRounded} from 'components';
-import {Divider, Chip} from 'react-native-paper';
-import {Colors} from 'components';
-
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
-
+import React, {useEffect, useState} from 'react';
+import {Text} from 'react-native';
+import {ThemeView, Header} from 'components';
+import {Divider} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {storeActions} from 'redux/reducers';
-
+import styles from './styles';
 import ProductList from './ProductList';
 import SortDropDown from './SortDropDown';
 import TagList from './TagList';
 import FilterBar from './FilterBar';
+import {PRODUCT_SORT_ITEM} from 'constants';
 
 interface ProductSearchListProps {
   title: String;
@@ -32,14 +25,7 @@ interface ProductSearchListProps {
   hasLoadmore: Boolean;
   searchDataFunction: Function;
 }
-const MockSortItem = [
-  {label: 'Liên quan nhất', value: 1},
-  {label: 'Phổ biến nhất', value: 2},
-  {label: 'Hàng mới về', value: 3},
-  {label: 'Giá thấp', value: 4},
-  {label: 'Giá cao nhất', value: 5},
-  {label: 'Đánh giá tốt', value: 6},
-];
+
 const ProductSearchList = ({
   title,
   navigation,
@@ -98,7 +84,7 @@ const ProductSearchList = ({
             navigation={navigation}
             activeSortItem={
               valueSort
-                ? MockSortItem.find((v) => v.value === valueSort).label
+                ? PRODUCT_SORT_ITEM.find((v) => v.value === valueSort).label
                 : ''
             }
           />
