@@ -35,7 +35,7 @@ const FeaturedCategories = ({navigation, data = []}) => {
                   color: Colors?.['$purple'],
                 },
               ]}>
-              Xem thêm
+              {i18n.t('stores.seeMore')}
             </Text>
           </TouchableOpacity>
         </View>

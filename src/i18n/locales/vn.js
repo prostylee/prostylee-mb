@@ -15,6 +15,7 @@ export default {
     voucherSaved: 'Mã giảm giá đã được lưu',
     success: 'Thành công',
     voucherCode: 'Mã khuyễn mãi',
+    seeMore: 'Xem thêm',
   },
   common: {
     textSeeMore: 'Xem thêm',
