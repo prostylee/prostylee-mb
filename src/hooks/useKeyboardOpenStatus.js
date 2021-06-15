@@ -7,14 +7,12 @@ const useKeyboardVisible = () => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
-        console.log('SHOW KEYBOARD');
         setKeyboardVisible(true);
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
-        console.log('HIDE KEYBOARD');
         setKeyboardVisible(false);
       },
     );

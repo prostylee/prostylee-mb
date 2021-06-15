@@ -18,6 +18,9 @@ import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {MapPin} from 'svg/common';
 import getDistanceFromLatLonInKm from 'utils/locationUtils';
 import useLocation from 'hooks/useLocation';
+
+import i18n from 'i18n';
+
 import styles from './styles';
 
 const FeaturedCategories = ({navigation}) => {
@@ -167,7 +170,7 @@ const FeaturedCategories = ({navigation}) => {
             showsHorizontalScrollIndicator={false}
           />
         ) : (
-          <Text>Không có kết quả</Text>
+          <Text>{i18n.t('Search.resultsNotfound')}</Text>
         )}
       </View>
     </>

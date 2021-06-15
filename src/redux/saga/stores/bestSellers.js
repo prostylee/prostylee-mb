@@ -11,8 +11,6 @@ const getBestSellers = function* ({payload}) {
     yield put(storeActions.setBestSellersLoading(true));
     const res = yield call(getBestSellersApi, payload);
 
-    console.log('GET BEST SELLER', res);
-
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getBestSellersSuccess(res?.data?.data));
     } else {

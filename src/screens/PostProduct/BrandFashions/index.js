@@ -79,7 +79,7 @@ const Brands = (props) => {
         <Searchbar
           style={styles.searchBarStyle}
           inputStyle={styles.searchBarInput}
-          placeholder={'Tìm kiếm'}
+          placeholder={i18n.t('search')}
           onChangeText={onChangeSearch}
           value={searchQuery}
         />
@@ -100,7 +100,10 @@ const Brands = (props) => {
 
       <View style={styles.button}>
         <TouchableOpacity>
-          <ButtonRounded label="Chọn" onPress={submitBrand} />
+          <ButtonRounded
+            label={i18n.t('addProduct.choose')}
+            onPress={submitBrand}
+          />
         </TouchableOpacity>
       </View>
     </ThemeView>

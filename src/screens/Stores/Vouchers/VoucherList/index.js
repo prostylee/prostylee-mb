@@ -64,9 +64,9 @@ const VoucherList = ({navigation}) => {
   const _handleSavePress = () => {
     showMessage({
       titleStyle: {fontSize: 13, fontWeight: '500'},
-      message: 'Thành công',
+      message: i18n.t('stores.success'),
       textStyle: {fontSize: 13, fontWeight: '300'},
-      description: 'Mã giảm giá đã được lưu',
+      description: i18n.t('stores.voucherSaved'),
 
       type: 'success',
       position: {

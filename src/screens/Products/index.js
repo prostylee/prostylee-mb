@@ -83,7 +83,6 @@ const Products = ({navigation}) => {
   const page = useSelector((state) => getPageProductSelector(state));
 
   useEffect(() => {
-    console.log('DISPATCH');
     dispatch(
       productActions.getListProduct({
         page: PAGE_DEFAULT,
@@ -109,7 +108,6 @@ const Products = ({navigation}) => {
 
   const handleLoadMore = () => {
     if (hasLoadMore) {
-      console.log('LOAD MORE NE');
       dispatch(
         productActions.getListProductLoadMore({
           page: page + 1,

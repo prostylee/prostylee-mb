@@ -63,3 +63,27 @@ export const VOUCHER_SORT_ITEM = [
   {label: 'Sắp hết hạn', value: 4},
   {label: 'Sử dụng nhiều nhất', value: 5},
 ];
+
+//FILTER TAG
+
+export const FILTER_TAGS = [
+  {
+    label: 'Best seller',
+    value: {
+      bestSeller: true,
+    },
+  },
+  {
+    label: 'Gần đây',
+    value: {
+      atitude: 10.806406363857086,
+      longitude: 106.6634168400805,
+    },
+  },
+  {
+    label: 'Sale',
+    value: {
+      sale: true,
+    },
+  },
+];
