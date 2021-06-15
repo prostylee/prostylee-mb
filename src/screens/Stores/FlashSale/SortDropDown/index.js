@@ -1,12 +1,6 @@
-import React, {useCallback, useState} from 'react';
-import {RnRatingTap, Picker} from 'components';
-import {
-  IconButton,
-  Searchbar,
-  RadioButton,
-  Divider,
-  Chip,
-} from 'react-native-paper';
+import React from 'react';
+import {Picker} from 'components';
+import {RadioButton, Divider} from 'react-native-paper';
 import styles from './style';
 import {Colors} from 'components';
 import {PRODUCT_SORT_ITEM} from 'constants';
@@ -46,7 +40,6 @@ const SortDropDown = ({
               ]}
               label={v.label}
             />
-            {/* {i !== arr.length - 1 ? <Divider /> : null} */}
           </>
         ))}
       </RadioButton.Group>

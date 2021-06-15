@@ -1,60 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 
-import {FlatList, Text, View, TouchableOpacity, Image} from 'react-native';
-import {useTheme} from '@react-navigation/native';
-import {Check} from 'svg/common';
+import {FlatList} from 'react-native';
 
 import styles from './styles';
-
-const Item = ({item, selectedBrand, onPress}) => {
-  const {colors} = useTheme();
-  const active = selectedBrand.id === item.id;
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={styles.itemcontainer}>
-        {active ? (
-          <View
-            style={[
-              styles.img,
-              {
-                backgroundColor: colors['$purple'],
-                justifyContent: 'center',
-                alignItems: 'center',
-              },
-            ]}>
-            <Check />
-          </View>
-        ) : (
-          <Image
-            source={
-              item.icon
-                ? {uri: item.icon}
-                : require('../../../../assets/images/uniqlo.png')
-            }
-            resizeMode={'cover'}
-            style={[
-              styles.img,
-              {
-                borderWidth: 4,
-                borderColor: active ? colors['$purple'] : 'transparent',
-              },
-            ]}
-          />
-        )}
-
-        <Text
-          style={[
-            styles.Card,
-            {
-              color: active ? colors['$purple'] : colors['$black'],
-            },
-          ]}>
-          {item.name}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
+import Item from './item';
 
 const ListBrand = ({selectedBrand, setSelectedBrand, data}) => {
   const activeBrand = selectedBrand ? selectedBrand : {};

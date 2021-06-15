@@ -7,6 +7,14 @@ export default {
     titleTopStore: 'Cửa hàng nổi bật',
     textNear: 'Cửa hàng gần đây',
     flashSale: '🔥 Flash sale',
+    personalSaler: 'Cá nhân đăng bán',
+    nearbyShop: 'Shop gần đây',
+    voucher: 'Mã khuyến mãi',
+    bestSeller: 'Best-seller',
+    popularBrand: 'Thương hiệu nổi bật',
+    voucherSaved: 'Mã giảm giá đã được lưu',
+    success: 'Thành công',
+    voucherCode: 'Mã khuyễn mãi',
   },
   common: {
     textSeeMore: 'Xem thêm',
@@ -374,6 +382,7 @@ export default {
     unselectAll: 'Bỏ chọn toàn bộ',
     postSuccess: 'Đăng sản phẩm thành công',
     postFailed: 'Đăng sản phẩm thất bại',
+    choose: 'Chọn',
   },
   voucher: {
     use: 'Sử dụng',
