@@ -1,20 +1,13 @@
-import React, {useEffect} from 'react';
-import {
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Text,
-  Animated,
-  Platform,
-} from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
-import IconIcons from 'react-native-vector-icons/Ionicons';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-import i18n from 'i18n';
-import EStyleSheet from 'react-native-extended-stylesheet';
-import {useTheme, useNavigation} from '@react-navigation/native';
+import styles from './styles';
 
-const {width: WIDTH_HEADER} = Dimensions.get('window');
+import React, {useEffect} from 'react';
+import {TouchableOpacity, Text, Animated} from 'react-native';
+
+/*Translate*/
+import i18n from 'i18n';
+
+/*Proptypes*/
+import PropTypes from 'prop-types';
 
 const TabNav = ({
   opacity,
@@ -23,8 +16,6 @@ const TabNav = ({
   scrollToRelated,
   activeTabProps = 'product',
 }) => {
-  const {colors} = useTheme();
-  const navigation = useNavigation();
   const [activeTab, setActiveTab] = React.useState(activeTabProps);
 
   const tabButtonStyle = (tabName) => {
@@ -50,7 +41,7 @@ const TabNav = ({
   return (
     <Animated.View
       style={[
-        styles.container,
+        styles.containerTabNav,
         {
           opacity,
         },
@@ -89,39 +80,16 @@ const TabNav = ({
   );
 };
 
-const styles = EStyleSheet.create({
-  container: {
-    height: 36 + 50 + (Platform.OS === 'ios' ? getStatusBarHeight() : 0),
-    paddingTop: 50 + (Platform.OS === 'ios' ? getStatusBarHeight() : 0),
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    backgroundColor: '$white',
-    paddingHorizontal: 32,
-    borderBottomWidth: 1,
-    borderBottomColor: '$bgColor',
-  },
-  tabButton: {
-    height: 36,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomWidth: 3,
-    borderBottomColor: 'transparent',
-  },
-  tabButtonActive: {
-    borderBottomColor: '$purple',
-  },
-  tabButtonText: {
-    fontSize: 14,
-    lineHeight: 20,
-    color: '$lightGray',
-  },
-  tabButtonTextActive: {
-    color: '$purple',
-  },
-});
+TabNav.defaultProps={
+  activeTabProps: 'product',
+};
+
+TabNav.PropTypes={
+  opacity:PropTypes.number,
+  scrollToTop:PropTypes.func,
+  scrollToComment:PropTypes.func,
+  scrollToRelated:PropTypes.func,
+  activeTabProps:PropTypes.string,
+};
 
 export default TabNav;

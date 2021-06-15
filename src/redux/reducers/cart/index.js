@@ -173,7 +173,7 @@ export default handleActions(
     },
     [types.SET_CART_COUPON_AMOUNT]: (state, {payload}) => {
       const {item, newAmount} = payload;
-      const currentCart = state.listCart;
+      const currentCart = new Array(...state.listCart);
       const findCartIndex = currentCart.findIndex(
         (element) => element.item.id === item.id,
       );

@@ -1,18 +1,28 @@
-import React from 'react';
-import {View, TouchableOpacity, Text, Image, Dimensions} from 'react-native';
-import i18n from 'i18n';
-import ImageView from 'react-native-image-viewing';
-import {useSelector} from 'react-redux';
-import {productSelectors} from 'reducers';
-
-import Entypo from 'react-native-vector-icons/Entypo';
-import IonIcons from 'react-native-vector-icons/Ionicons';
-import {useTheme} from '@react-navigation/native';
 import styles from './styles';
 
-const ProductRating = (props) => {
+import React from 'react';
+import {View, TouchableOpacity, Text, Image, Dimensions} from 'react-native';
+
+/*Hooks*/
+import {useSelector} from 'react-redux';
+import {useTheme} from '@react-navigation/native';
+
+/*Translate*/
+import i18n from 'i18n';
+
+/*Components*/
+import {CustomRating} from 'components';
+import ImageView from 'react-native-image-viewing';
+import IonIcons from 'react-native-vector-icons/Ionicons';
+
+/*Reducers*/
+import {productSelectors} from 'reducers';
+
+/*Proptypes*/
+import PropTypes from 'prop-types';
+
+const ProductRating = ({data, ref, productId, navigation}) => {
   const {colors} = useTheme();
-  const data = props.data ? props.data : {};
   const totalElements = data.totalElements ? data.totalElements : 0;
   const commentList = data.content ? data.content.slice(0, 3) : [];
   const [imageListVisible, setImageListVisible] = React.useState(false);
@@ -28,45 +38,15 @@ const ProductRating = (props) => {
   const numberOfImageAvailabel = Math.floor(
     (Dimensions.get('window').width - 32) / 64,
   );
-  const Rating = ({value}) => {
-    return [0, 1, 2, 3, 4].map((item) => {
-      if (value - item >= 1) {
-        return (
-          <Entypo
-            key={`star_${item}`}
-            name={'star'}
-            size={12}
-            color={colors['$rateStar']}
-          />
-        );
-      } else if (value - item > 0) {
-        return (
-          <IonIcons
-            key={`star_${item}`}
-            name={'star-half-sharp'}
-            size={12}
-            color={colors['$rateStar']}
-          />
-        );
-      } else {
-        return (
-          <Entypo
-            key={`star_${item}`}
-            name={'star-outlined'}
-            size={12}
-            color={colors['$rateStar']}
-          />
-        );
-      }
-    });
-  };
+
   const openImageModal = (item, index) => {
     setImageListActive(index);
     setImageList(item.images);
     setImageListVisible(true);
   };
+
   return (
-    <View style={styles.container} ref={props?.ref}>
+    <View style={styles.container} ref={ref}>
       <View style={styles.rateTitle}>
         <Text style={styles.rateTitleText}>
           {i18n.t('productDetail.rating')}
@@ -74,11 +54,11 @@ const ProductRating = (props) => {
         <TouchableOpacity
           style={styles.ratingTotal}
           onPress={() => {
-            props.navigation.navigate('ReviewRating', {
-              productId: props.productId,
+            navigation.navigate('ReviewRating', {
+              productId: productId,
             });
           }}>
-          <Rating value={totalRate} />
+          <CustomRating rate={totalRate} />
           <Text
             style={
               styles.rateNumber
@@ -97,7 +77,7 @@ const ProductRating = (props) => {
             <View key={`rating_item_${item.id}`} style={styles.ratingItem}>
               <View style={styles.itemTitle}>
                 <Text style={styles.itemUserName}>{user?.fullName}</Text>
-                <Rating value={item?.value} />
+                <CustomRating rate={item?.value} />
               </View>
               <Text style={styles.itemContent}>{item?.content}</Text>
               <View style={styles.commentImage}>
@@ -164,6 +144,17 @@ const ProductRating = (props) => {
       />
     </View>
   );
+};
+
+ProductRating.defaultProps = {
+  data: {},
+  productId: null,
+};
+
+ProductRating.PropTypes = {
+  data: PropTypes.object,
+  ref: PropTypes.element,
+  productId: PropTypes.string,
 };
 
 export default ProductRating;

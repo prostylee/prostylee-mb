@@ -1,20 +1,29 @@
 import styles from './styles';
+
 import React from 'react';
 import {View} from 'react-native';
-import {ButtonRounded, ButtonOutlined, ProductLike} from 'components';
-import i18n from 'i18n';
 
-import {cartActions} from 'reducers';
+/*Hooks*/
 import {useDispatch} from 'react-redux';
 
-const Footer = (props) => {
-  const item = props.productData ? props.productData : {};
-  const choiceSelect = props.choiceSelect ? props.choiceSelect : [];
+/*Components*/
+import {ButtonRounded, ButtonOutlined, ProductLike} from 'components';
+
+/*Translate*/
+import i18n from 'i18n';
+
+/*Proptypes*/
+import PropTypes from 'prop-types';
+
+/*Reducers*/
+import {cartActions} from 'reducers';
+
+const Footer = ({navigation, productData, choiceSelect}) => {
   const dispatch = useDispatch();
 
   const onAddToCart = () => {
     const productItem = {
-      item: item,
+      item: productData,
       quantity: 1,
       options: choiceSelect,
     };
@@ -22,13 +31,13 @@ const Footer = (props) => {
   };
 
   const goToStore = () => {
-    props.navigation.navigate('Stores');
+    navigation.navigate('Stores');
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.likeButton}>
-        <ProductLike likeSize={26} unlikeSize={24} item={item} />
+        <ProductLike likeSize={26} unlikeSize={24} item={productData} />
       </View>
       <View style={{}}>
         <ButtonOutlined
@@ -50,6 +59,17 @@ const Footer = (props) => {
       </View>
     </View>
   );
+};
+
+Footer.defaultProps = {
+  productData: {},
+  choiceSelect: [],
+};
+
+Footer.PropTypes = {
+  navigation: PropTypes.object,
+  productData: PropTypes.object,
+  choiceSelect: PropTypes.array,
 };
 
 export default Footer;

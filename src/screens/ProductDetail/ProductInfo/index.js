@@ -1,17 +1,26 @@
-import React from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
-import IconIcons from 'react-native-vector-icons/Ionicons';
-import Collapsible from 'react-native-collapsible';
-import i18n from 'i18n';
-import {useTheme} from '@react-navigation/native';
 import styles from './styles';
 
-const ProductInfo = (props) => {
+import React from 'react';
+import {View, TouchableOpacity, Text} from 'react-native';
+
+/*Hooks*/
+import {useTheme} from '@react-navigation/native';
+
+/*Components*/
+import IconIcons from 'react-native-vector-icons/Ionicons';
+import Collapsible from 'react-native-collapsible';
+
+/*Translate*/
+import i18n from 'i18n';
+
+/*Proptypes*/
+import PropTypes from 'prop-types';
+
+const ProductInfo = ({description, brand, productStatus}) => {
   const {colors} = useTheme();
-  const description = props.description ? props.description : '';
-  const brand = props.brand ? props.brand : {};
-  const productStatus = props.productStatus ? props.productStatus : {};
+
   const [showInfo, setShowInfo] = React.useState(false);
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -56,6 +65,18 @@ const ProductInfo = (props) => {
       ) : null}
     </View>
   );
+};
+
+ProductInfo.defaultProps = {
+  description: '',
+  brand: {},
+  productStatus: {},
+};
+
+ProductInfo.PropTypes = {
+  description: PropTypes.string,
+  brand: PropTypes.object,
+  productStatus: PropTypes.object,
 };
 
 export default ProductInfo;
