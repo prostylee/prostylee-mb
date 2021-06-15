@@ -71,7 +71,7 @@ const FilterProduct = ({navigation}) => {
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...newAttributes,
-        // categoryId: categoryFilterState,
+        categoryId: categoryFilterState,
         // price: `${priceFilterState?.join('-')}`,
         userId: 1,
       }),

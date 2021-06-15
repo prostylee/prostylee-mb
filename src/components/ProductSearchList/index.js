@@ -3,7 +3,7 @@ import {Text} from 'react-native';
 import {ThemeView, Header} from 'components';
 import {Divider} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import styles from './styles';
+
 import ProductList from './ProductList';
 import SortDropDown from './SortDropDown';
 import TagList from './TagList';
