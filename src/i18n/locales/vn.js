@@ -365,5 +365,12 @@ export default {
     productInformationTitle: 'Thông tin sản phẩm',
     pleaseFillInformation: 'Vui lòng nhập đầy đủ thông tin',
     postProduct: 'Đăng sản phẩm',
+    selectedAddress: 'Địa chỉ đã chọn',
+    choose: 'Chọn',
+    useAddress: 'Sử dụng địa chỉ này',
+    yourAddress: 'Địa chỉ của bạn',
+    chooseAddress: 'Chọn địa điểm',
+    selectAll: 'Chọn toàn bộ',
+    unselectAll: 'Bỏ chọn toàn bộ',
   },
 };

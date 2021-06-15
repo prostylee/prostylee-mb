@@ -45,10 +45,12 @@ const ProductInfor = () => {
           <View style={styles.status}>
             <View style={{flexDirection: 'row'}}>
               <Icon name="ios-location-sharp" size={20} color="grey" />
-              <Text style={styles.title}>Địa điểm của bạn</Text>
+              <Text style={styles.title}>{i18n.t('cart.yourAddress')}</Text>
             </View>
             <TouchableOpacity onPress={onChangeLocationPress}>
-              <Text style={styles.rightTitle}>Thay đổi địa điểm</Text>
+              <Text style={styles.rightTitle}>
+                {i18n.t('cart.changeAddress')}
+              </Text>
             </TouchableOpacity>
           </View>
           <View style={styles.location}>

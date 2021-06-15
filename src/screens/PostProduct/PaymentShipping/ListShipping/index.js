@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {TextInput, Text, View, TouchableOpacity, FlatList} from 'react-native';
-import {CheckBox} from 'react-native-elements';
+
+import i18n from 'i18n';
 
 import styles from './styles';
 
@@ -67,7 +68,7 @@ const ColorInfor = ({
   return (
     <>
       <View style={styles.status}>
-        <Text style={styles.title}>Phương thức vận chuyển</Text>
+        <Text style={styles.title}>{i18n.t('cart.deliveryMethod')}</Text>
         <TouchableOpacity
           onPress={() => {
             if (!isCheckAll) {
@@ -78,7 +79,9 @@ const ColorInfor = ({
             setIsCheckAll(!isCheckAll);
           }}>
           <Text style={styles.rightTitle}>
-            {!isCheckAll ? 'Chọn toàn bộ' : 'Bỏ chọn toàn bộ'}
+            {!isCheckAll
+              ? i18n.t('addProduct.selectAll')
+              : i18n.t('addProduct.unselectAll')}
           </Text>
         </TouchableOpacity>
       </View>

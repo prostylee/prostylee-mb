@@ -17,7 +17,7 @@ import {
   getListAttributesSelector,
   getListAttributesLoadingSelector,
 } from 'redux/selectors/postProduct';
-import {postProductActions} from 'redux/reducers';
+import i18n from 'i18n';
 
 const Item = ({item, onPress = () => {}, active}) => {
   return (
@@ -113,7 +113,7 @@ const ColorInfor = ({
 
       <View style={styles.button}>
         <TouchableOpacity onPress={onSubmitPress}>
-          <ButtonRounded label="Chọn" />
+          <ButtonRounded label={i18n.t('addProduct.choose')} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>

@@ -164,7 +164,7 @@ const AddProductsInfor = ({navigation}) => {
                 source={
                   brand.icon
                     ? {uri: brand.icon}
-                    : require('../../../assets/images/uniqlo.png')
+                    : require('assets/images/uniqlo.png')
                 }
                 resizeMode={'cover'}
                 style={styles.imgBrand}

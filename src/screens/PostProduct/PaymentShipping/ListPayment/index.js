@@ -10,7 +10,7 @@ import {
 
 import {ActivityIndicator, Checkbox, Divider} from 'react-native-paper';
 import styles from './styles';
-import Icon from 'react-native-vector-icons/AntDesign';
+import i18n from 'i18n';
 
 import {
   getProductPaymentMethodSelector,
@@ -60,7 +60,7 @@ const ListPayment = ({
   return (
     <>
       <View style={styles.status}>
-        <Text style={styles.title}>Phương thức thanh toán</Text>
+        <Text style={styles.title}>{i18n.t('cart.paymentMethod')}</Text>
         <TouchableOpacity
           onPress={() => {
             if (!isCheckAll) {
@@ -71,7 +71,9 @@ const ListPayment = ({
             setIsCheckAll(!isCheckAll);
           }}>
           <Text style={styles.rightTitle}>
-            {!isCheckAll ? 'Chọn toàn bộ' : 'Bỏ chọn toàn bộ'}
+            {!isCheckAll
+              ? i18n.t('addProduct.selectAll')
+              : i18n.t('addProduct.unselectAll')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -95,7 +97,7 @@ const ListPayment = ({
                   <View style={{flexDirection: 'row'}}>
                     {v.imageUrls.map((item) => (
                       <Image
-                        source={require('../../../../assets/images/visa.png')}
+                        source={require('assets/images/visa.png')}
                         resizeMode={'cover'}
                         style={styles.image}
                       />

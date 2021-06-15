@@ -72,7 +72,9 @@ const AddressRecent = ({navigation}) => {
       />
 
       <View style={{padding: 10, color: 'gray'}}>
-        <Text style={{color: 'grey', fontSize: 14}}>Địa chỉ đã chọn</Text>
+        <Text style={{color: 'grey', fontSize: 14}}>
+          {i18n.t('addProduct.selectedAddress')}
+        </Text>
       </View>
       <ListAddress />
     </ThemeView>
