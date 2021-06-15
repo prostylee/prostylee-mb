@@ -21,6 +21,8 @@ const AddProductsInfor = ({navigation}) => {
 
   const images = route?.params?.images || [];
 
+  const [listImagePicked, setListImagePicked] = React.useState(images);
+
   const productNameRef = React.useRef();
   const productDescriptionRef = React.useRef();
 
@@ -40,13 +42,17 @@ const AddProductsInfor = ({navigation}) => {
       maxFiles: 4,
     })
       .then((res) => {
-        console.log(res);
         RootNavigator.navigate('CropPostProductImage', {images: res});
       })
       .catch((e) => console.log(e));
   };
   const onSubmitPress = () => {
-    if (!productName || !productDescription || !images.length || !brand) {
+    if (
+      !productName ||
+      !productDescription ||
+      !listImagePicked.length ||
+      !brand
+    ) {
       showMessage({
         message: i18n.t('addProduct.pleaseFillInformation'),
         type: 'danger',
@@ -57,11 +63,29 @@ const AddProductsInfor = ({navigation}) => {
       postProductActions.setProductInfo({
         name: productName,
         description: productDescription,
-        images: images,
+        images: listImagePicked,
       }),
     );
     navigation.navigate('ProductInformations');
   };
+  React.useEffect(() => {
+    if (images.length) {
+      let newListImage = [];
+      if (listImagePicked.length + images.length <= 4) {
+        newListImage = newListImage
+          .concat([...listImagePicked])
+          .concat([...images]);
+        setListImagePicked([...newListImage]);
+      } else {
+        let lengthRemove = 4 - images.length;
+        newListImage = [...listImagePicked];
+        newListImage.splice(0, lengthRemove);
+        newListImage = newListImage.concat([...images]);
+        setListImagePicked([...newListImage]);
+      }
+    }
+    return;
+  }, [images]);
   return (
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('addProduct.generalInformationTitle')} />
@@ -72,16 +96,16 @@ const AddProductsInfor = ({navigation}) => {
             {i18n.t('addProduct.generalDescription')}
           </Text>
           <View style={styles.wrapperBorder}>
-            {images && images.length ? (
+            {listImagePicked && listImagePicked.length ? (
               [0, 1, 2, 3].map((v) =>
-                v < images.length ? (
+                v < listImagePicked.length ? (
                   <TouchableOpacity onPress={openCropImagePicker}>
                     <Image
                       style={styles.imgSelected}
-                      source={{uri: images[v].uri}}
+                      source={{uri: listImagePicked[v].uri}}
                     />
                   </TouchableOpacity>
-                ) : v === images.length ? (
+                ) : v === listImagePicked.length ? (
                   <TouchableOpacity
                     style={styles.shapesSelected}
                     onPress={openCropImagePicker}>
@@ -164,7 +188,7 @@ const AddProductsInfor = ({navigation}) => {
                 source={
                   brand.icon
                     ? {uri: brand.icon}
-                    : require('../../../assets/images/uniqlo.png')
+                    : require('assets/images/uniqlo.png')
                 }
                 resizeMode={'cover'}
                 style={styles.imgBrand}

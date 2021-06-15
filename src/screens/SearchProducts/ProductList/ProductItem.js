@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, FlatList, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 
 import {Image, ProductLike, ProductRatingStar} from 'components';
 

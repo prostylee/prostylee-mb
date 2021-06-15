@@ -63,7 +63,7 @@ const Vouchers = ({navigation}) => {
   }, []);
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header isDefault title="Mã khuyến mãi" />
+      <Header isDefault title={i18n.t('stores.voucherCode')} />
       <View style={styles.wrapBlockOne}>
         <TouchableOpacity onPress={() => setVisible(!visible)}>
           <View style={styles.contentBlockOne}>

@@ -38,8 +38,6 @@ const Project = ({isSearch = false}) => {
   );
   const listLocation = listLocationSelector.content || [];
 
-  console.log('LIST LOCATION', listLocationSelector);
-
   const renderItem = ({item}) => {
     return <Item item={item} />;
   };

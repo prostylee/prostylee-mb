@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import {Dimensions, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import i18n from 'i18n';
 
 import styles from './styles';
 
-import {ThemeView, Header, TextInputRounded} from 'components';
-import {Chip, Divider, Text} from 'react-native-paper';
-import {Trending} from 'svg/common';
+import {Divider, Text} from 'react-native-paper';
+
 import {Colors} from 'components';
-import {getProductFilterAttributeListSelector} from 'redux/selectors/search/productFilter';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
 import {searchActions} from 'redux/reducers';
@@ -103,7 +102,7 @@ const BlockFilter = ({attribute}) => {
           ))
         ) : (
           <Text style={{color: Colors['$lightGray']}}>
-            Can not load options
+            {i18n.t('Search.resultsNotfound')}
           </Text>
         )}
       </View>

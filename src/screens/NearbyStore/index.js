@@ -1,23 +1,10 @@
 import React, {useCallback, useState} from 'react';
-import {
-  Dimensions,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
 import i18n from 'i18n';
 import styles from './styles';
 import {Sort, Filter, CaretDown} from 'svg/common';
 import {ThemeView, Header, TextInputRounded} from 'components';
-import {
-  IconButton,
-  Searchbar,
-  RadioButton,
-  Divider,
-  Chip,
-} from 'react-native-paper';
+import {Chip} from 'react-native-paper';
 import StoreResult from './StoreResult';
 
 const MockTag = [

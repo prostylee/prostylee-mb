@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import i18n from 'i18n';
-import {useTheme, useNavigation} from '@react-navigation/native';
+
 import styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -24,7 +24,6 @@ const ListParentCategories = (props) => {
   const listCaterories = listCategoriesSelector?.content || [];
 
   const onSelectParentCategory = (item) => {
-    //console.log('PARENT CATEGORY', JSON.stringify(item, null, 2));
     dispatch(
       postProductActions.setProductInfo({
         category: item,

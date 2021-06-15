@@ -1,7 +1,7 @@
 import React from 'react';
-import {TouchableOpacity, View, Text} from 'react-native';
+import {TouchableOpacity, Text} from 'react-native';
 import styles from './styles';
-const Item = ({item, index, onPress, parentName = ''}) => {
+const Item = ({item, onPress, parentName = ''}) => {
   return (
     <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
       <Text style={styles.itemText}>

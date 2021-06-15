@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './style';
-import {ChevronRight} from 'svg/common';
+import i18n from 'i18n';
 import {FlatList} from 'react-native-gesture-handler';
 import BrandItem from './BrandItem';
 
@@ -18,7 +18,7 @@ const PopularBrands = ({data = []}) => {
           },
         ]}>
         <View style={styles.wrapTitle}>
-          <Text style={styles.title}>Thương hiệu nổi bật</Text>
+          <Text style={styles.title}>{i18n.t('stores.popularBrand')}</Text>
         </View>
         <View style={styles.wrapList}>
           <FlatList
