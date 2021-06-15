@@ -73,6 +73,7 @@ const Search = ({navigation}) => {
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
             value={searchQuery}
+            multiline={false}
             onSubmitEditing={() => {
               navigation.navigate('SearchProducts');
               dispatch(

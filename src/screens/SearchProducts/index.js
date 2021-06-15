@@ -3,7 +3,7 @@ import {Dimensions, KeyboardAvoidingView} from 'react-native';
 import i18n from 'i18n';
 
 import styles from './styles';
-import {Sort, Filter, CaretDown} from 'svg/common';
+
 import {ThemeView, Header} from 'components';
 import {Searchbar, Divider, Chip} from 'react-native-paper';
 import {Colors} from 'components';
@@ -11,7 +11,7 @@ import {Colors} from 'components';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 import {debounce} from 'lodash';
-import {MessageOutlined, Bell, BellWithNotiBadge} from 'svg/header';
+
 import ProductList from './ProductList';
 import SortDropDown from './SortDropDown';
 import {useDispatch, useSelector} from 'react-redux';
@@ -20,6 +20,8 @@ import {getCurrentKeyword} from 'redux/selectors/search';
 import TagList from './TagList';
 import GroupHeaderRightButton from './HeaderRightButton';
 import FilterBar from './FilterBar';
+
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const WIDTH = Dimensions.get('window').width;
 const MockSortItem = [
@@ -138,26 +140,10 @@ const SearchProducts = ({navigation}) => {
         }}
         middleComponent={
           <Searchbar
-            style={{
-              minWidth: WIDTH - 140,
-              backgroundColor: '#F4F5F5',
-              height: 32,
-              borderRadius: 4,
-              elevation: 0,
-              padding: 0,
-              overflow: 'hidden',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            inputStyle={{
-              height: '100%',
-              fontSize: 14,
-              lineHeight: 16,
-              elevation: 0,
-              numberOfLines: 1,
-              overflow: 'hidden',
-            }}
+            style={styles.searchStyle}
+            inputStyle={styles.searchInputStyle}
             multiline={false}
+            numberOfLines={1}
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
             value={searchQuery}

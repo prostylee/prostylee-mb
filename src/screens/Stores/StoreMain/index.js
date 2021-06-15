@@ -74,6 +74,7 @@ const CustomSearchBar = ({navigation, onSearchFocus = () => {}}) => (
       inputStyle={styles.wrapSearchBarInput}
       placeholder={i18n.t('search')}
       onFocus={onSearchFocus}
+      placeholderTextColor={Colors['$lightGray']}
     />
   </View>
 );
@@ -175,20 +176,7 @@ const Stores = (props) => {
     <View style={{flex: 1, backgroundColor: '#E82E46'}}>
       <HeaderAnimated
         bottomComponent={
-          <View
-            style={{
-              width: '100%',
-              padding: 16,
-              flexDirection: 'row',
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 1,
-              },
-              shadowOpacity: 0.2,
-              shadowRadius: 1.0,
-              elevation: 1,
-            }}>
+          <View style={styles.animatedSearchBarContainer}>
             <Searchbar
               style={[
                 styles.wrapSearchBar,
@@ -200,6 +188,7 @@ const Stores = (props) => {
               inputStyle={styles.wrapSearchBarInput}
               placeholder={i18n.t('search')}
               onFocus={onSearchFocus}
+              placeholderTextColor={Colors['$lightGray']}
             />
             <HeaderRight
               isAnimated

@@ -14,7 +14,7 @@ import {
   getRightLoadingSelector,
   getListRightCategoriesSelector,
 } from 'redux/selectors/categories';
-import {ActivityIndicator} from 'react-native-paper';
+
 import Item from './item';
 import {Colors} from 'components';
 import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
