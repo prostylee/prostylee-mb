@@ -4,9 +4,11 @@ import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 import {storeActions} from 'redux/reducers';
 
-import ProductSearchList from '../../../components/ProductSearchList';
+import ProductSearchList from 'components/ProductSearchList';
 
 import {useDispatch, useSelector} from 'react-redux';
+
+import i18n from 'i18n';
 
 import {
   getPersonalSalersLoadingSelector,
@@ -98,7 +100,7 @@ const SearchProducts = ({navigation}) => {
 
   return (
     <ProductSearchList
-      title="Cá nhân đăng bán"
+      title={i18n.t('stores.personalSaler')}
       hasTagList
       hasFilterBar
       getDataFunction={getDataFunctionSelector}

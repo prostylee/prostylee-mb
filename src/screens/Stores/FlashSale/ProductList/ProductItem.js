@@ -7,7 +7,7 @@ import styles from './styles';
 import picture from 'assets/images/signInBg.png';
 import {Colors} from 'components';
 import {ProgressBar} from 'react-native-paper';
-import useCurrentTime from '../../../../hooks/useCurrentTime';
+import useCurrentTime from 'hooks/useCurrentTime';
 const ItemBadge = () => (
   <View
     style={[

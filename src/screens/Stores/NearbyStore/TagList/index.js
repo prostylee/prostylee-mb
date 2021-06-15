@@ -3,37 +3,18 @@ import React from 'react';
 import {Chip} from 'react-native-paper';
 import {Colors} from 'components';
 import styles from './styles';
+import {FILTER_TAGS} from 'constants';
 
-const MockTag = [
-  {
-    label: 'Gần đây',
-    value: {
-      atitude: 10.806406363857086,
-      longitude: 106.6634168400805,
-    },
-  },
-  {
-    label: 'Best seller',
-    value: {
-      bestSeller: true,
-    },
-  },
-  {
-    label: 'Sale',
-    value: {
-      sale: true,
-    },
-  },
-];
 const TagList = ({onTagPress}) => {
   const [active, setActive] = React.useState(null);
+  console.log('TAG LIST', FILTER_TAGS);
   return (
     <View style={styles.wrapList}>
       <FlatList
         style={styles.wrapChip}
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={MockTag}
+        data={FILTER_TAGS}
         renderItem={({item, index}) => (
           <Chip
             icon={item.icon}

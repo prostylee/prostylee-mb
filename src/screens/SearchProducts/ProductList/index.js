@@ -1,12 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  FlatList,
-  Text,
-  ActivityIndicator,
-  Dimensions,
-  Platform,
-} from 'react-native';
+import {View, FlatList, Text, ActivityIndicator} from 'react-native';
 import {SearchProductLoading} from 'components/Loading/contentLoader';
 import styles from './styles';
 import {Colors} from 'components';

@@ -22,10 +22,6 @@ import GroupHeaderRightButton from './HeaderRightButton';
 import FilterBar from './FilterBar';
 import {PRODUCT_SORT_ITEM} from 'constants';
 
-import Icon from 'react-native-vector-icons/AntDesign';
-
-const WIDTH = Dimensions.get('window').width;
-
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));

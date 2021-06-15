@@ -1,23 +1,10 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {
-  Dimensions,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {Text} from 'react-native';
 import i18n from 'i18n';
 import styles from './styles';
-import {Sort, Filter, CaretDown} from 'svg/common';
-import {ThemeView, Header, TextInputRounded, Colors} from 'components';
-import {
-  IconButton,
-  Searchbar,
-  RadioButton,
-  Divider,
-  Chip,
-} from 'react-native-paper';
+
+import {ThemeView, Header} from 'components';
+import {Divider} from 'react-native-paper';
 
 import StoreResult from './StoreResult';
 import {useDispatch} from 'react-redux';
@@ -26,9 +13,6 @@ import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 import TagList from './TagList';
 import useLocation from '../../../hooks/useLocation';
-import ProductSearchList from '../../../components/ProductSearchList';
-
-const WIDTH = Dimensions.get('window').width;
 
 const NearbyStore = ({navigation}) => {
   const dispatch = useDispatch();
@@ -59,7 +43,6 @@ const NearbyStore = ({navigation}) => {
         containerStyle={{
           paddingBottom: 10,
           borderBottomWidth: 0,
-          // height: 50,
           borderBottomWidth: 1,
         }}
         leftStyle={{
@@ -73,7 +56,7 @@ const NearbyStore = ({navigation}) => {
               fontSize: 18,
               fontWeight: 'bold',
             }}>
-            Cửa hàng gần đây
+            {i18n.t('stores.textNear')}
           </Text>
         }
       />

@@ -1,43 +1,9 @@
 import React from 'react';
-import {
-  View,
-  ActivityIndicator,
-  Dimensions,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {Image, SlideInModal} from 'components';
 import styles from './styles';
 import voucher1 from 'assets/images/voucher1.png';
 import {TicketCutLine, CloseOutLined} from 'svg/common';
-
-import {showMessage} from 'react-native-flash-message';
-
-const MockInfo = [
-  {
-    title: 'Thời gian hiệu lực',
-    subTitle: '08.01.2021 00:00 - 13.01.2021 23:59',
-  },
-  {
-    title: 'Chi tiết ưu đãi:',
-    subTitle:
-      'giảm ngay 50% , tối đa 10000đ cho đơn hàng từ 0đ trên ứng dụng Prostylee. Mã chỉ sử dụng 1 lần. Số lượng voucher có hạn',
-  },
-  {
-    title: 'Sản Phẩm',
-    subTitle: 'Tất cả sản phảm',
-  },
-  {
-    title: 'Thanh Toán',
-    subTitle: 'Tất cả hình thức thanh toán',
-  },
-  {
-    title: 'Đơn vị vận chuyển',
-    subTitle:
-      'Giao Hàng Nhanh, VNPost Tiết Kiệm, Viettel Post, Giao Hàng Tiết Kiệm, VNPost Nhanh, J&T Express, GrabExpress, Standard Express - LWE, Standard Express - Doora, Standard Express, Shopee Express, NowShip, Ninja Van, BEST Express, Shopee Express Bulky',
-  },
-];
 
 const ItemTopSide = ({data}) => (
   <View style={styles.topSideWrapper}>

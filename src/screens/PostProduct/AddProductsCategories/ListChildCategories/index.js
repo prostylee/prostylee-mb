@@ -1,11 +1,5 @@
-import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import React from 'react';
+import {View, Text, FlatList} from 'react-native';
 
 import styles from './styles';
 import i18n from 'i18n';
@@ -16,7 +10,7 @@ import {
 } from 'redux/selectors/categories';
 
 import Item from './item';
-import {Colors} from 'components';
+
 import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
 import {postProductActions} from 'redux/reducers';
 import {useNavigation} from '@react-navigation/native';
@@ -50,12 +44,6 @@ const ListChildCategories = (props) => {
     dispatch(postProductActions.getListProductStatus());
     dispatch(postProductActions.getListDeliveryType());
     dispatch(postProductActions.getListPaymentMethod());
-    // dispatch(
-    //   postProductActions.getListLocation({
-    //     page: 0,
-    //     limit: 12,
-    //   }),
-    // );
     navigation.navigate('GeneralInformation');
   };
   const renderItem = ({item, index}) => {

@@ -1,18 +1,12 @@
 import React from 'react';
 import {View} from 'react-native';
 
-interface Props {
-  topBounceColor: String;
-  bottomBounceColor: String;
-  children: React.FunctionComponent;
-}
-
 const AppScrollViewIOSBounceColorsWrapper = ({
   topBounceColor,
   bottomBounceColor,
   children,
   ...props
-}: Props) => {
+}) => {
   return (
     <View {...props} style={[{position: 'relative'}, props.style]}>
       {children}

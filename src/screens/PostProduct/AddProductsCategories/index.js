@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
+
 import styles from './styles';
 import i18n from 'i18n';
 import {ThemeView, Header, ButtonRounded} from 'components';
