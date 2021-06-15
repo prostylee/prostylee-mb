@@ -21,7 +21,6 @@ import {
 } from 'react-native-paper';
 
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
-import demoData from './demodata.json';
 
 const ChatOne2One = (props) => {
   const theme = useTheme();
@@ -161,7 +160,7 @@ const ChatOne2One = (props) => {
             'https://pbs.twimg.com/profile_images/3390520999/c167795c6ab9ccad370ce53dbe85fd05.jpeg',
             'https://s3.amazonaws.com/ionic-marketplace/m-fashion/icon.jpg',
           ], // TODO fill image urls if user attached images in chat
-          content: JSON.stringify(demoData),
+          content: chat,
           createdAt: new Date().toISOString(), // "2021-02-18T15:41:16Z"
         },
       }),

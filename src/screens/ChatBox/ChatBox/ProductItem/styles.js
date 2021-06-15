@@ -15,4 +15,9 @@ export default EStyleSheet.create({
     paddingTop: 0,
     fontSize: 15,
   },
+  image: {
+    width: 30,
+    height: 40,
+    borderRadius: 3,
+  },
 });
