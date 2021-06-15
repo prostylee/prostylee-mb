@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Text} from 'react-native';
 
-import styles from './styles';
-
 import {ThemeView, Header} from 'components';
 import {Divider} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
