@@ -1,10 +1,13 @@
 import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+const HEIGHT = Dimensions.get('window').height;
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '$white',
+    backgroundColor: '$gray',
     flexDirection: 'column',
+    height: HEIGHT - 200,
+    marginBottom: 20,
   },
   titleContainer: {
     padding: 16,
@@ -16,12 +19,10 @@ export default EStyleSheet.create({
     color: '$black',
   },
   listWrapper: {
-    paddingTop: 20,
+    paddingTop: 10,
     backgroundColor: '$white',
-    // justifyContent: 'flex-start',
-    // alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    width: '100%',
+    height: '100%',
   },
   itemWrapper: {
     width: '$screenWidth/2',
@@ -95,5 +96,11 @@ export default EStyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
     color: '$white',
+  },
+  listFooterContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 50,
   },
 });

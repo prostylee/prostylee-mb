@@ -1,9 +1,12 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
+import {GET, POST, PUT} from 'constants';
+import {_fetch} from '../../../services/config';
 import {
   getBannerAds,
   getBrandList as getBrandListApi,
   getCategories,
   getBannerCampaigns,
+  getBottomTabList as getBottomTabListApi,
 } from 'services/api/storeApi';
 import {storeActions, storeTypes} from 'reducers';
 import {SUCCESS} from 'constants';
@@ -76,10 +79,28 @@ const getCategoryList = function* ({payload}) {
   }
 };
 
+const getBottomTabList = function* ({payload}) {
+  try {
+    yield put(storeActions.setStoreLoading(true));
+    const res = yield call(getBottomTabListApi, payload);
+
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(storeActions.getBottomTabListSuccess(res.data.data));
+    } else {
+      yield put(storeActions.getBottomTabListFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(storeActions.setStoreLoading(false));
+  }
+};
+
 const watcher = function* () {
   yield takeLatest(storeTypes.GET_TOP_BANNER, getTopBanner);
   yield takeLatest(storeTypes.GET_MID_BANNER, getMidBanner);
   yield takeLatest(storeTypes.GET_BRAND_LIST, getBrandList);
   yield takeLatest(storeTypes.GET_CATEGORY_LIST, getCategoryList);
+  yield takeLatest(storeTypes.GET_BOTTOM_TAB_LIST, getBottomTabList);
 };
 export default watcher();

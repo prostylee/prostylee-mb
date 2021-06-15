@@ -4,6 +4,7 @@ import styles from './styles';
 import ProductItem from './ProductItem';
 import {Colors} from 'components';
 import {SearchProductLoading} from '../../Loading/contentLoader';
+
 interface ProductListProps {
   getDataFunction: Function;
   refreshDataFunction: Function;
@@ -60,7 +61,12 @@ const ProductList = ({
           data={data?.content}
           numColumns={2}
           renderItem={({item, index}) => (
-            <ProductItem item={item} index={index} navigation={navigation} />
+            <ProductItem
+              key={`${item?.id}-${index}`}
+              item={item}
+              index={index}
+              navigation={navigation}
+            />
           )}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}

@@ -18,6 +18,10 @@ export const types = {
   GET_CATEGORY_LIST: 'GET_CATEGORY_LIST',
   GET_CATEGORY_LIST_SUCCESS: 'GET_CATEGORY_LIST_SUCCESS',
   GET_CATEGORY_LIST_FAILED: 'GET_CATEGORY_LIST_FAILED',
+
+  GET_BOTTOM_TAB_LIST: 'GET_BOTTOM_TAB_LIST',
+  GET_BOTTOM_TAB_LIST_SUCCESS: 'GET_BOTTOM_TAB_LIST_SUCCESS',
+  GET_BOTTOM_TAB_LIST_FAILED: 'GET_BOTTOM_TAB_LIST_FAILED',
 };
 
 export const actions = {
@@ -38,6 +42,10 @@ export const actions = {
   getCategoryList: createAction(types.GET_CATEGORY_LIST),
   getCategoryListSuccess: createAction(types.GET_CATEGORY_LIST_SUCCESS),
   getCategoryListFailed: createAction(types.GET_CATEGORY_LIST_FAILED),
+
+  getBottomTabList: createAction(types.GET_BOTTOM_TAB_LIST),
+  getBottomTabListSuccess: createAction(types.GET_BOTTOM_TAB_LIST_SUCCESS),
+  getBottomTabListFailed: createAction(types.GET_BOTTOM_TAB_LIST_FAILED),
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -48,6 +56,7 @@ export const defaultState = {
   midBannerList: {},
   brandList: {},
   categoryList: {},
+  bottomTabList: [],
 };
 
 export const handleActions = {
@@ -81,5 +90,17 @@ export const handleActions = {
   },
   [types.GET_CATEGORY_LIST_FAILED]: (state, {payload}) => {
     return {...state, categoryList: {}};
+  },
+  [types.GET_BOTTOM_TAB_LIST_SUCCESS]: (state, {payload}) => {
+    return {
+      ...state,
+      bottomTabList: payload,
+    };
+  },
+  [types.GET_BOTTOM_TAB_LIST_FAILED]: (state, {payload}) => {
+    return {
+      ...state,
+      bottomTabList: [],
+    };
   },
 };

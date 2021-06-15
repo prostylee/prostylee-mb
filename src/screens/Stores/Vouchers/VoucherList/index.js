@@ -96,6 +96,7 @@ const VoucherList = ({navigation}) => {
           data={data?.content}
           renderItem={({item, index}) => (
             <VoucherItem
+              key={`${item?.name}-${item?.id}`}
               item={item}
               index={index}
               onSavePress={_handleSavePress}
