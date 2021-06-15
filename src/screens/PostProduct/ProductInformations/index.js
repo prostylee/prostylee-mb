@@ -29,7 +29,7 @@ const ProductInfor = () => {
   );
 
   const [productPrice, setProductPrice] = useState(null);
-  const [selectedRadioAttributes, setSelectedRadioAttributes] = useState([]);
+  // const [selectedRadioAttributes, setSelectedRadioAttributes] = useState([]);
   const [selectedAttributes, setSelectedAttributes] = useState({});
 
   const loading = useSelector((state) =>
@@ -51,11 +51,11 @@ const ProductInfor = () => {
       [key]: value,
     });
   };
-  const _handleSelectedRadioAttributes = (key, value) => {
-    let temp = {...selectedRadioAttributes};
-    temp[key] = [value];
-    setSelectedRadioAttributes({...temp});
-  };
+  // const _handleSelectedRadioAttributes = (key, value) => {
+  //   let temp = {...selectedRadioAttributes};
+  //   temp[key] = [value];
+  //   setSelectedRadioAttributes({...temp});
+  // };
 
   const _handleChangePrice = (value) => {
     if (`${value * 1}` === 'NaN') {
@@ -75,15 +75,14 @@ const ProductInfor = () => {
       });
       return;
     }
+    // .concat(...Object.values(selectedRadioAttributes))
     const arrayAttributesClone = []
       .concat(...Object.values(selectedAttributes))
-      .concat(...Object.values(selectedRadioAttributes))
       .map((v) => ({
         id: null,
         attrValue: v.attrValue,
         attributeId: v.attributeId,
       }));
-    console.log('SUBMIT ATTRI', arrayAttributesClone);
     navigation.navigate('PaymentShipping');
     dispatch(
       postProductActions.setProductInfo({
@@ -106,15 +105,15 @@ const ProductInfor = () => {
         }
         return obj;
       }, {});
-      let radioAttributes = [...listAttributes].reduce((obj, item) => {
-        if (item.type === 3) {
-          obj[item.key] = [];
-          return obj;
-        }
-        return obj;
-      }, {});
+      // let radioAttributes = [...listAttributes].reduce((obj, item) => {
+      //   if (item.type === 3) {
+      //     obj[item.key] = [];
+      //     return obj;
+      //   }
+      //   return obj;
+      // }, {});
       setSelectedAttributes({...newAttributesObject});
-      setSelectedRadioAttributes({...radioAttributes});
+      // setSelectedRadioAttributes({...radioAttributes});
     }
   }, [listAttributes]);
 
@@ -126,6 +125,7 @@ const ProductInfor = () => {
         {listAttributes && listAttributes.length
           ? listAttributes.map((item) => (
               <TouchableOpacity
+                key={item?.id}
                 onPress={() => {
                   setSelectedModalItem(item);
                 }}
@@ -145,7 +145,7 @@ const ProductInfor = () => {
           : null}
 
         <View style={styles.boxWrap}>
-          <Text style={styles.title}>Giá sản phẩm</Text>
+          <Text style={styles.title}>{i18n.t('addProduct.productPrice')}</Text>
           <View style={styles.inputPrice}>
             <TextInput
               style={styles.input}

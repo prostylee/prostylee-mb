@@ -18,7 +18,7 @@ const ModalSelectAttributes = ({
     <Modal
       transparent={true}
       animationOut="slideOutDown"
-      isVisible={Object.keys(selectedModalItem).length}
+      isVisible={Object.keys(selectedModalItem).length > 0}
       backdropOpacity={0.3}
       style={{justifyContent: 'flex-end', margin: 0}}
       testID={'modal'}

@@ -385,6 +385,7 @@ export default {
     choose: 'Chọn',
     yourLocation: 'Địa điểm của bạn',
     changeLocation: 'Thay đổi địa điểm',
+    productPrice: 'Giá sản phẩm',
   },
   voucher: {
     use: 'Sử dụng',

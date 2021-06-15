@@ -82,7 +82,7 @@ const ListPayment = ({
           <ActivityIndicator />
         ) : (
           listPaymentMethod.map((v) => (
-            <>
+            <View key={`${v.name}-${v.id}`}>
               <View style={styles.itemPayment}>
                 <TouchableOpacity
                   onPress={() => _handleChecked(v)}
@@ -106,7 +106,7 @@ const ListPayment = ({
                 ) : null}
               </View>
               <Divider />
-            </>
+            </View>
           ))
         )}
       </View>
