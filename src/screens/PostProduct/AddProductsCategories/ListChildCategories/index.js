@@ -14,12 +14,13 @@ import {
   getRightLoadingSelector,
   getListRightCategoriesSelector,
 } from 'redux/selectors/categories';
-import {ActivityIndicator} from 'react-native-paper';
+
 import Item from './item';
 import {Colors} from 'components';
 import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
 import {postProductActions} from 'redux/reducers';
 import {useNavigation} from '@react-navigation/native';
+import {PostProductCategoryLoading} from 'components/Loading/contentLoader';
 
 const ListChildCategories = (props) => {
   const navigation = useNavigation();
@@ -76,7 +77,9 @@ const ListChildCategories = (props) => {
         </Text>
       </View>
       {loading ? (
-        <ActivityIndicator />
+        <View style={{paddingHorizontal: 16, overflow: 'hidden'}}>
+          <PostProductCategoryLoading />
+        </View>
       ) : listChildCategories && listChildCategories.length ? (
         <FlatList
           data={listChildCategories}

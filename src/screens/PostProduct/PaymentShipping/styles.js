@@ -11,9 +11,9 @@ export default StyleSheet.create({
     padding: 15,
   },
   headerContain: {
-    paddingBottom: 10,
-    borderBottomWidth: 0,
-    height: 50,
+    // paddingBottom: 10,
+    // borderBottomWidth: 0,
+    // height: 50,
   },
   middleComponent: {
     textAlign: 'center',
@@ -53,5 +53,20 @@ export default StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     paddingVertical: 15,
+  },
+  notiContainer: {
+    alignItems: 'center',
+    backgroundColor: '#333333',
+    paddingLeft: 10,
+    height: width / 7,
+  },
+  notiTitle: {fontSize: 13, fontWeight: '500', color: '#fff'},
+  notiSubTitle: {fontSize: 13, fontWeight: '400', color: '#8B9399'},
+  notiImage: {
+    width: width / 7 - 16,
+    height: width / 7 - 16,
+    aspectRatio: 1,
+    borderRadius: 4,
+    marginRight: 12,
   },
 });

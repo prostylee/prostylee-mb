@@ -30,38 +30,32 @@ const Item = ({item, onPress = () => {}, active}) => {
     </TouchableOpacity>
   );
 };
-const ColorInfor = ({
-  selectedColors = [],
+const CheckBoxAttributes = ({
   defaultState = [],
-  setSelectedColors = () => {},
-  setModalVisibleColor = () => {},
+  submitSelect = () => {},
+  setModalVisible = () => {},
+  data = {},
+  allowSelectMultiple = false,
 }) => {
-  const dispatch = useDispatch();
-
-  const loading = useSelector((state) =>
-    getListAttributesLoadingSelector(state),
-  );
-  const listAttributesSelector = useSelector(
-    (state) => getListAttributesSelector(state),
-    shallowEqual,
-  );
-  const listAttributes = listAttributesSelector.content || [];
-  const attributesId =
-    listAttributes.filter((v) => v.key === 'color')?.[0]?.id || 0;
-  const listColors =
-    listAttributes.filter((v) => v.key === 'color')?.[0]?.attributeOptions ||
-    [];
+  const attributesId = data?.id || 0;
+  const listOptions = data?.attributeOptions || [];
 
   const [selectedItem, setSelectedItem] = useState(defaultState);
 
   const _handleChecked = (item) => {
     let idx = selectedItem.findIndex((v) => v.id === item.id);
-    if (idx === -1) {
-      setSelectedItem([...selectedItem, item]);
+    if (allowSelectMultiple) {
+      if (idx === -1) {
+        setSelectedItem([...selectedItem, item]);
+      } else {
+        let newSelectedList = [...selectedItem];
+        newSelectedList.splice(idx, 1);
+        setSelectedItem([...newSelectedList]);
+      }
+    } else if (idx === -1) {
+      setSelectedItem([item]);
     } else {
-      let newSelectedList = [...selectedItem];
-      newSelectedList.splice(idx, 1);
-      setSelectedItem([...newSelectedList]);
+      setSelectedItem([]);
     }
   };
 
@@ -71,8 +65,8 @@ const ColorInfor = ({
       attributeId: attributesId || 0,
       attrValue: v?.value || '',
     }));
-    setSelectedColors(submitData);
-    setModalVisibleColor(false);
+    submitSelect(data?.key, submitData);
+    setModalVisible(false);
   };
 
   const renderItem = ({item}) => {
@@ -88,28 +82,24 @@ const ColorInfor = ({
   };
   return (
     <SafeAreaView style={styles.container}>
-      {loading ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList
-          data={[...listColors, {name: 'Khác', id: -1}] || []}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          extraData={selectedItem}
-          style={styles.listWrapper}
-          ListFooterComponent={
-            selectedItem.indexOf(-1) !== -1 ? (
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Placeholder"
-                  keyboardType="numeric"
-                />
-              </View>
-            ) : null
-          }
-        />
-      )}
+      <FlatList
+        data={[...listOptions, {name: 'Khác', id: -1}] || []}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        extraData={selectedItem}
+        style={styles.listWrapper}
+        ListFooterComponent={
+          selectedItem.indexOf(-1) !== -1 ? (
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Placeholder"
+                keyboardType="numeric"
+              />
+            </View>
+          ) : null
+        }
+      />
 
       <View style={styles.button}>
         <TouchableOpacity onPress={onSubmitPress}>
@@ -119,4 +109,4 @@ const ColorInfor = ({
     </SafeAreaView>
   );
 };
-export default ColorInfor;
+export default CheckBoxAttributes;

@@ -9,14 +9,6 @@ import {
 } from 'react-native-paper';
 import styles from './style';
 import {Colors} from 'components';
-const MockSortItem = [
-  {label: 'Tất cả', value: 0},
-  {label: 'Của Prostylee', value: 1},
-  {label: 'Của store', value: 2},
-  {label: 'Ưu đãi nhất', value: 3},
-  {label: 'Sắp hết hạn', value: 4},
-  {label: 'Sử dụng nhiều nhất', value: 5},
-];
 
 const SortDropDown = ({
   visible = false,
@@ -54,7 +46,6 @@ const SortDropDown = ({
               ]}
               label={v.label}
             />
-            {/* {i !== arr.length - 1 ? <Divider /> : null} */}
           </>
         ))}
       </RadioButton.Group>

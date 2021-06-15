@@ -1,17 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  FlatList,
-  Text,
-  ActivityIndicator,
-  Dimensions,
-} from 'react-native';
+import {View, FlatList, Text, Dimensions} from 'react-native';
+
+import i18n from 'i18n';
 
 import styles from './styles';
 
 import VoucherItem from './VoucherItem';
 import {showMessage} from 'react-native-flash-message';
-import {Colors} from 'components';
+
 import {
   getVouchersLoadingSelector,
   getVouchersSelector,
@@ -114,7 +110,7 @@ const VoucherList = ({navigation}) => {
           onRefresh={_handleRefresh}
         />
       ) : (
-        <Text>Không có dữ liệu</Text>
+        <Text>{i18n.t('Search.resultsNotfound')}</Text>
       )}
     </View>
   );

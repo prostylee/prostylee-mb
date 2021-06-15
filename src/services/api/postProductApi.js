@@ -16,9 +16,13 @@ export const getListPaymentMethod = (payload) => {
   });
 };
 export const getListDeliveryType = () => {
-  return _fetch(GET, `/shippings/methods`);
+  return _fetch(GET, `/shippings/providers`);
 };
 
 export const getListLocation = (payload) => {
   return _fetch(GET, `/user-addresses/userLogin`, {...payload});
+};
+
+export const postProduct = (payload) => {
+  return _fetch(POST, `/products`, payload);
 };

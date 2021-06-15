@@ -372,5 +372,11 @@ export default {
     chooseAddress: 'Chọn địa điểm',
     selectAll: 'Chọn toàn bộ',
     unselectAll: 'Bỏ chọn toàn bộ',
+    postSuccess: 'Đăng sản phẩm thành công',
+    postFailed: 'Đăng sản phẩm thất bại',
+  },
+  voucher: {
+    use: 'Sử dụng',
+    save: 'Lưu',
   },
 };

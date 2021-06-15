@@ -46,7 +46,7 @@ const AddProductsInfor = ({navigation}) => {
       .catch((e) => console.log(e));
   };
   const onSubmitPress = () => {
-    if (!productName || !productDescription || !images.length) {
+    if (!productName || !productDescription || !images.length || !brand) {
       showMessage({
         message: i18n.t('addProduct.pleaseFillInformation'),
         type: 'danger',
@@ -151,13 +151,13 @@ const AddProductsInfor = ({navigation}) => {
           />
         </TouchableOpacity>
 
-        {brand ? (
-          <TouchableOpacity
-            style={styles.brandWrap}
-            onPress={() => navigation.navigate('BrandFashions')}>
-            <Text style={styles.title}>
-              {i18n.t('addProduct.descriptionBrand')}
-            </Text>
+        <TouchableOpacity
+          style={styles.brandWrap}
+          onPress={() => navigation.navigate('BrandFashions')}>
+          <Text style={styles.title}>
+            {i18n.t('addProduct.descriptionBrand')}
+          </Text>
+          {brand ? (
             <View style={styles.brand}>
               <Text>{brand?.name}</Text>
               <Image
@@ -170,8 +170,8 @@ const AddProductsInfor = ({navigation}) => {
                 style={styles.imgBrand}
               />
             </View>
-          </TouchableOpacity>
-        ) : null}
+          ) : null}
+        </TouchableOpacity>
       </View>
       <View style={styles.button}>
         <TouchableOpacity>
