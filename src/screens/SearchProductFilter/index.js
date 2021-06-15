@@ -40,7 +40,6 @@ const FilterProduct = ({navigation}) => {
   };
 
   const _handlePriceChange = (value) => {
-    console.log('PRICE CHANGE', value);
     dispatch(
       searchActions.setProductFilterState({
         ...filterState,
@@ -57,13 +56,12 @@ const FilterProduct = ({navigation}) => {
     let newAttributes = {};
     for (let item in attributesParamm) {
       if (attributesParamm[item] && Array.isArray(attributesParamm[item])) {
-        console.log('ARRAY ', attributesParamm[item], '\n\n\n');
         newAttributes[`attributes[${item}]`] = formatArrayParamsValue(
           attributesParamm[item],
         );
       } else newAttributes[`attributes[${item}]`] = attributesParamm[item];
     }
-    // console.log('ATTRIBUTES PARAMS', newAttributes);
+
     dispatch(
       searchActions.getProductsSearch({
         keyword: currentKeyword,

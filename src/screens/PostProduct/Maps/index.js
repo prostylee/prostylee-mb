@@ -22,11 +22,9 @@ const Maps = () => {
   const [coordinate, setCoordinate] = useState(null);
 
   const location = useLocation();
-  console.log('LOCATION', location);
 
   const _handleMapPress = (e) => {
     setCoordinate(e.nativeEvent.coordinate);
-    console.log('COORDINATE', e.nativeEvent.coordinate);
   };
 
   return (

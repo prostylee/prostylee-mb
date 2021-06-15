@@ -37,8 +37,6 @@ const ProductLocation = (props) => {
     Linking.openURL(url);
   };
 
-  console.log('locations', location);
-
   return (
     <View style={styles.container}>
       <View style={styles.locationName}>

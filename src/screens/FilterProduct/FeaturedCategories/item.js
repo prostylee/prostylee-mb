@@ -9,14 +9,18 @@ import {categoriesActions, productActions} from 'redux/reducers';
 const FeaturedCategoriesItem = ({item, index, navigation}) => {
   const paddingLeft = index % 2 ? 4 : 12;
   const paddingRight = index % 2 ? 12 : 0;
-  console.log(paddingLeft)
+
   const dispatch = useDispatch();
   const clickItem = () => {
     dispatch(categoriesActions.setCategoriesSelect(item));
     navigation.navigate('Products');
   };
   return (
-    <View style={[styles.wrapItems, { paddingLeft: paddingLeft, paddingRight:paddingRight }]}>
+    <View
+      style={[
+        styles.wrapItems,
+        {paddingLeft: paddingLeft, paddingRight: paddingRight},
+      ]}>
       <TouchableOpacity onPress={clickItem}>
         <View style={styles.item}>
           <Text numberOfLines={2} style={styles.titleCategory}>

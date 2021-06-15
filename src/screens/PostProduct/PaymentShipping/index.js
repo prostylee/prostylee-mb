@@ -76,7 +76,7 @@ const PaymentShipping = () => {
       return;
     }
     const {images} = postProductInfo;
-    console.log('LIST IMAGE', images);
+
     if (uploadList && uploadList.length) {
       postProduct();
       return;

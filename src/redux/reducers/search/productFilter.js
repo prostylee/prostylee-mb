@@ -51,7 +51,6 @@ export const handleActions = {
     };
   },
   [types.SET_PRODUCTS_FILTER_STATE]: (state, {payload}) => {
-    console.log('FILTER PAYLOAD', payload);
     return {
       ...state,
       productFilterState: {...payload},

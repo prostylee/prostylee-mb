@@ -13,7 +13,6 @@ import {useSelector, shallowEqual, useDispatch} from 'react-redux';
 import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
 import {postProductActions} from 'redux/reducers';
 import {showMessage} from 'react-native-flash-message';
-import {selectInput} from 'aws-amplify';
 
 const AddProductsInfor = ({navigation}) => {
   const dispatch = useDispatch();
@@ -43,7 +42,6 @@ const AddProductsInfor = ({navigation}) => {
       maxFiles: 4,
     })
       .then((res) => {
-        console.log(res);
         RootNavigator.navigate('CropPostProductImage', {images: res});
       })
       .catch((e) => console.log(e));
@@ -71,22 +69,18 @@ const AddProductsInfor = ({navigation}) => {
     navigation.navigate('ProductInformations');
   };
   React.useEffect(() => {
-    console.log('USE EFFECT INPUT', JSON.stringify(images, null, 2));
-    console.log('USE EFFECT CURRENT', JSON.stringify(listImagePicked, null, 2));
     if (images.length) {
       let newListImage = [];
       if (listImagePicked.length + images.length <= 4) {
         newListImage = newListImage
           .concat([...listImagePicked])
           .concat([...images]);
-        console.log('ZO TH1', JSON.stringify(newListImage, null, 2));
         setListImagePicked([...newListImage]);
       } else {
         let lengthRemove = 4 - images.length;
         newListImage = [...listImagePicked];
         newListImage.splice(0, lengthRemove);
         newListImage = newListImage.concat([...images]);
-        console.log('ZO TH2', JSON.stringify(newListImage, null, 2));
         setListImagePicked([...newListImage]);
       }
     }
