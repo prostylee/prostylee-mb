@@ -91,23 +91,21 @@ const ProductInfor = () => {
             </TouchableOpacity>
           </View>
           <View>
-            {item.type === 2 ? (
-              <ButtonAttributes
-                data={item}
-                setModalVisible={() => setSelectedModalItem({})}
-                defaultState={selectedAttributes?.[item.key]}
-                submitSelect={_handleSelectAttributes}
-                allowSelectMultiple={item?.allowsMultipleSelection}
-              />
-            ) : item.type === 1 ? (
-              <CheckBoxAttributes
-                data={item}
-                setModalVisible={() => setSelectedModalItem({})}
-                defaultState={selectedAttributes?.[item.key]}
-                submitSelect={_handleSelectAttributes}
-                allowSelectMultiple={item?.allowsMultipleSelection}
-              />
-            ) : null}
+            <ButtonAttributes
+              data={item}
+              setModalVisible={() => setSelectedModalItem({})}
+              defaultState={selectedAttributes?.[item.key]}
+              submitSelect={_handleSelectAttributes}
+              allowSelectMultiple={false}
+            />
+
+            {/* <CheckBoxAttributes
+              data={item}
+              setModalVisible={() => setSelectedModalItem({})}
+              defaultState={selectedAttributes?.[item.key]}
+              submitSelect={_handleSelectAttributes}
+              allowSelectMultiple={item?.allowsMultipleSelection}
+            /> */}
           </View>
         </View>
       </Modal>
@@ -173,7 +171,7 @@ const ProductInfor = () => {
       <Header isDefault title={i18n.t('addProduct.productInformationTitle')} />
       <ProgressBar progress={0.67} color="#823FFD" />
       <View style={styles.container}>
-        {listAttributes && listAttributes.length
+        {/* {listAttributes && listAttributes.length
           ? listAttributes.map((item) =>
               item?.type === 3 ? (
                 <View style={styles.boxWrap}>
@@ -197,29 +195,27 @@ const ProductInfor = () => {
                 </View>
               ) : null,
             )
-          : null}
+          : null} */}
 
         {listAttributes && listAttributes.length
-          ? listAttributes.map((item) =>
-              item?.type !== 3 ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    setSelectedModalItem(item);
-                  }}
-                  style={styles.boxWrap}>
-                  <View style={styles.status}>
-                    <Text style={styles.title}>{item?.label}</Text>
-                    <View style={styles.selectItemContainer}>
-                      {selectedAttributes?.[item?.key]?.map((v) => (
-                        <View style={styles.viewStatus}>
-                          <Text>{v.name}</Text>
-                        </View>
-                      ))}
-                    </View>
+          ? listAttributes.map((item) => (
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedModalItem(item);
+                }}
+                style={styles.boxWrap}>
+                <View style={styles.status}>
+                  <Text style={styles.title}>{item?.label}</Text>
+                  <View style={styles.selectItemContainer}>
+                    {selectedAttributes?.[item?.key]?.map((v) => (
+                      <View style={styles.viewStatus}>
+                        <Text>{v.name}</Text>
+                      </View>
+                    ))}
                   </View>
-                </TouchableOpacity>
-              ) : null,
-            )
+                </View>
+              </TouchableOpacity>
+            ))
           : null}
 
         <View style={styles.boxWrap}>
