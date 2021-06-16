@@ -101,7 +101,16 @@ const ProductDetail = (props) => {
   const productData = useSelector((state) =>
     productSelectors.getProductDetail(state),
   );
-
+  const productPriceData =
+    productData?.price && productData?.priceSale
+      ? {
+          price: productData?.price,
+          priceSale: productData?.priceSale,
+        }
+      : {
+          price: productData.productPriceResponseList[0].price || 0,
+          priceSale: productData.productPriceResponseList[0].priceSale || 0,
+        };
   const productDataLoading = useSelector((state) =>
     productSelectors.getProductDetailLoading(state),
   );
@@ -205,7 +214,7 @@ const ProductDetail = (props) => {
     );
   };
   const discount = productData
-    ? priceSalePercent(productData?.price, productData?.priceSale)
+    ? priceSalePercent(productPriceData?.price, productPriceData?.priceSale)
     : 0;
 
   React.useEffect(() => {
@@ -242,7 +251,10 @@ const ProductDetail = (props) => {
         scrollToTop={scrollToTop}
         scrollToComment={scrollToComment}
         scrollToRelated={scrollToRelated}
-        discount={priceSalePercent(productData?.price, productData?.priceSale)}
+        discount={priceSalePercent(
+          productPriceData?.price,
+          productPriceData?.priceSale,
+        )}
         activeTabProps={activeTab}
       />
       <Container
@@ -296,10 +308,11 @@ const ProductDetail = (props) => {
           navigation={props.navigation}
           productId={productData?.id}
           name={productData?.name}
-          price={productData?.price}
-          priceOriginal={productData?.price}
+          price={productPriceData?.priceSale}
+          priceOriginal={productPriceData?.price}
           rateValue={productData?.productStatisticResponse?.resultOfRating}
           numberOfRate={productData?.productStatisticResponse?.numberOfReview}
+          bookmarkStatus={productData?.saveStatusOfUserLogin || false}
         />
         <View style={styles.lineHr} />
         {ProductChoiceMemo}
@@ -308,12 +321,12 @@ const ProductDetail = (props) => {
           description={productData?.description}
           brand={productData?.brandResponse || {}}
         />
-        {productData?.storeId ? (
+        {productData?.locationId ? (
           <>
             <View style={styles.lineHrBig} />
             <ProductLocation
               info={productData?.productOwnerResponse}
-              location={productData?.location}
+              location={productData?.location || {}}
               productId={productData?.id}
             />
           </>

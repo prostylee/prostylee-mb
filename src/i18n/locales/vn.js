@@ -25,6 +25,7 @@ export default {
     textFollowing: 'Đang theo dõi',
     textPost: 'Bài đăng',
     textNear: '2.5km',
+    textNoPhoneNumber: 'Người dùng chưa đăng ký số điện thoại!',
   },
   codePush: {
     installButton: 'Cập nhật',
@@ -163,6 +164,8 @@ export default {
     similarProduct: 'Sản phẩm tương tự',
     buttonStore: 'Cửa hàng',
     buttonAddToCart: 'Thêm vào giỏ hàng',
+    buttonCall: 'Gọi điện',
+    buttonChat: 'Chat với người bán',
     sizeHelp: 'Hướng dẫn kích thước',
     productCoordinated: 'Sản phẩm có thể phối hợp',
     seeMore: 'Xem thêm',

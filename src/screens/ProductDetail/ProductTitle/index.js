@@ -28,6 +28,7 @@ const ProductTitle = ({
   priceOriginal,
   numberOfRate,
   navigation,
+  bookmarkStatus,
 }) => {
   const {colors} = useTheme();
 
@@ -75,13 +76,19 @@ const ProductTitle = ({
       <View style={styles.titleRow}>
         <Text style={styles.name}>{name}</Text>
         <TouchableOpacity style={styles.bookmark} onPress={() => {}}>
-          <ProductBookmark item={{id: productId}} />
+          <ProductBookmark
+            item={{id: productId, bookmarkStatus: bookmarkStatus}}
+          />
         </TouchableOpacity>
       </View>
-      <Text style={styles.price}>{currencyFormat(price, 'đ')}</Text>
+      <Text style={styles.price}>
+        {price
+          ? currencyFormat(price, 'đ')
+          : currencyFormat(priceOriginal, 'đ')}
+      </Text>
       <View style={styles.titleRow}>
         <Text style={styles.priceOriginal}>
-          {currencyFormat(priceOriginal, 'đ')}
+          {price ? currencyFormat(priceOriginal, 'đ') : ''}
         </Text>
         <TouchableOpacity
           style={styles.rating}
