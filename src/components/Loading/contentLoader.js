@@ -496,6 +496,30 @@ export const PostProductCategoryLoading = ({
     </ContentLoader>
   );
 };
+export const BrandListLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <ContentLoader
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}>
+      <Circle cx="76" cy="38" r="38" />
+      <Rect x="64" y="83" rx="5" ry="5" width="25" height="10" />
+      <Circle cx="197" cy="38" r="38" />
+      <Rect x="184" y="83" rx="5" ry="5" width="25" height="10" />
+      <Circle cx="318" cy="38" r="38" />
+      <Rect x="306" y="83" rx="5" ry="5" width="25" height="10" />
+    </ContentLoader>
+  );
+};
 
 HintKeywordLoading.defaultProps = {
   height: 10,
@@ -640,6 +664,17 @@ PostProductCategoryLoading.defaultProps = {
   },
   speed: 1.2,
 };
+BrandListLoading.defaultProps = {
+  height: 100,
+  width: deviceWidth * 0.95,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {
+    height: deviceHeight,
+  },
+  speed: 1.2,
+};
+
 const styles = StyleSheet.create({
   container: {
     display: 'flex',

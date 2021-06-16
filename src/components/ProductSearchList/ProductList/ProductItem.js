@@ -30,8 +30,8 @@ const ProductItem = ({item, index, navigation}) => (
       style={[
         styles.itemInner,
         {
-          paddingHorizontal: 15,
-          paddingLeft: index % 2 !== 0 ? 0 : 15,
+          paddingLeft: index % 2 !== 0 ? 6 : 15,
+          paddingRight: index % 2 === 0 ? 6 : 15,
         },
       ]}>
       <View style={[styles.imageContainer]}>

@@ -5,6 +5,7 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     // backgroundColor: '$white',
   },
   titleContainer: {
@@ -132,5 +133,11 @@ export default EStyleSheet.create({
     color: '$white',
     fontSize: 14,
     fontWeight: '500',
+  },
+  notfoundText: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '$lightGray',
+    lineHeight: 20,
   },
 });

@@ -47,7 +47,7 @@ const getMidBanner = function* ({payload}) {
 
 const getBrandList = function* ({payload}) {
   try {
-    yield put(storeActions.setStoreLoading(true));
+    yield put(storeActions.setBrandListLoading(true));
     const res = yield call(getBrandListApi, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getBrandListSuccess(res.data.data));
@@ -57,7 +57,23 @@ const getBrandList = function* ({payload}) {
   } catch (e) {
     console.error(e);
   } finally {
-    yield put(storeActions.setStoreLoading(false));
+    yield put(storeActions.setBrandListLoading(false));
+  }
+};
+
+const getBrandListLoadmore = function* ({payload}) {
+  try {
+    yield put(storeActions.setBrandListLoadmoreLoading(true));
+    const res = yield call(getBrandListApi, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(storeActions.getBrandListLoadmoreSuccess(res.data.data));
+    } else {
+      yield put(storeActions.getBrandListLoadmoreFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(storeActions.setBrandListLoadmoreLoading(false));
   }
 };
 
@@ -102,5 +118,6 @@ const watcher = function* () {
   yield takeLatest(storeTypes.GET_BRAND_LIST, getBrandList);
   yield takeLatest(storeTypes.GET_CATEGORY_LIST, getCategoryList);
   yield takeLatest(storeTypes.GET_BOTTOM_TAB_LIST, getBottomTabList);
+  yield takeLatest(storeTypes.GET_BRAND_LIST_LOADMORE, getBrandListLoadmore);
 };
 export default watcher();

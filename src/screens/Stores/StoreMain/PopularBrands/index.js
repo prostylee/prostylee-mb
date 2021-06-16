@@ -4,8 +4,10 @@ import styles from './style';
 import i18n from 'i18n';
 import {FlatList} from 'react-native-gesture-handler';
 import BrandItem from './BrandItem';
+import {useNavigation} from '@react-navigation/native';
 
 const PopularBrands = ({data = []}) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View
@@ -19,6 +21,12 @@ const PopularBrands = ({data = []}) => {
         ]}>
         <View style={styles.wrapTitle}>
           <Text style={styles.title}>{i18n.t('stores.popularBrand')}</Text>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('BrandFashions', {readOnly: true})
+            }>
+            <Text style={styles.seeMoreText}>{i18n.t('stores.seeMore')}</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.wrapList}>
           <FlatList
