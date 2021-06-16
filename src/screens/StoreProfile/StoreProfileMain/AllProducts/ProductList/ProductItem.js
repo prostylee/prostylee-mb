@@ -26,10 +26,7 @@ const ProductItem = ({item, index}) => {
     navigation.navigate('ProductDetail', {id: item.id});
   };
   return (
-    <TouchableOpacity
-      style={styles.itemWrapper}
-      key={`${item}-${index}`}
-      onPress={clickItem}>
+    <TouchableOpacity style={styles.itemWrapper} onPress={clickItem}>
       <View
         style={[
           styles.itemInner,
@@ -48,19 +45,21 @@ const ProductItem = ({item, index}) => {
             }
             resizeMode="cover"
           />
-          <ItemBadge value={priceSalePercent(item?.price, item?.priceSale)} />
+          <ItemBadge
+            value={priceSalePercent(item?.price || 0, item?.priceSale || 0)}
+          />
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.itemName}>{item?.name}</Text>
           <View style={{flexDirection: 'column'}}>
             <Text style={styles.itemPrice}>
-              {currencyFormat(item?.priceSale, 'đ')}
+              {currencyFormat(item?.priceSale || 0, 'đ')}
             </Text>
           </View>
           <View style={styles.toolContainer}>
             <View style={styles.ratingContainer}>
               <Text style={styles.itemDiscountPrice}>
-                {currencyFormat(item?.price, 'đ')}
+                {currencyFormat(item?.price || 0, 'đ')}
               </Text>
             </View>
 

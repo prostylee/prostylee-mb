@@ -1,4 +1,4 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {center, flexRow} from 'theme/style';
 
@@ -10,6 +10,7 @@ export default EStyleSheet.create({
   },
   contentWrapper: {
     backgroundColor: '$bgColor',
+    // paddingTop: Platform.OS === 'android' ? '78rem' : '80rem',
   },
   headerContainer: {
     display: 'flex',
@@ -40,6 +41,7 @@ export default EStyleSheet.create({
     paddingHorizontal: 10,
     width: 80,
     height: 35,
+
     // borderWidth: 1,
     // borderColor: '#fff',
   },

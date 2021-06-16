@@ -13,6 +13,8 @@ export const types = {
   GET_STORE_BESTSELLER_PRODUCT_FAILED: 'GET_STORE_BESTSELLER_PRODUCT_FAILED',
 
   SET_ALL_STORE_PRODUCT_LOADING: 'SET_ALL_STORE_PRODUCT_LOADING',
+  SET_ALL_STORE_PRODUCT_LOADMORE_LOADING:
+    'SET_ALL_STORE_PRODUCT_LOADMORE_LOADING',
   GET_ALL_STORE_PRODUCT: 'GET_ALL_STORE_PRODUCT',
   GET_ALL_STORE_PRODUCT_SUCCESS: 'GET_ALL_STORE_PRODUCT_SUCCESS',
   GET_ALL_STORE_PRODUCT_FAILED: 'GET_ALL_STORE_PRODUCT_FAILED',
@@ -40,10 +42,15 @@ export const actions = {
   getStoreBestSellerProductFailed: createAction(
     types.GET_STORE_BESTSELLER_PRODUCT_FAILED,
   ),
+
   setAllStoreProductLoading: createAction(types.SET_ALL_STORE_PRODUCT_LOADING),
+  setAllStoreProductLoadmoreLoading: createAction(
+    types.SET_ALL_STORE_PRODUCT_LOADMORE_LOADING,
+  ),
   getAllStoreProduct: createAction(types.GET_ALL_STORE_PRODUCT),
   getAllStoreProductSuccess: createAction(types.GET_ALL_STORE_PRODUCT_SUCCESS),
   getAllStoreProductFailed: createAction(types.GET_ALL_STORE_PRODUCT_FAILED),
+
   getAllStoreProductLoadmore: createAction(
     types.GET_ALL_STORE_PRODUCT_LOADMORE,
   ),
@@ -61,6 +68,7 @@ const defaultState = {
   bestSellerProductLoading: false,
   bestSellerProduct: null,
   allProductLoading: false,
+  allProductLoadmoreLoading: false,
   allProduct: null,
   allProductCurrentPage: 0,
   hasAllProductLoadmore: false,
@@ -91,8 +99,17 @@ export default handleActions(
     [types.SET_ALL_STORE_PRODUCT_LOADING]: (state, {payload}) => {
       return {...state, allProductLoading: payload};
     },
+    [types.SET_ALL_STORE_PRODUCT_LOADMORE_LOADING]: (state, {payload}) => {
+      return {...state, allProductLoadmoreLoading: payload};
+    },
     [types.GET_ALL_STORE_PRODUCT_SUCCESS]: (state, {payload}) => {
       const {totalPages, content} = payload;
+      console.log(
+        'TOTAL PAGE',
+        totalPages,
+        'CURRENT PAGE',
+        state.allProductCurrentPage,
+      );
       return {
         ...state,
         allProduct: payload,
@@ -108,6 +125,14 @@ export default handleActions(
     },
     [types.GET_ALL_STORE_PRODUCT_LOADMORE_SUCCESS]: (state, {payload}) => {
       const {totalPages, content} = payload;
+      console.log('LOAD MORE \n\n\n\n ');
+      console.log(
+        'TOTAL PAGE',
+        totalPages,
+        'CURRENT PAGE',
+        state.allProductCurrentPage,
+        state.allProductCurrentPage + UNIT_INCREASE + 1 < totalPages,
+      );
       payload.content = state.allProduct?.content.concat(content) || [];
       return {
         ...state,

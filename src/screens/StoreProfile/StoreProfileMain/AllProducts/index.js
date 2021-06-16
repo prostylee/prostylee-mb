@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import {
   Dimensions,
   View,
@@ -6,115 +6,95 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import i18n from 'i18n';
 import styles from './styles';
-import {Sort, Filter, CaretDown} from 'svg/common';
-import {ThemeView, Header, TextInputRounded} from 'components';
-import {
-  IconButton,
-  Searchbar,
-  RadioButton,
-  Divider,
-  Chip,
-} from 'react-native-paper';
-import {Colors} from 'components';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {RnRatingTap, Picker} from 'components';
 
-const WIDTH = Dimensions.get('window').width;
-import {debounce} from 'lodash';
+import {Chip} from 'react-native-paper';
+import {Colors} from 'components';
+
 import {MessageOutlined, Bell, BellWithNotiBadge} from 'svg/header';
 import ProductList from './ProductList';
 import SortDropDown from './SortDropDown';
+import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 
-const MockTag = [
-  'Best seller',
-  'Gần đây',
-  '🔥 Deal hot',
-  'Elegant',
-  'Best seller',
-  'Gần đây',
-  'Sale',
-  'Elegant',
-];
+import {
+  getStoreAllProductCurrentPage,
+  getStoreAllProductHasLoadmore,
+  getStoreAllProductLoadmoreLoadingSelector,
+} from 'redux/selectors/storeProfile';
 
-const GroupHeaderRightButton = ({haveNoti = false}) => {
-  return (
-    <View style={styles.headerGroupButtonRight}>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <MessageOutlined
-          width={20}
-          height={20}
-          color={Colors['$lightGray']}
-          strokeWidth={2}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        {haveNoti ? (
-          <BellWithNotiBadge
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        ) : (
-          <Bell
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        )}
-      </TouchableOpacity>
-    </View>
-  );
-};
-const TagList = () => (
-  <View style={styles.wrapList}>
-    <FlatList
-      style={styles.wrapChip}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      data={MockTag}
-      renderItem={({item, index}) => (
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}
-          key={`${item}-${index}`}>
-          {item}
-        </Chip>
-      )}
-    />
-  </View>
-);
+import {storeProfileActions} from 'redux/reducers';
+import {useDispatch, useSelector} from 'react-redux';
+import TagList from './TagList';
 
-const AllProducts = ({navigation}) => {
+const AllProducts = ({
+  navigation,
+  isEndReached = false,
+  setIsEndReached = () => {},
+  setHasLoadmore = () => {},
+}) => {
+  const dispatch = useDispatch();
+
   const [searchQuery, setSearchQuery] = React.useState('');
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
 
+  const hasLoadMore = useSelector((state) =>
+    getStoreAllProductHasLoadmore(state),
+  );
+
+  const loadmoreLoading = useSelector((state) =>
+    getStoreAllProductLoadmoreLoadingSelector(state),
+  );
+  const page = useSelector((state) => getStoreAllProductCurrentPage(state));
+
   const onChangeSearch = (query) => {
     setSearchQuery(query);
   };
 
+  const Footer = () => {
+    return (
+      <View style={styles.viewFooter}>
+        <ActivityIndicator animating color={Colors.$purple} size="small" />
+      </View>
+    );
+  };
+  const _handleLoadMore = () => {
+    dispatch(
+      storeProfileActions.getAllStoreProductLoadmore({
+        limit: LIMIT_DEFAULT,
+        page: page,
+        storeId: 1,
+      }),
+    );
+    setIsEndReached(false);
+  };
+  const _handleFilterByTag = (queryObject) => {
+    dispatch(
+      storeProfileActions.getAllStoreProduct({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        ...queryObject,
+      }),
+    );
+  };
+  useEffect(() => {
+    if (isEndReached) {
+      _handleLoadMore();
+    }
+  }, [isEndReached]);
+  useEffect(() => {
+    setHasLoadmore(hasLoadMore);
+  });
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tất cả sản phẩm</Text>
-      <TagList />
+      <TagList onTagPress={_handleFilterByTag} />
       <ProductList />
+      {loadmoreLoading ? <Footer /> : null}
     </View>
   );
 };

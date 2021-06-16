@@ -77,4 +77,8 @@ export default EStyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 12,
   },
+  viewFooter: {
+    width: '100%',
+    marginBottom: 50,
+  },
 });

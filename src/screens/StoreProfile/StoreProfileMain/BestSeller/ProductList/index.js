@@ -19,7 +19,7 @@ const ProductList = ({navigation}) => {
     getStoreBestSellerProductSelector(state),
   );
   const listBestSeller = bestSellerSelector?.content || [];
-  console.log('DATA BEST SELLER', listBestSeller);
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -28,7 +28,7 @@ const ProductList = ({navigation}) => {
         data={listBestSeller}
         numColumns={1}
         renderItem={({item, index}) => (
-          <ProductItem item={item} index={index} />
+          <ProductItem item={item} index={index} key={`${item.id}-${index}`} />
         )}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}

@@ -42,7 +42,7 @@ const getAllStoreProduct = function* ({payload}) {
 };
 const getAllStoreProductLoadmore = function* ({payload}) {
   try {
-    yield put(storeProfileActions.setAllStoreProductLoading(true));
+    yield put(storeProfileActions.setAllStoreProductLoadmoreLoading(true));
     const res = yield call(getAllStoreProductApi, payload);
 
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
@@ -55,7 +55,7 @@ const getAllStoreProductLoadmore = function* ({payload}) {
   } catch (e) {
     console.error(e);
   } finally {
-    yield put(storeProfileActions.setAllStoreProductLoading(false));
+    yield put(storeProfileActions.setAllStoreProductLoadmoreLoading(false));
   }
 };
 const getStoreBestSellerProduct = function* ({payload}) {

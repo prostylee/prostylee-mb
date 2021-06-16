@@ -9,6 +9,7 @@ import {
   ScrollView,
   Dimensions,
   Animated,
+  RefreshControl,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
@@ -22,6 +23,7 @@ import {storeProfileActions} from 'redux/reducers';
 import {
   getStoreLoadingSelector,
   getStoreInfoSelector,
+  getStoreAllProductHasLoadmore,
 } from 'redux/selectors/storeProfile';
 
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
@@ -62,7 +64,13 @@ const HeaderLeft = ({opacity, isAnimated = false}) => {
 };
 const HeaderRight = ({opacity, isAnimated = false}) => {
   return isAnimated ? (
-    <View style={styles.headerRightContainer}>
+    <View
+      style={[
+        styles.headerRightContainer,
+        {
+          marginBottom: 10,
+        },
+      ]}>
       <Animated.View style={{opacity}}>
         <TouchableOpacity>
           <MessageOutlined
@@ -106,16 +114,26 @@ const HeaderRight = ({opacity, isAnimated = false}) => {
 const Stores = (props) => {
   const dispatch = useDispatch();
 
+  const [isEndReached, setIsEndReached] = useState(false);
+  const [hasLoadmore, setHasLoadmore] = useState(false);
+
   const WIDTH = Dimensions.get('window').width;
   const scrollAnimated = useRef(new Animated.Value(0)).current;
-  const scrollRef = useRef();
+  const onScrollEvent = Animated.event(
+    [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
+    {useNativeDriver: false},
+  );
+  // const scrollRef = useRef();
+
   const {navigation} = props;
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector((state) => getStoreLoadingSelector(state));
   const storeInfo = useSelector((state) => getStoreInfoSelector(state));
-
-  console.log('STORE INFO', storeInfo);
+  // const hasLoadMore = useSelector(
+  //   (state) => getStoreAllProductHasLoadmore(state),
+  //   () => {},
+  // );
 
   useEffect(() => {
     dispatch(storeProfileActions.getStoreInfo(1));
@@ -133,18 +151,38 @@ const Stores = (props) => {
         storeId: 1,
       }),
     );
-
-    handleRefreshing(false);
   }, []);
 
-  const handleRefresh = () => {
+  useEffect(() => {
+    if (!loading) handleRefreshing(false);
+  }, [loading]);
+
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    return (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
+  };
+  const _handleRefresh = () => {
     handleRefreshing(true);
+    dispatch(storeProfileActions.getStoreInfo(1));
+    dispatch(
+      storeProfileActions.getAllStoreProduct({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        storeId: 1,
+      }),
+    );
+    dispatch(
+      storeProfileActions.getStoreBestSellerProduct({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        storeId: 1,
+      }),
+    );
   };
 
-  const onScrollEvent = Animated.event(
-    [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
-    {useNativeDriver: false},
-  );
   const opacity = scrollAnimated.interpolate({
     inputRange: [0, heightShow],
     outputRange: [0, 1],
@@ -155,39 +193,16 @@ const Stores = (props) => {
     outputRange: [-30, 0, 0],
     extrapolate: 'clamp',
   });
-  const handleLoadMore = () => {
-    if (hasLoadMore) {
-      dispatch(
-        storeActions.getListOfFuturedStoresLoadMore({
-          page: page + 1,
-          limit: LIMIT_DEFAULT,
-        }),
-      );
-    }
-  };
-
-  const renderFooter = () => {
-    if (!loadMoreLoading) {
-      return <View style={styles.viewFooter} />;
-    }
-
-    return (
-      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-        <ActivityIndicator animating color={Colors.$purple} size="small" />
-      </View>
-    );
-  };
+  // const width = scrollAnimated.interpolate({
+  //   inputRange: [0, heightShow * 0.2, 1],
+  //   outputRange: [-30, 0, 0],
+  //   extrapolate: 'clamp',
+  // });
 
   return (
-    <ThemeView isFullView style={styles.container}>
+    <View isFullView style={styles.container}>
       <HeaderAnimated
-        leftComponent={
-          <HeaderLeft
-            opacity={opacity}
-            marginTop={marginTop}
-            isAnimated={true}
-          />
-        }
+        leftComponent={<HeaderLeft opacity={opacity} isAnimated={true} />}
         rightComponent={
           <HeaderRight
             opacity={opacity}
@@ -202,8 +217,9 @@ const Stores = (props) => {
               backgroundColor: '#F4F5F5',
               height: 35,
               borderRadius: 4,
-              elevation: 0,
+              elevation: 1,
               padding: 0,
+              marginBottom: 10,
             }}
             inputStyle={{
               height: 35,
@@ -237,34 +253,46 @@ const Stores = (props) => {
           <Searchbar
             style={{
               width: WIDTH - 160,
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              // backgroundColor: '#00000017',
               height: 35,
               borderRadius: 4,
-              elevation: 0,
+              elevation: 1,
               padding: 0,
+              marginTop: 30,
+              zIndex: 999,
             }}
             inputStyle={{
               height: 35,
               fontSize: 14,
               lineHeight: 18,
               elevation: 0,
-              color: '#8B9399',
+              zIndex: 999,
+              // color: '#fff',
             }}
             placeholder={'Tìm kiếm'}
-            // onChangeText={onChangeSearch}
+            onChangeText={(v) => {
+              console.log('VALUE', v);
+            }}
             // value={searchQuery}
           />
         }
       />
-      <Animated.ScrollView
+      <ScrollView
         style={styles.contentWrapper}
-        ref={scrollRef}
-        onScroll={onScrollEvent}
+        onScroll={(e) => {
+          onScrollEvent(e);
+
+          if (isCloseToBottom(e.nativeEvent) && hasLoadmore && !isEndReached) {
+            setIsEndReached(true);
+          }
+        }}
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}>
+        showsHorizontalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={_handleRefresh} />
+        }>
         <CustomBackground />
-
         <StoreInfo
           logoUri={storeInfo?.logoUrl}
           name={storeInfo?.name}
@@ -273,9 +301,14 @@ const Stores = (props) => {
         <MidAdvertisingSlider />
         <VoucherHorizontalList navigation={props.navigation} />
         <BestSeller />
-        <AllProducts />
-      </Animated.ScrollView>
-    </ThemeView>
+        <AllProducts
+          navigation={navigation}
+          isEndReached={isEndReached}
+          setIsEndReached={setIsEndReached}
+          setHasLoadmore={setHasLoadmore}
+        />
+      </ScrollView>
+    </View>
   );
 };
 

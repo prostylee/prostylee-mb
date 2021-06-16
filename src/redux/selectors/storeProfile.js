@@ -26,6 +26,10 @@ export const getStoreAllProductLoadingSelector = createSelector(
   storeProfileReducer,
   (data) => data.allProductLoading || false,
 );
+export const getStoreAllProductLoadmoreLoadingSelector = createSelector(
+  storeProfileReducer,
+  (data) => data.allProductLoadmoreLoading || false,
+);
 
 export const getStoreAllProductSelector = createSelector(
   storeProfileReducer,

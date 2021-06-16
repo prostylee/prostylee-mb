@@ -17,10 +17,6 @@ export default EStyleSheet.create({
   },
   listWrapper: {
     backgroundColor: '$white',
-    // justifyContent: 'flex-start',
-    // alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
   },
   itemWrapper: {
     width: '$screenWidth/2',

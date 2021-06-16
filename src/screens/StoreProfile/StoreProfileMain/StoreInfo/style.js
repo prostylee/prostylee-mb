@@ -1,4 +1,4 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {center, flexRow} from 'theme/style';
 
@@ -13,6 +13,7 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    // marginTop: Platform.OS === 'android' ? '78rem' : '80rem',
   },
   storeNameWrapper: {
     flexDirection: 'column',

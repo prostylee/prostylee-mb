@@ -6,7 +6,8 @@ const WIDTH = Dimensions.get('window').width - 30;
 export default EStyleSheet.create({
   container: {
     width: 700,
-    backgroundColor: '#333333',
+    backgroundColor: '#000',
+    opacity: 0.79,
     height: 700,
     position: 'absolute',
     top: -550,
