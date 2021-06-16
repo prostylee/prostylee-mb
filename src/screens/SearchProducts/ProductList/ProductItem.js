@@ -30,8 +30,8 @@ const ProductItem = ({item, index, navigation}) => {
         style={[
           styles.itemInner,
           {
-            paddingHorizontal: 15,
-            paddingLeft: index % 2 !== 0 ? 0 : 15,
+            paddingLeft: index % 2 !== 0 ? 6 : 15,
+            paddingRight: index % 2 === 0 ? 6 : 15,
           },
         ]}>
         <View style={[styles.imageContainer]}>
@@ -48,7 +48,7 @@ const ProductItem = ({item, index, navigation}) => {
           />
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.itemName}>Áo nỉ hoddie trơn đủ màu Unisex</Text>
+          <Text style={styles.itemName}>{item?.name}</Text>
           <View style={{flexDirection: 'column'}}>
             <Text style={styles.itemDiscountPrice}>
               {currencyFormat(item?.priceSale ? item?.priceSale : 0, 'đ')}

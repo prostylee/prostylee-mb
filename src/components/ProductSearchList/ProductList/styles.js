@@ -1,5 +1,6 @@
 import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+const WIDTH = Dimensions.get('window').width;
 export default EStyleSheet.create({
   container: {
     flex: 1,
@@ -24,7 +25,7 @@ export default EStyleSheet.create({
     // alignItems: 'center',
   },
   itemWrapper: {
-    width: '$screenWidth/2',
+    width: WIDTH / 2,
     height: 300,
     marginBottom: 20,
   },

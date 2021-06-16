@@ -10,6 +10,7 @@ import SortDropDown from './SortDropDown';
 import TagList from './TagList';
 import FilterBar from './FilterBar';
 import {PRODUCT_SORT_ITEM} from 'constants';
+import styles from './styles';
 
 interface ProductSearchListProps {
   title: String;
