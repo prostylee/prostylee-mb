@@ -1,5 +1,6 @@
 import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+const WIDTH = Dimensions.get('window').width;
 export default EStyleSheet.create({
   container: {
     flex: 1,
@@ -67,5 +68,25 @@ export default EStyleSheet.create({
     marginTop: 8,
     marginRight: 8,
     backgroundColor: '$bgColor',
+  },
+  searchStyle: {
+    minWidth: WIDTH - 140,
+    backgroundColor: '#F4F5F5',
+    height: 32,
+    borderRadius: 4,
+    elevation: 0,
+    padding: 0,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  searchInputStyle: {
+    height: '100%',
+    fontSize: 14,
+    lineHeight: 16,
+    elevation: 0,
+    overflow: 'hidden',
+    padding: 0,
+    marginLeft: -15,
   },
 });

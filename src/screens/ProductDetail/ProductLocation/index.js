@@ -1,3 +1,5 @@
+import styles from './styles';
+
 import React from 'react';
 import {
   View,
@@ -8,21 +10,31 @@ import {
   Platform,
   Linking,
 } from 'react-native';
+
+/*Hooks*/
+import {useTheme} from '@react-navigation/native';
+
+/*Components*/
 import IconIcons from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
-import i18n from 'i18n';
-import {useTheme} from '@react-navigation/native';
-import styles from './styles';
 
-const ProductLocation = (props) => {
+/*Transalte*/
+import i18n from 'i18n';
+
+/*Components*/
+import {FollowTextButton} from 'components';
+
+/*Proptypes*/
+import PropTypes from 'prop-types';
+
+const ProductLocation = ({productId, info, location}) => {
   const {colors} = useTheme();
-  const info = props.info ? props.info : {};
-  const location = props.location ? props.location : {};
   const address = `${location.address ? location.address : ''}, ${
     location.state ? location.state : ''
   }, ${location.city ? location.city : ''}, ${
     location.country ? location.country : ''
   }`;
+
   const findPathMapsApp = () => {
     const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
     const latLng = `${location.latitude},${location.longitude}`;
@@ -33,6 +45,7 @@ const ProductLocation = (props) => {
     });
     Linking.openURL(url);
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.locationName}>
@@ -40,11 +53,7 @@ const ProductLocation = (props) => {
           <Image source={{uri: info?.logoUrl}} style={styles.infoLogo} />
           <Text style={styles.infoNameText}>{info?.name}</Text>
         </View>
-        <TouchableOpacity style={styles.infoFollow} onPress={() => {}}>
-          <Text style={styles.followText}>
-            {i18n.t('productDetail.follow')}
-          </Text>
-        </TouchableOpacity>
+        <FollowTextButton item={{id: productId}} />
       </View>
       <View style={styles.mapPlaceholder}>
         <MapView
@@ -81,6 +90,18 @@ const ProductLocation = (props) => {
       </View>
     </View>
   );
+};
+
+ProductLocation.defaultProps = {
+  productId: 0,
+  info: {},
+  location: {},
+};
+
+ProductLocation.PropTypes = {
+  productId: PropTypes.number.isRequired,
+  info: PropTypes.object,
+  location: PropTypes.object,
 };
 
 export default ProductLocation;

@@ -4,6 +4,7 @@ import {
   ScrollView,
   StatusBar,
   KeyboardAvoidingView,
+  View,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -23,6 +24,9 @@ const Container = ({
   keyboardShouldPersistTaps,
   translucent,
   nestedScrollEnabled,
+  overLapStatusBar = false,
+  hasRefreshing = false,
+  ...rest
 }) => (
   <KeyboardAvoidingView style={styles.wrapper}>
     <ScrollView
@@ -32,10 +36,15 @@ const Container = ({
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       scrollEventThrottle={scrollEventThrottle}
-      bounces={false}
+      bounces={hasRefreshing}
       nestedScrollEnabled={nestedScrollEnabled}
-      ref={scrollViewRef}>
-      <SafeAreaView style={[styles.safeAreaTopStyle, safeAreaTopStyle]} />
+      ref={scrollViewRef}
+      {...rest}>
+      {overLapStatusBar ? (
+        <View style={[styles.safeAreaTopStyle, safeAreaTopStyle]} />
+      ) : (
+        <SafeAreaView style={[styles.safeAreaTopStyle, safeAreaTopStyle]} />
+      )}
       <StatusBar
         barStyle={barStyle}
         hidden={hidden}

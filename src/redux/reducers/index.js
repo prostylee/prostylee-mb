@@ -41,10 +41,32 @@ import status, {
   selectors as statusSelectors,
   types as statusTypes,
 } from './status';
+
 import categories, {
   actions as categoriesActions,
   types as categoriesTypes,
 } from './categories';
+
+import postProduct, {
+  actions as postProductActions,
+  selectors as postProductSelectors,
+  types as postProductTypes,
+} from './postProduct';
+
+import address, {
+  actions as addressActions,
+  selectors as addressSelectors,
+  types as addressTypes,
+} from './address';
+
+import cart, {actions as cartActions, types as cartTypes} from './cart';
+import search, {actions as searchActions, types as searchTypes} from './search';
+import notification, {
+  actions as notificationActions,
+  types as notificationTypes,
+} from './notification';
+
+import myPage, {actions as myPageActions, types as myPageTypes} from './myPage';
 
 const rootReducer = combineReducers({
   common,
@@ -56,6 +78,12 @@ const rootReducer = combineReducers({
   reviewRating,
   status,
   categories,
+  postProduct,
+  address,
+  cart,
+  search,
+  notification,
+  myPage,
 });
 
 export {commonActions, commonSelectors, commonTypes};
@@ -67,5 +95,11 @@ export {dynamicUsersActions, dynamicUsersTypes};
 export {reviewRatingActions, reviewRatingSelectors, reviewRatingTypes};
 export {statusActions, statusSelectors, statusTypes};
 export {categoriesActions, categoriesTypes};
+export {postProductActions, postProductSelectors, postProductTypes};
+export {addressActions, addressSelectors, addressTypes};
+export {cartActions, cartTypes};
+export {searchActions, searchTypes};
+export {notificationActions, notificationTypes};
+export {myPageActions, myPageTypes};
 
 export default rootReducer;

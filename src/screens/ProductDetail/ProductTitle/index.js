@@ -1,23 +1,47 @@
-import React from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
 import styles from './styles';
 
+import React from 'react';
+import {View, TouchableOpacity, Text} from 'react-native';
+
+/*Hooks*/
+import {useSelector} from 'react-redux';
+import {useTheme} from '@react-navigation/native';
+
+/*Reducers*/
+import {productSelectors} from 'reducers';
+
+/*Components*/
+import {ProductBookmark} from 'components';
 import Entypo from 'react-native-vector-icons/Entypo';
 import IonIcons from 'react-native-vector-icons/Ionicons';
-import {useTheme} from '@react-navigation/native';
-import {currencyFormat} from 'utils/currency';
-import {BookMark} from 'svg/common';
 
-const ProductTitle = (props) => {
+/*Utils*/
+import {currencyFormat} from 'utils/currency';
+
+/*Proptypes*/
+import PropTypes from 'prop-types';
+
+const ProductTitle = ({
+  productId,
+  name,
+  price,
+  priceOriginal,
+  numberOfRate,
+  navigation,
+  bookmarkStatus,
+}) => {
   const {colors} = useTheme();
-  const name = props.name ? props.name : '';
-  const price = props.price ? props.price : 0;
-  const priceOriginal = props.priceOriginal ? props.priceOriginal : 0;
-  const rateValue = props.rateValue ? props.rateValue : 0;
-  const numberOfRate = props.numberOfRate ? props.numberOfRate : 0;
-  const Rating = () => {
+
+  const totalRate = useSelector((state) =>
+    productSelectors.getProductCommentsAverage(state),
+  );
+
+  const totalRateDisplay =
+    typeof totalRate === 'number' ? totalRate?.toFixed(1) : 0;
+
+  const Rating = ({rate}) => {
     return [0, 1, 2, 3, 4].map((item) => {
-      if (rateValue - item >= 1) {
+      if (rate - item >= 1) {
         return (
           <Entypo
             key={`star_${item}`}
@@ -26,7 +50,7 @@ const ProductTitle = (props) => {
             color={colors['$rateStar']}
           />
         );
-      } else if (rateValue - item > 0) {
+      } else if (rate - item > 0) {
         return (
           <IonIcons
             key={`star_${item}`}
@@ -52,19 +76,32 @@ const ProductTitle = (props) => {
       <View style={styles.titleRow}>
         <Text style={styles.name}>{name}</Text>
         <TouchableOpacity style={styles.bookmark} onPress={() => {}}>
-          <BookMark />
+          <ProductBookmark
+            item={{id: productId, bookmarkStatus: bookmarkStatus}}
+          />
         </TouchableOpacity>
       </View>
-      <Text style={styles.price}>{currencyFormat(price, 'đ')}</Text>
+      <Text style={styles.price}>
+        {price
+          ? currencyFormat(price, 'đ')
+          : currencyFormat(priceOriginal, 'đ')}
+      </Text>
       <View style={styles.titleRow}>
         <Text style={styles.priceOriginal}>
-          {currencyFormat(priceOriginal, 'đ')}
+          {price ? currencyFormat(priceOriginal, 'đ') : ''}
         </Text>
-        <TouchableOpacity style={styles.rating} onPress={() => {}}>
-          <Rating />
-          <Text style={styles.rateNumber}>{`${rateValue.toFixed(
-            1,
-          )} (${numberOfRate})`}</Text>
+        <TouchableOpacity
+          style={styles.rating}
+          onPress={() => {
+            navigation.navigate('ReviewRating', {
+              productId: productId,
+            });
+          }}>
+          <Rating rate={totalRate} />
+          <Text
+            style={
+              styles.rateNumber
+            }>{`${totalRateDisplay} (${numberOfRate})`}</Text>
           <IonIcons
             name={'ios-chevron-forward'}
             size={14}
@@ -74,6 +111,22 @@ const ProductTitle = (props) => {
       </View>
     </View>
   );
+};
+
+ProductTitle.defaultProps = {
+  productId: null,
+  name: null,
+  price: 0,
+  priceOriginal: 0,
+  numberOfRate: 0,
+};
+
+ProductTitle.PropTypes = {
+  productId: PropTypes.number.isRequired,
+  name: PropTypes.string,
+  price: PropTypes.number,
+  priceOriginal: PropTypes.number,
+  numberOfRate: PropTypes.number,
 };
 
 export default ProductTitle;

@@ -9,12 +9,17 @@ const ButtonOutlined = ({
   label,
   contentStyle,
   labelStyle,
+  style,
   ...props
 }) => (
   <Button
     disabled={disabled}
     contentStyle={[styles.button, contentStyle]}
-    style={[styles.buttonWrapper, disabled && styles.disabledButton]}
+    style={[
+      styles.buttonWrapper,
+      style,
+      disabled && styles.disabledButton,
+    ]}
     labelStyle={[styles.labelStyle, labelStyle]}
     {...props}>
     {label}

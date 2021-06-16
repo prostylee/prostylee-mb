@@ -4,7 +4,7 @@ import styles from './styles';
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import Picker from '../Picker';
-import {AirbnbRating} from 'components';
+import {AirbnbRating, CustomRating} from 'components';
 import {Divider} from 'react-native-paper';
 import {Sort, Filter, CaretDown} from 'svg/common';
 import i18n from 'i18n';
@@ -41,16 +41,7 @@ const BottomHeaderAnimated = ({
     setVisible(true);
   };
 
-  const renderStar = (star) => (
-    <AirbnbRating
-      isDisabled={true}
-      size={20}
-      showRating={false}
-      defaultRating={star}
-      reviewColor="#333333"
-      reviewSize={14}
-    />
-  );
+  const renderStar = (star) => <CustomRating rate={star} size={20} />;
 
   const handleSort = (value) => {
     setSortValue(value);
@@ -103,16 +94,19 @@ const BottomHeaderAnimated = ({
             <RadioButton.Item
               label={i18n.t('reviewRating.default')}
               value="default"
+              mode="ios"
               color="#823ffd"
             />
             <RadioButton.Item
               label={i18n.t('reviewRating.newest')}
               value="newest"
+              mode="ios"
               color="#823ffd"
             />
             <RadioButton.Item
               label={i18n.t('reviewRating.oldest')}
               value="oldest"
+              mode="ios"
               color="#823ffd"
             />
           </RadioButton.Group>
@@ -121,11 +115,41 @@ const BottomHeaderAnimated = ({
             onValueChange={handleFilter}
             value={filterValue}
             color="#823ffd">
-            <RadioButton.Item label={renderStar(5)} value={5} color="#823ffd" />
-            <RadioButton.Item label={renderStar(4)} value={4} color="#823ffd" />
-            <RadioButton.Item label={renderStar(3)} value={3} color="#823ffd" />
-            <RadioButton.Item label={renderStar(2)} value={2} color="#823ffd" />
-            <RadioButton.Item label={renderStar(1)} value={1} color="#823ffd" />
+            <RadioButton.Item
+              label={renderStar(5)}
+              mode="ios"
+              labelStyle={styles.wrapLabelRadioButton}
+              value={5}
+              color="#823ffd"
+            />
+            <RadioButton.Item
+              label={renderStar(4)}
+              mode="ios"
+              labelStyle={styles.wrapLabelRadioButton}
+              value={4}
+              color="#823ffd"
+            />
+            <RadioButton.Item
+              label={renderStar(3)}
+              mode="ios"
+              labelStyle={styles.wrapLabelRadioButton}
+              value={3}
+              color="#823ffd"
+            />
+            <RadioButton.Item
+              label={renderStar(2)}
+              mode="ios"
+              labelStyle={styles.wrapLabelRadioButton}
+              value={2}
+              color="#823ffd"
+            />
+            <RadioButton.Item
+              label={renderStar(1)}
+              mode="ios"
+              labelStyle={styles.wrapLabelRadioButton}
+              value={1}
+              color="#823ffd"
+            />
           </RadioButton.Group>
         )}
       </Picker>

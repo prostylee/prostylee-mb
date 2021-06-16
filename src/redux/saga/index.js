@@ -8,6 +8,27 @@ import daynamicUsers from './dynamicUsers';
 import reviewRating from './reviewRating';
 import status from './status';
 import categories from './categories';
+import cart from './cart';
+import address from './address';
+
+import search from './search';
+import topSearch from './search/topSearch';
+import hintProductSearch from './search/hintProductSearch';
+import featuredProductSearch from './search/featuredProductSearch';
+import storeSearch from './search/storeSearch';
+import productSearchMain from './search/productSearchMain';
+import productFilter from './search/productFilter';
+import listNotification from './notification';
+import storeMain from './stores/storeMain';
+import personalSaler from './stores/personalSaler';
+import nearbyStore from './stores/nearbyStore';
+import bestSeller from './stores/bestSellers';
+import flashSale from './stores/flashSale';
+import vouchers from './stores/vouchers';
+
+import postProduct from './postProduct';
+
+import myPage from './myPage';
 
 export default function* rootSaga() {
   yield all([
@@ -19,5 +40,23 @@ export default function* rootSaga() {
     ...reviewRating,
     ...status,
     ...categories,
+    ...cart,
+    ...address,
+    ...search,
+    ...topSearch,
+    ...hintProductSearch,
+    ...featuredProductSearch,
+    ...storeSearch,
+    ...productSearchMain,
+    ...productFilter,
+    ...listNotification,
+    ...storeMain,
+    ...personalSaler,
+    ...nearbyStore,
+    ...bestSeller,
+    ...flashSale,
+    ...vouchers,
+    ...postProduct,
+    ...myPage,
   ]);
 }

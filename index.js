@@ -10,7 +10,7 @@ import {name as appName} from './app.json';
 import CodePush from 'react-native-code-push';
 
 LogBox.ignoreAllLogs();
-
+// AppRegistry.registerComponent(appName, () => App);
 AppRegistry.registerComponent(appName, () =>
   CodePush({
     updateDialog: {

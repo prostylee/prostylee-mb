@@ -1,49 +1,59 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+
+import {useDispatch} from 'react-redux';
 import {Text, View, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {Image, NumberInputUpDown} from 'components';
 import HeaderStore from './HeaderStore';
 import {currencyFormat} from 'utils/currency';
 import Modal from 'react-native-modal';
-import {IconButton, Colors} from 'react-native-paper';
 import ModalChangeCart from '../ModalChangeCart';
-import {DownArrow} from 'svg/common';
+import {DownArrow, Close} from 'svg/common';
+import {cartActions} from 'reducers';
 
-const Item = ({product, navigation}) => {
+const Item = ({product}) => {
+  const {storeId, storeName, storeAvatar, data, amount, options} = product;
   const [visible, setVisible] = useState(false);
+  const [currentId, setCurrentId] = useState();
 
-  const {storeId, storeName, storeAvatar, data} = product;
+  const dispatch = useDispatch();
 
-  useEffect(() => {}, [JSON.stringify(data)]);
+  const onChangeAttr = (pId) => {
+    setCurrentId(pId);
+    setVisible(true);
+  };
+
+  const onChaneAmount = (amount, item) => {
+    dispatch(cartActions.setCartAmount({item: item, newAmount: amount}));
+  };
 
   return (
     <>
       <Modal
-        animationIn="fadeIn"
-        animationOut="fadeOut"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
         transparent={true}
         isVisible={visible}
-        animationOutTiming={20}
+        animationInTiming={100}
+        animationOutTiming={100}
         backdropOpacity={0.3}
         style={{padding: 0}}
         testID={'modal'}
         isVisible={visible}
-        // onSwipeComplete={() => setVisible(false)}
-        // swipeDirection={['down']}
-        // propagateSwipe={true}
         style={styles.modal}>
         <View style={styles.modalChangeColor}>
           <View style={styles.contentBox}>
             <View style={styles.modalHeader}>
-              <IconButton
-                icon="close"
-                color={Colors.black500}
-                size={20}
-                onPress={() => setVisible(false)}
-              />
+              <View style={styles.wrapButtonEmpty}></View>
+              <View style={styles.wrapButtonClose}>
+                <TouchableOpacity
+                  style={styles.buttonClose}
+                  onPress={() => setVisible(false)}>
+                  <Close />
+                </TouchableOpacity>
+              </View>
             </View>
-            <ModalChangeCart />
+            <ModalChangeCart productId={currentId} currentOptions={options} />
           </View>
         </View>
       </Modal>
@@ -55,8 +65,8 @@ const Item = ({product, navigation}) => {
               <View style={styles.wrapImageThumbnail}>
                 <Image
                   source={
-                    item.productImage
-                      ? {uri: item?.productImage}
+                    item?.imageUrls?.length
+                      ? {uri: item?.imageUrls[0]}
                       : require('assets/images/default.png')
                   }
                   style={styles.productAvatar}
@@ -64,32 +74,49 @@ const Item = ({product, navigation}) => {
                 />
               </View>
               <View style={styles.wrapTextContent}>
-                <View>
+                <View style={styles.wrapText}>
                   <Text numberOfLines={2} style={styles.name}>
-                    {item.productName}
+                    {item.name}
                   </Text>
-                  {item?.productPrice ? (
+                  {item?.priceSale ? (
                     <Text numberOfLines={1} style={styles.price}>
-                      {currencyFormat(item?.productPrice, 'đ')}
+                      {currencyFormat(item?.priceSale, 'đ')}
                     </Text>
                   ) : null}
                 </View>
                 <View style={styles.wrapAmount}>
                   <View style={styles.wrapSize}>
                     <Text numberOfLines={1} style={styles.name}>
-                      Size: {item.productSize}&nbsp;
-                      <TouchableOpacity
-                        style={styles.productColor}
-                        onPress={() => setVisible(true)}>
-                        <Text style={styles.addButtonText}>
-                          &nbsp;{item.productColor}&nbsp;
-                          <DownArrow />
-                        </Text>
-                      </TouchableOpacity>
+                      {options.map((op, idx) => {
+                        return (
+                          <TouchableOpacity
+                            style={[
+                              styles.productAttr,
+                              {
+                                borderLeftWidth: idx !== 0 ? 1 : 0,
+                              },
+                            ]}
+                            onPress={() => onChangeAttr(item.id)}>
+                            {/* <Text style={styles.name}>
+                              {`${op.label}:`}&nbsp;
+                            </Text> */}
+                            <Text style={styles.addButtonText}>
+                              {op.value.attrValue}
+                            </Text>
+                          </TouchableOpacity>
+                        );
+                      })}
                     </Text>
+                    <TouchableOpacity onPress={() => onChangeAttr(item.id)}>
+                      <DownArrow />
+                    </TouchableOpacity>
                   </View>
                   <View style={styles.wrapUpdown}>
-                    <NumberInputUpDown value={+item.amount} minValue={0} />
+                    <NumberInputUpDown
+                      value={+amount}
+                      minValue={0}
+                      onChange={(value) => onChaneAmount(value, item)}
+                    />
                   </View>
                 </View>
               </View>

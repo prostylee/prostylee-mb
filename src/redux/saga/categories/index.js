@@ -12,6 +12,7 @@ const getListLeftCategories = function* ({payload}) {
     yield put(categoriesActions.setLeftLoading(true));
     yield put(categoriesActions.setPageLeftCategoriesDefault());
     const res = yield call(getParentCategories, payload);
+
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(categoriesActions.getListLeftCategoriesSuccess(res.data.data));
     } else {

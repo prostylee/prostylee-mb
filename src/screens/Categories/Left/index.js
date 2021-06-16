@@ -12,6 +12,7 @@ import {
   getLoadLeftCategoriesMoreLoadingSelector,
   getHasLoadMoreLeftCategoriesSelector,
   getPageLeftCategoriesSelector,
+  getCategoriesParentSelectSelector,
 } from 'redux/selectors/categories';
 
 import CategoriesRightItem from './item.js';
@@ -20,7 +21,7 @@ import {CategoriesLeftLoading} from 'components/Loading/contentLoader';
 import {categoriesActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
-const LeftCategories = () => {
+const LeftCategories = ({setBanner}) => {
   const dispatch = useDispatch();
   const [refreshing, handleRefreshing] = useState(false);
 
@@ -28,6 +29,9 @@ const LeftCategories = () => {
 
   const listLeftCategoriesSelector = useSelector((state) =>
     getListLeftCategoriesSelector(state),
+  );
+  const categoryParentSelect = useSelector((state) =>
+    getCategoriesParentSelectSelector(state),
   );
 
   const listLeftCategories = listLeftCategoriesSelector?.content || [];
@@ -41,6 +45,25 @@ const LeftCategories = () => {
   );
 
   const page = useSelector((state) => getPageLeftCategoriesSelector(state));
+
+  if (
+    (!categoryParentSelect || !categoryParentSelect.id) &&
+    listLeftCategories &&
+    listLeftCategories.length
+  ) {
+    setBanner(
+      listLeftCategories[0]?.banner ? listLeftCategories[0]?.banner : '',
+    );
+    dispatch(
+      categoriesActions.setCategoriesParentSelect(listLeftCategories?.[0]),
+    );
+  }
+
+  useEffect(() => {
+    if (categoryParentSelect && categoryParentSelect.banner) {
+      setBanner(categoryParentSelect.banner);
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(
@@ -97,7 +120,13 @@ const LeftCategories = () => {
       ) : (
         <FlatList
           data={listLeftCategories}
-          renderItem={({item}) => <CategoriesRightItem item={item} />}
+          renderItem={({item}) => (
+            <CategoriesRightItem
+              item={item}
+              setBanner={setBanner}
+              listLeftCategories={listLeftCategories}
+            />
+          )}
           numColumns={1}
           keyExtractor={(item, index) => index}
           refreshing={refreshing}

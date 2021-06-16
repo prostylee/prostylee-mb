@@ -6,19 +6,37 @@ import {View, TouchableOpacity as Touch, Text} from 'react-native';
 import styles from './styles';
 import {Colors, Image} from 'components';
 import ProductsCategories from '../Categories';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Searchbar} from 'react-native-paper';
 import {ChevronLeft} from 'svg/common';
+import {productActions} from 'redux/reducers';
 import {getCategoriesSelectSelector} from 'redux/selectors/categories';
 import {useDispatch, useSelector} from 'react-redux';
+let timeoutSearch = null;
 
-const HeaderList = ({heightShow, leftPress, navigation}) => {
+const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
+  const dispatch = useDispatch();
   const categoriesSelect = useSelector((state) =>
     getCategoriesSelectSelector(state),
   );
   const [searchQuery, setSearchQuery] = React.useState('');
-  const onChangeSearch = (query) => setSearchQuery(query);
-  console.log('categoriesSelect');
-  console.log(categoriesSelect);
+  const onChangeSearch = (query) => {
+    dispatch(productActions.setListProductLoading(true));
+    clearTimeout(timeoutSearch);
+    setSearchQuery(query);
+    timeoutSearch = setTimeout(() => {
+      dispatch(
+        productActions.getListProduct({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          categoryId: categoryId,
+          sorts: 'name',
+          keyword: query,
+        }),
+      );
+    }, 1000);
+    setSearchQuery(query);
+  };
   return (
     <View
       style={{
@@ -40,6 +58,9 @@ const HeaderList = ({heightShow, leftPress, navigation}) => {
           placeholder={i18n.t('search')}
           onChangeText={onChangeSearch}
           value={searchQuery}
+          onSubmitEditing={() => {
+            navigation.navigate('SearchProducts');
+          }}
         />
       </View>
       <View style={styles.wrapButtonLeft}>

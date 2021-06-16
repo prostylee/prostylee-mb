@@ -3,13 +3,29 @@ import {Dimensions, View} from 'react-native';
 import i18n from 'i18n';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import styles from './styles';
-
-import {ThemeView, Header, TextInputRounded} from 'components';
-import {Chip, Divider, Text} from 'react-native-paper';
-import {Trending} from 'svg/common';
+import {Divider, Text} from 'react-native-paper';
+import debounce from 'lodash/debounce';
 import {Colors} from 'components';
+import {currencyFormat} from 'utils/currency';
+import {getProductFilterState} from 'redux/selectors/search/productFilter';
+import {useSelector} from 'react-redux';
 const WIDTH = Dimensions.get('window').width;
-const PriceFilter = ({navigation}) => {
+const PriceFilter = ({
+  minValue = 0,
+  maxValue = 1000000,
+  onPriceChange = () => {},
+}) => {
+  const filterState = useSelector((state) => getProductFilterState(state));
+  const priceState = filterState.price;
+
+  const _handleValueChangeDebounce = debounce(
+    (value) => {
+      onPriceChange(value);
+    },
+    1000,
+    {maxWait: 2000, trailing: true, leading: false},
+  );
+
   return (
     <>
       <View style={styles.wrapHeader}>
@@ -21,7 +37,7 @@ const PriceFilter = ({navigation}) => {
               color: Colors['$black500'],
             },
           ]}>
-          0đ - 100.000đ
+          {currencyFormat(minValue, 'đ')} - {currencyFormat(maxValue, 'đ')}
         </Text>
       </View>
       <View style={styles.wrapChip}>
@@ -35,9 +51,10 @@ const PriceFilter = ({navigation}) => {
             width: 20,
             height: 20,
           }}
-          values={[10, 100]}
-          min={10}
-          max={100}
+          onValuesChange={_handleValueChangeDebounce}
+          values={[priceState?.[0], priceState?.[1]]}
+          min={minValue}
+          max={maxValue}
           markerOffsetY={2}
           enabledTwo={true}
           isMarkersSeparated={true}

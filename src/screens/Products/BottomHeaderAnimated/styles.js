@@ -2,13 +2,13 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
   container: {
-    width: '100%'
+    width: '100%',
   },
   wrapBlockOne: {
     height: 45,
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   wrapBlockFilter: {
     height: 45,
@@ -16,11 +16,11 @@ export default EStyleSheet.create({
     alignItems: 'center',
     paddingRight: 16,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   contentBlockOne: {
     height: 45,
-    width: 80,
+    minWidth: 100,
     alignItems: 'center',
     paddingLeft: 16,
     flexDirection: 'row',
@@ -47,6 +47,6 @@ export default EStyleSheet.create({
   itemChips: {
     height: 32,
     marginTop: 5,
-    marginRight: 10
+    marginRight: 10,
   },
 });

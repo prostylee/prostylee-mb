@@ -8,8 +8,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getCategoriesParentSelectSelector} from 'redux/selectors/categories';
 import {categoriesActions} from 'redux/reducers';
 import {IMG_RATIO, LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {Colors} from 'components';
 
-const CategoriesLeftItem = ({item}) => {
+const CategoriesLeftItem = ({item, setBanner}) => {
   if (item && item.id === undefined) {
     return null;
   }
@@ -22,14 +23,17 @@ const CategoriesLeftItem = ({item}) => {
     : false;
 
   const clickItem = () => {
-    dispatch(categoriesActions.setCategoriesParentSelect(item));
-    dispatch(
-      categoriesActions.getListRightCategories({
-        page: PAGE_DEFAULT,
-        limit: LIMIT_DEFAULT,
-        parentId: item?.id,
-      }),
-    );
+    if (!active) {
+      setBanner(item.banner);
+      dispatch(categoriesActions.setCategoriesParentSelect(item));
+      dispatch(
+        categoriesActions.getListRightCategories({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          parentId: item?.id,
+        }),
+      );
+    }
   };
 
   return (
@@ -44,10 +48,18 @@ const CategoriesLeftItem = ({item}) => {
             }
             resizeMode="cover"
             style={styles.imageThumbnail}
+            tintColor={active ? Colors['$purple'] : Colors['$black']}
             PlaceholderContent={<ActivityIndicator />}
           />
           <View style={{height: 32}}>
-            <Text numberOfLines={2} style={styles.title}>
+            <Text
+              numberOfLines={2}
+              style={[
+                styles.title,
+                {
+                  color: active ? Colors['$purple'] : Colors['$black'],
+                },
+              ]}>
               {item?.name}
             </Text>
           </View>

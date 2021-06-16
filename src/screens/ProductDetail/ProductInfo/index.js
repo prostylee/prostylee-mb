@@ -1,15 +1,26 @@
-import React from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
-import IconIcons from 'react-native-vector-icons/Ionicons';
-import Collapsible from 'react-native-collapsible';
-import i18n from 'i18n';
-import {useTheme} from '@react-navigation/native';
 import styles from './styles';
 
-const ProductInfo = (props) => {
+import React from 'react';
+import {View, TouchableOpacity, Text} from 'react-native';
+
+/*Hooks*/
+import {useTheme} from '@react-navigation/native';
+
+/*Components*/
+import IconIcons from 'react-native-vector-icons/Ionicons';
+import Collapsible from 'react-native-collapsible';
+
+/*Translate*/
+import i18n from 'i18n';
+
+/*Proptypes*/
+import PropTypes from 'prop-types';
+
+const ProductInfo = ({description, brand, productStatus}) => {
   const {colors} = useTheme();
-  const description = props.description ? props.description : '';
+
   const [showInfo, setShowInfo] = React.useState(false);
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -34,8 +45,38 @@ const ProductInfo = (props) => {
       <Collapsible collapsed={showInfo} style={styles.infoContent}>
         <Text style={styles.infoContentText}>{description}</Text>
       </Collapsible>
+      {brand && brand.name ? (
+        <View style={styles.infoMore}>
+          <Text style={styles.infoMoreTitleText}>
+            {i18n.t('productDetail.brand')}
+          </Text>
+          <Text style={styles.infoContentContent}>{brand.name}</Text>
+        </View>
+      ) : null}
+      {productStatus && productStatus.description ? (
+        <View style={styles.infoMore}>
+          <Text style={styles.infoMoreTitleText}>
+            {i18n.t('productDetail.productStatus')}
+          </Text>
+          <Text style={styles.infoMoreTitleContent}>
+            {productStatus.description}
+          </Text>
+        </View>
+      ) : null}
     </View>
   );
+};
+
+ProductInfo.defaultProps = {
+  description: '',
+  brand: {},
+  productStatus: {},
+};
+
+ProductInfo.PropTypes = {
+  description: PropTypes.string,
+  brand: PropTypes.object,
+  productStatus: PropTypes.object,
 };
 
 export default ProductInfo;

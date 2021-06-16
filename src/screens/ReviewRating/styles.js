@@ -6,6 +6,7 @@ const leftWidth = 84;
 export default EStyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '$bgColorTwo',
   },
   wrapContent: {
@@ -40,18 +41,29 @@ export default EStyleSheet.create({
     borderRadius: 8,
   },
   ratingWrapper: {
-    display: 'flex',
-    flex: 0,
-    flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10
+    paddingTop: 18,
+    paddingBottom: 18,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  wrapLabel: {
+    paddingRight: 8,
   },
   label: {
     fontWeight: '500',
     fontSize: 20,
     lineHeight: 28,
     color: '#333333',
+  },
+  viewLoadingFooter: {
+    position: 'relative',
+    height: 40,
+    justifyContent: 'center',
   },
 });

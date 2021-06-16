@@ -1,30 +1,42 @@
+import styles from './styles';
+
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
-import styles from './styles';
-import i18n from 'i18n';
+
+/*Hooks*/
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '@react-navigation/native';
+
+/*Translate*/
+import i18n from 'i18n';
+
+/*Configs*/
 import envConfig from 'config';
+
+/*Svg*/
 import {Ruler} from 'svg/common';
 
-const ProductChoice = (props) => {
+/*Proptypes*/
+import PropTypes from 'prop-types';
+
+const ProductChoice = ({choiceSelect, choiceList, setChoiceSelect}) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
-  const choiceList = props.choiceList ? props.choiceList : [];
-  const selectList = props.choiceSelect ? props.choiceSelect : [];
+
   const selectChoice = (item) => {
-    let list = new Array(...props.choiceSelect);
-    const existedChoice = selectList.findIndex(
+    let list = new Array(...choiceSelect);
+    const existedChoice = choiceSelect.findIndex(
       (listItem) => listItem.id === item.id,
     );
     if (existedChoice >= 0) {
       list[existedChoice] = item;
-      props?.setChoiceSelect(list);
+      setChoiceSelect(list);
     } else {
       list = [...list, item];
-      props?.setChoiceSelect(list);
+      setChoiceSelect(list);
     }
   };
+
   return (
     <View style={styles.container}>
       {choiceList.length
@@ -40,7 +52,7 @@ const ProductChoice = (props) => {
                 ]}>
                 <View key={`choice_${index}`} style={styles.titleRow}>
                   <Text style={styles.itemLabel}>{item.label}</Text>
-                  {item.key === 'kich_co' ? (
+                  {item.key === 'kich_co' || item.key === 'size' ? (
                     <TouchableOpacity
                       style={styles.linkSupport}
                       onPress={() => {
@@ -63,12 +75,12 @@ const ProductChoice = (props) => {
                     (itemChoice, indexChoice) => {
                       let choiceButtonStyle = styles.choiceButton;
                       let choiceButtonTextStyle = styles.choiceButtonText;
-                      const choiceIsSelected = selectList.find(
-                        (selectItem) => selectItem.value === itemChoice.id,
+                      const choiceIsSelected = choiceSelect.find(
+                        (selectItem) => selectItem.value.id === itemChoice.id,
                       );
                       if (
                         choiceIsSelected &&
-                        choiceIsSelected.value === itemChoice.id
+                        choiceIsSelected.value.id === itemChoice.id
                       ) {
                         choiceButtonStyle = [
                           styles.choiceButton,
@@ -86,7 +98,7 @@ const ProductChoice = (props) => {
                           <TouchableOpacity
                             style={choiceButtonStyle}
                             onPress={() => {
-                              selectChoice({...item, value: itemChoice.id});
+                              selectChoice({...item, value: itemChoice});
                             }}>
                             <Text style={choiceButtonTextStyle}>
                               {itemChoice.attrValue}
@@ -103,6 +115,17 @@ const ProductChoice = (props) => {
         : null}
     </View>
   );
+};
+
+ProductChoice.defaultProps = {
+  choiceList: [],
+  choiceSelect: [],
+};
+
+ProductChoice.PropType = {
+  choiceSelect: PropTypes.array,
+  choiceList: PropTypes.array,
+  setChoiceSelect: PropTypes.func,
 };
 
 export default ProductChoice;

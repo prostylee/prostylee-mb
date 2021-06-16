@@ -1,29 +1,45 @@
-import React from 'react';
-import {View, Text, Animated, ActivityIndicator} from 'react-native';
-import {Container} from 'components';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {hasNotch} from 'react-native-device-info';
-import {useTheme, useRoute, useNavigation} from '@react-navigation/native';
-import * as CommonIcon from 'svg/common';
-import isEmpty from 'lodash/isEmpty';
-import Carousel from 'react-native-snap-carousel';
-import AnimatedHeader from './AnimatedHeader';
-import {Storage, Auth} from 'aws-amplify';
 import styles from './styles';
-import i18n from 'i18n';
-import {useBackHandler} from '@react-native-community/hooks';
-import {commonActions, productActions, productSelectors} from 'reducers';
+
+import React from 'react';
+import {View, Text, Animated, RefreshControl} from 'react-native';
+
+/*Hooks*/
 import {useDispatch, useSelector} from 'react-redux';
-import {priceSalePercent} from 'utils/currency';
+import {useBackHandler} from '@react-native-community/hooks';
+import {useRoute} from '@react-navigation/native';
+
+/*Translate*/
+import i18n from 'i18n';
+
+/*Components*/
+import Carousel from 'react-native-snap-carousel';
+import {ProductDetailLoading} from 'components/Loading/contentLoader';
+import {Container} from 'components';
+import AnimatedHeader from './AnimatedHeader';
 import ProductTitle from './ProductTitle';
 import ProductChoice from './ProductChoice';
 import ProductInfo from './ProductInfo';
 import ProductLocation from './ProductLocation';
 import ProductRating from './ProductRating';
 import ProductSimilar from './ProductSimilar';
+import ProductCoordinated from './ProductCoordinated';
 import Footer from './Footer';
 
+/*Helpers*/
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {hasNotch} from 'react-native-device-info';
+import {debounce} from 'lodash-es';
+import PropTypes from 'prop-types';
+
+/*Utils*/
+import {priceSalePercent} from 'utils/currency';
 import {dim} from 'utils/common';
+
+/*Reducers*/
+import {productActions, productSelectors} from 'reducers';
+
+/*Assets*/
+import defaultImg from '../../assets/images/default.png';
 
 const WIDTH = dim.width;
 
@@ -31,15 +47,21 @@ const ProductDetail = (props) => {
   const dispatch = useDispatch();
   //route
   const route = useRoute();
-  const navigation = useNavigation();
-  const {colors} = useTheme();
 
   const imagesRef = React.useRef();
   const scrollViewRef = React.useRef();
+  const ratingRef = React.useRef();
+  const relatedRef = React.useRef();
+
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
   const [currentImage, setCurrentImage] = React.useState(1);
   const [choiceSelect, setChoiceSelect] = React.useState([]);
-
+  const [activeTab, setActiveTab] = React.useState('product');
+  const [ratingVerticalOffset, setRatingVerticalOffset] = React.useState(0);
+  const [relatedVerticalOffset, setRelatedVerticalOffset] = React.useState(0);
+  const [ratingPos, setRatingPos] = React.useState(0);
+  const [suggestPos, setSuggestPos] = React.useState(0);
+  const [refreshing, handleRefreshing] = React.useState(false);
   /*Animated*/
   const HEIGHT_HEADER = (WIDTH * 4) / 3 + getStatusBarHeight();
   const scrollAnimated = React.useRef(new Animated.Value(0)).current;
@@ -54,34 +76,64 @@ const ProductDetail = (props) => {
     extrapolate: 'clamp',
   });
 
-  const productId = route?.params?.id || 0;
+  const productId = route?.params?.id || 232;
 
   React.useEffect(() => {
-    dispatch(productActions.getProductById({id: productId}));
-    dispatch(productActions.getProductComments({id: productId}));
-    dispatch(productActions.getProductRelated({id: productId}));
-  }, []);
+    if (productId) {
+      scrollAnimated.setValue(0);
+      dispatch(productActions.getProductById({id: productId}));
+      dispatch(productActions.getProductComments({id: productId}));
+      dispatch(productActions.getProductRelated({id: productId}));
+    }
+  }, [productId]);
+
+  React.useEffect(() => {
+    if (productData && productData.storeId && productData.categoryId) {
+      dispatch(
+        productActions.getProductCoordinated({
+          storeId: productData.storeId,
+          categoryId: productData.categoryId,
+        }),
+      );
+    }
+  }, [productData]);
 
   const productData = useSelector((state) =>
     productSelectors.getProductDetail(state),
   );
+  const productPriceData =
+    productData?.price && productData?.priceSale
+      ? {
+          price: productData?.price,
+          priceSale: productData?.priceSale,
+        }
+      : {
+          price: productData.productPriceResponseList[0].price || 0,
+          priceSale: productData.productPriceResponseList[0].priceSale || 0,
+        };
   const productDataLoading = useSelector((state) =>
     productSelectors.getProductDetailLoading(state),
   );
+
   const productComments = useSelector((state) =>
     productSelectors.getProductComments(state),
   );
+
   const productRelated = useSelector((state) =>
     productSelectors.getProductRelated(state),
   );
 
-  React.useEffect(() => {
-    if (productDataLoading) {
-      dispatch(commonActions.toggleLoading(true));
-    } else {
-      dispatch(commonActions.toggleLoading(false));
-    }
-  }, [productDataLoading]);
+  const productCoordinated = useSelector((state) =>
+    productSelectors.getProductCoordinated(state),
+  );
+
+  // React.useEffect(() => {
+  //   if (productDataLoading) {
+  //     dispatch(commonActions.toggleLoading(true));
+  //   } else {
+  //     dispatch(commonActions.toggleLoading(false));
+  //   }
+  // }, [productDataLoading]);
 
   const productImage =
     productData?.imageUrls && productData?.imageUrls?.length
@@ -97,19 +149,50 @@ const ProductDetail = (props) => {
     scrollViewRef.current?.scrollTo({y: 0, animated: true});
   };
   const scrollToComment = () => {
-    scrollViewRef.current?.scrollToEnd({animated: true});
+    scrollViewRef.current?.scrollTo({
+      y: ratingPos - (notchHeight + 56),
+      animated: true,
+    });
   };
   const scrollToRelated = () => {
-    scrollViewRef.current?.scrollToEnd({animated: true});
+    scrollViewRef.current?.scrollTo({
+      y: suggestPos - (notchHeight + 56),
+      animated: true,
+    });
+  };
+  const handleChangeTabActiveItemWhenScrolling = (currentOffset) => {
+    if (currentOffset + 140 < ratingVerticalOffset) {
+      if (activeTab !== 'product') {
+        setActiveTab('product');
+      }
+    }
+    if (
+      currentOffset + 140 > ratingVerticalOffset &&
+      currentOffset + 140 < relatedVerticalOffset
+    ) {
+      if (activeTab !== 'rate') {
+        setActiveTab('rate');
+      }
+    }
+    if (currentOffset + 140 > relatedVerticalOffset) {
+      if (activeTab !== 'suggest') {
+        setActiveTab('suggest');
+      }
+    }
   };
 
+  debounce;
+
   const selectRelatedProduct = (id) => {
+    scrollAnimated.setValue(0);
     setCurrentImage(1);
     setChoiceSelect([]);
     dispatch(productActions.getProductById({id: id}));
-    scrollToTop();
   };
-
+  const handleRefresh = () => {
+    handleRefreshing(true);
+    selectRelatedProduct(productId);
+  };
   const ProductChoiceMemo = React.useMemo(() => {
     return (
       <ProductChoice
@@ -124,14 +207,41 @@ const ProductDetail = (props) => {
     return (
       <Animated.Image
         style={styles.imageItem}
-        source={{original: item}}
+        source={{uri: item}}
         resizeMode={'cover'}
+        defaultSource={defaultImg}
       />
     );
   };
   const discount = productData
-    ? priceSalePercent(productData?.price, productData?.priceSale)
+    ? priceSalePercent(productPriceData?.price, productPriceData?.priceSale)
     : 0;
+
+  React.useEffect(() => {
+    if (!productDataLoading) handleRefreshing(false);
+  }, [productDataLoading]);
+
+  React.useEffect(() => {
+    if (!ratingVerticalOffset || !relatedVerticalOffset) {
+      if (ratingRef) {
+        ratingRef?.current?.measure((fx, fy) => {
+          setRatingVerticalOffset(fy);
+        });
+      }
+      if (relatedRef) {
+        relatedRef?.current?.measure((fx, fy) => {
+          setRelatedVerticalOffset(fy);
+        });
+      }
+    }
+  });
+  if (productDataLoading && !refreshing) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <ProductDetailLoading />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -141,13 +251,25 @@ const ProductDetail = (props) => {
         scrollToTop={scrollToTop}
         scrollToComment={scrollToComment}
         scrollToRelated={scrollToRelated}
-        discount={priceSalePercent(productData?.price, productData?.priceSale)}
+        discount={priceSalePercent(
+          productPriceData?.price,
+          productPriceData?.priceSale,
+        )}
+        activeTabProps={activeTab}
       />
       <Container
         style={styles.mainContent}
         scrollEventThrottle={16}
         scrollViewRef={scrollViewRef}
-        onScroll={onScrollEvent}>
+        overLapStatusBar
+        onScroll={(e) => {
+          onScrollEvent(e);
+          handleChangeTabActiveItemWhenScrolling(e.nativeEvent.contentOffset.y);
+        }}
+        hasRefreshing
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }>
         <Animated.View
           style={[
             styles.imageList,
@@ -157,7 +279,11 @@ const ProductDetail = (props) => {
           ]}>
           <Carousel
             ref={imagesRef}
-            data={productImage}
+            data={
+              productData?.imageUrls && productData?.imageUrls
+                ? productData.imageUrls
+                : []
+            }
             activeSlideAlignment={'start'}
             renderItem={renderImageItem}
             sliderWidth={WIDTH * productImage.length}
@@ -179,36 +305,83 @@ const ProductDetail = (props) => {
           ) : null}
         </Animated.View>
         <ProductTitle
+          navigation={props.navigation}
+          productId={productData?.id}
           name={productData?.name}
-          price={productData?.price}
-          priceOriginal={productData?.priceSale}
+          price={productPriceData?.priceSale}
+          priceOriginal={productPriceData?.price}
           rateValue={productData?.productStatisticResponse?.resultOfRating}
           numberOfRate={productData?.productStatisticResponse?.numberOfReview}
+          bookmarkStatus={productData?.saveStatusOfUserLogin || false}
         />
         <View style={styles.lineHr} />
         {ProductChoiceMemo}
         <View style={styles.lineHr} />
-        <ProductInfo description={productData?.description} />
-        {productData?.storeId ? (
+        <ProductInfo
+          description={productData?.description}
+          brand={productData?.brandResponse || {}}
+        />
+        {productData?.locationId ? (
           <>
             <View style={styles.lineHrBig} />
             <ProductLocation
               info={productData?.productOwnerResponse}
-              location={productData?.location}
+              location={productData?.location || {}}
+              productId={productData?.id}
             />
           </>
         ) : null}
-        <View style={styles.lineHrBig} />
-        <ProductRating data={productComments} />
-        <View style={styles.lineHrBig} />
+        <View
+          ref={ratingRef}
+          style={styles.lineHrBig}
+          onLayout={({
+            nativeEvent: {
+              layout: {y},
+            },
+          }) => {
+            setRatingPos(y);
+          }}
+        />
+        <ProductRating
+          navigation={props.navigation}
+          data={productComments}
+          productId={productData?.id}
+        />
+        <View
+          ref={relatedRef}
+          style={styles.lineHrBig}
+          onLayout={({
+            nativeEvent: {
+              layout: {y},
+            },
+          }) => {
+            setSuggestPos(y);
+          }}
+        />
         <ProductSimilar
           data={productRelated?.content || []}
           onSelect={selectRelatedProduct}
         />
+        <View style={styles.lineHrBig} />
+        <ProductCoordinated
+          data={productCoordinated?.content || []}
+          onSelect={selectRelatedProduct}
+        />
       </Container>
-      <Footer isLike={productData?.likeStatusOfUserLogin || false} />
+      <Footer
+        navigation={props.navigation}
+        isLike={productData?.likeStatusOfUserLogin || false}
+        productData={productData}
+        choiceSelect={choiceSelect}
+      />
     </View>
   );
+};
+
+ProductDetail.defaultProps = {};
+
+ProductDetail.propTypes = {
+  navigation: PropTypes.object,
 };
 
 export default ProductDetail;

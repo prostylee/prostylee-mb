@@ -1,5 +1,7 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TouchableOpacity, Image, Platform} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 import {ContainerWithoutScrollView} from 'components';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {hasNotch} from 'react-native-device-info';
@@ -15,6 +17,7 @@ import {dim} from 'utils/common';
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
 const IC_BACK = require('assets/icons/arrowLeft.png');
+let activeIndex = 0;
 
 const CropPicture = () => {
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
@@ -31,6 +34,7 @@ const CropPicture = () => {
   ];
 
   const [afterCropImages, setAfterCropImages] = React.useState([]);
+  const [checkImage, setCheckImage] = React.useState([]);
   //route
   const route = useRoute();
   const navigation = useNavigation();
@@ -46,9 +50,16 @@ const CropPicture = () => {
   const {colors} = useTheme();
 
   const cropAllImage = () => {
-    images.forEach(async (_, index) => {
-      await cropViewRefList[index].current.saveImage(90);
-    });
+    if (checkImage.every((item) => item)) {
+      images.forEach(async (_, index) => {
+        await cropViewRefList[index].current.saveImage(90);
+      });
+    } else {
+      showMessage({
+        message: i18n.t('addStatus.checkAll'),
+        type: 'danger',
+      });
+    }
   };
 
   const checkAllCropImage = () => {
@@ -61,6 +72,20 @@ const CropPicture = () => {
     checkAllCropImage();
   }, [JSON.stringify(afterCropImages)]);
 
+  React.useEffect(() => {
+    images.forEach((_, index) => {
+      setCheckImage((prev) => {
+        const newData = new Array(...prev);
+        if (index === 0) {
+          newData[index] = true;
+        } else {
+          newData[index] = false;
+        }
+        return newData;
+      });
+    });
+  }, []);
+
   const CropViewStyle = isCropList
     ? {width: WIDTH, height: HEIGHT - notchHeight - 100}
     : {
@@ -71,7 +96,7 @@ const CropPicture = () => {
   const RenderCropView = ({item, index}) => {
     return (
       <CropView
-        sourceUrl={item.sourceURL}
+        sourceUrl={Platform.OS === 'ios' ? item.sourceURL : item.path}
         style={CropViewStyle}
         ref={cropViewRefList[index]}
         onImageCrop={(res) => {
@@ -87,11 +112,13 @@ const CropPicture = () => {
     );
   };
 
-  const CropImagesList = () => {
+  const CropImagesList = React.useMemo(() => {
     return (
       <Carousel
         ref={cropsRef}
         data={images}
+        activeSlideOffset
+        initialNumToRender={4}
         renderItem={({item, index}) => {
           return <RenderCropView item={item} index={index} />;
         }}
@@ -100,12 +127,19 @@ const CropPicture = () => {
         itemWidth={WIDTH}
         scrollEnabled={false}
         style={CropViewStyle}
+        onSnapToItem={(index) =>
+          setCheckImage((prev) => {
+            const newData = new Array(...prev);
+            newData[index] = true;
+            return newData;
+          })
+        }
       />
     );
-  };
+  }, [images]);
 
   const ThumbImagesList = () => {
-    const [activeCrop, setActiveCrop] = React.useState(0);
+    const [activeCrop, setActiveCrop] = React.useState(activeIndex);
     return (
       <View style={styles.thumbList}>
         {images.map((item, index) => {
@@ -116,6 +150,7 @@ const CropPicture = () => {
               style={styles.thumbItemContainer}
               onPress={() => {
                 setActiveCrop(index);
+                activeIndex = index;
                 cropsRef.current.snapToItem(index);
               }}>
               <Image
@@ -158,9 +193,7 @@ const CropPicture = () => {
             </TouchableOpacity>
           }
         />
-        <View style={styles.mainWrapper}>
-          <CropImagesList />
-        </View>
+        <View style={styles.mainWrapper}>{CropImagesList}</View>
         {isCropList ? <ThumbImagesList /> : null}
       </ContainerWithoutScrollView>
     </View>

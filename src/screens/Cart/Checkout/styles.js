@@ -33,16 +33,6 @@ export default EStyleSheet.create({
     color: '#333333',
   },
   footerCheckout: {},
-
-  imageThumbnail: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 60,
-    width: 60,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#E9EAEB',
-  },
   wrapSection: {
     backgroundColor: '$white',
     alignItems: 'flex-start',
@@ -51,32 +41,217 @@ export default EStyleSheet.create({
   wrapHeader: {
     alignItems: 'center',
     flexDirection: 'row',
-    padding: 10,
+    paddingVertical: 10,
     borderBottomWidth: 1,
     borderColor: '#E9EAEB',
+    paddingHorizontal: 16,
+    marginBottom: 8,
   },
+
+  wrapSize: {flex: 0.5},
+  wrapUpdown: {flex: 0.5, alignItems: 'flex-end'},
+  storeName: {flex: 1, alignItems: 'center', flexDirection: 'row'},
+  storeNameText: {fontSize: 11, lineHeight: 16},
+  storeAvatar: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 16,
+    width: 16,
+    borderRadius: 8,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+
+  modalChangeColor: {
+    height: '80%',
+    backgroundColor: '$white',
+    borderRadius: 10,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+  contentBox: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  modalHeader: {
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    marginRight: 10,
+  },
+  wrapAccordion: {
+    backgroundColor: '$white',
+    flex: 1,
+    flexDirection: 'column',
+    marginBottom: 5,
+    marginTop: 5,
+  },
+  buttonCollapseHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+  wrapCollapseHeader: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  wrapCollapseHeaderLabel: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  titleCollapseHeader: {
+    color: '$black',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '400',
+  },
+  wrapTotal: {
+    marginBottom: 5,
+    backgroundColor: '$white',
+    padding: 10,
+  },
+  rowTotal: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+  },
+  labelTotal: {
+    color: '#8B9399',
+    fontSize: 11,
+    lineHeight: 16,
+    fontWeight: '400',
+  },
+  valueTotal: {
+    color: '#333333',
+    fontSize: 11,
+    lineHeight: 16,
+    fontWeight: '400',
+  },
+  wrapRadioGroup: {
+    flexDirection: 'row',
+    backgroundColor: '$white',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  wrapRadioButton: {
+    flex: 1,
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: '#F4F5F5',
+    backgroundColor: '$white',
+  },
+  wrapLabelRadioButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    textAlign: 'left',
+  },
+  wrapRadio: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+
+  wrapRadioTitle: {
+    flexDirection: 'column',
+  },
+
+  wrapRadioSub: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+
+  iconRadioSub: {
+    marginLeft: 5,
+  },
+  titleRadio: {
+    color: '#333333',
+    fontWeight: '400',
+    fontSize: 11,
+    lineHeight: 16,
+  },
+  priceRadio: {
+    color: '$red',
+    fontWeight: '400',
+    fontSize: 11,
+    lineHeight: 16,
+  },
+  contentRadio: {
+    color: '#8B9399',
+    fontWeight: '400',
+    fontSize: 11,
+    lineHeight: 16,
+  },
+  wrapDeliveryChosen: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 16,
+  },
+  wrapInfoChosen: {
+    flexDirection: 'column',
+    marginRight: 10,
+  },
+  wrapTitleChosen: {flexDirection: 'column'},
+  wrapContentChosen: {
+    flexDirection: 'row',
+  },
+  titleChosen: {
+    color: '$black',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '400',
+  },
+  contentChosen: {
+    color: '$lightGray',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '400',
+  },
+  priceRadioChosen: {
+    color: '$red',
+    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  wrapCollapse: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+  wrapLabelDelivery: {
+    padding: 10,
+  },
+
   wrapItems: {
     padding: 5,
     flexDirection: 'row',
     backgroundColor: '$white',
     marginBottom: 5,
   },
-  wrapImageThumbnail: {
-    position: 'relative',
-  },
   productItem: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 5,
+    paddingHorizontal: 16,
   },
-  productAvatar: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 60,
-    width: 60,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#E9EAEB',
+  wrapImageThumbnail: {
+    position: 'relative',
   },
   wrapTextContent: {
     flex: 1,
@@ -91,16 +266,29 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  wrapSize: {flex: 0.5},
-  wrapUpdown: {flex: 0.5, alignItems: 'flex-end'},
-  storeName: {flex: 1, alignItems: 'center', flexDirection: 'row'},
-  storeNameText: {fontSize: 11, lineHeight: 16},
-  storeAvatar: {
+  wrapTextSale: {
+    position: 'absolute',
+    bottom: 8,
+    left: 8,
+    padding: 4,
+    borderRadius: 3,
+  },
+  textSale: {
+    fontFamily: '$font1',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: 11,
+    lineHeight: 16,
+    color: '$white',
+  },
+  imageThumbnail: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 16,
-    width: 16,
-    borderRadius: 8,
+    height: 60,
+    width: 60,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#E9EAEB',
   },
   name: {
     lineHeight: 18,
@@ -136,131 +324,10 @@ export default EStyleSheet.create({
     color: '#F4F5F5',
   },
   wrapPriceRoot: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   viewFooter: {
     marginBottom: 6,
-  },
-  modal: {
-    justifyContent: 'flex-end',
-    margin: 0,
-  },
-
-  modalChangeColor: {
-    height: '80%',
-    backgroundColor: '$white',
-    borderRadius: 10,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    flexDirection: 'column',
-  },
-  contentBox: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  modalHeader: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    marginRight: 10,
-  },
-  wrapAccordion: {
-    backgroundColor: '$white',
-    flex: 1,
-    flexDirection: 'column',
-    marginBottom: 5,
-    marginTop: 5,
-    padding: 10,
-  },
-  buttonCollapseHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flex: 1,
-  },
-  wrapCollapseHeader: {
-    flexDirection: 'row',
-  },
-  titleCollapseHeader: {
-    color: '#333333',
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '400',
-  },
-  wrapTotal: {
-    marginBottom: 5,
-    backgroundColor: '$white',
-    padding: 10,
-  },
-  rowTotal: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 5,
-  },
-  labelTotal: {
-    color: '#8B9399',
-    fontSize: 11,
-    lineHeight: 16,
-    fontWeight: '400',
-  },
-  valueTotal: {
-    color: '#333333',
-    fontSize: 11,
-    lineHeight: 16,
-    fontWeight: '400',
-  },
-  wrapRadioGroup: {
-    flexDirection: 'row',
-    backgroundColor: '$white',
-  },
-  wrapRadioButton: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: '#F4F5F5',
-    backgroundColor: '$white',
-  },
-  wrapRadio: {
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-  wrapInfo: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  wrapRadioTitle: {
-    flexDirection: 'column',
-  },
-
-  wrapRadioSub: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-  },
-  iconRadioSub: {
-    marginLeft: 5,
-  },
-  titleRadio: {
-    color: '#333333',
-    fontWeight: '400',
-    fontSize: 11,
-    lineHeight: 16,
-  },
-  priceRadio: {
-    color: '#ED2727',
-    fontWeight: '400',
-    fontSize: 11,
-    lineHeight: 16,
-  },
-  contentRadio: {
-    color: '#8B9399',
-    fontWeight: '400',
-    fontSize: 11,
-    lineHeight: 16,
-  },
-  wrapLabelDelivery: {
-    padding: 10,
   },
 });
