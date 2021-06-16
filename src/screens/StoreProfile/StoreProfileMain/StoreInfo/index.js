@@ -7,18 +7,18 @@ import {Image, Colors} from 'components';
 import {MapPin, TreeDotHorizontal} from 'svg/common';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const StoreInfo = () => {
+const StoreInfo = ({name = '', address = '', logoUri = ''}) => {
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
         <View style={styles.logoContainer}>
-          <Image />
+          <Image style={styles.logo} source={logoUri ? {uri: logoUri} : img} />
         </View>
         <View style={styles.storeNameWrapper}>
-          <Text style={styles.storeName}>Femi Clothing Store</Text>
+          <Text style={styles.storeName}>{name}</Text>
           <View style={styles.storeAddressWrapper}>
             <MapPin />
-            <Text style={styles.storeAddressText}>Sai gon, Viet Nam</Text>
+            <Text style={styles.storeAddressText}>{address}</Text>
           </View>
         </View>
       </View>

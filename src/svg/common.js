@@ -6,7 +6,6 @@ import Svg, {
   LinearGradient,
   G,
   Defs,
-  LinearGradient,
   Stop,
   Line,
   ClipPath,
@@ -1386,27 +1385,7 @@ export const CartIconColor = ({width = 28, height = 28}) => (
     </Defs>
   </Svg>
 );
-export const ChevronRight = ({
-  width = 16,
-  height = 16,
-  color = '#823FFD',
-  strokeWidth = 1.5,
-}) => (
-  <Svg
-    width={width}
-    height={height}
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg">
-    <Path
-      d="M6 12L10 8L6 4"
-      stroke={color}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={`${strokeWidth}`}
-    />
-  </Svg>
-);
+
 export const TicketCutLine = ({width = 279, height = 2, color = '#E9EAEB'}) => (
   <Svg
     width={width}
@@ -1424,36 +1403,7 @@ export const TicketCutLine = ({width = 279, height = 2, color = '#E9EAEB'}) => (
     />
   </Svg>
 );
-export const CloseOutLined = ({
-  width = 28,
-  height = 28,
-  color = 'black',
-  strokeWidth = 2,
-}) => {
-  return (
-    <Svg
-      width={width}
-      height={height}
-      viewBox="0 0 28 28"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg">
-      <Path
-        d="M18 10L10 18"
-        stroke={color}
-        strokeWidth={`${strokeWidth}`}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <Path
-        d="M10 10L18 18"
-        stroke={color}
-        strokeWidth={`${strokeWidth}`}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </Svg>
-  );
-};
+
 export const TreeDotHorizontal = ({
   width = 24,
   height = 24,
@@ -1541,144 +1491,7 @@ export const CheckIcon = () => (
     </Defs>
   </Svg>
 );
-export const DashLine = ({width = 1, height = 50, color = '#E9EAEB'}) => (
-  <Svg
-    width={width}
-    height={height}
-    viewBox="0 0 1 50"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg">
-    <Line
-      x1="0.5"
-      y1="-1.6756e-08"
-      x2="0.500002"
-      y2="50"
-      stroke={color}
-      strokeDasharray="4 4"
-    />
-  </Svg>
-);
-export const TicketIconWithColor = ({width = 28, height = 28}) => (
-  <Svg
-    width={width}
-    height={height}
-    viewBox="0 0 28 28"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg">
-    <G clipPath="url(#clip0)">
-      <Path
-        d="M11.1 10.3471C11.1 9.06733 11.7124 7.86484 12.7473 7.11213L15.6418 5.00707C17.0444 3.98699 18.9446 3.98699 20.3472 5.00707L23.2417 7.11213C24.2766 7.86484 24.889 9.06733 24.889 10.3471V22.4865C24.889 24.6956 23.0981 26.4865 20.889 26.4865H15.1C12.8909 26.4865 11.1 24.6956 11.1 22.4865V10.3471Z"
-        fill="url(#paint0_linear)"
-      />
-      <Path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M13.804 1.19256C12.5313 1.32694 11.3997 2.06215 10.7599 3.17045L3.01293 16.5885C1.90836 18.5017 2.56386 20.9481 4.47703 22.0526L11.6942 26.2195C13.6074 27.3241 16.0538 26.6686 17.1583 24.7554L24.9053 11.3373C25.5451 10.229 25.6161 8.88145 25.0961 7.71209L23.0027 3.00424C22.2981 1.41952 20.6525 0.469439 18.9278 0.651548L13.804 1.19256ZM16.6237 9.34765C17.689 9.96271 19.0512 9.5977 19.6662 8.53239C20.2813 7.46708 19.9163 6.10487 18.851 5.48981C17.7857 4.87475 16.4235 5.23976 15.8084 6.30507C15.1934 7.37038 15.5584 8.73259 16.6237 9.34765Z"
-        fill="url(#paint1_linear)"
-      />
-    </G>
-    <Defs>
-      <LinearGradient
-        id="paint0_linear"
-        x1="17.8889"
-        y1="7.00005"
-        x2="22.9444"
-        y2="25.6667"
-        gradientUnits="userSpaceOnUse">
-        <Stop stopColor="#FEF3ED" />
-        <Stop offset="1" stopColor="#FFB0A2" />
-      </LinearGradient>
-      <LinearGradient
-        id="paint1_linear"
-        x1="21.3478"
-        y1="1.16533"
-        x2="8.08562"
-        y2="24.1361"
-        gradientUnits="userSpaceOnUse">
-        <Stop stopColor="#FE9452" />
-        <Stop offset="1" stopColor="#EF3333" />
-      </LinearGradient>
-      <ClipPath id="clip0">
-        <Rect width="28" height="28" fill="white" />
-      </ClipPath>
-    </Defs>
-  </Svg>
-);
-export const BestSellerIcon = ({width = 28, height = 28}) => (
-  <Svg
-    width={width}
-    height={height}
-    viewBox="0 0 28 28"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg">
-    <G clip-path="url(#clip0)">
-      <Path
-        d="M8.1406 1.55554H8.98616C9.68049 1.55554 10.3202 1.93198 10.6574 2.53893C12.1143 5.1613 15.8857 5.1613 17.3426 2.53893C17.6798 1.93198 18.3195 1.55554 19.0138 1.55554H19.8594C20.5941 1.55554 21.3033 1.82518 21.8525 2.31331L25.7978 5.82026C27.0204 6.90702 27.147 8.77288 26.0825 10.0149L23.8662 12.6005C23.553 12.9659 23.0314 13.0712 22.6009 12.856C22.2375 12.6743 21.8144 12.9571 21.8433 13.3624L22.471 22.1495C22.5225 22.8706 22.1483 23.5554 21.5137 23.9016C16.8303 26.4562 11.1697 26.4562 6.48635 23.9016C5.85167 23.5554 5.47749 22.8706 5.529 22.1495L6.15665 13.3624C6.1856 12.9571 5.76251 12.6743 5.39908 12.856C4.96864 13.0712 4.44695 12.9659 4.13376 12.6005L1.91751 10.0149C0.852958 8.77288 0.979588 6.90702 2.20219 5.82026L6.14751 2.31331C6.69666 1.82518 7.40585 1.55554 8.1406 1.55554Z"
-        fill="url(#paint0_linear)"
-      />
-      <Path
-        d="M13.5516 9.46403C13.735 9.09241 14.2649 9.09241 14.4483 9.46403L15.2551 11.0988C15.328 11.2464 15.4688 11.3486 15.6316 11.3723L17.4357 11.6344C17.8458 11.694 18.0095 12.198 17.7128 12.4873L16.4073 13.7598C16.2895 13.8746 16.2357 14.0401 16.2635 14.2023L16.5717 15.9991C16.6418 16.4075 16.2131 16.719 15.8462 16.5262L14.2327 15.6779C14.087 15.6013 13.913 15.6013 13.7673 15.6779L12.1537 16.5262C11.7869 16.719 11.3582 16.4075 11.4282 15.9991L11.7364 14.2023C11.7642 14.0401 11.7105 13.8746 11.5926 13.7598L10.2872 12.4873C9.99043 12.198 10.1542 11.694 10.5643 11.6344L12.3683 11.3723C12.5312 11.3486 12.672 11.2464 12.7448 11.0988L13.5516 9.46403Z"
-        fill="white"
-      />
-    </G>
-    <Defs>
-      <LinearGradient
-        id="paint0_linear"
-        x1="5.44444"
-        y1="2.33332"
-        x2="21"
-        y2="24.8889"
-        gradientUnits="userSpaceOnUse">
-        <Stop stopColor="#B052F5" />
-        <Stop offset="1" stopColor="#882AE4" />
-      </LinearGradient>
-      <ClipPath id="clip0">
-        <Rect width="28" height="28" fill="white" />
-      </ClipPath>
-    </Defs>
-  </Svg>
-);
-export const CartIconColor = ({width = 28, height = 28}) => (
-  <Svg
-    width={width}
-    height={height}
-    viewBox="0 0 28 28"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg">
-    <Path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M0.388916 2.33329C0.388916 1.68896 0.91125 1.16663 1.55558 1.16663H4.57242C5.15763 1.16663 5.6523 1.60019 5.72902 2.18035L6.1092 5.05551H23.6779C25.8469 5.05551 27.4936 7.00801 27.1278 9.14586L25.6637 17.7014C25.3761 19.3822 23.9191 20.6111 22.2139 20.6111H8.88015C7.1245 20.6111 5.6405 19.3104 5.41035 17.5699L3.54987 3.49996H1.55558C0.91125 3.49996 0.388916 2.97762 0.388916 2.33329ZM7.7778 26.4444C9.06647 26.4444 10.1111 25.3997 10.1111 24.1111C10.1111 22.8224 9.06647 21.7777 7.7778 21.7777C6.48914 21.7777 5.44447 22.8224 5.44447 24.1111C5.44447 25.3997 6.48914 26.4444 7.7778 26.4444ZM23.3334 26.4444C24.622 26.4444 25.6667 25.3997 25.6667 24.1111C25.6667 22.8224 24.622 21.7777 23.3334 21.7777C22.0447 21.7777 21 22.8224 21 24.1111C21 25.3997 22.0447 26.4444 23.3334 26.4444Z"
-      fill="url(#paint0_linear)"
-    />
-    <G opacity="0.9">
-      <Path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M15.4444 12.7215C15.9858 12.2942 16.3333 11.6321 16.3333 10.8889C16.3333 9.60021 15.2887 8.55554 14 8.55554C12.7113 8.55554 11.6667 9.60021 11.6667 10.8889C11.6667 11.6321 12.0142 12.2942 12.5556 12.7215C11.4221 13.1752 10.552 14.147 10.2381 15.344C10.098 15.8782 10.5588 16.3333 11.1111 16.3333H16.8889C17.4412 16.3333 17.9021 15.8782 17.7619 15.344C17.448 14.147 16.5779 13.1752 15.4444 12.7215Z"
-        fill="white"
-      />
-      <Path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M17.4003 10.8889C17.4003 11.6321 17.0329 12.2941 16.4605 12.7214C17.6595 13.1752 18.5798 14.1476 18.9115 15.3452C19.0589 15.8775 18.5976 16.3333 18.0454 16.3333H20.7135C21.2658 16.3333 21.7267 15.8782 21.5866 15.344C21.2726 14.147 20.4025 13.1752 19.269 12.7215C19.8105 12.2942 20.158 11.6321 20.158 10.8889C20.158 9.60021 19.1133 8.55554 17.8246 8.55554C17.2969 8.55554 16.8101 8.73074 16.4192 9.02614C17.0152 9.45208 17.4003 10.1279 17.4003 10.8889Z"
-        fill="white"
-      />
-    </G>
-    <Defs>
-      <LinearGradient
-        id="paint0_linear"
-        x1="0.777805"
-        y1="1.55551"
-        x2="24.1111"
-        y2="24.8888"
-        gradientUnits="userSpaceOnUse">
-        <Stop stopColor="#FFBF5A" />
-        <Stop offset="1" stopColor="#FF8114" />
-      </LinearGradient>
-    </Defs>
-  </Svg>
-);
+
 export const ChevronRight = ({
   width = 16,
   height = 16,
@@ -1700,23 +1513,7 @@ export const ChevronRight = ({
     />
   </Svg>
 );
-export const TicketCutLine = ({width = 279, height = 2, color = '#E9EAEB'}) => (
-  <Svg
-    width={width}
-    height="1"
-    viewBox="0 0 279 1"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg">
-    <Line
-      y1="0.5"
-      x2={width}
-      y2="0.5"
-      stroke={color}
-      strokeWidth={`${height}`}
-      strokeDasharray="5 5"
-    />
-  </Svg>
-);
+
 export const CloseOutLined = ({
   width = 28,
   height = 28,

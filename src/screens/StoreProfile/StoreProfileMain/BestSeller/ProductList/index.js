@@ -5,13 +5,27 @@ import styles from './styles';
 
 import ProductItem from './ProductItem';
 
+import {
+  getStoreBestSellerProductLoadingSelector,
+  getStoreBestSellerProductSelector,
+} from 'redux/selectors/storeProfile';
+import {useSelector} from 'react-redux';
+
 const ProductList = ({navigation}) => {
+  const loading = useSelector((state) =>
+    getStoreBestSellerProductLoadingSelector(state),
+  );
+  const bestSellerSelector = useSelector((state) =>
+    getStoreBestSellerProductSelector(state),
+  );
+  const listBestSeller = bestSellerSelector?.content || [];
+  console.log('DATA BEST SELLER', listBestSeller);
   return (
     <View style={styles.container}>
       <FlatList
         contentContainerStyle={styles.listWrapper}
         horizontal
-        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]}
+        data={listBestSeller}
         numColumns={1}
         renderItem={({item, index}) => (
           <ProductItem item={item} index={index} />

@@ -25,6 +25,11 @@ export default EStyleSheet.create({
     borderRadius: 23,
     backgroundColor: '#fff',
   },
+  logo: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 23,
+  },
   storeAddressWrapper: {
     flexDirection: 'row',
     marginTop: 2,

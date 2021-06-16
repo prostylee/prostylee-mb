@@ -5,8 +5,10 @@ import {Image, Rating} from 'components';
 import {Heart} from 'svg/common';
 import styles from './styles';
 import picture from 'assets/images/signInBg.png';
-import {Colors} from 'components';
-const ItemBadge = () => (
+import {Colors, ProductLike} from 'components';
+import {currencyFormat, priceSalePercent} from 'utils/currency';
+import {useNavigation} from '@react-navigation/native';
+const ItemBadge = ({value}) => (
   <View
     style={[
       styles.itemBadge,
@@ -14,46 +16,59 @@ const ItemBadge = () => (
         backgroundColor: Colors['$red'],
       },
     ]}>
-    <Text style={styles.badgeText}>-50%</Text>
+    <Text style={styles.badgeText}>-{value}%</Text>
   </View>
 );
 
-const ProductItem = ({item, index}) => (
-  <View
-    style={[
-      styles.itemWrapper,
-      {
-        marginTop: index !== 1 && index % 2 !== 0 ? 16 : 0,
-      },
-    ]}
-    key={`${item}-${index}`}>
-    <View
-      style={[
-        styles.itemInner,
-        {
-          paddingHorizontal: 15,
-          paddingLeft: index % 2 !== 0 ? 0 : 15,
-        },
-      ]}>
-      <View style={[styles.imageContainer]}>
-        <Image style={styles.imageStyle} source={picture} resizeMode="cover" />
-        <ItemBadge />
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.itemName}>Áo nỉ hoddie trơn đủ màu Unisex</Text>
-        <View style={{flexDirection: 'column'}}>
-          <Text style={styles.itemPrice}>99.000 đ</Text>
+const ProductItem = ({item, index}) => {
+  const navigation = useNavigation();
+  const clickItem = () => {
+    navigation.navigate('ProductDetail', {id: item.id});
+  };
+  return (
+    <TouchableOpacity
+      style={styles.itemWrapper}
+      key={`${item}-${index}`}
+      onPress={clickItem}>
+      <View
+        style={[
+          styles.itemInner,
+          {
+            paddingLeft: index % 2 !== 0 ? 6 : 15,
+            paddingRight: index % 2 === 0 ? 6 : 15,
+          },
+        ]}>
+        <View style={[styles.imageContainer]}>
+          <Image
+            style={styles.imageStyle}
+            source={
+              item.imageUrls && item.imageUrls.length
+                ? {uri: item.imageUrls[0]}
+                : picture
+            }
+            resizeMode="cover"
+          />
+          <ItemBadge value={priceSalePercent(item?.price, item?.priceSale)} />
         </View>
-        <View style={styles.toolContainer}>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.itemDiscountPrice}>99.000 đ</Text>
+        <View style={styles.infoContainer}>
+          <Text style={styles.itemName}>{item?.name}</Text>
+          <View style={{flexDirection: 'column'}}>
+            <Text style={styles.itemPrice}>
+              {currencyFormat(item?.priceSale, 'đ')}
+            </Text>
           </View>
-          <TouchableOpacity>
-            <Heart />
-          </TouchableOpacity>
+          <View style={styles.toolContainer}>
+            <View style={styles.ratingContainer}>
+              <Text style={styles.itemDiscountPrice}>
+                {currencyFormat(item?.price, 'đ')}
+              </Text>
+            </View>
+
+            <ProductLike item={item} />
+          </View>
         </View>
       </View>
-    </View>
-  </View>
-);
+    </TouchableOpacity>
+  );
+};
 export default ProductItem;

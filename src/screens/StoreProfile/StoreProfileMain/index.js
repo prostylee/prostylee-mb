@@ -17,29 +17,18 @@ import styles from './styles';
 
 import {Header, HeaderAnimated, ThemeView, Colors} from 'components';
 
-import {storeActions} from 'redux/reducers';
+import {storeProfileActions} from 'redux/reducers';
 
 import {
-  getLoadingFuturedStoresSelector,
-  listOfFuturedStoresSelector,
-  hasLoadMoreSelector,
-  loadMoreLoadingSelector,
-  getPageSelector,
-} from 'redux/selectors/stores';
+  getStoreLoadingSelector,
+  getStoreInfoSelector,
+} from 'redux/selectors/storeProfile';
 
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 import CustomBackground from './CustomBackground';
 import VoucherHorizontalList from './VoucherHorizontalList';
 
-import {
-  MapPin,
-  MessageOutlined,
-  Bag,
-  Search,
-  MapPinFill,
-  ChevronLeft,
-  Bell,
-} from 'svg/common';
+import {MessageOutlined, Bag, ChevronLeft, Bell} from 'svg/common';
 import {Searchbar} from 'react-native-paper';
 
 import MidAdvertisingSlider from './MidAdvertisingSlider';
@@ -49,7 +38,7 @@ import BestSeller from './BestSeller';
 import AllProducts from './AllProducts';
 import BottomHeaderAnimated from './BottomHeaderAnimated';
 const heightShow = Platform.OS === 'ios' ? 380 : 420;
-const {width} = Dimensions.get('window');
+
 const HeaderLeft = ({opacity, isAnimated = false}) => {
   return isAnimated ? (
     <Animated.View style={{opacity}}>
@@ -113,43 +102,40 @@ const HeaderRight = ({opacity, isAnimated = false}) => {
     </View>
   );
 };
-const CustomSearchBar = () => (
-  <View style={styles.searchBarContainer}>
-    <Searchbar placeholder={i18n.t('search')} />
-  </View>
-);
 
 const Stores = (props) => {
   const dispatch = useDispatch();
+
   const WIDTH = Dimensions.get('window').width;
   const scrollAnimated = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef();
   const {navigation} = props;
   const [refreshing, handleRefreshing] = useState(false);
 
-  const loading = useSelector((state) =>
-    getLoadingFuturedStoresSelector(state),
-  );
-  const listOfFuturedStores = useSelector((state) =>
-    listOfFuturedStoresSelector(state),
-  );
-  const loadMoreLoading = useSelector((state) =>
-    loadMoreLoadingSelector(state),
-  );
-  const hasLoadMore = useSelector((state) => hasLoadMoreSelector(state));
-  const page = useSelector((state) => getPageSelector(state));
+  const loading = useSelector((state) => getStoreLoadingSelector(state));
+  const storeInfo = useSelector((state) => getStoreInfoSelector(state));
 
-  const listData = listOfFuturedStores?.content || [];
+  console.log('STORE INFO', storeInfo);
 
   useEffect(() => {
+    dispatch(storeProfileActions.getStoreInfo(1));
     dispatch(
-      storeActions.getListOfFuturedStore({
+      storeProfileActions.getAllStoreProduct({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
+        storeId: 1,
       }),
     );
+    dispatch(
+      storeProfileActions.getStoreBestSellerProduct({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        storeId: 1,
+      }),
+    );
+
     handleRefreshing(false);
-  }, [dispatch, refreshing]);
+  }, []);
 
   const handleRefresh = () => {
     handleRefreshing(true);
@@ -179,7 +165,6 @@ const Stores = (props) => {
       );
     }
   };
-  console.log('Opacity ne', opacity);
 
   const renderFooter = () => {
     if (!loadMoreLoading) {
@@ -280,7 +265,11 @@ const Stores = (props) => {
         showsHorizontalScrollIndicator={false}>
         <CustomBackground />
 
-        <StoreInfo />
+        <StoreInfo
+          logoUri={storeInfo?.logoUrl}
+          name={storeInfo?.name}
+          address="Ho Chi Minh, Viet Nam"
+        />
         <MidAdvertisingSlider />
         <VoucherHorizontalList navigation={props.navigation} />
         <BestSeller />
