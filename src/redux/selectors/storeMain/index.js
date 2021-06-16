@@ -17,10 +17,30 @@ export const getMidBannerSelector = createSelector(
   storeReducer,
   (data) => data?.midBannerList || {},
 );
+
+//BRAND
+export const getBrandListLoadingSelector = createSelector(
+  storeReducer,
+  (data) => data?.isBrandlistLoading || false,
+);
+export const getBrandListLoadmoreLoadingSelector = createSelector(
+  storeReducer,
+  (data) => data?.isBrandlistLoadmoreLoading || false,
+);
+export const getBrandListCurrentPageSelector = createSelector(
+  storeReducer,
+  (data) => data?.brandListCurrentPage || null,
+);
+export const getBrandListHasLoadmoreSelector = createSelector(
+  storeReducer,
+  (data) => data?.hasBrandlistLoadmore || null,
+);
+
 export const getBrandListSelector = createSelector(
   storeReducer,
   (data) => data?.brandList || {},
 );
+
 export const getCategoryListSelector = createSelector(
   storeReducer,
   (data) => data?.categoryList || {},
