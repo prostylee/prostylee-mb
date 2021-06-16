@@ -5,23 +5,15 @@ import ProductItem from './ProductItem';
 import {SearchProductLoading} from 'components/Loading/contentLoader';
 import i18n from 'i18n';
 
-const ProductList = ({
-  navigation,
-  onRefresh = () => {},
-  onLoadMore = () => {},
-  isRefreshing = false,
-  isLoading = false,
-  data = [],
-  isLoadmore = false,
-}) => {
-  const Footer = () =>
-    isLoadmore ? (
-      <View style={styles.listFooterContainer}>
-        <ActivityIndicator />
-      </View>
-    ) : null;
+const ProductList = ({navigation, isLoading = false, data = []}) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          height: data?.length ? Math.floor(data.length / 2) * 320 : 200,
+        },
+      ]}>
       {isLoading ? (
         <View
           style={{
@@ -30,33 +22,23 @@ const ProductList = ({
             flexWrap: 'wrap',
             justifyContent: 'space-around',
           }}>
-          {[1, 2, 3, 4].map((v) => (
+          {Array.from(
+            'x'.repeat(data?.length ? Math.floor(data?.length) : 4),
+          ).map(() => (
             <SearchProductLoading />
           ))}
         </View>
       ) : data && data.length ? (
-        <FlatList
-          style={styles.listWrapper}
-          numColumns={2}
-          data={data}
-          nestedScrollEnabled={true}
-          onEndReached={onLoadMore}
-          refreshing={isRefreshing}
-          onRefresh={onRefresh}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item, index}) => {
-            return (
-              <ProductItem
-                item={item}
-                index={index}
-                navigation={navigation}
-                key={`${item.id}-${index}-${item.name}`}
-              />
-            );
-          }}
-          ListFooterComponent={<Footer />}
-        />
+        <View style={styles.listWrapper}>
+          {data.map((item, index) => (
+            <ProductItem
+              item={item}
+              index={index}
+              navigation={navigation}
+              key={`${item.id}-${index}-${item.name}`}
+            />
+          ))}
+        </View>
       ) : (
         <Text style={styles.notFoundText}>
           {i18n.t('Search.resultsNotfound')}
@@ -66,7 +48,10 @@ const ProductList = ({
   );
 };
 
-ProductList.defaultProps = {};
+ProductList.defaultProps = {
+  isLoading: false,
+  data: [],
+};
 
 ProductList.propTypes = {};
 

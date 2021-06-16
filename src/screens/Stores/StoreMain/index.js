@@ -39,6 +39,7 @@ import {
   getStoreMainLoadingSelector,
 } from 'redux/selectors/storeMain';
 import AppScrollViewIOSBounceColorsWrapper from './AppScrollViewIOSBounceColorsWrapper';
+
 const heightShow = 334;
 const HeaderLeft = () => {
   return (
@@ -81,6 +82,9 @@ const Stores = (props) => {
   const {navigation} = props;
   const [refreshing, handleRefreshing] = useState(false);
 
+  const [isEndReached, setIsEndReached] = useState(false);
+  const [hasLoadmore, setHasLoadmore] = useState(false);
+
   const topBannerList = useSelector((state) => getTopBannerSelector(state));
   const midBannerList = useSelector((state) => getMidBannerSelector(state));
   const brandList = useSelector((state) => getBrandListSelector(state));
@@ -100,6 +104,13 @@ const Stores = (props) => {
   const onSearchFocus = () => {
     dispatch(searchActions.setCurrentKeyword(''));
     navigation.navigate('SearchProducts');
+  };
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    return (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
   };
 
   useEffect(() => {
@@ -212,7 +223,12 @@ const Stores = (props) => {
           style={styles.container}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          onScroll={onScrollEvent}
+          onScroll={(e) => {
+            onScrollEvent(e);
+            if (isCloseToBottom(e.nativeEvent) && hasLoadmore) {
+              setIsEndReached(true);
+            }
+          }}
           scrollEventThrottle={16}
           refreshControl={
             <RefreshControl
@@ -256,7 +272,17 @@ const Stores = (props) => {
               }
               navigation={navigation}
             />
-            <ForUserTabView navigation={navigation} />
+            <ForUserTabView
+              navigation={navigation}
+              isEndReached={isEndReached}
+              setIsEndReached={setIsEndReached}
+              setHasLoadmore={setHasLoadmore}
+            />
+            {isEndReached ? (
+              <View style={styles.listFooterContainer}>
+                <ActivityIndicator size="large" />
+              </View>
+            ) : null}
           </View>
         </ScrollView>
       </AppScrollViewIOSBounceColorsWrapper>

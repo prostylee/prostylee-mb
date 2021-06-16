@@ -10,8 +10,14 @@ import {getBottomTabListSelector} from 'redux/selectors/storeMain';
 import {useSelector} from 'react-redux';
 import {_fetch} from '../../../../services/config';
 import {GET, POST, PUT, LIMIT_DEFAULT, SUCCESS} from 'constants';
+import i18n from 'i18n';
 
-const ForUserTabView = ({navigation}) => {
+const ForUserTabView = ({
+  navigation,
+  isEndReached = false,
+  setIsEndReached = () => {},
+  setHasLoadmore = () => {},
+}) => {
   const UNIT_INCREASE = 1;
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -30,15 +36,19 @@ const ForUserTabView = ({navigation}) => {
   const _handleRefresh = async () => {
     try {
       setIsRefreshing(true);
+
       let res = await getData(0);
       if (res.ok && res.data.status === SUCCESS && !res.data.error) {
         let newState = {...state};
+        let isHasLoadmore =
+          UNIT_INCREASE + 1 < res.data.data.totalPages ? true : false;
         newState.data = res.data.data.content;
         newState.currentPage = 0;
-        newState.hasLoadMore =
-          UNIT_INCREASE + 1 < res.data.data.totalPages ? true : false;
+        newState.hasLoadMore = isHasLoadmore;
+        setHasLoadmore(isHasLoadmore);
         setState({...newState});
       } else {
+        setHasLoadmore(false);
         setState({
           hasLoadMore: false,
           currentPage: 0,
@@ -58,10 +68,13 @@ const ForUserTabView = ({navigation}) => {
         let res = await getData(state.currentPage);
         if (res.ok && res.data.status === SUCCESS && !res.data.error) {
           let newState = {...state};
+          let isHasLoadmore =
+            UNIT_INCREASE + 1 < res.data.data.totalPages ? true : false;
           newState.data = state.data.concat(res.data.data.content);
           newState.currentPage = state.currentPage + UNIT_INCREASE;
-          newState.hasLoadMore =
-            UNIT_INCREASE + 1 < res.data.data.totalPages ? true : false;
+          newState.hasLoadMore = isHasLoadmore;
+
+          setHasLoadmore(isHasLoadmore);
           setState({...newState});
         } else {
           setState({
@@ -72,22 +85,25 @@ const ForUserTabView = ({navigation}) => {
         }
       } catch (err) {
         setIsLoadmore(false);
-        console.log('INIT DATA ERR', err);
+      } finally {
+        setIsEndReached(false);
       }
+    } else {
+      setIsEndReached(false);
     }
-    return;
   };
   const initData = async () => {
     try {
       setIsLoading(true);
       let res = await getData(0);
-      console.log('RES TOTAL PAGE', res.totalPages, UNIT_INCREASE + 1);
       if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+        let isHasLoadmore =
+          UNIT_INCREASE + 1 < res.data.data.totalPages ? true : false;
         let newState = {...state};
         newState.data = res.data.data.content;
         newState.currentPage = 0;
-        newState.hasLoadMore =
-          UNIT_INCREASE + 1 < res.data.data.totalPages ? true : false;
+        newState.hasLoadMore = isHasLoadmore;
+        setHasLoadmore(isHasLoadmore);
         setState({...newState});
       } else {
         setState({
@@ -114,15 +130,20 @@ const ForUserTabView = ({navigation}) => {
     return res;
   };
   useEffect(() => {
-    console.log('TABLIST', tabList);
     if (tabList && tabList.length) {
       initData(tabIndex);
     }
   }, [tabIndex]);
+
+  useEffect(() => {
+    if (isEndReached) {
+      _handleLoadMore();
+    }
+  }, [isEndReached]);
   return (
     <View style={styles.contaner}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Dành riêng cho bạn</Text>
+        <Text style={styles.title}>{i18n.t('stores.forUser')}</Text>
       </View>
       <ScrollableTabView
         onChangeTab={({i}) => {
@@ -141,7 +162,7 @@ const ForUserTabView = ({navigation}) => {
             <View tabLabel={v.tabName} url={v?.apiUrl} method={v?.apiMethod} />
           ))
         ) : (
-          <Text>Khong co ket qua</Text>
+          <Text>{i18n.t('Search.resultsNotfound')}</Text>
         )}
       </ScrollableTabView>
       <ProductList

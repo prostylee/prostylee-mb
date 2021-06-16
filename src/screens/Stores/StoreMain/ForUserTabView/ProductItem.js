@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
 import {Image, Rating, ProductLike} from 'components';
-import {Heart} from 'svg/common';
+
 import styles from './style';
 import picture from 'assets/images/signInBg.png';
 import {Colors} from 'components';

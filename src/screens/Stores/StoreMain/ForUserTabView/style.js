@@ -25,6 +25,8 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     width: '100%',
     height: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   itemWrapper: {
     width: '$screenWidth/2',
