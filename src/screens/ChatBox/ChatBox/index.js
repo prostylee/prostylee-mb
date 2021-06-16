@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {Header, ThemeView} from 'components';
+import i18n from 'i18n';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProductItem from './ProductItem';
 import FooterItem from './FooterItem';
@@ -120,7 +121,7 @@ const ChatBox = ({navigation, route}) => {
     if (phoneNumber) {
       Linking.openURL(`tel:${phoneNumber}`);
     } else {
-      Alert.alert('User do note have phone number!');
+      Alert.alert(i18n.t('common.textNoPhoneNumber'));
     }
   };
 

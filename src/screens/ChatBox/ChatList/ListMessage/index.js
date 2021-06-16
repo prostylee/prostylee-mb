@@ -66,13 +66,13 @@ const Item = ({item, index, userData, onPress}) => {
         <View style={[styles.itemStyle, borderItemStyle(index)]}>
           <Image
             source={{
-              uri: `${configEnv.api_url}/profile/${userData.id}/avatar`,
+              uri: `${configEnv.api_url}/profile/${userData?.id}/avatar`,
             }}
             resizeMode={'cover'}
             style={styles.img}
           />
           <View style={styles.itemInfo}>
-            <Text style={styles.Card}>{userData.fullName}</Text>
+            <Text style={styles.Card}>{userData?.fullName}</Text>
             <Text style={styles.fomat} numberOfLines={2}>
               {`${itemContent.name} • ${getNewChatTime()}`}
             </Text>
