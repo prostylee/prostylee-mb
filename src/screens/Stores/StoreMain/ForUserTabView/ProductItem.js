@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
 import {Image, Rating, ProductLike} from 'components';
-import {Heart} from 'svg/common';
+
 import styles from './style';
 import picture from 'assets/images/signInBg.png';
 import {Colors} from 'components';
@@ -29,8 +29,8 @@ const ProductItem = ({item, index, navigation}) => (
       style={[
         styles.itemInner,
         {
-          paddingHorizontal: 15,
-          paddingLeft: index % 2 !== 0 ? 0 : 15,
+          paddingLeft: index % 2 !== 0 ? 6 : 15,
+          paddingRight: index % 2 === 0 ? 6 : 15,
         },
       ]}>
       <View style={[styles.imageContainer]}>

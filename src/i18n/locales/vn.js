@@ -16,6 +16,7 @@ export default {
     success: 'Thành công',
     voucherCode: 'Mã khuyễn mãi',
     seeMore: 'Xem thêm',
+    forUser: 'Dành riêng cho bạn',
   },
   common: {
     textSeeMore: 'Xem thêm',

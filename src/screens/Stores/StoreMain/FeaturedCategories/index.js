@@ -27,16 +27,7 @@ const FeaturedCategories = ({navigation, data = []}) => {
               );
               navigation.navigate('Categories');
             }}>
-            <Text
-              style={[
-                styles.title,
-                {
-                  fontWeight: '400',
-                  color: Colors?.['$purple'],
-                },
-              ]}>
-              {i18n.t('stores.seeMore')}
-            </Text>
+            <Text style={styles.seeMoreText}>{i18n.t('stores.seeMore')}</Text>
           </TouchableOpacity>
         </View>
 

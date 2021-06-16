@@ -11,9 +11,14 @@ export const types = {
   GET_MID_BANNER_SUCCESS: 'GET_MID_BANNER_SUCCESS',
   GET_MID_BANNER_FAILED: 'GET_MID_BANNER_FAILED',
 
+  SET_BRAND_LIST_LOADING: 'SET_BRAND_LIST_LOADING',
+  SET_BRAND_LIST_LOADMORE_LOADING: 'SET_BRAND_LIST_LOADMORE_LOADING',
   GET_BRAND_LIST: 'GET_BRAND_LIST',
   GET_BRAND_LIST_SUCCESS: 'GET_BRAND_LIST_SUCCESS',
   GET_BRAND_LIST_FAILED: 'GET_BRAND_LIST_FAILED',
+  GET_BRAND_LIST_LOADMORE: 'GET_BRAND_LIST_LOADMORE',
+  GET_BRAND_LIST_LOADMORE_SUCCESS: 'GET_BRAND_LIST_LOADMORE_SUCCESS',
+  GET_BRAND_LIST_LOADMORE_FAILED: 'GET_BRAND_LIST_LOADMORE_FAILED',
 
   GET_CATEGORY_LIST: 'GET_CATEGORY_LIST',
   GET_CATEGORY_LIST_SUCCESS: 'GET_CATEGORY_LIST_SUCCESS',
@@ -38,6 +43,17 @@ export const actions = {
   getBrandList: createAction(types.GET_BRAND_LIST),
   getBrandListSuccess: createAction(types.GET_BRAND_LIST_SUCCESS),
   getBrandListFailed: createAction(types.GET_BRAND_LIST_FAILED),
+  setBrandListLoading: createAction(types.SET_BRAND_LIST_LOADING),
+  setBrandListLoadmoreLoading: createAction(
+    types.SET_BRAND_LIST_LOADMORE_LOADING,
+  ),
+  getBrandListLoadmore: createAction(types.GET_BRAND_LIST_LOADMORE),
+  getBrandListLoadmoreSuccess: createAction(
+    types.GET_BRAND_LIST_LOADMORE_SUCCESS,
+  ),
+  getBrandListLoadmoreFailed: createAction(
+    types.GET_BRAND_LIST_LOADMORE_FAILED,
+  ),
 
   getCategoryList: createAction(types.GET_CATEGORY_LIST),
   getCategoryListSuccess: createAction(types.GET_CATEGORY_LIST_SUCCESS),
@@ -52,11 +68,15 @@ const UNIT_INCREASE = 1;
 
 export const defaultState = {
   isStoreLoading: false,
+  isBrandlistLoading: false,
+  isBrandlistLoadmoreLoading: false,
   topBannerList: {},
   midBannerList: {},
   brandList: {},
   categoryList: {},
   bottomTabList: [],
+  brandListCurrentPage: PAGE_INIT,
+  hasBrandlistLoadmore: false,
 };
 
 export const handleActions = {
@@ -77,14 +97,54 @@ export const handleActions = {
   [types.GET_MID_BANNER_FAILED]: (state, {payload}) => {
     return {...state, midBannerList: {}};
   },
+  //BRAND LIST
+  [types.SET_BRAND_LIST_LOADING]: (state, {payload}) => {
+    return {
+      ...state,
+      isBrandlistLoading: payload,
+    };
+  },
+  [types.SET_BRAND_LIST_LOADMORE_LOADING]: (state, {payload}) => {
+    return {
+      ...state,
+      isBrandlistLoadmoreLoading: payload,
+    };
+  },
 
   [types.GET_BRAND_LIST_SUCCESS]: (state, {payload}) => {
-    return {...state, brandList: payload};
+    const {totalPages, content} = payload;
+    return {
+      ...state,
+      brandList: payload,
+      brandListCurrentPage: PAGE_INIT,
+      hasBrandlistLoadmore:
+        state.brandListCurrentPage + UNIT_INCREASE + 1 < totalPages
+          ? true
+          : false,
+    };
   },
   [types.GET_BRAND_LIST_FAILED]: (state, {payload}) => {
     return {...state, brandList: {}};
   },
 
+  [types.GET_BRAND_LIST_LOADMORE_SUCCESS]: (state, {payload}) => {
+    const {totalPages, content} = payload;
+    payload.content = state.personalSalersData?.content.concat(content) || [];
+    return {
+      ...state,
+      brandList: payload,
+      brandListCurrentPage: state.brandListCurrentPage + UNIT_INCREASE,
+      hasBrandlistLoadmore:
+        state.brandListCurrentPage + UNIT_INCREASE + 1 < totalPages
+          ? true
+          : false,
+    };
+  },
+  [types.GET_BRAND_LIST_LOADMORE_FAILED]: (state, {payload}) => {
+    return {...state, brandList: {}};
+  },
+
+  //CATEGORY
   [types.GET_CATEGORY_LIST_SUCCESS]: (state, {payload}) => {
     return {...state, categoryList: payload};
   },

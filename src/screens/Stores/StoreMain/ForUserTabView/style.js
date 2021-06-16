@@ -4,10 +4,12 @@ const HEIGHT = Dimensions.get('window').height;
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '$gray',
+    backgroundColor: '$white',
     flexDirection: 'column',
     height: HEIGHT - 200,
     marginBottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleContainer: {
     padding: 16,
@@ -23,6 +25,8 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     width: '100%',
     height: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   itemWrapper: {
     width: '$screenWidth/2',
@@ -102,5 +106,10 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 50,
+  },
+  notFoundText: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '$lightGray',
   },
 });

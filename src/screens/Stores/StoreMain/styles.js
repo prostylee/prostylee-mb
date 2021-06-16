@@ -74,4 +74,10 @@ export default EStyleSheet.create({
     shadowRadius: 1.0,
     elevation: 1,
   },
+  listFooterContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 30,
+  },
 });
