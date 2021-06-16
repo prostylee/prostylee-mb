@@ -111,7 +111,9 @@ const VoucherList = ({navigation}) => {
           onRefresh={_handleRefresh}
         />
       ) : (
-        <Text>{i18n.t('Search.resultsNotfound')}</Text>
+        <Text style={styles.notfoundText}>
+          {i18n.t('Search.resultsNotfound')}
+        </Text>
       )}
     </View>
   );

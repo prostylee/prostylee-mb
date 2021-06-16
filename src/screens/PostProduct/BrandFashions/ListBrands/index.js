@@ -5,7 +5,12 @@ import {FlatList} from 'react-native';
 import styles from './styles';
 import Item from './item';
 
-const ListBrand = ({selectedBrand, setSelectedBrand, data}) => {
+const ListBrand = ({
+  selectedBrand,
+  setSelectedBrand,
+  data,
+  disabled = false,
+}) => {
   const activeBrand = selectedBrand ? selectedBrand : {};
   const setActiveBrand = setSelectedBrand ? setSelectedBrand : () => {};
 
@@ -15,6 +20,7 @@ const ListBrand = ({selectedBrand, setSelectedBrand, data}) => {
         item={item}
         selectedBrand={activeBrand}
         onPress={() => setActiveBrand(item)}
+        disabled={disabled}
       />
     );
   };

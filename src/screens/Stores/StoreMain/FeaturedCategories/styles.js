@@ -53,6 +53,11 @@ export default EStyleSheet.create({
     fontWeight: '600',
     color: '$black',
   },
+  seeMoreText: {
+    fontSize: 13,
+    fontWeight: '400',
+    color: '$purple',
+  },
   titleCategory: {
     color: '$black',
     width: '50%',

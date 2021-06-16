@@ -5,8 +5,6 @@ import {Header, ButtonRounded, ThemeView} from 'components';
 import {ActivityIndicator, Searchbar} from 'react-native-paper';
 import i18n from 'i18n';
 import IonIcons from 'react-native-vector-icons/Ionicons';
-import {useTheme} from '@react-navigation/native';
-
 import styles from './styles';
 import ListBrand from './ListBrands';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
@@ -18,8 +16,13 @@ import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
 import {storeActions} from 'redux/reducers';
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 import {postProductActions} from 'redux/reducers';
+import {useRoute, useTheme} from '@react-navigation/native';
 const Brands = (props) => {
   const dispatch = useDispatch();
+  const route = useRoute();
+
+  const isReadOnly = route?.params?.readOnly || false;
+
   const loading = useSelector((state) => getStoreMainLoadingSelector(state));
   const brandListSelector = useSelector(
     (state) => getBrandListSelector(state),
@@ -91,21 +94,23 @@ const Brands = (props) => {
           data={brandList}
           selectedBrand={selectedBrand}
           setSelectedBrand={setSelectedBrand}
+          disabled={isReadOnly}
         />
       ) : (
         <Text style={styles.notFoundText}>
           {i18n.t('Search.resultsNotfound')}
         </Text>
       )}
-
-      <View style={styles.button}>
-        <TouchableOpacity>
-          <ButtonRounded
-            label={i18n.t('addProduct.choose')}
-            onPress={submitBrand}
-          />
-        </TouchableOpacity>
-      </View>
+      {!isReadOnly ? (
+        <View style={styles.button}>
+          <TouchableOpacity>
+            <ButtonRounded
+              label={i18n.t('addProduct.choose')}
+              onPress={submitBrand}
+            />
+          </TouchableOpacity>
+        </View>
+      ) : null}
     </ThemeView>
   );
 };

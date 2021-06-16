@@ -5,11 +5,11 @@ import {Check} from 'svg/common';
 import {Image} from 'components';
 import styles from './styles';
 import {useTheme} from '@react-navigation/native';
-const Item = ({item, selectedBrand, onPress}) => {
+const Item = ({item, selectedBrand, onPress, disabled = false}) => {
   const {colors} = useTheme();
   const active = selectedBrand.id === item.id;
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
       <View style={styles.itemcontainer}>
         {active ? (
           <View

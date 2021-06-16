@@ -12,7 +12,7 @@ const getVouchers = function* ({payload}) {
   try {
     yield put(storeActions.setVouchersLoading(true));
     const res = yield call(getVouchersApi, payload);
-
+    console.log('VOUCHERS', res.data);
     let listStore = res?.data?.data;
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getVouchersSuccess(listStore));
