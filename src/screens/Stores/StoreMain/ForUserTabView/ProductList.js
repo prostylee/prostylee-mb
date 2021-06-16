@@ -3,6 +3,7 @@ import {View, FlatList, Text, ActivityIndicator} from 'react-native';
 import styles from './style';
 import ProductItem from './ProductItem';
 import {SearchProductLoading} from 'components/Loading/contentLoader';
+import i18n from 'i18n';
 
 const ProductList = ({
   navigation,
@@ -21,44 +22,46 @@ const ProductList = ({
     ) : null;
   return (
     <View style={styles.container}>
-      <View style={styles.listWrapper}>
-        {isLoading ? (
-          <View
-            style={{
-              flexDirection: 'row',
-              paddingBottom: 16,
-              flexWrap: 'wrap',
-              justifyContent: 'space-around',
-            }}>
-            {[1, 2, 3, 4].map((v) => (
-              <SearchProductLoading />
-            ))}
-          </View>
-        ) : data && data.length ? (
-          <FlatList
-            style={styles.listWrapper}
-            numColumns={2}
-            data={data}
-            nestedScrollEnabled={true}
-            onEndReached={onLoadMore}
-            refreshing={isRefreshing}
-            onRefresh={onRefresh}
-            renderItem={({item, index}) => {
-              return (
-                <ProductItem
-                  item={item}
-                  index={index}
-                  navigation={navigation}
-                  key={`${item.id}-${index}-${item.name}`}
-                />
-              );
-            }}
-            ListFooterComponent={<Footer />}
-          />
-        ) : (
-          <Text>Ko co</Text>
-        )}
-      </View>
+      {isLoading ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingBottom: 16,
+            flexWrap: 'wrap',
+            justifyContent: 'space-around',
+          }}>
+          {[1, 2, 3, 4].map((v) => (
+            <SearchProductLoading />
+          ))}
+        </View>
+      ) : data && data.length ? (
+        <FlatList
+          style={styles.listWrapper}
+          numColumns={2}
+          data={data}
+          nestedScrollEnabled={true}
+          onEndReached={onLoadMore}
+          refreshing={isRefreshing}
+          onRefresh={onRefresh}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item, index}) => {
+            return (
+              <ProductItem
+                item={item}
+                index={index}
+                navigation={navigation}
+                key={`${item.id}-${index}-${item.name}`}
+              />
+            );
+          }}
+          ListFooterComponent={<Footer />}
+        />
+      ) : (
+        <Text style={styles.notFoundText}>
+          {i18n.t('Search.resultsNotfound')}
+        </Text>
+      )}
     </View>
   );
 };
