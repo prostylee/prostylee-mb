@@ -38,7 +38,6 @@ const ListProduct = ({navigation}) => {
   );
 
   const handleRefresh = () => {
-    console.log('REFRSH');
     handleRefreshing(true);
     dispatch(cartActions.getListRecent());
     dispatch(cartActions.getListSuggestion());
