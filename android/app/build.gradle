@@ -204,8 +204,12 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     //firebase
+    implementation "com.google.firebase:firebase-core:15.0.2"
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation project(path: ":@react-native-firebase_messaging")
+
+    //
+    classpath("com.google.gms:google-services:4.3.3")
 
     implementation 'com.android.support:multidex:2.0.1'
 

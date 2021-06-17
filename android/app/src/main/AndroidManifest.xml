@@ -75,13 +75,13 @@
             <action android:name="com.amazonaws.intent.fcm.NOTIFICATION_OPEN" />
         </intent-filter>
     </receiver>
-    <!-- This activity allows your application to receive a deep linkthat navigates directly to the "Deeplink Page" -->
-    <activity android:name=".DeepLinkActivity" android:label="A deeplink!" >
+    <!-- This activity allows your application to receive a deep link
+    that navigates directly to the "Deeplink Page" -->
+    <activity
+            android:name=".DeepLinkActivity"
+            android:label="A deeplink!" >
         <intent-filter android:label="inAppReceiver">
             <action android:name="android.intent.action.VIEW" />
-            <action android:name="com.amazon.device.messaging.intent.REGISTRATION" />
-            <action android:name="com.amazon.device.messaging.intent.RECEIVE" />
-            <category android:name="com.prostylee." />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <!-- Accepts URIs of type "pinpoint://deeplink" -->
@@ -90,7 +90,39 @@
         </intent-filter>
     </activity>
 
+    <!--[START Push notification config -->
+    <!-- [START firebase_service] -->
+    <service
+            android:name="com.amazonaws.amplify.pushnotification.RNPushNotificationMessagingService">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+        </intent-filter>
+    </service>
+    <!-- [END firebase_service] -->
+    <!-- [START firebase_iid_service] -->
+    <service
+            android:name="com.amazonaws.amplify.pushnotification.RNPushNotificationDeviceIDService">
+        <intent-filter>
+            <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+        </intent-filter>
+    </service>
+    <receiver
+            android:name="com.amazonaws.amplify.pushnotification.modules.RNPushNotificationBroadcastReceiver"
+            android:exported="false" >
+        <intent-filter>
+            <action android:name="com.amazonaws.amplify.pushnotification.NOTIFICATION_OPENED"/>
+        </intent-filter>
+    </receiver>
 
+
+
+    <receiver
+            android:name="com.amazonaws.mobileconnectors.pinpoint.targeting.notification.PinpointNotificationReceiver" android:exported="false" >
+        <intent-filter>
+            <action android:name="com.amazonaws.intent.fcm.NOTIFICATION_OPEN" />
+        </intent-filter>
+    </receiver>
+    <!-- [END Push notification config -->
 
 
 
