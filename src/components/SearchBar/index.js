@@ -21,6 +21,10 @@ const SearchBar = (props) => {
   const _handleClear = () => {
     if (inputRef && inputRef.current) {
       inputRef.current.clear();
+      setState('');
+      if (props.onClear) {
+        props.onClear();
+      }
     }
   };
   return (
@@ -31,7 +35,7 @@ const SearchBar = (props) => {
       <TextInput
         ref={inputRef}
         {...props}
-        style={styles.inputStyle}
+        style={[styles.inputStyle, props.style]}
         onChangeText={(value) => {
           _handleChangeText(value);
           if (props && props?.onChangeText) {

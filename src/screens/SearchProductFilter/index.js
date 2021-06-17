@@ -98,7 +98,7 @@ const FilterProduct = ({navigation}) => {
         userId: 1,
       }),
     );
-    // navigation.goBack();
+    navigation.goBack();
   };
 
   useEffect(() => {

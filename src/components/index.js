@@ -53,6 +53,8 @@ import Bag from './Bag';
 import ChatIcon from './ChatIcon';
 import CustomRating from './Rating';
 
+import SearchBar from './SearchBar';
+
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -108,4 +110,5 @@ export {
   Bag,
   ChatIcon,
   CustomRating,
+  SearchBar,
 };

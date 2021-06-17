@@ -127,18 +127,10 @@ const SearchProducts = ({navigation}) => {
           height: 30,
         }}
         middleComponent={
-          // <Searchbar
-          //   style={styles.searchStyle}
-          //   inputStyle={styles.searchInputStyle}
-          //   multiline={false}
-          //   placeholder={i18n.t('Search.inputPlaceholder')}
-          //   onChangeText={onChangeSearch}
-          //   value={searchQuery}
-          //   defaultValue={searchQuery}
-          // />
           <SearchBar
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
+            onClear={() => onChangeSearch('')}
             value={searchQuery}
             defaultValue={searchQuery}
             style={styles.searchStyle}
