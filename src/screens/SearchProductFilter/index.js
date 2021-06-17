@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {TouchableOpacity, View, Text, ScrollView} from 'react-native';
 import i18n from 'i18n';
 
@@ -22,21 +22,39 @@ import {
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
 const FilterProduct = ({navigation}) => {
   const dispatch = useDispatch();
+
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
   const filterAttributeList = useSelector((state) =>
     getProductFilterAttributeListSelector(state),
   );
+
   const filterState = useSelector((state) => getProductFilterState(state));
-  const attributeFilterState = filterState?.attributes;
-  const categoryFilterState = filterState.category;
-  const priceFilterState = filterState.price;
 
   const categories = useSelector((state) =>
     getSearchFeaturedCategoriesSelector(state),
   );
 
+  const [state, setState] = useState(filterState);
+
+  const attributeFilterState = state?.attributes;
+  const categoryFilterState = state.category;
+  const priceFilterState = state.price;
+
+  const _updateFilterState = (key, value) => {
+    let newState = {...state};
+    newState[key] = value;
+    setState({...newState});
+  };
+
   const _handleClearFilter = () => {
-    dispatch(searchActions.clearProductsFilterState({}));
+    setState({category: {}, price: [0, 0], attributes: {}});
+    dispatch(
+      searchActions.clearProductsFilterState({
+        category: 0,
+        price: [0, 0],
+        attributes: {},
+      }),
+    );
   };
 
   const _handlePriceChange = (value) => {
@@ -51,7 +69,6 @@ const FilterProduct = ({navigation}) => {
     return `${arrayValue.join(',')}`;
   };
   const _handleConfirm = () => {
-    // let arrayAttribute = Object.keys(attributeFilterState);
     let attributesParamm = {...attributeFilterState};
     let newAttributes = {};
     for (let item in attributesParamm) {
@@ -61,7 +78,14 @@ const FilterProduct = ({navigation}) => {
         );
       } else newAttributes[`attributes[${item}]`] = attributesParamm[item];
     }
-
+    dispatch(
+      searchActions.setProductFilterState({
+        ...filterState,
+        price: priceFilterState || [0, 0],
+        attributes: attributeFilterState,
+      }),
+    );
+    console.log('STATE', JSON.stringify(state, null, 2));
     dispatch(
       searchActions.getProductsSearch({
         keyword: currentKeyword,
@@ -70,12 +94,11 @@ const FilterProduct = ({navigation}) => {
         sorts: 'name',
         ...newAttributes,
         categoryId: categoryFilterState,
-        // price: `${priceFilterState?.join('-')}`,
+        price: `${priceFilterState?.join('-')}`,
         userId: 1,
       }),
     );
-
-    navigation.goBack();
+    // navigation.goBack();
   };
 
   useEffect(() => {
@@ -110,11 +133,15 @@ const FilterProduct = ({navigation}) => {
         <View style={styles.wrapContent}>
           <FeaturedCategories data={categories} />
           <PriceFilter
-            onPriceChange={_handlePriceChange}
+            onPriceChange={_updateFilterState}
             minValue={0}
-            maxValue={10000}
+            maxValue={50000000}
+            defaultState={state}
           />
-          <ConditionOfProductsFilter />
+          <ConditionOfProductsFilter
+            onSelect={_updateFilterState}
+            defaultState={state}
+          />
         </View>
       </ScrollView>
       <ButtonRounded

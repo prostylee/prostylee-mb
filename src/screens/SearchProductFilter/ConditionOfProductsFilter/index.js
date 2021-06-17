@@ -14,19 +14,19 @@ import {searchActions} from 'redux/reducers';
 
 import BlockFilter from './BlockFilter';
 
-const ConditionOfProductsFilter = () => {
+const ConditionOfProductsFilter = ({
+  onSelect = () => {},
+  defaultState = {},
+}) => {
   const [activeSections, setActiveSections] = useState([]);
-  const [value, setValue] = React.useState(' ');
-
-  const dispatch = useDispatch();
 
   const filterAttributeList = useSelector((state) =>
     getProductFilterAttributeListSelector(state),
   );
 
-  const filterState = useSelector((state) => getProductFilterState(state));
-  const attributeFilterState = filterState?.attributes;
-  const categoryFilterState = filterState.category;
+  const attributeFilterState = defaultState?.attributes;
+
+  const [state, setState] = useState(attributeFilterState);
 
   const setSections = (sections) => {
     setActiveSections(sections.includes(undefined) ? [] : sections);
@@ -47,29 +47,26 @@ const ConditionOfProductsFilter = () => {
             : [optionsId];
       } else {
         currentAttributeStateItem.splice(flag, 1);
-        //newFilterState[`${attribute.id}`] = currentAttributeStateItem;
       }
     } else {
       newFilterState[`${attributeKey}`] = optionsId;
     }
 
-    dispatch(
-      searchActions.setProductFilterState({
-        ...filterState,
-        attributes: {...newFilterState},
-      }),
-    );
+    onSelect('attributes', {...newFilterState});
+    setState({...newFilterState});
   };
-
-  const isItemActive = (itemId, state, allowsMultipleSelection) => {
+  React.useEffect(() => {
+    setState(attributeFilterState);
+  }, [attributeFilterState]);
+  const isItemActive = (itemId, currentState, allowsMultipleSelection) => {
     if (allowsMultipleSelection) {
-      return state && state.length
-        ? state.indexOf(itemId) !== -1
+      return currentState && currentState.length
+        ? currentState.indexOf(itemId) !== -1
           ? true
           : false
         : false;
     } else {
-      return state === itemId;
+      return currentState === itemId;
     }
   };
 
@@ -109,8 +106,8 @@ const ConditionOfProductsFilter = () => {
                 value={item?.id}
                 status={
                   isItemActive(
-                    item?.id,
-                    attributeFilterState[`${section.key}`],
+                    item?.value,
+                    state[`${section.key}`],
                     section.allowsMultipleSelection,
                   )
                     ? 'checked'
@@ -123,8 +120,8 @@ const ConditionOfProductsFilter = () => {
                     color:
                       // attributeFilterState?.[`${section.id}`] === item.id
                       isItemActive(
-                        item?.id,
-                        attributeFilterState[`${section.key}`],
+                        item?.value,
+                        state[`${section.key}`],
                         section.allowsMultipleSelection,
                       )
                         ? Colors['$purple']
@@ -153,7 +150,13 @@ const ConditionOfProductsFilter = () => {
     <SafeAreaView>
       {filterAttributeList && filterAttributeList.length
         ? filterAttributeList.map((v) =>
-            v.type === 1 ? <BlockFilter attribute={v} /> : null,
+            v.type === 1 ? (
+              <BlockFilter
+                onSelect={onSelect}
+                attribute={v}
+                defaultState={defaultState}
+              />
+            ) : null,
           )
         : null}
       <View style={styles.wrapper}>

@@ -58,13 +58,10 @@ const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
           placeholder={i18n.t('search')}
           onChangeText={onChangeSearch}
           value={searchQuery}
-          onSubmitEditing={() => {
-            navigation.navigate('SearchProducts');
-          }}
         />
       </View>
       <View style={styles.wrapButtonLeft}>
-        <Touch style={{width: 16}} onPress={leftPress}>
+        <Touch style={styles.leftTouch} onPress={leftPress}>
           <ChevronLeft color={Colors.$white} />
         </Touch>
       </View>

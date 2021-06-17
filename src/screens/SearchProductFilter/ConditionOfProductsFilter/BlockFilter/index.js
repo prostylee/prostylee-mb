@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import i18n from 'i18n';
 
@@ -12,16 +12,15 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
 import {searchActions} from 'redux/reducers';
 
-const BlockFilter = ({attribute}) => {
-  const dispatch = useDispatch();
-  const filterState = useSelector((state) => getProductFilterState(state));
-  const attributeFilterState = filterState?.attributes;
-  const categoryFilterState = filterState.category;
+const BlockFilter = ({attribute, onSelect = () => {}, defaultState = {}}) => {
+  // const filterState = useSelector((state) => getProductFilterState(state));
+  const attributeFilterState = defaultState?.attributes;
 
-  const activeItem = attributeFilterState?.[`${attribute.key}`];
+  const [state, setState] = useState(attributeFilterState);
+
+  const activeItem = state?.[`${attribute.key}`];
 
   const {allowsMultipleSelection} = attribute;
-  // let allowsMultipleSelection = true;
 
   let listOption = attribute.attributeOptions;
 
@@ -41,18 +40,13 @@ const BlockFilter = ({attribute}) => {
             : [attributeId];
       } else {
         currentAttributeStateItem.splice(flag, 1);
-        //newFilterState[`${attribute.id}`] = currentAttributeStateItem;
       }
     } else {
       newFilterState[`${attribute.key}`] = attributeId;
     }
 
-    dispatch(
-      searchActions.setProductFilterState({
-        ...filterState,
-        attributes: {...newFilterState},
-      }),
-    );
+    onSelect('attributes', {...newFilterState});
+    setState({...newFilterState});
   };
   const isItemActive = (itemId) => {
     if (allowsMultipleSelection) {
@@ -66,6 +60,9 @@ const BlockFilter = ({attribute}) => {
     }
   };
 
+  useEffect(() => {
+    setState(attributeFilterState);
+  }, [attributeFilterState]);
   return (
     <>
       <View style={styles.wrapHeader}>

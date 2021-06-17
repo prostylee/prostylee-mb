@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Dimensions, View} from 'react-native';
 import i18n from 'i18n';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
@@ -17,15 +17,11 @@ const PriceFilter = ({
 }) => {
   const filterState = useSelector((state) => getProductFilterState(state));
   const priceState = filterState.price;
-
-  const _handleValueChangeDebounce = debounce(
-    (value) => {
-      onPriceChange(value);
-    },
-    1000,
-    {maxWait: 2000, trailing: true, leading: false},
-  );
-
+  const [state, setState] = useState([priceState[0], priceState[1]]);
+  const getValue = () => state;
+  useEffect(() => {
+    setState([priceState[0], priceState[1]]);
+  }, [priceState]);
   return (
     <>
       <View style={styles.wrapHeader}>
@@ -37,7 +33,7 @@ const PriceFilter = ({
               color: Colors['$black500'],
             },
           ]}>
-          {currencyFormat(minValue, 'đ')} - {currencyFormat(maxValue, 'đ')}
+          {currencyFormat(state[0], 'đ')} - {currencyFormat(state[1], 'đ')}
         </Text>
       </View>
       <View style={styles.wrapChip}>
@@ -51,8 +47,13 @@ const PriceFilter = ({
             width: 20,
             height: 20,
           }}
-          onValuesChange={_handleValueChangeDebounce}
-          values={[priceState?.[0], priceState?.[1]]}
+          onValuesChange={(value) => {
+            setState(value);
+          }}
+          onValuesChangeFinish={(value) => {
+            onPriceChange('price', value);
+          }}
+          values={[state?.[0], state?.[1]]}
           min={minValue}
           max={maxValue}
           markerOffsetY={2}
