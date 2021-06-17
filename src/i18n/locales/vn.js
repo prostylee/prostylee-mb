@@ -389,7 +389,6 @@ export default {
     unselectAll: 'Bỏ chọn toàn bộ',
     postSuccess: 'Đăng sản phẩm thành công',
     postFailed: 'Đăng sản phẩm thất bại',
-    choose: 'Chọn',
     yourLocation: 'Địa điểm của bạn',
     changeLocation: 'Thay đổi địa điểm',
     productPrice: 'Giá sản phẩm',
@@ -397,5 +396,6 @@ export default {
   voucher: {
     use: 'Sử dụng',
     save: 'Lưu',
+    noVoucherList: 'Bạn chưa có mã khuyến mãi.',
   },
 };

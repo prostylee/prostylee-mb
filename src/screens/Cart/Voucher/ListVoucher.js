@@ -2,12 +2,13 @@
 import styles from './styles';
 
 import React, {useEffect, useState, useRef} from 'react';
-import {Animated, View, ActivityIndicator, FlatList} from 'react-native';
+import {Animated, View, ActivityIndicator, FlatList, Text} from 'react-native';
 
 import {Colors} from 'components';
 import Item from './Item';
 import {CategoriesLeftLoading} from 'components/Loading/contentLoader';
 import {useDispatch, useSelector} from 'react-redux';
+import i18n from 'i18n';
 
 import {
   getVoucherLoadingSelector,
@@ -102,6 +103,12 @@ const ListVoucher = ({navigation, params}) => {
             },
           )}
         </>
+      ) : !loading && listVoucher.length === 0 ? (
+        <View style={styles.emptyList}>
+          <Text style={styles.emptyListTitle}>
+            {i18n.t('voucher.noVoucherList')}
+          </Text>
+        </View>
       ) : (
         <FlatList
           data={listVoucher}

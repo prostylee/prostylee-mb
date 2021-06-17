@@ -14,7 +14,7 @@ export const getPaymentMethods = (payload) => {
 };
 
 export const getDeliveryMethods = (payload) => {
-  return _fetch(GET, '/shippings/providers-fee', {...payload});
+  return _fetch(GET, '/shippings/providers-fee/providers-fee', {...payload});
 };
 
 export const orders = (payload) => {
