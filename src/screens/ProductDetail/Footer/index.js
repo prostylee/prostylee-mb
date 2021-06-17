@@ -20,7 +20,7 @@ import i18n from 'i18n';
 import PropTypes from 'prop-types';
 
 /*Reducers*/
-import {cartActions} from 'reducers';
+import {cartActions, commonActions} from 'reducers';
 
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {createChat} from 'graphqlLocal/mutations';
@@ -90,27 +90,32 @@ const Footer = ({navigation, productData, choiceSelect}) => {
     if (!sellerData) {
       return;
     }
-    const response = await API.graphql(
-      graphqlOperation(createChat, {
-        input: {
-          parentId: DEFAULT_CHAT_GROUP_ID,
-          ownerId: awsData.attributes.sub,
-          owner: userData.username,
-          ownerFullname: userData.fullName,
-          participantUserIds: [sellerData.id, userData.id],
-          imageUrls: [],
-          content: JSON.stringify(productData),
-          createdAt: new Date().toISOString(),
-        },
-      }),
-    );
-    navigation.navigate('ChatBox', {
-      chatId: response.id,
-      otherChatUserId: sellerData.id,
-      userName: sellerData.fullName,
-      userPhone: sellerData.phoneNumber,
-      productData: productData,
-    });
+    dispatch(commonActions.toggleLoading(true));
+    try {
+      const response = await API.graphql(
+        graphqlOperation(createChat, {
+          input: {
+            parentId: DEFAULT_CHAT_GROUP_ID,
+            ownerId: awsData.attributes.sub,
+            owner: userData.username,
+            ownerFullname: userData.fullName,
+            participantUserIds: [sellerData.id, userData.id],
+            imageUrls: [],
+            content: JSON.stringify(productData),
+            createdAt: new Date().toISOString(),
+          },
+        }),
+      );
+      navigation.navigate('ChatBox', {
+        chatId: response.id,
+        otherChatUserId: sellerData.id,
+        userName: sellerData.fullName,
+        userPhone: sellerData.phoneNumber,
+        productData: productData,
+      });
+    } finally {
+      dispatch(commonActions.toggleLoading(false));
+    }
   };
 
   const FirstButton = () => {
