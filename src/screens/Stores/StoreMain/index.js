@@ -85,6 +85,7 @@ const CustomSearchBar = ({navigation, onSearchFocus = () => {}}) => (
 
 const Stores = (props) => {
   const dispatch = useDispatch();
+  const BOTTOM_ENDREACHED_HEIGHT = 100;
   const {navigation} = props;
   const [refreshing, handleRefreshing] = useState(false);
 
@@ -112,10 +113,9 @@ const Stores = (props) => {
     navigation.navigate('SearchProducts');
   };
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
-    const paddingToBottom = 20;
     return (
       layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
+      contentSize.height - BOTTOM_ENDREACHED_HEIGHT
     );
   };
 
@@ -282,7 +282,7 @@ const Stores = (props) => {
             />
             {isEndReached ? (
               <View style={styles.listFooterContainer}>
-                <ActivityIndicator size="large" />
+                <ActivityIndicator size="large" color={Colors['$purple']} />
               </View>
             ) : null}
           </View>
