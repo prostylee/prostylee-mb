@@ -7,6 +7,15 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- This permission ensures that no other application can intercept your ADM messages. -->
+    <permission
+            android:name="com.prostylee.permission.RECEIVE_ADM_MESSAGE"
+            android:protectionLevel="signature" />
+    <uses-permission android:name="com.prostylee.permission.RECEIVE_ADM_MESSAGE" />
+    <!-- This permission allows your app access to receive push notifications from ADM. -->
+    <uses-permission android:name="com.amazon.device.messaging.permission.RECEIVE" />
+    <!-- ADM uses WAKE_LOCK to keep the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
       android:name=".MainApplication"
@@ -17,6 +26,12 @@
       android:theme="@style/AppTheme"
       android:networkSecurityConfig="@xml/network_security_config"
       android:usesCleartextTraffic="true">
+        <!-- You must explicitly enable ADM and declare whether your app cannot work without
+        ADM (android:required="true") or can work without ADM (android:required="false").
+        If you specify android:required="false", your app must degrade gracefully if ADM is unavailable. -->
+        <amazon:enable-feature
+                android:name="com.amazon.device.messaging"
+                android:required="true"/>
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
@@ -54,5 +69,30 @@
         android:value="AIzaSyC4jYt4jOXd8LJhoVWcZMOU20pCN0JP5Yg"/>
       <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>
+    <receiver android:name="com.amazonaws.mobileconnectors.pinpoint.targeting.notification.PinpointNotificationReceiver"
+              android:exported="false" >
+        <intent-filter>
+            <action android:name="com.amazonaws.intent.fcm.NOTIFICATION_OPEN" />
+        </intent-filter>
+    </receiver>
+    <!-- This activity allows your application to receive a deep linkthat navigates directly to the "Deeplink Page" -->
+    <activity android:name=".DeepLinkActivity" android:label="A deeplink!" >
+        <intent-filter android:label="inAppReceiver">
+            <action android:name="android.intent.action.VIEW" />
+            <action android:name="com.amazon.device.messaging.intent.REGISTRATION" />
+            <action android:name="com.amazon.device.messaging.intent.RECEIVE" />
+            <category android:name="com.prostylee." />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <!-- Accepts URIs of type "pinpoint://deeplink" -->
+            <data android:scheme="pinpoint"
+                  android:host="deeplink" />
+        </intent-filter>
+    </activity>
+
+
+
+
+
 
 </manifest>
