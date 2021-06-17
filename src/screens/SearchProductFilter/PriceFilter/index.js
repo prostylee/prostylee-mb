@@ -10,18 +10,21 @@ import {currencyFormat} from 'utils/currency';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
 import {useSelector} from 'react-redux';
 const WIDTH = Dimensions.get('window').width;
-const PriceFilter = ({
-  minValue = 0,
-  maxValue = 1000000,
-  onPriceChange = () => {},
-}) => {
+const PriceFilter = ({onPriceChange = () => {}}) => {
   const filterState = useSelector((state) => getProductFilterState(state));
+  console.log('PRICE STATE', filterState);
+
   const priceState = filterState.price;
-  const [state, setState] = useState([priceState[0], priceState[1]]);
+  const [state, setState] = useState(
+    priceState && priceState.length ? [priceState[0], priceState[1]] : [0, 1],
+  );
 
   useEffect(() => {
-    setState([priceState[0], priceState[1]]);
+    if (priceState && priceState.length) {
+      setState([priceState[0], priceState[1]]);
+    }
   }, [priceState]);
+
   return (
     <>
       <View style={styles.wrapHeader}>
@@ -54,9 +57,10 @@ const PriceFilter = ({
             onPriceChange('price', value);
           }}
           values={[state?.[0], state?.[1]]}
-          min={minValue}
-          max={maxValue}
+          min={0}
+          max={50000000}
           markerOffsetY={2}
+          step={10000}
           enabledTwo={true}
           isMarkersSeparated={true}
         />
