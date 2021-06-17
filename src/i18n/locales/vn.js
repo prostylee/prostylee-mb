@@ -3,6 +3,7 @@ export default {
   confirm: 'Đồng ý',
   cancel: 'Huỷ',
   logOut: 'Đăng xuất',
+  caution: 'Chú ý!',
   stores: {
     titleTopStore: 'Cửa hàng nổi bật',
     textNear: 'Cửa hàng gần đây',
@@ -206,6 +207,7 @@ export default {
     updateProduct: 'Cập nhật sản phẩm',
     seeMore: 'Xem thêm',
     yourAddress: 'Địa điểm của bạn',
+    removeItemPopup: 'Xoá sản phẩm khỏi giỏ hàng?',
   },
   error: {
     cannotUploadImage:

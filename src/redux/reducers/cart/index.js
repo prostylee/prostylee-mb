@@ -16,7 +16,7 @@ export const types = {
   SET_LIST_CART_SUCCESS: 'SET_LIST_CART_SUCCESS',
   SET_LIST_CART_FAILED: 'SET_LIST_CART_FAILED',
   ADD_ITEM_TO_CART: 'ADD_ITEM_TO_CART',
-  SET_VOUCHER_LOADING: 'SET_VOUCHER_LOADING',
+  REMOVE_ITEM_FROM_CART: 'REMOVE_ITEM_FROM_CART',
   //AMOUNT
   SET_CART_COUPON_AMOUNT: 'SET_CART_AMOUNT',
 
@@ -64,6 +64,7 @@ export const actions = {
   setListCartSuccess: createAction(types.SET_LIST_CART_SUCCESS),
   setListCartFailed: createAction(types.SET_LIST_CART_FAILED),
   addItemToCart: createAction(types.ADD_ITEM_TO_CART),
+  removeItemFromCart: createAction(types.REMOVE_ITEM_FROM_CART),
   //List Payment
   setPaymentLoading: createAction(types.SET_PAYMENT_LOADING),
   getListPayment: createAction(types.GET_LIST_PAYMENT),
@@ -161,14 +162,31 @@ export default handleActions(
         showMessage({
           message: 'Thêm vào giỏ hàng thành công',
           type: 'success',
+          position: 'top',
         });
         return {...state, listCart: currentCart};
       } else {
         showMessage({
           message: 'Thêm vào giỏ hàng thành công',
           type: 'success',
+          position: 'top',
         });
         return {...state, listCart: currentCart};
+      }
+    },
+    [types.REMOVE_ITEM_FROM_CART]: (state, {payload}) => {
+      const currentCart = state.listCart;
+      const removeItemIndex = currentCart.findIndex(
+        (item) => item.item.id === payload.id,
+      );
+      if (removeItemIndex >= 0) {
+        const newCartList = [
+          ...currentCart.slice(0, removeItemIndex),
+          ...currentCart.slice(removeItemIndex + 1),
+        ];
+        return {...state, listCart: newCartList};
+      } else {
+        return state;
       }
     },
     [types.SET_CART_COUPON_AMOUNT]: (state, {payload}) => {
