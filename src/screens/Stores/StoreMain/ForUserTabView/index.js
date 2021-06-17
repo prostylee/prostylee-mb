@@ -96,6 +96,7 @@ const ForUserTabView = ({
     try {
       setIsLoading(true);
       let res = await getData(0);
+      //console.log('DATA', JSON.stringify(res.data.data.content, null, 2));
       if (res.ok && res.data.status === SUCCESS && !res.data.error) {
         let isHasLoadmore =
           UNIT_INCREASE + 1 < res.data.data.totalPages ? true : false;
@@ -130,10 +131,11 @@ const ForUserTabView = ({
     return res;
   };
   useEffect(() => {
+    console.log('TAB LIST', tabList);
     if (tabList && tabList.length) {
       initData(tabIndex);
     }
-  }, [tabIndex]);
+  }, [tabIndex, tabList]);
 
   useEffect(() => {
     if (isEndReached) {
