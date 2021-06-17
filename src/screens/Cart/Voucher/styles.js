@@ -38,6 +38,22 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '$bgColorTwo',
   },
+  emptyList: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyListTitle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontFamily: '$font1',
+    fontWeight: '500',
+    fontStyle: 'normal',
+    textAlign: 'center',
+    fontSize: 20,
+    lineHeight: 28,
+    color: '#333333',
+  },
   wrapContent: {
     flex: 1,
     flexDirection: 'column',
