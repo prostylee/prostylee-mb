@@ -8,10 +8,6 @@ import {Divider, Text} from 'react-native-paper';
 
 import {Colors} from 'components';
 
-import {useDispatch, useSelector} from 'react-redux';
-import {getProductFilterState} from 'redux/selectors/search/productFilter';
-import {searchActions} from 'redux/reducers';
-
 const BlockFilter = ({attribute, onSelect = () => {}, defaultState = {}}) => {
   // const filterState = useSelector((state) => getProductFilterState(state));
   const attributeFilterState = defaultState?.attributes;

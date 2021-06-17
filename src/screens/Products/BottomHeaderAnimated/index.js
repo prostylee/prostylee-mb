@@ -14,6 +14,7 @@ import {RnRatingTap, Picker, Colors} from 'components';
 import {useSelector} from 'react-redux';
 import TagList from '../TagList';
 import {PRODUCT_SORT_ITEM} from 'constants';
+import {productActions} from 'redux/reducers';
 
 const BottomHeaderAnimated = ({
   navigation,
@@ -74,7 +75,11 @@ const BottomHeaderAnimated = ({
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('SearchProductFilter')}>
+          onPress={() =>
+            navigation.navigate('SearchProductFilter', {
+              filterFunc: productActions.getListProduct,
+            })
+          }>
           <View style={styles.wrapBlockFilter}>
             <Text numberOfLines={1} style={styles.textSpace}>
               |

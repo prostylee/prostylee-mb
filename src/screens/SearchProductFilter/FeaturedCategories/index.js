@@ -6,77 +6,27 @@ import styles from './styles';
 import {Colors} from 'components';
 import i18n from 'i18n';
 
-import {
-  getSearchFeaturedCategoriesLoadingSelector,
-  getSearchFeaturedCategoriesSelector,
-  getLoadSearchFeaturedCategoriesMoreLoading,
-  getHasLoadMoreSearchFeaturedCategoriesSelector,
-  getPageSearchFeaturedCategoriesSelector,
-} from 'redux/selectors/search';
-import {getProductFilterState} from 'redux/selectors/search/productFilter';
+import {getSearchFeaturedCategoriesSelector} from 'redux/selectors/search';
 
 import FeaturedCategoriesItem from './item.js';
 
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import {Divider, Text} from 'react-native-paper';
 
-const FeaturedCategories = ({navigation, data = []}) => {
-  const dispatch = useDispatch();
-
-  const filterState = useSelector((state) => getProductFilterState(state));
-
-  const attributeFilterState = filterState?.attributes;
-  const categoryFilterState = filterState.category;
+const FeaturedCategories = ({
+  navigation,
+  defaultState = {},
+  onItemPress = () => {},
+}) => {
+  const categoryFilterState = defaultState.category;
 
   const activeItem = categoryFilterState;
-
-  const [refreshing, handleRefreshing] = useState(false);
 
   const categories = useSelector((state) =>
     getSearchFeaturedCategoriesSelector(state),
   );
 
-  const listRightCategoriesSelector = useSelector((state) =>
-    getSearchFeaturedCategoriesSelector(state),
-  );
-
-  const listRightCategories = listRightCategoriesSelector?.content || [];
-
-  const loadMoreLoading = useSelector((state) =>
-    getLoadSearchFeaturedCategoriesMoreLoading(state),
-  );
-
-  const hasLoadMore = useSelector((state) =>
-    getHasLoadMoreSearchFeaturedCategoriesSelector(state),
-  );
-
-  const page = useSelector((state) =>
-    getPageSearchFeaturedCategoriesSelector(state),
-  );
-
-  useEffect(() => {}, [dispatch, refreshing]);
-
-  const handleRefresh = () => {
-    handleRefreshing(true);
-  };
-
-  const handleLoadMore = () => {
-    if (hasLoadMore) {
-    }
-  };
-
-  const renderFooter = () => {
-    if (!loadMoreLoading) {
-      return <View style={styles.viewFooter} />;
-    }
-
-    return (
-      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-        <ActivityIndicator animating color={Colors.$purple} size="small" />
-      </View>
-    );
-  };
   return (
     <>
       <View style={styles.container}>
@@ -94,15 +44,12 @@ const FeaturedCategories = ({navigation, data = []}) => {
                 navigation={navigation}
                 item={item}
                 isActive={activeItem === item.id}
-                // setActive={handleCategoryClick}
+                defaultState={defaultState}
+                onItemPress={onItemPress}
               />
             )}
             contentContainerStyle={{backgroundColor: Colors['$white']}}
             keyExtractor={(item, index) => index}
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            onEndReached={() => handleLoadMore()}
-            ListFooterComponent={renderFooter}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
           />

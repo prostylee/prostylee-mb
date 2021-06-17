@@ -18,7 +18,7 @@ const PriceFilter = ({
   const filterState = useSelector((state) => getProductFilterState(state));
   const priceState = filterState.price;
   const [state, setState] = useState([priceState[0], priceState[1]]);
-  const getValue = () => state;
+
   useEffect(() => {
     setState([priceState[0], priceState[1]]);
   }, [priceState]);

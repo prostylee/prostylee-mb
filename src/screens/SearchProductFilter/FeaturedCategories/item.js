@@ -1,46 +1,23 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import {Text, View, TouchableOpacity, Image} from 'react-native';
-// import {Image} from 'components';
+
 import styles from './styles';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {categoriesActions, productActions} from 'redux/reducers';
-import {MenFashion, WomanFashion} from 'svg/categories';
+
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
 import {Colors} from 'components';
 import {searchActions} from 'redux/reducers';
 const FeaturedCategoriesItem = ({
   item,
   index,
-  navigation,
   isActive = true,
   setActive = () => {},
+  onItemPress = () => {},
 }) => {
-  const dispatch = useDispatch();
-  const filterState = useSelector((state) => getProductFilterState(state));
-  const attributeFilterState = filterState?.attributes;
-  const categoryFilterState = filterState.category;
   const clickItem = (itemId) => {
-    // let newCategoryState = null;
-    // if (categoryFilterState && categoryFilterState.length) {
-    //   let flag = categoryFilterState?.indexOf(itemId);
-    //   if (flag < 0) {
-    //     newCategoryState = [...categoryFilterState, itemId];
-    //   } else {
-    //     newCategoryState = [...categoryFilterState];
-    //     newCategoryState.splice(flag, 1);
-    //   }
-    // } else {
-    //   newCategoryState = [itemId];
-    // }
-
-    dispatch(
-      searchActions.setProductFilterState({
-        ...filterState,
-        category: itemId,
-      }),
-    );
+    onItemPress('category', itemId);
     setActive(itemId);
   };
 

@@ -20,8 +20,11 @@ import {
   getCurrentKeyword,
 } from 'redux/selectors/search';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
+import {useRoute} from '@react-navigation/native';
 const FilterProduct = ({navigation}) => {
   const dispatch = useDispatch();
+  const route = useRoute();
+  const filterDispatchFunction = route?.params?.filterFunc || null;
 
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
   const filterAttributeList = useSelector((state) =>
@@ -47,7 +50,7 @@ const FilterProduct = ({navigation}) => {
   };
 
   const _handleClearFilter = () => {
-    setState({category: {}, price: [0, 0], attributes: {}});
+    setState({category: 0, price: [0, 0], attributes: {}});
     dispatch(
       searchActions.clearProductsFilterState({
         category: 0,
@@ -57,14 +60,6 @@ const FilterProduct = ({navigation}) => {
     );
   };
 
-  const _handlePriceChange = (value) => {
-    dispatch(
-      searchActions.setProductFilterState({
-        ...filterState,
-        price: [...value],
-      }),
-    );
-  };
   const formatArrayParamsValue = (arrayValue = []) => {
     return `${arrayValue.join(',')}`;
   };
@@ -78,24 +73,26 @@ const FilterProduct = ({navigation}) => {
         );
       } else newAttributes[`attributes[${item}]`] = attributesParamm[item];
     }
+
     dispatch(
       searchActions.setProductFilterState({
         ...filterState,
         price: priceFilterState || [0, 0],
         attributes: attributeFilterState,
+        category: categoryFilterState,
       }),
     );
-    console.log('STATE', JSON.stringify(state, null, 2));
+
     dispatch(
-      searchActions.getProductsSearch({
-        keyword: currentKeyword,
+      filterDispatchFunction({
+        // keyword: currentKeyword,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...newAttributes,
         categoryId: categoryFilterState,
         price: `${priceFilterState?.join('-')}`,
-        userId: 1,
+        // userId: 1,
       }),
     );
     navigation.goBack();
@@ -111,7 +108,6 @@ const FilterProduct = ({navigation}) => {
           type: 'product',
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
-          keyword: '',
         }),
       );
     }
@@ -125,13 +121,19 @@ const FilterProduct = ({navigation}) => {
         title={i18n.t('filter')}
         rightComponent={
           <TouchableOpacity onPress={_handleClearFilter}>
-            <Text style={styles.headerRight}>Reset</Text>
+            <Text style={styles.headerRight}>
+              {i18n.t('filterProduct.reset')}
+            </Text>
           </TouchableOpacity>
         }
       />
       <ScrollView>
         <View style={styles.wrapContent}>
-          <FeaturedCategories data={categories} />
+          <FeaturedCategories
+            data={categories}
+            defaultState={state}
+            onItemPress={_updateFilterState}
+          />
           <PriceFilter
             onPriceChange={_updateFilterState}
             minValue={0}
@@ -145,7 +147,7 @@ const FilterProduct = ({navigation}) => {
         </View>
       </ScrollView>
       <ButtonRounded
-        label="Áp Dụng"
+        label={i18n.t('filterProduct.apply')}
         style={{margin: 20}}
         onPress={_handleConfirm}
       />

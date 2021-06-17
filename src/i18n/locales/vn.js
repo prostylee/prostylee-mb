@@ -396,4 +396,8 @@ export default {
     use: 'Sử dụng',
     save: 'Lưu',
   },
+  filterProduct: {
+    apply: 'Áp dụng',
+    reset: 'Đặt lại',
+  },
 };
