@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {searchActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
-
+import PropTypes from 'prop-types';
 const FeaturedCategoriesItem = ({item, index, navigation}) => {
   const paddingLeft = index % 2 ? 4 : 12;
   const paddingRight = index % 2 ? 12 : 0;
@@ -56,8 +56,16 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
   );
 };
 
-FeaturedCategoriesItem.defaultProps = {};
+FeaturedCategoriesItem.defaultProps = {
+  item: {},
+  index: 0,
+  navigation: {},
+};
 
-FeaturedCategoriesItem.propTypes = {};
+FeaturedCategoriesItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  navigation: PropTypes.object.isRequired,
+};
 
 export default FeaturedCategoriesItem;

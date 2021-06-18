@@ -9,10 +9,12 @@ import {
   getBestSellersSelector,
   getCurrentBestSellersPageSelector,
   hasBestSellersLoadmoreSelector,
+  getBestSellerFilterStateSelector,
 } from 'redux/selectors/storeMain/bestSellers';
 
 import {storeActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 const BestSellers = ({navigation}) => {
   const dispatch = useDispatch();
@@ -113,6 +115,10 @@ const BestSellers = ({navigation}) => {
       navigation={navigation}
       isLoading={isLoading}
       hasLoadmore={hasLoadmore}
+      filterDispatchAction={storeActions.getBestSellers}
+      getFilterStateSelectorFunction={getBestSellerFilterStateSelector}
+      setFilterStateAction={storeActions.setBestSellersFilterState}
+      clearFilterStateAction={storeActions.clearBestSellersFilterState}
     />
   );
 };

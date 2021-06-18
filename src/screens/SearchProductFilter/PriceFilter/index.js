@@ -1,30 +1,27 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Dimensions, View} from 'react-native';
 import i18n from 'i18n';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import styles from './styles';
 import {Divider, Text} from 'react-native-paper';
-import debounce from 'lodash/debounce';
+
 import {Colors} from 'components';
 import {currencyFormat} from 'utils/currency';
-import {getProductFilterState} from 'redux/selectors/search/productFilter';
-import {useSelector} from 'react-redux';
-const WIDTH = Dimensions.get('window').width;
-const PriceFilter = ({
-  minValue = 0,
-  maxValue = 1000000,
-  onPriceChange = () => {},
-}) => {
-  const filterState = useSelector((state) => getProductFilterState(state));
-  const priceState = filterState.price;
 
-  const _handleValueChangeDebounce = debounce(
-    (value) => {
-      onPriceChange(value);
-    },
-    1000,
-    {maxWait: 2000, trailing: true, leading: false},
+import PropTypes from 'prop-types';
+
+const WIDTH = Dimensions.get('window').width;
+const PriceFilter = ({onPriceChange, defaultState}) => {
+  const priceState = defaultState.price;
+  const [state, setState] = useState(
+    priceState && priceState.length ? [priceState[0], priceState[1]] : [0, 1],
   );
+
+  useEffect(() => {
+    if (priceState && priceState.length) {
+      setState([priceState[0], priceState[1]]);
+    }
+  }, [priceState]);
 
   return (
     <>
@@ -37,7 +34,7 @@ const PriceFilter = ({
               color: Colors['$black500'],
             },
           ]}>
-          {currencyFormat(minValue, 'đ')} - {currencyFormat(maxValue, 'đ')}
+          {currencyFormat(state[0], 'đ')} - {currencyFormat(state[1], 'đ')}
         </Text>
       </View>
       <View style={styles.wrapChip}>
@@ -51,11 +48,17 @@ const PriceFilter = ({
             width: 20,
             height: 20,
           }}
-          onValuesChange={_handleValueChangeDebounce}
-          values={[priceState?.[0], priceState?.[1]]}
-          min={minValue}
-          max={maxValue}
+          onValuesChange={(value) => {
+            setState(value);
+          }}
+          onValuesChangeFinish={(value) => {
+            onPriceChange('price', value);
+          }}
+          values={[state?.[0], state?.[1]]}
+          min={0}
+          max={50000000}
           markerOffsetY={2}
+          step={10000}
           enabledTwo={true}
           isMarkersSeparated={true}
         />
@@ -65,8 +68,11 @@ const PriceFilter = ({
   );
 };
 
-PriceFilter.defaultProps = {};
+PriceFilter.defaultProps = {onPriceChange: () => {}, defaultState: {}};
 
-PriceFilter.propTypes = {};
+PriceFilter.propTypes = {
+  onPriceChange: PropTypes.func.isRequired,
+  defaultState: PropTypes.object.isRequired,
+};
 
 export default PriceFilter;

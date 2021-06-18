@@ -1,22 +1,16 @@
-import React, {useCallback, useState} from 'react';
-import {RnRatingTap, Picker} from 'components';
-import {
-  IconButton,
-  Searchbar,
-  RadioButton,
-  Divider,
-  Chip,
-} from 'react-native-paper';
-import styles from './style';
+import React from 'react';
+import {Picker} from 'components';
+import {RadioButton, Divider} from 'react-native-paper';
+import styles from './styles';
 import {Colors} from 'components';
-import {PRODUCT_SORT_ITEM} from 'constants';
-
+import PropTypes from 'prop-types';
 const SortDropDown = ({
-  visible = false,
-  setVisible = () => {},
-  setAction = () => {},
-  setValueSort = () => {},
+  visible,
+  setVisible,
+  setAction,
+  setValueSort,
   valueSort,
+  options,
 }) => {
   return (
     <Picker visible={visible} setVisible={setVisible} setAction={setAction}>
@@ -27,7 +21,7 @@ const SortDropDown = ({
           setVisible(false);
         }}
         color="#823ffd">
-        {PRODUCT_SORT_ITEM?.map((v, i, arr) => (
+        {options?.map((v, i, arr) => (
           <>
             <Divider />
             <RadioButton.Item
@@ -52,4 +46,22 @@ const SortDropDown = ({
     </Picker>
   );
 };
+SortDropDown.defaultProps = {
+  visible: false,
+  setVisible: () => {},
+  setAction: () => {},
+  setValueSort: () => {},
+  valueSort: '',
+  options: [],
+};
+
+SortDropDown.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  setVisible: PropTypes.func.isRequired,
+  setAction: PropTypes.func.isRequired,
+  setValueSort: PropTypes.func.isRequired,
+  valueSort: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
+};
+
 export default SortDropDown;

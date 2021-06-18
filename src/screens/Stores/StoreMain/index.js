@@ -14,7 +14,14 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {Header, Colors, HeaderAnimated, Bag, ChatIcon} from 'components';
+import {
+  Header,
+  Colors,
+  HeaderAnimated,
+  Bag,
+  ChatIcon,
+  SearchBar,
+} from 'components';
 
 import {storeActions, searchActions} from 'redux/reducers';
 
@@ -67,9 +74,8 @@ const HeaderRight = ({color = '#fff', navigation, isAnimated = false}) => {
 };
 const CustomSearchBar = ({navigation, onSearchFocus = () => {}}) => (
   <View style={styles.searchBarContainer}>
-    <Searchbar
+    <SearchBar
       style={styles.wrapSearchBar}
-      inputStyle={styles.wrapSearchBarInput}
       placeholder={i18n.t('search')}
       onFocus={onSearchFocus}
       placeholderTextColor={Colors['$lightGray']}
@@ -79,6 +85,7 @@ const CustomSearchBar = ({navigation, onSearchFocus = () => {}}) => (
 
 const Stores = (props) => {
   const dispatch = useDispatch();
+  const BOTTOM_ENDREACHED_HEIGHT = 300;
   const {navigation} = props;
   const [refreshing, handleRefreshing] = useState(false);
 
@@ -106,10 +113,9 @@ const Stores = (props) => {
     navigation.navigate('SearchProducts');
   };
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
-    const paddingToBottom = 20;
     return (
       layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
+      contentSize.height - BOTTOM_ENDREACHED_HEIGHT
     );
   };
 
@@ -186,14 +192,10 @@ const Stores = (props) => {
       <HeaderAnimated
         bottomComponent={
           <View style={styles.animatedSearchBarContainer}>
-            <Searchbar
-              style={[
-                styles.wrapSearchBar,
-                {
-                  flex: 1,
-                  backgroundColor: '#F4F5F5',
-                },
-              ]}
+            <SearchBar
+              style={{
+                backgroundColor: '#F4F5F5',
+              }}
               inputStyle={styles.wrapSearchBarInput}
               placeholder={i18n.t('search')}
               onFocus={onSearchFocus}
@@ -280,7 +282,7 @@ const Stores = (props) => {
             />
             {isEndReached ? (
               <View style={styles.listFooterContainer}>
-                <ActivityIndicator size="large" />
+                <ActivityIndicator size="small" color={Colors['$purple']} />
               </View>
             ) : null}
           </View>

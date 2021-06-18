@@ -4,23 +4,25 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {ThemeView, Header} from 'components';
+import {ThemeView, Header, SortDropDown} from 'components';
+import SearchBar from 'components/SearchBar';
 import {Searchbar, Divider, Chip} from 'react-native-paper';
-import {Colors} from 'components';
+import {TagList} from 'components';
 
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 import {debounce} from 'lodash';
 
 import ProductList from './ProductList';
-import SortDropDown from './SortDropDown';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {searchActions} from 'redux/reducers';
 import {getCurrentKeyword} from 'redux/selectors/search';
-import TagList from './TagList';
+
 import GroupHeaderRightButton from './HeaderRightButton';
 import FilterBar from './FilterBar';
 import {PRODUCT_SORT_ITEM} from 'constants';
+import {FILTER_TAGS} from 'constants';
 
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
@@ -35,6 +37,7 @@ const SearchProducts = ({navigation}) => {
 
   const handlerSearch = useCallback(
     debounce((query) => {
+      dispatch(searchActions.setCurrentKeyword(query));
       dispatch(
         searchActions.getProductsSearch({
           keyword: query,
@@ -115,7 +118,7 @@ const SearchProducts = ({navigation}) => {
   }, [currentKeyword]);
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
+    <ThemeView style={styles.container}>
       <Header
         isDefault
         containerStyle={{
@@ -126,15 +129,13 @@ const SearchProducts = ({navigation}) => {
           height: 30,
         }}
         middleComponent={
-          <Searchbar
-            style={styles.searchStyle}
-            inputStyle={styles.searchInputStyle}
-            multiline={false}
-            numberOfLines={1}
+          <SearchBar
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
+            onClear={() => onChangeSearch('')}
             value={searchQuery}
             defaultValue={searchQuery}
+            style={styles.searchStyle}
           />
         }
         rightComponent={<GroupHeaderRightButton haveNoti={true} />}
@@ -150,19 +151,20 @@ const SearchProducts = ({navigation}) => {
         }
       />
       <Divider />
-      <TagList onTagPress={_handleFilterByTag} />
+      <TagList onTagPress={_handleFilterByTag} options={FILTER_TAGS} />
       <SortDropDown
         visible={visible}
         setVisible={setVisible}
         setAction={setAction}
         setValueSort={_handleSort}
         valueSort={valueSort}
+        options={PRODUCT_SORT_ITEM}
       />
       <ProductList
         currentFilterValue={currentFilterValue}
         navigation={navigation}
       />
-    </KeyboardAvoidingView>
+    </ThemeView>
   );
 };
 

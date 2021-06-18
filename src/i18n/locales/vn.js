@@ -398,4 +398,8 @@ export default {
     save: 'Lưu',
     noVoucherList: 'Bạn chưa có mã khuyến mãi.',
   },
+  filterProduct: {
+    apply: 'Áp dụng',
+    reset: 'Đặt lại',
+  },
 };

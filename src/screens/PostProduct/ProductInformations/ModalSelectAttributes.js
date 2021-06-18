@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modal';
 import styles from './styles';
 import ButtonAttributes from './ButtonAttributes';
-
+import PropTypes from 'prop-types';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 const ModalSelectAttributes = ({
@@ -47,5 +47,20 @@ const ModalSelectAttributes = ({
       </View>
     </Modal>
   );
+};
+ModalSelectAttributes.defaultProps = {
+  item: {},
+  setSelectedModalItem: () => {},
+  _handleSelectAttributes: () => {},
+  selectedAttributes: {},
+  selectedModalItem: {},
+};
+
+ModalSelectAttributes.propTypes = {
+  item: PropTypes.object.isRequired,
+  setSelectedModalItem: PropTypes.func.isRequired,
+  _handleSelectAttributes: PropTypes.func.isRequired,
+  selectedAttributes: PropTypes.object.isRequired,
+  selectedModalItem: PropTypes.object.isRequired,
 };
 export default ModalSelectAttributes;

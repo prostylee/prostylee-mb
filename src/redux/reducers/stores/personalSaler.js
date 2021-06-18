@@ -11,6 +11,9 @@ export const types = {
   GET_PERSONAL_SALERS_LOADMORE: 'GET_PERSONAL_SALERS_LOADMORE',
   GET_PERSONAL_SALERS_LOADMORE_SUCCESS: 'GET_PERSONAL_SALERS_LOADMORE_SUCCESS',
   GET_PERSONAL_SALERS_LOADMORE_FAILED: 'GET_PERSONAL_SALERS_LOADMORE_FAILED',
+
+  SET_PERSONAL_SALERS_FILTER_STATE: 'SET_PERSONAL_SALERS_FILTER_STATE',
+  CLEAR_PERSONAL_SALERS_FILTER_STATE: 'CLEAR_PERSONAL_SALERS_FILTER_STATE',
 };
 
 export const actions = {
@@ -28,6 +31,13 @@ export const actions = {
   getPersonalSalersLoadmoreFailed: createAction(
     types.GET_PERSONAL_SALERS_LOADMORE_FAILED,
   ),
+
+  setPersonalSalersFilterState: createAction(
+    types.SET_PERSONAL_SALERS_FILTER_STATE,
+  ),
+  clearPersonalSalersFilterState: createAction(
+    types.CLEAR_PERSONAL_SALERS_FILTER_STATE,
+  ),
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -38,6 +48,7 @@ export const defaultState = {
   personalSalersData: {},
   personalSalersPage: 0,
   hasPersonalSalersLoadmore: false,
+  personalSalersFilterState: {},
 };
 
 export const handleActions = {
@@ -79,5 +90,22 @@ export const handleActions = {
   },
   [types.GET_PERSONAL_SALERS_LOADMORE_FAILED]: (state, {payload}) => {
     return {...state};
+  },
+
+  [types.SET_PERSONAL_SALERS_FILTER_STATE]: (state, {payload}) => {
+    return {
+      ...state,
+      personalSalersFilterState: {...payload},
+    };
+  },
+  [types.CLEAR_PERSONAL_SALERS_FILTER_STATE]: (state, {payload}) => {
+    return {
+      ...state,
+      personalSalersFilterState: {
+        attributes: {},
+        category: -1,
+        price: [0, 0],
+      },
+    };
   },
 };

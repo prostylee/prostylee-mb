@@ -89,6 +89,7 @@ export default EStyleSheet.create({
     color: '$white',
   },
   viewFooter: {
-    marginBottom: 26,
+    paddingVertical: 26,
+    backgroundColor: '$white',
   },
 });
