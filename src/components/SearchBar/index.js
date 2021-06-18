@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, TextInput, TouchableOpacity} from 'react-native';
-
+import {View, TextInput, TouchableOpacity, Text} from 'react-native';
 import {Search, ClearTextInput} from 'svg/common';
 import styles from './styles';
 const SearchBar = (props) => {
