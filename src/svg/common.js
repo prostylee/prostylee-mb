@@ -280,7 +280,12 @@ export const ChevronLeft = ({
   );
 };
 
-export const Close = ({width = 28, height = 28, color = 'black'}) => {
+export const Close = ({
+  width = 28,
+  height = 28,
+  color = 'black',
+  background = 'white',
+}) => {
   return (
     <Svg
       width={width}
@@ -288,7 +293,7 @@ export const Close = ({width = 28, height = 28, color = 'black'}) => {
       viewBox="0 0 28 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
-      <Rect width="28" height="28" rx="14" fill="white" />
+      <Rect width="28" height="28" rx="14" fill={background} />
       <Path
         d="M18 10L10 18"
         stroke={color}
@@ -2747,6 +2752,26 @@ export const PlusIcon = ({
       strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
+    />
+  </Svg>
+);
+export const ClearTextInput = ({
+  width = 16,
+  height = 16,
+  background = '#8B9399',
+  color = '#fff',
+}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M14.6668 7.99967C14.6668 11.6816 11.6821 14.6663 8.00016 14.6663C4.31826 14.6663 1.3335 11.6816 1.3335 7.99967C1.3335 4.31778 4.31826 1.33301 8.00016 1.33301C11.6821 1.33301 14.6668 4.31778 14.6668 7.99967ZM10.7072 5.29256C11.0978 5.68308 11.0978 6.31625 10.7072 6.70677L9.41434 7.99966L10.7072 9.29256C11.0978 9.68308 11.0978 10.3162 10.7072 10.7068C10.3167 11.0973 9.68354 11.0973 9.29302 10.7068L8.00012 9.41388L6.70723 10.7068C6.3167 11.0973 5.68354 11.0973 5.29302 10.7068C4.90249 10.3162 4.90249 9.68308 5.29302 9.29256L6.58591 7.99966L5.29302 6.70677C4.90249 6.31625 4.90249 5.68308 5.29302 5.29256C5.68354 4.90203 6.3167 4.90203 6.70723 5.29256L8.00012 6.58545L9.29302 5.29256C9.68354 4.90203 10.3167 4.90203 10.7072 5.29256Z"
+      fill={background}
     />
   </Svg>
 );

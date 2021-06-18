@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {TouchableOpacity, View, Text, ScrollView} from 'react-native';
 import i18n from 'i18n';
 
@@ -20,38 +20,50 @@ import {
   getCurrentKeyword,
 } from 'redux/selectors/search';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
+import {useRoute} from '@react-navigation/native';
 const FilterProduct = ({navigation}) => {
   const dispatch = useDispatch();
+  const route = useRoute();
+  const filterDispatchFunction = route?.params?.filterFunc || null;
+  const getFilterStateSelectorFunction =
+    route?.params?.getFilterStateSelectorFunction || null;
+  const clearFilterStateAction = route?.params?.clearFilterStateAction || null;
+  const setFilterStateAction = route?.params?.setFilterStateAction || null;
+
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
   const filterAttributeList = useSelector((state) =>
     getProductFilterAttributeListSelector(state),
   );
-  const filterState = useSelector((state) => getProductFilterState(state));
-  const attributeFilterState = filterState?.attributes;
-  const categoryFilterState = filterState.category;
-  const priceFilterState = filterState.price;
+
+  const filterState = useSelector((state) =>
+    getFilterStateSelectorFunction(state),
+  );
 
   const categories = useSelector((state) =>
     getSearchFeaturedCategoriesSelector(state),
   );
 
-  const _handleClearFilter = () => {
-    dispatch(searchActions.clearProductsFilterState({}));
+  const [state, setState] = useState(filterState);
+
+  const attributeFilterState = state?.attributes;
+  const categoryFilterState = state.category;
+  const priceFilterState = state.price;
+
+  const _updateFilterState = (key, value) => {
+    let newState = {...state};
+    newState[key] = value;
+    setState({...newState});
   };
 
-  const _handlePriceChange = (value) => {
-    dispatch(
-      searchActions.setProductFilterState({
-        ...filterState,
-        price: [...value],
-      }),
-    );
+  const _handleClearFilter = () => {
+    setState({category: 0, price: [0, 0], attributes: {}});
+    dispatch(clearFilterStateAction());
   };
+
   const formatArrayParamsValue = (arrayValue = []) => {
     return `${arrayValue.join(',')}`;
   };
   const _handleConfirm = () => {
-    // let arrayAttribute = Object.keys(attributeFilterState);
     let attributesParamm = {...attributeFilterState};
     let newAttributes = {};
     for (let item in attributesParamm) {
@@ -61,20 +73,30 @@ const FilterProduct = ({navigation}) => {
         );
       } else newAttributes[`attributes[${item}]`] = attributesParamm[item];
     }
+    console.log('STATE', state);
 
     dispatch(
-      searchActions.getProductsSearch({
-        keyword: currentKeyword,
+      setFilterStateAction({
+        price: priceFilterState || [0, 0],
+        attributes: attributeFilterState,
+        category: categoryFilterState || 0,
+      }),
+    );
+
+    dispatch(
+      filterDispatchFunction({
+        // keyword: currentKeyword,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...newAttributes,
-        categoryId: categoryFilterState,
-        // price: `${priceFilterState?.join('-')}`,
-        userId: 1,
+        categoryId: categoryFilterState || undefined,
+        price:
+          `${priceFilterState?.join('-')}` === '0-0'
+            ? undefined
+            : `${priceFilterState?.join('-')}`,
       }),
     );
-
     navigation.goBack();
   };
 
@@ -88,7 +110,6 @@ const FilterProduct = ({navigation}) => {
           type: 'product',
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
-          keyword: '',
         }),
       );
     }
@@ -102,23 +123,33 @@ const FilterProduct = ({navigation}) => {
         title={i18n.t('filter')}
         rightComponent={
           <TouchableOpacity onPress={_handleClearFilter}>
-            <Text style={styles.headerRight}>Reset</Text>
+            <Text style={styles.headerRight}>
+              {i18n.t('filterProduct.reset')}
+            </Text>
           </TouchableOpacity>
         }
       />
       <ScrollView>
         <View style={styles.wrapContent}>
-          <FeaturedCategories data={categories} />
-          <PriceFilter
-            onPriceChange={_handlePriceChange}
-            minValue={0}
-            maxValue={10000}
+          <FeaturedCategories
+            data={categories}
+            defaultState={state}
+            onItemPress={_updateFilterState}
           />
-          <ConditionOfProductsFilter />
+          <PriceFilter
+            onPriceChange={_updateFilterState}
+            minValue={0}
+            maxValue={50000000}
+            defaultState={state}
+          />
+          <ConditionOfProductsFilter
+            onSelect={_updateFilterState}
+            defaultState={state}
+          />
         </View>
       </ScrollView>
       <ButtonRounded
-        label="Áp Dụng"
+        label={i18n.t('filterProduct.apply')}
         style={{margin: 20}}
         onPress={_handleConfirm}
       />

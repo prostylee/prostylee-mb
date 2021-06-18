@@ -13,7 +13,7 @@ import {ButtonRounded} from 'components';
 import styles from './styles';
 
 import i18n from 'i18n';
-
+import PropTypes from 'prop-types';
 const Item = ({item, onPress = () => {}, active}) => {
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
@@ -26,11 +26,11 @@ const Item = ({item, onPress = () => {}, active}) => {
   );
 };
 const CheckBoxAttributes = ({
-  defaultState = [],
-  submitSelect = () => {},
-  setModalVisible = () => {},
-  data = {},
-  allowSelectMultiple = false,
+  defaultState,
+  submitSelect,
+  setModalVisible,
+  data,
+  allowSelectMultiple,
 }) => {
   const attributesId = data?.id || 0;
   const listOptions = data?.attributeOptions || [];
@@ -103,5 +103,20 @@ const CheckBoxAttributes = ({
       </View>
     </SafeAreaView>
   );
+};
+CheckBoxAttributes.defaultProps = {
+  defaultState: [],
+  submitSelect: () => {},
+  setModalVisible: () => {},
+  data: {},
+  allowSelectMultiple: false,
+};
+
+CheckBoxAttributes.propTypes = {
+  defaultState: PropTypes.array.isRequired,
+  submitSelect: PropTypes.func.isRequired,
+  setModalVisible: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+  allowSelectMultiple: PropTypes.bool,
 };
 export default CheckBoxAttributes;

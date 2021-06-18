@@ -17,13 +17,8 @@ import {
   getProductPaymentMethodLoadingSelector,
 } from 'redux/selectors/postProduct';
 import {useSelector} from 'react-redux';
-
-const ListPayment = ({
-  item,
-  onPress,
-  setSelectedPaymentMethods = () => {},
-  selectedPaymentMethods = [],
-}) => {
+import PropTypes from 'prop-types';
+const ListPayment = ({setSelectedPaymentMethods, selectedPaymentMethods}) => {
   const [isCheckAll, setIsCheckAll] = useState(false);
 
   const loading = useSelector((state) =>
@@ -112,5 +107,14 @@ const ListPayment = ({
       </View>
     </>
   );
+};
+ListPayment.defaultProps = {
+  setSelectedPaymentMethods: () => {},
+  selectedPaymentMethods: [],
+};
+
+ListPayment.propTypes = {
+  setSelectedPaymentMethods: PropTypes.func.isRequired,
+  selectedPaymentMethods: PropTypes.array.isRequired,
 };
 export default ListPayment;

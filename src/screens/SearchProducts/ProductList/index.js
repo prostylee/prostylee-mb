@@ -17,7 +17,7 @@ import i18n from 'i18n';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {getProductSearchListSelector} from 'redux/selectors/search/productSearchMain';
 
-const ProductList = ({navigation, data = []}) => {
+const ProductList = ({navigation}) => {
   const dispatch = useDispatch();
   const [isRefreshing, setIsRefreshing] = useState(false);
 

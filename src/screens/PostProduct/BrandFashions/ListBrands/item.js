@@ -5,7 +5,8 @@ import {Check} from 'svg/common';
 import {Image} from 'components';
 import styles from './styles';
 import {useTheme} from '@react-navigation/native';
-const Item = ({item, selectedBrand, onPress, disabled = false}) => {
+import PropTypes from 'prop-types';
+const Item = ({item, selectedBrand, onPress, disabled}) => {
   const {colors} = useTheme();
   const active = selectedBrand.id === item.id;
   return (
@@ -51,5 +52,18 @@ const Item = ({item, selectedBrand, onPress, disabled = false}) => {
       </View>
     </TouchableOpacity>
   );
+};
+Item.defaultProps = {
+  item: {},
+  selectedBrand: {},
+  disabled: false,
+  onPress: () => {},
+};
+
+Item.propTypes = {
+  item: PropTypes.object.isRequired,
+  selectedBrand: PropTypes.object.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 export default Item;

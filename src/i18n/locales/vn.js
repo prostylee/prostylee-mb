@@ -3,6 +3,7 @@ export default {
   confirm: 'Đồng ý',
   cancel: 'Huỷ',
   logOut: 'Đăng xuất',
+  caution: 'Chú ý!',
   stores: {
     titleTopStore: 'Cửa hàng nổi bật',
     textNear: 'Cửa hàng gần đây',
@@ -206,6 +207,7 @@ export default {
     updateProduct: 'Cập nhật sản phẩm',
     seeMore: 'Xem thêm',
     yourAddress: 'Địa điểm của bạn',
+    removeItemPopup: 'Xoá sản phẩm khỏi giỏ hàng?',
   },
   error: {
     cannotUploadImage:
@@ -387,7 +389,6 @@ export default {
     unselectAll: 'Bỏ chọn toàn bộ',
     postSuccess: 'Đăng sản phẩm thành công',
     postFailed: 'Đăng sản phẩm thất bại',
-    choose: 'Chọn',
     yourLocation: 'Địa điểm của bạn',
     changeLocation: 'Thay đổi địa điểm',
     productPrice: 'Giá sản phẩm',
@@ -395,5 +396,10 @@ export default {
   voucher: {
     use: 'Sử dụng',
     save: 'Lưu',
+    noVoucherList: 'Bạn chưa có mã khuyến mãi.',
+  },
+  filterProduct: {
+    apply: 'Áp dụng',
+    reset: 'Đặt lại',
   },
 };

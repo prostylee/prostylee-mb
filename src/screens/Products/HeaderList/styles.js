@@ -1,6 +1,6 @@
 import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {getStatusBarHeight} from "react-native-status-bar-height";
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 export default EStyleSheet.create({
   wrapSearchBar: {
@@ -14,7 +14,7 @@ export default EStyleSheet.create({
     position: 'absolute',
     top: getStatusBarHeight(),
     width: '100%',
-    paddingLeft: 16,
+    // paddingLeft: 16,
   },
   wrapTitle: {
     position: 'absolute',
@@ -40,5 +40,10 @@ export default EStyleSheet.create({
   imageBanner: {
     width: '100%',
     height: 200,
+  },
+  leftTouch: {
+    padding: 16,
+    fontWeight: '500',
+    width: 80,
   },
 });

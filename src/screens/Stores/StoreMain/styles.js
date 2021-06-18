@@ -46,12 +46,7 @@ export default EStyleSheet.create({
     paddingHorizontal: 16,
   },
   wrapSearchBar: {
-    width: '100%',
     backgroundColor: '#F4F5F5',
-    height: 35,
-    borderRadius: 4,
-    elevation: 0,
-    // padding: 0,
   },
   wrapSearchBarInput: {
     height: '100%',
@@ -78,6 +73,7 @@ export default EStyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
+    paddingVertical: 30,
+    backgroundColor: '$white',
   },
 });

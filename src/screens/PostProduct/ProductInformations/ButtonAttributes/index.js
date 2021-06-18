@@ -6,15 +6,15 @@ import styles from './styles';
 import {ButtonRounded} from 'components';
 import {Divider, Text} from 'react-native-paper';
 import {Colors} from 'components';
-
+import PropTypes from 'prop-types';
 import i18n from 'i18n';
 
 const ButtonAttributes = ({
-  defaultState = [],
-  submitSelect = () => {},
-  setModalVisible = () => {},
-  data = {},
-  allowSelectMultiple = false,
+  defaultState,
+  submitSelect,
+  setModalVisible,
+  data,
+  allowSelectMultiple,
 }) => {
   const attributesId = data?.id || 0;
   const listOptions = data?.attributeOptions || [];
@@ -120,6 +120,22 @@ const ButtonAttributes = ({
       </View>
     </View>
   );
+};
+
+ButtonAttributes.defaultProps = {
+  defaultState: [],
+  submitSelect: () => {},
+  setModalVisible: () => {},
+  data: {},
+  allowSelectMultiple: false,
+};
+
+ButtonAttributes.propTypes = {
+  defaultState: PropTypes.array.isRequired,
+  submitSelect: PropTypes.func.isRequired,
+  setModalVisible: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+  allowSelectMultiple: PropTypes.bool,
 };
 
 export default ButtonAttributes;

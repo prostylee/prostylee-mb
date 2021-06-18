@@ -34,6 +34,7 @@ import PropTypes from 'prop-types';
 /*Utils*/
 import {priceSalePercent} from 'utils/currency';
 import {dim} from 'utils/common';
+import isEmpty from 'lodash/isEmpty';
 
 /*Reducers*/
 import {productActions, productSelectors} from 'reducers';
@@ -101,8 +102,8 @@ const ProductDetail = (props) => {
   const productData = useSelector((state) =>
     productSelectors.getProductDetail(state),
   );
-  const productPriceData =
-    productData?.price && productData?.priceSale
+  const productPriceData = !isEmpty(productData)
+    ? productData?.price && productData?.priceSale
       ? {
           price: productData?.price,
           priceSale: productData?.priceSale,
@@ -110,7 +111,8 @@ const ProductDetail = (props) => {
       : {
           price: productData.productPriceResponseList[0].price || 0,
           priceSale: productData.productPriceResponseList[0].priceSale || 0,
-        };
+        }
+    : {};
   const productDataLoading = useSelector((state) =>
     productSelectors.getProductDetailLoading(state),
   );

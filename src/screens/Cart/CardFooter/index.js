@@ -15,7 +15,12 @@ import {
   getListCartSelector,
 } from 'redux/selectors/cart';
 
-const CardFooter = ({buttonText, actionButton}) => {
+const CardFooter = ({
+  buttonText,
+  deliveryMethod,
+  voucher: voucherData,
+  actionButton,
+}) => {
   const [total, setTotal] = useState(0);
   const [voucher, setVoucher] = useState();
   const [payment, setPayment] = useState();
@@ -25,8 +30,6 @@ const CardFooter = ({buttonText, actionButton}) => {
 
   const paymentList = useSelector((state) => getListPaymentSelector(state));
   const cart = useSelector((state) => getListCartSelector(state)) || [];
-
-  console.log("cart", cart)
 
   useEffect(() => {
     if (cart.length) {
@@ -63,6 +66,13 @@ const CardFooter = ({buttonText, actionButton}) => {
   };
 
   const paymentUsed = paymentList.filter((item) => item.id === payment);
+  const totalPrice = () => {
+    const deliveryPrice =
+      deliveryMethod && deliveryMethod.price ? deliveryMethod.price : 0;
+    const voucherPrice =
+      voucherData && voucherData.price ? voucherData.price : 0;
+    return +total + deliveryPrice + voucherPrice;
+  };
 
   return (
     <View style={styles.container}>
@@ -107,7 +117,7 @@ const CardFooter = ({buttonText, actionButton}) => {
         <View style={styles.viewTemp}>
           <Text style={styles.viewTempTitle}>Tạm tính</Text>
           <Text style={styles.viewTempValue}>
-            {currencyFormat(+total, 'đ')}
+            {currencyFormat(totalPrice(), 'đ')}
           </Text>
         </View>
         <View style={styles.viewCheckout}>

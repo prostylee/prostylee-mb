@@ -3,7 +3,7 @@ import React from 'react';
 import {View, FlatList} from 'react-native';
 
 import styles from './styles';
-import {Colors} from 'components';
+
 import i18n from 'i18n';
 
 import FeaturedCategoriesItem from './item.js';

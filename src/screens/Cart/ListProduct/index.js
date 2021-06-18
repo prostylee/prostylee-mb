@@ -38,7 +38,6 @@ const ListProduct = ({navigation}) => {
   );
 
   const handleRefresh = () => {
-    console.log('REFRSH');
     handleRefreshing(true);
     dispatch(cartActions.getListRecent());
     dispatch(cartActions.getListSuggestion());
@@ -101,6 +100,7 @@ const ListProduct = ({navigation}) => {
   useEffect(() => {
     dispatch(cartActions.getListRecent());
     dispatch(cartActions.getListSuggestion());
+    dispatch(cartActions.getListDelivery());
   }, []);
 
   return (

@@ -16,7 +16,7 @@ export const types = {
   SET_LIST_CART_SUCCESS: 'SET_LIST_CART_SUCCESS',
   SET_LIST_CART_FAILED: 'SET_LIST_CART_FAILED',
   ADD_ITEM_TO_CART: 'ADD_ITEM_TO_CART',
-  SET_VOUCHER_LOADING: 'SET_VOUCHER_LOADING',
+  REMOVE_ITEM_FROM_CART: 'REMOVE_ITEM_FROM_CART',
   //AMOUNT
   SET_CART_COUPON_AMOUNT: 'SET_CART_AMOUNT',
 
@@ -35,6 +35,12 @@ export const types = {
   GET_LIST_SUGGESTION: 'GET_LIST_SUGGESTION',
   GET_LIST_SUGGESTION_SUCCESS: 'GET_LIST_SUGGESTION_SUCCESS',
   GET_LIST_SUGGESTION_FAILED: 'GET_LIST_SUGGESTION_FAILED',
+
+  //List Delivery
+  SET_DELIVERY_LOADING: 'SET_DELIVERY_LOADING',
+  GET_LIST_DELIVERY: 'GET_LIST_DELIVERY',
+  GET_LIST_DELIVERY_SUCCESS: 'GET_LIST_DELIVERY_SUCCESS',
+  GET_LIST_DELIVERY_FAILED: 'GET_LIST_DELIVERY_FAILED',
 
   //List coupon
   SET_CART_COUPON: 'SET_CART_COUPON',
@@ -64,6 +70,7 @@ export const actions = {
   setListCartSuccess: createAction(types.SET_LIST_CART_SUCCESS),
   setListCartFailed: createAction(types.SET_LIST_CART_FAILED),
   addItemToCart: createAction(types.ADD_ITEM_TO_CART),
+  removeItemFromCart: createAction(types.REMOVE_ITEM_FROM_CART),
   //List Payment
   setPaymentLoading: createAction(types.SET_PAYMENT_LOADING),
   getListPayment: createAction(types.GET_LIST_PAYMENT),
@@ -82,6 +89,12 @@ export const actions = {
   getListSuggestion: createAction(types.GET_LIST_SUGGESTION),
   getListSuggestionSuccess: createAction(types.GET_LIST_SUGGESTION_SUCCESS),
   getListSuggestionFailed: createAction(types.GET_LIST_SUGGESTION_FAILED),
+
+  //List Delivery
+  setDeliveryLoading: createAction(types.SET_DELIVERY_LOADING),
+  getListDelivery: createAction(types.GET_LIST_DELIVERY),
+  getListDeliverySuccess: createAction(types.GET_LIST_DELIVERY_SUCCESS),
+  getListDeliveryFailed: createAction(types.GET_LIST_DELIVERY_FAILED),
 
   //List Voucher
   setVoucherLoading: createAction(types.SET_VOUCHER_LOADING),
@@ -130,6 +143,7 @@ const intialState = {
   listSuggestion: [],
 
   //List Delivery
+  deliveryLoading: false,
   listDelivery: [],
 
   //List Voucher
@@ -161,14 +175,31 @@ export default handleActions(
         showMessage({
           message: 'Thêm vào giỏ hàng thành công',
           type: 'success',
+          position: 'top',
         });
         return {...state, listCart: currentCart};
       } else {
         showMessage({
           message: 'Thêm vào giỏ hàng thành công',
           type: 'success',
+          position: 'top',
         });
         return {...state, listCart: currentCart};
+      }
+    },
+    [types.REMOVE_ITEM_FROM_CART]: (state, {payload}) => {
+      const currentCart = state.listCart;
+      const removeItemIndex = currentCart.findIndex(
+        (item) => item.item.id === payload.id,
+      );
+      if (removeItemIndex >= 0) {
+        const newCartList = [
+          ...currentCart.slice(0, removeItemIndex),
+          ...currentCart.slice(removeItemIndex + 1),
+        ];
+        return {...state, listCart: newCartList};
+      } else {
+        return state;
       }
     },
     [types.SET_CART_COUPON_AMOUNT]: (state, {payload}) => {
@@ -201,6 +232,20 @@ export default handleActions(
         ...state,
         cartLoading: false,
       };
+    },
+    //List Payment
+    [types.SET_DELIVERY_LOADING]: (state, {payload}) => {
+      return {...state, deliveryLoading: payload};
+    },
+    [types.GET_LIST_DELIVERY_SUCCESS]: (state, {payload}) => {
+      return {
+        ...state,
+        listDelivery: payload,
+        deliveryLoading: false,
+      };
+    },
+    [types.GET_LIST_DELIVERY_FAILED]: (state, {payload}) => {
+      return state;
     },
     //List Payment
     [types.SET_PAYMENT_LOADING]: (state, {payload}) => {

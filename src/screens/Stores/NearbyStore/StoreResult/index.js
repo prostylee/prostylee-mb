@@ -153,7 +153,7 @@ const FeaturedCategories = ({navigation}) => {
                       />
                     )}
                     numColumns={1}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) => item.id + '-' + index}
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                   />
@@ -161,7 +161,7 @@ const FeaturedCategories = ({navigation}) => {
               </>
             )}
             numColumns={1}
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => item.id + '-' + index}
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
             onEndReached={handleLoadMore}

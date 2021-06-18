@@ -11,11 +11,8 @@ import {
 } from 'redux/selectors/postProduct';
 import {useSelector} from 'react-redux';
 import {Checkbox} from 'react-native-paper';
-
-const ColorInfor = ({
-  setSelectedDeliveryType = () => {},
-  selectedDeliveryType = [],
-}) => {
+import PropTypes from 'prop-types';
+const ColorInfor = ({setSelectedDeliveryType, selectedDeliveryType}) => {
   const [isCheckAll, setIsCheckAll] = useState(false);
 
   const loading = useSelector((state) =>
@@ -93,5 +90,14 @@ const ColorInfor = ({
       />
     </>
   );
+};
+ColorInfor.defaultProps = {
+  setSelectedDeliveryType: () => {},
+  selectedDeliveryType: [],
+};
+
+ColorInfor.propTypes = {
+  setSelectedDeliveryType: PropTypes.func.isRequired,
+  selectedDeliveryType: PropTypes.array.isRequired,
 };
 export default ColorInfor;

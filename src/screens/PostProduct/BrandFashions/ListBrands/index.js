@@ -15,13 +15,8 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {ActivityIndicator} from 'react-native-paper';
 import {BrandListLoading} from 'components/Loading/contentLoader';
-
-const ListBrand = ({
-  selectedBrand,
-  setSelectedBrand,
-  data,
-  disabled = false,
-}) => {
+import PropTypes from 'prop-types';
+const ListBrand = ({selectedBrand, setSelectedBrand, data, disabled}) => {
   const HEIGHT = Dimensions.get('window').height;
   const dispatch = useDispatch();
   const [refreshing, setIsRefreshing] = React.useState(false);
@@ -102,6 +97,20 @@ const ListBrand = ({
       refreshing={refreshing}
     />
   );
+};
+
+ListBrand.defaultProps = {
+  selectedBrand: {},
+  setSelectedBrand: () => {},
+  data: [],
+  disabled: false,
+};
+
+ListBrand.propTypes = {
+  selectedBrand: PropTypes.object.isRequired,
+  setSelectedBrand: PropTypes.func.isRequired,
+  data: PropTypes.array.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default ListBrand;
