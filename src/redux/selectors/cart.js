@@ -101,3 +101,14 @@ export const getVoucherUseSelector = createSelector(
   cartReducer,
   (data) => data?.voucherUse,
 );
+
+//List Delivery
+export const getDeliveryLoadingSelector = createSelector(
+  cartReducer,
+  (data) => data?.deliveryLoading || false,
+);
+
+export const getListDeliverySelector = createSelector(
+  cartReducer,
+  (data) => data?.listDelivery || [],
+);

@@ -14,40 +14,10 @@ import {currencyFormat} from 'utils/currency';
 import Collapsible from 'react-native-collapsible';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {RadioButton} from 'react-native-paper';
-import {getListCartSelector} from 'redux/selectors/cart';
-
-const deliveries = [
-  {
-    label: 'Grab',
-    content: 'Nhận hàng vào 29-12 đến 31-12',
-    value: 25000,
-    key: 'grab',
-  },
-  {
-    label: 'Viettel Post',
-    content: 'Nhận hàng trong ngày',
-    value: 45000,
-    key: 'viettel-post',
-  },
-  {
-    label: 'VN Express',
-    content: 'Nhận hàng trong ngày',
-    value: 35000,
-    key: 'vn-express',
-  },
-  {
-    label: 'Giao hàng tiết kiệm',
-    content: 'Nhận hàng trong ngày',
-    value: 30000,
-    key: 'ghtk',
-  },
-  {
-    label: 'Tự lấy hàng',
-    content: 'Bạn có thể tự đến lấy hàng tại địa chỉ của người bán.',
-    value: 0,
-    key: 'seft-shipping',
-  },
-];
+import {
+  getListCartSelector,
+  getListDeliverySelector,
+} from 'redux/selectors/cart';
 
 const ListProduct = ({navigation, data}) => {
   const [refreshing, handleRefreshing] = useState(false);
@@ -57,6 +27,8 @@ const ListProduct = ({navigation, data}) => {
   const [valueChosen, setValueChosen] = useState();
 
   const cart = useSelector((state) => getListCartSelector(state)) || [];
+  const deliveries =
+    useSelector((state) => getListDeliverySelector(state)) || [];
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -126,9 +98,9 @@ const ListProduct = ({navigation, data}) => {
               {listDelivery?.length > 0 &&
                 listDelivery.map((item) => (
                   <RadioButton.Item
-                    key={`radio-${item.key}`}
+                    key={`radio-${item.id}`}
                     label={renderDelivery(item)}
-                    value={item.key}
+                    value={item.id}
                     color="#823ffd"
                     style={styles.wrapRadioButton}
                     mode="android"
@@ -187,20 +159,20 @@ const ListProduct = ({navigation, data}) => {
         <View style={styles.wrapInfo}>
           <View>
             <View style={styles.wrapRadioTitle}>
-              <Text style={styles.titleRadio}>{item.label}</Text>
+              <Text style={styles.titleRadio}>{item.description}</Text>
             </View>
           </View>
           <View style={styles.wrapPrice}>
             <Text style={styles.priceRadio}>
-              {item.value
-                ? currencyFormat(item.value, 'đ')
+              {item.price
+                ? currencyFormat(item.price, 'đ')
                 : i18n.t('cart.freeShip')}
             </Text>
           </View>
         </View>
 
         <View style={styles.wrapRadioContent}>
-          <Text style={styles.contentRadio}>{item.content}</Text>
+          <Text style={styles.contentRadio}>{item.deliveryTime}</Text>
         </View>
       </View>
     );
