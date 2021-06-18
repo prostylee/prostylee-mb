@@ -47,6 +47,10 @@ export default EStyleSheet.create({
     paddingLeft: 6,
     paddingRight: 16,
   },
+  chatListContainer: {
+    flex: 1,
+    width: '100%',
+  },
 
   footer: {
     backgroundColor: 'white',
