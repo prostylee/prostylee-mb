@@ -26,6 +26,9 @@ export default EStyleSheet.create({
     alignItems: 'center',
     paddingLeft: 15,
   },
+  dropDown: {
+    width: 200,
+  },
   buttonContainer: {
     position: 'absolute',
     bottom: 0,
