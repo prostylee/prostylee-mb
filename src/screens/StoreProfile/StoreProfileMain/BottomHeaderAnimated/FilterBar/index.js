@@ -6,7 +6,9 @@ import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 import styles from './styles';
 import {useSelector} from 'react-redux';
-import {Colors} from 'components';
+import {Colors, FilterButton} from 'components';
+import {getStoreProfileFilterStateSelector} from 'redux/selectors/storeProfile';
+import {storeProfileActions} from 'redux/reducers';
 
 const FilterBar = ({
   setVisible = () => {},
@@ -49,39 +51,15 @@ const FilterBar = ({
           </View>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('SearchProductFilter')}>
-        <View style={styles.wrapBlockFilter}>
-          <Text numberOfLines={1} style={styles.textSpace}>
-            |
-          </Text>
-          <View style={{position: 'relative'}}>
-            <Filter />
-            {count !== 0 ? (
-              <View
-                style={{
-                  position: 'absolute',
-                  width: 14,
-                  height: 14,
-                  backgroundColor: '#333333',
-                  right: 0,
-                  bottom: 0,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 7,
-                }}>
-                <Text
-                  style={{color: '#fff', fontSize: 10, textAlign: 'center'}}>
-                  {count}
-                </Text>
-              </View>
-            ) : null}
-          </View>
-          <Text numberOfLines={1} style={styles.textSort}>
-            {i18n.t('filter')}
-          </Text>
-        </View>
-      </TouchableOpacity>
+
+      <FilterButton
+        filterDispatchAction={storeProfileActions.getAllStoreProduct}
+        getFilterStateSelectorFunction={getStoreProfileFilterStateSelector}
+        clearFilterStateAction={
+          storeProfileActions.clearStoreProfileFilterState
+        }
+        setFilterStateAction={storeProfileActions.setStoreProfileFilterState}
+      />
     </View>
   );
 };

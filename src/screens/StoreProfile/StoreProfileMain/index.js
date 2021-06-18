@@ -16,7 +16,7 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {Header, HeaderAnimated, ThemeView, Colors} from 'components';
+import {Header, HeaderAnimated, SearchBar, Colors} from 'components';
 
 import {storeProfileActions} from 'redux/reducers';
 
@@ -39,21 +39,25 @@ import StoreInfo from './StoreInfo';
 import BestSeller from './BestSeller';
 import AllProducts from './AllProducts';
 import BottomHeaderAnimated from './BottomHeaderAnimated';
-const heightShow = Platform.OS === 'ios' ? 380 : 420;
+const heightShow = Platform.OS === 'ios' ? 280 : 320;
 
 const HeaderLeft = ({opacity, isAnimated = false}) => {
   return isAnimated ? (
-    <Animated.View style={{opacity}}>
-      <TouchableOpacity style={styles.headerLeftContainer}>
-        <ChevronLeft color={Colors?.['$icon']} strokeWidth={2} />
-      </TouchableOpacity>
-    </Animated.View>
+    <TouchableOpacity
+      style={[
+        styles.headerLeftContainer,
+        {
+          paddingLeft: 16,
+        },
+      ]}>
+      <ChevronLeft color={Colors?.['$icon']} strokeWidth={2} />
+    </TouchableOpacity>
   ) : (
     <TouchableOpacity
       style={[
         styles.headerLeftContainer,
         {
-          width: 80,
+          paddingTop: 3,
           justifyContent: 'center',
           alignItems: 'center',
         },
@@ -68,29 +72,27 @@ const HeaderRight = ({opacity, isAnimated = false}) => {
       style={[
         styles.headerRightContainer,
         {
-          marginBottom: 10,
+          width: 80,
+          paddingRight: 19,
         },
       ]}>
-      <Animated.View style={{opacity}}>
-        <TouchableOpacity>
-          <MessageOutlined
-            color={Colors?.['$icon']}
-            width={18}
-            height={18}
-            strokeWidth={2}
-          />
-        </TouchableOpacity>
-      </Animated.View>
-      <Animated.View style={{opacity}}>
-        <TouchableOpacity>
-          <Bell
-            color={Colors?.['$icon']}
-            width={20}
-            height={20}
-            strokeWidth={2}
-          />
-        </TouchableOpacity>
-      </Animated.View>
+      <TouchableOpacity>
+        <MessageOutlined
+          color={Colors?.['$icon']}
+          width={18}
+          height={18}
+          strokeWidth={2}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity>
+        <Bell
+          color={Colors?.['$icon']}
+          width={20}
+          height={20}
+          strokeWidth={2}
+        />
+      </TouchableOpacity>
     </View>
   ) : (
     <View
@@ -123,17 +125,12 @@ const Stores = (props) => {
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
-  // const scrollRef = useRef();
 
   const {navigation} = props;
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector((state) => getStoreLoadingSelector(state));
   const storeInfo = useSelector((state) => getStoreInfoSelector(state));
-  // const hasLoadMore = useSelector(
-  //   (state) => getStoreAllProductHasLoadmore(state),
-  //   () => {},
-  // );
 
   useEffect(() => {
     dispatch(storeProfileActions.getStoreInfo(1));
@@ -182,57 +179,52 @@ const Stores = (props) => {
       }),
     );
   };
-
   const opacity = scrollAnimated.interpolate({
     inputRange: [0, heightShow],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   });
-  const marginTop = scrollAnimated.interpolate({
-    inputRange: [0, heightShow * 0.2, heightShow],
-    outputRange: [-30, 0, 0],
-    extrapolate: 'clamp',
-  });
-  // const width = scrollAnimated.interpolate({
-  //   inputRange: [0, heightShow * 0.2, 1],
-  //   outputRange: [-30, 0, 0],
-  //   extrapolate: 'clamp',
-  // });
-
   return (
-    <View isFullView style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: '#fff',
+        },
+      ]}>
       <HeaderAnimated
-        leftComponent={<HeaderLeft opacity={opacity} isAnimated={true} />}
-        rightComponent={
-          <HeaderRight
-            opacity={opacity}
-            marginTop={marginTop}
-            isAnimated={true}
-          />
-        }
-        midComponent={
-          <Searchbar
+        justBottomComponent={true}
+        bottomComponent={
+          <Animated.View
             style={{
-              minWidth: WIDTH - 160,
-              backgroundColor: '#F4F5F5',
-              height: 35,
-              borderRadius: 4,
-              elevation: 1,
-              padding: 0,
-              marginBottom: 10,
-            }}
-            inputStyle={{
-              height: 35,
-              fontSize: 14,
-              lineHeight: 18,
-              elevation: 0,
-            }}
-            placeholder={'Tìm kiếm'}
-            // onChangeText={onChangeSearch}
-            // value={searchQuery}
-          />
+              flexDirection: 'column',
+              marginBottom: 20,
+              opacity: opacity,
+              backgroundColor: '#fff',
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: '100%',
+
+                paddingVertical: 0,
+              }}>
+              <HeaderLeft isAnimated />
+              <SearchBar
+                style={{
+                  maxWidth: WIDTH - 160,
+                  backgroundColor: '#F4F5F5',
+                }}
+                placeholder={'Tìm kiếm'}
+              />
+              <HeaderRight isAnimated />
+            </View>
+            <BottomHeaderAnimated />
+          </Animated.View>
         }
-        bottomComponent={<BottomHeaderAnimated navigation={navigation} />}
+        //bottomComponent={<BottomHeaderAnimated navigation={navigation} />}
         bottomHeight={0}
         hideBottomBorder={true}
         heightShow={heightShow}
@@ -243,36 +235,21 @@ const Stores = (props) => {
       <Header
         leftComponent={<HeaderLeft />}
         rightComponent={<HeaderRight />}
-        containerStyle={[
-          styles.headerContainer,
-          {
-            paddingTop: 10,
-          },
-        ]}
+        containerStyle={[styles.headerContainer]}
         middleComponent={
-          <Searchbar
+          <SearchBar
             style={{
-              width: WIDTH - 160,
-              // backgroundColor: '#00000017',
-              height: 35,
-              borderRadius: 4,
-              elevation: 1,
-              padding: 0,
-              marginTop: 30,
-              zIndex: 999,
-            }}
-            inputStyle={{
-              height: 35,
-              fontSize: 14,
-              lineHeight: 18,
-              elevation: 0,
-              zIndex: 999,
-              // color: '#fff',
+              maxWidth: WIDTH - 160,
+              backgroundColor: 'rgba(255,255,255,0.1)',
+              color: '#fff',
+              zIndex: 10,
             }}
             placeholder={'Tìm kiếm'}
             onChangeText={(v) => {
               console.log('VALUE', v);
             }}
+            placeholderTextColor="#8B9399"
+
             // value={searchQuery}
           />
         }

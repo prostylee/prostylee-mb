@@ -45,3 +45,8 @@ export const getStoreAllProductHasLoadmore = createSelector(
   storeProfileReducer,
   (data) => data?.hasAllProductLoadmore || false,
 );
+
+export const getStoreProfileFilterStateSelector = createSelector(
+  storeProfileReducer,
+  (data) => data?.storeProfileFilterState || {},
+);

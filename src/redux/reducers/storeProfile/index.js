@@ -23,6 +23,9 @@ export const types = {
     'GET_ALL_STORE_PRODUCT_LOADMORE_SUCCESS',
   GET_ALL_STORE_PRODUCT_LOADMORE_FAILED:
     'GET_ALL_STORE_PRODUCT_LOADMORE_FAILED',
+
+  SET_STORE_PROFILE_FILTER_STATE: 'SET_STORE_PROFILE_FILTER_STATE',
+  CLEAR_STORE_PROFILE_FILTER_STATE: 'CLEAR_STORE_PROFILE_FILTER_STATE',
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -60,6 +63,13 @@ export const actions = {
   getAllStoreProductLoadmoreFailed: createAction(
     types.GET_ALL_STORE_PRODUCT_LOADMORE_FAILED,
   ),
+
+  setStoreProfileFilterState: createAction(
+    types.SET_STORE_PROFILE_FILTER_STATE,
+  ),
+  clearStoreProfileFilterState: createAction(
+    types.CLEAR_STORE_PROFILE_FILTER_STATE,
+  ),
 };
 
 const defaultState = {
@@ -72,6 +82,7 @@ const defaultState = {
   allProduct: null,
   allProductCurrentPage: 0,
   hasAllProductLoadmore: false,
+  storeProfileFilterState: {},
 };
 
 export default handleActions(
@@ -146,6 +157,24 @@ export default handleActions(
     },
     [types.GET_ALL_STORE_PRODUCT_LOADMORE_FAILED]: (state, {payload}) => {
       return {...state, bestSellerProduct: {}};
+    },
+
+    //FILTER STATE
+    [types.SET_STORE_PROFILE_FILTER_STATE]: (state, {payload}) => {
+      return {
+        ...state,
+        storeProfileFilterState: {...payload},
+      };
+    },
+    [types.CLEAR_STORE_PROFILE_FILTER_STATE]: (state, {payload}) => {
+      return {
+        ...state,
+        storeProfileFilterState: {
+          attributes: {},
+          category: -1,
+          price: [0, 0],
+        },
+      };
     },
   },
   defaultState,

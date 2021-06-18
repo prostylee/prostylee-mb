@@ -7,26 +7,12 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import i18n from 'i18n';
+
 import styles from './styles';
-import {Sort, Filter, CaretDown} from 'svg/common';
-import {ThemeView, Header, TextInputRounded} from 'components';
+
+import {ThemeView, SortDropDown} from 'components';
 import FilterBar from './FilterBar';
-
-const WIDTH = Dimensions.get('window').width;
-
-import SortDropDown from './SortDropDown';
-
-const MockTag = [
-  'Best seller',
-  'Gần đây',
-  'Sale',
-  'Elegant',
-  'Best seller',
-  'Gần đây',
-  'Sale',
-  'Elegant',
-];
+import {PRODUCT_SORT_ITEM} from 'constants';
 
 const SearchProducts = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -39,7 +25,7 @@ const SearchProducts = ({navigation}) => {
   };
 
   return (
-    <ThemeView style={styles.container} isFullView>
+    <View style={styles.container}>
       <FilterBar
         setVisible={setVisible}
         visible={visible}
@@ -52,8 +38,9 @@ const SearchProducts = ({navigation}) => {
         setAction={setAction}
         setValueSort={setValueSort}
         valueSort={valueSort}
+        options={PRODUCT_SORT_ITEM}
       />
-    </ThemeView>
+    </View>
   );
 };
 

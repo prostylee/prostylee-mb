@@ -7,8 +7,6 @@ import ProductItem from './ProductItem';
 import {
   getStoreAllProductLoadingSelector,
   getStoreAllProductSelector,
-  getStoreAllProductCurrentPage,
-  getStoreAllProductHasLoadmore,
   getStoreAllProductLoadmoreLoadingSelector,
 } from 'redux/selectors/storeProfile';
 import {useSelector} from 'react-redux';

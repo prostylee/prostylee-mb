@@ -15,11 +15,13 @@ export default EStyleSheet.create({
   headerContainer: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     // alignItems: 'center',
     backgroundColor: '#333333',
+    // opacity: 0.79,
     borderBottomWidth: 0,
     paddingTop: 20,
+    // zIndex: 99,
   },
   headerWrap: {
     ...flexRow,
@@ -27,19 +29,21 @@ export default EStyleSheet.create({
     width: WIDTH * 0.7,
   },
   headerLeftContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
     height: 35,
+    width: '10%',
+    // maxWidth: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
 
     // borderWidth: 1,
+    paddingLeft: 6,
   },
   headerRightContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
     paddingHorizontal: 10,
-    width: 80,
+    maxWidth: 80,
     height: 35,
 
     // borderWidth: 1,

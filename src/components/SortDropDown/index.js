@@ -38,6 +38,7 @@ const SortDropDown = ({
                       : Colors['$black'],
                 },
               ]}
+              mode="ios"
               label={v.label}
             />
           </>

@@ -45,6 +45,7 @@ const SortDropDown = ({
                 },
               ]}
               label={v.label}
+              mode="ios"
             />
             {/* {i !== arr.length - 1 ? <Divider /> : null} */}
           </>
