@@ -182,7 +182,11 @@ const ChatBox = ({navigation, route}) => {
             refreshChatList={refreshChatList}
           />
         </View>
-        <FooterItem user={currentUser} chatId={chatId} />
+        <FooterItem
+          user={currentUser}
+          otherChatUserId={otherChatUserId}
+          chatId={chatId}
+        />
       </KeyboardAvoidingView>
     </ThemeView>
   );

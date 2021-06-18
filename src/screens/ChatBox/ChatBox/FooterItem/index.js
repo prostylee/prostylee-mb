@@ -18,6 +18,7 @@ import {createChat} from 'graphqlLocal/mutations';
 const FooterItem = (props) => {
   const user = props.user ? props.user : {};
   const chatId = props.chatId ? props.chatId : '';
+  const otherChatUserId = props.otherChatUserId ? props.otherChatUserId : '';
 
   const {colors} = useTheme();
   const dispatch = useDispatch();
@@ -76,8 +77,11 @@ const FooterItem = (props) => {
           parentId: chatId,
           ownerId: user.attributes.sub,
           owner: user.username,
-          ownerFullname: user.username,
-          participantUserIds: ['191', '30'], // ['created-user-id', 'participant-user-id'], // TODO fill user id would like to chat
+          ownerFullname: user.attributes.name,
+          participantUserIds: [
+            otherChatUserId,
+            user.attributes['custom:userId'],
+          ], // ['created-user-id', 'participant-user-id'], // TODO fill user id would like to chat
           imageUrls: [key], // TODO fill image urls if user attached images in chat
           content: JSON.stringify({
             type_view: 'image',
@@ -100,8 +104,11 @@ const FooterItem = (props) => {
           parentId: chatId,
           ownerId: user.attributes.sub,
           owner: user.username,
-          ownerFullname: user.username,
-          participantUserIds: ['191', '30'], // ['created-user-id', 'participant-user-id'], // TODO fill user id would like to chat
+          ownerFullname: user.attributes.name,
+          participantUserIds: [
+            otherChatUserId,
+            user.attributes['custom:userId'],
+          ], // ['created-user-id', 'participant-user-id'], // TODO fill user id would like to chat
           imageUrls: [], // TODO fill image urls if user attached images in chat
           content: JSON.stringify({
             type_view: 'text',
