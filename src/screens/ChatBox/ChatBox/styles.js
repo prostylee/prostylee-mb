@@ -4,6 +4,9 @@ export default EStyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
+  contentContainer: {
+    flex: 1,
+  },
   headerContain: {
     paddingBottom: 8,
     backgroundColor: '$purple',
