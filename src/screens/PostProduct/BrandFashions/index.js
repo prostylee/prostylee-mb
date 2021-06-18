@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {View, TouchableOpacity, Dimensions} from 'react-native';
+import {View, TouchableOpacity, Dimensions, Text} from 'react-native';
 import {Header, ButtonRounded, ThemeView} from 'components';
 import {ActivityIndicator, Searchbar} from 'react-native-paper';
 import i18n from 'i18n';

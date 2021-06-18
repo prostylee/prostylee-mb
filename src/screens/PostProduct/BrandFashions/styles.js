@@ -20,6 +20,7 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     borderBottomWidth: 1,
     borderBottomColor: '$bgColor',
+    paddingBottom: 20,
   },
   searchBarStyle: {
     width: WIDTH - 32,
