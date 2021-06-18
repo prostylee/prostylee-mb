@@ -25,13 +25,19 @@ const FilterProduct = ({navigation}) => {
   const dispatch = useDispatch();
   const route = useRoute();
   const filterDispatchFunction = route?.params?.filterFunc || null;
+  const getFilterStateSelectorFunction =
+    route?.params?.getFilterStateSelectorFunction || null;
+  const clearFilterStateAction = route?.params?.clearFilterStateAction || null;
+  const setFilterStateAction = route?.params?.setFilterStateAction || null;
 
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
   const filterAttributeList = useSelector((state) =>
     getProductFilterAttributeListSelector(state),
   );
 
-  const filterState = useSelector((state) => getProductFilterState(state));
+  const filterState = useSelector((state) =>
+    getFilterStateSelectorFunction(state),
+  );
 
   const categories = useSelector((state) =>
     getSearchFeaturedCategoriesSelector(state),
@@ -51,13 +57,7 @@ const FilterProduct = ({navigation}) => {
 
   const _handleClearFilter = () => {
     setState({category: 0, price: [0, 0], attributes: {}});
-    dispatch(
-      searchActions.clearProductsFilterState({
-        category: 0,
-        price: [0, 0],
-        attributes: {},
-      }),
-    );
+    dispatch(clearFilterStateAction());
   };
 
   const formatArrayParamsValue = (arrayValue = []) => {
@@ -73,13 +73,14 @@ const FilterProduct = ({navigation}) => {
         );
       } else newAttributes[`attributes[${item}]`] = attributesParamm[item];
     }
+    console.log('STATE', state);
 
     dispatch(
-      searchActions.setProductFilterState({
+      setFilterStateAction({
         ...filterState,
         price: priceFilterState || [0, 0],
         attributes: attributeFilterState,
-        category: categoryFilterState,
+        category: categoryFilterState || -1,
       }),
     );
 

@@ -23,3 +23,7 @@ export const getCurrentBestSellersPageSelector = createSelector(
   storeReducer,
   (data) => data?.bestSellersPage || 0,
 );
+export const getBestSellerFilterStateSelector = createSelector(
+  storeReducer,
+  (data) => data?.bestSellersFilterState || {},
+);

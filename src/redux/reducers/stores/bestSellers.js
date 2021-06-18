@@ -97,7 +97,7 @@ export const handleActions = {
       ...state,
       bestSellersFilterState: {
         attributes: {},
-        category: null,
+        category: -1,
         price: [0, 0],
       },
     };

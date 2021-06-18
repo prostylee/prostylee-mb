@@ -54,6 +54,7 @@ import ChatIcon from './ChatIcon';
 import CustomRating from './Rating';
 
 import SearchBar from './SearchBar';
+import FilterButton from './FilterButton';
 
 export {
   ContainerWithoutScrollView,
@@ -111,4 +112,5 @@ export {
   ChatIcon,
   CustomRating,
   SearchBar,
+  FilterButton,
 };

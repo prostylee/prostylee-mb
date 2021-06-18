@@ -10,11 +10,8 @@ import {currencyFormat} from 'utils/currency';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
 import {useSelector} from 'react-redux';
 const WIDTH = Dimensions.get('window').width;
-const PriceFilter = ({onPriceChange = () => {}}) => {
-  const filterState = useSelector((state) => getProductFilterState(state));
-  console.log('PRICE STATE', filterState);
-
-  const priceState = filterState.price;
+const PriceFilter = ({onPriceChange = () => {}, defaultState = {}}) => {
+  const priceState = defaultState.price;
   const [state, setState] = useState(
     priceState && priceState.length ? [priceState[0], priceState[1]] : [0, 1],
   );

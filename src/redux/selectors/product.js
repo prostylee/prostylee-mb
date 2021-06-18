@@ -27,3 +27,8 @@ export const getPageProductSelector = createSelector(
   productReducer,
   (data) => data?.pageProduct,
 );
+
+export const getProductCategoriesFilterStateSelector = createSelector(
+  productReducer,
+  (data) => data?.productCategoryFilterState || {},
+);

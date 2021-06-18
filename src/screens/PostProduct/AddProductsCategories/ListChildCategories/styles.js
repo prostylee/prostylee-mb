@@ -1,8 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 export default EStyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
     height: 250,
   },
   flatlistStyle: {
@@ -44,5 +42,10 @@ export default EStyleSheet.create({
   notFoundText: {
     fontWeight: '400',
     color: '$gray',
+  },
+  contentWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
   },
 });

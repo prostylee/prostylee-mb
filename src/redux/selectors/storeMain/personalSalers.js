@@ -23,3 +23,8 @@ export const getPersonalSalersCurrentPageSelector = createSelector(
   storeReducer,
   (data) => data?.personalSalersPage || 0,
 );
+
+export const getPersonalSalersFilterStateSelector = createSelector(
+  storeReducer,
+  (data) => data?.personalSalersFilterState || {},
+);

@@ -6,18 +6,20 @@ import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 import styles from './styles';
 import {useSelector} from 'react-redux';
-import {Colors} from 'components';
+import {Colors, FilterButton} from 'components';
 
 const FilterBar = ({
   setVisible = () => {},
   visible = false,
   navigation,
   activeSortItem = '',
-  getFilterStateDispatchFunction = () => {},
+  getFilterStateSelectorFunction = () => {},
   filterDispatchAction = () => {},
+  clearFilterStateAction = {},
+  setFilterStateAction = {},
 }) => {
   const filterState = useSelector((state) =>
-    getFilterStateDispatchFunction(state),
+    getFilterStateSelectorFunction(state),
   );
   const attributeFilterState = filterState?.attributes;
   const categoryFilterState = filterState.category;
@@ -53,43 +55,12 @@ const FilterBar = ({
           </View>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('SearchProductFilter', {
-            filterFunc: filterDispatchAction,
-          })
-        }>
-        <View style={styles.wrapBlockFilter}>
-          <Text numberOfLines={1} style={styles.textSpace}>
-            |
-          </Text>
-          <View style={{position: 'relative'}}>
-            <Filter />
-            {count !== 0 ? (
-              <View
-                style={{
-                  position: 'absolute',
-                  width: 14,
-                  height: 14,
-                  backgroundColor: '#333333',
-                  right: 0,
-                  bottom: 0,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 7,
-                }}>
-                <Text
-                  style={{color: '#fff', fontSize: 10, textAlign: 'center'}}>
-                  {count}
-                </Text>
-              </View>
-            ) : null}
-          </View>
-          <Text numberOfLines={1} style={styles.textSort}>
-            {i18n.t('filter')}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <FilterButton
+        filterDispatchAction={filterDispatchAction}
+        getFilterStateSelectorFunction={getFilterStateSelectorFunction}
+        clearFilterStateAction={clearFilterStateAction}
+        setFilterStateAction={setFilterStateAction}
+      />
     </View>
   );
 };
