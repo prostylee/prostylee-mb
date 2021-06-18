@@ -1,14 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import {Text, View, TouchableOpacity, Image} from 'react-native';
-
 import styles from './styles';
-
-import {useDispatch, useSelector} from 'react-redux';
-
-import {getProductFilterState} from 'redux/selectors/search/productFilter';
 import {Colors} from 'components';
-import {searchActions} from 'redux/reducers';
+import PropTypes from 'prop-types';
+
 const FeaturedCategoriesItem = ({
   item,
   index,
@@ -66,8 +62,20 @@ const FeaturedCategoriesItem = ({
   );
 };
 
-FeaturedCategoriesItem.defaultProps = {};
+FeaturedCategoriesItem.defaultProps = {
+  item: {},
+  index: 0,
+  isActive: false,
+  setActive: () => {},
+  onItemPress: () => {},
+};
 
-FeaturedCategoriesItem.propTypes = {};
+FeaturedCategoriesItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  setActive: PropTypes.func.isRequired,
+  onItemPress: PropTypes.func.isRequired,
+};
 
 export default FeaturedCategoriesItem;

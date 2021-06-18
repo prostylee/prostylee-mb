@@ -7,7 +7,6 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     flexDirection: 'column',
     height: HEIGHT - 200,
-    marginBottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },

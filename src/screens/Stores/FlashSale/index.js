@@ -3,13 +3,12 @@ import {Dimensions, View, Text, TouchableOpacity} from 'react-native';
 import i18n from 'i18n';
 import styles from './styles';
 
-import {ThemeView, Header} from 'components';
+import {ThemeView, Header, SortDropDown} from 'components';
 import {Divider} from 'react-native-paper';
-import {Colors} from 'components';
 
-import {MessageOutlined, Bell, BellWithNotiBadge} from 'svg/header';
+import {PRODUCT_SORT_ITEM} from 'constants';
+
 import ProductList from './ProductList';
-import SortDropDown from './SortDropDown';
 
 import TagList from './TagList';
 import FilterBar from './FilterBar';
@@ -61,6 +60,7 @@ const FlashSale = ({navigation}) => {
         setAction={setAction}
         setValueSort={setValueSort}
         valueSort={valueSort}
+        options={PRODUCT_SORT_ITEM}
       />
       <ProductList />
     </ThemeView>

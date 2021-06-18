@@ -73,6 +73,7 @@ export default EStyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
+    paddingVertical: 30,
+    backgroundColor: '$white',
   },
 });

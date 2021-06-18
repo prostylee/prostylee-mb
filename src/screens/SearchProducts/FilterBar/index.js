@@ -1,17 +1,18 @@
 import React from 'react';
 import i18n from 'i18n';
 import {TouchableOpacity, View, Text} from 'react-native';
-import {Sort, Filter, CaretDown} from 'svg/common';
+import {Sort, CaretDown} from 'svg/common';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
 import {searchActions} from 'redux/reducers';
 import styles from './styles';
-import {useSelector} from 'react-redux';
+
 import {Colors, FilterButton} from 'components';
+
+import PropTypes from 'prop-types';
 
 const FilterBar = ({
   setVisible = () => {},
   visible = false,
-  navigation,
   sortActiveItem = '',
 }) => {
   return (
@@ -47,5 +48,16 @@ const FilterBar = ({
       />
     </View>
   );
+};
+FilterBar.defaultProps = {
+  setVisible: () => {},
+  visible: false,
+  sortActiveItem: '',
+};
+
+FilterBar.propTypes = {
+  setVisible: PropTypes.func.isRequired,
+  visible: PropTypes.bool.isRequired,
+  sortActiveItem: PropTypes.string.isRequired,
 };
 export default FilterBar;

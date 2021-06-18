@@ -55,6 +55,8 @@ import CustomRating from './Rating';
 
 import SearchBar from './SearchBar';
 import FilterButton from './FilterButton';
+import SortDropDown from './SortDropDown';
+import TagList from './TagList';
 
 export {
   ContainerWithoutScrollView,
@@ -113,4 +115,6 @@ export {
   CustomRating,
   SearchBar,
   FilterButton,
+  SortDropDown,
+  TagList,
 };

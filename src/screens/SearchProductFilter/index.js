@@ -77,10 +77,9 @@ const FilterProduct = ({navigation}) => {
 
     dispatch(
       setFilterStateAction({
-        ...filterState,
         price: priceFilterState || [0, 0],
         attributes: attributeFilterState,
-        category: categoryFilterState || -1,
+        category: categoryFilterState || 0,
       }),
     );
 
@@ -91,9 +90,11 @@ const FilterProduct = ({navigation}) => {
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...newAttributes,
-        categoryId: categoryFilterState,
-        price: `${priceFilterState?.join('-')}`,
-        // userId: 1,
+        categoryId: categoryFilterState || undefined,
+        price:
+          `${priceFilterState?.join('-')}` === '0-0'
+            ? undefined
+            : `${priceFilterState?.join('-')}`,
       }),
     );
     navigation.goBack();

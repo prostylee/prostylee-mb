@@ -5,12 +5,13 @@ import styles from './styles';
 import i18n from 'i18n';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import PropTypes from 'prop-types';
 
 const FilterButton = ({
-  filterDispatchAction = {},
-  getFilterStateSelectorFunction = () => {},
-  clearFilterStateAction = {},
-  setFilterStateAction = {},
+  filterDispatchAction,
+  getFilterStateSelectorFunction,
+  clearFilterStateAction,
+  setFilterStateAction,
 }) => {
   const navigation = useNavigation();
 
@@ -21,7 +22,7 @@ const FilterButton = ({
   const categoryFilterState = filterState.category;
   const price = filterState.price;
   let count = 0;
-  count += categoryFilterState !== -1 ? 1 : 0;
+  count += categoryFilterState > 0 ? 1 : 0;
   count += Object.keys(
     attributeFilterState ? attributeFilterState : {},
   )?.length;
@@ -68,5 +69,19 @@ const FilterButton = ({
       </View>
     </TouchableOpacity>
   );
+};
+
+FilterButton.defaultProps = {
+  filterDispatchAction: {},
+  getFilterStateSelectorFunction: () => {},
+  clearFilterStateAction: {},
+  setFilterStateAction: {},
+};
+
+FilterButton.propTypes = {
+  filterDispatchAction: PropTypes.object.isRequired,
+  getFilterStateSelectorFunction: PropTypes.func.isRequired,
+  clearFilterStateAction: PropTypes.object.isRequired,
+  setFilterStateAction: PropTypes.object.isRequired,
 };
 export default FilterButton;

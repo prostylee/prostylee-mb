@@ -4,15 +4,11 @@ import {Divider, RadioButton} from 'react-native-paper';
 import styles from './styles';
 import Accordion from 'react-native-collapsible/Accordion';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {
-  getProductFilterAttributeListSelector,
-  getProductFilterState,
-} from 'redux/selectors/search/productFilter';
-import {useDispatch, useSelector} from 'react-redux';
+import {getProductFilterAttributeListSelector} from 'redux/selectors/search/productFilter';
+import {useSelector} from 'react-redux';
 import {Colors} from 'components';
-import {searchActions} from 'redux/reducers';
-
 import BlockFilter from './BlockFilter';
+import PropTypes from 'prop-types';
 
 const ConditionOfProductsFilter = ({
   onSelect = () => {},
@@ -176,5 +172,14 @@ const ConditionOfProductsFilter = ({
       </View>
     </SafeAreaView>
   );
+};
+ConditionOfProductsFilter.defaultProps = {
+  onSelect: () => {},
+  defaultState: {},
+};
+
+ConditionOfProductsFilter.propTypes = {
+  onSelect: PropTypes.func.isRequired,
+  defaultState: PropTypes.object.isRequired,
 };
 export default ConditionOfProductsFilter;

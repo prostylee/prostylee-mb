@@ -1,24 +1,26 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, {useState} from 'react';
-import {ScrollView, View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 
-import {Chip, Divider} from 'react-native-paper';
-import {Sort, Filter, CaretDown} from 'svg/common';
+import {Divider} from 'react-native-paper';
+import {Sort, CaretDown} from 'svg/common';
 import i18n from 'i18n';
-import SortDropDown from '../SortDropDown';
-import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 import styles from './styles';
-import {RadioButton} from 'react-native-paper';
-import {RnRatingTap, FilterButton, Colors} from 'components';
-import {useSelector} from 'react-redux';
-import TagList from '../TagList';
-import {PRODUCT_SORT_ITEM} from 'constants';
+
+import {
+  RnRatingTap,
+  FilterButton,
+  Colors,
+  SortDropDown,
+  TagList,
+} from 'components';
+
+import {PRODUCT_SORT_ITEM, FILTER_TAGS} from 'constants';
 
 import {getProductCategoriesFilterStateSelector} from 'redux/selectors/product';
 import {productActions} from 'redux/reducers';
 const BottomHeaderAnimated = ({
-  navigation,
   onTagPress = () => {},
   onSortPress = () => {},
 }) => {
@@ -26,14 +28,6 @@ const BottomHeaderAnimated = ({
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
 
-  const renderStar = (star) => (
-    <RnRatingTap
-      onChangeValue={() => {}}
-      value={star}
-      isDisabled={true}
-      size={20}
-    />
-  );
   return (
     <View style={styles.container}>
       <Divider />
@@ -85,8 +79,9 @@ const BottomHeaderAnimated = ({
           onSortPress(value);
         }}
         valueSort={valueSort}
+        options={PRODUCT_SORT_ITEM}
       />
-      <TagList onTagPress={onTagPress} />
+      <TagList onTagPress={onTagPress} options={FILTER_TAGS} />
     </View>
   );
 };

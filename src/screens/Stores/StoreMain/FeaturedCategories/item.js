@@ -31,7 +31,7 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
         <Image
           source={
             item?.banner
-              ? {uri: item?.banner}
+              ? {uri: item?.backgroundButton}
               : require('assets/images/default.png')
           }
           resizeMode="cover"
@@ -39,9 +39,9 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
           PlaceholderContent={<ActivityIndicator />}
         />
 
-        <Text numberOfLines={2} style={styles.titleCategory}>
+        {/* <Text numberOfLines={2} style={styles.titleCategory}>
           {item.name}
-        </Text>
+        </Text> */}
       </TouchableOpacity>
     </View>
   );

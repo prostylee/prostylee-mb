@@ -11,26 +11,7 @@ import TagList from './TagList';
 import FilterBar from './FilterBar';
 import {PRODUCT_SORT_ITEM} from 'constants';
 import styles from './styles';
-
-interface ProductSearchListProps {
-  title: String;
-  hasTagList?: Boolean;
-  hasFilterBar?: Boolean;
-  getDataFunction: Function;
-  refreshDataFunction: Function;
-  loadmoreDataFuntion: Function;
-  tagFilterFunction: Function;
-  sortDataFunction?: Function;
-  navigation: Object;
-  getCurrentPageFunction: Function;
-  isLoading: Boolean;
-  hasLoadmore: Boolean;
-  searchDataFunction: Function;
-  getFilterStateSelectorFunction: Function;
-  filterDispatchAction: Function;
-  setFilterStateAction: Object;
-  clearFilterStateAction: Object;
-}
+import PropTypes from 'prop-types';
 
 const ProductSearchList = ({
   title,
@@ -48,7 +29,7 @@ const ProductSearchList = ({
   filterDispatchAction,
   setFilterStateAction,
   clearFilterStateAction,
-}: ProductSearchListProps) => {
+}) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
@@ -127,8 +108,44 @@ const ProductSearchList = ({
   );
 };
 
-ProductSearchList.defaultProps = {};
+ProductSearchList.defaultProps = {
+  title: '',
+  hasTagList: false,
+  hasFilterBar: false,
+  getDataFunction: () => {},
+  refreshDataFunction: () => {},
+  loadmoreDataFuntion: () => {},
+  tagFilterFunction: () => {},
+  sortDataFunction: () => {},
+  navigation: {},
+  getCurrentPageFunction: () => {},
+  isLoading: false,
+  hasLoadmore: false,
+  searchDataFunction: () => {},
+  getFilterStateSelectorFunction: () => {},
+  filterDispatchAction: () => {},
+  setFilterStateAction: {},
+  clearFilterStateAction: {},
+};
 
-ProductSearchList.propTypes = {};
+ProductSearchList.propTypes = {
+  title: PropTypes.string.isRequired,
+  hasTagList: PropTypes.bool,
+  hasFilterBar: PropTypes.bool,
+  getDataFunction: PropTypes.func.isRequired,
+  refreshDataFunction: PropTypes.func.isRequired,
+  loadmoreDataFuntion: PropTypes.func.isRequired,
+  tagFilterFunction: PropTypes.func,
+  sortDataFunction: PropTypes.func,
+  navigation: PropTypes.object.isRequired,
+  getCurrentPageFunction: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  hasLoadmore: PropTypes.bool,
+  searchDataFunction: PropTypes.func,
+  getFilterStateSelectorFunction: PropTypes.func,
+  filterDispatchAction: PropTypes.object,
+  setFilterStateAction: PropTypes.object,
+  clearFilterStateAction: PropTypes.object,
+};
 
 export default ProductSearchList;

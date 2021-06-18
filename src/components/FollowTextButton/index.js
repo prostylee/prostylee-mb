@@ -7,6 +7,7 @@ import {
   unFollowStoreService,
 } from '../../services/api/storeApi';
 import Colors from '../Colors';
+import PropTypes from 'prop-types';
 const FollowTextButton = ({item}) => {
   const [followed, setFollowed] = useState(false);
 
@@ -19,9 +20,7 @@ const FollowTextButton = ({item}) => {
         res = await followStoreService(item?.id);
       }
       setFollowed(!followed);
-      console.log('FOLLOW RES', res);
     } catch (err) {
-      console.log('FOLLOW ERR', err);
       showMessage({
         message: `${res?.data?.status}: ${res?.data?.error}`,
         type: 'danger',
@@ -40,4 +39,12 @@ const FollowTextButton = ({item}) => {
     </TouchableOpacity>
   );
 };
+FollowTextButton.defaultProps = {
+  item: {},
+};
+
+FollowTextButton.propTypes = {
+  item: PropTypes.object.isRequired,
+};
+
 export default FollowTextButton;

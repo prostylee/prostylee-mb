@@ -7,8 +7,9 @@ import styles from './styles';
 import {Divider, Text} from 'react-native-paper';
 
 import {Colors} from 'components';
+import PropTypes from 'prop-types';
 
-const BlockFilter = ({attribute, onSelect = () => {}, defaultState = {}}) => {
+const BlockFilter = ({attribute, onSelect, defaultState}) => {
   // const filterState = useSelector((state) => getProductFilterState(state));
   const attributeFilterState = defaultState?.attributes;
 
@@ -104,8 +105,16 @@ const BlockFilter = ({attribute, onSelect = () => {}, defaultState = {}}) => {
   );
 };
 
-BlockFilter.defaultProps = {};
+BlockFilter.defaultProps = {
+  attributes: {},
+  onSelect: () => {},
+  defaultState: {},
+};
 
-BlockFilter.propTypes = {};
+BlockFilter.propTypes = {
+  attributes: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  defaultState: PropTypes.object.isRequired,
+};
 
 export default BlockFilter;
