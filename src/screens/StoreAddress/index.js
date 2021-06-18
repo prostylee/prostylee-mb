@@ -59,6 +59,7 @@ const StoreAddress = (props) => {
             value={selectedAddress}
             onValueChange={(value) => setselectedAddress(value)}
             items={getPrefectureList()}
+            onDonePress={(value) => setselectedAddress(value)}
           />
         </View>
       </View>

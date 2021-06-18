@@ -113,7 +113,7 @@ const ProductRating = ({data, ref, productId, navigation}) => {
                       source={{
                         uri: item.images[numberOfImageAvailabel - 1].uri,
                       }}
-                      resizeMethod={'cover'}
+                      resizeMode={'cover'}
                     />
                     {item.images.length >= numberOfImageAvailabel + 1 ? (
                       <View style={styles.commentImageMore}>
