@@ -172,14 +172,16 @@ const ChatBox = ({navigation, route}) => {
         {loading && !refreshing ? null : (
           <ProductItem data={productData} navigation={navigation} />
         )}
-        <Chat
-          user={currentUser}
-          chatData={chatDataList}
-          otherUserAvatar={otherUserAvatar}
-          loading={loading}
-          refreshing={refreshing}
-          refreshChatList={refreshChatList}
-        />
+        <View style={styles.chatListContainer}>
+          <Chat
+            user={currentUser}
+            chatData={chatDataList}
+            otherUserAvatar={otherUserAvatar}
+            loading={loading}
+            refreshing={refreshing}
+            refreshChatList={refreshChatList}
+          />
+        </View>
         <FooterItem user={currentUser} chatId={chatId} />
       </KeyboardAvoidingView>
     </ThemeView>
