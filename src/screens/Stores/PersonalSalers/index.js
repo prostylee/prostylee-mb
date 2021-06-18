@@ -16,6 +16,7 @@ import {
   hasPersonalSalersLoadmoreSelector,
   getPersonalSalersCurrentPageSelector,
 } from 'redux/selectors/storeMain/personalSalers';
+import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
@@ -112,6 +113,7 @@ const SearchProducts = ({navigation}) => {
       getCurrentPageFunction={() => {}}
       isLoading={isLoading}
       hasLoadmore={hasLoadmore}
+      getFilterStateDispatchFunction={getProductFilterState}
     />
   );
 };

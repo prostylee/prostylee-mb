@@ -13,8 +13,11 @@ const FilterBar = ({
   visible = false,
   navigation,
   activeSortItem = '',
+  getFilterStateDispatchFunction = () => {},
 }) => {
-  const filterState = useSelector((state) => getProductFilterState(state));
+  const filterState = useSelector((state) =>
+    getFilterStateDispatchFunction(state),
+  );
   const attributeFilterState = filterState?.attributes;
   const categoryFilterState = filterState.category;
   const price = filterState.price;

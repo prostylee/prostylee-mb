@@ -11,6 +11,9 @@ export const types = {
   GET_BEST_SELLERS_LOADMORE: 'GET_BEST_SELLERS_LOADMORE',
   GET_BEST_SELLERS_LOADMORE_SUCCESS: 'GET_BEST_SELLERS_LOADMORE_SUCCESS',
   GET_BEST_SELLERS_LOADMORE_FAILED: 'GET_BEST_SELLERS_LOADMORE_FAILED',
+
+  SET_BEST_SELLERS_FILTER_STATE: 'SET_BEST_SELLERS_FILTER_STATE',
+  CLEAR_BEST_SELLERS_FILTER_STATE: 'CLEAR_BEST_SELLERS_FILTER_STATE',
 };
 
 export const actions = {
@@ -28,6 +31,11 @@ export const actions = {
   getBestSellersLoadmoreFailed: createAction(
     types.GET_BEST_SELLERS_LOADMORE_FAILED,
   ),
+
+  setBestSellersFilterState: createAction(types.SET_BEST_SELLERS_FILTER_STATE),
+  clearBestSellersFilterState: createAction(
+    types.CLEAR_BEST_SELLERS_FILTER_STATE,
+  ),
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -38,6 +46,7 @@ export const defaultState = {
   bestSellersData: {},
   bestSellersPage: 0,
   hasBestSellersLoadmore: false,
+  bestSellersFilterState: {},
 };
 
 export const handleActions = {
@@ -75,5 +84,22 @@ export const handleActions = {
   },
   [types.GET_NEARBY_STORE_LOADMORE_FAILED]: (state, {payload}) => {
     return {...state};
+  },
+
+  [types.SET_BEST_SELLERS_FILTER_STATE]: (state, {payload}) => {
+    return {
+      ...state,
+      bestSellersFilterState: {...payload},
+    };
+  },
+  [types.CLEAR_BEST_SELLERS_FILTER_STATE]: (state, {payload}) => {
+    return {
+      ...state,
+      bestSellersFilterState: {
+        attributes: {},
+        category: null,
+        price: [0, 0],
+      },
+    };
   },
 };
