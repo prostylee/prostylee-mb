@@ -27,6 +27,7 @@ interface ProductSearchListProps {
   hasLoadmore: Boolean;
   searchDataFunction: Function;
   getFilterStateDispatchFunction: Function;
+  filterDispatchAction: Function;
 }
 
 const ProductSearchList = ({
@@ -42,6 +43,7 @@ const ProductSearchList = ({
   tagFilterFunction,
   sortDataFunction,
   getFilterStateDispatchFunction,
+  filterDispatchAction,
 }: ProductSearchListProps) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -86,6 +88,7 @@ const ProductSearchList = ({
             setVisible={setVisible}
             visible={visible}
             navigation={navigation}
+            filterDispatchAction={filterDispatchAction}
             activeSortItem={
               valueSort
                 ? PRODUCT_SORT_ITEM.find((v) => v.value === valueSort).label

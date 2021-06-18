@@ -61,13 +61,9 @@ const ProductList = ({
           data={data?.content}
           numColumns={2}
           renderItem={({item, index}) => (
-            <ProductItem
-              key={`${item?.id}-${index}`}
-              item={item}
-              index={index}
-              navigation={navigation}
-            />
+            <ProductItem item={item} index={index} navigation={navigation} />
           )}
+          keyExtractor={(item, index) => `${index}-${item.id}`}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           refreshing={isRefreshing}

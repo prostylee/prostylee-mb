@@ -4,7 +4,8 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {ThemeView, Header} from 'components';
+import {ThemeView, Header, Container} from 'components';
+import SearchBar from 'components/SearchBar';
 import {Searchbar, Divider, Chip} from 'react-native-paper';
 import {Colors} from 'components';
 
@@ -115,7 +116,7 @@ const SearchProducts = ({navigation}) => {
   }, [currentKeyword]);
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
+    <ThemeView style={styles.container}>
       <Header
         isDefault
         containerStyle={{
@@ -126,15 +127,13 @@ const SearchProducts = ({navigation}) => {
           height: 30,
         }}
         middleComponent={
-          <Searchbar
-            style={styles.searchStyle}
-            inputStyle={styles.searchInputStyle}
-            multiline={false}
-            numberOfLines={1}
+          <SearchBar
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
+            onClear={() => onChangeSearch('')}
             value={searchQuery}
             defaultValue={searchQuery}
+            style={styles.searchStyle}
           />
         }
         rightComponent={<GroupHeaderRightButton haveNoti={true} />}
@@ -162,7 +161,7 @@ const SearchProducts = ({navigation}) => {
         currentFilterValue={currentFilterValue}
         navigation={navigation}
       />
-    </KeyboardAvoidingView>
+    </ThemeView>
   );
 };
 

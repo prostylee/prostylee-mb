@@ -4,7 +4,7 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {ThemeView, Header, TextInputRounded} from 'components';
+import {ThemeView, Header, TextInputRounded, SearchBar} from 'components';
 import {Searchbar} from 'react-native-paper';
 import TopSearch from './TopSearch';
 import FeaturedCategories from './FeaturedCategories';
@@ -67,13 +67,14 @@ const Search = ({navigation}) => {
           height: 30,
         }}
         middleComponent={
-          <Searchbar
+          <SearchBar
             style={styles.wrapSearchBar}
             inputStyle={styles.wrapSearchBarInput}
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
             value={searchQuery}
             multiline={false}
+            onClear={() => onChangeSearch('')}
             onSubmitEditing={() => {
               navigation.navigate('SearchProducts');
               dispatch(

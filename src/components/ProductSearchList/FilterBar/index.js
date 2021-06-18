@@ -14,6 +14,7 @@ const FilterBar = ({
   navigation,
   activeSortItem = '',
   getFilterStateDispatchFunction = () => {},
+  filterDispatchAction = () => {},
 }) => {
   const filterState = useSelector((state) =>
     getFilterStateDispatchFunction(state),
@@ -53,7 +54,11 @@ const FilterBar = ({
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate('SearchProductFilter')}>
+        onPress={() =>
+          navigation.navigate('SearchProductFilter', {
+            filterFunc: filterDispatchAction,
+          })
+        }>
         <View style={styles.wrapBlockFilter}>
           <Text numberOfLines={1} style={styles.textSpace}>
             |

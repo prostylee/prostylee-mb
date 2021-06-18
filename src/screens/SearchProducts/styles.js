@@ -70,15 +70,7 @@ export default EStyleSheet.create({
     backgroundColor: '$bgColor',
   },
   searchStyle: {
-    minWidth: WIDTH - 140,
     backgroundColor: '#F4F5F5',
-    height: 32,
-    borderRadius: 4,
-    elevation: 0,
-    padding: 0,
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   searchInputStyle: {
     height: '100%',
@@ -87,6 +79,9 @@ export default EStyleSheet.create({
     elevation: 0,
     overflow: 'hidden',
     padding: 0,
-    marginLeft: -15,
+    marginLeft: -20,
+    marginRight: 20,
+    textAlignVertical: 'center',
+    borderWidth: 1,
   },
 });

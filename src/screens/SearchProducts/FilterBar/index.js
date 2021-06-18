@@ -3,7 +3,7 @@ import i18n from 'i18n';
 import {TouchableOpacity, View, Text} from 'react-native';
 import {Sort, Filter, CaretDown} from 'svg/common';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
-
+import {searchActions} from 'redux/reducers';
 import styles from './styles';
 import {useSelector} from 'react-redux';
 import {Colors} from 'components';
@@ -50,7 +50,11 @@ const FilterBar = ({
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate('SearchProductFilter')}>
+        onPress={() =>
+          navigation.navigate('SearchProductFilter', {
+            filterFunc: searchActions.getProductsSearch,
+          })
+        }>
         <View style={styles.wrapBlockFilter}>
           <Text numberOfLines={1} style={styles.textSpace}>
             |

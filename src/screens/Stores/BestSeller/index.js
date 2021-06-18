@@ -113,6 +113,7 @@ const BestSellers = ({navigation}) => {
       navigation={navigation}
       isLoading={isLoading}
       hasLoadmore={hasLoadmore}
+      filterDispatchAction={storeActions.getBestSellers}
     />
   );
 };

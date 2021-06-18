@@ -110,10 +110,10 @@ const SearchProducts = ({navigation}) => {
       tagFilterFunction={_handleFilterByTag}
       sortDataFunction={_handleSort}
       navigation={navigation}
-      getCurrentPageFunction={() => {}}
       isLoading={isLoading}
       hasLoadmore={hasLoadmore}
       getFilterStateDispatchFunction={getProductFilterState}
+      filterDispatchAction={storeActions.getPersonalSalers}
     />
   );
 };
