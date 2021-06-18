@@ -36,6 +36,12 @@ export const types = {
   GET_LIST_SUGGESTION_SUCCESS: 'GET_LIST_SUGGESTION_SUCCESS',
   GET_LIST_SUGGESTION_FAILED: 'GET_LIST_SUGGESTION_FAILED',
 
+  //List Delivery
+  SET_DELIVERY_LOADING: 'SET_DELIVERY_LOADING',
+  GET_LIST_DELIVERY: 'GET_LIST_DELIVERY',
+  GET_LIST_DELIVERY_SUCCESS: 'GET_LIST_DELIVERY_SUCCESS',
+  GET_LIST_DELIVERY_FAILED: 'GET_LIST_DELIVERY_FAILED',
+
   //List coupon
   SET_CART_COUPON: 'SET_CART_COUPON',
   SET_CART_COUPON_SUCCESS: 'SET_CART_COUPON_SUCCESS',
@@ -84,6 +90,12 @@ export const actions = {
   getListSuggestionSuccess: createAction(types.GET_LIST_SUGGESTION_SUCCESS),
   getListSuggestionFailed: createAction(types.GET_LIST_SUGGESTION_FAILED),
 
+  //List Delivery
+  setDeliveryLoading: createAction(types.SET_DELIVERY_LOADING),
+  getListDelivery: createAction(types.GET_LIST_DELIVERY),
+  getListDeliverySuccess: createAction(types.GET_LIST_DELIVERY_SUCCESS),
+  getListDeliveryFailed: createAction(types.GET_LIST_DELIVERY_FAILED),
+
   //List Voucher
   setVoucherLoading: createAction(types.SET_VOUCHER_LOADING),
   getListVoucher: createAction(types.GET_LIST_VOUCHER),
@@ -131,6 +143,7 @@ const intialState = {
   listSuggestion: [],
 
   //List Delivery
+  deliveryLoading: false,
   listDelivery: [],
 
   //List Voucher
@@ -219,6 +232,20 @@ export default handleActions(
         ...state,
         cartLoading: false,
       };
+    },
+    //List Payment
+    [types.SET_DELIVERY_LOADING]: (state, {payload}) => {
+      return {...state, deliveryLoading: payload};
+    },
+    [types.GET_LIST_DELIVERY_SUCCESS]: (state, {payload}) => {
+      return {
+        ...state,
+        listDelivery: payload,
+        deliveryLoading: false,
+      };
+    },
+    [types.GET_LIST_DELIVERY_FAILED]: (state, {payload}) => {
+      return state;
     },
     //List Payment
     [types.SET_PAYMENT_LOADING]: (state, {payload}) => {

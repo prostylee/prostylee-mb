@@ -100,6 +100,7 @@ const ListProduct = ({navigation}) => {
   useEffect(() => {
     dispatch(cartActions.getListRecent());
     dispatch(cartActions.getListSuggestion());
+    dispatch(cartActions.getListDelivery());
   }, []);
 
   return (
