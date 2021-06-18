@@ -85,7 +85,7 @@ const CustomSearchBar = ({navigation, onSearchFocus = () => {}}) => (
 
 const Stores = (props) => {
   const dispatch = useDispatch();
-  const BOTTOM_ENDREACHED_HEIGHT = 100;
+  const BOTTOM_ENDREACHED_HEIGHT = 300;
   const {navigation} = props;
   const [refreshing, handleRefreshing] = useState(false);
 
@@ -282,7 +282,7 @@ const Stores = (props) => {
             />
             {isEndReached ? (
               <View style={styles.listFooterContainer}>
-                <ActivityIndicator size="large" color={Colors['$purple']} />
+                <ActivityIndicator size="small" color={Colors['$purple']} />
               </View>
             ) : null}
           </View>

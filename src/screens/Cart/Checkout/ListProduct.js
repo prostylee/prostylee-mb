@@ -14,40 +14,10 @@ import {currencyFormat} from 'utils/currency';
 import Collapsible from 'react-native-collapsible';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {RadioButton} from 'react-native-paper';
-import {getListCartSelector} from 'redux/selectors/cart';
-
-const deliveries = [
-  {
-    label: 'Grab',
-    content: 'Nhận hàng vào 29-12 đến 31-12',
-    value: 25000,
-    key: 'grab',
-  },
-  {
-    label: 'Viettel Post',
-    content: 'Nhận hàng trong ngày',
-    value: 45000,
-    key: 'viettel-post',
-  },
-  {
-    label: 'VN Express',
-    content: 'Nhận hàng trong ngày',
-    value: 35000,
-    key: 'vn-express',
-  },
-  {
-    label: 'Giao hàng tiết kiệm',
-    content: 'Nhận hàng trong ngày',
-    value: 30000,
-    key: 'ghtk',
-  },
-  {
-    label: 'Tự lấy hàng',
-    content: 'Bạn có thể tự đến lấy hàng tại địa chỉ của người bán.',
-    value: 0,
-    key: 'seft-shipping',
-  },
-];
+import {
+  getListCartSelector,
+  getListDeliverySelector,
+} from 'redux/selectors/cart';
 
 const ListProduct = ({navigation, data}) => {
   const [refreshing, handleRefreshing] = useState(false);
@@ -55,8 +25,11 @@ const ListProduct = ({navigation, data}) => {
   const [valueDelivery, setValueDelivery] = useState();
   const [total, setTotal] = useState(0);
   const [valueChosen, setValueChosen] = useState();
+  const [voucher, setVoucher] = useState();
 
   const cart = useSelector((state) => getListCartSelector(state)) || [];
+  const deliveries =
+    useSelector((state) => getListDeliverySelector(state)) || [];
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -69,7 +42,7 @@ const ListProduct = ({navigation, data}) => {
     if (cart.length) {
       let sum = 0;
       cart.forEach(function (c, index) {
-        sum += c.item.price * c.quantity;
+        sum += c.item.priceSale * c.quantity;
       });
       setTotal(sum);
     }
@@ -86,13 +59,16 @@ const ListProduct = ({navigation, data}) => {
   const handleLoadMore = () => {};
 
   const onChangeDelivery = (vl) => {
-    const items = deliveries.find((item) => item.key === vl);
+    const items = deliveries.find((item) => item.id === vl);
     setValueChosen(items);
     setCollapsed(true);
     setValueDelivery(vl);
   };
 
   const renderFooter = () => {
+    const voucherValue = voucher && voucher.price ? voucher.price : 0;
+    const deliveryValue =
+      valueChosen && valueChosen.price ? valueChosen.price : 0;
     return (
       <>
         <View style={styles.wrapAccordion}>
@@ -126,9 +102,9 @@ const ListProduct = ({navigation, data}) => {
               {listDelivery?.length > 0 &&
                 listDelivery.map((item) => (
                   <RadioButton.Item
-                    key={`radio-${item.key}`}
+                    key={`radio-${item.id}`}
                     label={renderDelivery(item)}
-                    value={item.key}
+                    value={item.id}
                     color="#823ffd"
                     style={styles.wrapRadioButton}
                     mode="android"
@@ -159,7 +135,7 @@ const ListProduct = ({navigation, data}) => {
             </View>
             <View style={styles.colValueTotal}>
               <Text style={styles.valueTotal}>
-                {currencyFormat(9999999, 'đ')}
+                {currencyFormat(deliveryValue, 'đ')}
               </Text>
             </View>
           </View>
@@ -169,14 +145,14 @@ const ListProduct = ({navigation, data}) => {
             </View>
             <View style={styles.colValueTotal}>
               <Text style={styles.valueTotal}>
-                {currencyFormat(9999999, 'đ')}
+                {currencyFormat(voucherValue, 'đ')}
               </Text>
             </View>
           </View>
         </View>
-        <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+        {/* <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
           <ActivityIndicator animating color={Colors.$purple} size="small" />
-        </View>
+        </View> */}
       </>
     );
   };
@@ -187,20 +163,20 @@ const ListProduct = ({navigation, data}) => {
         <View style={styles.wrapInfo}>
           <View>
             <View style={styles.wrapRadioTitle}>
-              <Text style={styles.titleRadio}>{item.label}</Text>
+              <Text style={styles.titleRadio}>{item.description}</Text>
             </View>
           </View>
           <View style={styles.wrapPrice}>
             <Text style={styles.priceRadio}>
-              {item.value
-                ? currencyFormat(item.value, 'đ')
+              {item.price
+                ? currencyFormat(item.price, 'đ')
                 : i18n.t('cart.freeShip')}
             </Text>
           </View>
         </View>
 
         <View style={styles.wrapRadioContent}>
-          <Text style={styles.contentRadio}>{item.content}</Text>
+          <Text style={styles.contentRadio}>{item.deliveryTime}</Text>
         </View>
       </View>
     );
@@ -212,19 +188,19 @@ const ListProduct = ({navigation, data}) => {
         <View style={styles.wrapInfoChosen}>
           <View>
             <View style={styles.wrapTitleChosen}>
-              <Text style={styles.titleChosen}>{item.label}</Text>
+              <Text style={styles.titleChosen}>{item.description}</Text>
             </View>
           </View>
           <View>
             <View style={styles.wrapContentChosen}>
-              <Text style={styles.contentChosen}>{item.content}</Text>
+              <Text style={styles.contentChosen}>{item.deliveryTime}</Text>
             </View>
           </View>
         </View>
         <View style={styles.wrapPriceChosen}>
           <Text style={styles.priceRadioChosen}>
-            {item.value
-              ? currencyFormat(item.value, 'đ')
+            {item.price
+              ? currencyFormat(item.price, 'đ')
               : i18n.t('cart.freeShip')}
           </Text>
         </View>
@@ -300,6 +276,8 @@ const ListProduct = ({navigation, data}) => {
           <View style={styles.wrapFooter}>
             <CardFooter
               buttonText={i18n.t('cart.order')}
+              deliveryMethod={valueChosen}
+              voucher={voucher}
               actionButton={onPayment}
             />
           </View>

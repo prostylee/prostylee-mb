@@ -13,12 +13,9 @@ import FeaturedCategoriesItem from './item.js';
 import {useSelector} from 'react-redux';
 
 import {Divider, Text} from 'react-native-paper';
+import PropTypes from 'prop-types';
 
-const FeaturedCategories = ({
-  navigation,
-  defaultState = {},
-  onItemPress = () => {},
-}) => {
+const FeaturedCategories = ({navigation, defaultState, onItemPress}) => {
   const categoryFilterState = defaultState.category;
 
   const activeItem = categoryFilterState;
@@ -60,8 +57,16 @@ const FeaturedCategories = ({
   );
 };
 
-FeaturedCategories.defaultProps = {};
+FeaturedCategories.defaultProps = {
+  navigation: {},
+  defaultState: {},
+  onItemPress: () => {},
+};
 
-FeaturedCategories.propTypes = {};
+FeaturedCategories.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  defaultState: PropTypes.object.isRequired,
+  onItemPress: PropTypes.func.isRequired,
+};
 
 export default FeaturedCategories;

@@ -64,23 +64,25 @@ const ListChildCategories = (props) => {
           {i18n.t('addProduct.productCategory')}
         </Text>
       </View>
-      {loading ? (
-        <View style={{paddingHorizontal: 16, overflow: 'hidden'}}>
-          <PostProductCategoryLoading />
-        </View>
-      ) : listChildCategories && listChildCategories.length ? (
-        <FlatList
-          data={listChildCategories}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.contentStyle}
-          style={styles.flatlistStyle}
-        />
-      ) : (
-        <Text style={styles.notFoundText}>
-          {i18n.t('Search.resultsNotfound')}
-        </Text>
-      )}
+      <View style={styles.contentWrapper}>
+        {loading ? (
+          <View style={{paddingHorizontal: 16, overflow: 'hidden'}}>
+            <PostProductCategoryLoading />
+          </View>
+        ) : listChildCategories && listChildCategories.length ? (
+          <FlatList
+            data={listChildCategories}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={styles.contentStyle}
+            style={styles.flatlistStyle}
+          />
+        ) : (
+          <Text style={styles.notFoundText}>
+            {i18n.t('Search.resultsNotfound')}
+          </Text>
+        )}
+      </View>
     </View>
   );
 };

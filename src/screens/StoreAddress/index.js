@@ -16,26 +16,50 @@ import {
   ButtonRounded,
 } from 'components';
 import {useTheme} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {addressActions, addressSelectors} from 'reducers';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListStoreAddress from './ListStoreAddress';
 
 const StoreAddress = (props) => {
   const navigation = props.navigation ? props.navigation : {};
+  const dispatch = useDispatch();
   const {colors} = useTheme();
-  const [selectedAddress, setselectedAddress] = useState('HCM');
+  const [selectedAddress, setselectedAddress] = useState();
+
+  const prefecture = useSelector((state) =>
+    addressSelectors.getPrefecture(state),
+  );
+
+  React.useEffect(() => {
+    dispatch(addressActions.getPrefecture());
+  }, []);
+
+  React.useEffect(() => {
+    if (prefecture.length && !selectedAddress) {
+      setselectedAddress(79);
+    }
+  }, [prefecture]);
+  console.log(selectedAddress);
+
+  const getPrefectureList = () => {
+    return prefecture.map((item) => ({
+      label: item.name,
+      value: item.code,
+    }));
+  };
+
   const Dropdown = () => {
     return (
       <View style={styles.dropDownContainer}>
         <Icon name="location-outline" color="grey" size={28} />
-        <View style={{width: 200, marginHorizontal: -10}}>
+        <View style={styles.dropDown}>
           <RNPickerSelect
-            onValueChange={(value) => console.log(value)}
-            items={[
-              {label: 'Football', value: 'football'},
-              {label: 'Baseball', value: 'baseball'},
-              {label: 'Hockey', value: 'hockey'},
-            ]}
+            value={selectedAddress}
+            onValueChange={(value) => setselectedAddress(value)}
+            items={getPrefectureList()}
+            onDonePress={(value) => setselectedAddress(value)}
           />
         </View>
       </View>

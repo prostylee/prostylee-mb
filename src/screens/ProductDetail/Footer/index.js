@@ -35,7 +35,9 @@ const Footer = ({navigation, productData, choiceSelect}) => {
 
   React.useEffect(() => {
     if (!isStore) {
-      getProfileData(productData.productOwnerResponse.id);
+      if (productData && productData.productOwnerResponse) {
+        getProfileData(productData.productOwnerResponse.id);
+      }
     }
   }, []);
 
@@ -77,7 +79,7 @@ const Footer = ({navigation, productData, choiceSelect}) => {
   };
 
   const goToStore = () => {
-    navigation.navigate('Stores');
+    navigation.navigate('StoreAddress');
   };
   const callSeller = (phoneNumber) => {
     if (phoneNumber) {

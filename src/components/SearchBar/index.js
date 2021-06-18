@@ -1,18 +1,8 @@
 import React from 'react';
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  TouchableWithoutFeedback,
-  Dimensions,
-} from 'react-native';
-
+import {View, TextInput, TouchableOpacity, Text} from 'react-native';
 import {Search, ClearTextInput} from 'svg/common';
 import styles from './styles';
 const SearchBar = (props) => {
-  const {width, height} = Dimensions.get('window');
-
   const inputRef = React.useRef();
   const [state, setState] = React.useState('');
   const _handleChangeText = (text) => {

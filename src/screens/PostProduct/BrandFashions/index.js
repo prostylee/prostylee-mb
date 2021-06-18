@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
-import {View, TouchableOpacity, Dimensions, Text} from 'react-native';
-import {Header, ButtonRounded, ThemeView} from 'components';
+import {View, TouchableOpacity, Text} from 'react-native';
+import {Header, ButtonRounded, ThemeView, SearchBar} from 'components';
 import {ActivityIndicator, Searchbar} from 'react-native-paper';
 import i18n from 'i18n';
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -79,28 +79,30 @@ const Brands = (props) => {
         containerStyle={styles.header}
       />
       <View style={styles.searchBarContainer}>
-        <Searchbar
+        <SearchBar
           style={styles.searchBarStyle}
-          inputStyle={styles.searchBarInput}
+          // inputStyle={styles.searchBarInput}
           placeholder={i18n.t('search')}
           onChangeText={onChangeSearch}
           value={searchQuery}
         />
       </View>
-      {loading ? (
-        <ActivityIndicator />
-      ) : brandList.length ? (
-        <ListBrand
-          data={brandList}
-          selectedBrand={selectedBrand}
-          setSelectedBrand={setSelectedBrand}
-          disabled={isReadOnly}
-        />
-      ) : (
-        <Text style={styles.notFoundText}>
-          {i18n.t('Search.resultsNotfound')}
-        </Text>
-      )}
+      <View style={styles.contentWrapper}>
+        {loading ? (
+          <ActivityIndicator />
+        ) : brandList.length ? (
+          <ListBrand
+            data={brandList}
+            selectedBrand={selectedBrand}
+            setSelectedBrand={setSelectedBrand}
+            disabled={isReadOnly}
+          />
+        ) : (
+          <Text style={styles.notFoundText}>
+            {i18n.t('Search.resultsNotfound')}
+          </Text>
+        )}
+      </View>
       {!isReadOnly ? (
         <View style={styles.button}>
           <TouchableOpacity>

@@ -1,12 +1,11 @@
 import {FlatList, View} from 'react-native';
 import React from 'react';
 import {Chip} from 'react-native-paper';
-import {Colors} from 'components';
 import styles from './styles';
-
+import PropTypes from 'prop-types';
 import {FILTER_TAGS} from 'constants';
 
-const TagList = ({onTagPress}) => {
+const TagList = ({onTagPress, options}) => {
   const [active, setActive] = React.useState(null);
   return (
     <View style={styles.wrapList}>
@@ -14,7 +13,7 @@ const TagList = ({onTagPress}) => {
         style={styles.wrapChip}
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={FILTER_TAGS}
+        data={options}
         renderItem={({item, index}) => (
           <Chip
             icon={item.icon}
@@ -32,5 +31,14 @@ const TagList = ({onTagPress}) => {
       />
     </View>
   );
+};
+TagList.defaultProps = {
+  onTagPress: () => {},
+  options: [],
+};
+
+TagList.propTypes = {
+  onTagPress: PropTypes.func.isRequired,
+  options: PropTypes.array.isRequired,
 };
 export default TagList;

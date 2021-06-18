@@ -7,6 +7,7 @@ import {
   getRecentViewList,
   getSuggestionsList,
   getVoucherList,
+  getDeliveryMethods,
 } from 'services/api/cartApi';
 
 import {SUCCESS} from 'constants';
@@ -105,6 +106,22 @@ const getLoadMoreListVoucher = function* ({payload}) {
   }
 };
 
+const getListDelivery = function* ({payload}) {
+  try {
+    yield put(cartActions.setDeliveryLoading(true));
+    const res = yield call(getDeliveryMethods, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(cartActions.getListDeliverySuccess(res.data.data.content));
+    } else {
+      yield put(cartActions.getListDeliveryFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(cartActions.setDeliveryLoading(false));
+  }
+};
+
 const watcher = function* () {
   //List Cart
   yield takeLatest(cartTypes.SET_LIST_CART, setListCart);
@@ -124,5 +141,8 @@ const watcher = function* () {
     cartTypes.GET_LIST_VOUCHER_LOAD_MORE,
     getLoadMoreListVoucher,
   );
+
+  //List Delivery
+  yield takeLatest(cartTypes.GET_LIST_DELIVERY, getListDelivery);
 };
 export default watcher();

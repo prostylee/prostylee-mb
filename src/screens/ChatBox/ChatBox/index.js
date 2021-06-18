@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Linking,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import styles from './styles';
 import {Header, ThemeView} from 'components';
@@ -164,20 +166,24 @@ const ChatBox = ({navigation, route}) => {
           </View>
         }
       />
-      {loading && !refreshing ? null : (
-        <ProductItem data={productData} navigation={navigation} />
-      )}
-      <View style={{flex: 1, width: '100%'}}>
-        <Chat
-          user={currentUser}
-          chatData={chatDataList}
-          otherUserAvatar={otherUserAvatar}
-          loading={loading}
-          refreshing={refreshing}
-          refreshChatList={refreshChatList}
-        />
-      </View>
-      <FooterItem user={currentUser} chatId={chatId} />
+      <KeyboardAvoidingView
+        style={styles.contentContainer}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        {loading && !refreshing ? null : (
+          <ProductItem data={productData} navigation={navigation} />
+        )}
+        <View style={styles.chatListContainer}>
+          <Chat
+            user={currentUser}
+            chatData={chatDataList}
+            otherUserAvatar={otherUserAvatar}
+            loading={loading}
+            refreshing={refreshing}
+            refreshChatList={refreshChatList}
+          />
+        </View>
+        <FooterItem user={currentUser} chatId={chatId} />
+      </KeyboardAvoidingView>
     </ThemeView>
   );
 };

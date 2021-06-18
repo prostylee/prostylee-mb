@@ -20,6 +20,7 @@ const NumberInputUpDown = ({
   plusIcon,
   editable,
   onChange,
+  onRemoveItem,
   ...rest
 }) => {
   const refNumberic = useRef();
@@ -47,6 +48,10 @@ const NumberInputUpDown = ({
   const onFocus = () => {};
 
   const inc = () => {
+    if (currentValue == 1) {
+      onRemoveItem();
+      return;
+    }
     if (!currentValue) {
       setCurrentValue('0');
       if (typeof onChange === 'function') {

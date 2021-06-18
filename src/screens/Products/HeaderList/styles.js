@@ -14,7 +14,7 @@ export default EStyleSheet.create({
     position: 'absolute',
     top: getStatusBarHeight(),
     width: '100%',
-    paddingLeft: 16,
+    // paddingLeft: 16,
   },
   wrapTitle: {
     position: 'absolute',

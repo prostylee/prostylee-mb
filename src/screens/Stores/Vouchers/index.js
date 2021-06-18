@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
-import {ThemeView, Header, Colors} from 'components';
+import {ThemeView, Header, Colors, SortDropDown} from 'components';
 import {Sort, CaretDown} from 'svg/common';
 import i18n from 'i18n';
 import styles from './style';
-import SortDropDown from './SortDropDown';
+// import SortDropDown from './SortDropDown';
 import VoucherList from './VoucherList';
 import {useDispatch} from 'react-redux';
 import {storeActions} from 'redux/reducers';

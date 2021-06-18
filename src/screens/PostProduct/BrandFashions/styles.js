@@ -21,14 +21,19 @@ export default EStyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '$bgColor',
     paddingBottom: 20,
+    // borderBottomWidth: 1,
+    // borderBottomColor: '$bgColor',
+    height: 40,
+    paddingHorizontal: 16,
   },
   searchBarStyle: {
-    width: WIDTH - 32,
+    // width: WIDTH - 32,
     height: 35,
-    alignSelf: 'center',
-    marginBottom: 5,
+    // alignSelf: 'center',
+    // marginBottom: 5,
     elevation: 0,
     backgroundColor: '$bgColor',
+    // borderWidth: 1,
   },
   searchBarInput: {
     fontSize: 14,
@@ -41,5 +46,10 @@ export default EStyleSheet.create({
   notFoundText: {
     fontWeight: '400',
     color: '$gray',
+  },
+  contentWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

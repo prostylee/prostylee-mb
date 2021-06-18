@@ -54,6 +54,9 @@ import ChatIcon from './ChatIcon';
 import CustomRating from './Rating';
 
 import SearchBar from './SearchBar';
+import FilterButton from './FilterButton';
+import SortDropDown from './SortDropDown';
+import TagList from './TagList';
 
 export {
   ContainerWithoutScrollView,
@@ -111,4 +114,7 @@ export {
   ChatIcon,
   CustomRating,
   SearchBar,
+  FilterButton,
+  SortDropDown,
+  TagList,
 };

@@ -1,23 +1,26 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, {useState} from 'react';
-import {ScrollView, View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 
-import {Chip, Divider} from 'react-native-paper';
-import {Sort, Filter, CaretDown} from 'svg/common';
+import {Divider} from 'react-native-paper';
+import {Sort, CaretDown} from 'svg/common';
 import i18n from 'i18n';
-import SortDropDown from '../SortDropDown';
-import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 import styles from './styles';
-import {RadioButton} from 'react-native-paper';
-import {RnRatingTap, Picker, Colors} from 'components';
-import {useSelector} from 'react-redux';
-import TagList from '../TagList';
-import {PRODUCT_SORT_ITEM} from 'constants';
-import {productActions} from 'redux/reducers';
 
+import {
+  RnRatingTap,
+  FilterButton,
+  Colors,
+  SortDropDown,
+  TagList,
+} from 'components';
+
+import {PRODUCT_SORT_ITEM, FILTER_TAGS} from 'constants';
+
+import {getProductCategoriesFilterStateSelector} from 'redux/selectors/product';
+import {productActions} from 'redux/reducers';
 const BottomHeaderAnimated = ({
-  navigation,
   onTagPress = () => {},
   onSortPress = () => {},
 }) => {
@@ -25,25 +28,6 @@ const BottomHeaderAnimated = ({
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
 
-  const filterState = useSelector((state) => getProductFilterState(state));
-  const attributeFilterState = filterState?.attributes;
-  const categoryFilterState = filterState.category;
-  const price = filterState.price;
-  let count = 0;
-  count += categoryFilterState !== -1 ? 1 : 0;
-  count += Object.keys(
-    attributeFilterState ? attributeFilterState : {},
-  )?.length;
-  count += price?.[1] !== 0 ? 1 : 0;
-
-  const renderStar = (star) => (
-    <RnRatingTap
-      onChangeValue={() => {}}
-      value={star}
-      isDisabled={true}
-      size={20}
-    />
-  );
   return (
     <View style={styles.container}>
       <Divider />
@@ -74,44 +58,16 @@ const BottomHeaderAnimated = ({
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('SearchProductFilter', {
-              filterFunc: productActions.getListProduct,
-            })
-          }>
-          <View style={styles.wrapBlockFilter}>
-            <Text numberOfLines={1} style={styles.textSpace}>
-              |
-            </Text>
-            <View style={{position: 'relative'}}>
-              <Filter />
-              {count !== 0 ? (
-                <View
-                  style={{
-                    position: 'absolute',
-                    width: 14,
-                    height: 14,
-                    backgroundColor: '#333333',
-                    right: 0,
-                    bottom: 0,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 7,
-                  }}>
-                  <Text
-                    style={{color: '#fff', fontSize: 10, textAlign: 'center'}}>
-                    {count}
-                  </Text>
-                </View>
-              ) : null}
-            </View>
-
-            <Text numberOfLines={1} style={styles.textSort}>
-              {i18n.t('filter')}
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <FilterButton
+          filterDispatchAction={productActions.getListProduct}
+          getFilterStateSelectorFunction={
+            getProductCategoriesFilterStateSelector
+          }
+          clearFilterStateAction={
+            productActions.clearProductCategoriesFilterState
+          }
+          setFilterStateAction={productActions.setProductCategoriesFilterState}
+        />
       </View>
       <Divider />
       <SortDropDown
@@ -123,8 +79,9 @@ const BottomHeaderAnimated = ({
           onSortPress(value);
         }}
         valueSort={valueSort}
+        options={PRODUCT_SORT_ITEM}
       />
-      <TagList onTagPress={onTagPress} />
+      <TagList onTagPress={onTagPress} options={FILTER_TAGS} />
     </View>
   );
 };
