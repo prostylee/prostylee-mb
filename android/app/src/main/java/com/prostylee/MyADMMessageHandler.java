@@ -1,5 +1,7 @@
 package com.prostylee;
 
+/** Use for amazon device only
+*/
 public class MyADMMessageHandler extends ADMMessageHandlerJobBase {
 
      @Override

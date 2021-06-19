@@ -1,5 +1,7 @@
 package com.prostylee;
 
+/** Use for amazon device only
+*/
 public class Receiver extends ADMMessageReceiver
  {
      public Receiver()
