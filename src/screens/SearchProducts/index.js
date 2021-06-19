@@ -4,9 +4,9 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {ThemeView, Header, SortDropDown} from 'components';
-import SearchBar from 'components/SearchBar';
-import {Searchbar, Divider, Chip} from 'react-native-paper';
+import {ThemeView, Header, SortDropDown, SearchBar} from 'components';
+
+import {Divider, Chip} from 'react-native-paper';
 import {TagList} from 'components';
 
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';

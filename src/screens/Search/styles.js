@@ -14,9 +14,6 @@ export default EStyleSheet.create({
     width: WIDTH - 60,
     backgroundColor: '#F4F5F5',
     height: 35,
-    borderRadius: 0,
-    elevation: 0,
-    padding: 0,
   },
   wrapSearchBarInput: {
     flex: 1,

@@ -1,7 +1,7 @@
 import styles from './styles';
 
 import React from 'react';
-import {View, TouchableWithoutFeedback, Animated} from 'react-native';
+import {View, TouchableWithoutFeedback, Animated, Platform} from 'react-native';
 import {ThemeView} from 'components';
 
 const Picker = ({visible, setVisible, setAction, children}) => {
@@ -11,7 +11,8 @@ const Picker = ({visible, setVisible, setAction, children}) => {
   };
 
   return visible ? (
-    <Animated.View style={styles.container}>
+    <Animated.View
+      style={[styles.container, Platform.OS === 'ios' ? {zIndex: 1} : null]}>
       <ThemeView style={styles.content} isFullView>
         <View style={styles.wrapper}>
           <View style={styles.contentPicker}>{children}</View>
