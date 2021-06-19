@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Text} from 'react-native';
 
-import {ThemeView, Header} from 'components';
+import {ThemeView, Header, SortDropDown, TagList} from 'components';
 import {Divider} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import ProductList from './ProductList';
-import SortDropDown from './SortDropDown';
-import TagList from './TagList';
+
 import FilterBar from './FilterBar';
-import {PRODUCT_SORT_ITEM} from 'constants';
+import {PRODUCT_SORT_ITEM, FILTER_TAGS} from 'constants';
 import styles from './styles';
 import PropTypes from 'prop-types';
 
@@ -30,7 +29,6 @@ const ProductSearchList = ({
   setFilterStateAction,
   clearFilterStateAction,
 }) => {
-  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
@@ -90,11 +88,14 @@ const ProductSearchList = ({
             setAction={setAction}
             setValueSort={_handleSort}
             valueSort={valueSort}
+            options={PRODUCT_SORT_ITEM}
           />
         </>
       ) : null}
 
-      {hasTagList ? <TagList onTagPress={tagFilterFunction} /> : null}
+      {hasTagList ? (
+        <TagList onTagPress={tagFilterFunction} options={FILTER_TAGS} />
+      ) : null}
 
       <ProductList
         getDataFunction={getDataFunction}
