@@ -4,6 +4,9 @@ export default EStyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
+  contentContainer: {
+    flex: 1,
+  },
   headerContain: {
     paddingBottom: 8,
     backgroundColor: '$purple',
@@ -43,6 +46,10 @@ export default EStyleSheet.create({
     height: '100%',
     paddingLeft: 6,
     paddingRight: 16,
+  },
+  chatListContainer: {
+    flex: 1,
+    width: '100%',
   },
 
   footer: {

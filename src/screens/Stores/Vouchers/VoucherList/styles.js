@@ -6,7 +6,6 @@ export default EStyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: '$white',
   },
   titleContainer: {
     padding: 16,
@@ -18,8 +17,14 @@ export default EStyleSheet.create({
     color: '$black',
   },
   listWrapper: {
-    paddingTop: 20,
+    width: '100%',
+    paddingTop: 10,
     backgroundColor: '$bgColorTwo',
+    // paddingBottom: 60,
+    // borderWidth: 1,
+  },
+  listInner: {
+    paddingBottom: 40,
   },
   itemWrapper: {
     width: '100%',

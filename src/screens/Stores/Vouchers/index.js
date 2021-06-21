@@ -9,6 +9,7 @@ import VoucherList from './VoucherList';
 import {useDispatch} from 'react-redux';
 import {storeActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT, VOUCHER_SORT_ITEM} from 'constants';
+import {values} from 'lodash-es';
 
 const Vouchers = ({navigation}) => {
   const dispatch = useDispatch();
@@ -20,26 +21,26 @@ const Vouchers = ({navigation}) => {
   const _handleSort = (value) => {
     setVisible(false);
     setValueSort(value);
+    console.log('VALUE', values);
     let sortOption = {};
     switch (value) {
+      case 0: {
+        break;
+      }
       case 1: {
-        sortOption.sorts = 'name';
+        sortOption.storeId = 0;
         break;
       }
       case 2: {
-        sortOption.bestSeller = true;
+        sortOption.sorts = 'bestDiscount';
         break;
       }
       case 3: {
-        sortOption.sorts = '-createdAt';
-        break;
-      }
-      case 4: {
-        sortOption.sorts = '-priceSale';
+        sortOption.sorts = 'expiredDate';
         break;
       }
       default: {
-        sortOption.bestRating = true;
+        sortOption.sorts = 'mostUsed';
         break;
       }
     }
@@ -81,7 +82,7 @@ const Vouchers = ({navigation}) => {
                   color: Colors['$black'],
                 },
               ]}>
-              {VOUCHER_SORT_ITEM[valueSort].label}
+              {VOUCHER_SORT_ITEM[valueSort]?.label}
             </Text>
             <View>
               <CaretDown />

@@ -58,7 +58,7 @@ const ProductItem = ({item, index, navigation}) => (
         <View style={styles.toolContainer}>
           <View style={styles.ratingContainer}>
             <Text style={styles.itemDiscountPrice}>
-              {currencyFormat(item?.priceSale ? Number(item?.price) : 0, 'đ')}
+              {currencyFormat(item?.price ? Number(item?.price) : 0, 'đ')}
             </Text>
           </View>
           <ProductLike item={item} />

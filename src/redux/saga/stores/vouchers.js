@@ -1,10 +1,13 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {getVouchers as getVouchersApi} from 'services/api/storeApi';
+import {
+  getVouchers as getVouchersApi,
+  postSaveVouchers as postSaveVouchersApi,
+} from 'services/api/storeApi';
 
 import {storeActions, storeTypes} from 'reducers';
 
-import {SUCCESS} from 'constants';
+import {SUCCESS, POST_SUCCESS} from 'constants';
 
 //List FEATURED_PRODUCT_SEARCH
 
@@ -12,7 +15,6 @@ const getVouchers = function* ({payload}) {
   try {
     yield put(storeActions.setVouchersLoading(true));
     const res = yield call(getVouchersApi, payload);
-    console.log('VOUCHERS', res.data);
     let listStore = res?.data?.data;
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getVouchersSuccess(listStore));
@@ -41,9 +43,24 @@ const getVouchersLoadmore = function* ({payload}) {
   }
 };
 
+const postSaveVoucher = function* ({payload}) {
+  try {
+    //yield put(storeActions.setVouchersLoadmoreLoading(true));
+    const res = yield call(postSaveVouchersApi, payload);
+    if (res.ok && res.data.status === POST_SUCCESS && !res.data.error) {
+      yield put(storeActions.postSaveVoucherSuccess(payload));
+    } else {
+      yield put(storeActions.postSaveVoucherFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 const watcher = function* () {
   //List FEATURED_PRODUCT_SEARCH
   yield takeLatest(storeTypes.GET_VOUCHERS, getVouchers);
   yield takeLatest(storeTypes.GET_VOUCHERS_LOADMORE, getVouchersLoadmore);
+  yield takeLatest(storeTypes.POST_SAVE_VOUCHER, postSaveVoucher);
 };
 export default watcher();

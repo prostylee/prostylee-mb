@@ -6,7 +6,7 @@ const {height, width} = Dimensions.get('window');
 export default EStyleSheet.create({
   container: {
     position: 'relative',
-    zIndex: 100,
+    // zIndex: 0,
   },
   content: {
     flex: 1,

@@ -48,7 +48,10 @@ export const getNearbyStore = (payload) => {
 
 //PERSONAL SALERS
 export const getPersonalSalersProducts = (payload) => {
-  return _fetch(GET, '/products', {userId: 1, ...payload});
+  return _fetch(GET, '/products', {
+    ...payload,
+    newFeedType: 'USER',
+  });
 };
 
 export const followStoreService = (id) => {
@@ -79,8 +82,13 @@ export const getBestSellers = (payload) => {
 
 //VOUCHERS
 export const getVouchers = (payload) => {
-  return _fetch(GET, '/voucher/userLogin', {...payload});
+  return _fetch(GET, '/user-vouchers', {...payload});
 };
+
+export const postSaveVouchers = (id) => {
+  return _fetch(POST, `/user-vouchers/${id}`);
+};
+
 // BOTTOM TAB LIST
 export const getBottomTabList = (payload) => {
   return _fetch(GET, '/products/allTabs', {...payload});

@@ -23,3 +23,8 @@ export const getCurrentVouchersPageSelector = createSelector(
   storeReducer,
   (data) => data?.vouchersPage || 0,
 );
+
+export const postSaveVoucherStatusSelector = createSelector(
+  storeReducer,
+  (data) => data?.saveVoucherStatus || '',
+);

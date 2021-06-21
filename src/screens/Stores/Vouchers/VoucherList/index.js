@@ -13,6 +13,7 @@ import {
   getVouchersSelector,
   getCurrentVouchersPageSelector,
   hasVouchersLoadmoreSelector,
+  postSaveVoucherStatusSelector,
 } from 'redux/selectors/storeMain/vouchers';
 
 import {storeActions} from 'redux/reducers';
@@ -35,6 +36,10 @@ const VoucherList = ({navigation}) => {
   );
 
   const data = useSelector((state) => getVouchersSelector(state));
+
+  const saveStatus = useSelector((state) =>
+    postSaveVoucherStatusSelector(state),
+  );
 
   const _handleRefresh = () => {
     setIsRefreshing(true);
@@ -61,27 +66,53 @@ const VoucherList = ({navigation}) => {
     if (!isLoading) setIsRefreshing(false);
   }, [isLoading]);
 
-  const _handleSavePress = () => {
-    showMessage({
-      titleStyle: {fontSize: 13, fontWeight: '500'},
-      message: i18n.t('stores.success'),
-      textStyle: {fontSize: 13, fontWeight: '300'},
-      description: i18n.t('stores.voucherSaved'),
-
-      type: 'success',
-      position: {
-        top: 40,
-        left: 0,
-      },
-      icon: {icon: 'success', position: 'left'},
-      style: {
-        alignItems: 'center',
-      },
-    });
+  const _handleSavePress = (id) => {
+    console.log('SAVE VOUCHER ID', id);
+    dispatch(storeActions.postSaveVoucher(id));
   };
   const _handUsePress = () => {
     navigation.navigate('FlashSale');
   };
+
+  useEffect(() => {
+    if (saveStatus === 'success') {
+      showMessage({
+        titleStyle: {fontSize: 13, fontWeight: '500'},
+        message: i18n.t('stores.success'),
+        textStyle: {fontSize: 13, fontWeight: '300'},
+        description: i18n.t('stores.voucherSaved'),
+
+        type: 'success',
+        position: {
+          top: 40,
+          left: 0,
+        },
+        icon: {icon: 'success', position: 'left'},
+        style: {
+          alignItems: 'center',
+        },
+      });
+    }
+    if (saveStatus === 'failed') {
+      showMessage({
+        titleStyle: {fontSize: 13, fontWeight: '500'},
+        message: i18n.t('stores.failed'),
+        textStyle: {fontSize: 13, fontWeight: '300'},
+        description: i18n.t('stores.saveFailed'),
+
+        type: 'danger',
+        position: {
+          top: 40,
+          left: 0,
+        },
+        icon: {icon: 'danger', position: 'left'},
+        style: {
+          alignItems: 'center',
+        },
+      });
+    }
+    dispatch(storeActions.setSaveVoucherStatus(''));
+  }, [saveStatus]);
   return (
     <View style={styles.container}>
       {isLoading && !isRefreshing ? (
@@ -92,7 +123,8 @@ const VoucherList = ({navigation}) => {
         </View>
       ) : data && data?.content?.length ? (
         <FlatList
-          contentContainerStyle={styles.listWrapper}
+          style={styles.listWrapper}
+          contentContainerStyle={styles.listInner}
           data={data?.content}
           renderItem={({item, index}) => (
             <VoucherItem

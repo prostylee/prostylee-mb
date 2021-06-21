@@ -17,13 +17,22 @@ const TagList = ({onTagPress, options}) => {
         renderItem={({item, index}) => (
           <Chip
             icon={item.icon}
-            selected={index === active}
+            //selected={index === active}
             small
             onPress={() => {
               setActive(index);
               onTagPress(item.value);
             }}
-            style={styles.itemChips}
+            //selectedColor="#fff"
+            style={[
+              styles.itemChips,
+              {
+                backgroundColor: active === index ? '#333333' : '#F4F5F5',
+              },
+            ]}
+            textStyle={{
+              color: active === index ? '#ffffff' : '#333333',
+            }}
             key={`${item.label}-${index}`}>
             {item.label}
           </Chip>

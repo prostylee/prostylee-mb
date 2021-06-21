@@ -40,6 +40,7 @@ const SortDropDown = ({
               ]}
               mode="ios"
               label={v.label}
+              mode="ios"
             />
           </>
         ))}

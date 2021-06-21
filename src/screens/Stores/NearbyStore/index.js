@@ -3,16 +3,15 @@ import {Text} from 'react-native';
 import i18n from 'i18n';
 import styles from './styles';
 
-import {ThemeView, Header} from 'components';
+import {ThemeView, Header, TagList} from 'components';
 import {Divider} from 'react-native-paper';
 
 import StoreResult from './StoreResult';
 import {useDispatch} from 'react-redux';
 import {storeActions} from 'redux/reducers';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {LIMIT_DEFAULT, PAGE_DEFAULT, FILTER_TAGS} from 'constants';
 
-import TagList from './TagList';
-import useLocation from '../../../hooks/useLocation';
+import useLocation from 'hooks/useLocation';
 
 const NearbyStore = ({navigation}) => {
   const dispatch = useDispatch();
@@ -60,7 +59,7 @@ const NearbyStore = ({navigation}) => {
           </Text>
         }
       />
-      <TagList onTagPress={_handleFilterByTag} />
+      <TagList onTagPress={_handleFilterByTag} options={FILTER_TAGS} />
       <Divider />
       <StoreResult navigation={navigation} />
     </ThemeView>

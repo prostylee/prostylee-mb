@@ -18,20 +18,14 @@ const SearchBar = (props) => {
     }
   };
   return (
-    <View style={[{...props.style}, styles.container]}>
+    <View style={[styles.container, {...props.style}]}>
       <View style={styles.searchIcon}>
         <Search width={16} height={16} />
       </View>
       <TextInput
         ref={inputRef}
         {...props}
-        style={[
-          styles.inputStyle,
-          props.style,
-          {
-            backgroundColor: 'transparent',
-          },
-        ]}
+        style={[styles.inputStyle]}
         onChangeText={(value) => {
           _handleChangeText(value);
           if (props && props?.onChangeText) {

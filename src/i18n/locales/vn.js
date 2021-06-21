@@ -18,6 +18,8 @@ export default {
     voucherCode: 'Mã khuyễn mãi',
     seeMore: 'Xem thêm',
     forUser: 'Dành riêng cho bạn',
+    saveFailed: 'Lưu mã khuyễn mãi thất bại',
+    failed: 'Thất bại',
   },
   common: {
     textSeeMore: 'Xem thêm',
@@ -397,6 +399,9 @@ export default {
     use: 'Sử dụng',
     save: 'Lưu',
     noVoucherList: 'Bạn chưa có mã khuyến mãi.',
+    saved: 'Đã lưu',
+    voucherDescription: 'Chi tiết ưu đãi',
+    effectTime: 'Thời gian hiệu lực',
   },
   filterProduct: {
     apply: 'Áp dụng',
