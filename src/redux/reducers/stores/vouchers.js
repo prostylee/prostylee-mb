@@ -11,17 +11,29 @@ export const types = {
   GET_VOUCHERS_LOADMORE: 'GET_VOUCHERS_LOADMORE',
   GET_VOUCHERS_LOADMORE_SUCCESS: 'GET_VOUCHERS_LOADMORE_SUCCESS',
   GET_VOUCHERS_LOADMORE_FAILED: 'GET_VOUCHERS_LOADMORE_FAILED',
+
+  SET_SAVE_VOUCHER_STATUS: 'SET_SAVE_VOUCHER_STATUS',
+  POST_SAVE_VOUCHER: 'POST_SAVE_VOUCHER',
+  POST_SAVE_VOUCHER_SUCCESS: 'POST_SAVE_VOUCHER_SUCCESS',
+  POST_SAVE_VOUCHER_FAILED: 'POST_SAVE_VOUCHER_FAILED',
 };
 
 export const actions = {
   setVouchersLoading: createAction(types.SET_VOUCHERS_LOADING),
   setVouchersLoadmoreLoading: createAction(types.SET_VOUCHERS_LOADMORE_LOADING),
+
   getVouchers: createAction(types.GET_VOUCHERS),
   getVouchersSuccess: createAction(types.GET_VOUCHERS_SUCCESS),
   getVouchersFailed: createAction(types.GET_VOUCHERS_FAILED),
+
   getVouchersLoadmore: createAction(types.GET_VOUCHERS_LOADMORE),
   getVouchersLoadmoreSuccess: createAction(types.GET_VOUCHERS_LOADMORE_SUCCESS),
   getVouchersLoadmoreFailed: createAction(types.GET_VOUCHERS_LOADMORE_FAILED),
+
+  setSaveVoucherStatus: createAction(types.SET_SAVE_VOUCHER_STATUS),
+  postSaveVoucher: createAction(types.POST_SAVE_VOUCHER),
+  postSaveVoucherSuccess: createAction(types.POST_SAVE_VOUCHER_SUCCESS),
+  postSaveVoucherFailed: createAction(types.POST_SAVE_VOUCHER_FAILED),
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -31,8 +43,8 @@ export const defaultState = {
   isVouchersLoadmoreLoading: false,
   vouchersData: {},
   vouchersPage: 0,
-
   hasVouchersLoadmore: false,
+  saveVoucherStatus: null,
 };
 
 export const handleActions = {
@@ -70,5 +82,32 @@ export const handleActions = {
   },
   [types.GET_VOUCHERS_LOADMORE_FAILED]: (state, {payload}) => {
     return {...state};
+  },
+
+  [types.POST_SAVE_VOUCHER_SUCCESS]: (state, {payload}) => {
+    let newState = {...state?.vouchersData};
+    newState?.content?.map((v) => {
+      if (v.id === payload) {
+        v.savedUserVoucherId = 1;
+      }
+      return v;
+    });
+    return {
+      ...state,
+      vouchersData: newState,
+      saveVoucherStatus: 'success',
+    };
+  },
+  [types.POST_SAVE_VOUCHER_FAILED]: (state) => {
+    return {
+      ...state,
+      saveVoucherStatus: 'failed',
+    };
+  },
+  [types.SET_SAVE_VOUCHER_STATUS]: (state, {payload}) => {
+    return {
+      ...state,
+      saveVoucherStatus: payload,
+    };
   },
 };
