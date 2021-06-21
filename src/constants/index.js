@@ -58,10 +58,9 @@ export const PRODUCT_SORT_ITEM = [
 export const VOUCHER_SORT_ITEM = [
   {label: 'Tất cả', value: 0},
   {label: 'Của Prostylee', value: 1},
-  {label: 'Của store', value: 2},
-  {label: 'Ưu đãi nhất', value: 3},
-  {label: 'Sắp hết hạn', value: 4},
-  {label: 'Sử dụng nhiều nhất', value: 5},
+  {label: 'Ưu đãi nhất', value: 2},
+  {label: 'Sắp hết hạn', value: 3},
+  {label: 'Sử dụng nhiều nhất', value: 4},
 ];
 
 //FILTER TAG
