@@ -5,6 +5,8 @@ export default EStyleSheet.create({
     flex: 1,
     backgroundColor: '$white',
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleContainer: {
     padding: 16,
@@ -18,6 +20,7 @@ export default EStyleSheet.create({
   listWrapper: {
     paddingTop: 12,
     backgroundColor: '$white',
+    paddingRight: 16,
   },
   itemWrapper: {
     width: 132,
@@ -94,5 +97,10 @@ export default EStyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
     color: '$white',
+  },
+  notFoundText: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '$lightGray',
   },
 });

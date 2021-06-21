@@ -1,53 +1,28 @@
 import React from 'react';
-import {
-  View,
-  ActivityIndicator,
-  Dimensions,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {Image, SlideInModal} from 'components';
 import styles from './styles';
 import voucher1 from 'assets/images/voucher1.png';
 import {TicketCutLine, CloseOutLined} from 'svg/common';
-
-import {showMessage} from 'react-native-flash-message';
-
-const MockInfo = [
-  {
-    title: 'Thời gian hiệu lực',
-    subTitle: '08.01.2021 00:00 - 13.01.2021 23:59',
-  },
-  {
-    title: 'Chi tiết ưu đãi:',
-    subTitle:
-      'giảm ngay 50% , tối đa 10000đ cho đơn hàng từ 0đ trên ứng dụng Prostylee. Mã chỉ sử dụng 1 lần. Số lượng voucher có hạn',
-  },
-  {
-    title: 'Sản Phẩm',
-    subTitle: 'Tất cả sản phảm',
-  },
-  {
-    title: 'Thanh Toán',
-    subTitle: 'Tất cả hình thức thanh toán',
-  },
-  {
-    title: 'Đơn vị vận chuyển',
-    subTitle:
-      'Giao Hàng Nhanh, VNPost Tiết Kiệm, Viettel Post, Giao Hàng Tiết Kiệm, VNPost Nhanh, J&T Express, GrabExpress, Standard Express - LWE, Standard Express - Doora, Standard Express, Shopee Express, NowShip, Ninja Van, BEST Express, Shopee Express Bulky',
-  },
-];
+import i18n from 'i18n';
+import PropTypes from 'prop-types';
 
 const ItemTopSide = ({data}) => (
   <View style={styles.topSideWrapper}>
     <View style={styles.voucherInfoContainer}>
       <View style={styles.voucherImgWrapper}>
-        <Image source={voucher1} style={styles.voucherImg} />
+        <Image
+          source={
+            data?.storeOwner?.logoUrl
+              ? {uri: data?.storeOwner?.logoUrl}
+              : voucher1
+          }
+          style={styles.voucherImg}
+        />
       </View>
       <View style={styles.voucerDetailWrapper}>
-        <Text style={styles.subTitle}>{data?.brand}</Text>
-        <Text style={styles.voucherContent}>{data?.content}</Text>
+        <Text style={styles.subTitle}>{data?.storeOwner?.name}</Text>
+        <Text style={styles.voucherContent}>{data?.name}</Text>
       </View>
     </View>
   </View>
@@ -75,13 +50,21 @@ const ItemBottomSide = ({submit, data}) => (
     </View>
     <View style={styles.takeButtonWrapper}>
       <TouchableOpacity
-        style={styles.takeButton}
+        disabled={data?.savedUserVoucherId}
+        style={[
+          styles.takeButton,
+          {
+            opacity: data?.savedUserVoucherId ? 0.3 : 1,
+          },
+        ]}
         onPress={() => {
           submit();
           SlideInModal.hide();
         }}>
         <Text style={styles.buttonText}>
-          {data?.status === 1 ? 'Sử dụng ngay' : 'Lưu'}
+          {data?.savedUserVoucherId
+            ? i18n.t('voucher.saved')
+            : i18n.t('voucher.save')}
         </Text>
       </TouchableOpacity>
     </View>
@@ -89,7 +72,15 @@ const ItemBottomSide = ({submit, data}) => (
 );
 
 const VoucherDetail = ({data, submit}) => {
-  console.log('Voucher detail ne');
+  const {cndValidFrom, cndValidTo, description} = data;
+  const detailData = [
+    {
+      title: i18n.t('voucher.effectTime'),
+      subTitle: cndValidFrom + ' - ' + cndValidTo,
+    },
+    {title: i18n.t('voucher.voucherDescription'), subTitle: description},
+  ];
+
   return (
     <View style={styles.container}>
       <View style={styles.topBrackdrop}>
@@ -105,10 +96,26 @@ const VoucherDetail = ({data, submit}) => {
         <View style={styles.ticketContainer}>
           <ItemTopSide data={data} />
           <TicketCutLine height={3} width={300} />
-          <ItemBottomSide data={data} submit={submit} />
+          <ItemBottomSide
+            data={{
+              ...data,
+              details: detailData,
+            }}
+            submit={submit}
+          />
         </View>
       </View>
     </View>
   );
+};
+
+VoucherDetail.defaultProps = {
+  data: {},
+  submit: () => {},
+};
+
+VoucherDetail.propTypes = {
+  data: PropTypes.object.isRequired,
+  submit: PropTypes.func.isRequired,
 };
 export default VoucherDetail;

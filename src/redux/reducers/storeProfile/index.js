@@ -1,6 +1,15 @@
 import {createAction, handleActions} from 'redux-actions';
+import {
+  types as typeStoreVouchers,
+  actions as actionsStoreVouchers,
+  defaultState as defaultStateStoreVouchers,
+  handleActions as handleActionsStoreVouchers,
+} from './voucher';
 
 export const types = {
+  //STORE VOUCHER
+  ...typeStoreVouchers,
+
   SET_STORE_PROFILE_LOADING: 'SET_STORE_PROFILE_LOADING',
 
   GET_STORE_INFO: 'GET_STORE_INFO',
@@ -70,6 +79,8 @@ export const actions = {
   clearStoreProfileFilterState: createAction(
     types.CLEAR_STORE_PROFILE_FILTER_STATE,
   ),
+  //STORE VOUCHER
+  ...actionsStoreVouchers,
 };
 
 const defaultState = {
@@ -83,6 +94,8 @@ const defaultState = {
   allProductCurrentPage: 0,
   hasAllProductLoadmore: false,
   storeProfileFilterState: {},
+  //STORE VOUCHER
+  ...defaultStateStoreVouchers,
 };
 
 export default handleActions(
@@ -176,6 +189,8 @@ export default handleActions(
         },
       };
     },
+    //STORE VOUCHER
+    ...handleActionsStoreVouchers,
   },
   defaultState,
 );

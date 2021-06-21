@@ -15,3 +15,11 @@ export const getAllStoreProduct = (payload) => {
     ...payload,
   });
 };
+//VOUCHERS
+export const getVouchers = (payload) => {
+  return _fetch(GET, '/user-vouchers', {...payload});
+};
+
+export const postSaveVouchers = (id) => {
+  return _fetch(POST, `/user-vouchers/${id}`);
+};

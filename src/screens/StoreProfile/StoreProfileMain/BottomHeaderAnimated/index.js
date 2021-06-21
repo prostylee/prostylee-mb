@@ -14,29 +14,30 @@ import {ThemeView, SortDropDown} from 'components';
 import FilterBar from './FilterBar';
 import {PRODUCT_SORT_ITEM} from 'constants';
 
-const SearchProducts = ({navigation}) => {
+const BottomHeaderAnimated = ({navigation, onSort = () => {}}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [visible, setVisible] = useState(false);
-  const [action, setAction] = useState('filter');
+  const [activeItemLabel, setActiveItemLabel] = useState('');
   const [valueSort, setValueSort] = useState(null);
 
-  const onChangeSearch = (query) => {
-    setSearchQuery(query);
+  const _handleSort = (value) => {
+    setValueSort(value);
+    onSort(value);
+    let label = PRODUCT_SORT_ITEM.find((v) => v.value === value).label;
+    setActiveItemLabel(label);
   };
-
   return (
     <View style={styles.container}>
       <FilterBar
         setVisible={setVisible}
         visible={visible}
-        activeSortItem={valueSort?.label ? valueSort?.label : ''}
+        activeSortItem={activeItemLabel}
         navigation={navigation}
       />
       <SortDropDown
         visible={visible}
         setVisible={setVisible}
-        setAction={setAction}
-        setValueSort={setValueSort}
+        setValueSort={_handleSort}
         valueSort={valueSort}
         options={PRODUCT_SORT_ITEM}
       />
@@ -44,8 +45,8 @@ const SearchProducts = ({navigation}) => {
   );
 };
 
-SearchProducts.defaultProps = {};
+BottomHeaderAnimated.defaultProps = {};
 
-SearchProducts.propTypes = {};
+BottomHeaderAnimated.propTypes = {};
 
-export default SearchProducts;
+export default BottomHeaderAnimated;

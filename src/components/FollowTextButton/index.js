@@ -9,7 +9,9 @@ import {
 import Colors from '../Colors';
 import PropTypes from 'prop-types';
 const FollowTextButton = ({item}) => {
-  const [followed, setFollowed] = useState(false);
+  const [followed, setFollowed] = useState(
+    item?.followStatusOfUserLogin ? true : false,
+  );
 
   const _handleClick = async () => {
     let res = null;

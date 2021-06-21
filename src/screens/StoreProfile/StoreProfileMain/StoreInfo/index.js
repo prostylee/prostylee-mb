@@ -6,8 +6,32 @@ import img from 'assets/images/slider1.png';
 import {Image, Colors} from 'components';
 import {MapPin, TreeDotHorizontal} from 'svg/common';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import i18n from 'i18n';
+import {
+  followStoreService,
+  unFollowStoreService,
+} from '../../../../services/api/storeApi';
+const StoreInfo = ({name = '', address = '', logoUri = '', item = {}}) => {
+  const [followed, setFollowed] = React.useState(
+    item?.followStatusOfUserLogin ? true : false,
+  );
+  const _handleClick = async () => {
+    let res = null;
+    try {
+      if (followed) {
+        res = await unFollowStoreService(item?.id);
+      } else {
+        res = await followStoreService(item?.id);
+      }
+      setFollowed(!followed);
+    } catch (err) {
+      showMessage({
+        message: `${res?.data?.status}: ${res?.data?.error}`,
+        type: 'danger',
+      });
+    }
+  };
 
-const StoreInfo = ({name = '', address = '', logoUri = ''}) => {
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
@@ -23,8 +47,10 @@ const StoreInfo = ({name = '', address = '', logoUri = ''}) => {
         </View>
       </View>
       <TreeDotHorizontal />
-      <TouchableOpacity style={styles.followButton}>
-        <Text style={styles.buttonText}>Đã theo dõi</Text>
+      <TouchableOpacity style={styles.followButton} onPress={_handleClick}>
+        <Text style={styles.buttonText}>
+          {!followed ? i18n.t('Search.follow') : i18n.t('Search.unfollow')}
+        </Text>
       </TouchableOpacity>
     </View>
   );

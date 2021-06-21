@@ -25,7 +25,12 @@ const SearchBar = (props) => {
       <TextInput
         ref={inputRef}
         {...props}
-        style={[styles.inputStyle]}
+        style={[
+          styles.inputStyle,
+          {
+            color: props.color || null,
+          },
+        ]}
         onChangeText={(value) => {
           _handleChangeText(value);
           if (props && props?.onChangeText) {

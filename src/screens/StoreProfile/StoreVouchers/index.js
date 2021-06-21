@@ -1,30 +1,86 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
-import {ThemeView, Header, Colors} from 'components';
+import {ThemeView, Header, Colors, SortDropDown} from 'components';
 import {Sort, CaretDown} from 'svg/common';
 import i18n from 'i18n';
 import styles from './style';
-
+// import SortDropDown from './SortDropDown';
 import VoucherList from './VoucherList';
-import SortDropDown from './SortDropDown';
-
-const Vouchers = ({navigation}) => {
-  const [searchQuery, setSearchQuery] = React.useState('');
+import {useDispatch} from 'react-redux';
+import {storeProfileActions} from 'redux/reducers';
+import {LIMIT_DEFAULT, PAGE_DEFAULT, VOUCHER_SORT_ITEM} from 'constants';
+import {values} from 'lodash-es';
+import {useRoute} from '@react-navigation/native';
+const StoreVouchers = ({navigation}) => {
+  const dispatch = useDispatch();
+  const route = useRoute();
+  const storeId = route?.params?.storeId || 1;
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(0);
-  const sortOptions = [
-    {label: 'Tất cả', value: 0},
-    {label: 'Liên quan nhất', value: 1},
-    {label: 'Phổ biến nhất', value: 2},
-    {label: 'Hàng mới về', value: 3},
-    {label: 'Giá thấp', value: 4},
-    {label: 'Giá cao nhất', value: 5},
-    {label: 'Đánh giá tốt', value: 6},
-  ];
+
+  const _handleSort = (value) => {
+    setVisible(false);
+    setValueSort(value);
+    console.log('VALUE', value);
+    let sortOption = {};
+    switch (value) {
+      case 0: {
+        break;
+      }
+      case 1: {
+        sortOption.storeId = 0;
+        break;
+      }
+      case 2: {
+        sortOption.sorts = 'bestDiscount';
+        break;
+      }
+      case 3: {
+        sortOption.sorts = 'expiredDate';
+        break;
+      }
+      default: {
+        sortOption.sorts = 'mostUsed';
+        break;
+      }
+    }
+    dispatch(
+      storeProfileActions.getStoreVouchers({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: 'name',
+        storeId: storeId,
+        ...sortOption,
+      }),
+    );
+  };
+
+  useEffect(() => {
+    dispatch(
+      storeProfileActions.getStoreVouchers({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        storeId: storeId,
+      }),
+    );
+  }, []);
+  const _handleGoback = () => {
+    dispatch(
+      storeProfileActions.getStoreVouchers({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        storeId: storeId,
+      }),
+    );
+  };
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header isDefault title={i18n.t('stores.voucherCode')} />
+      <Header
+        leftPress={_handleGoback}
+        isDefault
+        title={i18n.t('stores.voucherCode')}
+      />
       <View style={styles.wrapBlockOne}>
         <TouchableOpacity onPress={() => setVisible(!visible)}>
           <View style={styles.contentBlockOne}>
@@ -42,7 +98,7 @@ const Vouchers = ({navigation}) => {
                   color: Colors['$black'],
                 },
               ]}>
-              {sortOptions[valueSort].label}
+              {VOUCHER_SORT_ITEM[valueSort]?.label}
             </Text>
             <View>
               <CaretDown />
@@ -51,15 +107,15 @@ const Vouchers = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <SortDropDown
-        options={sortOptions}
+        options={VOUCHER_SORT_ITEM}
         visible={visible}
         setVisible={setVisible}
         setAction={setAction}
-        setValueSort={setValueSort}
+        setValueSort={_handleSort}
         valueSort={valueSort}
       />
       <VoucherList navigation={navigation} />
     </ThemeView>
   );
 };
-export default Vouchers;
+export default StoreVouchers;

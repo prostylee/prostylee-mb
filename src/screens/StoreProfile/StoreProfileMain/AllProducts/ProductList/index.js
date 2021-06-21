@@ -10,7 +10,7 @@ import {
   getStoreAllProductLoadmoreLoadingSelector,
 } from 'redux/selectors/storeProfile';
 import {useSelector} from 'react-redux';
-
+import i18n from 'i18n';
 import {SearchProductLoading} from 'components/Loading/contentLoader';
 const ITEM_HEIGHT = 320;
 const ProductList = ({navigation}) => {
@@ -57,18 +57,16 @@ const ProductList = ({navigation}) => {
           data={productList}
           numColumns={2}
           renderItem={({item, index}) => (
-            <ProductItem
-              item={item}
-              index={index}
-              key={`${item?.id}-${index}`}
-            />
+            <ProductItem item={item} index={index} />
           )}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={<></>}
         />
       ) : (
-        <Text>Ko co</Text>
+        <Text style={styles.notFoundText}>
+          {i18n.t('Search.resultsNotfound')}
+        </Text>
       )}
     </View>
   );

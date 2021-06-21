@@ -2,10 +2,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
-  ActivityIndicator,
-  FlatList,
-  Text,
-  TouchableOpacity,
   ScrollView,
   Dimensions,
   Animated,
@@ -16,22 +12,18 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {Header, HeaderAnimated, SearchBar, Colors} from 'components';
+import {Header, HeaderAnimated, SearchBar} from 'components';
 
 import {storeProfileActions} from 'redux/reducers';
 
 import {
   getStoreLoadingSelector,
   getStoreInfoSelector,
-  getStoreAllProductHasLoadmore,
 } from 'redux/selectors/storeProfile';
 
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 import CustomBackground from './CustomBackground';
 import VoucherHorizontalList from './VoucherHorizontalList';
-
-import {MessageOutlined, Bag, ChevronLeft, Bell} from 'svg/common';
-import {Searchbar} from 'react-native-paper';
 
 import MidAdvertisingSlider from './MidAdvertisingSlider';
 
@@ -39,85 +31,22 @@ import StoreInfo from './StoreInfo';
 import BestSeller from './BestSeller';
 import AllProducts from './AllProducts';
 import BottomHeaderAnimated from './BottomHeaderAnimated';
+import {useRoute} from '@react-navigation/native';
+
+import HeaderLeft from './HeaderLeft';
+import HeaderRight from './HeaderRight';
+
 const heightShow = Platform.OS === 'ios' ? 280 : 320;
+let timeoutSearch = null;
 
-const HeaderLeft = ({opacity, isAnimated = false}) => {
-  return isAnimated ? (
-    <TouchableOpacity
-      style={[
-        styles.headerLeftContainer,
-        {
-          paddingLeft: 16,
-        },
-      ]}>
-      <ChevronLeft color={Colors?.['$icon']} strokeWidth={2} />
-    </TouchableOpacity>
-  ) : (
-    <TouchableOpacity
-      style={[
-        styles.headerLeftContainer,
-        {
-          paddingTop: 3,
-          justifyContent: 'center',
-          alignItems: 'center',
-        },
-      ]}>
-      <ChevronLeft color="#fff" strokeWidth={2} />
-    </TouchableOpacity>
-  );
-};
-const HeaderRight = ({opacity, isAnimated = false}) => {
-  return isAnimated ? (
-    <View
-      style={[
-        styles.headerRightContainer,
-        {
-          width: 80,
-          paddingRight: 19,
-        },
-      ]}>
-      <TouchableOpacity>
-        <MessageOutlined
-          color={Colors?.['$icon']}
-          width={18}
-          height={18}
-          strokeWidth={2}
-        />
-      </TouchableOpacity>
-
-      <TouchableOpacity>
-        <Bell
-          color={Colors?.['$icon']}
-          width={20}
-          height={20}
-          strokeWidth={2}
-        />
-      </TouchableOpacity>
-    </View>
-  ) : (
-    <View
-      style={[
-        styles.headerRightContainer,
-        {
-          width: 80,
-        },
-      ]}>
-      <TouchableOpacity>
-        <MessageOutlined color="#fff" width={18} height={18} strokeWidth={2} />
-      </TouchableOpacity>
-
-      <TouchableOpacity>
-        <Bag color="#fff" width={20} height={20} strokeWidth={2} />
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const Stores = (props) => {
+const StoreProfileMain = (props) => {
   const dispatch = useDispatch();
+  const route = useRoute();
+  const storeId = route?.params?.storeId || 1;
 
   const [isEndReached, setIsEndReached] = useState(false);
   const [hasLoadmore, setHasLoadmore] = useState(false);
+  const [keyword, setKeyword] = useState('');
 
   const WIDTH = Dimensions.get('window').width;
   const scrollAnimated = useRef(new Animated.Value(0)).current;
@@ -131,28 +60,81 @@ const Stores = (props) => {
 
   const loading = useSelector((state) => getStoreLoadingSelector(state));
   const storeInfo = useSelector((state) => getStoreInfoSelector(state));
-
   useEffect(() => {
     dispatch(storeProfileActions.getStoreInfo(1));
     dispatch(
       storeProfileActions.getAllStoreProduct({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
-        storeId: 1,
+        storeId: storeId,
       }),
     );
     dispatch(
       storeProfileActions.getStoreBestSellerProduct({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
-        storeId: 1,
+        storeId: storeId,
       }),
     );
-  }, []);
+  }, [storeId]);
 
   useEffect(() => {
     if (!loading) handleRefreshing(false);
   }, [loading]);
+
+  const onChangeSearch = (query) => {
+    clearTimeout(timeoutSearch);
+    dispatch(storeProfileActions.setAllStoreProductLoading(true));
+    setKeyword(query);
+    timeoutSearch = setTimeout(() => {
+      dispatch(
+        storeProfileActions.getAllStoreProduct({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          storeId: storeId,
+          keyword: query,
+        }),
+      );
+    }, 1000);
+  };
+
+  const _handleSort = (value) => {
+    let sortOption = {};
+    switch (value) {
+      case 1: {
+        sortOption.sorts = 'name';
+        break;
+      }
+      case 2: {
+        sortOption.bestSeller = true;
+        break;
+      }
+      case 3: {
+        sortOption.sorts = '-createdAt';
+        break;
+      }
+      case 4: {
+        sortOption.sorts = '-priceSale';
+        break;
+      }
+      case 5: {
+        sortOption.sorts = 'priceSale';
+        break;
+      }
+      default: {
+        sortOption.bestRating = true;
+        break;
+      }
+    }
+    dispatch(
+      storeProfileActions.getAllStoreProduct({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: 'name',
+        ...sortOption,
+      }),
+    );
+  };
 
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     const paddingToBottom = 20;
@@ -168,14 +150,14 @@ const Stores = (props) => {
       storeProfileActions.getAllStoreProduct({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
-        storeId: 1,
+        storeId: storeId,
       }),
     );
     dispatch(
       storeProfileActions.getStoreBestSellerProduct({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
-        storeId: 1,
+        storeId: storeId,
       }),
     );
   };
@@ -211,20 +193,22 @@ const Stores = (props) => {
 
                 paddingVertical: 0,
               }}>
-              <HeaderLeft isAnimated />
+              <HeaderLeft isAnimated navigation={props.navigation} />
               <SearchBar
                 style={{
                   maxWidth: WIDTH - 160,
                   backgroundColor: '#F4F5F5',
                 }}
                 placeholder={'Tìm kiếm'}
+                onChangeText={onChangeSearch}
+                value={keyword}
+                onClear={() => onChangeSearch('')}
               />
               <HeaderRight isAnimated />
             </View>
-            <BottomHeaderAnimated />
+            <BottomHeaderAnimated onSort={_handleSort} />
           </Animated.View>
         }
-        //bottomComponent={<BottomHeaderAnimated navigation={navigation} />}
         bottomHeight={0}
         hideBottomBorder={true}
         heightShow={heightShow}
@@ -233,7 +217,7 @@ const Stores = (props) => {
         scrollAnimated={scrollAnimated}
       />
       <Header
-        leftComponent={<HeaderLeft />}
+        leftComponent={<HeaderLeft navigation={props.navigation} />}
         rightComponent={<HeaderRight />}
         containerStyle={[styles.headerContainer]}
         middleComponent={
@@ -241,16 +225,14 @@ const Stores = (props) => {
             style={{
               maxWidth: WIDTH - 160,
               backgroundColor: 'rgba(255,255,255,0.1)',
-              color: '#fff',
               zIndex: 10,
             }}
+            color="#fff"
             placeholder={'Tìm kiếm'}
-            onChangeText={(v) => {
-              console.log('VALUE', v);
-            }}
+            onChangeText={onChangeSearch}
             placeholderTextColor="#8B9399"
-
-            // value={searchQuery}
+            value={keyword}
+            onClear={() => onChangeSearch('')}
           />
         }
       />
@@ -274,9 +256,13 @@ const Stores = (props) => {
           logoUri={storeInfo?.logoUrl}
           name={storeInfo?.name}
           address="Ho Chi Minh, Viet Nam"
+          item={storeInfo}
         />
         <MidAdvertisingSlider />
-        <VoucherHorizontalList navigation={props.navigation} />
+        <VoucherHorizontalList
+          navigation={props.navigation}
+          storeId={storeId}
+        />
         <BestSeller />
         <AllProducts
           navigation={navigation}
@@ -289,8 +275,8 @@ const Stores = (props) => {
   );
 };
 
-Stores.defaultProps = {};
+StoreProfileMain.defaultProps = {};
 
-Stores.propTypes = {};
+StoreProfileMain.propTypes = {};
 
-export default Stores;
+export default StoreProfileMain;

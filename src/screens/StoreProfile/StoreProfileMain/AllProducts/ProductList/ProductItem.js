@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, FlatList, Text} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {View, FlatList, Text, TouchableOpacity} from 'react-native';
+
 import {Image, Rating} from 'components';
 import {Heart} from 'svg/common';
 import styles from './styles';
@@ -50,7 +50,9 @@ const ProductItem = ({item, index}) => {
           />
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.itemName}>{item?.name}</Text>
+          <Text style={styles.itemName} numberOfLines={2}>
+            {item?.name}
+          </Text>
           <View style={{flexDirection: 'column'}}>
             <Text style={styles.itemPrice}>
               {currencyFormat(item?.priceSale || 0, 'đ')}
@@ -62,7 +64,6 @@ const ProductItem = ({item, index}) => {
                 {currencyFormat(item?.price || 0, 'đ')}
               </Text>
             </View>
-
             <ProductLike item={item} />
           </View>
         </View>

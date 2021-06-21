@@ -50,3 +50,30 @@ export const getStoreProfileFilterStateSelector = createSelector(
   storeProfileReducer,
   (data) => data?.storeProfileFilterState || {},
 );
+//STORE VOUCHER
+
+export const getVouchersLoadingSelector = createSelector(
+  storeProfileReducer,
+  (data) => data?.isStoreVouchersLoading || false,
+);
+export const getVouchersLoadmoreLoadingSelector = createSelector(
+  storeProfileReducer,
+  (data) => data?.isStoreVouchersLoadmoreLoading || false,
+);
+export const getVouchersSelector = createSelector(
+  storeProfileReducer,
+  (data) => data?.storeVouchersData || {},
+);
+export const hasVouchersLoadmoreSelector = createSelector(
+  storeProfileReducer,
+  (data) => data?.hasStoreVouchersLoadmore || false,
+);
+export const getCurrentVouchersPageSelector = createSelector(
+  storeProfileReducer,
+  (data) => data?.storeVouchersPage || 0,
+);
+
+export const postSaveVoucherStatusSelector = createSelector(
+  storeProfileReducer,
+  (data) => data?.saveStoreVoucherStatus || '',
+);

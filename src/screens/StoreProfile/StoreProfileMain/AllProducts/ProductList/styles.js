@@ -1,10 +1,14 @@
 import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+const ITEM_HEIGHT = 320;
 export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: ITEM_HEIGHT * 2,
   },
   titleContainer: {
     padding: 16,
@@ -90,5 +94,10 @@ export default EStyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
     color: '$white',
+  },
+  notFoundText: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '$lightGray',
   },
 });

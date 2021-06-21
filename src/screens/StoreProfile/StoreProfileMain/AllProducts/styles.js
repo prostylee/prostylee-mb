@@ -1,9 +1,11 @@
 import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+const ITEM_HEIGHT = 320;
 export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
+    minHeight: ITEM_HEIGHT * 2,
   },
   headerGroupButtonRight: {
     flexDirection: 'row',

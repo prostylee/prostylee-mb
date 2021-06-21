@@ -13,7 +13,7 @@ const SortDropDown = ({
   options,
 }) => {
   return (
-    <Picker visible={visible} setVisible={setVisible} setAction={setAction}>
+    <Picker visible={visible} setVisible={setVisible}>
       <RadioButton.Group
         value={valueSort}
         onValueChange={(value) => {

@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, FlatList, Text} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {View, FlatList, TouchableOpacity, Text} from 'react-native';
+
 import {Image, Rating} from 'components';
 import {Heart} from 'svg/common';
 import styles from './styles';
@@ -44,7 +44,9 @@ const ProductItem = ({item, index}) => {
           <ItemBadge value={priceSalePercent(item?.price, item?.priceSale)} />
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.itemName}>{item?.name}</Text>
+          <Text style={styles.itemName} numberOfLines={2}>
+            {item?.name}
+          </Text>
           <View style={styles.toolContainer}>
             <Text style={styles.itemPrice} numberOfLines={1}>
               {currencyFormat(item?.priceSale, 'đ')}

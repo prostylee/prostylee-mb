@@ -4,7 +4,7 @@ import {View, FlatList, Text} from 'react-native';
 import styles from './styles';
 
 import ProductItem from './ProductItem';
-
+import i18n from 'i18n';
 import {
   getStoreBestSellerProductLoadingSelector,
   getStoreBestSellerProductSelector,
@@ -22,17 +22,24 @@ const ProductList = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        contentContainerStyle={styles.listWrapper}
-        horizontal
-        data={listBestSeller}
-        numColumns={1}
-        renderItem={({item, index}) => (
-          <ProductItem item={item} index={index} key={`${item.id}-${index}`} />
-        )}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      />
+      {listBestSeller && listBestSeller.length ? (
+        <FlatList
+          contentContainerStyle={styles.listWrapper}
+          horizontal
+          data={listBestSeller}
+          numColumns={1}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
+          renderItem={({item, index}) => (
+            <ProductItem item={item} index={index} />
+          )}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        />
+      ) : (
+        <Text style={styles.notFoundText}>
+          {i18n.t('Search.resultsNotfound')}
+        </Text>
+      )}
     </View>
   );
 };

@@ -4,16 +4,16 @@ import {Image} from 'components';
 import styles from './style';
 import {VoucherPercent} from 'svg/common';
 
-const VoucherItem = ({index}) => (
+const VoucherItem = ({index, item}) => (
   <View style={styles.itemContainer}>
     <View style={styles.iconWrapper}>
       <VoucherPercent />
     </View>
     <View style={styles.voucherContentWrapper}>
       <Text style={styles.voucherContent} numberOfLines={1}>
-        Giảm 50% cho đơn hàng từ 1 triệu tối đa 500k
+        {item?.name}
       </Text>
-      <Text style={styles.expiredDate}>HSD: 12-12-2022</Text>
+      <Text style={styles.expiredDate}>EXP: {item?.cndValidTo}</Text>
     </View>
   </View>
 );

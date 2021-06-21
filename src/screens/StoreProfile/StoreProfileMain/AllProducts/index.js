@@ -11,13 +11,11 @@ import {
 import i18n from 'i18n';
 import styles from './styles';
 
-import {Chip} from 'react-native-paper';
-import {Colors} from 'components';
+import {Colors, TagList} from 'components';
 
-import {MessageOutlined, Bell, BellWithNotiBadge} from 'svg/header';
 import ProductList from './ProductList';
-import SortDropDown from './SortDropDown';
-import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
+
+import {PAGE_DEFAULT, LIMIT_DEFAULT, FILTER_TAGS} from 'constants';
 
 import {
   getStoreAllProductCurrentPage,
@@ -27,7 +25,6 @@ import {
 
 import {storeProfileActions} from 'redux/reducers';
 import {useDispatch, useSelector} from 'react-redux';
-import TagList from './TagList';
 
 const AllProducts = ({
   navigation,
@@ -92,7 +89,7 @@ const AllProducts = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tất cả sản phẩm</Text>
-      <TagList onTagPress={_handleFilterByTag} />
+      <TagList onTagPress={_handleFilterByTag} options={FILTER_TAGS} />
       <ProductList />
       {loadmoreLoading ? <Footer /> : null}
     </View>
