@@ -96,7 +96,7 @@ const ProductRating = ({data, ref, productId, navigation}) => {
                             {marginLeft: index > 0 ? 4 : 0},
                           ]}
                           source={{uri: imageItem.original}}
-                          resizeMethod={'cover'}
+                          resizeMode={'cover'}
                         />
                       </TouchableOpacity>
                     );
