@@ -17,7 +17,7 @@ import {useDispatch} from 'react-redux';
 import {Header, ThemeView} from 'components';
 import GroupHeaderRightButton from './HeaderRightButton';
 import i18n from 'i18n';
-import style from '../../../components/ProductSearchList/SortDropDown/style';
+
 const AddressRecent = ({navigation}) => {
   const dispatch = useDispatch();
   const WIDTH = Dimensions.get('window').width;

@@ -2,18 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {View, FlatList, Text, ActivityIndicator} from 'react-native';
 import styles from './styles';
 import ProductItem from './ProductItem';
-import {Colors} from 'components';
-import {SearchProductLoading} from '../../Loading/contentLoader';
 
-interface ProductListProps {
-  getDataFunction: Function;
-  refreshDataFunction: Function;
-  loadmoreDataFuntion: Function;
-  getCurrentPageFunction: Function;
-  isLoading: Boolean;
-  hasLoadmore: Boolean;
-  navigation: Object;
-}
+import {SearchProductLoading} from '../../Loading/contentLoader';
+import PropTypes from 'prop-types';
 
 const ProductList = ({
   getDataFunction,
@@ -22,7 +13,7 @@ const ProductList = ({
   isLoading,
   hasLoadmore,
   navigation,
-}: ProductListProps) => {
+}) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const data = getDataFunction();
@@ -77,8 +68,24 @@ const ProductList = ({
   );
 };
 
-ProductList.defaultProps = {};
+ProductList.defaultProps = {
+  getDataFunction: () => {},
+  refreshDataFunction: () => {},
+  loadmoreDataFuntion: () => {},
+  getCurrentPageFunction: () => {},
+  isLoading: false,
+  hasLoadmore: false,
+  navigation: false,
+};
 
-ProductList.propTypes = {};
+ProductList.propTypes = {
+  getDataFunction: PropTypes.func.isRequired,
+  refreshDataFunction: PropTypes.func.isRequired,
+  loadmoreDataFuntion: PropTypes.func.isRequired,
+  getCurrentPageFunction: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  hasLoadmore: PropTypes.bool.isRequired,
+  navigation: PropTypes.bool.isRequired,
+};
 
 export default React.memo(ProductList);

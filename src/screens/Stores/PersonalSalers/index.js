@@ -17,10 +17,14 @@ import {
   getPersonalSalersCurrentPageSelector,
   getPersonalSalersFilterStateSelector,
 } from 'redux/selectors/storeMain/personalSalers';
+import {userTokenSelector} from 'redux/selectors/user';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
+  const token = useSelector((state) => userTokenSelector(state));
+
+  const userId = token?.signInUserSession?.idToken?.payload?.['custom:userId'];
 
   const currentPage = useSelector((state) =>
     getPersonalSalersCurrentPageSelector(state),
@@ -67,6 +71,7 @@ const SearchProducts = ({navigation}) => {
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...sortOption,
+        userId: userId,
       }),
     );
   };
@@ -77,6 +82,7 @@ const SearchProducts = ({navigation}) => {
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         ...queryObject,
+        userId: userId,
       }),
     );
   };
@@ -89,6 +95,7 @@ const SearchProducts = ({navigation}) => {
       storeActions.getPersonalSalers({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
+        userId: userId,
       }),
     );
 
@@ -97,6 +104,7 @@ const SearchProducts = ({navigation}) => {
       storeActions.getPersonalSalersLoadmore({
         page: currentPage,
         limit: LIMIT_DEFAULT,
+        userId: userId,
       }),
     );
 

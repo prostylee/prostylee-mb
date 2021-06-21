@@ -48,7 +48,10 @@ export const getNearbyStore = (payload) => {
 
 //PERSONAL SALERS
 export const getPersonalSalersProducts = (payload) => {
-  return _fetch(GET, '/products', {userId: 1, ...payload});
+  return _fetch(GET, '/products', {
+    ...payload,
+    newFeedType: 'USER',
+  });
 };
 
 export const followStoreService = (id) => {
