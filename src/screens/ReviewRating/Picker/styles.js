@@ -7,6 +7,7 @@ export default EStyleSheet.create({
   container: {
     position: 'relative',
     zIndex: 100,
+    height: height,
   },
   content: {
     flex: 1,
