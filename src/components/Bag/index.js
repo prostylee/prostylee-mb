@@ -4,8 +4,10 @@ import {useSelector, shallowEqual} from 'react-redux';
 import {Bag as Bags} from 'svg/common';
 import {getListCartSelector} from 'redux/selectors/cart';
 import PropTypes from 'prop-types';
+import {useNavigation} from '@react-navigation/native';
 
-const Bag = ({badgeColor, badgeTextColor, navigation, color}) => {
+const Bag = ({badgeColor, badgeTextColor, color}) => {
+  const navigation = useNavigation();
   const listCart = useSelector(
     (state) => getListCartSelector(state),
     () => {},

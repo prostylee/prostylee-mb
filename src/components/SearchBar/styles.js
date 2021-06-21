@@ -24,6 +24,7 @@ export default EStyleSheet.create({
     height: '100%',
     paddingHorizontal: 10,
   },
+
   searchIcon: {
     width: 16,
     height: 16,

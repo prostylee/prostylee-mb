@@ -1,5 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {View, ActivityIndicator, FlatList} from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 
 import styles from './styles';
 import {Colors, FollowTextButton} from 'components';
@@ -93,7 +98,13 @@ const FeaturedCategories = ({navigation}) => {
             renderItem={({item}) => {
               return (
                 <>
-                  <View style={styles.wrapHeader}>
+                  <TouchableOpacity
+                    style={styles.wrapHeader}
+                    onPress={() => {
+                      navigation.navigate('StoreProfileMain', {
+                        storeId: item.id,
+                      });
+                    }}>
                     <View
                       style={{
                         height: 65,
@@ -127,7 +138,7 @@ const FeaturedCategories = ({navigation}) => {
                     <View style={styles.wrapTextFlow}>
                       <FollowTextButton item={item} />
                     </View>
-                  </View>
+                  </TouchableOpacity>
                   <View style={styles.wrapList}>
                     <FlatList
                       horizontal

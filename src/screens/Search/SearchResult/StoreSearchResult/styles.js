@@ -42,6 +42,9 @@ export default EStyleSheet.create({
     height: 52,
     paddingTop: 6,
     paddingRight: 12,
+    fontSize: 11,
+    fontWeight: '400',
+    color: '#333',
   },
   text: {
     lineHeight: 65,
@@ -71,5 +74,6 @@ export default EStyleSheet.create({
     color: '$black',
     fontWeight: '500',
     fontFamily: '$font1',
+    fontSize: 14,
   },
 });

@@ -29,6 +29,8 @@ import AddStore from './Story/AddStore';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
+import StoreProfileMain from './StoreProfile/StoreProfileMain';
+import StoreVouchers from './StoreProfile/StoreVouchers';
 import AddProductsCategories from './PostProduct/AddProductsCategories';
 import BrandFashions from './PostProduct/BrandFashions';
 import GeneralInformation from './PostProduct/GeneralInformation';
@@ -101,6 +103,8 @@ export {
   CropPicture,
   AddStatus,
   AddStoreForStatus,
+  StoreProfileMain,
+  StoreVouchers,
   AddProductsCategories,
   BrandFashions,
   GeneralInformation,

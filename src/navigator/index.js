@@ -45,6 +45,8 @@ import {
   ChooseRateProduct,
   RateProduct,
   Cart,
+  StoreProfileMain,
+  StoreVouchers,
   //-------- Post Product --------
   AddProductsCategories,
   BrandFashions,
@@ -179,6 +181,8 @@ function SignedIn() {
       <Stack.Screen name="MainNotification" component={MainNotification} />
       <Stack.Screen name="PromoNotification" component={PromoNotification} />
       <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
+      <Stack.Screen name="StoreProfileMain" component={StoreProfileMain} />
+      <Stack.Screen name="StoreVouchers" component={StoreVouchers} />
     </Stack.Navigator>
   );
 }

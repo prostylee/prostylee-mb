@@ -59,7 +59,9 @@ const ProductItem = ({item, index, navigation}) => {
           </View>
           <View style={styles.toolContainer}>
             <View style={styles.ratingContainer}>
-              <ProductRatingStar value={3} />
+              <ProductRatingStar
+                value={item?.productStatisticResponse?.resultOfRating || 0}
+              />
               <Text style={styles.ratingPoint}>
                 {item.productStatisticResponse
                   ? `${item?.productStatisticResponse?.resultOfRating}(${item?.productStatisticResponse?.numberOfLike})`

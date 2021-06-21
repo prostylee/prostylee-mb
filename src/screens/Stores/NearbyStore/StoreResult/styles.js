@@ -44,6 +44,8 @@ export default EStyleSheet.create({
     height: 52,
     paddingTop: 6,
     paddingRight: 12,
+    fontSize: 11,
+    fontWeight: '400',
   },
   text: {
     lineHeight: 65,

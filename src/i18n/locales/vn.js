@@ -20,6 +20,7 @@ export default {
     forUser: 'Dành riêng cho bạn',
     saveFailed: 'Lưu mã khuyễn mãi thất bại',
     failed: 'Thất bại',
+    discountCode: 'Mã giảm giá',
   },
   common: {
     textSeeMore: 'Xem thêm',

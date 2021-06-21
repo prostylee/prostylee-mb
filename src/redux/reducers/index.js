@@ -70,6 +70,12 @@ import notification, {
 
 import myPage, {actions as myPageActions, types as myPageTypes} from './myPage';
 
+import storeProfile, {
+  actions as storeProfileActions,
+  selectors as storeProfileSelectors,
+  types as storeProfileTypes,
+} from './storeProfile';
+
 const rootReducer = combineReducers({
   common,
   product,
@@ -87,6 +93,7 @@ const rootReducer = combineReducers({
   notification,
   branch,
   myPage,
+  storeProfile,
 });
 
 export {commonActions, commonSelectors, commonTypes};
@@ -105,5 +112,6 @@ export {searchActions, searchTypes};
 export {notificationActions, notificationTypes};
 export {branchActions, branchTypes};
 export {myPageActions, myPageTypes};
+export {storeProfileActions, storeProfileTypes};
 
 export default rootReducer;

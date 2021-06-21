@@ -336,6 +336,7 @@ const Index = () => {
       <ModalTabButton visible={isShowTabButton} />
       <ModalAddPictureMethod visible={isShowAddPictureOption} />
       <ModalIndicator visible={isLoading} />
+      <SlideInModal />
       {/* <ModalRequireUpdate
         visible={isRequireUpdate}
         onConfirm={() => onHandleUpdate()}

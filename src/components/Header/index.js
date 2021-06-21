@@ -26,6 +26,9 @@ const Header = ({
 
   const _goBack = () => {
     navigation.goBack();
+    if (leftPress) {
+      leftPress();
+    }
   };
   return (
     <View style={StyleSheet.flatten([styles.container, containerStyle])}>

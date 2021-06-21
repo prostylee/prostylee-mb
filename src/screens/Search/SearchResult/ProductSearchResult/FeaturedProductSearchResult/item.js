@@ -6,7 +6,8 @@ import {currencyFormat, priceSalePercent} from 'utils/currency';
 
 const FeaturedCategoriesItem = ({item, navigation}) => {
   const onItemClick = () => {
-    navigation.navigate('ProductDetail', {id: item.id});
+    // navigation.navigate('ProductDetail', {id: item.id});
+    console.log('ITEM', item);
   };
   return (
     <View style={styles.wrapItems}>
@@ -59,9 +60,15 @@ const FeaturedCategoriesItem = ({item, navigation}) => {
               {currencyFormat(item?.price, 'đ')}
             </Text>
             <View style={styles.wrapRating}>
-              <ProductRatingStar value={3} />
+              <ProductRatingStar
+                value={item?.productStatisticResponse?.resultOfRating || 0}
+              />
               <Text numberOfLines={1} style={styles.resultRating}>
-                4.6(2)
+                {item.productStatisticResponse
+                  ? `${item?.productStatisticResponse?.resultOfRating || 0}(${
+                      item?.productStatisticResponse?.numberOfLike || 0
+                    })`
+                  : '0(0)'}
               </Text>
             </View>
           </View>
