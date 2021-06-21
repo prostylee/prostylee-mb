@@ -18,7 +18,8 @@ export default EStyleSheet.create({
   },
   title: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: Platform.OS === 'android' ? '700' : '500',
+    fontFamily: '$font1',
     color: '$black600',
   },
   seeMoreText: {

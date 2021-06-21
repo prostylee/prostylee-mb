@@ -11,7 +11,8 @@ export default EStyleSheet.create({
   },
   title: {
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'android' ? '700' : '500',
+    fontFamily: '$font1',
     lineHeight: 20,
     color: '$black600',
     paddingHorizontal: 16,

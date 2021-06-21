@@ -1,4 +1,4 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {center, flexRow} from 'theme/style';
 
@@ -21,8 +21,9 @@ export default EStyleSheet.create({
   },
   title: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: Platform.OS === 'android' ? '700' : '600',
     color: '$black',
+    fontFamily: '$font1',
   },
   seeMoreText: {
     fontSize: 13,
