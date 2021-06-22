@@ -28,6 +28,7 @@ import vouchers from './stores/vouchers';
 
 import postProduct from './postProduct';
 
+import branch from './branch';
 import myPage from './myPage';
 
 import storeProfile from './storeProfile';
@@ -59,6 +60,7 @@ export default function* rootSaga() {
     ...flashSale,
     ...vouchers,
     ...postProduct,
+    ...branch,
     ...myPage,
     ...storeProfile,
   ]);

@@ -6,7 +6,8 @@ const {height, width} = Dimensions.get('window');
 export default EStyleSheet.create({
   container: {
     position: 'relative',
-    // zIndex: 0,
+    zIndex: 200,
+    height: height,
   },
   content: {
     flex: 1,
@@ -35,6 +36,7 @@ export default EStyleSheet.create({
   },
   modalOverlay: {
     position: 'absolute',
+    height: height,
     top: 0,
     bottom: 0,
     left: 0,
