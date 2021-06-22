@@ -22,12 +22,10 @@ import {getProductCategoriesFilterStateSelector} from 'redux/selectors/product';
 import {productActions} from 'redux/reducers';
 const BottomHeaderAnimated = ({
   onTagPress = () => {},
-  onSortPress = () => {},
+  setVisible,
+  visible,
+  valueSort,
 }) => {
-  const [visible, setVisible] = useState(false);
-  const [action, setAction] = useState('filter');
-  const [valueSort, setValueSort] = useState(null);
-
   return (
     <View style={styles.container}>
       <Divider />
@@ -70,17 +68,6 @@ const BottomHeaderAnimated = ({
         />
       </View>
       <Divider />
-      <SortDropDown
-        visible={visible}
-        setVisible={setVisible}
-        setAction={setAction}
-        setValueSort={(value) => {
-          setValueSort(value);
-          onSortPress(value);
-        }}
-        valueSort={valueSort}
-        options={PRODUCT_SORT_ITEM}
-      />
       <TagList onTagPress={onTagPress} options={FILTER_TAGS} />
     </View>
   );
