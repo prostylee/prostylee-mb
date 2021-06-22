@@ -15,9 +15,10 @@ import {
   HeaderBack,
   ButtonRounded,
 } from 'components';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useTheme} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {addressActions, addressSelectors} from 'reducers';
+import {addressActions, addressSelectors, branchActions} from 'reducers';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListStoreAddress from './ListStoreAddress';
@@ -31,6 +32,9 @@ const StoreAddress = (props) => {
   const prefecture = useSelector((state) =>
     addressSelectors.getPrefecture(state),
   );
+  const branchData = useSelector((state) =>
+    addressSelectors.getPrefecture(state),
+  );
 
   React.useEffect(() => {
     dispatch(addressActions.getPrefecture());
@@ -41,7 +45,17 @@ const StoreAddress = (props) => {
       setselectedAddress(79);
     }
   }, [prefecture]);
-  console.log(selectedAddress);
+  React.useEffect(() => {
+    if (selectedAddress) {
+      dispatch(
+        branchActions.getBranch({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
+    }
+  }, [selectedAddress]);
+  console.log('selectedAddress', selectedAddress);
 
   const getPrefectureList = () => {
     return prefecture.map((item) => ({
@@ -60,6 +74,9 @@ const StoreAddress = (props) => {
             onValueChange={(value) => setselectedAddress(value)}
             items={getPrefectureList()}
             onDonePress={(value) => setselectedAddress(value)}
+            pickerProps={{
+              selectedValue: selectedAddress,
+            }}
           />
         </View>
       </View>
