@@ -5,12 +5,14 @@ import {
   ScrollView,
   FlatList,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import styles from './styles';
 import {ThemeView, Header, Colors} from 'components';
 import {Divider} from 'react-native-paper';
 import {EmptyNotiOutlined} from '../../../svg/common';
 import NotificationItem from './NotificationItem';
+import {NotiLoading} from 'components/Loading/contentLoader';
 
 import {
   getListNotificationDiscountLoadingSelector,
@@ -26,6 +28,7 @@ import i18n from 'i18n';
 import {useDispatch, useSelector} from 'react-redux';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
+const {width, height} = Dimensions.get('window');
 const PromoNotifications = () => {
   const dispatch = useDispatch();
 
@@ -55,6 +58,12 @@ const PromoNotifications = () => {
 
   const handleRefresh = () => {
     handleRefreshing(true);
+    dispatch(
+      notificationActions.getListNotificationDiscount({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
   };
 
   useEffect(() => {
@@ -65,7 +74,10 @@ const PromoNotifications = () => {
       }),
     );
     handleRefreshing(false);
-  }, [dispatch, refreshing]);
+  }, [dispatch]);
+  useEffect(() => {
+    if (!loading) handleRefreshing(false);
+  }, [loading]);
 
   const handleLoadMore = () => {
     console.log('PAGE', page, hasLoadMore);
@@ -100,7 +112,15 @@ const PromoNotifications = () => {
       <Divider />
 
       <Divider />
-      {listNotification && listNotification.length ? (
+      {loading && !refreshing ? (
+        <View style={styles.loadingContainter}>
+          {Array.from('x'.repeat(Math.round(height - 120) / (width / 3))).map(
+            () => (
+              <NotiLoading width={width * 0.95} height={width / 3} />
+            ),
+          )}
+        </View>
+      ) : listNotification && listNotification.length ? (
         <FlatList
           data={listNotification}
           renderItem={({item}) => (

@@ -520,6 +520,30 @@ export const BrandListLoading = ({
     </ContentLoader>
   );
 };
+export const NotiLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <ContentLoader
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}
+      speed={speed}>
+      <Circle cx="60.2" cy="83.2" r="40.3" />
+      <Rect x="129.9" y="39.5" width="135.5" height="10" />
+      <Rect x="129.9" y="64.7" width="306" height="10" />
+      <Rect x="129.9" y="87.8" width="263.5" height="10" />
+      <Rect x="129.9" y="112.3" width="222.5" height="10" />
+    </ContentLoader>
+  );
+};
 
 HintKeywordLoading.defaultProps = {
   height: 10,
@@ -665,6 +689,16 @@ PostProductCategoryLoading.defaultProps = {
   speed: 1.2,
 };
 BrandListLoading.defaultProps = {
+  height: 100,
+  width: deviceWidth * 0.95,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {
+    height: deviceHeight,
+  },
+  speed: 1.2,
+};
+NotiLoading.defaultProps = {
   height: 100,
   width: deviceWidth * 0.95,
   backgroundColor: '#d9d9d9',

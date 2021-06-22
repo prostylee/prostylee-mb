@@ -107,4 +107,8 @@ export default EStyleSheet.create({
     paddingTop: 20,
     paddingBottom: 30,
   },
+  loadingContainter: {
+    flex: 1,
+    flexDirection: 'column',
+  },
 });

@@ -125,4 +125,8 @@ export default EStyleSheet.create({
     paddingBottom: 30,
     backgroundColor: '$white',
   },
+  loadingContainter: {
+    flex: 1,
+    flexDirection: 'column',
+  },
 });
