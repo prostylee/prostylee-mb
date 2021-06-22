@@ -16,8 +16,9 @@ export default EStyleSheet.create({
   },
   title: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: Platform.OS === 'android' ? '700' : '600',
     color: '$black',
+    fontFamily: '$font1',
   },
   listWrapper: {
     paddingTop: 10,
