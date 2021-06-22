@@ -117,6 +117,11 @@ export default {
   search: 'Tìm kiếm',
   sort: 'Sắp xếp',
   filter: 'Bộ lọc',
+  setMarkAllAsRead: 'Đã đánh dấu tất cả là đã đọc',
+  someThingWrong: 'Có lỗi xảy ra, vui lòng thử lại sau',
+  serverError: 'Lỗi hệ thống',
+  deleteSuccess: 'Xoá thành công',
+
   validation: {
     required: '%{field} bắt buộc nhập',
     invalid: '%{field} không hợp lệ',

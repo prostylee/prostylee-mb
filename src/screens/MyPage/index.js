@@ -10,14 +10,13 @@ import {
   ImageBackground,
 } from 'react-native';
 
-import {ThemeView, ButtonRounded, Container} from 'components';
+import {ThemeView, ButtonRounded, ChatIcon} from 'components';
 import HeaderFeed from './HeaderFeed';
 import I18n from 'i18n';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
 import {Auth} from 'aws-amplify';
 import {Grid, Full, Setting} from 'svg/common';
-import {Message} from 'svg/social';
 
 import {Avatar, ToggleButton} from 'react-native-paper';
 import TabViewContainer from './TabView';
@@ -109,7 +108,7 @@ const Index = ({navigation}) => {
           ]}>
           <View style={styles.headerFull}>
             <TouchableOpacity style={{paddingRight: 20}}>
-              <Message color="#ffffff" />
+              <ChatIcon />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
               <Setting color="#ffffff" />

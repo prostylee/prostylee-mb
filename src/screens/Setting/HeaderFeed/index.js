@@ -2,7 +2,7 @@ import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import styles from './styles';
 
-import {Header} from 'components';
+import {Header, ChatIcon} from 'components';
 
 import {Setting, FeedStore, ChevronLeft} from 'svg/common';
 import {Message} from 'svg/social';
@@ -14,14 +14,16 @@ const HeaderFeed = () => {
   const navigation = useNavigation();
 
   const onNavigateSetting = (screen) => {
-    screen?navigation.navigate(screen):navigation.goBack();;
+    screen ? navigation.navigate(screen) : navigation.goBack();
   };
 
   return (
     <Header
       leftIcon={
-        <TouchableOpacity style={styles.leftHeader} onPress={() => onNavigateSetting()}>
-          <ChevronLeft/>
+        <TouchableOpacity
+          style={styles.leftHeader}
+          onPress={() => onNavigateSetting()}>
+          <ChevronLeft />
         </TouchableOpacity>
       }
       middleComponent={
@@ -32,7 +34,7 @@ const HeaderFeed = () => {
       rightComponent={
         <View style={styles.rightHeader}>
           <TouchableOpacity style={styles.touch}>
-            <Message />
+            <ChatIcon />
           </TouchableOpacity>
         </View>
       }

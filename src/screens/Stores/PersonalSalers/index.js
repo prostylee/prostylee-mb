@@ -71,7 +71,7 @@ const SearchProducts = ({navigation}) => {
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...sortOption,
-        userId: userId,
+        // userId: userId,
       }),
     );
   };
@@ -82,7 +82,7 @@ const SearchProducts = ({navigation}) => {
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         ...queryObject,
-        userId: userId,
+        // userId: userId,
       }),
     );
   };
@@ -95,7 +95,7 @@ const SearchProducts = ({navigation}) => {
       storeActions.getPersonalSalers({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
-        userId: userId,
+        // userId: userId,
       }),
     );
 
@@ -104,7 +104,7 @@ const SearchProducts = ({navigation}) => {
       storeActions.getPersonalSalersLoadmore({
         page: currentPage,
         limit: LIMIT_DEFAULT,
-        userId: userId,
+        // userId: userId,
       }),
     );
 

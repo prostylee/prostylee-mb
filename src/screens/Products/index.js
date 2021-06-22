@@ -15,7 +15,10 @@ import {SearchProductLoading} from 'components/Loading/contentLoader';
 import i18n from 'i18n';
 
 import ProductItem from './ProductItem';
-import {getCategoriesSelectSelector} from 'redux/selectors/categories';
+import {
+  getCategoriesSelectSelector,
+  getCategoriesParentSelectSelector,
+} from 'redux/selectors/categories';
 import {ChevronLeft} from 'svg/common';
 import HeaderList from './HeaderList';
 import BottomHeaderAnimated from './BottomHeaderAnimated';
@@ -66,6 +69,9 @@ const Products = ({navigation}) => {
     getCategoriesSelectSelector(state),
   );
 
+  const categoryParentSelect = useSelector((state) =>
+    getCategoriesParentSelectSelector(state),
+  );
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector(
@@ -213,7 +219,7 @@ const Products = ({navigation}) => {
           }
           midComponent={
             <Text numberOfLines={1} style={styles.textTitle}>
-              {categoriesSelect?.name}
+              {categoryParentSelect?.name}
             </Text>
           }
           bottomComponent={

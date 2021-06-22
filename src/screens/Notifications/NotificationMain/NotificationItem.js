@@ -1,6 +1,6 @@
 import styles from './styles';
 
-import React from 'react';
+import React, {useRef} from 'react';
 import {useDispatch} from 'react-redux';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {Colors, Image} from 'components';
@@ -14,6 +14,8 @@ import {notificationActions} from 'redux/reducers';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {DeleteIcon, SeenIcon} from '../../../svg/common';
 import {showMessage} from 'react-native-flash-message';
+import {DELETE_SUCCESS} from 'constants';
+import i18n from 'i18n';
 
 const NotificationItem = ({
   id,
@@ -25,56 +27,71 @@ const NotificationItem = ({
   markAsRead,
 }) => {
   const dispatch = useDispatch();
+  const swipeableRef = useRef();
+
   const onMarkAsRead = () => {
     if (!markAsRead) {
       maskReadNotification(id)
         .then((res) => {
           if (res.data.status !== 200) {
-            console.log('Có lỗi xảy ra, không thể đánh dấu đã đọc');
+            showMessage({
+              message: i18n.t('someThingWrong'),
+              type: 'danger',
+            });
             return;
           }
           dispatch(notificationActions.setMarkAsRead(id));
         })
         .catch(() => {
-          console.log('Lỗi hệ thống');
+          showMessage({
+            message: i18n.t('serverError'),
+            type: 'danger',
+          });
         });
+    }
+    if (swipeableRef && swipeableRef.current) {
+      swipeableRef.current?.close();
     }
   };
 
   const onDeleteNotification = () => {
     deleteNotificationService(id)
       .then((res) => {
-        if (res.data.status !== 200) {
+        if (res.data.status !== DELETE_SUCCESS) {
           showMessage({
-            message: `Có lỗi xảy ra, vui lòng thử lại sau!`,
+            message: i18n.t('someThingWrong'),
             type: 'danger',
           });
           return;
         }
         dispatch(notificationActions.deleteNotification(id));
         showMessage({
-          message: `Xóa thành công`,
+          message: i18n.t('deleteSuccess'),
           type: 'success',
         });
       })
       .catch((e) => {
-        console.log('error', e);
         showMessage({
-          message: `Lỗi hệ thống`,
+          message: i18n.t('serverError'),
           type: 'danger',
         });
       });
+    if (swipeableRef && swipeableRef.current) {
+      swipeableRef.current?.close();
+    }
   };
 
   const renderRightButton = () => (
     <View style={{flexDirection: 'row'}}>
-      <View style={styles.wrapSeen}>
-        <TouchableOpacity
-          style={styles.buttonSeen}
-          onPress={() => onMarkAsRead(id, markAsRead)}>
-          <SeenIcon />
-        </TouchableOpacity>
-      </View>
+      {!markAsRead ? (
+        <View style={styles.wrapSeen}>
+          <TouchableOpacity
+            style={styles.buttonSeen}
+            onPress={() => onMarkAsRead(id, markAsRead)}>
+            <SeenIcon />
+          </TouchableOpacity>
+        </View>
+      ) : null}
       <View style={styles.wrapDelete}>
         <TouchableOpacity
           style={styles.buttonDelete}
@@ -86,7 +103,7 @@ const NotificationItem = ({
   );
 
   return (
-    <Swipeable renderRightActions={renderRightButton}>
+    <Swipeable renderRightActions={renderRightButton} ref={swipeableRef}>
       <TouchableOpacity
         style={[
           styles.notiItemContainer,

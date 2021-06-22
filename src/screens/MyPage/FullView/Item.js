@@ -6,6 +6,7 @@ import {Avatar} from 'react-native-paper';
 import {MapPin, Heart, HorizontalDot, StoreIcon} from 'svg/common';
 import {Message} from 'svg/social';
 import I18n from 'i18n';
+import {ChatIcon} from 'components';
 
 const FullView = ({item}) => {
   const {
@@ -76,7 +77,7 @@ const FullView = ({item}) => {
                   flexDirection: 'row',
                   alignItems: 'center',
                 }}>
-                <Message width={18} height={18} />
+                <ChatIcon width={18} height={18} />
                 <Text style={styles.subText}>{commentcount}</Text>
               </TouchableOpacity>
             </View>
