@@ -79,7 +79,7 @@ const Footer = ({navigation, productData, choiceSelect}) => {
   };
 
   const goToStore = () => {
-    navigation.navigate('StoreAddress');
+    navigation.navigate('StoreAddress', {storeId: productData.storeId});
   };
   const callSeller = (phoneNumber) => {
     if (phoneNumber) {

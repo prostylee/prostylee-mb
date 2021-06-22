@@ -7,6 +7,9 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     paddingBottom: 10,
   },
+  itemContainer: {
+    flexDirection: 'row',
+  },
   fomatItem: {
     flexDirection: 'column',
     paddingTop: 5,
@@ -15,6 +18,17 @@ export default EStyleSheet.create({
     fontSize: 16,
     color: '$black',
     justifyContent: 'space-between',
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconStyle: {
+    paddingRight: 5,
+  },
+  textDistance: {
+    fontSize: 13,
+    color: '$lightGray',
   },
   fomat: {
     fontSize: 15,
