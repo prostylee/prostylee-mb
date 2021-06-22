@@ -12,7 +12,7 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {Header, HeaderAnimated, SearchBar} from 'components';
+import {Header, HeaderAnimated, SearchBar, SortDropDown} from 'components';
 
 import {storeProfileActions} from 'redux/reducers';
 
@@ -21,7 +21,7 @@ import {
   getStoreInfoSelector,
 } from 'redux/selectors/storeProfile';
 
-import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
+import {PAGE_DEFAULT, LIMIT_DEFAULT, PRODUCT_SORT_ITEM} from 'constants';
 import CustomBackground from './CustomBackground';
 import VoucherHorizontalList from './VoucherHorizontalList';
 
@@ -35,6 +35,12 @@ import {useRoute} from '@react-navigation/native';
 
 import HeaderLeft from './HeaderLeft';
 import HeaderRight from './HeaderRight';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
+const BOTTOM_HEADER_HEIGHT = 50;
+const HEIGHT_HEADER = BOTTOM_HEADER_HEIGHT + 50 + getStatusBarHeight();
 
 const heightShow = Platform.OS === 'ios' ? 280 : 320;
 let timeoutSearch = null;
@@ -47,6 +53,10 @@ const StoreProfileMain = (props) => {
   const [isEndReached, setIsEndReached] = useState(false);
   const [hasLoadmore, setHasLoadmore] = useState(false);
   const [keyword, setKeyword] = useState('');
+
+  const [visible, setVisible] = useState(false);
+  const [activeItemLabel, setActiveItemLabel] = useState('');
+  const [valueSort, setValueSort] = useState(null);
 
   const WIDTH = Dimensions.get('window').width;
   const scrollAnimated = useRef(new Animated.Value(0)).current;
@@ -135,7 +145,13 @@ const StoreProfileMain = (props) => {
       }),
     );
   };
-
+  const onSort = (value) => {
+    setValueSort(value);
+    let label = PRODUCT_SORT_ITEM.find((v) => v.value === value).label;
+    setActiveItemLabel(label);
+    _handleSort(value);
+    console.log('LABEL', label);
+  };
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     const paddingToBottom = 20;
     return (
@@ -166,6 +182,15 @@ const StoreProfileMain = (props) => {
     outputRange: [0, 1],
     extrapolate: 'clamp',
   });
+  const sortStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 999,
+    width: WIDTH,
+    height: visible ? HEIGHT : 0,
+    marginTop: visible ? HEIGHT_HEADER : 0,
+  };
   return (
     <View
       style={[
@@ -180,7 +205,6 @@ const StoreProfileMain = (props) => {
           <Animated.View
             style={{
               flexDirection: 'column',
-              marginBottom: 20,
               opacity: opacity,
               backgroundColor: '#fff',
             }}>
@@ -206,10 +230,15 @@ const StoreProfileMain = (props) => {
               />
               <HeaderRight isAnimated />
             </View>
-            <BottomHeaderAnimated onSort={_handleSort} />
+            <BottomHeaderAnimated
+              onSort={onSort}
+              activeItemLabel={activeItemLabel}
+              setVisible={setVisible}
+              visible={visible}
+            />
           </Animated.View>
         }
-        bottomHeight={0}
+        bottomHeight={BOTTOM_HEADER_HEIGHT}
         hideBottomBorder={true}
         heightShow={heightShow}
         Animated={Animated}
@@ -236,6 +265,15 @@ const StoreProfileMain = (props) => {
           />
         }
       />
+      <View style={sortStyle}>
+        <SortDropDown
+          visible={visible}
+          setVisible={setVisible}
+          setValueSort={onSort}
+          valueSort={valueSort}
+          options={PRODUCT_SORT_ITEM}
+        />
+      </View>
       <ScrollView
         style={styles.contentWrapper}
         onScroll={(e) => {
