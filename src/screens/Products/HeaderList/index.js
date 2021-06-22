@@ -10,14 +10,17 @@ import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Searchbar} from 'react-native-paper';
 import {ChevronLeft} from 'svg/common';
 import {productActions} from 'redux/reducers';
-import {getCategoriesSelectSelector} from 'redux/selectors/categories';
+import {
+  getCategoriesSelectSelector,
+  getCategoriesParentSelectSelector,
+} from 'redux/selectors/categories';
 import {useDispatch, useSelector} from 'react-redux';
 let timeoutSearch = null;
 
 const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
   const dispatch = useDispatch();
-  const categoriesSelect = useSelector((state) =>
-    getCategoriesSelectSelector(state),
+  const categoryParentSelect = useSelector((state) =>
+    getCategoriesParentSelectSelector(state),
   );
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => {
@@ -47,8 +50,8 @@ const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
       <Image
         style={styles.imageBanner}
         source={
-          categoriesSelect?.banner
-            ? {uri: categoriesSelect?.banner}
+          categoryParentSelect?.banner
+            ? {uri: categoryParentSelect?.banner}
             : require('assets/images/default.png')
         }
         resizeMode="cover"
@@ -67,7 +70,7 @@ const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
       </View>
       <View style={styles.wrapTitle}>
         <Text numberOfLines={1} style={styles.headTitle}>
-          {categoriesSelect?.name}
+          {categoryParentSelect?.name}
         </Text>
       </View>
       <ProductsCategories />
