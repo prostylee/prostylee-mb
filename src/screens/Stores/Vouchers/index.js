@@ -4,7 +4,7 @@ import {ThemeView, Header, Colors, SortDropDown} from 'components';
 import {Sort, CaretDown} from 'svg/common';
 import i18n from 'i18n';
 import styles from './style';
-// import SortDropDown from './SortDropDown';
+
 import VoucherList from './VoucherList';
 import {useDispatch} from 'react-redux';
 import {storeActions} from 'redux/reducers';
@@ -94,7 +94,7 @@ const Vouchers = ({navigation}) => {
         options={VOUCHER_SORT_ITEM}
         visible={visible}
         setVisible={setVisible}
-        setAction={setAction}
+        // setAction={setAction}
         setValueSort={_handleSort}
         valueSort={valueSort}
       />

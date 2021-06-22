@@ -25,6 +25,6 @@ const Picker = ({visible, setVisible, setAction, children}) => {
   ) : null;
 };
 
-Picker.defaultProps = {visible: false};
+Picker.defaultProps = {visible: false, setAction: () => {}};
 
 export default Picker;
