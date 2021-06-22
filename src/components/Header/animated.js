@@ -14,6 +14,7 @@ const HeaderAnimated = ({
   bottomHeight,
   hideBottomBorder,
   backgroundColor,
+  justBottomComponent = false,
 }) => {
   const [showView, handleShowView] = useState(false);
   /*Dimension header*/
@@ -45,6 +46,7 @@ const HeaderAnimated = ({
     outputRange: [0, width],
     extrapolate: 'clamp',
   });
+
   return (
     <Animated.View
       style={{
@@ -71,7 +73,15 @@ const HeaderAnimated = ({
         </View>
       </Animated.View>
       {bottomComponent ? (
-        <Animated.View style={{opacity}}>{bottomComponent}</Animated.View>
+        <Animated.View
+          style={[
+            {opacity},
+            justBottomComponent
+              ? {overflow: translateWidth ? 'hidden' : 'auto'}
+              : null,
+          ]}>
+          {bottomComponent}
+        </Animated.View>
       ) : null}
     </Animated.View>
   );
@@ -84,14 +94,14 @@ const styles = StyleSheet.create({
     display: 'flex',
     position: 'absolute',
     borderBottomWidth: 1,
-    zIndex: 100,
+    zIndex: 10,
   }),
   content: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    zIndex: 100,
+    zIndex: 15,
   },
   left: {
     justifyContent: 'center',
