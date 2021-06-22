@@ -58,7 +58,7 @@ const ItemBottomSide = ({submit, data}) => (
           },
         ]}
         onPress={() => {
-          submit();
+          submit(data?.id);
           SlideInModal.hide();
         }}>
         <Text style={styles.buttonText}>
