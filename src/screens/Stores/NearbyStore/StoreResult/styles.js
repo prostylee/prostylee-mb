@@ -72,8 +72,9 @@ export default EStyleSheet.create({
     marginLeft: 4,
   },
   storeName: {
+    fontWeight: Platform.OS === 'android' ? '700' : '500',
     color: '$black',
-    fontWeight: '500',
     fontFamily: '$font1',
+    fontSize: 14,
   },
 });
