@@ -34,8 +34,9 @@ const Notifications = ({navigation}) => {
     getListNotificationLoadingSelector(state),
   );
 
-  const listListNotificationSelector = useSelector((state) =>
-    getListNotificationSelector(state),
+  const listListNotificationSelector = useSelector(
+    (state) => getListNotificationSelector(state),
+    () => {},
   );
 
   const listListNotification = listListNotificationSelector?.content || [];
@@ -67,7 +68,7 @@ const Notifications = ({navigation}) => {
   const handleLoadMore = () => {
     if (hasLoadMore) {
       dispatch(
-        notificationActions.getListNotification({
+        notificationActions.getListNotificationLoadMore({
           page: page + 1,
           limit: LIMIT_DEFAULT,
         }),
@@ -123,30 +124,9 @@ const Notifications = ({navigation}) => {
           ListFooterComponent={renderFooter}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          onEndReachedThreshold={0.7}
         />
       ) : (
-        // <FlatList
-        //   data={listListNotification}
-        //   renderItem={({item}) => (
-        //     <>
-        //       <NotificationItem {...item} />
-        //       <Divider
-        //         style={{
-        //           backgroundColor:
-        //             item?.status !== 0 ? Colors?.bgColor : Colors?.white,
-        //         }}
-        //       />
-        //     </>
-        //   )}
-        //   numColumns={1}
-        //   keyExtractor={(item, index) => index}
-        //   refreshing={refreshing}
-        //   onRefresh={handleRefresh}
-        //   onEndReached={handleLoadMore}
-        //   ListFooterComponent={renderFooter}
-        //   showsVerticalScrollIndicator={false}
-        //   showsHorizontalScrollIndicator={false}
-        // />
         <View style={styles.emptyView}>
           <EmptyNotiOutlined />
           <Text style={styles.emptyText}>{i18n.t('Notification.noData')}</Text>

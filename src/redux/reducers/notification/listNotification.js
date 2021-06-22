@@ -251,7 +251,7 @@ export const handleActions = {
     const {
       listNotification: {content},
     } = state;
-    const newContent = content.filter((item) => item.id !== payload);
+    const newContent = [...content].filter((item) => item.id !== payload);
     state.listNotification.content = newContent;
     return {
       ...state,

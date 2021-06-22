@@ -68,9 +68,10 @@ const PromoNotifications = () => {
   }, [dispatch, refreshing]);
 
   const handleLoadMore = () => {
+    console.log('PAGE', page, hasLoadMore);
     if (hasLoadMore) {
       dispatch(
-        notificationActions.getListNotificationDiscount({
+        notificationActions.getListNotificationDiscountLoadMore({
           page: page + 1,
           limit: LIMIT_DEFAULT,
         }),

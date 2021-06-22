@@ -103,4 +103,8 @@ export default EStyleSheet.create({
     fontWeight: '400',
     marginTop: 30,
   },
+  viewLoadingFooter: {
+    paddingTop: 20,
+    paddingBottom: 30,
+  },
 });
