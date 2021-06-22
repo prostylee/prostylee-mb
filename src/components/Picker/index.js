@@ -17,7 +17,7 @@ const Picker = ({visible, setVisible, setAction, children}) => {
         <View style={styles.wrapper}>
           <View style={styles.contentPicker}>{children}</View>
           <TouchableWithoutFeedback onPress={onOutside}>
-            <View style={styles.modalOverlay}></View>
+            <View style={styles.modalOverlay} />
           </TouchableWithoutFeedback>
         </View>
       </ThemeView>
