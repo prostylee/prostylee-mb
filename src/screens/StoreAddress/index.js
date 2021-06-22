@@ -1,13 +1,5 @@
-import React, {useCallback, useState} from 'react';
-import {
-  Dimensions,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
-} from 'react-native';
+import React, {useState} from 'react';
+import {View} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import {
@@ -16,15 +8,22 @@ import {
   ButtonRounded,
 } from 'components';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
-import {useTheme} from '@react-navigation/native';
+import {useTheme, useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {addressActions, addressSelectors, branchActions} from 'reducers';
+import {
+  addressActions,
+  addressSelectors,
+  branchActions,
+  branchSelectors,
+} from 'reducers';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListStoreAddress from './ListStoreAddress';
 
 const StoreAddress = (props) => {
   const navigation = props.navigation ? props.navigation : {};
+  const route = useRoute();
+  const storeId = route?.params?.storeId || '';
   const dispatch = useDispatch();
   const {colors} = useTheme();
   const [selectedAddress, setselectedAddress] = useState();
@@ -33,8 +32,9 @@ const StoreAddress = (props) => {
     addressSelectors.getPrefecture(state),
   );
   const branchData = useSelector((state) =>
-    addressSelectors.getPrefecture(state),
+    branchSelectors.getBranchList(state),
   );
+  console.log('branchData', branchData);
 
   React.useEffect(() => {
     dispatch(addressActions.getPrefecture());
@@ -47,10 +47,12 @@ const StoreAddress = (props) => {
   }, [prefecture]);
   React.useEffect(() => {
     if (selectedAddress) {
+      console.log(' branchActions.getBranch(');
       dispatch(
         branchActions.getBranch({
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
+          storeId: storeId,
         }),
       );
     }
@@ -94,7 +96,7 @@ const StoreAddress = (props) => {
         />
         <Dropdown />
         <View style={styles.wrapper}>
-          <ListStoreAddress style={styles.list} />
+          <ListStoreAddress style={styles.list} data={branchData} />
         </View>
         <View style={styles.buttonContainer}>
           <ButtonRounded

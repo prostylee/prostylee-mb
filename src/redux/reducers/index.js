@@ -59,7 +59,11 @@ import address, {
   types as addressTypes,
 } from './address';
 
-import branch, {actions as branchActions, types as branchTypes} from './branch';
+import branch, {
+  actions as branchActions,
+  selectors as branchSelectors,
+  types as branchTypes,
+} from './branch';
 
 import cart, {actions as cartActions, types as cartTypes} from './cart';
 import search, {actions as searchActions, types as searchTypes} from './search';
@@ -103,7 +107,7 @@ export {addressActions, addressSelectors, addressTypes};
 export {cartActions, cartTypes};
 export {searchActions, searchTypes};
 export {notificationActions, notificationTypes};
-export {branchActions, branchTypes};
+export {branchActions, branchSelectors, branchTypes};
 export {myPageActions, myPageTypes};
 
 export default rootReducer;
