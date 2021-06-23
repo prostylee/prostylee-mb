@@ -73,7 +73,6 @@ const FilterProduct = ({navigation}) => {
         );
       } else newAttributes[`attributes[${item}]`] = attributesParamm[item];
     }
-    console.log('STATE', state);
 
     dispatch(
       setFilterStateAction({

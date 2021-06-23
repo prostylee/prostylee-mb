@@ -6,8 +6,7 @@ import {currencyFormat, priceSalePercent} from 'utils/currency';
 
 const FeaturedCategoriesItem = ({item, navigation}) => {
   const onItemClick = () => {
-    // navigation.navigate('ProductDetail', {id: item.id});
-    console.log('ITEM', item);
+    navigation.navigate('ProductDetail', {id: item.id});
   };
   return (
     <View style={styles.wrapItems}>

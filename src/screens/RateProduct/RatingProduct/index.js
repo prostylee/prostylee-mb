@@ -59,17 +59,16 @@ const RatingProduct = ({navigation, product, productId}) => {
     addReview(body)
       .then((res) => {
         if (res.status !== 200) {
-          console.log('failed');
           showMessage({
-            message: I18n.t("rateProduct.ratingFailTitle"),
-            description: I18n.t("rateProduct.ratingFailContent"),
+            message: I18n.t('rateProduct.ratingFailTitle'),
+            description: I18n.t('rateProduct.ratingFailContent'),
             type: 'danger',
           });
           return;
         }
         showMessage({
-          message: I18n.t("rateProduct.ratingSuccessTitle"),
-          description: I18n.t("rateProduct.ratingSuccessContent"),
+          message: I18n.t('rateProduct.ratingSuccessTitle'),
+          description: I18n.t('rateProduct.ratingSuccessContent'),
           type: 'success',
         });
         navigation.navigate('Products', {});

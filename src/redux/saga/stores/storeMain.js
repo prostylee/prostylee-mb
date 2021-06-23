@@ -15,7 +15,7 @@ const getTopBanner = function* ({payload}) {
   try {
     yield put(storeActions.setStoreLoading(true));
     const res = yield call(getBannerAds, payload);
-    console.log('BANNER ADS', res.data.data);
+
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getTopBannerSuccess(res.data.data));
     } else {
@@ -32,7 +32,7 @@ const getMidBanner = function* ({payload}) {
   try {
     yield put(storeActions.setStoreLoading(true));
     const res = yield call(getBannerCampaigns, payload);
-    console.log('BANNER CAMPAIGNS', res.data.data);
+
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getMidBannerSuccess(res.data.data));
     } else {
@@ -82,7 +82,6 @@ const getCategoryList = function* ({payload}) {
     yield put(storeActions.setStoreLoading(true));
     const res = yield call(getCategories, payload);
 
-    console.log('GET CATEGORY LIST SUCCESS', res.data.data);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getCategoryListSuccess(res.data.data));
     } else {

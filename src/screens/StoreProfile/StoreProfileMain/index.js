@@ -151,7 +151,6 @@ const StoreProfileMain = (props) => {
     let label = PRODUCT_SORT_ITEM.find((v) => v.value === value).label;
     setActiveItemLabel(label);
     _handleSort(value);
-    console.log('LABEL', label);
   };
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     const paddingToBottom = 20;

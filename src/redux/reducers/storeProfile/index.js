@@ -128,12 +128,7 @@ export default handleActions(
     },
     [types.GET_ALL_STORE_PRODUCT_SUCCESS]: (state, {payload}) => {
       const {totalPages, content} = payload;
-      console.log(
-        'TOTAL PAGE',
-        totalPages,
-        'CURRENT PAGE',
-        state.allProductCurrentPage,
-      );
+
       return {
         ...state,
         allProduct: payload,
@@ -149,14 +144,7 @@ export default handleActions(
     },
     [types.GET_ALL_STORE_PRODUCT_LOADMORE_SUCCESS]: (state, {payload}) => {
       const {totalPages, content} = payload;
-      console.log('LOAD MORE \n\n\n\n ');
-      console.log(
-        'TOTAL PAGE',
-        totalPages,
-        'CURRENT PAGE',
-        state.allProductCurrentPage,
-        state.allProductCurrentPage + UNIT_INCREASE + 1 < totalPages,
-      );
+
       payload.content = state.allProduct?.content.concat(content) || [];
       return {
         ...state,
