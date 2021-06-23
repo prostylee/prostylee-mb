@@ -116,4 +116,9 @@ export default EStyleSheet.create({
     lineHeight: 24,
     color: '$white',
   },
+  ratingNotFound: {
+    fontSize: 11,
+    color: '$lightGray',
+    paddingBottom: 16,
+  },
 });

@@ -70,65 +70,72 @@ const ProductRating = ({data, ref, productId, navigation}) => {
           />
         </TouchableOpacity>
       </View>
-      <View style={styles.ratingList}>
-        {commentList.map((item) => {
-          const user = item.user ? item.user : {};
-          return (
-            <View key={`rating_item_${item.id}`} style={styles.ratingItem}>
-              <View style={styles.itemTitle}>
-                <Text style={styles.itemUserName}>{user?.fullName}</Text>
-                <CustomRating rate={item?.value} />
+      {commentList.length ? (
+        <View style={styles.ratingList}>
+          {commentList.map((item) => {
+            const user = item.user ? item.user : {};
+            return (
+              <View key={`rating_item_${item.id}`} style={styles.ratingItem}>
+                <View style={styles.itemTitle}>
+                  <Text style={styles.itemUserName}>{user?.fullName}</Text>
+                  <CustomRating rate={item?.value} />
+                </View>
+                <Text style={styles.itemContent}>{item?.content}</Text>
+                <View style={styles.commentImage}>
+                  {item.images
+                    .slice(0, numberOfImageAvailabel - 1)
+                    .map((imageItem, index) => {
+                      return (
+                        <TouchableOpacity
+                          key={`comment_${item.id}_${index}`}
+                          onPress={() => {
+                            openImageModal(item, index);
+                          }}>
+                          <Image
+                            style={[
+                              styles.commentImageStyle,
+                              {marginLeft: index > 0 ? 4 : 0},
+                            ]}
+                            source={{uri: imageItem.original}}
+                            resizeMode={'cover'}
+                          />
+                        </TouchableOpacity>
+                      );
+                    })}
+                  {item.images.length >= numberOfImageAvailabel ? (
+                    <TouchableOpacity
+                      style={styles.commentLastImage}
+                      key={`comment_${item.id}_${numberOfImageAvailabel - 1}`}
+                      onPress={() => {
+                        openImageModal(item, numberOfImageAvailabel - 1);
+                      }}>
+                      <Image
+                        style={[styles.commentImageStyle, {marginLeft: 4}]}
+                        source={{
+                          uri: item.images[numberOfImageAvailabel - 1].uri,
+                        }}
+                        resizeMode={'cover'}
+                      />
+                      {item.images.length >= numberOfImageAvailabel + 1 ? (
+                        <View style={styles.commentImageMore}>
+                          <Text style={styles.commentImageMoreText}>{`+${
+                            item.images.length - numberOfImageAvailabel
+                          }`}</Text>
+                        </View>
+                      ) : null}
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
               </View>
-              <Text style={styles.itemContent}>{item?.content}</Text>
-              <View style={styles.commentImage}>
-                {item.images
-                  .slice(0, numberOfImageAvailabel - 1)
-                  .map((imageItem, index) => {
-                    return (
-                      <TouchableOpacity
-                        key={`comment_${item.id}_${index}`}
-                        onPress={() => {
-                          openImageModal(item, index);
-                        }}>
-                        <Image
-                          style={[
-                            styles.commentImageStyle,
-                            {marginLeft: index > 0 ? 4 : 0},
-                          ]}
-                          source={{uri: imageItem.original}}
-                          resizeMode={'cover'}
-                        />
-                      </TouchableOpacity>
-                    );
-                  })}
-                {item.images.length >= numberOfImageAvailabel ? (
-                  <TouchableOpacity
-                    style={styles.commentLastImage}
-                    key={`comment_${item.id}_${numberOfImageAvailabel - 1}`}
-                    onPress={() => {
-                      openImageModal(item, numberOfImageAvailabel - 1);
-                    }}>
-                    <Image
-                      style={[styles.commentImageStyle, {marginLeft: 4}]}
-                      source={{
-                        uri: item.images[numberOfImageAvailabel - 1].uri,
-                      }}
-                      resizeMode={'cover'}
-                    />
-                    {item.images.length >= numberOfImageAvailabel + 1 ? (
-                      <View style={styles.commentImageMore}>
-                        <Text style={styles.commentImageMoreText}>{`+${
-                          item.images.length - numberOfImageAvailabel
-                        }`}</Text>
-                      </View>
-                    ) : null}
-                  </TouchableOpacity>
-                ) : null}
-              </View>
-            </View>
-          );
-        })}
-      </View>
+            );
+          })}
+        </View>
+      ) : (
+        <Text style={styles.ratingNotFound}>
+          {i18n.t('rateProduct.notHaveRate')}
+        </Text>
+      )}
+
       {data.content && data.content.length > 3 ? (
         <TouchableOpacity style={styles.readAllButton}>
           <Text style={styles.readAllButtonText}>{`${i18n.t(
