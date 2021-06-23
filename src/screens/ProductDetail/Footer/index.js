@@ -33,7 +33,7 @@ const Footer = ({navigation, productData, choiceSelect}) => {
   const [awsData, setAwsData] = React.useState({});
   const [sellerData, setSellerData] = React.useState({});
   const [userData, setUserData] = React.useState({});
-
+  const attributes = productData?.productAttributeOptionResponse || [];
   React.useEffect(() => {
     if (!isStore) {
       if (productData && productData.productOwnerResponse) {
