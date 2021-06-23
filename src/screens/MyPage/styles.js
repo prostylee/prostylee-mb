@@ -1,6 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 const barHeight = getStatusBarHeight();
 const {height, width} = Dimensions.get('window');
 const TABS_HEIGHT = 45;
@@ -21,6 +21,7 @@ export default EStyleSheet.create({
     height: 500,
     top: 0,
     alignSelf: 'center',
+    backgroundColor: '$lightGray',
   },
   wrapAvatar: {
     marginBottom: -40,
@@ -85,10 +86,11 @@ export default EStyleSheet.create({
     position: 'absolute',
     top: barHeight,
     zIndex: 11,
-    right: 7,
+    right: 20,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
+    paddingTop: 12,
   },
   wrapTabView: {
     height: height - TABS_HEIGHT - HEIGHT_HEADER - ANDROID_HEADER,
