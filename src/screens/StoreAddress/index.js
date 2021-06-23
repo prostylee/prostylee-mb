@@ -34,7 +34,6 @@ const StoreAddress = (props) => {
   const branchData = useSelector((state) =>
     branchSelectors.getBranchList(state),
   );
-  console.log('branchData', branchData);
 
   React.useEffect(() => {
     dispatch(addressActions.getPrefecture());
@@ -47,7 +46,6 @@ const StoreAddress = (props) => {
   }, [prefecture]);
   React.useEffect(() => {
     if (selectedAddress) {
-      console.log(' branchActions.getBranch(');
       dispatch(
         branchActions.getBranch({
           page: PAGE_DEFAULT,
@@ -57,7 +55,6 @@ const StoreAddress = (props) => {
       );
     }
   }, [selectedAddress]);
-  console.log('selectedAddress', selectedAddress);
 
   const getPrefectureList = () => {
     return prefecture.map((item) => ({

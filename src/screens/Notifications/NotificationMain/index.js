@@ -31,10 +31,13 @@ import {notificationActions} from 'redux/reducers';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {useRoute} from '@react-navigation/native';
 const {width, height} = Dimensions.get('window');
 
 const Notifications = ({navigation}) => {
   const dispatch = useDispatch();
+  const route = useRoute();
+  const isNotTabbar = route?.params?.isNotTabbar || false;
 
   const [refreshing, handleRefreshing] = useState(false);
 
@@ -110,6 +113,8 @@ const Notifications = ({navigation}) => {
         leftComponent={<HeaderLeft />}
         containerStyle={styles.headerContainer}
         rightComponent={<HeaderRight />}
+        isDefault={isNotTabbar}
+        title={isNotTabbar ? i18n.t('bottomTab.notification') : ''}
       />
       <Divider />
       <PromotionsInfo

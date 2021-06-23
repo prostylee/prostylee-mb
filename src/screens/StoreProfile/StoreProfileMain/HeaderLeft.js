@@ -27,7 +27,6 @@ const HeaderLeft = ({opacity, isAnimated = false, navigation}) => {
         },
       ]}
       onPress={() => {
-        console.log('GO BACK');
         navigation.goBack();
       }}>
       <ChevronLeft color="#fff" strokeWidth={2} />

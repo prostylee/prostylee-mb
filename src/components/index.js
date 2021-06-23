@@ -57,6 +57,7 @@ import SearchBar from './SearchBar';
 import FilterButton from './FilterButton';
 import SortDropDown from './SortDropDown';
 import TagList from './TagList';
+import NotificationIcon from './NotificationIcon';
 
 export {
   ContainerWithoutScrollView,
@@ -117,4 +118,5 @@ export {
   FilterButton,
   SortDropDown,
   TagList,
+  NotificationIcon,
 };

@@ -80,7 +80,6 @@ const PromoNotifications = () => {
   }, [loading]);
 
   const handleLoadMore = () => {
-    console.log('PAGE', page, hasLoadMore);
     if (hasLoadMore) {
       dispatch(
         notificationActions.getListNotificationDiscountLoadMore({

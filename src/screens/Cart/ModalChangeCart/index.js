@@ -11,6 +11,7 @@ import i18n from 'i18n';
 import {useDispatch} from 'react-redux';
 import {getProductById} from 'services/api/productApi';
 import {cartActions} from 'reducers';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const {width} = Dimensions.get('window');
 const WIDTH_IMAGE = width / 2 - 14;
@@ -117,32 +118,27 @@ const ModalChangeCart = ({currentOptions, productId, closeModal}) => {
               {currencyFormat(price, 'đ')}
             </Text>
           </View>
-          {currentOptions.map((item) => {
-            return (
-              <View style={styles.wrapSize} key={item.id}>
-                <RadioSelectGroup
-                  key={item.id}
-                  title={item.label}
-                  defaultValue={item.value.id}
-                  onChange={(value) => onChangeValue(value, item)}
-                  data={item.productAttributeResponses.map((opt) => {
-                    return {label: opt.attrValue, value: opt.id};
-                  })}
-                />
-              </View>
-            );
-          })}
-
-          {/* <View style={styles.wrapColor}>
-          <RadioSelectGroup
-            value="black"
-            title={i18n.t('cart.color')}
-            data={[
-              {label: 'Đen', value: 'black'},
-              {label: 'Trắng', value: 'white'},
-            ]}
-          />
-        </View> */}
+          <ScrollView
+            contentContainerStyle={styles.attributeListInner}
+            style={styles.attributeListContainer}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}>
+            {currentOptions.map((item) => {
+              return (
+                <View style={styles.wrapSize} key={item.id}>
+                  <RadioSelectGroup
+                    key={item.id}
+                    title={item.label}
+                    defaultValue={item.value.id}
+                    onChange={(value) => onChangeValue(value, item)}
+                    data={item.productAttributeResponses.map((opt) => {
+                      return {label: opt.attrValue, value: opt.id};
+                    })}
+                  />
+                </View>
+              );
+            })}
+          </ScrollView>
         </View>
 
         <View style={styles.wrapCheckout}>

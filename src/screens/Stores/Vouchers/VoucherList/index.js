@@ -67,7 +67,6 @@ const VoucherList = ({navigation}) => {
   }, [isLoading]);
 
   const _handleSavePress = (id) => {
-    console.log('SAVE VOUCHER ID', id);
     dispatch(storeActions.postSaveVoucher(id));
   };
   const _handUsePress = () => {

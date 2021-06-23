@@ -16,7 +16,6 @@ const getListNotification = function* ({payload}) {
     yield put(notificationActions.setPageListNotificationDefault());
     const res = yield call(getListNotificationService, payload);
 
-    // console.log('LIST NOTI', JSON.stringify(res.data.data, null, 2));
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(notificationActions.getListNotificationSuccess(res.data.data));
     } else {

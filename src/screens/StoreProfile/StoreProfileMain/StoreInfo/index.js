@@ -24,7 +24,6 @@ const StoreInfo = ({storeInfo = {}}) => {
         res = await followStoreService(storeInfo?.id);
       }
       setFollowed(!followed);
-      console.log('RESSSS', res);
     } catch (err) {
       showMessage({
         message: `${res?.data?.status}: ${res?.data?.error}`,
@@ -33,7 +32,6 @@ const StoreInfo = ({storeInfo = {}}) => {
     }
   };
   const {logoUrl, name, location} = storeInfo;
-  console.log('LOCATION', location);
   return (
     <View style={styles.container}>
       <View style={styles.infoWrapper}>
