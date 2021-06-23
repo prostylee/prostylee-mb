@@ -1,7 +1,7 @@
 import styles from './styles';
 
 import React from 'react';
-import {View, Text, Animated, RefreshControl} from 'react-native';
+import {View, Text, Animated, RefreshControl, Platform} from 'react-native';
 
 /*Hooks*/
 import {useDispatch, useSelector} from 'react-redux';
@@ -43,6 +43,7 @@ import {productActions, productSelectors} from 'reducers';
 import defaultImg from '../../assets/images/default.png';
 
 const WIDTH = dim.width;
+const SCROLL_TRIGGER_POINT = Platform.OS === 'android' ? 90 : 140;
 
 const ProductDetail = (props) => {
   const dispatch = useDispatch();
@@ -58,8 +59,7 @@ const ProductDetail = (props) => {
   const [currentImage, setCurrentImage] = React.useState(1);
   const [choiceSelect, setChoiceSelect] = React.useState([]);
   const [activeTab, setActiveTab] = React.useState('product');
-  const [ratingVerticalOffset, setRatingVerticalOffset] = React.useState(0);
-  const [relatedVerticalOffset, setRelatedVerticalOffset] = React.useState(0);
+
   const [ratingPos, setRatingPos] = React.useState(0);
   const [suggestPos, setSuggestPos] = React.useState(0);
   const [refreshing, handleRefreshing] = React.useState(false);
@@ -163,27 +163,25 @@ const ProductDetail = (props) => {
     });
   };
   const handleChangeTabActiveItemWhenScrolling = (currentOffset) => {
-    if (currentOffset + 140 < ratingVerticalOffset) {
+    if (currentOffset + SCROLL_TRIGGER_POINT < ratingPos) {
       if (activeTab !== 'product') {
         setActiveTab('product');
       }
     }
     if (
-      currentOffset + 140 > ratingVerticalOffset &&
-      currentOffset + 140 < relatedVerticalOffset
+      currentOffset + SCROLL_TRIGGER_POINT > ratingPos &&
+      currentOffset + SCROLL_TRIGGER_POINT < suggestPos
     ) {
       if (activeTab !== 'rate') {
         setActiveTab('rate');
       }
     }
-    if (currentOffset + 140 > relatedVerticalOffset) {
+    if (currentOffset + SCROLL_TRIGGER_POINT > suggestPos) {
       if (activeTab !== 'suggest') {
         setActiveTab('suggest');
       }
     }
   };
-
-  debounce;
 
   const selectRelatedProduct = (id) => {
     scrollAnimated.setValue(0);
@@ -223,20 +221,6 @@ const ProductDetail = (props) => {
     if (!productDataLoading) handleRefreshing(false);
   }, [productDataLoading]);
 
-  React.useEffect(() => {
-    if (!ratingVerticalOffset || !relatedVerticalOffset) {
-      if (ratingRef) {
-        ratingRef?.current?.measure((fx, fy) => {
-          setRatingVerticalOffset(fy);
-        });
-      }
-      if (relatedRef) {
-        relatedRef?.current?.measure((fx, fy) => {
-          setRelatedVerticalOffset(fy);
-        });
-      }
-    }
-  });
   if (productDataLoading && !refreshing) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

@@ -59,6 +59,7 @@ const userSignIn = function* ({payload: {email, password, onSuccess, onFail}}) {
     console.log('Sign-in successfully!!!');
     yield authService.setUserName({username: user.username});
     yield authService.setAuthUser(user);
+    yield fetchProfile({payload: user.attributes['custom:userId']});
     yield put(userActions.userSignInSuccess(user));
     yield onSuccess();
   } catch (e) {

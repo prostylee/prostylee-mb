@@ -84,11 +84,13 @@ const ProductChoice = ({choiceSelect, choiceList, setChoiceSelect}) => {
                       ) {
                         choiceButtonStyle = [
                           styles.choiceButton,
-                          {backgroundColor: colors['$purple']},
+                          {
+                            borderColor: colors['$purple'],
+                          },
                         ];
                         choiceButtonTextStyle = [
                           styles.choiceButtonText,
-                          {color: colors['$white']},
+                          {color: colors['$purple']},
                         ];
                       }
                       return (

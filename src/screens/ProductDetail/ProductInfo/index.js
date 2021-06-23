@@ -44,25 +44,25 @@ const ProductInfo = ({description, brand, productStatus}) => {
       </TouchableOpacity>
       <Collapsible collapsed={showInfo} style={styles.infoContent}>
         <Text style={styles.infoContentText}>{description}</Text>
+        {brand && brand.name ? (
+          <View style={styles.infoMore}>
+            <Text style={styles.infoMoreTitleText}>
+              {i18n.t('productDetail.brand')}
+            </Text>
+            <Text style={styles.infoContentContent}>{brand.name}</Text>
+          </View>
+        ) : null}
+        {productStatus && productStatus.description ? (
+          <View style={styles.infoMore}>
+            <Text style={styles.infoMoreTitleText}>
+              {i18n.t('productDetail.productStatus')}
+            </Text>
+            <Text style={styles.infoMoreTitleContent}>
+              {productStatus.description}
+            </Text>
+          </View>
+        ) : null}
       </Collapsible>
-      {brand && brand.name ? (
-        <View style={styles.infoMore}>
-          <Text style={styles.infoMoreTitleText}>
-            {i18n.t('productDetail.brand')}
-          </Text>
-          <Text style={styles.infoContentContent}>{brand.name}</Text>
-        </View>
-      ) : null}
-      {productStatus && productStatus.description ? (
-        <View style={styles.infoMore}>
-          <Text style={styles.infoMoreTitleText}>
-            {i18n.t('productDetail.productStatus')}
-          </Text>
-          <Text style={styles.infoMoreTitleContent}>
-            {productStatus.description}
-          </Text>
-        </View>
-      ) : null}
     </View>
   );
 };

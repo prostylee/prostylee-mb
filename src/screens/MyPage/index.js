@@ -10,11 +10,14 @@ import {
   ImageBackground,
 } from 'react-native';
 
+import configEnv from 'config';
+import isEmpty from 'lodash/isEmpty';
 import {ThemeView, ButtonRounded, ChatIcon} from 'components';
 import HeaderFeed from './HeaderFeed';
 import I18n from 'i18n';
-import {useDispatch} from 'react-redux';
-import {commonActions} from 'reducers';
+import {useIsFocused} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {commonActions, userActions, userSelectors} from 'reducers';
 import {Auth} from 'aws-amplify';
 import {Grid, Full, Setting} from 'svg/common';
 
@@ -33,10 +36,22 @@ const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
 };
 const Index = ({navigation}) => {
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [viewType, setViewType] = useState('grid');
   const [activeTab, setActivedTab] = useState('menu');
   const scrollViewRef = useRef();
+
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
+
+  const userStatistics = useSelector((state) =>
+    userSelectors.getUserStatistics(state),
+  );
+  const userAvatar = `${configEnv.api_url}/profile/${userProfile.id}/avatar`;
+  const statisticsData = !isEmpty(userStatistics) ? userStatistics : {};
+  console.log('userStatistics', JSON.stringify(userStatistics, null, 4));
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -70,10 +85,17 @@ const Index = ({navigation}) => {
     Auth.currentAuthenticatedUser()
       .then((user) => {
         console.log('USER ' + JSON.stringify(user));
+        dispatch(userActions.getProfile(user.attributes['custom:userId']));
       })
       .catch((err) => console.log(err));
     dispatch(commonActions.toggleLoading(false));
   }, []);
+
+  React.useEffect(() => {
+    if (isFocused) {
+      dispatch(userActions.getStatistics(userProfile.id));
+    }
+  }, [isFocused]);
 
   return (
     <ThemeView isFullView style={styles.container}>
@@ -83,11 +105,20 @@ const Index = ({navigation}) => {
         scrollAnimated={scrollAnimated}
         restoreScrollTop={restoreScrollTop}
       />
+      <View style={styles.headerFull}>
+        <TouchableOpacity style={{paddingRight: 16}}>
+          <ChatIcon color={'#ffffff'} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
+          <Setting color="#ffffff" />
+        </TouchableOpacity>
+      </View>
       <ScrollView
         ref={scrollViewRef}
         onScroll={onScrollEvent}
         scrollEnabled={scrollEnabled}
         scrollEventThrottle={1}
+        nestedScrollEnabled={true}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         style={styles.viewScroll}>
@@ -106,46 +137,38 @@ const Index = ({navigation}) => {
             },
             styles.headerProfile,
           ]}>
-          <View style={styles.headerFull}>
-            <TouchableOpacity style={{paddingRight: 20}}>
-              <ChatIcon />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
-              <Setting color="#ffffff" />
-            </TouchableOpacity>
-          </View>
           <View style={styles.wrapScroll}>
             <ImageBackground
               style={styles.backgroundImageStyle}
-              source={{uri: 'https://reactjs.org/logo-og.png'}}
+              source={{uri: userProfile.avatar ? userAvatar : ''}}
               blurRadius={10}>
               <View style={styles.scrollViewStyle}>
                 <View style={styles.wrapAvatar}>
                   <Avatar.Image
-                    source={{uri: 'https://reactjs.org/logo-og.png'}}
+                    source={{uri: userAvatar}}
                     size={80}
                     style={styles.avatarStyle}
                   />
                 </View>
                 <View style={styles.viewInfoUser}>
                   <View style={styles.wrapUserNameText}>
-                    <Text style={styles.userNameText}>Alyssa Gardner</Text>
-                  </View>
-                  <View style={{paddingHorizontal: 16}}>
-                    <Text
-                      style={{
-                        textAlign: 'center',
-                        lineHeight: 20,
-                        fontSize: 14,
-                        color: '#333333',
-                      }}>
-                      I’m only a morning person on Christmas morning
-                      {'\n'}
-                      You are not just a Follower.
-                      {'\n'}
-                      📚 Bookaholic - ✈️ Travelholic
+                    <Text style={styles.userNameText}>
+                      {userProfile.fullName}
                     </Text>
                   </View>
+                  {userProfile.bio ? (
+                    <View style={{paddingHorizontal: 16}}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          lineHeight: 20,
+                          fontSize: 14,
+                          color: '#333333',
+                        }}>
+                        {userProfile.bio}
+                      </Text>
+                    </View>
+                  ) : null}
                   <View style={{paddingTop: 16}}>
                     <ButtonRounded
                       style={styles.editButton}
@@ -156,19 +179,25 @@ const Index = ({navigation}) => {
                   </View>
                   <View style={styles.followParentView}>
                     <View style={styles.followChildView}>
-                      <Text style={styles.valueFollowChild}>1244</Text>
+                      <Text style={styles.valueFollowChild}>
+                        {statisticsData.followers || 0}
+                      </Text>
                       <Text style={styles.labelFollowChild}>
                         {I18n.t('mypage.follower')}
                       </Text>
                     </View>
                     <View style={styles.followChildView}>
-                      <Text style={styles.valueFollowChild}>275</Text>
+                      <Text style={styles.valueFollowChild}>
+                        {statisticsData.followings || 0}
+                      </Text>
                       <Text style={styles.labelFollowChild}>
                         {I18n.t('mypage.following')}
                       </Text>
                     </View>
                     <View style={styles.followChildView}>
-                      <Text style={styles.valueFollowChild}>275</Text>
+                      <Text style={styles.valueFollowChild}>
+                        {statisticsData.posts || 0}
+                      </Text>
                       <Text style={styles.labelFollowChild}>
                         {I18n.t('mypage.posts')}
                       </Text>
