@@ -19,6 +19,8 @@ export const types = {
   REMOVE_ITEM_FROM_CART: 'REMOVE_ITEM_FROM_CART',
   //AMOUNT
   SET_CART_COUPON_AMOUNT: 'SET_CART_AMOUNT',
+  //OPTION
+  SET_CART_ITEM_UPDATE_OPTION: 'SET_CART_ITEM_UPDATE_OPTION',
 
   //List Payment
   GET_LIST_PAYMENT: 'GET_LIST_PAYMENT',
@@ -71,6 +73,7 @@ export const actions = {
   setListCartFailed: createAction(types.SET_LIST_CART_FAILED),
   addItemToCart: createAction(types.ADD_ITEM_TO_CART),
   removeItemFromCart: createAction(types.REMOVE_ITEM_FROM_CART),
+  updateItemOption: createAction(types.SET_CART_ITEM_UPDATE_OPTION),
   //List Payment
   setPaymentLoading: createAction(types.SET_PAYMENT_LOADING),
   getListPayment: createAction(types.GET_LIST_PAYMENT),
@@ -196,6 +199,28 @@ export default handleActions(
         const newCartList = [
           ...currentCart.slice(0, removeItemIndex),
           ...currentCart.slice(removeItemIndex + 1),
+        ];
+        return {...state, listCart: newCartList};
+      } else {
+        return state;
+      }
+    },
+    [types.SET_CART_ITEM_UPDATE_OPTION]: (state, {payload}) => {
+      const currentCart = state.listCart;
+      const itemId = payload.itemId ? payload.itemId : 0;
+      if (itemId) {
+        const findCartIndex = currentCart.findIndex(
+          (element) => element.item.id === itemId,
+        );
+        const newItem = Object.assign({}, currentCart[findCartIndex]);
+        const newOptions = payload.newOptions
+          ? payload.newOptions
+          : newItem.options;
+        newItem.options = newOptions;
+        const newCartList = [
+          ...currentCart.slice(0, findCartIndex),
+          newItem,
+          ...currentCart.slice(findCartIndex + 1),
         ];
         return {...state, listCart: newCartList};
       } else {

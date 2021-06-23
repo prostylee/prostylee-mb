@@ -19,13 +19,15 @@ import {DownArrow, Close} from 'svg/common';
 import {cartActions} from 'reducers';
 
 const Item = ({product}) => {
-  const {storeId, storeName, storeAvatar, data, amount, options} = product;
+  const {storeId, storeName, storeAvatar, data} = product;
   const [visible, setVisible] = useState(false);
   const [currentId, setCurrentId] = useState();
+  const [currentOptions, setCurrentOptions] = useState([]);
 
   const dispatch = useDispatch();
 
-  const onChangeAttr = (pId) => {
+  const onChangeAttr = (pId, options) => {
+    setCurrentOptions(options);
     setCurrentId(pId);
     setVisible(true);
   };
@@ -58,13 +60,18 @@ const Item = ({product}) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <ModalChangeCart productId={currentId} currentOptions={options} />
+            <ModalChangeCart
+              productId={currentId}
+              currentOptions={currentOptions}
+              closeModal={() => setVisible(false)}
+            />
           </View>
         </View>
       </Modal>
       <View style={styles.wrapSection}>
         <HeaderStore header={{storeId, storeName, storeAvatar}} />
-        {data.map((item, index) => {
+        {data.map((dataItem, index) => {
+          const item = dataItem.item ? dataItem.item : {};
           const onRemoveItem = () => {
             Alert.alert(i18n.t('caution'), i18n.t('cart.removeItemPopup'), [
               {
@@ -107,35 +114,31 @@ const Item = ({product}) => {
                     ) : null}
                   </View>
                   <View style={styles.wrapAmount}>
-                    <View style={styles.wrapSize}>
+                    <TouchableOpacity
+                      style={styles.wrapSize}
+                      onPress={() => onChangeAttr(item.id, dataItem?.options)}>
                       <Text numberOfLines={1} style={styles.name}>
-                        {options.map((op, idx) => {
+                        {dataItem?.options.map((op, idx) => {
                           return (
-                            <TouchableOpacity
+                            <View
                               style={[
                                 styles.productAttr,
                                 {
                                   borderLeftWidth: idx !== 0 ? 1 : 0,
                                 },
-                              ]}
-                              onPress={() => onChangeAttr(item.id)}>
-                              {/* <Text style={styles.name}>
-                              {`${op.label}:`}&nbsp;
-                            </Text> */}
+                              ]}>
                               <Text style={styles.addButtonText}>
-                                {op.value.attrValue}
+                                {`${idx > 0 ? ' ' : ''}${op.value.attrValue} `}
                               </Text>
-                            </TouchableOpacity>
+                            </View>
                           );
                         })}
                       </Text>
-                      <TouchableOpacity onPress={() => onChangeAttr(item.id)}>
-                        <DownArrow />
-                      </TouchableOpacity>
-                    </View>
+                      <DownArrow />
+                    </TouchableOpacity>
                     <View style={styles.wrapUpdown}>
                       <NumberInputUpDown
-                        value={+amount}
+                        value={+dataItem?.quantity}
                         minValue={0}
                         onChange={(value) => onChaneAmount(value, item)}
                         onRemoveItem={() => onRemoveItem()}

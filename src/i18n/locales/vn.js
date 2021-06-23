@@ -203,7 +203,7 @@ export default {
     size: 'Kích thước',
     color: 'Màu sắc',
     latestViewProduct: 'Sản phẩm đã xem gần đây',
-    forYou: 'Giành riêng cho bạn',
+    forYou: 'Dành riêng cho bạn',
     temp: 'Tạm tính',
     notfound: 'Chưa có sản phẩm nào',
     subNotFound: 'Hàng ngàn sản phẩm vẫn đang chờ bạn khám phá',
