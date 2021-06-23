@@ -49,6 +49,7 @@ export default EStyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingBottom: 8,
+    marginTop: 16,
   },
   infoMoreTitleText: {
     fontSize: 14,

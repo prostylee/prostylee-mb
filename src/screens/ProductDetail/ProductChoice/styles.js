@@ -61,9 +61,10 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: '#E9EAEB',
-    borderRadius: 3,
+    borderColor: '$line',
+    borderRadius: 4,
     paddingHorizontal: 10,
+    backgroundColor: '$white',
   },
   choiceButtonText: {
     fontSize: 14,
