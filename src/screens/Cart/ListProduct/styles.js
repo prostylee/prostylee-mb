@@ -134,6 +134,7 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     marginBottom: -3,
     flexDirection: 'row',
+    paddingHorizontal: 2,
   },
   productColor: {
     borderLeftWidth: 1,
