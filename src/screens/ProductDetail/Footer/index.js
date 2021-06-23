@@ -24,6 +24,7 @@ import {cartActions, commonActions} from 'reducers';
 
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {createChat} from 'graphqlLocal/mutations';
+
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
 
 const Footer = ({navigation, productData, choiceSelect}) => {
@@ -150,6 +151,7 @@ const Footer = ({navigation, productData, choiceSelect}) => {
         labelStyle={{}}
         label={i18n.t('productDetail.buttonAddToCart')}
         onPress={onAddToCart}
+        disabled={attributes.length !== choiceSelect.length}
       />
     ) : (
       <ButtonRounded
