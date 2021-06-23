@@ -22,7 +22,10 @@ export default EStyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     padding: 10,
-    margin: 5,
+    marginRight: 10,
+    marginVertical: 5,
+    minWidth: 40,
+    height: 40,
   },
   radioLabel: {
     fontSize: 14,

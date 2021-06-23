@@ -47,6 +47,7 @@ export default EStyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     marginTop: 6,
+    marginBottom: 10,
   },
   price: {
     color: '#333333',
@@ -57,10 +58,20 @@ export default EStyleSheet.create({
   wrapSize: {
     paddingLeft: 10,
     paddingRight: 10,
-    marginTop: 10,
   },
   wrapColor: {
     padding: 10,
   },
-  wrapCheckout: {position: 'absolute', bottom: 44, right: 16, left: 16},
+  wrapCheckout: {
+    position: 'absolute',
+    bottom: 44,
+    right: 16,
+    left: 16,
+  },
+  attributeListContainer: {
+    marginBottom: '40rem + 44px',
+  },
+  attributeListInner: {
+    paddingBottom: '40rem + 44px',
+  },
 });
