@@ -16,16 +16,6 @@ const FilterBar = ({
   navigation,
   activeSortItem = '',
 }) => {
-  const filterState = useSelector((state) => getProductFilterState(state));
-  const attributeFilterState = filterState?.attributes;
-  const categoryFilterState = filterState.category;
-  const price = filterState.price;
-  let count = 0;
-  count += categoryFilterState !== -1 ? 1 : 0;
-  count += Object.keys(
-    attributeFilterState ? attributeFilterState : {},
-  )?.length;
-  count += price?.[1] !== 0 ? 1 : 0;
   return (
     <View style={styles.wrapBlockOne}>
       <TouchableOpacity onPress={() => setVisible(!visible)}>

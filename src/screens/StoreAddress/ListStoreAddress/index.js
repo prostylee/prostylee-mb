@@ -1,84 +1,22 @@
-import {size} from 'lodash';
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  FlatList,
-  TouchableOpacity,
-  TextInput,
-  Image,
-  ScrollView,
-} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Checkbox, RadioButton} from 'react-native-paper';
+import {RadioButton} from 'react-native-paper';
 import styles from './styles';
 
-const DATA = [
-  {
-    id: '0',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
-  {
-    id: '1',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
-  {
-    id: '2',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
-  {
-    id: '3',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
-  {
-    id: '4',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
-  {
-    id: '5',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
-  {
-    id: '6',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
-  {
-    id: '7',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
-  {
-    id: '8',
-    title: 'Nike',
-    address: '95 Đ. Nguyễn Trãi, Phường Phạm Ngũ L...',
-    range: '0.2',
-  },
-];
 const Item = ({item, onPress}) => {
+  const location = item.location ? item.location : {};
+  const address = `${location.address ? location.address : 'unknow'}, ${
+    location.state ? location.state : 'unknow'
+  }, ${location.city ? location.city : 'unknow'}, ${
+    location.country ? location.country : 'unknow'
+  }`;
+  const distance = item.distance ? item.distance : 'unknow';
   const [value, setValue] = React.useState('');
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: 'row',
-          }}>
+        <View style={styles.itemContainer}>
           <RadioButton.Group
             onValueChange={(newValue) => setValue(newValue)}
             value={value}>
@@ -91,16 +29,16 @@ const Item = ({item, onPress}) => {
             </View>
           </RadioButton.Group>
           <View style={styles.fomatItem}>
-            <Text style={styles.Card}>{item.title}</Text>
-            <Text style={[styles.fomat]}>{item.address}</Text>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={styles.Card}>{item.name}</Text>
+            <Text style={[styles.fomat]}>{address}</Text>
+            <View style={styles.iconContainer}>
               <Icon
                 name="location-outline"
                 color="grey"
                 size={13}
-                style={{paddingRight: 5}}
+                style={styles.iconStyle}
               />
-              <Text style={{fontSize: 13, color: 'grey'}}>{item.range}km</Text>
+              <Text style={styles.textDistance}>{distance}</Text>
             </View>
           </View>
         </View>
@@ -108,14 +46,15 @@ const Item = ({item, onPress}) => {
     </TouchableOpacity>
   );
 };
-const ListStoreAddress = () => {
+const ListStoreAddress = (props) => {
+  const data = props.data ? props.data : [];
   const [selectedId, setSelectedId] = useState(null);
   const renderItem = ({item}) => {
     return <Item item={item} onPress={() => setSelectedId(item.id)} />;
   };
   return (
     <FlatList
-      data={DATA}
+      data={data}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       extraData={selectedId}

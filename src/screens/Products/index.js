@@ -10,12 +10,15 @@ import {
 } from 'react-native';
 import styles from './styles';
 
-import {ThemeView, Colors, HeaderAnimated} from 'components';
+import {ThemeView, Colors, HeaderAnimated, SortDropDown} from 'components';
 import {SearchProductLoading} from 'components/Loading/contentLoader';
 import i18n from 'i18n';
 
 import ProductItem from './ProductItem';
-import {getCategoriesSelectSelector} from 'redux/selectors/categories';
+import {
+  getCategoriesSelectSelector,
+  getCategoriesParentSelectSelector,
+} from 'redux/selectors/categories';
 import {ChevronLeft} from 'svg/common';
 import HeaderList from './HeaderList';
 import BottomHeaderAnimated from './BottomHeaderAnimated';
@@ -27,18 +30,26 @@ import {
   getHasLoadMoreProductSelector,
   getPageProductSelector,
 } from 'redux/selectors/product';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 import {productActions} from 'redux/reducers';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {LIMIT_DEFAULT, PAGE_DEFAULT, PRODUCT_SORT_ITEM} from 'constants';
 
 const heightShow = 334;
 import {ProductLoading} from 'components/Loading/contentLoader';
 
 const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 const WIDTH_IMAGE = WIDTH / 2 - 14;
 const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 
+const BOTTOM_HEADER_HEIGHT = 100;
+const HEIGHT_HEADER = BOTTOM_HEADER_HEIGHT / 2 + 50 + getStatusBarHeight();
+
 const Products = ({navigation}) => {
+  const [sortVisible, setSortVisible] = useState(false);
+  const [sortAction, setSortAction] = useState('filter');
+  const [valueSort, setValueSort] = useState(null);
   /*Animated*/
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -58,6 +69,9 @@ const Products = ({navigation}) => {
     getCategoriesSelectSelector(state),
   );
 
+  const categoryParentSelect = useSelector((state) =>
+    getCategoriesParentSelectSelector(state),
+  );
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector(
@@ -185,6 +199,15 @@ const Products = ({navigation}) => {
       </Text>
     </View>
   );
+  const sortStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 999,
+    width: WIDTH,
+    height: sortVisible ? HEIGHT : 0,
+    marginTop: sortVisible ? HEIGHT_HEADER : 0,
+  };
   return (
     <ThemeView style={styles.container} isFullView>
       <>
@@ -196,7 +219,7 @@ const Products = ({navigation}) => {
           }
           midComponent={
             <Text numberOfLines={1} style={styles.textTitle}>
-              {categoriesSelect?.name}
+              {categoryParentSelect?.name}
             </Text>
           }
           bottomComponent={
@@ -204,15 +227,31 @@ const Products = ({navigation}) => {
               navigation={navigation}
               onSortPress={_handleSort}
               onTagPress={_handleFilterByTag}
+              setVisible={setSortVisible}
+              visible={sortVisible}
+              valueSort={valueSort}
             />
           }
-          bottomHeight={100}
+          bottomHeight={BOTTOM_HEADER_HEIGHT}
           hideBottomBorder={true}
           heightShow={heightShow - 190}
           Animated={Animated}
           navigation={navigation}
           scrollAnimated={scrollAnimated}
         />
+        <View style={sortStyle}>
+          <SortDropDown
+            visible={sortVisible}
+            setVisible={setSortVisible}
+            setAction={setSortAction}
+            setValueSort={(value) => {
+              setValueSort(value);
+              _handleSort(value);
+            }}
+            valueSort={valueSort}
+            options={PRODUCT_SORT_ITEM}
+          />
+        </View>
 
         <FlatList
           data={

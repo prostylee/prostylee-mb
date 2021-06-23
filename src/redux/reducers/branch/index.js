@@ -28,6 +28,11 @@ export const actions = {
   getBranchMoreFailed: createAction(types.GET_BRANCH_FAILED),
 };
 
+export const selectors = {
+  getBranchListLoading: (state) => state.branch.branchLoading,
+  getBranchList: (state) => state.branch.branchList,
+};
+
 const intialState = {
   // Branches
   branchLoading: false,

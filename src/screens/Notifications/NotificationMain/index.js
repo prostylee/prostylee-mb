@@ -1,7 +1,13 @@
 import styles from './styles';
 
 import React, {useEffect, useState} from 'react';
-import {View, Text, ActivityIndicator, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+} from 'react-native';
 import {ThemeView, Header, Colors} from 'components';
 import {Divider} from 'react-native-paper';
 import {EmptyNotiOutlined} from '../../../svg/common';
@@ -9,6 +15,7 @@ import HeaderLeft from './HeaderLeft';
 import HeaderRight from './HeaderRight';
 import PromotionsInfo from './PromotionsInfo';
 import NotificationItem from './NotificationItem';
+import {NotiLoading} from 'components/Loading/contentLoader';
 import i18n from 'i18n';
 
 import {
@@ -24,6 +31,7 @@ import {notificationActions} from 'redux/reducers';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+const {width, height} = Dimensions.get('window');
 
 const Notifications = ({navigation}) => {
   const dispatch = useDispatch();
@@ -34,8 +42,9 @@ const Notifications = ({navigation}) => {
     getListNotificationLoadingSelector(state),
   );
 
-  const listListNotificationSelector = useSelector((state) =>
-    getListNotificationSelector(state),
+  const listListNotificationSelector = useSelector(
+    (state) => getListNotificationSelector(state),
+    () => {},
   );
 
   const listListNotification = listListNotificationSelector?.content || [];
@@ -52,6 +61,12 @@ const Notifications = ({navigation}) => {
 
   const handleRefresh = () => {
     handleRefreshing(true);
+    dispatch(
+      notificationActions.getListNotification({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
   };
 
   useEffect(() => {
@@ -61,13 +76,15 @@ const Notifications = ({navigation}) => {
         limit: LIMIT_DEFAULT,
       }),
     );
-    handleRefreshing(false);
-  }, [dispatch, refreshing]);
+  }, [dispatch]);
 
+  useEffect(() => {
+    if (!loading) handleRefreshing(false);
+  }, [loading]);
   const handleLoadMore = () => {
     if (hasLoadMore) {
       dispatch(
-        notificationActions.getListNotification({
+        notificationActions.getListNotificationLoadMore({
           page: page + 1,
           limit: LIMIT_DEFAULT,
         }),
@@ -101,7 +118,15 @@ const Notifications = ({navigation}) => {
         }}
       />
       <Divider />
-      {listListNotification && listListNotification.length ? (
+      {loading && !refreshing ? (
+        <View style={styles.loadingContainter}>
+          {Array.from('x'.repeat(Math.round(height - 120) / (width / 3))).map(
+            () => (
+              <NotiLoading width={width * 0.95} height={width / 3} />
+            ),
+          )}
+        </View>
+      ) : listListNotification && listListNotification.length ? (
         <FlatList
           data={listListNotification}
           renderItem={({item}) => (
@@ -123,30 +148,9 @@ const Notifications = ({navigation}) => {
           ListFooterComponent={renderFooter}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          onEndReachedThreshold={0.7}
         />
       ) : (
-        // <FlatList
-        //   data={listListNotification}
-        //   renderItem={({item}) => (
-        //     <>
-        //       <NotificationItem {...item} />
-        //       <Divider
-        //         style={{
-        //           backgroundColor:
-        //             item?.status !== 0 ? Colors?.bgColor : Colors?.white,
-        //         }}
-        //       />
-        //     </>
-        //   )}
-        //   numColumns={1}
-        //   keyExtractor={(item, index) => index}
-        //   refreshing={refreshing}
-        //   onRefresh={handleRefresh}
-        //   onEndReached={handleLoadMore}
-        //   ListFooterComponent={renderFooter}
-        //   showsVerticalScrollIndicator={false}
-        //   showsHorizontalScrollIndicator={false}
-        // />
         <View style={styles.emptyView}>
           <EmptyNotiOutlined />
           <Text style={styles.emptyText}>{i18n.t('Notification.noData')}</Text>

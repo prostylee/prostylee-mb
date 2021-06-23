@@ -79,7 +79,7 @@ const Footer = ({navigation, productData, choiceSelect}) => {
   };
 
   const goToStore = () => {
-    navigation.navigate('StoreAddress');
+    navigation.navigate('StoreAddress', {storeId: productData.storeId});
   };
   const callSeller = (phoneNumber) => {
     if (phoneNumber) {
@@ -108,13 +108,15 @@ const Footer = ({navigation, productData, choiceSelect}) => {
           },
         }),
       );
-      navigation.navigate('ChatBox', {
-        chatId: response.id,
-        otherChatUserId: sellerData.id,
-        userName: sellerData.fullName,
-        userPhone: sellerData.phoneNumber,
-        productData: productData,
-      });
+      if (response && response.data) {
+        navigation.navigate('ChatBox', {
+          chatId: response.data.createChat.id,
+          otherChatUserId: sellerData.id,
+          userName: sellerData.fullName,
+          userPhone: sellerData.phoneNumber,
+          productData: productData,
+        });
+      }
     } finally {
       dispatch(commonActions.toggleLoading(false));
     }

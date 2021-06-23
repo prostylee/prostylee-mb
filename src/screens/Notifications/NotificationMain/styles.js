@@ -120,4 +120,13 @@ export default EStyleSheet.create({
     width: 80,
     flex: 1,
   },
+  viewLoadingFooter: {
+    paddingTop: 20,
+    paddingBottom: 30,
+    backgroundColor: '$white',
+  },
+  loadingContainter: {
+    flex: 1,
+    flexDirection: 'column',
+  },
 });

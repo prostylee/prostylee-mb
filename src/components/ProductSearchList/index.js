@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Text} from 'react-native';
+import {Text, Dimensions, View, Platform} from 'react-native';
 
 import {ThemeView, Header, SortDropDown, TagList} from 'components';
 import {Divider} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 
 import ProductList from './ProductList';
 
@@ -11,6 +10,12 @@ import FilterBar from './FilterBar';
 import {PRODUCT_SORT_ITEM, FILTER_TAGS} from 'constants';
 import styles from './styles';
 import PropTypes from 'prop-types';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
+const BOTTOM_HEADER_HEIGHT = Platform.OS === 'ios' ? 80 : 60;
+const HEIGHT_HEADER = BOTTOM_HEADER_HEIGHT / 2 + 50 + getStatusBarHeight();
 
 const ProductSearchList = ({
   title,
@@ -39,6 +44,15 @@ const ProductSearchList = ({
   const _handleSort = (value) => {
     setValueSort(value);
     sortDataFunction(value);
+  };
+  const sortStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 999,
+    width: WIDTH,
+    height: visible ? HEIGHT : 0,
+    marginTop: visible ? HEIGHT_HEADER : 0,
   };
 
   return (
@@ -82,14 +96,16 @@ const ProductSearchList = ({
             clearFilterStateAction={clearFilterStateAction}
           />
           <Divider />
-          <SortDropDown
-            visible={visible}
-            setVisible={setVisible}
-            setAction={setAction}
-            setValueSort={_handleSort}
-            valueSort={valueSort}
-            options={PRODUCT_SORT_ITEM}
-          />
+          <View style={sortStyle}>
+            <SortDropDown
+              visible={visible}
+              setVisible={setVisible}
+              setAction={setAction}
+              setValueSort={_handleSort}
+              valueSort={valueSort}
+              options={PRODUCT_SORT_ITEM}
+            />
+          </View>
         </>
       ) : null}
 

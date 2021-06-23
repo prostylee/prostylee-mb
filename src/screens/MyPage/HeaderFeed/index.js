@@ -3,7 +3,7 @@ import React from 'react';
 import {View, TouchableOpacity, Animated, Dimensions, Text} from 'react-native';
 import {Avatar} from 'react-native-paper';
 import {Setting, ChevronLeft} from 'svg/common';
-import {Message} from 'svg/social';
+import {ChatIcon} from 'components';
 import {useNavigation} from '@react-navigation/native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 
@@ -63,7 +63,10 @@ const HeaderFeed = ({scrollAnimated, heightShow, restoreScrollTop}) => {
         <View style={styles.left} />
         <View style={styles.mid}>
           <Animated.View style={{...styles.midHeader, opacity}}>
-            <TouchableOpacity onPress={() => {restoreScrollTop()}}>
+            <TouchableOpacity
+              onPress={() => {
+                restoreScrollTop();
+              }}>
               <View style={styles.midBorder}>
                 <View style={styles.headerUser}>
                   <Avatar.Image
@@ -80,7 +83,7 @@ const HeaderFeed = ({scrollAnimated, heightShow, restoreScrollTop}) => {
         <View style={styles.right}>
           <Animated.View style={{...styles.rightHeader, opacity}}>
             <TouchableOpacity style={styles.touch}>
-              <Message />
+              <ChatIcon />
             </TouchableOpacity>
             <TouchableOpacity style={styles.touch} onPress={onNavigateSetting}>
               <Setting />

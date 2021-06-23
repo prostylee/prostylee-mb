@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Dimensions, KeyboardAvoidingView} from 'react-native';
+import {Dimensions, View, Platform} from 'react-native';
 import i18n from 'i18n';
 
 import styles from './styles';
@@ -23,6 +23,13 @@ import GroupHeaderRightButton from './HeaderRightButton';
 import FilterBar from './FilterBar';
 import {PRODUCT_SORT_ITEM} from 'constants';
 import {FILTER_TAGS} from 'constants';
+
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
+const BOTTOM_HEADER_HEIGHT = Platform.OS === 'ios' ? 80 : 60;
+const HEIGHT_HEADER = BOTTOM_HEADER_HEIGHT / 2 + 50 + getStatusBarHeight();
 
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
@@ -116,7 +123,15 @@ const SearchProducts = ({navigation}) => {
   useEffect(() => {
     setSearchQuery(currentKeyword);
   }, [currentKeyword]);
-
+  const sortStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 999,
+    width: WIDTH,
+    height: visible ? HEIGHT : 0,
+    marginTop: visible ? HEIGHT_HEADER : 0,
+  };
   return (
     <ThemeView style={styles.container}>
       <Header
@@ -152,14 +167,16 @@ const SearchProducts = ({navigation}) => {
       />
       <Divider />
       <TagList onTagPress={_handleFilterByTag} options={FILTER_TAGS} />
-      <SortDropDown
-        visible={visible}
-        setVisible={setVisible}
-        setAction={setAction}
-        setValueSort={_handleSort}
-        valueSort={valueSort}
-        options={PRODUCT_SORT_ITEM}
-      />
+      <View style={sortStyle}>
+        <SortDropDown
+          visible={visible}
+          setVisible={setVisible}
+          setAction={setAction}
+          setValueSort={_handleSort}
+          valueSort={valueSort}
+          options={PRODUCT_SORT_ITEM}
+        />
+      </View>
       <ProductList
         currentFilterValue={currentFilterValue}
         navigation={navigation}

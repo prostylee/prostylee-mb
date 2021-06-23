@@ -1,16 +1,21 @@
 import React, {useState, useEffect} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity, Text, Dimensions, Platform} from 'react-native';
 import {ThemeView, Header, Colors, SortDropDown} from 'components';
 import {Sort, CaretDown} from 'svg/common';
 import i18n from 'i18n';
 import styles from './style';
-// import SortDropDown from './SortDropDown';
+
 import VoucherList from './VoucherList';
 import {useDispatch} from 'react-redux';
 import {storeActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT, VOUCHER_SORT_ITEM} from 'constants';
-import {values} from 'lodash-es';
 
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
+const BOTTOM_HEADER_HEIGHT = Platform.OS === 'ios' ? 80 : 60;
+const HEIGHT_HEADER = BOTTOM_HEADER_HEIGHT / 2 + 50 + getStatusBarHeight();
 const Vouchers = ({navigation}) => {
   const dispatch = useDispatch();
 
@@ -21,7 +26,7 @@ const Vouchers = ({navigation}) => {
   const _handleSort = (value) => {
     setVisible(false);
     setValueSort(value);
-    console.log('VALUE', values);
+
     let sortOption = {};
     switch (value) {
       case 0: {
@@ -62,6 +67,15 @@ const Vouchers = ({navigation}) => {
       }),
     );
   }, []);
+  const sortStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 999,
+    width: WIDTH,
+    height: visible ? HEIGHT : 0,
+    marginTop: visible ? HEIGHT_HEADER : 0,
+  };
   return (
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('stores.voucherCode')} />
@@ -90,14 +104,16 @@ const Vouchers = ({navigation}) => {
           </View>
         </TouchableOpacity>
       </View>
-      <SortDropDown
-        options={VOUCHER_SORT_ITEM}
-        visible={visible}
-        setVisible={setVisible}
-        setAction={setAction}
-        setValueSort={_handleSort}
-        valueSort={valueSort}
-      />
+      <View style={sortStyle}>
+        <SortDropDown
+          options={VOUCHER_SORT_ITEM}
+          visible={visible}
+          setVisible={setVisible}
+          // setAction={setAction}
+          setValueSort={_handleSort}
+          valueSort={valueSort}
+        />
+      </View>
       <VoucherList navigation={navigation} />
     </ThemeView>
   );

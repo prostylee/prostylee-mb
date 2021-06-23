@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 const SortDropDown = ({
   visible,
   setVisible,
-  setAction,
+
   setValueSort,
   valueSort,
   options,
