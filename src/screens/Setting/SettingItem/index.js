@@ -8,7 +8,7 @@ import list from './items';
 import {RightArrow} from 'svg/common';
 import {useNavigation} from '@react-navigation/native';
 import {ButtonOutlined} from 'components';
-import {commonActions, userActions} from 'reducers';
+import {commonActions, userActions, cartActions} from 'reducers';
 import {showMessage} from 'react-native-flash-message';
 
 const SettingItem = () => {
@@ -21,10 +21,12 @@ const SettingItem = () => {
   //funcs
   const onSignOut = async () => {
     await dispatch(commonActions.setInitialRouteName('SignInOptions'));
+    await dispatch(cartActions.resetListCart());
     await dispatch(userActions.userLogout());
     showMessage({
       message: i18n.t('logOutSuccess'),
       type: 'success',
+      position: 'top',
     });
   };
 

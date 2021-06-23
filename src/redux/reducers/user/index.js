@@ -77,6 +77,8 @@ export const actions = {
 export const selectors = {
   getUser: (state) => state.user.user,
   getUserToken: (state) => state.user.userToken,
+  getUserProfile: (state) => state.user.profile,
+  getUserStatistics: (state) => state.user.statistics,
 };
 
 const defaultState = {

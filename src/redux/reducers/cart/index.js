@@ -74,6 +74,7 @@ export const actions = {
   addItemToCart: createAction(types.ADD_ITEM_TO_CART),
   removeItemFromCart: createAction(types.REMOVE_ITEM_FROM_CART),
   updateItemOption: createAction(types.SET_CART_ITEM_UPDATE_OPTION),
+  resetListCart: createAction(types.RESET_LIST_CART),
   //List Payment
   setPaymentLoading: createAction(types.SET_PAYMENT_LOADING),
   getListPayment: createAction(types.GET_LIST_PAYMENT),
@@ -164,6 +165,9 @@ const UNIT_INCREASE = 1;
 export default handleActions(
   {
     //List Cart
+    [types.RESET_LIST_CART]: (state, {payload}) => {
+      return intialState;
+    },
     [types.SET_CART_LOADING]: (state, {payload}) => {
       return {...state, cartLoading: payload};
     },
