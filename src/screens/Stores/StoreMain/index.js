@@ -23,7 +23,7 @@ import {
   SearchBar,
 } from 'components';
 
-import {storeActions, searchActions} from 'redux/reducers';
+import {storeActions, searchActions, storeProfileActions} from 'redux/reducers';
 
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 import CustomBackground from './CustomBackground';
@@ -46,6 +46,7 @@ import {
   getStoreMainLoadingSelector,
 } from 'redux/selectors/storeMain';
 import AppScrollViewIOSBounceColorsWrapper from './AppScrollViewIOSBounceColorsWrapper';
+import {useIsFocused} from '@react-navigation/native';
 
 const heightShow = 334;
 const HeaderLeft = () => {
@@ -102,6 +103,8 @@ const Stores = (props) => {
   const location = useLocation();
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
+
+  const isFocused = useIsFocused();
 
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
@@ -187,6 +190,15 @@ const Stores = (props) => {
   useEffect(() => {
     if (!loading) handleRefreshing(false);
   }, [loading]);
+
+  useEffect(() => {
+    if (isFocused) {
+      dispatch(storeActions.clearPersonalSalersFilterState());
+      dispatch(storeActions.clearBestSellersFilterState());
+      dispatch(searchActions.clearProductsFilterState());
+      dispatch(storeProfileActions.clearStoreProfileFilterState());
+    }
+  }, [isFocused]);
   return (
     <View style={{flex: 1, backgroundColor: '#E82E46'}}>
       <HeaderAnimated

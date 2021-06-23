@@ -29,7 +29,7 @@ export default EStyleSheet.create({
     marginRight: 8,
     backgroundColor: '$white',
     borderColor: '$line',
-    borderRadius: 10,
+    borderRadius: 4,
     borderWidth: 1,
     fontSize: 14,
     paddingHorizontal: 10,

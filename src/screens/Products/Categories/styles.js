@@ -37,4 +37,12 @@ export default EStyleSheet.create({
   viewFooter: {
     marginBottom: 6,
   },
+  activeItem: {
+    backgroundColor: '$purpleActive',
+    borderBottomColor: '$purple',
+    borderBottomWidth: 3,
+  },
+  wrapItems: {
+    paddingTop: 6,
+  },
 });

@@ -12,6 +12,7 @@ import {
   getHasLoadMoreRightCategoriesSelector,
   getPageRightCategoriesSelector,
   getCategoriesParentSelectSelector,
+  getCategoriesSelectSelector,
 } from 'redux/selectors/categories';
 
 import CategoriesRightItem from './item.js';
@@ -25,6 +26,9 @@ const Categories = ({navigation}) => {
   const dispatch = useDispatch();
   const categoryParentSelect = useSelector((state) =>
     getCategoriesParentSelectSelector(state),
+  );
+  const categoriesSelect = useSelector((state) =>
+    getCategoriesSelectSelector(state),
   );
 
   const [refreshing, handleRefreshing] = useState(false);
@@ -84,6 +88,7 @@ const Categories = ({navigation}) => {
       </View>
     );
   };
+
   return (
     <View style={styles.container}>
       {(loading || !categoryParentSelect) &&
@@ -111,7 +116,11 @@ const Categories = ({navigation}) => {
           horizontal
           data={listRightCategories}
           renderItem={({item}) => (
-            <CategoriesRightItem navigation={navigation} item={item} />
+            <CategoriesRightItem
+              navigation={navigation}
+              item={item}
+              isActive={item?.id === categoriesSelect?.id}
+            />
           )}
           keyExtractor={(item, index) => index}
           refreshing={refreshing}

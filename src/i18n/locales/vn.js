@@ -155,6 +155,7 @@ export default {
     ratingFailContent: 'Oops! Đánh giá thất bại, vui lòng thử lại sau',
     ratingNotFoundTitle: 'Oops, hiện không có đánh giá nào phù hợp',
     ratingNotFoundContent: 'Mua hàng để bổ sung vào danh sách nhé!',
+    notHaveRate: 'Sản phẩm hiện chưa có đánh giá',
   },
   productDetail: {
     reduce: 'Giảm',
@@ -245,7 +246,7 @@ export default {
     size: 'Size',
     resultsNotfound: 'Không có kết quả',
     follow: 'Theo dõi',
-    unfollow: 'Bỏ theo dõi',
+    unfollow: 'Đã theo dõi',
   },
   Notification: {
     noData: 'Hiện tại bạn không có thông báo nào',
