@@ -19,6 +19,7 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     paddingLeft: 12,
+    maxWidth: '100%',
   },
   logoContainer: {
     width: 46,
@@ -47,6 +48,7 @@ export default EStyleSheet.create({
     fontWeight: '400',
     lineHeight: 16,
     marginLeft: 5,
+    maxWidth: '80%',
   },
   followButton: {
     width: 100,
@@ -62,5 +64,9 @@ export default EStyleSheet.create({
     fontWeight: '500',
     lineHeight: 20,
     color: '$white',
+  },
+  infoWrapper: {
+    flexDirection: 'row',
+    maxWidth: '55%',
   },
 });

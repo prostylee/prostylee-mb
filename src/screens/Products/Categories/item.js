@@ -6,7 +6,7 @@ import styles from './styles';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch} from 'react-redux';
 import {categoriesActions} from 'redux/reducers';
-const CategoriesRightItem = ({item}) => {
+const CategoriesRightItem = ({item, isActive = false}) => {
   const dispatch = useDispatch();
   const clickItem = () => {
     dispatch(categoriesActions.setCategoriesSelect(item));
@@ -19,7 +19,7 @@ const CategoriesRightItem = ({item}) => {
     // );
   };
   return (
-    <View style={styles.wrapItems}>
+    <View style={[styles.wrapItems, isActive ? styles.activeItem : null]}>
       <TouchableOpacity onPress={clickItem}>
         <View style={styles.item}>
           <Image

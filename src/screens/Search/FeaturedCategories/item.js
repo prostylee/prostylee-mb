@@ -13,6 +13,7 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
   const dispatch = useDispatch();
   const filterState = useSelector((state) => getProductFilterState(state));
   const clickItem = (item) => {
+    console.log('ITEM', item);
     dispatch(
       searchActions.setProductFilterState({
         ...filterState,

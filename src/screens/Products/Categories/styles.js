@@ -4,12 +4,13 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     marginTop: 44,
+    height: 110,
   },
   item: {
     justifyContent: 'center',
     alignItems: 'center',
     width: 90,
-    height: 90,
+    height: '100%',
     padding: 8,
   },
   itemActive: {
@@ -36,5 +37,19 @@ export default EStyleSheet.create({
   },
   viewFooter: {
     marginBottom: 6,
+  },
+  activeItem: {
+    backgroundColor: '$purpleActive',
+    borderBottomColor: '$purple',
+    borderBottomWidth: 3,
+  },
+  wrapItems: {
+    paddingTop: 16,
+    paddingBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 90,
+    height: 90,
+    padding: 8,
   },
 });

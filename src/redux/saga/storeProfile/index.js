@@ -13,7 +13,6 @@ const getStoreProfile = function* ({payload}) {
   try {
     yield put(storeProfileActions.setStoreProfileLoading(true));
     const res = yield call(getStoreProfileApi, payload);
-    console.log('STORE PROFILE INFO', JSON.stringify(res, null, 2));
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeProfileActions.getStoreInfoSuccess(res?.data?.data));
     } else {

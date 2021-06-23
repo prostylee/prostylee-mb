@@ -7,9 +7,19 @@ import styles from './styles';
 import {ThemeView, Header, Image} from 'components';
 import RightCategories from './Right';
 import LeftCategories from './Left';
-
+import {useDispatch} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
+import {productActions} from 'redux/reducers';
 const Categories = ({navigation}) => {
+  const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const [banner, setBanner] = React.useState('');
+
+  React.useEffect(() => {
+    if (isFocused) {
+      dispatch(productActions.clearProductCategoriesFilterState());
+    }
+  }, [isFocused]);
   return (
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('headerTitle.categories')} />

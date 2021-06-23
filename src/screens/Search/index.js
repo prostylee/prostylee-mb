@@ -11,11 +11,13 @@ import FeaturedCategories from './FeaturedCategories';
 import SearchResult from './SearchResult';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch, useSelector} from 'react-redux';
-import {searchActions} from 'redux/reducers';
+import {searchActions, storeProfileActions} from 'redux/reducers';
 import {getCurrentKeyword} from 'redux/selectors/search';
+import {useIsFocused} from '@react-navigation/native';
 let timeoutSearch = null;
 const Search = ({navigation}) => {
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
   const [searchQuery, setSearchQuery] = React.useState(currentKeyword);
 
@@ -55,6 +57,12 @@ const Search = ({navigation}) => {
   React.useEffect(() => {
     setSearchQuery(currentKeyword);
   }, [currentKeyword]);
+  React.useEffect(() => {
+    if (isFocused) {
+      dispatch(searchActions.clearProductsFilterState());
+      dispatch(storeProfileActions.clearStoreProfileFilterState());
+    }
+  }, [isFocused]);
 
   return (
     <ThemeView style={styles.container} isFullView>
