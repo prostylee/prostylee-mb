@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {MessageOutlined, BellWithNotiBadge, Bell} from 'svg/common';
-import {Colors, ChatIcon} from 'components';
+import {Colors, ChatIcon, NotificationIcon} from 'components';
 
 import styles from './styles';
 
@@ -16,28 +16,7 @@ const GroupHeaderRightButton = ({haveNoti = false}) => {
         }}>
         <ChatIcon strokeWidth={2} />
       </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        {haveNoti ? (
-          <BellWithNotiBadge
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        ) : (
-          <Bell
-            width={24}
-            height={24}
-            color={Colors['$lightGray']}
-            strokeWidth={2}
-          />
-        )}
-      </TouchableOpacity>
+      <NotificationIcon strokeWidth={2} />
     </View>
   );
 };

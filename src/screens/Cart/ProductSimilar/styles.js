@@ -18,9 +18,10 @@ export default EStyleSheet.create({
   },
   title: {
     fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '600',
+    fontWeight: Platform.OS === 'android' ? '700' : '600',
     color: '$black',
+    fontFamily: '$font1',
+    lineHeight: 20,
   },
   carouselContainer: {
     paddingLeft: 16,
