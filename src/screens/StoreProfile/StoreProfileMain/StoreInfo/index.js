@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import styles from './style';
-import {SwiperFlatList} from 'react-native-swiper-flatlist';
+
 import img from 'assets/images/slider1.png';
-import {Image, Colors} from 'components';
+import {Image} from 'components';
 import {MapPin, TreeDotHorizontal} from 'svg/common';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import i18n from 'i18n';
@@ -11,19 +11,20 @@ import {
   followStoreService,
   unFollowStoreService,
 } from '../../../../services/api/storeApi';
-const StoreInfo = ({name = '', address = '', logoUri = '', item = {}}) => {
+const StoreInfo = ({storeInfo = {}}) => {
   const [followed, setFollowed] = React.useState(
-    item?.followStatusOfUserLogin ? true : false,
+    storeInfo?.followStatusOfUserLogin ? true : false,
   );
   const _handleClick = async () => {
     let res = null;
     try {
       if (followed) {
-        res = await unFollowStoreService(item?.id);
+        res = await unFollowStoreService(storeInfo?.id);
       } else {
-        res = await followStoreService(item?.id);
+        res = await followStoreService(storeInfo?.id);
       }
       setFollowed(!followed);
+      console.log('RESSSS', res);
     } catch (err) {
       showMessage({
         message: `${res?.data?.status}: ${res?.data?.error}`,
@@ -31,18 +32,23 @@ const StoreInfo = ({name = '', address = '', logoUri = '', item = {}}) => {
       });
     }
   };
-
+  const {logoUrl, name, location} = storeInfo;
+  console.log('LOCATION', location);
   return (
     <View style={styles.container}>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.infoWrapper}>
         <View style={styles.logoContainer}>
-          <Image style={styles.logo} source={logoUri ? {uri: logoUri} : img} />
+          <Image style={styles.logo} source={logoUrl ? {uri: logoUrl} : img} />
         </View>
         <View style={styles.storeNameWrapper}>
-          <Text style={styles.storeName}>{name}</Text>
+          <Text style={styles.storeName}>{name || ''}</Text>
           <View style={styles.storeAddressWrapper}>
             <MapPin />
-            <Text style={styles.storeAddressText}>{address}</Text>
+            <Text
+              numberOfLines={1}
+              style={
+                styles.storeAddressText
+              }>{`${location?.address} ${location?.state}`}</Text>
           </View>
         </View>
       </View>

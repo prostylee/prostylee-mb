@@ -70,6 +70,7 @@ const StoreProfileMain = (props) => {
 
   const loading = useSelector((state) => getStoreLoadingSelector(state));
   const storeInfo = useSelector((state) => getStoreInfoSelector(state));
+
   useEffect(() => {
     dispatch(storeProfileActions.getStoreInfo(1));
     dispatch(
@@ -290,13 +291,8 @@ const StoreProfileMain = (props) => {
           <RefreshControl refreshing={refreshing} onRefresh={_handleRefresh} />
         }>
         <CustomBackground />
-        <StoreInfo
-          logoUri={storeInfo?.logoUrl}
-          name={storeInfo?.name}
-          address="Ho Chi Minh, Viet Nam"
-          item={storeInfo}
-        />
-        <MidAdvertisingSlider />
+        <StoreInfo storeInfo={storeInfo} />
+        <MidAdvertisingSlider banners={storeInfo.storeBannerResponses} />
         <VoucherHorizontalList
           navigation={props.navigation}
           storeId={storeId}
