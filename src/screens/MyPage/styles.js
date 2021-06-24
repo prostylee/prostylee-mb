@@ -85,7 +85,7 @@ export default EStyleSheet.create({
   headerFull: {
     position: 'absolute',
     top: barHeight,
-    zIndex: 11,
+    zIndex: 100,
     right: 20,
     justifyContent: 'space-between',
     flexDirection: 'row',
