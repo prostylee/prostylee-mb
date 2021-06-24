@@ -220,6 +220,7 @@ const Stores = (props) => {
             />
           </View>
         }
+        justBottomComponent={true}
         bottomHeight={30}
         hideBottomBorder={true}
         heightShow={heightShow - 200}
