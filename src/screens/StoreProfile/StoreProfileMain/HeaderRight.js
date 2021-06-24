@@ -1,8 +1,8 @@
 import React from 'react';
 import {TouchableOpacity, View, Text} from 'react-native';
-import {MessageOutlined, ChevronLeft, Bell} from 'svg/common';
+
 import styles from './styles';
-import {Colors, ChatIcon, Bag} from 'components';
+import {Colors, ChatIcon, Bag, NotificationIcon} from 'components';
 const HeaderRight = ({opacity, isAnimated = false}) => {
   return isAnimated ? (
     <View
@@ -14,15 +14,12 @@ const HeaderRight = ({opacity, isAnimated = false}) => {
         },
       ]}>
       <ChatIcon />
-
-      <TouchableOpacity>
-        <Bell
-          color={Colors?.['$icon']}
-          width={20}
-          height={20}
-          strokeWidth={2}
-        />
-      </TouchableOpacity>
+      <NotificationIcon
+        color={Colors?.['$icon']}
+        width={20}
+        height={20}
+        strokeWidth={2}
+      />
     </View>
   ) : (
     <View
