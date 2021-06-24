@@ -219,24 +219,23 @@ const ListProduct = ({navigation, data}) => {
   /* Extract note */
   const groupDataByStore = (list) => {
     return list.reduce((acc, product) => {
-      const {item, quantity, options} = product;
-      const {storeId, productOwnerResponse, id} = item;
-      const foundIndex = acc.findIndex((element) => element.key === storeId);
+      const {item} = product;
+      const {storeId, productOwnerResponse} = item;
+      const foundIndex = acc.findIndex(
+        (element) => element.storeId === storeId,
+      );
       if (foundIndex === -1) {
         return [
           ...acc,
           {
-            key: storeId,
+            storeId: storeId,
             storeName: productOwnerResponse.name,
             storeAvatar: productOwnerResponse.logoUrl,
-            id: id,
-            data: [item],
-            amount: quantity,
-            options: options,
+            data: [product],
           },
         ];
       }
-      acc[foundIndex].data = [...acc[foundIndex].data, item];
+      acc[foundIndex].data = [...acc[foundIndex].data, product];
       return acc;
     }, []);
   };
