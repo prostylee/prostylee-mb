@@ -53,3 +53,8 @@ export const getPageListNotificationDiscountSelector = createSelector(
   searchReducer,
   (data) => data?.pageListNotificationDiscount,
 );
+
+export const getCountUnreadNotiSelector = createSelector(
+  searchReducer,
+  (data) => data?.countUnreadNoti || 0,
+);

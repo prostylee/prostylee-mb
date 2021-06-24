@@ -40,6 +40,9 @@ export const types = {
 
   //Delete notification
   DELETE_NOTFICATION: 'DELETE_NOTFICATION',
+  //COUNT UNREAD NOTI
+  GET_COUNT_UNREAD_NOTI: 'GET_COUNT_UNREAD_NOTI',
+  SET_COUNT_UNREAD_NOTI: 'SET_COUNT_UNREAD_NOTI',
 };
 
 export const actions = {
@@ -99,6 +102,9 @@ export const actions = {
 
   //Delete notification
   deleteNotification: createAction(types.DELETE_NOTFICATION),
+  //COUNT UNREAD NOTI
+  getCountUnreadNotification: createAction(types.GET_COUNT_UNREAD_NOTI),
+  setCountUnreadNoti: createAction(types.SET_COUNT_UNREAD_NOTI),
 };
 
 export const defaultState = {
@@ -117,6 +123,8 @@ export const defaultState = {
   hasLoadMoreListNotificationDiscount: false,
   pageListNotificationDiscount: 0,
   limitListNotificationDiscount: 12,
+  // UNread noti
+  countUnreadNoti: 0,
 };
 
 const PAGE_INIT = 0;
@@ -255,6 +263,13 @@ export const handleActions = {
     state.listNotification.content = newContent;
     return {
       ...state,
+    };
+  },
+  //COUNT unread noti
+  [types.SET_COUNT_UNREAD_NOTI]: (state, {payload}) => {
+    return {
+      ...state,
+      countUnreadNoti: payload,
     };
   },
 };

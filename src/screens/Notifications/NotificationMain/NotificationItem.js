@@ -1,7 +1,7 @@
 import styles from './styles';
 
 import React, {useRef} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {Colors, Image} from 'components';
 import cmt1 from 'assets/images/cmt1.jpeg';
@@ -16,6 +16,7 @@ import {DeleteIcon, SeenIcon} from '../../../svg/common';
 import {showMessage} from 'react-native-flash-message';
 import {DELETE_SUCCESS} from 'constants';
 import i18n from 'i18n';
+import {getCountUnreadNotiSelector} from 'redux/selectors/notification';
 
 const NotificationItem = ({
   id,
@@ -28,6 +29,10 @@ const NotificationItem = ({
 }) => {
   const dispatch = useDispatch();
   const swipeableRef = useRef();
+  const count = useSelector(
+    (state) => getCountUnreadNotiSelector(state),
+    () => {},
+  );
 
   const onMarkAsRead = () => {
     if (!markAsRead) {
@@ -41,8 +46,10 @@ const NotificationItem = ({
             return;
           }
           dispatch(notificationActions.setMarkAsRead(id));
+          dispatch(notificationActions.setCountUnreadNoti(count - 1));
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log('ERROR MARKS AS READ', err);
           showMessage({
             message: i18n.t('serverError'),
             type: 'danger',
@@ -54,7 +61,7 @@ const NotificationItem = ({
     }
   };
 
-  const onDeleteNotification = () => {
+  const onDeleteNotification = (isRead) => {
     deleteNotificationService(id)
       .then((res) => {
         if (res.data.status !== DELETE_SUCCESS) {
@@ -68,6 +75,9 @@ const NotificationItem = ({
           swipeableRef.current?.close();
         }
         dispatch(notificationActions.deleteNotification(id));
+        if (!markAsRead) {
+          dispatch(notificationActions.setCountUnreadNoti(count - 1));
+        }
         showMessage({
           message: i18n.t('deleteSuccess'),
           type: 'success',

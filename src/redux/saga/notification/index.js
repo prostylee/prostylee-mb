@@ -3,6 +3,7 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {
   getListNotificationService,
   getListNotificationDiscountService,
+  countNotification,
 } from 'services/api/notificationApi';
 
 import {notificationActions, notificationTypes} from 'reducers';
@@ -91,7 +92,19 @@ const getLoadMoreListNotificationDiscount = function* ({payload}) {
     );
   }
 };
-
+const getCountUnreadNoti = function* ({payload}) {
+  try {
+    const res = yield call(countNotification, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(notificationActions.setCountUnreadNoti(res.data.data?.data));
+    } else {
+      yield put(notificationActions.setCountUnreadNoti(0));
+    }
+  } catch (e) {
+    console.error(e);
+    notificationActions.setCountUnreadNoti(0);
+  }
+};
 const watcher = function* () {
   //List LIST_NOTIFICATION
   yield takeLatest(
@@ -112,5 +125,6 @@ const watcher = function* () {
     notificationTypes.GET_LIST_NOTIFICATION_DISCOUNT_LOAD_MORE,
     getLoadMoreListNotificationDiscount,
   );
+  yield takeLatest(notificationTypes.GET_COUNT_UNREAD_NOTI, getCountUnreadNoti);
 };
 export default watcher();
