@@ -7,6 +7,7 @@ import {Image} from 'components';
 import {MapPin, TreeDotHorizontal} from 'svg/common';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import i18n from 'i18n';
+import {showMessage} from 'react-native-flash-message';
 import {
   followStoreService,
   unFollowStoreService,
@@ -31,7 +32,10 @@ const StoreInfo = ({storeInfo = {}}) => {
       });
     }
   };
-  const {logoUrl, name, location} = storeInfo;
+  const logoUrl = storeInfo?.logoUrl ? storeInfo?.logoUrl : '';
+  const name = storeInfo?.name ? storeInfo?.name : '';
+  const location = storeInfo?.location ? storeInfo?.location : {};
+
   return (
     <View style={styles.container}>
       <View style={styles.infoWrapper}>
