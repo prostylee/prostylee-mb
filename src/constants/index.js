@@ -68,7 +68,7 @@ export const VOUCHER_SORT_ITEM = [
 
 export const FILTER_TAGS = [
   {
-    label: 'Best seller',
+    label: 'Best-seller',
     value: {
       bestSeller: true,
     },
