@@ -132,6 +132,7 @@ const Footer = ({navigation, productData, choiceSelect}) => {
         labelStyle={{}}
         label={i18n.t('productDetail.buttonStore')}
         onPress={goToStore}
+        disabled={attributes.length !== choiceSelect.length}
       />
     ) : (
       <ButtonOutlined
