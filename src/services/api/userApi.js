@@ -1,8 +1,12 @@
 import {_fetch} from '../config';
-import {GET} from 'constants';
+import {GET, PUT} from 'constants';
 
 export const getProfile = (id) => {
   return _fetch(GET, '/profile/' + id);
+};
+
+export const updateProfile = (payload) => {
+  return _fetch(PUT, '/profile', payload);
 };
 
 export const getPostOfProfile = (payload) => {
