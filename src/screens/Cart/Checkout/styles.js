@@ -287,7 +287,7 @@ export default EStyleSheet.create({
     height: 60,
     width: 60,
     borderRadius: 4,
-    borderWidth: 1,
+
     borderColor: '#E9EAEB',
   },
   name: {
@@ -329,5 +329,8 @@ export default EStyleSheet.create({
   },
   viewFooter: {
     marginBottom: 6,
+  },
+  listInner: {
+    paddingBottom: '40rem + 100',
   },
 });

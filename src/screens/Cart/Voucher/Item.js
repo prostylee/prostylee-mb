@@ -12,6 +12,7 @@ import {cartActions} from 'redux/reducers';
 import {getVoucherUseSelector} from 'redux/selectors/cart';
 import {checkVoucher} from 'services/api/cartApi';
 import {showMessage} from 'react-native-flash-message';
+import {TicketCutLine} from 'svg/common';
 
 const ProductItem = ({item, navigation, params}) => {
   const dispatch = useDispatch();
@@ -97,8 +98,8 @@ const ProductItem = ({item, navigation, params}) => {
           <View>
             <Image
               source={
-                item?.logo
-                  ? {uri: item?.logo}
+                item?.storeOwner?.logoUrl
+                  ? {uri: item?.storeOwner?.logoUrl}
                   : require('assets/images/default.png')
               }
               resizeMode="cover"
@@ -108,18 +109,20 @@ const ProductItem = ({item, navigation, params}) => {
           </View>
           <View style={styles.wrapInfo}>
             <Text numberOfLines={1} style={styles.textCategory}>
-              {item.voucherOwner}
+              {item?.storeOwner?.name}
             </Text>
             <Text numberOfLines={2} style={styles.textDescription}>
               {item.name}
             </Text>
           </View>
         </View>
-        <View style={styles.dashedLine}></View>
+        <View style={{alignSelf: 'center'}}>
+          <TicketCutLine />
+        </View>
         <View style={styles.wrapExpiredVoucher}>
           <View style={styles.wrapExpiredText}>
             <Text numberOfLines={1} style={styles.textExpired}>{`HSD: ${
-              item.expiryDate ? item.expiryDate : 'Không có'
+              item.cndValidTo ? item.cndValidTo : 'Không có'
             }`}</Text>
           </View>
           <View>

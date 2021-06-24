@@ -26,7 +26,12 @@ export const getUserAddress = () => {
 };
 
 export const getVoucherList = (payload) => {
-  return _fetch(GET, '/voucher/userLogin', {...payload, page: 0, limit: 10});
+  return _fetch(GET, '/user-vouchers', {
+    ...payload,
+    savedByMe: true,
+    page: 0,
+    limit: 10,
+  });
 };
 
 export const checkVoucher = (payload) => {

@@ -28,7 +28,7 @@ const ProductSimilar = (props) => {
     <View style={styles.container}>
       <View style={styles.titleRow}>
         <Text style={styles.title}>{i18n.t('cart.forYou')}</Text>
-        <TouchableOpacity style={styles.listMore} onPress={() => {}}>
+        {/* <TouchableOpacity style={styles.listMore} onPress={() => {}}>
           <Text style={styles.listMoreText}>{i18n.t('cart.seeMore')}</Text>
           <IonIcons
             name={'ios-chevron-forward'}
@@ -36,7 +36,7 @@ const ProductSimilar = (props) => {
             color={colors['$purple']}
             style={styles.iconContainer}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <FlatList
         data={suggestionList}
