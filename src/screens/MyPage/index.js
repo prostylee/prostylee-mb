@@ -49,7 +49,7 @@ const Index = ({navigation}) => {
   const userStatistics = useSelector((state) =>
     userSelectors.getUserStatistics(state),
   );
-  const userAvatar = `${configEnv.api_url}/profile/${userProfile.id}/avatar`;
+  const userAvatar = `${configEnv.api_url}/profile/${userProfile?.id}/avatar`;
   const statisticsData = !isEmpty(userStatistics) ? userStatistics : {};
   console.log('userStatistics', JSON.stringify(userStatistics, null, 4));
 
@@ -93,7 +93,7 @@ const Index = ({navigation}) => {
 
   React.useEffect(() => {
     if (isFocused) {
-      dispatch(userActions.getStatistics(userProfile.id));
+      dispatch(userActions.getStatistics(userProfile?.id));
     }
   }, [isFocused]);
 
@@ -140,7 +140,7 @@ const Index = ({navigation}) => {
           <View style={styles.wrapScroll}>
             <ImageBackground
               style={styles.backgroundImageStyle}
-              source={{uri: userProfile.avatar ? userAvatar : ''}}
+              source={{uri: userProfile?.avatar ? userAvatar : ''}}
               blurRadius={10}>
               <View style={styles.scrollViewStyle}>
                 <View style={styles.wrapAvatar}>
@@ -153,10 +153,10 @@ const Index = ({navigation}) => {
                 <View style={styles.viewInfoUser}>
                   <View style={styles.wrapUserNameText}>
                     <Text style={styles.userNameText}>
-                      {userProfile.fullName}
+                      {userProfile?.fullName}
                     </Text>
                   </View>
-                  {userProfile.bio ? (
+                  {userProfile?.bio ? (
                     <View style={{paddingHorizontal: 16}}>
                       <Text
                         style={{
@@ -165,7 +165,7 @@ const Index = ({navigation}) => {
                           fontSize: 14,
                           color: '#333333',
                         }}>
-                        {userProfile.bio}
+                        {userProfile?.bio}
                       </Text>
                     </View>
                   ) : null}
