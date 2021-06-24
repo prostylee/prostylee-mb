@@ -12,6 +12,7 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '4rem',
+    padding: 0,
   },
 
   disabledButton: {
@@ -133,7 +134,6 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     flex: 1,
-    padding: 10,
   },
   wrapContentVoucher: {
     flexDirection: 'row',
@@ -187,5 +187,8 @@ export default EStyleSheet.create({
     fontSize: 13,
     lineHeight: 18,
     fontWeight: '400',
+  },
+  listInner: {
+    paddingVertical: 20,
   },
 });

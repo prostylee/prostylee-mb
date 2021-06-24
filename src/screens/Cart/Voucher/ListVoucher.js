@@ -111,6 +111,7 @@ const ListVoucher = ({navigation, params}) => {
         </View>
       ) : (
         <FlatList
+          contentContainerStyle={styles.listInner}
           data={listVoucher}
           renderItem={({item}) => (
             <Item navigation={navigation} item={item} params={params} />

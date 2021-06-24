@@ -64,11 +64,15 @@ const NotificationItem = ({
           });
           return;
         }
+        if (swipeableRef && swipeableRef.current) {
+          swipeableRef.current?.close();
+        }
         dispatch(notificationActions.deleteNotification(id));
         showMessage({
           message: i18n.t('deleteSuccess'),
           type: 'success',
         });
+        return;
       })
       .catch((e) => {
         showMessage({

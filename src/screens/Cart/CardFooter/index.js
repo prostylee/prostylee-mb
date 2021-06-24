@@ -50,6 +50,7 @@ const CardFooter = ({
 
   const onRemoveCoupon = () => {
     dispatch(cartActions.setVoucherUse(null));
+    setVoucher(null);
   };
 
   const onChangeVoucher = () => {
@@ -100,13 +101,15 @@ const CardFooter = ({
                 <>
                   <CouponSvg />
                   <Chip style={styles.wrapChip} onClose={onRemoveCoupon}>
-                    <Text style={styles.chipText}>&nbsp;{voucher.key}</Text>
+                    <Text style={styles.chipText}>&nbsp;{voucher?.code}</Text>
                   </Chip>
                 </>
               ) : (
                 <>
                   <CouponSvg />
-                  <Text>&nbsp;Mã giảm giá</Text>
+                  <Chip style={styles.wrapChip}>
+                    <Text style={styles.chipText}>&nbsp;&nbsp;Mã giảm giá</Text>
+                  </Chip>
                 </>
               )}
             </View>

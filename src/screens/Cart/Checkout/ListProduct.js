@@ -12,7 +12,7 @@ import CardAddress from '../CardAddress';
 import {CartEmpty, DeliveryIcon, DownIcon, RightIcon} from 'svg/common';
 import {currencyFormat} from 'utils/currency';
 import Collapsible from 'react-native-collapsible';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {RadioButton} from 'react-native-paper';
 import {
   getListCartSelector,
@@ -247,6 +247,7 @@ const ListProduct = ({navigation, data}) => {
 
   const listDelivery = useMemo(() => deliveries, [JSON.stringify(deliveries)]);
 
+  console.log('GROUP DATA', JSON.stringify(groupData, null, 2));
   return (
     <View style={styles.container}>
       {Object.keys(groupData).length > 0 ? (
@@ -269,6 +270,7 @@ const ListProduct = ({navigation, data}) => {
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 onScroll={onScrollEvent}
+                contentContainerStyle={styles.listInner}
               />
             </View>
           </View>

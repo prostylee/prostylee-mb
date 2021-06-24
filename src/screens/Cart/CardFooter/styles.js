@@ -60,7 +60,6 @@ export default EStyleSheet.create({
   },
   btnCoupon: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
   },
@@ -86,7 +85,7 @@ export default EStyleSheet.create({
     lineHeight: 18,
     fontWeight: '400',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
     textAlign: 'center',
@@ -105,6 +104,8 @@ export default EStyleSheet.create({
   },
   wrapChip: {
     backgroundColor: 'transparent',
+    padding: 0,
+    margin: 0,
   },
   chipText: {
     color: '$purple',
@@ -112,5 +113,11 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
+  },
+  couponText: {
+    color: '$purple',
+    fontSize: 13,
+    fontWeight: '400',
+    lineHeight: 18,
   },
 });
