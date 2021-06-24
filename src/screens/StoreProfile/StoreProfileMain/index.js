@@ -291,7 +291,7 @@ const StoreProfileMain = (props) => {
         }>
         <CustomBackground />
         <StoreInfo storeInfo={storeInfo} />
-        <MidAdvertisingSlider banners={storeInfo.storeBannerResponses} />
+        <MidAdvertisingSlider banners={storeInfo?.storeBannerResponses} />
         <VoucherHorizontalList
           navigation={props.navigation}
           storeId={storeId}
