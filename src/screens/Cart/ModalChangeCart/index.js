@@ -115,7 +115,7 @@ const ModalChangeCart = ({currentOptions, productId, closeModal}) => {
           </View>
           <View style={styles.wrapPrice}>
             <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(price, 'đ')}
+              {currencyFormat(price || 0, 'đ')}
             </Text>
           </View>
           <ScrollView
