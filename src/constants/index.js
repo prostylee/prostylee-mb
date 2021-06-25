@@ -68,16 +68,16 @@ export const VOUCHER_SORT_ITEM = [
 
 export const FILTER_TAGS = [
   {
-    label: 'Best-seller',
-    value: {
-      bestSeller: true,
-    },
-  },
-  {
     label: 'Gần đây',
     value: {
       atitude: 10.806406363857086,
       longitude: 106.6634168400805,
+    },
+  },
+  {
+    label: 'Best-seller',
+    value: {
+      bestSeller: true,
     },
   },
   {

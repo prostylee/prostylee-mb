@@ -5,7 +5,7 @@ const {width: WIDTH} = Dimensions.get('window');
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '$white',
+    backgroundColor: '$bgColor',
   },
   safeAreaTopStyle: {
     backgroundColor: '$bgColor',
@@ -20,14 +20,16 @@ export default EStyleSheet.create({
   },
   wrapper: {
     flex: 1,
+    marginTop: 6,
   },
   dropDownContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 15,
+    padding: 16,
+    backgroundColor: '$white',
   },
   dropDown: {
-    width: 200,
+    marginLeft: 10,
   },
   buttonContainer: {
     position: 'absolute',

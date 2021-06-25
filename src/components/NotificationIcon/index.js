@@ -1,53 +1,42 @@
 import React from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {BellWithNotiBadge, Bell} from 'svg/common';
+import {Bell} from 'svg/common';
 import PropTypes from 'prop-types';
 import {notificationActions} from 'redux/reducers';
-import {getListNotificationSelector} from 'redux/selectors/notification.js';
+import {getCountUnreadNotiSelector} from 'redux/selectors/notification';
 import {useDispatch, useSelector} from 'react-redux';
 
 const NotiIcon = ({color, size, strokeWidth}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
-  const listListNotificationSelector = useSelector(
-    (state) => getListNotificationSelector(state),
+  const count = useSelector(
+    (state) => getCountUnreadNotiSelector(state),
     () => {},
   );
-  const listListNotification = listListNotificationSelector?.content || [];
-  React.useEffect(() => {
-    dispatch(
-      notificationActions.getListNotification({
-        page: 0,
-        limit: 100,
-      }),
-    );
-  }, [dispatch]);
-  let listUnreadNoti = listListNotification.filter((v) => !v.markAsRead);
 
+  React.useEffect(() => {
+    dispatch(notificationActions.getCountUnreadNotification());
+  }, [dispatch]);
+  console.log('COUNT NOTI', count);
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() =>
         navigation.navigate('MainNotification', {isNotTabbar: true})
       }>
-      {listUnreadNoti && listUnreadNoti.length ? (
-        <BellWithNotiBadge
-          width={size}
-          height={size}
-          color={color}
-          strokeWidth={strokeWidth}
-        />
-      ) : (
-        <Bell
-          width={size}
-          height={size}
-          color={color}
-          strokeWidth={strokeWidth}
-        />
-      )}
+      <Bell
+        width={size}
+        height={size}
+        color={color}
+        strokeWidth={strokeWidth}
+      />
+      {count > 0 ? (
+        <View style={styles.badge}>
+          <Text style={styles.badgeText}>{count ? count : 0}</Text>
+        </View>
+      ) : null}
     </TouchableOpacity>
   );
 };
@@ -68,5 +57,23 @@ NotiIcon.propTypes = {
 const styles = EStyleSheet.create({
   container: {
     paddingHorizontal: 8,
+    position: 'relative',
+  },
+  badge: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    position: 'absolute',
+    bottom: 0,
+    right: 5,
+    backgroundColor: 'red',
+  },
+  badgeText: {
+    color: '#fff',
+    fontSize: 8,
+    textAlign: 'center',
+    fontWeight: '500',
   },
 });

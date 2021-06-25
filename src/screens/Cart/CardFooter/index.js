@@ -20,6 +20,7 @@ const CardFooter = ({
   deliveryMethod,
   voucher: voucherData,
   actionButton,
+  isCheckout = false,
 }) => {
   const [total, setTotal] = useState(0);
   const [voucher, setVoucher] = useState();
@@ -77,45 +78,52 @@ const CardFooter = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.viewHeader}>
-        <View style={styles.viewCredit}>
-          <TouchableOpacity style={styles.btnCredit} onPress={onChangePayment}>
-            <View style={styles.labelCredit}>
-              <CreditSvg />
-              <Text>
-                &nbsp;
-                {paymentUsed.length ? paymentUsed[0].name : 'Thanh toán'}
-                &nbsp;
-              </Text>
-              <RightArrow />
-            </View>
-          </TouchableOpacity>
+      {isCheckout ? (
+        <View style={styles.viewHeader}>
+          <View style={styles.viewCredit}>
+            <TouchableOpacity
+              style={styles.btnCredit}
+              onPress={onChangePayment}>
+              <View style={styles.labelCredit}>
+                <CreditSvg />
+                <Text>
+                  &nbsp;
+                  {paymentUsed.length ? paymentUsed[0].name : 'Thanh toán'}
+                  &nbsp;
+                </Text>
+                <RightArrow />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.viewCoupon}>
+            <TouchableOpacity
+              mode="text"
+              style={styles.btnCoupon}
+              onPress={onChangeVoucher}>
+              <View style={styles.labelCoupon}>
+                {voucher ? (
+                  <>
+                    <CouponSvg />
+                    <Chip style={styles.wrapChip} onClose={onRemoveCoupon}>
+                      <Text style={styles.chipText}>&nbsp;{voucher?.code}</Text>
+                    </Chip>
+                  </>
+                ) : (
+                  <>
+                    <CouponSvg />
+                    <Chip style={styles.wrapChip}>
+                      <Text style={styles.chipText}>
+                        &nbsp;&nbsp;Mã giảm giá
+                      </Text>
+                    </Chip>
+                  </>
+                )}
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.viewCoupon}>
-          <TouchableOpacity
-            mode="text"
-            style={styles.btnCoupon}
-            onPress={onChangeVoucher}>
-            <View style={styles.labelCoupon}>
-              {voucher ? (
-                <>
-                  <CouponSvg />
-                  <Chip style={styles.wrapChip} onClose={onRemoveCoupon}>
-                    <Text style={styles.chipText}>&nbsp;{voucher?.code}</Text>
-                  </Chip>
-                </>
-              ) : (
-                <>
-                  <CouponSvg />
-                  <Chip style={styles.wrapChip}>
-                    <Text style={styles.chipText}>&nbsp;&nbsp;Mã giảm giá</Text>
-                  </Chip>
-                </>
-              )}
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+      ) : null}
+
       <View style={styles.viewBody}>
         <View style={styles.viewTemp}>
           <Text style={styles.viewTempTitle}>Tạm tính</Text>
