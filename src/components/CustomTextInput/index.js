@@ -27,6 +27,7 @@ const CustomTextInput = (props) => {
         }}
         mode="flat"
         error={hasError}
+        ref={inputProps.innerRef}
         {...inputProps}
       />
       {hasError && <Text style={styles.errMsg}>{errors[name]}</Text>}

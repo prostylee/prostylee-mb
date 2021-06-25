@@ -1,7 +1,7 @@
 import {emailRegex} from 'utils/common';
 import _ from 'lodash';
 import I18n from 'i18n';
-import {fullNameRegex, passwordRegex} from './common';
+import {fullNameRegex, passwordRegex, phoneRegex} from './common';
 
 export const validateEmail = (value) => {
   let error = '';
@@ -14,7 +14,13 @@ export const validateEmail = (value) => {
 };
 
 export const validatePhone = (value) => {
-  return '';
+  let error = '';
+  if (_.isEmpty(value)) {
+    error = I18n.t('validation.required', {field: I18n.t('user.phone')});
+  } else if (phoneRegex.test(value) === false) {
+    error = I18n.t('validation.invalid', {field: I18n.t('user.phone')});
+  }
+  return error;
 };
 
 export const validatePassword = (value) => {
