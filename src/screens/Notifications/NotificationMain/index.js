@@ -122,7 +122,7 @@ const Notifications = ({navigation}) => {
           navigation.navigate('PromoNotification');
         }}
       />
-      <Divider />
+
       {loading && !refreshing ? (
         <View style={styles.loadingContainter}>
           {Array.from('x'.repeat(Math.round(height - 120) / (width / 3))).map(
