@@ -78,17 +78,7 @@ const Stores = (props) => {
 
   const isFocused = useIsFocused();
 
-  let newLocation = null;
-  const location = useSelector((state) => userSelectors.getUserLocation(state));
-
-  if (!location || !location?.lat) {
-    newLocation = useLocation();
-  }
-  useEffect(() => {
-    if (newLocation?.lat && newLocation?.lon) {
-      dispatch(userActions.setUserLocation(newLocation));
-    }
-  }, [newLocation]);
+  const location = useLocation();
 
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],

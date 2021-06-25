@@ -22,17 +22,8 @@ const Search = ({navigation}) => {
   const isFocused = useIsFocused();
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
   const [searchQuery, setSearchQuery] = React.useState(currentKeyword);
-  let newLocation = null;
-  const location = useSelector((state) => userSelectors.getUserLocation(state));
 
-  if (!location || !location?.lat) {
-    newLocation = useLocation();
-  }
-  useEffect(() => {
-    if (newLocation?.lat && newLocation?.lon) {
-      dispatch(userActions.setUserLocation(newLocation));
-    }
-  }, [newLocation]);
+  const location = useLocation();
 
   const onChangeSearch = (query) => {
     clearTimeout(timeoutSearch);
