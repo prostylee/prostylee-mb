@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import Geocoder from 'react-native-geocoding';
 import RNLocation from 'react-native-location';
@@ -51,6 +51,7 @@ const useLocation = () => {
     })();
 
     return () => {
+      console.log('UNMOUNT LOCATION');
       locationSubscription && locationSubscription();
     };
   }, []);
@@ -69,7 +70,6 @@ const useLocation = () => {
         .catch((error) => console.log('GET ADDRESS ERROR', error));
     }
   }, [location.lat, location.lon]);
-
   return location;
 };
 

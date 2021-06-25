@@ -3,7 +3,6 @@ import React from 'react';
 import {Chip} from 'react-native-paper';
 import styles from './styles';
 import PropTypes from 'prop-types';
-import {FILTER_TAGS} from 'constants';
 
 const TagList = ({onTagPress, options}) => {
   const [active, setActive] = React.useState(null);

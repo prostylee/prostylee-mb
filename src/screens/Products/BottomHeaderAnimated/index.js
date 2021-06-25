@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
 import {Divider} from 'react-native-paper';
@@ -20,15 +20,25 @@ import {PRODUCT_SORT_ITEM} from 'constants';
 
 import {getProductCategoriesFilterStateSelector} from 'redux/selectors/product';
 import {productActions} from 'redux/reducers';
-import useLocation from 'hooks/useLocation';
+
+import {userSelectors} from 'reducers';
+import {useSelector} from 'react-redux';
+
 const BottomHeaderAnimated = ({
   onTagPress = () => {},
   setVisible,
   visible,
   valueSort,
 }) => {
-  const location = useLocation();
-  const FILTER_TAGS = [
+  const location = useSelector((state) => userSelectors.getUserLocation(state));
+
+  const [filterTags, setFilterTags] = useState([
+    {
+      label: 'Best-seller',
+      value: {
+        bestSeller: true,
+      },
+    },
     {
       label: 'Gần đây',
       value: {
@@ -37,18 +47,38 @@ const BottomHeaderAnimated = ({
       },
     },
     {
-      label: 'Best-seller',
-      value: {
-        bestSeller: true,
-      },
-    },
-    {
       label: 'Sale',
       value: {
         sale: true,
       },
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    if (location.lat && location.lon) {
+      setFilterTags([
+        {
+          label: 'Best-seller',
+          value: {
+            bestSeller: true,
+          },
+        },
+        {
+          label: 'Gần đây',
+          value: {
+            latitude: location?.lat,
+            longitude: location?.lon,
+          },
+        },
+        {
+          label: 'Sale',
+          value: {
+            sale: true,
+          },
+        },
+      ]);
+    }
+  }, [location.lat, location.lon]);
   return (
     <View style={styles.container}>
       <Divider />
@@ -91,7 +121,7 @@ const BottomHeaderAnimated = ({
         />
       </View>
       <Divider />
-      <TagList onTagPress={onTagPress} options={FILTER_TAGS} />
+      <TagList onTagPress={onTagPress} options={filterTags} />
     </View>
   );
 };

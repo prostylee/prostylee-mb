@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Dimensions, View} from 'react-native';
 import i18n from 'i18n';
 
@@ -11,15 +11,28 @@ import FeaturedCategories from './FeaturedCategories';
 import SearchResult from './SearchResult';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch, useSelector} from 'react-redux';
-import {searchActions, storeProfileActions} from 'redux/reducers';
+import {searchActions, storeProfileActions, userActions} from 'redux/reducers';
 import {getCurrentKeyword} from 'redux/selectors/search';
 import {useIsFocused} from '@react-navigation/native';
+import {userSelectors} from 'reducers';
+import useLocation from 'hooks/useLocation';
 let timeoutSearch = null;
 const Search = ({navigation}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
   const [searchQuery, setSearchQuery] = React.useState(currentKeyword);
+  let newLocation = null;
+  const location = useSelector((state) => userSelectors.getUserLocation(state));
+
+  if (!location || !location?.lat) {
+    newLocation = useLocation();
+  }
+  useEffect(() => {
+    if (newLocation?.lat && newLocation?.lon) {
+      dispatch(userActions.setUserLocation(newLocation));
+    }
+  }, [newLocation]);
 
   const onChangeSearch = (query) => {
     clearTimeout(timeoutSearch);

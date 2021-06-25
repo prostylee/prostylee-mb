@@ -3,10 +3,13 @@ import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import {MapPinFill} from 'svg/common';
-import useLocation from 'hooks/useLocation';
+
+import {userSelectors} from 'reducers';
+import {useSelector} from 'react-redux';
 
 const HeaderLeft = () => {
-  const location = useLocation();
+  const location = useSelector((state) => userSelectors.getUserLocation(state));
+
   let address = location?.address || '';
   address = address.split(',').splice(0, 1).join('');
   return (

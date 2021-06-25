@@ -22,8 +22,9 @@ import {getCurrentKeyword} from 'redux/selectors/search';
 import GroupHeaderRightButton from './HeaderRightButton';
 import FilterBar from './FilterBar';
 import {PRODUCT_SORT_ITEM} from 'constants';
-import useLocation from 'hooks/useLocation';
+
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {userSelectors} from 'reducers';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -41,9 +42,9 @@ const SearchProducts = ({navigation}) => {
   const [currentFilterValue, setCurrentFilterValue] = useState({});
   const [currentSortValue, setCurrentSortValue] = useState({});
 
-  const location = useLocation();
+  const location = useSelector((state) => userSelectors.getUserLocation(state));
 
-  const FILTER_TAGS = [
+  const [filterTags, setFilterTags] = useState([
     {
       label: 'Gần đây',
       value: {
@@ -57,13 +58,41 @@ const SearchProducts = ({navigation}) => {
         bestSeller: true,
       },
     },
+
     {
       label: 'Sale',
       value: {
         sale: true,
       },
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    if (location.lat && location.lon) {
+      setFilterTags([
+        {
+          label: 'Gần đây',
+          value: {
+            latitude: location?.lat,
+            longitude: location?.lon,
+          },
+        },
+        {
+          label: 'Best-seller',
+          value: {
+            bestSeller: true,
+          },
+        },
+
+        {
+          label: 'Sale',
+          value: {
+            sale: true,
+          },
+        },
+      ]);
+    }
+  }, [location.lat, location.lon]);
 
   const handlerSearch = useCallback(
     debounce((query) => {
@@ -189,7 +218,7 @@ const SearchProducts = ({navigation}) => {
         }
       />
       <Divider />
-      <TagList onTagPress={_handleFilterByTag} options={FILTER_TAGS} />
+      <TagList onTagPress={_handleFilterByTag} options={filterTags} />
       <View style={sortStyle}>
         <SortDropDown
           visible={visible}

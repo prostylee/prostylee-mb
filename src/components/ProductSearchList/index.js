@@ -11,7 +11,10 @@ import {PRODUCT_SORT_ITEM} from 'constants';
 import styles from './styles';
 import PropTypes from 'prop-types';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {userSelectors} from 'reducers';
+
 import useLocation from 'hooks/useLocation';
+import {useSelector} from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -39,9 +42,9 @@ const ProductSearchList = ({
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
 
-  const location = useLocation();
+  const location = useSelector((state) => userSelectors.getUserLocation(state));
 
-  const FILTER_TAGS = [
+  const [filterTags, setFilterTags] = useState([
     {
       label: 'Best-seller',
       value: {
@@ -61,7 +64,33 @@ const ProductSearchList = ({
         sale: true,
       },
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    if (location.lat && location.lon) {
+      setFilterTags([
+        {
+          label: 'Best-seller',
+          value: {
+            bestSeller: true,
+          },
+        },
+        {
+          label: 'Gần đây',
+          value: {
+            latitude: location?.lat,
+            longitude: location?.lon,
+          },
+        },
+        {
+          label: 'Sale',
+          value: {
+            sale: true,
+          },
+        },
+      ]);
+    }
+  }, [location.lat, location.lon]);
 
   useEffect(() => {
     refreshDataFunction();
@@ -135,7 +164,7 @@ const ProductSearchList = ({
       ) : null}
 
       {hasTagList ? (
-        <TagList onTagPress={tagFilterFunction} options={FILTER_TAGS} />
+        <TagList onTagPress={tagFilterFunction} options={filterTags} />
       ) : null}
 
       <ProductList

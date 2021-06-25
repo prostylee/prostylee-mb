@@ -22,7 +22,7 @@ import {Avatar, Text} from 'react-native-paper';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {MapPin} from 'svg/common';
 import getDistanceFromLatLonInKm from 'utils/locationUtils';
-import useLocation from 'hooks/useLocation';
+import {userSelectors} from 'reducers';
 
 import i18n from 'i18n';
 
@@ -32,7 +32,7 @@ const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
 
   const followed = false;
-  const location = useLocation();
+  const location = useSelector((state) => userSelectors.getUserLocation(state));
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const isLoading = useSelector((state) =>

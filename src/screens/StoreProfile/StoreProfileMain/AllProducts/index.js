@@ -25,7 +25,7 @@ import {
 
 import {storeProfileActions} from 'redux/reducers';
 import {useDispatch, useSelector} from 'react-redux';
-import useLocation from 'hooks/useLocation';
+import {userSelectors} from 'reducers';
 
 const AllProducts = ({
   navigation,
@@ -35,9 +35,9 @@ const AllProducts = ({
 }) => {
   const dispatch = useDispatch();
 
-  const location = useLocation();
+  const location = useSelector((state) => userSelectors.getUserLocation(state));
 
-  const FILTER_TAGS = [
+  const [filterTags, setFilterTags] = useState([
     {
       label: 'Gần đây',
       value: {
@@ -51,13 +51,41 @@ const AllProducts = ({
         bestSeller: true,
       },
     },
+
     {
       label: 'Sale',
       value: {
         sale: true,
       },
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    if (location.lat && location.lon) {
+      setFilterTags([
+        {
+          label: 'Gần đây',
+          value: {
+            latitude: location?.lat,
+            longitude: location?.lon,
+          },
+        },
+        {
+          label: 'Best-seller',
+          value: {
+            bestSeller: true,
+          },
+        },
+
+        {
+          label: 'Sale',
+          value: {
+            sale: true,
+          },
+        },
+      ]);
+    }
+  }, [location.lat, location.lon]);
 
   const hasLoadMore = useSelector((state) =>
     getStoreAllProductHasLoadmore(state),
@@ -105,7 +133,7 @@ const AllProducts = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tất cả sản phẩm</Text>
-      <TagList onTagPress={_handleFilterByTag} options={FILTER_TAGS} />
+      <TagList onTagPress={_handleFilterByTag} options={filterTags} />
       <ProductList />
       {loadmoreLoading ? <Footer /> : null}
     </View>

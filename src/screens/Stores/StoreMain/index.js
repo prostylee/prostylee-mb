@@ -9,13 +9,15 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
-
 import styles from './styles';
-
 import {Header, Colors, HeaderAnimated, SearchBar} from 'components';
-
-import {storeActions, searchActions, storeProfileActions} from 'redux/reducers';
-
+import {
+  storeActions,
+  userActions,
+  searchActions,
+  storeProfileActions,
+  userSelectors,
+} from 'redux/reducers';
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 import CustomBackground from './CustomBackground';
 import AdvertisingSlider from './AdvertisingSlider';
@@ -37,6 +39,7 @@ import AppScrollViewIOSBounceColorsWrapper from './AppScrollViewIOSBounceColorsW
 import {useIsFocused} from '@react-navigation/native';
 import HeaderLeft from './HeaderLeftComponent';
 import HeaderRight from './HeaderRightComponent';
+import useLocation from '../../../hooks/useLocation';
 
 const heightShow = 334;
 const BOTTOM_ENDREACHED_HEIGHT = 300;
@@ -74,6 +77,18 @@ const Stores = (props) => {
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const isFocused = useIsFocused();
+
+  let newLocation = null;
+  const location = useSelector((state) => userSelectors.getUserLocation(state));
+
+  if (!location || !location?.lat) {
+    newLocation = useLocation();
+  }
+  useEffect(() => {
+    if (newLocation?.lat && newLocation?.lon) {
+      dispatch(userActions.setUserLocation(newLocation));
+    }
+  }, [newLocation]);
 
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
