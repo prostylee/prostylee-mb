@@ -21,7 +21,6 @@ export default EStyleSheet.create({
     paddingVertical: 12,
     flexDirection: 'row',
     backgroundColor: '$white',
-    marginBottom: 6,
   },
   promoTextContainer: {
     flexDirection: 'column',

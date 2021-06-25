@@ -134,6 +134,7 @@ const Notifications = ({navigation}) => {
       ) : listListNotification && listListNotification.length ? (
         <FlatList
           data={listListNotification}
+          contentContainerStyle={{paddingTop: 6}}
           renderItem={({item}) => (
             <>
               <NotificationItem {...item} />

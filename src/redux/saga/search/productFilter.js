@@ -15,12 +15,8 @@ const getProductFilter = function* ({payload}) {
   try {
     yield put(searchActions.setProductsFilterLoading(true));
     const res = yield call(getProductAttributesFilterResultsApi, payload);
-    console.log('LONG MAIN FILTER PRODUCTS', res.data.data.content);
     let listProduct = res?.data?.data?.content;
-
     let initFilterState = {};
-    console.log('INIT FILTER STATE', initFilterState);
-
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(searchActions.getProductsFilterSuccess(listProduct));
       yield put(
