@@ -137,7 +137,13 @@ const ProductRating = ({data, ref, productId, navigation}) => {
       )}
 
       {data.content && data.content.length > 3 ? (
-        <TouchableOpacity style={styles.readAllButton}>
+        <TouchableOpacity
+          style={styles.readAllButton}
+          onPress={() => {
+            navigation.navigate('ReviewRating', {
+              productId: productId,
+            });
+          }}>
           <Text style={styles.readAllButtonText}>{`${i18n.t(
             'productDetail.ratingAll',
           )} (${data.content.length})`}</Text>
