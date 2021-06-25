@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import {Header, ButtonRounded, ThemeView} from 'components';
@@ -80,7 +80,12 @@ const StoreAddress = (props) => {
 
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header isDefault title={i18n.t('storeAddress.title')} />
+      <Header
+        isDefault
+        middleComponent={
+          <Text style={styles.headerTitle}>{i18n.t('storeAddress.title')}</Text>
+        }
+      />
       <Dropdown />
       <View style={styles.wrapper}>
         <ListStoreAddress style={styles.list} data={branchData} />

@@ -30,6 +30,8 @@ export default EStyleSheet.create({
   },
   dropDown: {
     marginLeft: 10,
+    width: '70%',
+    marginRight: 16,
   },
   buttonContainer: {
     position: 'absolute',
@@ -49,6 +51,11 @@ export default EStyleSheet.create({
     borderBottomWidth: 1,
   },
   middleComponent: {
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  headerTitle: {
     textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
