@@ -21,6 +21,7 @@ const Item = ({item, onPress, isActive}) => {
             uncheckedColor={'#F0F0F0'}
             status={isActive ? 'checked' : 'unchecked'}
             mode="android"
+            onPress={onPress}
           />
 
           <View style={styles.fomatItem}>
