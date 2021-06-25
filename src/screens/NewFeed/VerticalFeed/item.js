@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
@@ -14,13 +14,7 @@ import {ContainerView, Colors} from 'components';
 import {Heart, Message, More} from 'svg/social';
 import {HeartSolid} from 'svg/common';
 
-import {
-  follow,
-  unfollow,
-  like,
-  unlike,
-  countLike,
-} from 'services/api/socialApi';
+import {follow, unfollow, like, unlike} from 'services/api/socialApi';
 
 import FeedSlide from './slide';
 
@@ -40,12 +34,17 @@ const VerticalFeedItem = ({newFeedItem, targetType, isProfile}) => {
   const navigation = useNavigation();
   const [followed, setFollowed] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [countsLike, setCountLike] = useState(undefined);
 
   const disCountPer = newFeedItem?.priceSale / newFeedItem?.price;
   const productOwnerResponse = newFeedItem?.productOwnerResponse;
   const userResponseLite = isProfile ? newFeedItem?.userResponseLite : null;
   const storeResponseLite = isProfile ? newFeedItem?.storeResponseLite : null;
+  const numOfLike = newFeedItem?.productStatisticResponse?.numberOfLike
+    ? newFeedItem?.productStatisticResponse?.numberOfLike
+    : 0;
+  const numberOfComment = newFeedItem?.productStatisticResponse?.numberOfComment
+    ? newFeedItem?.productStatisticResponse?.numberOfComment
+    : 0;
 
   const urlImage = userResponseLite
     ? userResponseLite.avatar
@@ -54,22 +53,6 @@ const VerticalFeedItem = ({newFeedItem, targetType, isProfile}) => {
     ? userResponseLite?.fullName
     : productOwnerResponse?.name;
 
-  useEffect(() => {
-    constLike();
-  }, []);
-  const constLike = async () => {
-    try {
-      const res = await countLike({
-        targetId: newFeedItem?.id,
-        targetType: targetType,
-      });
-      if (res.ok && res.data.status === SUCCESS) {
-        setCountLike(res.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const _followPress = async () => {
     if (!followed) {
       const res = await follow({
@@ -195,14 +178,19 @@ const VerticalFeedItem = ({newFeedItem, targetType, isProfile}) => {
               <Heart color={Colors.$icon} />
             )}
           </TouchableOpacity>
-          {countsLike && (
+          {numOfLike > 0 && (
             <Text style={[{color: Colors.$icon}, styles.textLike]}>
-              {countsLike}
+              {numOfLike}
             </Text>
           )}
           <TouchableOpacity onPress={_navigateChat} style={styles.touchMes}>
             <Message />
           </TouchableOpacity>
+          {numberOfComment > 0 && (
+            <Text style={[{color: Colors.$icon}, styles.textLike]}>
+              {numberOfComment}
+            </Text>
+          )}
         </View>
         <TouchableOpacity style={styles.touchOption}>
           <More />

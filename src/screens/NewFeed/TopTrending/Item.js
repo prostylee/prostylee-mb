@@ -62,8 +62,8 @@ const Item = ({item, style, targetType}) => {
               <Image
                 key={'productOfStore' + targetType + _i}
                 source={
-                  item?.imageUrls?.length
-                    ? {uri: item.imageUrls[0]}
+                  item?.imageUrl
+                    ? {uri: item.imageUrl}
                     : require('assets/images/default.png')
                 }
                 resizeMode="cover"
