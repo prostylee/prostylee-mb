@@ -16,16 +16,39 @@ import {
   TagList,
 } from 'components';
 
-import {PRODUCT_SORT_ITEM, FILTER_TAGS} from 'constants';
+import {PRODUCT_SORT_ITEM} from 'constants';
 
 import {getProductCategoriesFilterStateSelector} from 'redux/selectors/product';
 import {productActions} from 'redux/reducers';
+import useLocation from 'hooks/useLocation';
 const BottomHeaderAnimated = ({
   onTagPress = () => {},
   setVisible,
   visible,
   valueSort,
 }) => {
+  const location = useLocation();
+  const FILTER_TAGS = [
+    {
+      label: 'Gần đây',
+      value: {
+        latitude: location?.lat || 10.806406363857086,
+        longitude: location?.lon || 106.6634168400805,
+      },
+    },
+    {
+      label: 'Best-seller',
+      value: {
+        bestSeller: true,
+      },
+    },
+    {
+      label: 'Sale',
+      value: {
+        sale: true,
+      },
+    },
+  ];
   return (
     <View style={styles.container}>
       <Divider />

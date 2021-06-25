@@ -3,8 +3,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   ActivityIndicator,
-  Text,
-  TouchableOpacity,
   ScrollView,
   Animated,
   RefreshControl,
@@ -14,14 +12,7 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {
-  Header,
-  Colors,
-  HeaderAnimated,
-  Bag,
-  ChatIcon,
-  SearchBar,
-} from 'components';
+import {Header, Colors, HeaderAnimated, SearchBar} from 'components';
 
 import {storeActions, searchActions, storeProfileActions} from 'redux/reducers';
 
@@ -30,14 +21,11 @@ import CustomBackground from './CustomBackground';
 import AdvertisingSlider from './AdvertisingSlider';
 import FunctionTags from './FunctionTags';
 
-import {MapPinFill} from 'svg/common';
-import {Searchbar} from 'react-native-paper';
-
 import PopularBrands from './PopularBrands';
 import MidAdvertisingSlider from './MidAdvertisingSlider';
 import FeaturedCategories from './FeaturedCategories';
 import ForUserTabView from './ForUserTabView';
-import useLocation from 'hooks/useLocation';
+
 import {
   getTopBannerSelector,
   getMidBannerSelector,
@@ -47,33 +35,13 @@ import {
 } from 'redux/selectors/storeMain';
 import AppScrollViewIOSBounceColorsWrapper from './AppScrollViewIOSBounceColorsWrapper';
 import {useIsFocused} from '@react-navigation/native';
+import HeaderLeft from './HeaderLeftComponent';
+import HeaderRight from './HeaderRightComponent';
 
 const heightShow = 334;
-const HeaderLeft = () => {
-  return (
-    <TouchableOpacity style={styles.headerLeftContainer}>
-      <MapPinFill color="#E82E46" width={18} height={18} backdropColor="#fff" />
-      <Text style={styles.locationText}>100 Nguyễn Công Trứ</Text>
-    </TouchableOpacity>
-  );
-};
-const HeaderRight = ({color = '#fff', navigation, isAnimated = false}) => {
-  return (
-    <View style={styles.headerRightContainer}>
-      <ChatIcon color={color} />
-      <Bag
-        color={color}
-        width={20}
-        height={20}
-        strokeWidth={2}
-        badgeColor={isAnimated ? '#E82E46' : '#fff'}
-        badgeTextColor={isAnimated ? '#fff' : '#000'}
-        navigation={navigation}
-      />
-    </View>
-  );
-};
-const CustomSearchBar = ({navigation, onSearchFocus = () => {}}) => (
+const BOTTOM_ENDREACHED_HEIGHT = 300;
+
+const CustomSearchBar = ({onSearchFocus = () => {}}) => (
   <View style={styles.searchBarContainer}>
     <SearchBar
       style={styles.wrapSearchBar}
@@ -86,21 +54,22 @@ const CustomSearchBar = ({navigation, onSearchFocus = () => {}}) => (
 
 const Stores = (props) => {
   const dispatch = useDispatch();
-  const BOTTOM_ENDREACHED_HEIGHT = 300;
-  const {navigation} = props;
-  const [refreshing, handleRefreshing] = useState(false);
 
+  const {navigation} = props;
+
+  const [refreshing, handleRefreshing] = useState(false);
   const [isEndReached, setIsEndReached] = useState(false);
   const [hasLoadmore, setHasLoadmore] = useState(false);
 
   const topBannerList = useSelector((state) => getTopBannerSelector(state));
+
   const midBannerList = useSelector((state) => getMidBannerSelector(state));
+
   const brandList = useSelector((state) => getBrandListSelector(state));
+
   const categoryList = useSelector((state) => getCategoryListSelector(state));
 
   const loading = useSelector((state) => getStoreMainLoadingSelector(state));
-
-  const location = useLocation();
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 

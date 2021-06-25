@@ -11,7 +11,7 @@ const useLocation = () => {
   });
 
   useEffect(() => {
-    Geocoder.init('AIzaSyDIqkfXbjBkSQeAaFZchfHB9k6CzF6ctsI');
+    Geocoder.init('AIzaSyDa4XSziMXUFBwRFLto2hT_CBZ9GHbOlkg');
     let locationSubscription = null;
     (async () => {
       RNLocation.configure({
@@ -59,12 +59,16 @@ const useLocation = () => {
     if (location.lat && location.lon) {
       Geocoder.from(location.lat, location.lon)
         .then((json) => {
-          const addressComponent = json.results[0].address_components[0];
-          console.log('GET ADDRESS SUCCESS', addressComponent);
+          const addressComponent = json.results[0];
+          setLocation({
+            ...location,
+            ...addressComponent,
+            address: addressComponent.formatted_address,
+          });
         })
         .catch((error) => console.log('GET ADDRESS ERROR', error));
     }
-  }, [location]);
+  }, [location.lat, location.lon]);
 
   return location;
 };

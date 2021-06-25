@@ -7,10 +7,11 @@ import {Divider} from 'react-native-paper';
 import ProductList from './ProductList';
 
 import FilterBar from './FilterBar';
-import {PRODUCT_SORT_ITEM, FILTER_TAGS} from 'constants';
+import {PRODUCT_SORT_ITEM} from 'constants';
 import styles from './styles';
 import PropTypes from 'prop-types';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import useLocation from 'hooks/useLocation';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -37,6 +38,30 @@ const ProductSearchList = ({
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
+
+  const location = useLocation();
+
+  const FILTER_TAGS = [
+    {
+      label: 'Best-seller',
+      value: {
+        bestSeller: true,
+      },
+    },
+    {
+      label: 'Gần đây',
+      value: {
+        latitude: location?.lat || 10.806406363857086,
+        longitude: location?.lon || 106.6634168400805,
+      },
+    },
+    {
+      label: 'Sale',
+      value: {
+        sale: true,
+      },
+    },
+  ];
 
   useEffect(() => {
     refreshDataFunction();

@@ -25,6 +25,7 @@ import {
 
 import {storeProfileActions} from 'redux/reducers';
 import {useDispatch, useSelector} from 'react-redux';
+import useLocation from 'hooks/useLocation';
 
 const AllProducts = ({
   navigation,
@@ -34,10 +35,29 @@ const AllProducts = ({
 }) => {
   const dispatch = useDispatch();
 
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [visible, setVisible] = useState(false);
-  const [action, setAction] = useState('filter');
-  const [valueSort, setValueSort] = useState(null);
+  const location = useLocation();
+
+  const FILTER_TAGS = [
+    {
+      label: 'Gần đây',
+      value: {
+        latitude: location?.lat || 10.806406363857086,
+        longitude: location?.lon || 106.6634168400805,
+      },
+    },
+    {
+      label: 'Best-seller',
+      value: {
+        bestSeller: true,
+      },
+    },
+    {
+      label: 'Sale',
+      value: {
+        sale: true,
+      },
+    },
+  ];
 
   const hasLoadMore = useSelector((state) =>
     getStoreAllProductHasLoadmore(state),
@@ -47,10 +67,6 @@ const AllProducts = ({
     getStoreAllProductLoadmoreLoadingSelector(state),
   );
   const page = useSelector((state) => getStoreAllProductCurrentPage(state));
-
-  const onChangeSearch = (query) => {
-    setSearchQuery(query);
-  };
 
   const Footer = () => {
     return (

@@ -9,13 +9,35 @@ import {Divider} from 'react-native-paper';
 import StoreResult from './StoreResult';
 import {useDispatch} from 'react-redux';
 import {storeActions} from 'redux/reducers';
-import {LIMIT_DEFAULT, PAGE_DEFAULT, FILTER_TAGS} from 'constants';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 import useLocation from 'hooks/useLocation';
 
 const NearbyStore = ({navigation}) => {
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const FILTER_TAGS = [
+    {
+      label: 'Gần đây',
+      value: {
+        latitude: location?.lat || 10.806406363857086,
+        longitude: location?.lon || 106.6634168400805,
+      },
+    },
+    {
+      label: 'Best-seller',
+      value: {
+        bestSeller: true,
+      },
+    },
+    {
+      label: 'Sale',
+      value: {
+        sale: true,
+      },
+    },
+  ];
 
   const _handleFilterByTag = (queryObject) => {
     dispatch(
