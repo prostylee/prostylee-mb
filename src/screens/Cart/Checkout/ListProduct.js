@@ -209,7 +209,7 @@ const ListProduct = ({navigation, data}) => {
   };
 
   const renderHeader = () => {
-    return <CardAddress />;
+    return <CardAddress navigation={navigation} />;
   };
 
   const onPayment = () => {

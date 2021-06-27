@@ -23,7 +23,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import FlashMessage from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
-
+import Geocoder from 'react-native-geocoding';
 import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from './config/aws-exports';
 
@@ -38,6 +38,13 @@ import {
 } from 'react-native-device-info';
 import RootNavigator from './navigator/rootNavigator';
 import LocalStorageService from './services/LocalStorageService';
+
+Geocoder.init('AIzaSyDa4XSziMXUFBwRFLto2hT_CBZ9GHbOlkg', {
+  language: 'vi',
+  components: {
+    country: 'VN',
+  },
+});
 
 Amplify.configure({
   ...awsconfig,

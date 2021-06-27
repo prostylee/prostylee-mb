@@ -4,8 +4,11 @@ import React, {useEffect, useState} from 'react';
 import {Text, View, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {LocationIcon} from 'svg/common';
 import i18n from 'i18n';
+import {useSelector} from 'react-redux';
+import {userSelectors} from 'reducers';
 
 const CardAddress = ({navigation}) => {
+  const location = useSelector((state) => userSelectors.getUserLocation(state));
   return (
     <View style={styles.wrapAddress}>
       <View style={styles.wrapAddressHeader}>
@@ -16,7 +19,11 @@ const CardAddress = ({navigation}) => {
           </Text>
         </View>
         <View style={styles.changeAddress}>
-          <TouchableOpacity style={styles.buttonChangeAddress}>
+          <TouchableOpacity
+            style={styles.buttonChangeAddress}
+            onPress={() => {
+              navigation.navigate('AddressRecent');
+            }}>
             <Text style={styles.labelChangeAddress}>
               {i18n.t('cart.changeAddress')}
             </Text>
@@ -25,7 +32,7 @@ const CardAddress = ({navigation}) => {
       </View>
       <View style={styles.wrapAddressContent}>
         <Text style={styles.valueAddress} numberOfLines={2}>
-          184A Trịnh Đình Trọng, Phú Trung, Tân Phú, TPHCM
+          {location?.address}
         </Text>
       </View>
     </View>

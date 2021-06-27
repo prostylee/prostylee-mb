@@ -19,7 +19,6 @@ const useLocation = () => {
   useEffect(() => {
     let locationSubscription = null;
     if (!haveLocation) {
-      Geocoder.init('AIzaSyDa4XSziMXUFBwRFLto2hT_CBZ9GHbOlkg');
       (async () => {
         RNLocation.configure({
           distanceFilter: 100, // Meters
