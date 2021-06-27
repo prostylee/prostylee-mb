@@ -1,60 +1,23 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  View,
-  StatusBar,
-  Platform,
-  FlatList,
-  ActivityIndicator,
-} from 'react-native';
+import {ActivityIndicator, FlatList, Platform, StatusBar, View,} from 'react-native';
 import styles from './styles';
-import {ThemeView} from 'components';
+import {Colors, ThemeView} from 'components';
 
 import HeaderFeed from './HeaderFeed';
 import TopTrending from './TopTrending';
 import DynamicUsers from './DynamicUsers';
 import StoryBoard from './Stories';
-import {Colors} from 'components';
 
-import {
-  NewFeedTrendingContentLoading,
-  NewFeedContentLoading,
-} from 'components/Loading/contentLoader';
+import {NewFeedContentLoading, NewFeedTrendingContentLoading,} from 'components/Loading/contentLoader';
 
-import {
-  newFeedActions,
-  storeActions,
-  commonActions,
-  dynamicUsersActions,
-} from 'redux/reducers';
-import {
-  getNewFeedSelector,
-  getHasLoadMoreSelector,
-  getPageSelector,
-  getLoadMoreLoadingSelector,
-  getNewFeedLoadingSelector,
-  threeFirstNewFeedItemSelector,
-  getStoriesLoading,
-  getStories,
-} from 'redux/selectors/newFeed';
-import {
-  getTopProduct,
-  getTopProductLoadingSelector,
-} from 'redux/selectors/stores';
-import {
-  loadingSelector,
-  listDynamicUsersSelector,
-} from 'redux/selectors/dynamicUsers';
+import {commonActions, dynamicUsersActions, newFeedActions, storeActions,} from 'redux/reducers';
+import {getHasLoadMoreSelector, getLoadMoreLoadingSelector, getNewFeedLoadingSelector, getNewFeedSelector, getPageSelector, getStories, getStoriesLoading, threeFirstNewFeedItemSelector,} from 'redux/selectors/newFeed';
+import {getTopProduct, getTopProductLoadingSelector,} from 'redux/selectors/stores';
+import {listDynamicUsersSelector, loadingSelector,} from 'redux/selectors/dynamicUsers';
 import {targetTypeSelector} from 'redux/selectors/common';
 
-import {
-  TYPE_STORE,
-  TYPE_USER,
-  PAGE_DEFAULT,
-  LIMIT_DEFAULT,
-  NUMBER_OF_PRODUCT,
-} from 'constants';
+import {LIMIT_DEFAULT, NUMBER_OF_PRODUCT, PAGE_DEFAULT, TYPE_STORE, TYPE_USER,} from 'constants';
 import FeedItem from './VerticalFeed/item';
 
 const NewFeedRowItemType = {
@@ -124,8 +87,7 @@ const NewFeed = ({navigation}) => {
           page: PAGE_DEFAULT,
         }),
       );
-    }
-    if (targetType === TYPE_USER) {
+    } else if (targetType === TYPE_USER) {
       dispatch(
         dynamicUsersActions.getDynamicUser({
           page: PAGE_DEFAULT,
@@ -194,6 +156,7 @@ const NewFeed = ({navigation}) => {
   useEffect(() => {
     if (!handleLoading()) {
       const items = [];
+
       if (stories && stories?.content?.length) {
         items.push({
           id: NewFeedRowItemType.STORIES.id,
@@ -201,26 +164,39 @@ const NewFeed = ({navigation}) => {
           items: stories,
         });
       }
+
       if (threeFirstNewFeedItem && threeFirstNewFeedItem?.content?.length) {
         items.push(...threeFirstNewFeedItem?.content);
       }
-      if (topProduct && topProduct?.content?.length) {
+
+      if (
+        targetType === TYPE_STORE &&
+        topProduct &&
+        topProduct?.content?.length
+      ) {
         items.push({
           id: NewFeedRowItemType.STORES.id,
           type: NewFeedRowItemType.STORES.type,
           items: topProduct,
         });
       }
-      if (listDynamicUsers && listDynamicUsers?.content?.length) {
+
+      if (
+        targetType === TYPE_USER &&
+        listDynamicUsers &&
+        listDynamicUsers?.content?.length
+      ) {
         items.push({
-          id: NewFeedRowItemType.STORES.id,
-          type: NewFeedRowItemType.STORES.type,
+          id: NewFeedRowItemType.USERS.id,
+          type: NewFeedRowItemType.USERS.type,
           items: listDynamicUsers,
         });
       }
+
       if (newFeedList && newFeedList?.content?.length) {
         items.push(...newFeedList?.content);
       }
+
       setAllNewFeeds(items);
       console.log('Render ' + items.length);
     }
@@ -298,7 +274,7 @@ const NewFeed = ({navigation}) => {
             'newFeedKeyExtractor' + targetType + index
           }
           renderItem={({item, index}) => renderItem(item, index)}
-          onEndReached={() => handleLoadMore()}
+          onEndReached={handleLoadMore}
           refreshing={refreshing}
           onRefresh={handleRefresh}
           ListFooterComponent={renderFooter}

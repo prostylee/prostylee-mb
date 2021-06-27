@@ -24,6 +24,7 @@ export default {
   },
   common: {
     textSeeMore: 'Xem thêm',
+    textSeeLess: 'Thu gọn',
     textFollow: 'Theo dõi',
     textFollowed: 'Đã theo dõi',
     textAdvertisement: 'Quảng cáo',
@@ -32,6 +33,7 @@ export default {
     textPost: 'Bài đăng',
     textNear: '2.5km',
     textNoPhoneNumber: 'Người dùng chưa đăng ký số điện thoại!',
+    textBuyNow: 'Mua ngay',
   },
   codePush: {
     installButton: 'Cập nhật',

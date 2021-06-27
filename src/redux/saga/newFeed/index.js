@@ -4,17 +4,23 @@ import {
   getStoriesByStore,
   getStoriesByUser,
   postStoriesByUser,
+  getPosts,
 } from 'services/api/newFeedApi';
 import {getProductById} from 'services/api/productApi';
 import {getStoreById, getStoreMiniApi} from 'services/api/storeApi';
 import {newFeedActions, newFeedTypes} from 'reducers';
 
-import {SUCCESS} from 'constants';
+import {SUCCESS, TYPE_STORE} from 'constants';
 
 const getNewFeeds = function* ({payload}) {
   try {
     yield put(newFeedActions.setLoading(true));
-    const res = yield call(getNewFeed, payload);
+    let res = {};
+    if (payload.newFeedType === TYPE_STORE) {
+      res = yield call(getNewFeed, payload);
+    } else {
+      res = yield call(getPosts, payload);
+    }
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(newFeedActions.getNewFeedSuccess(res.data.data));
     } else {
@@ -30,7 +36,12 @@ const getNewFeeds = function* ({payload}) {
 const getLoadMoreNewFeed = function* ({payload}) {
   try {
     yield put(newFeedActions.handleLoadMoreLoading(true));
-    const res = yield call(getNewFeed, payload);
+    let res = {};
+    if (payload.newFeedType === TYPE_STORE) {
+      res = yield call(getNewFeed, payload);
+    } else {
+      res = yield call(getPosts, payload);
+    }
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(newFeedActions.handleLoadMoreSuccess(res.data.data));
     } else {

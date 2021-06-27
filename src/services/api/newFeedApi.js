@@ -5,6 +5,10 @@ export const getNewFeed = (payload) => {
   return _fetch(GET, '/products/new-feeds', payload);
 };
 
+export const getPosts = (payload) => {
+  return _fetch(GET, '/posts/new-feeds', payload);
+};
+
 export const getStoriesByStore = (payload) => {
   return _fetch(GET, '/stories/store', payload);
 };
