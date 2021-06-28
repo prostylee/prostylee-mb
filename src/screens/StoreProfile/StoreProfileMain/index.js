@@ -36,7 +36,7 @@ import {useRoute} from '@react-navigation/native';
 import HeaderLeft from './HeaderLeft';
 import HeaderRight from './HeaderRight';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-
+import {rem} from 'utils/common';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 const BOTTOM_HEADER_HEIGHT = 50;

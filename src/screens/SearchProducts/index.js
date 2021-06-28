@@ -26,10 +26,12 @@ import {PRODUCT_SORT_ITEM} from 'constants';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {userSelectors} from 'reducers';
 
+import {rem} from 'utils/common';
+
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
-const BOTTOM_HEADER_HEIGHT = Platform.OS === 'ios' ? 80 : 60;
-const HEIGHT_HEADER = BOTTOM_HEADER_HEIGHT / 2 + 50 + getStatusBarHeight();
+const BOTTOM_HEADER_HEIGHT = Platform.OS === 'ios' ? 80 : 100;
+const HEIGHT_HEADER = Platform.OS === 'ios' ? 78 * rem + 45 : 80 * rem + 45;
 
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
