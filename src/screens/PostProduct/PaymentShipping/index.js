@@ -245,7 +245,7 @@ const PaymentShipping = () => {
       />
       <ProgressBar progress={1} color="#823FFD" />
       <View style={styles.container}>
-        {role && role?.length === 1 && role[0] === BUYER ? null : (
+        {/* {role && role?.length === 1 && role[0] === BUYER ? null : (
           <View style={styles.boxWrap}>
             <View style={styles.status}>
               <View style={{flexDirection: 'row'}}>
@@ -266,7 +266,7 @@ const PaymentShipping = () => {
               </Text>
             </View>
           </View>
-        )}
+        )} */}
 
         <View style={styles.boxWrap}>
           <ListPayment

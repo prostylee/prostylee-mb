@@ -162,7 +162,10 @@ const ProductDetail = (props) => {
       animated: true,
     });
   };
-  const handleChangeTabActiveItemWhenScrolling = (currentOffset) => {
+  const handleChangeTabActiveItemWhenScrolling = (
+    currentOffset,
+    isEndReached,
+  ) => {
     if (currentOffset + SCROLL_TRIGGER_POINT < ratingPos) {
       if (activeTab !== 'product') {
         setActiveTab('product');
@@ -170,7 +173,8 @@ const ProductDetail = (props) => {
     }
     if (
       currentOffset + SCROLL_TRIGGER_POINT > ratingPos &&
-      currentOffset + SCROLL_TRIGGER_POINT < suggestPos
+      currentOffset + SCROLL_TRIGGER_POINT < suggestPos &&
+      !isEndReached
     ) {
       if (activeTab !== 'rate') {
         setActiveTab('rate');
@@ -192,6 +196,13 @@ const ProductDetail = (props) => {
   const handleRefresh = () => {
     handleRefreshing(true);
     selectRelatedProduct(productId);
+  };
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 0;
+    return (
+      layoutMeasurement?.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
   };
   const ProductChoiceMemo = React.useMemo(() => {
     return (
@@ -250,7 +261,10 @@ const ProductDetail = (props) => {
         overLapStatusBar
         onScroll={(e) => {
           onScrollEvent(e);
-          handleChangeTabActiveItemWhenScrolling(e.nativeEvent.contentOffset.y);
+          handleChangeTabActiveItemWhenScrolling(
+            e.nativeEvent.contentOffset.y,
+            isCloseToBottom(e.nativeEvent),
+          );
         }}
         hasRefreshing
         refreshControl={

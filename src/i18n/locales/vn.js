@@ -21,6 +21,7 @@ export default {
     saveFailed: 'Lưu mã khuyến mãi thất bại',
     failed: 'Thất bại',
     discountCode: 'Mã giảm giá',
+    allProduct: 'Tất cả sản phẩm',
   },
   common: {
     textSeeMore: 'Xem thêm',

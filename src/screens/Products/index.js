@@ -50,6 +50,7 @@ const Products = ({navigation}) => {
   const [sortVisible, setSortVisible] = useState(false);
   const [sortAction, setSortAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
+  const [filterValue, setFilterValue] = useState(null);
   /*Animated*/
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -102,32 +103,39 @@ const Products = ({navigation}) => {
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         categoryId: categoriesSelect?.id,
-        sorts: 'name',
+        ...filterValue,
+        ...formatSortValue(valueSort),
       }),
     );
     // handleRefreshing(false);
   }, [categoriesSelect.id]);
 
   const handleRefresh = () => {
+    let newSortValue = valueSort ? formatSortValue(valueSort) : {sorts: 'name'};
     handleRefreshing(true);
     dispatch(
       productActions.getListProduct({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         categoryId: categoriesSelect?.id,
-        sorts: 'name',
+        ...filterValue,
+        ...newSortValue,
       }),
     );
   };
 
   const handleLoadMore = () => {
     if (hasLoadMore) {
+      let newSortValue = valueSort
+        ? formatSortValue(valueSort)
+        : {sorts: 'name'};
       dispatch(
         productActions.getListProductLoadMore({
           page: page + 1,
           limit: LIMIT_DEFAULT,
           categoryId: categoriesSelect?.id,
-          sorts: 'name',
+          ...filterValue,
+          ...newSortValue,
         }),
       );
     }
@@ -135,7 +143,7 @@ const Products = ({navigation}) => {
   useEffect(() => {
     if (!loading) handleRefreshing(false);
   }, [loading]);
-  const _handleSort = (value) => {
+  const formatSortValue = (value) => {
     let sortOption = {};
     switch (value) {
       case 1: {
@@ -163,21 +171,30 @@ const Products = ({navigation}) => {
         break;
       }
     }
+    return sortOption;
+  };
+  const _handleSort = (value) => {
+    let sortOption = formatSortValue(value);
     dispatch(
       productActions.getListProduct({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
-        sorts: 'name',
+        categoryId: categoriesSelect?.id,
+        ...filterValue,
         ...sortOption,
       }),
     );
   };
   const _handleFilterByTag = (queryObject) => {
+    setFilterValue(queryObject);
+    setValueSort(null);
     dispatch(
       productActions.getListProduct({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
+        categoryId: categoriesSelect?.id,
         ...queryObject,
+        sorts: 'name',
       }),
     );
   };

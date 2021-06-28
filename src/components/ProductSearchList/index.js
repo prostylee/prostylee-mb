@@ -96,6 +96,38 @@ const ProductSearchList = ({
   useEffect(() => {
     refreshDataFunction();
   }, []);
+
+  const formatSortValue = (value) => {
+    let sortOption = {};
+    switch (value) {
+      case 1: {
+        sortOption.sorts = 'name';
+        break;
+      }
+      case 2: {
+        sortOption.bestSeller = true;
+        break;
+      }
+      case 3: {
+        sortOption.sorts = '-createdAt';
+        break;
+      }
+      case 4: {
+        sortOption.sorts = '-priceSale';
+        break;
+      }
+      case 5: {
+        sortOption.sorts = 'priceSale';
+        break;
+      }
+      default: {
+        sortOption.bestRating = true;
+        break;
+      }
+    }
+    return sortOption;
+  };
+
   const _handleSort = (value) => {
     setValueSort(value);
     if (tagListRef && tagListRef.current && tagListRef.current.active) {
@@ -113,7 +145,12 @@ const ProductSearchList = ({
     height: visible ? HEIGHT : 0,
     marginTop: visible ? HEIGHT_HEADER : 0,
   };
-
+  const _handleLoadMore = () => {
+    loadmoreDataFuntion(
+      tagListRef?.current?.active?.value,
+      formatSortValue(valueSort),
+    );
+  };
   return (
     <ThemeView style={styles.container} isFullView>
       <Header
@@ -182,7 +219,7 @@ const ProductSearchList = ({
       <ProductList
         getDataFunction={getDataFunction}
         refreshDataFunction={refreshDataFunction}
-        loadmoreDataFuntion={loadmoreDataFuntion}
+        loadmoreDataFuntion={_handleLoadMore}
         isLoading={isLoading}
         hasLoadmore={hasLoadmore}
         navigation={navigation}

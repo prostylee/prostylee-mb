@@ -19,7 +19,6 @@ const NotiIcon = ({color, size, strokeWidth}) => {
   React.useEffect(() => {
     dispatch(notificationActions.getCountUnreadNotification());
   }, [dispatch]);
-  console.log('COUNT NOTI', count);
   return (
     <TouchableOpacity
       style={styles.container}

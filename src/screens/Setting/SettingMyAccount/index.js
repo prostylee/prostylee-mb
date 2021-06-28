@@ -174,6 +174,9 @@ const SettingMyAccount = () => {
                     validate={validatePhone}
                     name="phone"
                     innerRef={phoneRef}
+                    onValueChange={(value) => {
+                      values.phone = value;
+                    }}
                     label={I18n.t('settingProfile.phone')}
                   />
                   <Field

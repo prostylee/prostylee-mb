@@ -34,6 +34,7 @@ const HEIGHT_HEADER = BOTTOM_HEADER_HEIGHT / 2 + 50 + getStatusBarHeight();
 const SearchProducts = ({navigation}) => {
   const dispatch = useDispatch();
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
+  const tagListRef = React.useRef();
 
   const [searchQuery, setSearchQuery] = React.useState(currentKeyword);
   const [visible, setVisible] = useState(false);
@@ -161,13 +162,14 @@ const SearchProducts = ({navigation}) => {
     setCurrentFilterValue({
       ...queryObject,
     });
+    setCurrentSortValue(null);
+    setValueSort(null);
     dispatch(
       searchActions.getProductsSearch({
         keyword: searchQuery,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         ...queryObject,
-        ...currentSortValue,
       }),
     );
   };
@@ -218,7 +220,11 @@ const SearchProducts = ({navigation}) => {
         }
       />
       <Divider />
-      <TagList onTagPress={_handleFilterByTag} options={filterTags} />
+      <TagList
+        ref={tagListRef}
+        onTagPress={_handleFilterByTag}
+        options={filterTags}
+      />
       <View style={sortStyle}>
         <SortDropDown
           visible={visible}
@@ -230,7 +236,8 @@ const SearchProducts = ({navigation}) => {
         />
       </View>
       <ProductList
-        currentFilterValue={currentFilterValue}
+        currentFilter={currentFilterValue}
+        currentSort={currentSortValue}
         navigation={navigation}
       />
     </ThemeView>
