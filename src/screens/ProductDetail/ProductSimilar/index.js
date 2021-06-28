@@ -1,7 +1,7 @@
 import styles from './styles';
 
 import React from 'react';
-import {View, TouchableOpacity, Text, Image} from 'react-native';
+import {View, TouchableOpacity, Text, Image, Dimensions} from 'react-native';
 
 /*Translates*/
 import i18n from 'i18n';
@@ -15,7 +15,7 @@ import {currencyFormat} from 'utils/currency';
 
 /*Proptypes*/
 import PropTypes from 'prop-types';
-
+const WIDTH = Dimensions.get('window').width;
 const ProductSimilar = ({data, onSelect}) => {
   const imagesRef = React.useRef();
   const renderItem = ({item}) => {
@@ -63,7 +63,7 @@ const ProductSimilar = ({data, onSelect}) => {
         data={data}
         activeSlideAlignment={'start'}
         renderItem={renderItem}
-        sliderWidth={144 * data.length}
+        sliderWidth={WIDTH}
         itemWidth={144}
         inactiveSlideOpacity={1}
         inactiveSlideScale={1}
