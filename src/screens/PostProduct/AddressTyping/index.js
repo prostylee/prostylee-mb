@@ -331,10 +331,6 @@ const AddressTyping = (navigation) => {
     route?.params?.getListAddressHistorySelectorFunc || null;
   const getListAddressLoadingSelectorFunc =
     route?.params?.getListAddressLoadingSelectorFunc || null;
-  const setSelectedAddressAction =
-    route?.params?.setSelectedAddressAction || null;
-  const setSelectedAddressHistoryAction =
-    route?.params?.setSelectedAddressHistoryAction || null;
 
   const locationRedux =
     useSelector((state) => userSelectors.getUserLocation(state)) || {};
@@ -464,7 +460,7 @@ const AddressTyping = (navigation) => {
           <SearchBar
             style={styles.search}
             multiline={false}
-            placeholder={i18n.t('Search.inputPlaceholder')}
+            placeholder={i18n.t('cart.address')}
             onChangeText={onChangeSearch}
             value={searchQuery}
             defaultValue={searchQuery}
