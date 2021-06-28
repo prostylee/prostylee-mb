@@ -8,7 +8,7 @@ import {Switch} from 'react-native-paper';
 import {MapIcon} from 'svg/common';
 
 const addAddress = ({route, navigation}) => {
-  const {addressCount} = route.params;
+  const addressCount = route.params?.addressCount || 0;
 
   const onChangeProvince = () => {};
 
@@ -25,7 +25,7 @@ const addAddress = ({route, navigation}) => {
         isDefault
       />
       <View style={{paddingHorizontal: 16, paddingTop: 16}}>
-        {addressCount != 0 ? (
+        {addressCount === 0 ? (
           <Text style={{color: '#8B9399'}}>
             {I18n.t('settingAddress.noAddress')}
           </Text>

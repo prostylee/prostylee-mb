@@ -1,4 +1,4 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
+import {call, put, takeLatest, select} from 'redux-saga/effects';
 import {commonActions, userActions, userTypes} from 'reducers';
 import {Auth} from 'aws-amplify';
 import {
@@ -6,10 +6,12 @@ import {
   getProfile,
   getStatistics,
   getUserPost,
+  updateProfile,
+  getUserAddress as getUserAddressList,
 } from 'services/api/userApi';
 
 import {showMessage} from 'react-native-flash-message';
-import {UNKNOWN_MESSAGE, SUCCESS} from 'constants';
+import {UNKNOWN_MESSAGE, SUCCESS, LIMIT_DEFAULT} from 'constants';
 
 import messaging from '@react-native-firebase/messaging';
 import I18n from '../../../i18n';
@@ -221,6 +223,78 @@ const getProductByUser = function* ({payload}) {
   }
 };
 
+const updateUserProfile = function* ({payload}) {
+  yield put(commonActions.toggleLoading(true));
+  try {
+    const res = yield call(updateProfile, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.updateUserProfileSuccess(res.data.data));
+    } else {
+      yield put(userActions.updateUserProfileFail());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(commonActions.toggleLoading(false));
+  }
+};
+
+const getUserAddress = function* ({payload}) {
+  const getAddressPage = (state) => state.user.addressListPage;
+  const addressPage = yield select(getAddressPage);
+
+  yield put(userActions.getUserAddressLoading(true));
+  try {
+    const res = yield call(getUserAddressList, {
+      limit: LIMIT_DEFAULT,
+      page: addressPage,
+    });
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(
+        userActions.getUserAddressSuccess({
+          data: res.data.data.content,
+          // TODO
+          hasMore: false,
+        }),
+      );
+    } else {
+      yield put(userActions.getUserAddressFail());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(userActions.getUserAddressLoading(false));
+  }
+};
+
+const getUserAddressMore = function* ({payload}) {
+  const getAddressPage = (state) => state.user.addressListPage;
+  const addressPage = yield select(getAddressPage);
+
+  yield put(userActions.getUserAddressMoreLoading(true));
+  try {
+    const res = yield call(getUserAddressList, {
+      limit: LIMIT_DEFAULT,
+      page: addressPage,
+    });
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(
+        userActions.getUserAddressMoreSuccess({
+          data: res.data.data.content,
+          // TODO
+          hasMore: false,
+        }),
+      );
+    } else {
+      yield put(userActions.getUserAddressMoreFail());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(userActions.getUserAddressMoreLoading(false));
+  }
+};
+
 const userLogout = function* ({payload}) {
   try {
     Auth.currentAuthenticatedUser()
@@ -260,6 +334,9 @@ const watcher = function* () {
   yield takeLatest(userTypes.GET_STATISTICS, getStatisticsOfUser);
   yield takeLatest(userTypes.GET_POSTS_OF_USER, getPostsOfUser);
   yield takeLatest(userTypes.GET_PRODUCT_BY_USER, getProductByUser);
+  yield takeLatest(userTypes.UPDATE_USER_PROFILE, updateUserProfile);
+  yield takeLatest(userTypes.GET_USER_ADDRESS, getUserAddress);
+  yield takeLatest(userTypes.GET_USER_ADDRESS_MORE, getUserAddressMore);
 };
 
 export default watcher();

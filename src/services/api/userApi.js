@@ -17,6 +17,10 @@ export const getStatistics = (id) => {
   return _fetch(GET, '/statistics/user-activities/' + id);
 };
 
+export const getUserAddress = (payload) => {
+  return _fetch(GET, '/user-addresses/userLogin', payload);
+};
+
 export const getUserPost = (payload) => {
   return _fetch(GET, '/posts', {
     params: payload,
