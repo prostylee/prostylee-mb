@@ -3,10 +3,12 @@ import React from 'react';
 import {Chip} from 'react-native-paper';
 import styles from './styles';
 import PropTypes from 'prop-types';
-import {FILTER_TAGS} from 'constants';
 
-const TagList = ({onTagPress, options}) => {
+const TagList = ({onTagPress, options}, ref) => {
   const [active, setActive] = React.useState(null);
+  React.useImperativeHandle(ref, () => ({
+    active: options?.[active || 0],
+  }));
   return (
     <View style={styles.wrapList}>
       <FlatList
@@ -41,13 +43,13 @@ const TagList = ({onTagPress, options}) => {
     </View>
   );
 };
-TagList.defaultProps = {
-  onTagPress: () => {},
-  options: [],
-};
+// TagList.defaultProps = {
+//   onTagPress: () => {},
+//   options: [],
+// };
 
-TagList.propTypes = {
-  onTagPress: PropTypes.func.isRequired,
-  options: PropTypes.array.isRequired,
-};
-export default TagList;
+// TagList.propTypes = {
+//   onTagPress: PropTypes.func.isRequired,
+//   options: PropTypes.array.isRequired,
+// };
+export default React.forwardRef(TagList);

@@ -1,6 +1,13 @@
 import {createAction, handleActions} from 'redux-actions';
 import {showMessage} from 'react-native-flash-message';
 
+import {
+  types as typesCartAddress,
+  actions as actionsCartAddress,
+  defaultState as defaultStateCartAddress,
+  handleActions as handleActionsCartAddress,
+} from './cartAddress';
+
 export const types = {
   //Loading
   SET_CART_LOADING: 'SET_CART_LOADING',
@@ -63,6 +70,8 @@ export const types = {
   GET_LIST_VOUCHER_LOAD_MORE_SUCCESS: 'GET_LIST_VOUCHER_LOAD_MORE_SUCCESS',
   GET_LIST_VOUCHER_LOAD_MORE_FAILED: 'GET_LIST_VOUCHER_LOAD_MORE_FAILED',
   SET_VOUCHER_USE: 'SET_VOUCHER_USE',
+  // CART ADDRESS
+  ...typesCartAddress,
 };
 
 export const actions = {
@@ -120,6 +129,9 @@ export const actions = {
 
   //AMOUN
   setCartAmount: createAction(types.SET_CART_COUPON_AMOUNT),
+
+  //CART ADDRESS
+  ...actionsCartAddress,
 };
 
 const intialState = {
@@ -158,6 +170,8 @@ const intialState = {
   pageVoucher: 0,
   limitVoucher: 12,
   voucherUse: null,
+  //CART ADDRESS
+  ...defaultStateCartAddress,
 };
 
 const PAGE_INIT = 0;
@@ -377,6 +391,8 @@ export default handleActions(
     [types.SET_VOUCHER_USE]: (state, {payload}) => {
       return {...state, voucherUse: payload};
     },
+    //CART ADDRESS
+    ...handleActionsCartAddress,
   },
   intialState,
 );

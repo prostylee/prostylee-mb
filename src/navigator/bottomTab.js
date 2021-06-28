@@ -1,15 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
+import {getCountUnreadNotiSelector} from 'redux/selectors/notification';
 import * as screens from './tabNavigators';
 
 import {tabsSetting} from 'config/navigator';
 
 import * as TabsIcon from 'svg/bottomTab';
 
-import {commonSelectors, commonActions} from 'reducers';
+import {commonSelectors, commonActions, notificationActions} from 'reducers';
 import {useDispatch, useSelector} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
@@ -21,6 +21,15 @@ const BottomTabs = (props) => {
   const isShowTabButton = useSelector((state) =>
     commonSelectors.isShowTabButton(state),
   );
+
+  const count = useSelector(
+    (state) => getCountUnreadNotiSelector(state),
+    () => {},
+  );
+  useEffect(() => {
+    dispatch(notificationActions.getCountUnreadNotification());
+  }, []);
+
   const backBehavior = 'initialRoute';
   const {initialRouteName, tabBarColor, activeColor, inactiveColor} =
     tabsSetting.configs;
@@ -93,6 +102,7 @@ const BottomTabs = (props) => {
               },
               tabBarColor,
               title: tab?.isTurnOfLabel ? '' : tab.name,
+              tabBarBadge: tab.key && count ? count : null,
             }}
           />
         );

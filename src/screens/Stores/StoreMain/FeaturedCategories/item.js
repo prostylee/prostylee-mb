@@ -10,6 +10,7 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
   const paddingLeft = index % 2 ? 4 : 12;
   const paddingRight = index % 2 ? 12 : 0;
   const dispatch = useDispatch();
+
   const clickItem = () => {
     dispatch(categoriesActions.setCategoriesParentSelect(item));
     dispatch(
@@ -30,7 +31,7 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
       <TouchableOpacity style={styles.item} onPress={clickItem}>
         <Image
           source={
-            item?.banner
+            item?.backgroundButton
               ? {uri: item?.backgroundButton}
               : require('assets/images/default.png')
           }

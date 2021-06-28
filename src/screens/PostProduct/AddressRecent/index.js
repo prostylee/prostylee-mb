@@ -13,12 +13,18 @@ import {Searchbar} from 'react-native-paper';
 import styles from './styles';
 import ListAddress from './ListAddress';
 import {postProductActions} from 'redux/reducers';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Header, ThemeView} from 'components';
 import GroupHeaderRightButton from './HeaderRightButton';
 import i18n from 'i18n';
+import {useRoute} from '@react-navigation/native';
+// postProductActions.getListLocation;
 
 const AddressRecent = ({navigation}) => {
+  const route = useRoute();
+
+  const getListAddressAction = route?.params?.getListAddressAction || null;
+
   const dispatch = useDispatch();
   const WIDTH = Dimensions.get('window').width;
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -28,7 +34,7 @@ const AddressRecent = ({navigation}) => {
   };
   useEffect(() => {
     dispatch(
-      postProductActions.getListLocation({
+      getListAddressAction({
         page: 0,
         limit: 12,
       }),

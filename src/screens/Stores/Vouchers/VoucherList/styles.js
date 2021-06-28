@@ -116,6 +116,7 @@ export default EStyleSheet.create({
     color: '$lightGray',
   },
   voucherDetail: {
+    fontFamily: '$font1Bold',
     fontSize: 14,
     fontWeight: '500',
     color: '$black',

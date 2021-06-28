@@ -4,7 +4,7 @@ import {Search, ClearTextInput} from 'svg/common';
 import styles from './styles';
 const SearchBar = (props) => {
   const inputRef = React.useRef();
-  const [state, setState] = React.useState('');
+  const [state, setState] = React.useState(props?.value || '');
   const _handleChangeText = (text) => {
     setState(text);
   };

@@ -37,7 +37,7 @@ const SearchProducts = ({navigation}) => {
     hasPersonalSalersLoadmoreSelector(state),
   );
 
-  const _handleSort = (value) => {
+  const _handleSort = (value, filterValue = {}) => {
     let sortOption = {};
     switch (value) {
       case 1: {
@@ -71,6 +71,7 @@ const SearchProducts = ({navigation}) => {
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...sortOption,
+        ...filterValue,
         // userId: userId,
       }),
     );

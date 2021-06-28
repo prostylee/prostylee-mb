@@ -15,10 +15,10 @@ export default {
     popularBrand: 'Thương hiệu nổi bật',
     voucherSaved: 'Mã giảm giá đã được lưu',
     success: 'Thành công',
-    voucherCode: 'Mã khuyễn mãi',
+    voucherCode: 'Mã khuyến mãi',
     seeMore: 'Xem thêm',
     forUser: 'Dành riêng cho bạn',
-    saveFailed: 'Lưu mã khuyễn mãi thất bại',
+    saveFailed: 'Lưu mã khuyến mãi thất bại',
     failed: 'Thất bại',
     discountCode: 'Mã giảm giá',
   },
@@ -257,7 +257,9 @@ export default {
   },
   Notification: {
     noData: 'Hiện tại bạn không có thông báo nào',
-    titlePromotion: 'Mã khuyễn mãi',
+    titlePromotion: 'Mã khuyến mãi',
+    updateNewVoucher: 'Cập nhật các tin tức khuyến mãi mới nhất',
+    saleOfInfo: 'Thông tin khuyến mãi',
   },
   mypage: {
     editProfile: 'Sửa hồ sơ',
