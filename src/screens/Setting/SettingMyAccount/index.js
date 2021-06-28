@@ -73,7 +73,6 @@ const SettingMyAccount = ({data}) => {
             </View>
           </View>
           <Formik
-            key={rerenderGender}
             validateOnMount={true}
             initialValues={{
               name,
@@ -83,8 +82,9 @@ const SettingMyAccount = ({data}) => {
               phone,
               email,
             }}
-            onSubmit={(values) => console.log(values)}>
-            {({handleSubmit, values, isValid}) => {
+            enableReinitialize={true}
+            onSubmit={(values) => console.log(JSON.stringify(values, null, 4))}>
+            {({handleSubmit, handleChange, values, isValid}) => {
               const changeBirthday = (value) => {
                 setShowDatePicker(false);
                 const dateTime = moment(value);
@@ -117,7 +117,7 @@ const SettingMyAccount = ({data}) => {
                   <Field
                     component={CustomTextInput}
                     name="gender"
-                    value={genderLabel}
+                    value={values.gender}
                     label={I18n.t('settingProfile.gender')}
                     onFocus={() => {
                       genderRef.current.togglePicker(true);
@@ -136,6 +136,9 @@ const SettingMyAccount = ({data}) => {
                     validate={validatePhone}
                     name="phone"
                     innerRef={phoneRef}
+                    onValueChange={(value) => {
+                      values.phone = value;
+                    }}
                     label={I18n.t('settingProfile.phone')}
                   />
                   <Field
@@ -170,23 +173,16 @@ const SettingMyAccount = ({data}) => {
                   <RNPickerSelect
                     ref={genderRef}
                     onValueChange={(value) => {
-                      if (value == 'M') {
-                        setGenderLabel('nam');
-                      } else {
-                        setGenderLabel('nữ');
-                      }
-                      rerenderGender++;
-                      values.gender = value;
+                      handleChange(value);
                     }}
                     items={[
                       {value: 'M', label: 'nam'},
                       {value: 'F', label: 'nữ'},
                     ]}
                     onDonePress={(value) => {
-                      values.gender = value;
+                      handleChange(value);
                     }}
                     style={styles.pickerContainer}
-                    st
                   />
                   <RnDateTimePicker
                     visible={showDatePicker}
