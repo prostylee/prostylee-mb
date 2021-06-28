@@ -47,6 +47,16 @@ export const types = {
   UPDATE_USER_PROFILE: 'UPDATE_USER_PROFILE',
   UDPATE_USER_PROFILE_SUCCESS: 'UDPATE_USER_PROFILE_SUCCESS',
   UPDATE_USER_PROFILE_FAIL: 'UPDATE_USER_PROFILE_FAIL',
+
+  GET_USER_ADDRESS_LOADING: 'GET_USER_ADDRESS_LOADING',
+  GET_USER_ADDRESS: 'GET_USER_ADDRESS',
+  GET_USER_ADDRESS_SUCCESS: 'GET_USER_ADDRESS_SUCCESS',
+  GET_USER_ADDRESS_FAIL: 'GET_USER_ADDRESS_FAIL',
+
+  GET_USER_ADDRESS_MORE_LOADING: 'GET_USER_ADDRESS_MORE_LOADING',
+  GET_USER_ADDRESS_MORE: 'GET_USER_ADDRESS_MORE',
+  GET_USER_ADDRESS_MORE_SUCCESS: 'GET_USER_ADDRESS_MORE_SUCCESS',
+  GET_USER_ADDRESS_MORE_FAIL: 'GET_USER_ADDRESS_MORE_FAIL',
 };
 
 export const actions = {
@@ -85,6 +95,16 @@ export const actions = {
   updateUserProfile: createAction(types.UPDATE_USER_PROFILE),
   updateUserProfileSuccess: createAction(types.UDPATE_USER_PROFILE_SUCCESS),
   updateUserProfileFail: createAction(types.UPDATE_USER_PROFILE_FAIL),
+
+  getUserAddressLoading: createAction(types.GET_USER_ADDRESS_LOADING),
+  getUserAddress: createAction(types.GET_USER_ADDRESS),
+  getUserAddressSuccess: createAction(types.GET_USER_ADDRESS_SUCCESS),
+  getUserAddressFail: createAction(types.GET_USER_ADDRESS_FAIL),
+
+  getUserAddressMoreLoading: createAction(types.GET_USER_ADDRESS_MORE_LOADING),
+  getUserAddressMore: createAction(types.GET_USER_ADDRESS_MORE),
+  getUserAddressMoreSuccess: createAction(types.GET_USER_ADDRESS_MORE_SUCCESS),
+  getUserAddressMoreFail: createAction(types.GET_USER_ADDRESS_MORE_FAIL),
 };
 
 export const selectors = {
@@ -93,7 +113,11 @@ export const selectors = {
   getUserProfile: (state) => state.user.profile,
   getUserStatistics: (state) => state.user.statistics,
   getUserLocation: (state) => state.user.location,
+  getUserAddress: (state) => state.user.addressList,
 };
+
+const PAGE_INIT = 0;
+const UNIT_INCREASE = 1;
 
 const defaultState = {
   user: null,
@@ -104,6 +128,12 @@ const defaultState = {
   postsOfUser: null,
   productsByUser: null,
   location: null,
+
+  addressListHasMore: true,
+  addressListPage: 0,
+  addressList: null,
+  addressListLoading: false,
+  addressListMoreLoading: false,
 };
 
 export default handleActions(
@@ -173,6 +203,34 @@ export default handleActions(
     },
     [types.UPDATE_USER_PROFILE_FAIL]: (state, {payload}) => {
       return {...state, profile: state.profile};
+    },
+    [types.GET_USER_ADDRESS_LOADING]: (state, {payload}) => {
+      return {...state, addressListLoading: payload};
+    },
+    [types.GET_USER_ADDRESS_SUCCESS]: (state, {payload}) => {
+      return {
+        ...state,
+        addressList: payload.data,
+        addressListPage: PAGE_INIT,
+        addressListHasMore: payload.hasMore ? payload.hasMore : false,
+      };
+    },
+    [types.GET_USER_ADDRESS_FAIL]: (state, {payload}) => {
+      return {...state, addressList: state.addressList};
+    },
+    [types.GET_USER_ADDRESS_MORE_LOADING]: (state, {payload}) => {
+      return {...state, addressListMoreLoading: payload};
+    },
+    [types.GET_USER_ADDRESS_MORE_SUCCESS]: (state, {payload}) => {
+      return {
+        ...state,
+        addressList: payload.data,
+        addressListPage: state.addressListPage + UNIT_INCREASE,
+        addressListHasMore: payload.hasMore ? payload.hasMore : false,
+      };
+    },
+    [types.GET_USER_ADDRESS_MORE_FAIL]: (state, {payload}) => {
+      return {...state, addressList: state.addressList};
     },
   },
   defaultState,
