@@ -25,8 +25,6 @@ const HeaderLeft = () => {
     .join(',');
   const _handleReresheAddress = async () => {
     if (!address) {
-      Geocoder.init('AIzaSyDa4XSziMXUFBwRFLto2hT_CBZ9GHbOlkg');
-
       RNLocation.configure({
         distanceFilter: 100, // Meters
         desiredAccuracy: {

@@ -339,13 +339,12 @@ const AddressTyping = (navigation) => {
   const getAddress = debounce(
     async (keyword) => {
       try {
-        // const json = await Geocoder.from(keyword, {
-        //   southwest: {lat: minLat, lng: minLon},
-        //   northeast: {lat: maxLat, lng: maxLon},
-        // });
-        let arrayLocation = mock.results?.map((item) => formatAddress(item));
+        const json = await Geocoder.from(keyword, {
+          southwest: {lat: minLat, lng: minLon},
+          northeast: {lat: maxLat, lng: maxLon},
+        });
+        let arrayLocation = json.results?.map((item) => formatAddress(item));
         setListLocation(arrayLocation);
-        console.log('RESPONSE', json);
       } catch (err) {
         console.log('GET ADDRESS ERR', err);
       }

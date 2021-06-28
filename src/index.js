@@ -26,7 +26,7 @@ import messaging from '@react-native-firebase/messaging';
 import Geocoder from 'react-native-geocoding';
 import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from './config/aws-exports';
-
+import {GOOGLE_API_KEY} from 'config/development';
 // import NotificationPopup from 'react-native-push-notification-popup';
 import {
   getApplicationName,
@@ -39,7 +39,7 @@ import {
 import RootNavigator from './navigator/rootNavigator';
 import LocalStorageService from './services/LocalStorageService';
 
-Geocoder.init('AIzaSyDa4XSziMXUFBwRFLto2hT_CBZ9GHbOlkg', {
+Geocoder.init(GOOGLE_API_KEY, {
   language: 'vi',
   components: {
     country: 'VN',
