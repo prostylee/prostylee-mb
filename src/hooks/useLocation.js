@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-
+import {Platform, PermissionsAndroid} from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import RNLocation from 'react-native-location';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {userSelectors} from 'reducers';
 import {userActions} from 'redux/reducers';
+import Geolocation from '@react-native-community/geolocation';
 const useLocation = () => {
   const dispatch = useDispatch();
   const locationRedux =
@@ -17,56 +18,48 @@ const useLocation = () => {
   });
   const haveLocation = location?.lat && location?.lon && location?.address;
   useEffect(() => {
-    let locationSubscription = null;
     if (!haveLocation) {
       (async () => {
-        RNLocation.configure({
-          distanceFilter: 100, // Meters
-          desiredAccuracy: {
-            ios: 'best',
-            android: 'highAccuracy',
-          },
-        });
-        RNLocation.requestPermission({
-          ios: 'whenInUse',
-          android: {
-            detail: 'fine',
-            rationale: {
-              title: 'Location permission',
-              message: 'We use your location to demo the library',
-              buttonPositive: 'OK',
-              buttonNegative: 'Cancel',
-            },
-          },
-        })
-          .then((granted) => {
-            if (granted) {
-              locationSubscription = RNLocation.subscribeToLocationUpdates(
-                (locations) => {
-                  setLocation({
-                    lat: locations[0].latitude,
-                    lon: locations[0].longitude,
-                  });
-                  dispatch(
-                    userActions.setUserLocation({
-                      ...location,
-                      lat: locations[0].latitude,
-                      lon: locations[0].longitude,
-                    }),
-                  );
-                },
-              );
-            }
-          })
-          .catch((err) => {
-            console.log('GRANTED PERMISSION ERR', err);
-          });
+        if (Platform.OS === 'ios') {
+          getOneTimeLocation();
+        } else {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          );
+
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log('GRANTED', granted);
+            getOneTimeLocation();
+          }
+        }
       })();
     }
-    return () => {
-      locationSubscription && locationSubscription();
-    };
   }, []);
+  const getOneTimeLocation = () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        console.log('POSSS', position);
+        const currentLongitude = JSON.stringify(position.coords.longitude);
+        const currentLatitude = JSON.stringify(position.coords.latitude);
+        dispatch(
+          userActions.setUserLocation({
+            ...location,
+            lon: currentLongitude,
+            lat: currentLatitude,
+          }),
+        );
+        setLocation({...location, lon: currentLongitude, lat: currentLatitude});
+      },
+      (error) => {
+        console.log('GET LOCATION ERROR', error);
+      },
+      {
+        // enableHighAccuracy: false,
+        timeout: 10000,
+        maximumAge: 1000,
+      },
+    );
+  };
 
   useEffect(() => {
     if (!haveLocation && location?.lat && location?.lon) {

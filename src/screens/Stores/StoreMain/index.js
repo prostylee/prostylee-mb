@@ -77,8 +77,9 @@ const Stores = (props) => {
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const isFocused = useIsFocused();
-
+  //Call get location - pls do not remove
   const location = useLocation();
+  // console.log('LOCATION', location);
 
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
