@@ -8,19 +8,19 @@ export default EStyleSheet.create({
   },
   imageViewButton: {
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    paddingVertical: 9, 
-    borderRadius: 100, 
+    paddingVertical: 9,
+    borderRadius: 100,
     paddingHorizontal: 16,
     marginBottom: 16,
   },
   imageViewButtonText: {
     color: '$white',
-    paddingLeft: 8
+    paddingLeft: 8,
   },
   buttonView: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    alignItems: 'center'
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   imageView: {
     height: 150,
@@ -30,11 +30,18 @@ export default EStyleSheet.create({
   },
   viewDivider: {
     height: 6,
-    backgroundColor: '$bgColor'
+    backgroundColor: '$bgColor',
+  },
+  inputView: {
+    paddingHorizontal: 16,
   },
   buttonSave: {
     paddingTop: 8,
-    paddingHorizontal: 16, 
-    paddingBottom: 34
-  }
+    paddingBottom: 34,
+  },
+  pickerContainer: {
+    position: 'absolute',
+    opacity: 0,
+    zIndex: -1,
+  },
 });
