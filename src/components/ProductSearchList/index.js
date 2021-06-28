@@ -41,6 +41,7 @@ const ProductSearchList = ({
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
+  const tagListRef = React.useRef();
 
   const location = useSelector((state) => userSelectors.getUserLocation(state));
 
@@ -97,6 +98,10 @@ const ProductSearchList = ({
   }, []);
   const _handleSort = (value) => {
     setValueSort(value);
+    if (tagListRef && tagListRef.current && tagListRef.current.active) {
+      sortDataFunction(value, tagListRef.current.active.value);
+      return;
+    }
     sortDataFunction(value);
   };
   const sortStyle = {
@@ -164,7 +169,14 @@ const ProductSearchList = ({
       ) : null}
 
       {hasTagList ? (
-        <TagList onTagPress={tagFilterFunction} options={filterTags} />
+        <TagList
+          ref={tagListRef}
+          onTagPress={(value) => {
+            tagFilterFunction(value);
+            setValueSort(null);
+          }}
+          options={filterTags}
+        />
       ) : null}
 
       <ProductList
