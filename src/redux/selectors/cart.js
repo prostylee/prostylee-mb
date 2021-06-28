@@ -126,3 +126,7 @@ export const getListCartAddressHistorySelector = createSelector(
   cartReducer,
   (data) => data?.selectedCartAddressHistory || [],
 );
+export const getSelectedCartAddressSelector = createSelector(
+  cartReducer,
+  (data) => data?.selectedCartAddress || {},
+);

@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {ActivityIndicator, Searchbar} from 'react-native-paper';
+import {ActivityIndicator} from 'react-native-paper';
 import styles from './styles';
 import ListAddress from './ListAddress';
 import {postProductActions} from 'redux/reducers';
@@ -22,6 +22,8 @@ import {debounce} from 'lodash';
 import {useDispatch, useSelector} from 'react-redux';
 import {userSelectors} from 'reducers';
 import {userActions} from 'redux/reducers';
+import {SearchBar} from 'components';
+import {useRoute} from '@react-navigation/native';
 
 const mock = {
   plus_code: {
@@ -319,9 +321,20 @@ const mock = {
 };
 
 const AddressTyping = (navigation) => {
-  const [loading, setLoading] = useState(false);
-  const [listLocation, setListLocation] = useState([]);
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const route = useRoute();
+  const dispatch = useDispatch();
+
+  const getListAddressAction = route?.params?.getListAddressAction || null;
+  const getListAddressSelectorFunc =
+    route?.params?.getListAddressSelectorFunc || null;
+  const getListAddressHistorySelectorFunc =
+    route?.params?.getListAddressHistorySelectorFunc || null;
+  const getListAddressLoadingSelectorFunc =
+    route?.params?.getListAddressLoadingSelectorFunc || null;
+  const setSelectedAddressAction =
+    route?.params?.setSelectedAddressAction || null;
+  const setSelectedAddressHistoryAction =
+    route?.params?.setSelectedAddressHistoryAction || null;
 
   const locationRedux =
     useSelector((state) => userSelectors.getUserLocation(state)) || {};
@@ -331,6 +344,23 @@ const AddressTyping = (navigation) => {
   const maxLon = parseFloat(lon) + 0.01;
   const minLat = parseFloat(lat) - 0.0003;
   const minLon = parseFloat(lon) - 0.01;
+
+  const isListAddressLoading =
+    useSelector((state) => getListAddressLoadingSelectorFunc(state)) || false;
+  const listAddress =
+    useSelector((state) => getListAddressSelectorFunc(state)) || [];
+  const listHistoryAddress =
+    useSelector((state) => getListAddressHistorySelectorFunc(state)) || [];
+
+  const [isTyping, setIsTyping] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [listLocation, setListLocation] = useState([]);
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const [listUserLocation, setListUserLocation] = useState([
+    ...listAddress,
+    ...listHistoryAddress,
+  ]);
 
   const onChangeSearch = (query) => {
     setSearchQuery(query);
@@ -400,6 +430,24 @@ const AddressTyping = (navigation) => {
       lon,
     };
   };
+  useEffect(() => {
+    if (!searchQuery && isTyping) {
+      setIsTyping(false);
+      return;
+    }
+    if (searchQuery && !isTyping) {
+      setIsTyping(true);
+      return;
+    }
+  }, [searchQuery]);
+  useEffect(() => {
+    dispatch(
+      getListAddressAction({
+        page: 0,
+        limit: 12,
+      }),
+    );
+  }, []);
   return (
     <ThemeView style={styles.container} isFullView>
       <Header
@@ -413,16 +461,8 @@ const AddressTyping = (navigation) => {
           justifyContent: 'center',
         }}
         middleComponent={
-          <Searchbar
+          <SearchBar
             style={styles.search}
-            inputStyle={{
-              height: '100%',
-              fontSize: 14,
-              lineHeight: 16,
-              elevation: 0,
-              numberOfLines: 1,
-              overflow: 'hidden',
-            }}
             multiline={false}
             placeholder={i18n.t('Search.inputPlaceholder')}
             onChangeText={onChangeSearch}
@@ -432,7 +472,16 @@ const AddressTyping = (navigation) => {
         }
         rightComponent={<GroupHeaderRightButton haveNoti={true} />}
       />
-      {loading ? (
+      {!isTyping ? (
+        <>
+          <View style={{padding: 10, color: 'gray'}}>
+            <Text style={{color: 'grey', fontSize: 14}}>
+              {i18n.t('addProduct.selectedAddress')}
+            </Text>
+          </View>
+          <ListAddress data={listUserLocation} />
+        </>
+      ) : loading ? (
         <View style={styles.indicatorView}>
           <ActivityIndicator />
         </View>

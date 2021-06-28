@@ -10,21 +10,33 @@ import MapView, {Marker} from 'react-native-maps';
 import styles from './styles';
 import {MapPinFill} from 'svg/common';
 import i18n from 'i18n';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {cartActions} from 'reducers';
 
 const Maps = () => {
+  const dispatch = useDispatch();
+
+  const navigation = useNavigation();
+
   const route = useRoute();
 
   const location = useLocation();
 
   const pickedLocation = route?.params?.pickedLocation || {};
 
+  const setSelectedAddressAction =
+    route?.params?.setSelectedAddressAction || {};
+
+  const setSelectedAddressHistoryAction =
+    route?.params?.setSelectedAddressHistoryAction || {};
+  const getListAddressAction = route?.params?.getListAddressAction || {};
+
   const [coordinate, setCoordinate] = useState({
     latitude: pickedLocation?.lat || location?.lat,
     longitude: pickedLocation?.lon || location?.lon,
   });
 
-  console.log('CORODINATE', coordinate, pickedLocation);
   const [address, setAddress] = useState(pickedLocation);
 
   const _handleMapPress = (e) => {
@@ -40,9 +52,7 @@ const Maps = () => {
     async (lat, lon) => {
       try {
         const json = await Geocoder.from(lat, lon);
-        console.log('RESPONSE', JSON.stringify(json, null, 2));
         if (json && json?.results?.length) {
-          console.log('FORMATED ADDRESS', formatAddress(json.results[0]));
           setAddress(formatAddress(json.results[0]));
         }
       } catch (err) {
@@ -97,6 +107,12 @@ const Maps = () => {
     };
   };
 
+  const onConfirm = () => {
+    navigation.pop(2);
+    dispatch(setSelectedAddressAction({...address}));
+    dispatch(setSelectedAddressHistoryAction({...address}));
+  };
+
   return (
     <ThemeView style={styles.wrapper} isFullView>
       <Header isDefault title={i18n.t('addProduct.chooseAddress')} />
@@ -132,7 +148,7 @@ const Maps = () => {
             </Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={onConfirm}>
           <ButtonRounded label={i18n.t('addProduct.useAddress')} />
         </TouchableOpacity>
       </View>
