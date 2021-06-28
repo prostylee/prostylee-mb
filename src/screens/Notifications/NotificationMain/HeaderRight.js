@@ -12,7 +12,6 @@ const HeaderRight = () => {
   const onMarkReadAll = () => {
     markReadAll()
       .then((res) => {
-        console.log('RESSSSS', res);
         if (res.data.status !== 200) {
           showMessage({
             message: i18n.t('someThingWrong'),
