@@ -20,7 +20,8 @@ import {
 import {userTokenSelector} from 'redux/selectors/user';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
-const SearchProducts = ({navigation}) => {
+const PersonalSaler = ({navigation}) => {
+  console.log('RERENDER');
   const dispatch = useDispatch();
   const token = useSelector((state) => userTokenSelector(state));
 
@@ -38,6 +39,7 @@ const SearchProducts = ({navigation}) => {
   );
 
   const _handleSort = (value, filterValue = {}) => {
+    console.log('CALL SORT');
     let sortOption = {};
     switch (value) {
       case 1: {
@@ -100,14 +102,16 @@ const SearchProducts = ({navigation}) => {
       }),
     );
 
-  const loadMoreFunc = () =>
+  const loadMoreFunc = (params) => {
     dispatch(
       storeActions.getPersonalSalersLoadmore({
         page: currentPage,
         limit: LIMIT_DEFAULT,
+        ...params,
         // userId: userId,
       }),
     );
+  };
 
   return (
     <ProductSearchList
@@ -130,8 +134,8 @@ const SearchProducts = ({navigation}) => {
   );
 };
 
-SearchProducts.defaultProps = {};
+PersonalSaler.defaultProps = {};
 
-SearchProducts.propTypes = {};
+PersonalSaler.propTypes = {};
 
-export default SearchProducts;
+export default PersonalSaler;

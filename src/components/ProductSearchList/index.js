@@ -93,9 +93,9 @@ const ProductSearchList = ({
     }
   }, [location?.lat, location?.lon]);
 
-  useEffect(() => {
-    refreshDataFunction();
-  }, []);
+  // useEffect(() => {
+  //   refreshDataFunction();
+  // }, []);
   const _handleSort = (value) => {
     setValueSort(value);
     if (tagListRef && tagListRef.current && tagListRef.current.active) {
@@ -113,7 +113,9 @@ const ProductSearchList = ({
     height: visible ? HEIGHT : 0,
     marginTop: visible ? HEIGHT_HEADER : 0,
   };
-
+  const _handleLoadMore = () => {
+    loadmoreDataFuntion();
+  };
   return (
     <ThemeView style={styles.container} isFullView>
       <Header
@@ -182,7 +184,7 @@ const ProductSearchList = ({
       <ProductList
         getDataFunction={getDataFunction}
         refreshDataFunction={refreshDataFunction}
-        loadmoreDataFuntion={loadmoreDataFuntion}
+        loadmoreDataFuntion={_handleLoadMore}
         isLoading={isLoading}
         hasLoadmore={hasLoadmore}
         navigation={navigation}
