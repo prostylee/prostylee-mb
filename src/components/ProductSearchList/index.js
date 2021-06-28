@@ -93,9 +93,41 @@ const ProductSearchList = ({
     }
   }, [location?.lat, location?.lon]);
 
-  // useEffect(() => {
-  //   refreshDataFunction();
-  // }, []);
+  useEffect(() => {
+    refreshDataFunction();
+  }, []);
+
+  const formatSortValue = (value) => {
+    let sortOption = {};
+    switch (value) {
+      case 1: {
+        sortOption.sorts = 'name';
+        break;
+      }
+      case 2: {
+        sortOption.bestSeller = true;
+        break;
+      }
+      case 3: {
+        sortOption.sorts = '-createdAt';
+        break;
+      }
+      case 4: {
+        sortOption.sorts = '-priceSale';
+        break;
+      }
+      case 5: {
+        sortOption.sorts = 'priceSale';
+        break;
+      }
+      default: {
+        sortOption.bestRating = true;
+        break;
+      }
+    }
+    return sortOption;
+  };
+
   const _handleSort = (value) => {
     setValueSort(value);
     if (tagListRef && tagListRef.current && tagListRef.current.active) {
@@ -114,7 +146,10 @@ const ProductSearchList = ({
     marginTop: visible ? HEIGHT_HEADER : 0,
   };
   const _handleLoadMore = () => {
-    loadmoreDataFuntion();
+    loadmoreDataFuntion(
+      tagListRef?.current?.active?.value,
+      formatSortValue(valueSort),
+    );
   };
   return (
     <ThemeView style={styles.container} isFullView>
