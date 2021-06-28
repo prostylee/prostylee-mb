@@ -19,9 +19,13 @@ let timeoutSearch = null;
 
 const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
   const dispatch = useDispatch();
+  const categorySelect = useSelector((state) =>
+    getCategoriesSelectSelector(state),
+  );
   const categoryParentSelect = useSelector((state) =>
     getCategoriesParentSelectSelector(state),
   );
+
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => {
     dispatch(productActions.setListProductLoading(true));
@@ -50,8 +54,8 @@ const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
       <Image
         style={styles.imageBanner}
         source={
-          categoryParentSelect?.banner
-            ? {uri: categoryParentSelect?.banner}
+          categorySelect?.banner
+            ? {uri: categorySelect?.banner}
             : require('assets/images/default.png')
         }
         resizeMode="cover"
@@ -70,7 +74,7 @@ const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
       </View>
       <View style={styles.wrapTitle}>
         <Text numberOfLines={1} style={styles.headTitle}>
-          {categoryParentSelect?.name}
+          {categorySelect?.name}
         </Text>
       </View>
       <ProductsCategories />

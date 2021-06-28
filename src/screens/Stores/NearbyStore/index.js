@@ -40,7 +40,7 @@ const NearbyStore = ({navigation}) => {
   ]);
 
   useEffect(() => {
-    if (location.lat && location.lon) {
+    if (location?.lat && location?.lon) {
       setFilterTags([
         {
           label: 'Gần đây',

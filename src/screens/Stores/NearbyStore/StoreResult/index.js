@@ -135,8 +135,8 @@ const FeaturedCategories = ({navigation}) => {
                           {item?.isAdvertising
                             ? i18n.t('common.textAdvertisement')
                             : getDistanceFromLatLonInKm(
-                                location.lat,
-                                location.lon,
+                                location?.lat,
+                                location?.lon,
                                 item?.location?.latitude,
                                 item?.location?.longitude,
                               ) + 'km'}

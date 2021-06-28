@@ -62,7 +62,7 @@ const useLocation = () => {
   }, []);
 
   useEffect(() => {
-    if (!haveLocation && location.lat && location.lon) {
+    if (!haveLocation && location?.lat && location?.lon) {
       Geocoder.from(location.lat, location.lon)
         .then((json) => {
           const addressComponent = json.results[0];
