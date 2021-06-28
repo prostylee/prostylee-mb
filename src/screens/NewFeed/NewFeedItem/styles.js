@@ -53,4 +53,17 @@ export default EStyleSheet.create({
     fontFamily: '$font1',
     paddingLeft: 8,
   },
+  postContentWrapper: {
+    paddingLeft: 14,
+    paddingRight: 14,
+    textAlign: 'left',
+    lineHeight: 20,
+    paddingBottom: 10,
+  },
+  seeMoreStyle: {
+    color: '$lightGray',
+  },
+  seeLessStyle: {
+    color: '$lightGray',
+  },
 });

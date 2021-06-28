@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {Text, Dimensions, ActivityIndicator, View} from 'react-native';
+import {Text, Dimensions, ActivityIndicator, View, TouchableOpacity} from 'react-native';
 import {ThemeView, Image} from 'components';
 import {Avatar, Button} from 'react-native-paper';
 import i18n from 'i18n';
@@ -11,6 +11,7 @@ import {MapPin} from 'svg/common';
 import {follow, unfollow} from 'services/api/socialApi';
 
 import {SUCCESS} from 'constants';
+import RootNavigator from '../../../navigator/rootNavigator';
 
 const WIDTH = Dimensions.get('window').width;
 const WIDTH_IMG = (WIDTH * 0.7) / 3 - 1;
@@ -37,33 +38,46 @@ const Item = ({item, style, targetType}) => {
       }
     }
   };
+
+  const goToStore = () => {
+    RootNavigator.navigate('StoreProfileMain', {storeId: item.id});
+  };
+
   return (
     <ThemeView colorSecondary style={[styles.itemContainer, style && style]}>
-      <Avatar.Image
-        source={
-          item.logoUrl
-            ? {uri: item.logoUrl}
-            : require('assets/images/default.png')
-        }
-        size={60}
-        rounded
-        containerStyle={styles.image}
-      />
+      <TouchableOpacity onPress={goToStore}>
+        <Avatar.Image
+          source={
+            item.logoUrl
+              ? {uri: item.logoUrl}
+              : require('assets/images/default.png')
+          }
+          size={60}
+          rounded
+          containerStyle={styles.image}
+        />
+      </TouchableOpacity>
       <View style={styles.info}>
-        <Text style={styles.name}>{item?.name}</Text>
+        <TouchableOpacity onPress={goToStore}>
+          <Text style={styles.name}>{item?.name}</Text>
+        </TouchableOpacity>
         <View style={styles.addressWrap}>
-          <MapPin />
+          <MapPin/>
           <Text style={styles.address}>{item?.address}</Text>
         </View>
       </View>
       <View style={styles.productImageWrap}>
         {products.length
-          ? products.map((item, _i) => (
+          ? products.map((product, _i) => (
+            <TouchableOpacity
+              key={'productOfStore' + targetType + _i}
+              onPress={() => {
+                RootNavigator.navigate('ProductDetail', {id: product.id});
+              }}>
               <Image
-                key={'productOfStore' + targetType + _i}
                 source={
-                  item?.imageUrl
-                    ? {uri: item.imageUrl}
+                  product?.imageUrl
+                    ? {uri: product.imageUrl}
                     : require('assets/images/default.png')
                 }
                 resizeMode="cover"
@@ -72,9 +86,10 @@ const Item = ({item, style, targetType}) => {
                   width: WIDTH_IMG,
                   marginHorizontal: 1,
                 }}
-                PlaceholderContent={<ActivityIndicator />}
+                PlaceholderContent={<ActivityIndicator/>}
               />
-            ))
+            </TouchableOpacity>
+          ))
           : null}
       </View>
       <Button

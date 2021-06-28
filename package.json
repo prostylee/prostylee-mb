@@ -12,6 +12,7 @@
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.12.12",
     "@babel/preset-flow": "^7.12.1",
+    "@fawazahmed/react-native-read-more": "^2.1.1",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-async-storage/async-storage": "^1.13.4",
     "@react-native-community/checkbox": "^0.5.7",

@@ -28,10 +28,9 @@ export async function _fetch(method, path, data) {
 
   try {
     const token = await Auth.currentSession();
-    // console.log('TOKEN  \n\n\n', token.accessToken.jwtToken);
     if (token && token.accessToken) {
       api.setHeaders({
-        Authorization: 'Bearer ' + token.accessToken.jwtToken,
+        Authorization: 'Bearer ' + token.idToken.jwtToken,
         'X-PS-Authorization-Type': 'OPEN-ID',
       });
     }

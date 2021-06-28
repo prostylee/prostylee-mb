@@ -1,5 +1,5 @@
 import {createAction, handleActions} from 'redux-actions';
-import {FIRST_SLICE_ITEM, PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
+import {FIRST_SLICE_ITEM, LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 export const types = {
   SET_LOADING: 'SET_LOADING',
@@ -121,7 +121,7 @@ export default handleActions(
         ...state,
         page: PAGE_INIT,
         newFeed: {...payload, content: restContent},
-        hasLoadMore: state.page < totalPages ? true : false,
+        hasLoadMore: state.page < totalPages,
         threeFirstItem: {...payload, content: threeFirstItem},
       };
     },
@@ -135,7 +135,7 @@ export default handleActions(
         ...state,
         newFeed: payload,
         page: state.page + UNIT_INCREASE,
-        hasLoadMore: state.page + 1 < totalPages ? true : false,
+        hasLoadMore: state.page + 1 < totalPages,
       };
     },
     [types.HANDLE_LOAD_MORE_FAILED]: (state, {payload}) => {
