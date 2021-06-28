@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Searchbar} from 'react-native-paper';
+import {ActivityIndicator, Searchbar} from 'react-native-paper';
 import styles from './styles';
 import ListAddress from './ListAddress';
 import {postProductActions} from 'redux/reducers';
@@ -319,6 +319,7 @@ const mock = {
 };
 
 const AddressTyping = (navigation) => {
+  const [loading, setLoading] = useState(false);
   const [listLocation, setListLocation] = useState([]);
   const [searchQuery, setSearchQuery] = React.useState('');
 
@@ -339,14 +340,18 @@ const AddressTyping = (navigation) => {
   const getAddress = debounce(
     async (keyword) => {
       try {
+        setLoading(true);
         // const json = await Geocoder.from(keyword, {
         //   southwest: {lat: minLat, lng: minLon},
         //   northeast: {lat: maxLat, lng: maxLon},
         // });
+
         let arrayLocation = mock.results?.map((item) => formatAddress(item));
         setListLocation(arrayLocation);
       } catch (err) {
         console.log('GET ADDRESS ERR', err);
+      } finally {
+        setLoading(false);
       }
     },
     1000,
@@ -427,7 +432,13 @@ const AddressTyping = (navigation) => {
         }
         rightComponent={<GroupHeaderRightButton haveNoti={true} />}
       />
-      <ListAddress data={listLocation} />
+      {loading ? (
+        <View style={styles.indicatorView}>
+          <ActivityIndicator />
+        </View>
+      ) : (
+        <ListAddress data={listLocation} />
+      )}
     </ThemeView>
   );
 };

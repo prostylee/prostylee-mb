@@ -26,12 +26,17 @@ import {
 import {storeProfileActions} from 'redux/reducers';
 import {useDispatch, useSelector} from 'react-redux';
 import {userSelectors} from 'reducers';
+import {isNull} from 'lodash-es';
 
 const AllProducts = ({
   navigation,
   isEndReached = false,
   setIsEndReached = () => {},
   setHasLoadmore = () => {},
+  setFilterValue = () => {},
+  setValueSort = () => {},
+  filterValue = {},
+  valueSort = {},
 }) => {
   const dispatch = useDispatch();
 
@@ -104,16 +109,22 @@ const AllProducts = ({
     );
   };
   const _handleLoadMore = () => {
-    dispatch(
-      storeProfileActions.getAllStoreProductLoadmore({
-        limit: LIMIT_DEFAULT,
-        page: page,
-        storeId: 1,
-      }),
-    );
-    setIsEndReached(false);
+    if (!loadmoreLoading) {
+      dispatch(
+        storeProfileActions.getAllStoreProductLoadmore({
+          limit: LIMIT_DEFAULT,
+          page: page,
+          storeId: 1,
+          ...filterValue,
+          ...valueSort,
+        }),
+      );
+      setIsEndReached(false);
+    }
   };
   const _handleFilterByTag = (queryObject) => {
+    setFilterValue(queryObject);
+    setValueSort(isNull);
     dispatch(
       storeProfileActions.getAllStoreProduct({
         page: PAGE_DEFAULT,
@@ -132,7 +143,7 @@ const AllProducts = ({
   });
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tất cả sản phẩm</Text>
+      <Text style={styles.title}>{i18n.t('stores.allProduct')}</Text>
       <TagList onTagPress={_handleFilterByTag} options={filterTags} />
       <ProductList />
       {loadmoreLoading ? <Footer /> : null}

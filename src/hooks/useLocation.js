@@ -28,7 +28,6 @@ const useLocation = () => {
           );
 
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log('GRANTED', granted);
             getOneTimeLocation();
           }
         }
@@ -38,7 +37,6 @@ const useLocation = () => {
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
       (position) => {
-        console.log('POSSS', position);
         const currentLongitude = JSON.stringify(position.coords.longitude);
         const currentLatitude = JSON.stringify(position.coords.latitude);
         dispatch(

@@ -34,4 +34,9 @@ export default StyleSheet.create({
     // borderWidth: 1,
     width: 80,
   },
+  indicatorView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

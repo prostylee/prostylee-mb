@@ -39,7 +39,6 @@ const PersonalSaler = ({navigation}) => {
   );
 
   const _handleSort = (value, filterValue = {}) => {
-    console.log('CALL SORT');
     let sortOption = {};
     switch (value) {
       case 1: {
@@ -102,12 +101,13 @@ const PersonalSaler = ({navigation}) => {
       }),
     );
 
-  const loadMoreFunc = (params) => {
+  const loadMoreFunc = (params1, params2) => {
     dispatch(
       storeActions.getPersonalSalersLoadmore({
         page: currentPage,
         limit: LIMIT_DEFAULT,
-        ...params,
+        ...params1,
+        ...params2,
         // userId: userId,
       }),
     );

@@ -8,6 +8,6 @@ export const currencyFormat = (n = 0, currency = 'đ') => {
   );
 };
 
-export const priceSalePercent = (price, priceSale) => {
+export const priceSalePercent = (price = 0, priceSale = 0) => {
   return Math.round(100 - (priceSale / price) * 100);
 };

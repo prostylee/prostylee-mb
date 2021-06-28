@@ -57,6 +57,7 @@ const StoreProfileMain = (props) => {
   const [visible, setVisible] = useState(false);
   const [activeItemLabel, setActiveItemLabel] = useState('');
   const [valueSort, setValueSort] = useState(null);
+  const [filterValue, setFilterValue] = useState(null);
 
   const WIDTH = Dimensions.get('window').width;
   const scrollAnimated = useRef(new Animated.Value(0)).current;
@@ -143,6 +144,7 @@ const StoreProfileMain = (props) => {
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...sortOption,
+        ...filterValue,
       }),
     );
   };
@@ -302,6 +304,10 @@ const StoreProfileMain = (props) => {
           isEndReached={isEndReached}
           setIsEndReached={setIsEndReached}
           setHasLoadmore={setHasLoadmore}
+          setFilterValue={setFilterValue}
+          setValueSort={setValueSort}
+          filterValue={filterValue}
+          valueSort={valueSort}
         />
       </ScrollView>
     </View>

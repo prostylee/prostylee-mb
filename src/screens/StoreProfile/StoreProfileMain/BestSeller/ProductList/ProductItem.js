@@ -49,14 +49,14 @@ const ProductItem = ({item, index}) => {
           </Text>
           <View style={styles.toolContainer}>
             <Text style={styles.itemPrice} numberOfLines={1}>
-              {currencyFormat(item?.priceSale, 'đ')}
+              {currencyFormat(item?.priceSale || 0, 'đ')}
             </Text>
 
             <ProductLike item={item} />
           </View>
           <View style={{flexDirection: 'column'}}>
             <Text style={styles.itemDiscountPrice}>
-              {currencyFormat(item?.price, 'đ')}
+              {currencyFormat(item?.price || 0, 'đ')}
             </Text>
           </View>
         </View>

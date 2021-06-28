@@ -17,7 +17,7 @@ import i18n from 'i18n';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {getProductSearchListSelector} from 'redux/selectors/search/productSearchMain';
 
-const ProductList = ({navigation}) => {
+const ProductList = ({navigation, currentFilter = {}, currentSort = {}}) => {
   const dispatch = useDispatch();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -56,6 +56,8 @@ const ProductList = ({navigation}) => {
           limit: LIMIT_DEFAULT,
           keyword: currentKeyword,
           type: 'product',
+          ...currentFilter,
+          ...currentSort,
         }),
       );
     }
@@ -68,6 +70,8 @@ const ProductList = ({navigation}) => {
         limit: LIMIT_DEFAULT,
         keyword: currentKeyword,
         type: 'product',
+        ...currentFilter,
+        ...currentSort,
       }),
     );
   };
