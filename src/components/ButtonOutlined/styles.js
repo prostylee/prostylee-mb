@@ -12,7 +12,8 @@ const styles = EStyleSheet.create({
   },
 
   disabledButton: {
-    backgroundColor: '$line',
+    backgroundColor: '#E0E0E0',
+    borderWidth: 0,
   },
 
   labelStyle: {
@@ -20,6 +21,9 @@ const styles = EStyleSheet.create({
     fontFamily: '$font1',
     textAlign: 'center',
     color: '$purple',
+  },
+  disabledLabel: {
+    color: '$white',
   },
 });
 

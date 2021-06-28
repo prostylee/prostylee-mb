@@ -1,12 +1,8 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
-import {
-  ContainerWithoutScrollView,
-  HeaderBack,
-  ButtonRounded,
-} from 'components';
+import {Header, ButtonRounded, ThemeView} from 'components';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useTheme, useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -19,7 +15,7 @@ import {
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListStoreAddress from './ListStoreAddress';
-
+import {MapPin} from 'svg/common';
 const StoreAddress = (props) => {
   const navigation = props.navigation ? props.navigation : {};
   const route = useRoute();
@@ -66,7 +62,7 @@ const StoreAddress = (props) => {
   const Dropdown = () => {
     return (
       <View style={styles.dropDownContainer}>
-        <Icon name="location-outline" color="grey" size={28} />
+        <MapPin width={24} height={24} />
         <View style={styles.dropDown}>
           <RNPickerSelect
             value={selectedAddress}
@@ -83,26 +79,24 @@ const StoreAddress = (props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <ContainerWithoutScrollView
-        safeAreaTopStyle={styles.safeAreaTopStyle}
-        bgStatusBar={colors['$bgColor']}>
-        <HeaderBack
-          onBack={navigation.goBack}
-          title={i18n.t('storeAddress.title')}
+    <ThemeView style={styles.container} isFullView>
+      <Header
+        isDefault
+        middleComponent={
+          <Text style={styles.headerTitle}>{i18n.t('storeAddress.title')}</Text>
+        }
+      />
+      <Dropdown />
+      <View style={styles.wrapper}>
+        <ListStoreAddress style={styles.list} data={branchData} />
+      </View>
+      <View style={styles.buttonContainer}>
+        <ButtonRounded
+          style={styles.button}
+          label={i18n.t('storeAddress.button')}
         />
-        <Dropdown />
-        <View style={styles.wrapper}>
-          <ListStoreAddress style={styles.list} data={branchData} />
-        </View>
-        <View style={styles.buttonContainer}>
-          <ButtonRounded
-            style={styles.button}
-            label={i18n.t('storeAddress.button')}
-          />
-        </View>
-      </ContainerWithoutScrollView>
-    </View>
+      </View>
+    </ThemeView>
   );
 };
 export default StoreAddress;

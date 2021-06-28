@@ -1,64 +1,44 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  ScrollView,
-  View,
-  StatusBar,
-  Platform,
-  RefreshControl,
-} from 'react-native';
+import {ActivityIndicator, FlatList, Platform, StatusBar, View,} from 'react-native';
 import styles from './styles';
-import {ThemeView} from 'components';
+import {Colors, ThemeView} from 'components';
 
-import VerticalFeed from './VerticalFeed';
 import HeaderFeed from './HeaderFeed';
 import TopTrending from './TopTrending';
 import DynamicUsers from './DynamicUsers';
 import StoryBoard from './Stories';
 
-import {
-  NewFeedTrendingContentLoading,
-  NewFeedContentLoading,
-} from 'components/Loading/contentLoader';
+import {NewFeedContentLoading, NewFeedTrendingContentLoading,} from 'components/Loading/contentLoader';
 
-import {
-  newFeedActions,
-  storeActions,
-  commonActions,
-  dynamicUsersActions,
-} from 'redux/reducers';
-import {
-  getNewFeedSelector,
-  getHasLoadMoreSelector,
-  getPageSelector,
-  getLoadMoreLoadingSelector,
-  getNewFeedLoadingSelector,
-  threeFirstNewFeedItemSelector,
-  getStoriesLoading,
-  getStories,
-} from 'redux/selectors/newFeed';
-import {
-  getTopProduct,
-  getTopProductLoadingSelector,
-} from 'redux/selectors/stores';
-import {
-  loadingSelector,
-  listDynamicUsersSelector,
-} from 'redux/selectors/dynamicUsers';
+import {commonActions, dynamicUsersActions, newFeedActions, storeActions,} from 'redux/reducers';
+import {getHasLoadMoreSelector, getLoadMoreLoadingSelector, getNewFeedLoadingSelector, getNewFeedSelector, getPageSelector, getStories, getStoriesLoading, threeFirstNewFeedItemSelector,} from 'redux/selectors/newFeed';
+import {getTopProduct, getTopProductLoadingSelector,} from 'redux/selectors/stores';
+import {listDynamicUsersSelector, loadingSelector,} from 'redux/selectors/dynamicUsers';
 import {targetTypeSelector} from 'redux/selectors/common';
 
-import {
-  TYPE_STORE,
-  TYPE_USER,
-  PAGE_DEFAULT,
-  LIMIT_DEFAULT,
-  NUMBER_OF_PRODUCT,
-} from 'constants';
+import {LIMIT_DEFAULT, NUMBER_OF_PRODUCT, PAGE_DEFAULT, TYPE_STORE, TYPE_USER,} from 'constants';
+import FeedItem from './VerticalFeed/item';
+
+const NewFeedRowItemType = {
+  STORIES: {
+    id: -1,
+    type: 'STORIES',
+  },
+  STORES: {
+    id: -2,
+    type: 'STORES',
+  },
+  USERS: {
+    id: -3,
+    type: 'USERS',
+  },
+};
 
 const NewFeed = ({navigation}) => {
   const dispatch = useDispatch();
   const [refreshing, handleRefreshing] = useState(false);
+  const [allNewFeeds, setAllNewFeeds] = useState([]);
 
   const newFeedList = useSelector((state) => getNewFeedSelector(state));
   const threeFirstNewFeedItem = useSelector((state) =>
@@ -107,8 +87,7 @@ const NewFeed = ({navigation}) => {
           page: PAGE_DEFAULT,
         }),
       );
-    }
-    if (targetType === TYPE_USER) {
+    } else if (targetType === TYPE_USER) {
       dispatch(
         dynamicUsersActions.getDynamicUser({
           page: PAGE_DEFAULT,
@@ -122,7 +101,7 @@ const NewFeed = ({navigation}) => {
       );
     }
     handleRefreshing(false);
-  }, [refreshing, handleRefresh, targetType]);
+  }, [refreshing, targetType]);
 
   const handleLoadMore = () => {
     if (hasLoadMore) {
@@ -137,13 +116,17 @@ const NewFeed = ({navigation}) => {
   };
 
   const changeTabStore = () => {
-    dispatch(newFeedActions.setLoading(true));
-    dispatch(commonActions.toggleTargetType(TYPE_STORE));
+    if (targetType !== TYPE_STORE) {
+      dispatch(newFeedActions.setLoading(true));
+      dispatch(commonActions.toggleTargetType(TYPE_STORE));
+    }
   };
 
   const changeTabUser = () => {
-    dispatch(newFeedActions.setLoading(true));
-    dispatch(commonActions.toggleTargetType(TYPE_USER));
+    if (targetType !== TYPE_USER) {
+      dispatch(newFeedActions.setLoading(true));
+      dispatch(commonActions.toggleTargetType(TYPE_USER));
+    }
   };
 
   const handleRefresh = () => {
@@ -151,15 +134,12 @@ const NewFeed = ({navigation}) => {
   };
 
   const handleLoading = () => {
-    if (
-      !newFeedLoading &&
-      !topProductLoading &&
-      !dynamicUsersLoading &&
-      !storiesLoading
-    ) {
-      return false;
-    }
-    return true;
+    return (
+      newFeedLoading ||
+      topProductLoading ||
+      dynamicUsersLoading ||
+      storiesLoading
+    );
   };
 
   const LoadingComponent = () => {
@@ -170,6 +150,108 @@ const NewFeed = ({navigation}) => {
           <NewFeedContentLoading key={'newFeedLoading' + _i} />
         ))}
       </View>
+    );
+  };
+
+  useEffect(() => {
+    if (!handleLoading()) {
+      const items = [];
+
+      if (stories && stories?.content?.length) {
+        items.push({
+          id: NewFeedRowItemType.STORIES.id,
+          type: NewFeedRowItemType.STORIES.type,
+          items: stories,
+        });
+      }
+
+      if (threeFirstNewFeedItem && threeFirstNewFeedItem?.content?.length) {
+        items.push(...threeFirstNewFeedItem?.content);
+      }
+
+      if (
+        targetType === TYPE_STORE &&
+        topProduct &&
+        topProduct?.content?.length
+      ) {
+        items.push({
+          id: NewFeedRowItemType.STORES.id,
+          type: NewFeedRowItemType.STORES.type,
+          items: topProduct,
+        });
+      }
+
+      if (
+        targetType === TYPE_USER &&
+        listDynamicUsers &&
+        listDynamicUsers?.content?.length
+      ) {
+        items.push({
+          id: NewFeedRowItemType.USERS.id,
+          type: NewFeedRowItemType.USERS.type,
+          items: listDynamicUsers,
+        });
+      }
+
+      if (newFeedList && newFeedList?.content?.length) {
+        items.push(...newFeedList?.content);
+      }
+
+      setAllNewFeeds(items);
+      console.log('Render ' + items.length);
+    }
+  }, [
+    stories,
+    threeFirstNewFeedItem,
+    topProduct,
+    listDynamicUsers,
+    newFeedList,
+  ]);
+
+  const renderFooter = () => {
+    if (!loadMoreLoading) {
+      return <View style={styles.viewFooter} />;
+    }
+
+    return (
+      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+        <ActivityIndicator animating color={Colors.$purple} size="small" />
+      </View>
+    );
+  };
+
+  const renderItem = (item, index) => {
+    if (item.type === NewFeedRowItemType.STORIES.type) {
+      return <StoryBoard targetType={targetType} stories={item.items} />;
+    }
+
+    if (item.type === NewFeedRowItemType.STORES.type) {
+      return (
+        <TopTrending
+          targetType={targetType}
+          navigation={navigation}
+          topProduct={item.items}
+        />
+      );
+    }
+
+    if (item.type === NewFeedRowItemType.USERS.type) {
+      return (
+        <DynamicUsers
+          targetType={targetType}
+          navigation={navigation}
+          listDynamicUsers={item.items}
+        />
+      );
+    }
+
+    return (
+      <FeedItem
+        isProfile={false}
+        targetType={targetType}
+        key={'newFeedItem' + targetType + index}
+        newFeedItem={item}
+      />
     );
   };
 
@@ -186,51 +268,21 @@ const NewFeed = ({navigation}) => {
       {handleLoading() ? (
         <LoadingComponent />
       ) : (
-        <ScrollView
-          scrollEventThrottle={1}
-          showsVerticalScrollIndicator={false}
+        <FlatList
+          data={allNewFeeds || []}
+          keyExtractor={(item, index) =>
+            'newFeedKeyExtractor' + targetType + index
+          }
+          renderItem={({item, index}) => renderItem(item, index)}
+          onEndReached={handleLoadMore}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          ListFooterComponent={renderFooter}
+          onEndReachedThreshold={0.5}
+          initialNumToRender={10}
           showsHorizontalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-          }>
-          <StoryBoard
-            targetType={targetType}
-            stories={stories}
-            loading={handleLoading()}
-          />
-          {/* <VerticalFeed
-            targetType={targetType}
-            handleRefresh={() => {}}
-            handleLoadMore={() => {}}
-            newFeedList={threeFirstNewFeedItem}
-            refreshing={false}
-            loadMoreLoading={false}
-            isFirst={true}
-          />
-          {targetType === TYPE_STORE && (
-            <TopTrending
-              targetType={targetType}
-              navigation={navigation}
-              topProduct={topProduct}
-            />
-          )}
-          {targetType === TYPE_USER && (
-            <DynamicUsers
-              targetType={targetType}
-              navigation={navigation}
-              listDynamicUsers={listDynamicUsers}
-            />
-          )}
-          <VerticalFeed
-            targetType={targetType}
-            loading={handleLoading()}
-            handleRefresh={() => {}}
-            handleLoadMore={handleLoadMore}
-            newFeedList={newFeedList}
-            refreshing={false}
-            loadMoreLoading={loadMoreLoading}
-          /> */}
-        </ScrollView>
+          showsVerticalScrollIndicator={false}
+        />
       )}
     </ThemeView>
   );

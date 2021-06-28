@@ -280,6 +280,7 @@ const ListProduct = ({navigation, data}) => {
               deliveryMethod={valueChosen}
               voucher={voucher}
               actionButton={onPayment}
+              isCheckout
             />
           </View>
         </>

@@ -16,7 +16,7 @@ import {IMG_STATUS, IMG_PRODUCT, TYPE_USER} from 'constants';
 const DEFAULT_IMG = require('assets/images/default.png');
 const WIDTH = Dimensions.get('window').width;
 
-const Slide = React.memo((props) => {
+const NewFeedSlider = React.memo((props) => {
   const {images, width, targetType} = props;
   const IMG_RATIO = targetType === TYPE_USER ? IMG_STATUS : IMG_PRODUCT;
 
@@ -39,7 +39,6 @@ const Slide = React.memo((props) => {
     return (
       <TouchableOpacity
         activeOpacity={1}
-        style={styles.viewImage}
         onPress={() => {}}>
         <Image
           source={{uri: item}}
@@ -80,13 +79,16 @@ const Slide = React.memo((props) => {
           {(images.length ? state.indexCurrency + 1 : 0) + '/' + images.length}
         </Text>
       </View>
+      {
+        props.children
+      }
     </>
   );
 });
 
-Slide.defaultProps = {
+NewFeedSlider.defaultProps = {
   width: WIDTH,
   navigationType: 'navigate',
 };
 
-export default Slide;
+export default NewFeedSlider;
