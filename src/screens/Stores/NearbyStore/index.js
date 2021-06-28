@@ -63,7 +63,7 @@ const NearbyStore = ({navigation}) => {
         },
       ]);
     }
-  }, [location.lat, location.lon]);
+  }, [location?.lat, location?.lon]);
 
   const _handleFilterByTag = (queryObject) => {
     dispatch(
@@ -78,8 +78,8 @@ const NearbyStore = ({navigation}) => {
   useEffect(() => {
     dispatch(
       storeActions.getNearbyStore({
-        latitude: location.lat,
-        longtitude: location.lon,
+        latitude: location?.lat,
+        longtitude: location?.lon,
       }),
     );
   }, [location]);

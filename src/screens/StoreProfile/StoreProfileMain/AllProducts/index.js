@@ -85,7 +85,7 @@ const AllProducts = ({
         },
       ]);
     }
-  }, [location.lat, location.lon]);
+  }, [location?.lat, location?.lon]);
 
   const hasLoadMore = useSelector((state) =>
     getStoreAllProductHasLoadmore(state),

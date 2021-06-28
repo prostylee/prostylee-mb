@@ -92,7 +92,7 @@ const SearchProducts = ({navigation}) => {
         },
       ]);
     }
-  }, [location.lat, location.lon]);
+  }, [location?.lat, location?.lon]);
 
   const handlerSearch = useCallback(
     debounce((query) => {

@@ -90,7 +90,7 @@ const ProductSearchList = ({
         },
       ]);
     }
-  }, [location.lat, location.lon]);
+  }, [location?.lat, location?.lon]);
 
   useEffect(() => {
     refreshDataFunction();

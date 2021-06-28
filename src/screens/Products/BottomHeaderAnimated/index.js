@@ -78,7 +78,7 @@ const BottomHeaderAnimated = ({
         },
       ]);
     }
-  }, [location.lat, location.lon]);
+  }, [location?.lat, location?.lon]);
   return (
     <View style={styles.container}>
       <Divider />
