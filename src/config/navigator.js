@@ -52,6 +52,7 @@ export const tabsSetting = {
         tabBarIcon: 'NotifTab',
         tabBarIconSolid: 'NotifTabSolid',
       },
+      key: true,
     },
     {
       title: '',

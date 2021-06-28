@@ -40,6 +40,9 @@ export const types = {
   GET_PRODUCT_BY_USER: 'GET_PRODUCT_BY_USER',
   GET_PRODUCT_BY_USER_SUCCESS: 'GET_PRODUCT_BY_USER_SUCCESS',
   GET_PRODUCT_BY_USER_FAIL: 'GET_PRODUCT_BY_USER_FAIL',
+
+  GET_USER_LOCATION: 'GET_USER_LOCATION',
+  SET_USER_LOCATION: 'SET_USER_LOCATION',
 };
 
 export const actions = {
@@ -72,6 +75,8 @@ export const actions = {
   getProductByUser: createAction(types.GET_PRODUCT_BY_USER),
   getProductByUserSuccess: createAction(types.GET_PRODUCT_BY_USER_SUCCESS),
   getProductByUserFail: createAction(types.GET_PRODUCT_BY_USER_FAIL),
+  getUserLocation: createAction(types.GET_USER_LOCATION),
+  setUserLocation: createAction(types.SET_USER_LOCATION),
 };
 
 export const selectors = {
@@ -79,6 +84,7 @@ export const selectors = {
   getUserToken: (state) => state.user.userToken,
   getUserProfile: (state) => state.user.profile,
   getUserStatistics: (state) => state.user.statistics,
+  getUserLocation: (state) => state.user.location,
 };
 
 const defaultState = {
@@ -89,6 +95,7 @@ const defaultState = {
   statistics: null,
   postsOfUser: null,
   productsByUser: null,
+  location: null,
 };
 
 export default handleActions(
@@ -146,6 +153,12 @@ export default handleActions(
     },
     [types.GET_PRODUCT_BY_USER_FAIL]: (state, {payload}) => {
       return {...state, productsByUser: null};
+    },
+    [types.SET_USER_LOCATION]: (state, {payload}) => {
+      return {
+        ...state,
+        location: payload,
+      };
     },
   },
   defaultState,

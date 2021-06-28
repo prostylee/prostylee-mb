@@ -122,7 +122,7 @@ const Notifications = ({navigation}) => {
           navigation.navigate('PromoNotification');
         }}
       />
-      <Divider />
+
       {loading && !refreshing ? (
         <View style={styles.loadingContainter}>
           {Array.from('x'.repeat(Math.round(height - 120) / (width / 3))).map(
@@ -134,6 +134,7 @@ const Notifications = ({navigation}) => {
       ) : listListNotification && listListNotification.length ? (
         <FlatList
           data={listListNotification}
+          contentContainerStyle={{paddingTop: 6}}
           renderItem={({item}) => (
             <>
               <NotificationItem {...item} />

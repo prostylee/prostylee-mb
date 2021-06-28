@@ -26,13 +26,16 @@ import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Avatar, Text} from 'react-native-paper';
 import {searchActions} from 'redux/reducers';
 import getDistanceFromLatLonInKm from 'utils/locationUtils';
-import useLocation from 'hooks/useLocation';
+
 import {MapPin} from 'svg/common';
+import {userSelectors} from 'reducers';
 
 const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
   const [refreshing, handleRefreshing] = useState(false);
-  const location = useLocation();
+
+  const location = useSelector((state) => userSelectors.getUserLocation(state));
+
   const loading = useSelector((state) => getStoreSearchLoadingSelector(state));
   const storeList = useSelector((state) => getStoreSearchListSelector(state));
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));

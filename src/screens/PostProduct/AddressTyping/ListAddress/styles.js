@@ -15,6 +15,7 @@ export default StyleSheet.create({
     fontSize: 14,
     color: 'black',
     fontStyle: 'normal',
+    lineHeight: 20,
   },
   content: {
     flexDirection: 'column',
@@ -25,5 +26,6 @@ export default StyleSheet.create({
     fontSize: 14,
     color: 'grey',
     fontStyle: 'normal',
+    lineHeight: 20,
   },
 });

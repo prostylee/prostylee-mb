@@ -209,7 +209,7 @@ const ListProduct = ({navigation, data}) => {
   };
 
   const renderHeader = () => {
-    return <CardAddress />;
+    return <CardAddress navigation={navigation} />;
   };
 
   const onPayment = () => {
@@ -247,7 +247,6 @@ const ListProduct = ({navigation, data}) => {
 
   const listDelivery = useMemo(() => deliveries, [JSON.stringify(deliveries)]);
 
-  console.log('GROUP DATA', JSON.stringify(groupData, null, 2));
   return (
     <View style={styles.container}>
       {Object.keys(groupData).length > 0 ? (

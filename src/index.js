@@ -23,10 +23,10 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import FlashMessage from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
-
+import Geocoder from 'react-native-geocoding';
 import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from './config/aws-exports';
-
+import {GOOGLE_API_KEY} from 'config/development';
 // import NotificationPopup from 'react-native-push-notification-popup';
 import {
   getApplicationName,
@@ -38,6 +38,13 @@ import {
 } from 'react-native-device-info';
 import RootNavigator from './navigator/rootNavigator';
 import LocalStorageService from './services/LocalStorageService';
+
+Geocoder.init(GOOGLE_API_KEY, {
+  language: 'vi',
+  components: {
+    country: 'VN',
+  },
+});
 
 Amplify.configure({
   ...awsconfig,

@@ -8,6 +8,7 @@ import {
   getSuggestionsList,
   getVoucherList,
   getDeliveryMethods,
+  getUserAddress,
 } from 'services/api/cartApi';
 
 import {SUCCESS} from 'constants';
@@ -122,6 +123,23 @@ const getListDelivery = function* ({payload}) {
   }
 };
 
+const getUserCartAddress = function* ({payload}) {
+  try {
+    yield put(cartActions.setListCartAddressLoading(true));
+    const res = yield call(getUserAddress, payload);
+    console.log('USER ADDRESS', res.data);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(cartActions.getListCartAddressSuccess(res.data.data.content));
+    } else {
+      yield put(cartActions.getListCartAddressFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(cartActions.setListCartAddressLoading(false));
+  }
+};
+
 const watcher = function* () {
   //List Cart
   yield takeLatest(cartTypes.SET_LIST_CART, setListCart);
@@ -144,5 +162,7 @@ const watcher = function* () {
 
   //List Delivery
   yield takeLatest(cartTypes.GET_LIST_DELIVERY, getListDelivery);
+  //List address
+  yield takeLatest(cartTypes.GET_LIST_CART_ADDRESS, getUserCartAddress);
 };
 export default watcher();
