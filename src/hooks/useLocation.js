@@ -47,6 +47,13 @@ const useLocation = () => {
                     lat: locations[0].latitude,
                     lon: locations[0].longitude,
                   });
+                  dispatch(
+                    userActions.setUserLocation({
+                      ...location,
+                      lat: locations[0].latitude,
+                      lon: locations[0].longitude,
+                    }),
+                  );
                 },
               );
             }
