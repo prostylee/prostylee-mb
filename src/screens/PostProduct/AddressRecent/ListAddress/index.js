@@ -31,7 +31,7 @@ const Item = ({item, onPress}) => {
   );
 };
 
-const Project = ({isSearch = false, listAddress = [], historyAddress = []}) => {
+const Project = ({isSearch = false}) => {
   const route = useRoute();
   const dispatch = useDispatch();
   const {params} = route;
@@ -53,10 +53,10 @@ const Project = ({isSearch = false, listAddress = [], historyAddress = []}) => {
   const loading = useSelector((state) =>
     getListAddressLoadingSelectorFunc(state),
   );
-  const historyAddress = useSelector((state) =>
-    getListAddressHistorySelectorFunc(state),
-  );
-  const listAddress = useSelector((state) => getListAddressSelectorFunc(state));
+  const historyAddress =
+    useSelector((state) => getListAddressHistorySelectorFunc(state)) || [];
+  const listAddress =
+    useSelector((state) => getListAddressSelectorFunc(state)) || [];
 
   const renderItem = ({item}) => {
     return <Item item={item} onPress={() => onItemPress(item)} />;
@@ -71,7 +71,7 @@ const Project = ({isSearch = false, listAddress = [], historyAddress = []}) => {
       {!isSearch ? (
         loading ? (
           <ActivityIndicator />
-        ) : listLocation.length ? (
+        ) : [...listAddress, ...historyAddress].length ? (
           <FlatList
             data={[...listAddress, ...historyAddress]}
             renderItem={renderItem}
