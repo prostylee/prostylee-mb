@@ -21,8 +21,10 @@ export const orders = (payload) => {
   return _fetch(POST, '/orders', payload);
 };
 
-export const getUserAddress = () => {
-  return _fetch(GET, '/user-addresses/userLogin');
+export const getUserAddress = (payload) => {
+  return _fetch(GET, '/user-addresses/userLogin', {
+    ...payload,
+  });
 };
 
 export const getVoucherList = (payload) => {

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import {FlatList, Text, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import styles from './styles';
 import {
   getProductLocationSelector,
@@ -11,6 +11,8 @@ import {
 import {ActivityIndicator} from 'react-native-paper';
 import i18n from 'i18n';
 import {Colors} from 'components';
+import {cartActions} from 'reducers';
+import {useRoute} from '@react-navigation/native';
 
 const Item = ({item, onPress}) => {
   return (
@@ -29,17 +31,40 @@ const Item = ({item, onPress}) => {
   );
 };
 
-const Project = ({isSearch = false}) => {
+const Project = ({isSearch = false, listAddress = [], historyAddress = []}) => {
+  const route = useRoute();
+  const dispatch = useDispatch();
+  const {params} = route;
+
+  const getListAddressSelectorFunc =
+    params?.getListAddressSelectorFunc || (() => {});
+
+  const getListAddressHistorySelectorFunc =
+    params?.getListAddressHistorySelectorFunc || (() => {});
+
+  const getListAddressLoadingSelectorFunc =
+    params?.getListAddressLoadingSelectorFunc || (() => {});
+
+  const setSelectedAddressAction = params?.setSelectedAddressAction || {};
+
+  const setSelectedAddressHistoryAction =
+    params?.setSelectedAddressAction || {};
+
   const loading = useSelector((state) =>
-    getProductLocationLoadingSelector(state),
+    getListAddressLoadingSelectorFunc(state),
   );
-  const listLocationSelector = useSelector((state) =>
-    getProductLocationSelector(state),
+  const historyAddress = useSelector((state) =>
+    getListAddressHistorySelectorFunc(state),
   );
-  const listLocation = listLocationSelector.content || [];
+  const listAddress = useSelector((state) => getListAddressSelectorFunc(state));
 
   const renderItem = ({item}) => {
-    return <Item item={item} />;
+    return <Item item={item} onPress={() => onItemPress(item)} />;
+  };
+
+  const onItemPress = (item) => {
+    dispatch(setSelectedAddressAction(item));
+    dispatch(setSelectedAddressHistoryAction(item));
   };
   return (
     <View style={styles.mainContainer}>
@@ -48,7 +73,7 @@ const Project = ({isSearch = false}) => {
           <ActivityIndicator />
         ) : listLocation.length ? (
           <FlatList
-            data={listLocation}
+            data={[...listAddress, ...historyAddress]}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
           />

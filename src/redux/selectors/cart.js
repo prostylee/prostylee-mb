@@ -112,3 +112,17 @@ export const getListDeliverySelector = createSelector(
   cartReducer,
   (data) => data?.listDelivery || [],
 );
+//LIST ADDRESS
+export const getListCartAddressLoadingSelector = createSelector(
+  cartReducer,
+  (data) => data?.isListCartAddressLoading || false,
+);
+
+export const getListCartAddressSelector = createSelector(
+  cartReducer,
+  (data) => data?.listCartAddress || [],
+);
+export const getListCartAddressHistorySelector = createSelector(
+  cartReducer,
+  (data) => data?.selectedCartAddressHistory || [],
+);
