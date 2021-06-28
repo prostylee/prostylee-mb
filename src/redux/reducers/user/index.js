@@ -43,6 +43,10 @@ export const types = {
 
   GET_USER_LOCATION: 'GET_USER_LOCATION',
   SET_USER_LOCATION: 'SET_USER_LOCATION',
+
+  UPDATE_USER_PROFILE: 'UPDATE_USER_PROFILE',
+  UDPATE_USER_PROFILE_SUCCESS: 'UDPATE_USER_PROFILE_SUCCESS',
+  UPDATE_USER_PROFILE_FAIL: 'UPDATE_USER_PROFILE_FAIL',
 };
 
 export const actions = {
@@ -77,6 +81,10 @@ export const actions = {
   getProductByUserFail: createAction(types.GET_PRODUCT_BY_USER_FAIL),
   getUserLocation: createAction(types.GET_USER_LOCATION),
   setUserLocation: createAction(types.SET_USER_LOCATION),
+
+  updateUserProfile: createAction(types.UPDATE_USER_PROFILE),
+  updateUserProfileSuccess: createAction(types.UDPATE_USER_PROFILE_SUCCESS),
+  updateUserProfileFail: createAction(types.UPDATE_USER_PROFILE_FAIL),
 };
 
 export const selectors = {
@@ -159,6 +167,12 @@ export default handleActions(
         ...state,
         location: payload,
       };
+    },
+    [types.UDPATE_USER_PROFILE_SUCCESS]: (state, {payload}) => {
+      return {...state, profile: payload};
+    },
+    [types.UPDATE_USER_PROFILE_FAIL]: (state, {payload}) => {
+      return {...state, profile: state.profile};
     },
   },
   defaultState,

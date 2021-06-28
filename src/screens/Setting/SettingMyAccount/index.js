@@ -14,13 +14,14 @@ import {
   ButtonRounded,
   RnDateTimePicker,
 } from 'components';
+import {showMessage} from 'react-native-flash-message';
 import RNPickerSelect from 'react-native-picker-select';
 import {Camera} from 'svg/common';
 import styles from './styles';
 import I18n from 'i18n';
 import {Field, Formik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
-import {userSelectors} from 'reducers';
+import {userSelectors, userActions} from 'reducers';
 import {
   validateEmail,
   validateFullname,
@@ -28,10 +29,9 @@ import {
   validatePhone,
 } from '../../../utils/validatorUtils';
 import moment from 'moment';
-let rerenderGender = 0;
 
-const SettingMyAccount = ({data}) => {
-  const {birthday} = data;
+const SettingMyAccount = () => {
+  const dispatch = useDispatch();
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
   );
@@ -39,33 +39,69 @@ const SettingMyAccount = ({data}) => {
   const bio = userProfile.bio ? userProfile.bio : '';
   const gender = userProfile.gender
     ? userProfile.gender == 'M'
-      ? 'nam'
+      ? I18n.t('male')
       : userProfile.gender == 'F'
-      ? 'nữ'
+      ? I18n.t('female')
       : ''
     : '';
-  const phone = userProfile.phone ? userProfile.phone : '';
+  const phone = userProfile.phoneNumber ? userProfile.phoneNumber : '';
   const email = userProfile.email ? userProfile.email : '';
+  let birthday = '';
+  if (userProfile.date && userProfile.month && userProfile.year) {
+    birthday = `${userProfile.date}/${userProfile.month}/${userProfile.year}`;
+  }
   const [showDatePicker, setShowDatePicker] = React.useState(false);
-  const [genderLabel, setGenderLabel] = React.useState(gender);
 
   const birthdayRef = React.useRef();
   const phoneRef = React.useRef();
   const genderRef = React.useRef();
+
+  const updateUserProfile = async (payload) => {
+    const birthdayValue = payload.birthday;
+    const listDate = birthdayValue.split('/');
+    const birthdayData = {
+      date: Number(listDate[0]),
+      month: Number(listDate[1]),
+      year: Number(listDate[2]),
+    };
+    let userGender = '';
+    if (payload.gender === I18n.t('male')) {
+      userGender = 'M';
+    } else if (payload.gender === I18n.t('female')) {
+      userGender = 'F';
+    } else {
+      await showMessage({
+        message: I18n.t('error.formError'),
+        type: 'danger',
+        position: 'top',
+      });
+      return;
+    }
+    dispatch(
+      userActions.updateUserProfile({
+        fullName: payload.name,
+        gender: userGender,
+        bio: payload.bio,
+        phoneNumber: payload.phone,
+        email: payload.email,
+        ...birthdayData,
+      }),
+    );
+  };
 
   console.log('userProfile', JSON.stringify(userProfile, null, 4));
 
   return (
     <ThemeView isFullView style={styles.container}>
       <KeyboardAvoidingView
-        style={{flex: 1}}
+        style={styles.contentContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Header title={I18n.t('setting.profile')} isDefault />
         <ScrollView>
           <View style={styles.imageView}>
             <View style={styles.imageViewButton}>
               <TouchableOpacity style={styles.buttonView}>
-                <Camera color="white" />
+                <Camera color="#FFFFFF" />
                 <Text style={styles.imageViewButtonText}>
                   {I18n.t('settingProfile.changeImage')}
                 </Text>
@@ -73,7 +109,6 @@ const SettingMyAccount = ({data}) => {
             </View>
           </View>
           <Formik
-            key={rerenderGender}
             validateOnMount={true}
             initialValues={{
               name,
@@ -83,8 +118,9 @@ const SettingMyAccount = ({data}) => {
               phone,
               email,
             }}
-            onSubmit={(values) => console.log(values)}>
-            {({handleSubmit, values, isValid}) => {
+            enableReinitialize={true}
+            onSubmit={(values) => updateUserProfile(values)}>
+            {({handleSubmit, setFieldValue, values, isValid}) => {
               const changeBirthday = (value) => {
                 setShowDatePicker(false);
                 const dateTime = moment(value);
@@ -96,10 +132,13 @@ const SettingMyAccount = ({data}) => {
                   phoneRef.current.forceFocus();
                 }, 500);
               };
+              // function changeNameFunc(e) {
+              //   this.name = 'name';
+              //   handleChange(e, 'name');
+              //   {props.handleChange(e); props.updateParentStuff(e)}
+              // }
               return (
-                <View
-                  style={styles.inputView}
-                  key={`rerender_gender_${rerenderGender}`}>
+                <View style={styles.inputView}>
                   <Field
                     component={CustomTextInput}
                     name="name"
@@ -117,7 +156,6 @@ const SettingMyAccount = ({data}) => {
                   <Field
                     component={CustomTextInput}
                     name="gender"
-                    value={genderLabel}
                     label={I18n.t('settingProfile.gender')}
                     onFocus={() => {
                       genderRef.current.togglePicker(true);
@@ -157,7 +195,7 @@ const SettingMyAccount = ({data}) => {
 
                   <View style={styles.buttonSave}>
                     <ButtonRounded
-                      label="Lưu thay đổi"
+                      label={I18n.t('settingProfile.buttonSave')}
                       onPress={handleSubmit}
                       disabled={
                         !isValid ||
@@ -167,27 +205,19 @@ const SettingMyAccount = ({data}) => {
                       }
                     />
                   </View>
-                  <RNPickerSelect
-                    ref={genderRef}
-                    onValueChange={(value) => {
-                      if (value == 'M') {
-                        setGenderLabel('nam');
-                      } else {
-                        setGenderLabel('nữ');
-                      }
-                      rerenderGender++;
-                      values.gender = value;
-                    }}
-                    items={[
-                      {value: 'M', label: 'nam'},
-                      {value: 'F', label: 'nữ'},
-                    ]}
-                    onDonePress={(value) => {
-                      values.gender = value;
-                    }}
-                    style={styles.pickerContainer}
-                    st
-                  />
+                  <View style={styles.pickerContainer}>
+                    <RNPickerSelect
+                      ref={genderRef}
+                      onValueChange={(value) => {
+                        setFieldValue('gender', value);
+                      }}
+                      items={[
+                        {value: I18n.t('male'), label: I18n.t('male')},
+                        {value: I18n.t('female'), label: I18n.t('female')},
+                      ]}
+                      style={styles.pickerContainer}
+                    />
+                  </View>
                   <RnDateTimePicker
                     visible={showDatePicker}
                     onClose={() => setShowDatePicker(false)}
@@ -206,12 +236,6 @@ const SettingMyAccount = ({data}) => {
   );
 };
 
-SettingMyAccount.defaultProps = {
-  data: {
-    name: 'Vũ Nguyễn',
-    bio: 'I’m only a morning person on Christmas morning You are not just a Follower.',
-    gender: 'Nam',
-  },
-};
+SettingMyAccount.defaultProps = {};
 
 export default SettingMyAccount;

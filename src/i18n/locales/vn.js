@@ -98,6 +98,8 @@ export default {
   pwChangeSuccessNoti: 'Hãy đăng nhập để tiếp tục sử dụng ứng dụng',
   backToSignIn: 'Quay lại đăng nhập',
   fullname: 'Họ tên',
+  male: 'nam',
+  female: 'nữ',
   signUpWithPhone: 'Đăng ký bằng số điện thoại',
   yourPhone: 'Số điện thoại',
   signUpPolicyNoti: 'Bằng việc đăng kí, bạn đã đồng ý với chúng tôi về',
@@ -224,6 +226,7 @@ export default {
     cannotUploadImage:
       'Xuất hiện khi upload hình. Bạn hãy kiểm tra lại kết nối mạng nhé!',
     cannotGetImage: 'Không thể chọn hình ảnh này. Xin hãy thử lại!',
+    formError: 'Lỗi form, xin hãy thử lại sau!',
   },
   addStory: {
     addStore: 'Thêm cửa hàng',

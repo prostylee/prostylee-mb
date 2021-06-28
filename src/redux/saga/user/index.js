@@ -6,6 +6,7 @@ import {
   getProfile,
   getStatistics,
   getUserPost,
+  updateProfile,
 } from 'services/api/userApi';
 
 import {showMessage} from 'react-native-flash-message';
@@ -221,6 +222,23 @@ const getProductByUser = function* ({payload}) {
   }
 };
 
+const updateUserProfile = function* ({payload}) {
+  yield put(commonActions.toggleLoading(true));
+  try {
+    const res = yield call(updateProfile, payload);
+    console.log(res);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(userActions.updateUserProfileSuccess(res.data.data));
+    } else {
+      yield put(userActions.updateUserProfileFail());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(commonActions.toggleLoading(false));
+  }
+};
+
 const userLogout = function* ({payload}) {
   try {
     Auth.currentAuthenticatedUser()
@@ -260,6 +278,7 @@ const watcher = function* () {
   yield takeLatest(userTypes.GET_STATISTICS, getStatisticsOfUser);
   yield takeLatest(userTypes.GET_POSTS_OF_USER, getPostsOfUser);
   yield takeLatest(userTypes.GET_PRODUCT_BY_USER, getProductByUser);
+  yield takeLatest(userTypes.UPDATE_USER_PROFILE, updateUserProfile);
 };
 
 export default watcher();
