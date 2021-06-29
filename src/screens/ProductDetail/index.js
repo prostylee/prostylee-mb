@@ -86,6 +86,7 @@ const ProductDetail = (props) => {
       dispatch(productActions.getProductById({id: productId}));
       dispatch(productActions.getProductComments({id: productId}));
       dispatch(productActions.getProductRelated({id: productId}));
+      setChoiceSelect([]);
     }
   }, [productId]);
 
