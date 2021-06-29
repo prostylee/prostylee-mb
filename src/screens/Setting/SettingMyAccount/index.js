@@ -132,11 +132,7 @@ const SettingMyAccount = () => {
                   phoneRef.current.forceFocus();
                 }, 500);
               };
-              // function changeNameFunc(e) {
-              //   this.name = 'name';
-              //   handleChange(e, 'name');
-              //   {props.handleChange(e); props.updateParentStuff(e)}
-              // }
+              const birthDayValue = values.birthday;
               return (
                 <View style={styles.inputView}>
                   <Field
@@ -223,7 +219,11 @@ const SettingMyAccount = () => {
                   </View>
                   <RnDateTimePicker
                     visible={showDatePicker}
-                    onClose={() => setShowDatePicker(false)}
+                    maxDate={new Date()}
+                    onClose={() => {
+                      setShowDatePicker(false);
+                      changeBirthday(birthDayValue);
+                    }}
                     mode={'date'}
                     onValueChange={(value) => {
                       changeBirthday(value);
