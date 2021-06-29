@@ -120,21 +120,16 @@ const SettingMyAccount = () => {
             onSubmit={(values) => updateUserProfile(values)}>
             {({handleSubmit, setFieldValue, values, isValid}) => {
               const changeBirthday = (value) => {
-                setShowDatePicker(false);
                 const dateTime = moment(value);
                 const year = dateTime.get('year');
-                const month = dateTime.get('month');
+                const month = dateTime.get('month') + 1;
                 const date = dateTime.get('date');
-                values.birthday = `${date}/${month}/${year}`;
+                setFieldValue('birthday', `${date}/${month}/${year}`);
                 setTimeout(() => {
                   phoneRef.current.forceFocus();
                 }, 500);
               };
-              // function changeNameFunc(e) {
-              //   this.name = 'name';
-              //   handleChange(e, 'name');
-              //   {props.handleChange(e); props.updateParentStuff(e)}
-              // }
+              const birthDayValue = moment(values.birthday, 'DD/MM/YYYY');
               return (
                 <View style={styles.inputView}>
                   <Field
@@ -221,10 +216,15 @@ const SettingMyAccount = () => {
                   </View>
                   <RnDateTimePicker
                     visible={showDatePicker}
-                    onClose={() => setShowDatePicker(false)}
+                    maxDate={new Date()}
+                    onClose={() => {
+                      changeBirthday(birthDayValue);
+                      setShowDatePicker(false);
+                    }}
                     mode={'date'}
                     onValueChange={(value) => {
                       changeBirthday(value);
+                      setShowDatePicker(false);
                     }}
                   />
                 </View>
