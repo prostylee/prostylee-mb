@@ -188,6 +188,7 @@ export default {
     seeMore: 'Xem thêm',
     brand: 'Thương hiệu',
     productStatus: ' Tình trạng sản phẩm',
+    notExist: 'Chưa có mẫu sản phẩm này',
   },
   storeAddress: {
     title: 'Cửa hàng',

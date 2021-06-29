@@ -27,12 +27,13 @@ import {createChat} from 'graphqlLocal/mutations';
 
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
 
-const Footer = ({navigation, productData, choiceSelect}) => {
+const Footer = ({navigation, productData, priceList, choiceSelect}) => {
   const dispatch = useDispatch();
   const isStore = productData.storeId ? true : false;
   const [awsData, setAwsData] = React.useState({});
   const [sellerData, setSellerData] = React.useState({});
   const [userData, setUserData] = React.useState({});
+  const [productExist, setProductExist] = React.useState(true);
   const attributes = productData?.productAttributeOptionResponse || [];
 
   React.useEffect(() => {
@@ -51,6 +52,23 @@ const Footer = ({navigation, productData, choiceSelect}) => {
     };
     dispatch(cartActions.addItemToCart(productItem));
   };
+
+  const checkButtonEnability = () => {
+    const choiceList = choiceSelect.map((item) => item.value.attrValue).sort();
+    let attributeID = '';
+    choiceList.forEach((element) => {
+      attributeID = attributeID + '_' + element;
+    });
+    if (priceList[attributeID]) {
+      setProductExist(true);
+    } else {
+      setProductExist(false);
+    }
+  };
+
+  React.useEffect(() => {
+    checkButtonEnability();
+  }, [choiceSelect]);
 
   const getProfileData = async () => {
     const user = await Auth.currentAuthenticatedUser();
@@ -132,7 +150,6 @@ const Footer = ({navigation, productData, choiceSelect}) => {
         labelStyle={{}}
         label={i18n.t('productDetail.buttonStore')}
         onPress={goToStore}
-        disabled={attributes.length !== choiceSelect.length}
       />
     ) : (
       <ButtonOutlined
@@ -153,7 +170,7 @@ const Footer = ({navigation, productData, choiceSelect}) => {
         labelStyle={{}}
         label={i18n.t('productDetail.buttonAddToCart')}
         onPress={onAddToCart}
-        disabled={attributes.length !== choiceSelect.length}
+        disabled={!productExist || attributes.length !== choiceSelect.length}
       />
     ) : (
       <ButtonRounded
@@ -162,6 +179,7 @@ const Footer = ({navigation, productData, choiceSelect}) => {
         labelStyle={{}}
         label={i18n.t('productDetail.buttonChat')}
         onPress={chatWithSeller}
+        disabled={!productExist || attributes.length !== choiceSelect.length}
       />
     );
   };

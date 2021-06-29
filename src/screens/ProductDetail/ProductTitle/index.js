@@ -14,6 +14,7 @@ import {productSelectors} from 'reducers';
 import {ProductBookmark} from 'components';
 import Entypo from 'react-native-vector-icons/Entypo';
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import i18n from 'i18n';
 
 /*Utils*/
 import {currencyFormat} from 'utils/currency';
@@ -24,13 +25,14 @@ import PropTypes from 'prop-types';
 const ProductTitle = ({
   productId,
   name,
-  price,
-  priceOriginal,
   numberOfRate,
   navigation,
   bookmarkStatus,
+  priceList,
+  choiceSelect,
 }) => {
   const {colors} = useTheme();
+  const [productPrice, setProductPrice] = React.useState({});
 
   const totalRate = useSelector((state) =>
     productSelectors.getProductCommentsAverage(state),
@@ -71,6 +73,24 @@ const ProductTitle = ({
       }
     });
   };
+
+  const getProductChoicePrice = () => {
+    const choiceList = choiceSelect.map((item) => item.value.attrValue).sort();
+    let attributeID = '';
+    choiceList.forEach((element) => {
+      attributeID = attributeID + '_' + element;
+    });
+    if (priceList[attributeID]) {
+      setProductPrice(priceList[attributeID]);
+    } else {
+      setProductPrice(null);
+    }
+  };
+
+  React.useEffect(() => {
+    getProductChoicePrice();
+  }, [choiceSelect]);
+
   return (
     <View style={styles.container}>
       <View style={styles.titleRow}>
@@ -81,14 +101,20 @@ const ProductTitle = ({
           />
         </TouchableOpacity>
       </View>
-      <Text style={styles.price}>
-        {price
-          ? currencyFormat(price, 'đ')
-          : currencyFormat(priceOriginal, 'đ')}
-      </Text>
+      {productPrice ? (
+        <Text style={styles.price}>
+          {productPrice.price
+            ? currencyFormat(productPrice.price, 'đ')
+            : currencyFormat(productPrice.priceSale, 'đ')}
+        </Text>
+      ) : (
+        <Text style={styles.notExist}>{i18n.t('productDetail.notExist')}</Text>
+      )}
       <View style={styles.titleRow}>
         <Text style={styles.priceOriginal}>
-          {priceOriginal ? currencyFormat(priceOriginal, 'đ') : ''}
+          {productPrice && productPrice.priceSale
+            ? currencyFormat(productPrice.priceSale, 'đ')
+            : ''}
         </Text>
         <TouchableOpacity
           style={styles.rating}

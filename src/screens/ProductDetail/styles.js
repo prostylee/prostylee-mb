@@ -8,6 +8,11 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     position: 'relative',
   },
+  loaderContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   lineHr: {
     height: 1,
     width: WIDTH - 32,

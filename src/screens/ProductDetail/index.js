@@ -59,6 +59,7 @@ const ProductDetail = (props) => {
   const [currentImage, setCurrentImage] = React.useState(1);
   const [choiceSelect, setChoiceSelect] = React.useState([]);
   const [activeTab, setActiveTab] = React.useState('product');
+  const [priceList, setPriceList] = React.useState({});
 
   const [ratingPos, setRatingPos] = React.useState(0);
   const [suggestPos, setSuggestPos] = React.useState(0);
@@ -91,6 +92,7 @@ const ProductDetail = (props) => {
   }, [productId]);
 
   React.useEffect(() => {
+    processProductPriceData(productData.productPriceResponseList);
     if (productData && productData.storeId && productData.categoryId) {
       dispatch(
         productActions.getProductCoordinated({
@@ -104,6 +106,25 @@ const ProductDetail = (props) => {
   const productData = useSelector((state) =>
     productSelectors.getProductDetail(state),
   );
+
+  const processProductPriceData = (data) => {
+    const attributeList = {};
+    data.map((item) => {
+      const attributeValues = item.productAttributes
+        .map((attribute) => attribute.attrValue)
+        .sort();
+      let attributeID = '';
+      attributeValues.forEach((element) => {
+        attributeID = attributeID + '_' + element;
+      });
+      attributeList[attributeID] = {
+        price: item?.price,
+        priceSale: item?.priceSale,
+      };
+    });
+    setPriceList(attributeList);
+  };
+
   const productPriceData = !isEmpty(productData)
     ? productData?.price && productData?.priceSale
       ? {
@@ -231,7 +252,9 @@ const ProductDetail = (props) => {
     : 0;
 
   React.useEffect(() => {
-    if (!productDataLoading) handleRefreshing(false);
+    if (!productDataLoading) {
+      handleRefreshing(false);
+    }
   }, [productDataLoading]);
 
   React.useEffect(() => {
@@ -252,45 +275,9 @@ const ProductDetail = (props) => {
     setChoiceSelect(defaultChoiceSelect);
   }, [productData]);
 
-  const getProductPriceBasedOnAttributesObject = (
-    productPriceResponseList = [],
-  ) => {
-    return productPriceResponseList.reduce((currentPriceObject, item) => {
-      let attributesGroupPriceKey = item?.productAttributes
-        ?.map((item) => item.id)
-        ?.join('-');
-      currentPriceObject[`${attributesGroupPriceKey}`] = {
-        price: item?.price,
-        priceSale: item?.priceSale,
-      };
-      return currentPriceObject;
-    }, {});
-  };
-  const getAttributesGroupKey = (list = []) => {
-    return list
-      .reduce((attributesGroupKey, item) => {
-        let arrayKey = [...attributesGroupKey];
-        arrayKey.push(item?.value?.id);
-        return arrayKey;
-      }, [])
-      .join('-');
-  };
-
-  const ProductPriceBasedOnAttributesObject = React.useMemo(
-    () =>
-      getProductPriceBasedOnAttributesObject(
-        productData?.productPriceResponseList,
-      ),
-    [JSON.stringify(productData)],
-  );
-  const SelectedAttributesGroupKey = React.useMemo(
-    () => getAttributesGroupKey(choiceSelect),
-    [JSON.stringify(choiceSelect)],
-  );
-
   if (productDataLoading && !refreshing) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={styles.loaderContainer}>
         <ProductDetailLoading />
       </View>
     );
@@ -363,14 +350,8 @@ const ProductDetail = (props) => {
           navigation={props.navigation}
           productId={productData?.id}
           name={productData?.name}
-          price={
-            ProductPriceBasedOnAttributesObject?.[SelectedAttributesGroupKey]
-              ?.priceSale
-          }
-          priceOriginal={
-            ProductPriceBasedOnAttributesObject?.[SelectedAttributesGroupKey]
-              ?.price
-          }
+          priceList={priceList}
+          choiceSelect={choiceSelect}
           rateValue={productData?.productStatisticResponse?.resultOfRating}
           numberOfRate={productData?.productStatisticResponse?.numberOfReview}
           bookmarkStatus={productData?.saveStatusOfUserLogin || false}
@@ -433,6 +414,7 @@ const ProductDetail = (props) => {
         navigation={props.navigation}
         isLike={productData?.likeStatusOfUserLogin || false}
         productData={productData}
+        priceList={priceList}
         choiceSelect={choiceSelect}
       />
     </View>
