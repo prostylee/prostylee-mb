@@ -45,10 +45,10 @@ const ResultProductSearchResultItem = ({item, index, navigation}) => {
         <View style={styles.item}>
           <Text style={styles.title}>{item}</Text>
         </View>
+        <View style={{paddingHorizontal: 16, paddingVertical: 2}}>
+          <Divider />
+        </View>
       </TouchableOpacity>
-      <View style={{paddingLeft: 16, paddingRight: 16}}>
-        <Divider />
-      </View>
     </View>
   );
 };
