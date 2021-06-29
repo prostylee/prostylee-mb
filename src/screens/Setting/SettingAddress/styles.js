@@ -1,4 +1,3 @@
-import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
@@ -6,40 +5,54 @@ export default EStyleSheet.create({
     flex: 1,
     backgroundColor: '$bgColor',
   },
+  listContainer: {
+    flex: 1,
+  },
   addressView: {
-    flex: 8, 
-    flexDirection: 'row', 
+    flex: 8,
+    flexDirection: 'row',
     alignContent: 'center',
     justifyContent: 'flex-start',
     paddingVertical: 12,
-    backgroundColor: '$white'
+    backgroundColor: '$white',
+    position: 'relative',
   },
   addressIconView: {
-    flex: 1, 
-    flexDirection: 'column', 
-    alignItems: 'center'
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   addressDetailView: {
-    flex: 4, 
-    flexDirection: 'column'
+    flex: 4,
+    flexDirection: 'column',
   },
   addressDefaultView: {
-    flex: 3, 
-    flexDirection: 'column', 
-    alignItems: 'flex-end', 
-    paddingRight: 16
+    flex: 3,
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    paddingRight: 16,
   },
   isDefaultText: {
-    color: '#823FFD'
+    color: '$purple',
   },
   subText: {
-    color: '#8B9399'
+    color: '$lightGray',
   },
   addAddressButtonView: {
-    paddingLeft: 15, 
-    backgroundColor: 'white', 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    paddingVertical: 14
-  }
+    paddingLeft: 15,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 14,
+  },
+  rightArrowContainer: {
+    position: 'absolute',
+    right: 16,
+  },
+  dividerStyle: {
+    height: 6,
+  },
+  newAddressText: {
+    paddingLeft: 15,
+  },
 });

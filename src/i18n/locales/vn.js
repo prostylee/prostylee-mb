@@ -314,7 +314,7 @@ export default {
     addAddress: 'Thêm địa chỉ',
     province: 'Tỉnh/thành phố',
     district: 'Quận/Huyện',
-    ward: 'Quận/Huyện',
+    ward: 'Phường/Xã',
     noAddress:
       'Hiện tại bạn không có địa chỉ đã lưu. Hãy bắt đầu thêm một địa chỉ mới ngay',
     contact: 'Thông tin liên hệ',

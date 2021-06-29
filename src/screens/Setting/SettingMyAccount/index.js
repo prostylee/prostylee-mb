@@ -25,9 +25,8 @@ import {userSelectors, userActions} from 'reducers';
 import {
   validateEmail,
   validateFullname,
-  validatePassword,
   validatePhone,
-} from '../../../utils/validatorUtils';
+} from 'utils/validatorUtils';
 import moment from 'moment';
 
 const SettingMyAccount = () => {

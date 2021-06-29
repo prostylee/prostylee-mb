@@ -24,12 +24,16 @@ const SettingAddress = () => {
   const FooterButton = () => {
     return (
       <>
-        {userAddress.length ? <View style={{height: 6}} /> : null}
+        {userAddress.length ? <View style={styles.dividerStyle} /> : null}
         <TouchableOpacity
-          onPress={() => navigation.navigate('SettingAddAddress')}>
+          onPress={() =>
+            navigation.navigate('SettingAddAddress', {
+              addressCount: userAddress.length,
+            })
+          }>
           <View style={styles.addAddressButtonView}>
             <PlusSign />
-            <Text style={{paddingLeft: 15}}>
+            <Text style={styles.newAddressText}>
               {I18n.t('setting.newAddress')}
             </Text>
           </View>
@@ -38,31 +42,40 @@ const SettingAddress = () => {
     );
   };
 
-  const renderItem = ({item, index}) => {
+  const RenderItem = ({item, index}) => {
+    const [itemHeight, setItemHeight] = React.useState(0);
     return (
-      <>
-        <View style={styles.addressView}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('SettingAddAddress', {
+            addressCount: userAddress.length,
+            currentAddress: item,
+            addressId: item.id,
+          })
+        }>
+        <View
+          style={styles.addressView}
+          onLayout={(e) => setItemHeight(e.nativeEvent.layout.height)}>
           <View style={styles.addressIconView}>
             <LocationIcon color="#8B9399" />
           </View>
           <View style={styles.addressDetailView}>
             <Text>
-              {item.name} {item.phone}
+              {item.contactName} {item.contactPhone}
             </Text>
-            <Text style={styles.subText}>{item.address}</Text>
-            <Text style={styles.subText}>{item.ward}</Text>
-            <Text style={styles.subText}>{item.district}</Text>
-            <Text style={styles.subText}>{item.province}</Text>
+            <Text style={styles.subText}>{item.fullAddress}</Text>
           </View>
           <View style={styles.addressDefaultView}>
             <Text style={styles.isDefaultText}>
-              {item.isDefault === 1 ? I18n.t('setting.default') : ''}
+              {item.priority === true ? I18n.t('setting.default') : ''}
             </Text>
+          </View>
+          <View style={[styles.rightArrowContainer, {top: itemHeight / 2 - 8}]}>
             <RightArrow />
           </View>
         </View>
         {index !== userAddress.length - 1 ? <Divider /> : null}
-      </>
+      </TouchableOpacity>
     );
   };
 
@@ -70,9 +83,11 @@ const SettingAddress = () => {
     <ThemeView isFullView style={styles.container}>
       <Header title={I18n.t('setting.address')} isDefault />
       <FlatList
-        style={{flex: 1}}
+        style={styles.listContainer}
         data={userAddress || []}
-        renderItem={renderItem}
+        renderItem={({item, index}) => {
+          return <RenderItem item={item} index={index} />;
+        }}
         keyExtractor={(_, index) => `address_item_${index}`}
         ListFooterComponent={<FooterButton />}
       />
