@@ -21,6 +21,7 @@ const useLocation = () => {
     if (!haveLocation) {
       (async () => {
         if (Platform.OS === 'ios') {
+          Geolocation.requestAuthorization();
           getOneTimeLocation();
         } else {
           const granted = await PermissionsAndroid.request(
