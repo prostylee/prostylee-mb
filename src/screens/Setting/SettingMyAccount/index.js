@@ -88,8 +88,6 @@ const SettingMyAccount = () => {
     );
   };
 
-  console.log('userProfile', JSON.stringify(userProfile, null, 4));
-
   return (
     <ThemeView isFullView style={styles.container}>
       <KeyboardAvoidingView

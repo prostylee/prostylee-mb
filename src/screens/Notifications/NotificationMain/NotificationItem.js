@@ -49,7 +49,6 @@ const NotificationItem = ({
           dispatch(notificationActions.setCountUnreadNoti(count - 1));
         })
         .catch((err) => {
-          console.log('ERROR MARKS AS READ', err);
           showMessage({
             message: i18n.t('serverError'),
             type: 'danger',

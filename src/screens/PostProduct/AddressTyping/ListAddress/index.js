@@ -48,7 +48,7 @@ const ListAddress = ({data = []}) => {
       <FlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => index + item?.fullAddress}
       />
     </View>
   );
