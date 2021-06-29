@@ -28,7 +28,7 @@ const HeaderFeed = () => {
       }
       middleComponent={
         <View style={styles.midHeader}>
-          <Text>{i18n.t('setting.myaccount')}</Text>
+          <Text>{i18n.t('setting.title')}</Text>
         </View>
       }
       rightComponent={
