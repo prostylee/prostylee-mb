@@ -1,4 +1,4 @@
-import {createAction, handleActions} from 'redux-actions';
+import {createAction} from 'redux-actions';
 import {showMessage} from 'react-native-flash-message';
 
 export const types = {
@@ -13,7 +13,6 @@ export const types = {
 };
 
 export const actions = {
-  //AMOUN
   setListCartAddressLoading: createAction(types.SET_LIST_CART_ADDRESS_LOADING),
   getListCartAddress: createAction(types.GET_LIST_CART_ADDRESS),
   getListCartAddressSuccess: createAction(types.GET_LIST_CART_ADDRESS_SUCCESS),
@@ -25,50 +24,46 @@ export const actions = {
   ),
 };
 
-const intialState = {
+export const intialState = {
   isListCartAddressLoading: false,
   listCartAddress: null,
   selectedCartAddress: null,
-  selectedCartAddressHistory: null,
+  selectedCartAddressHistory: [],
 };
 
-const PAGE_INIT = 0;
-const UNIT_INCREASE = 1;
-export default handleActions(
-  {
-    [types.SET_LIST_CART_ADDRESS_LOADING]: (state, {payload}) => {
-      return {
-        ...state,
-        isListCartAddressLoading: payload,
-      };
-    },
-    [types.GET_LIST_CART_ADDRESS_SUCCESS]: (state, {payload}) => {
-      return {
-        ...state,
-        listCartAddress: payload,
-      };
-    },
-    [types.GET_LIST_CART_ADDRESS_FAILED]: (state, {payload}) => {
-      return {
-        ...state,
-        listCartAddress: [],
-      };
-    },
-    [types.SET_SELECTED_CART_ADDRESS]: (state, {payload}) => {
-      return {
-        ...state,
-        selectedCartAddress: payload,
-      };
-    },
-    [types.SET_SELECTED_CART_ADDRESS_HISTORY]: (state, {payload}) => {
-      return {
-        ...state,
-        selectedCartAddressHistory: [
-          payload,
-          ...state?.selectedCartAddressHistory,
-        ],
-      };
-    },
+export const handleActions = {
+  [types.SET_LIST_CART_ADDRESS_LOADING]: (state, {payload}) => {
+    return {
+      ...state,
+      isListCartAddressLoading: payload,
+    };
   },
-  intialState,
-);
+  [types.GET_LIST_CART_ADDRESS_SUCCESS]: (state, {payload}) => {
+    return {
+      ...state,
+      listCartAddress: payload,
+    };
+  },
+  [types.GET_LIST_CART_ADDRESS_FAILED]: (state, {payload}) => {
+    return {
+      ...state,
+      listCartAddress: [],
+    };
+  },
+  [types.SET_SELECTED_CART_ADDRESS]: (state, {payload}) => {
+    return {
+      ...state,
+      selectedCartAddress: payload,
+    };
+  },
+  [types.SET_SELECTED_CART_ADDRESS_HISTORY]: (state, {payload}) => {
+    let history = [payload];
+    if (state?.selectedCartAddressHistory?.length) {
+      history = history.concat(state?.selectedCartAddressHistory);
+    }
+    return {
+      ...state,
+      selectedCartAddressHistory: [...history],
+    };
+  },
+};

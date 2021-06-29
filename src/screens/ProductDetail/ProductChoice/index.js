@@ -37,6 +37,23 @@ const ProductChoice = ({choiceSelect, choiceList, setChoiceSelect}) => {
     }
   };
 
+  React.useEffect(() => {
+    if (!choiceList || !choiceList.length) {
+      return;
+    }
+    if (!choiceSelect.length) {
+      let defaultChoiceSelect = [];
+      choiceList.map((item) => {
+        defaultChoiceSelect.push({
+          ...item,
+          value: item?.productAttributeResponses?.[0],
+        });
+        return {...item};
+      });
+      setChoiceSelect(defaultChoiceSelect);
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
       {choiceList.length

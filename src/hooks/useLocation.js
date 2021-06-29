@@ -14,13 +14,14 @@ const useLocation = () => {
     ...locationRedux,
     lat: locationRedux?.lat,
     lon: locationRedux?.lon,
-    address: locationRedux?.address,
+    fullAddress: locationRedux?.fullAddress,
   });
-  const haveLocation = location?.lat && location?.lon && location?.address;
+  const haveLocation = location?.lat && location?.lon && location?.fullAddress;
   useEffect(() => {
     if (!haveLocation) {
       (async () => {
         if (Platform.OS === 'ios') {
+          Geolocation.requestAuthorization();
           getOneTimeLocation();
         } else {
           const granted = await PermissionsAndroid.request(
@@ -68,13 +69,13 @@ const useLocation = () => {
             userActions.setUserLocation({
               ...location,
               ...addressComponent,
-              address: addressComponent.formatted_address,
+              fullAddress: addressComponent.formatted_address,
             }),
           );
           setLocation({
             ...location,
             ...addressComponent,
-            address: addressComponent.formatted_address,
+            fullAddress: addressComponent.formatted_address,
           });
         })
         .catch((error) => console.log('GET ADDRESS ERROR', error));

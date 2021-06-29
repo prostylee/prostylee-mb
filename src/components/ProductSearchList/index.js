@@ -13,13 +13,12 @@ import PropTypes from 'prop-types';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {userSelectors} from 'reducers';
 
-import useLocation from 'hooks/useLocation';
 import {useSelector} from 'react-redux';
+import {rem} from 'utils/common';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
-const BOTTOM_HEADER_HEIGHT = Platform.OS === 'ios' ? 80 : 60;
-const HEIGHT_HEADER = BOTTOM_HEADER_HEIGHT / 2 + 50 + getStatusBarHeight();
+const HEIGHT_HEADER = Platform.OS === 'ios' ? 78 * rem + 45 : 80 * rem + 45;
 
 const ProductSearchList = ({
   title,

@@ -11,10 +11,15 @@ import {
   getListCartAddressLoadingSelector,
   getListCartAddressSelector,
   getListCartAddressHistorySelector,
+  getSelectedCartAddressSelector,
 } from 'redux/selectors/cart';
 
 const CardAddress = ({navigation}) => {
   const location = useSelector((state) => userSelectors.getUserLocation(state));
+  const selectedCartAddress = useSelector((state) =>
+    getSelectedCartAddressSelector(state),
+  );
+
   return (
     <View style={styles.wrapAddress}>
       <View style={styles.wrapAddressHeader}>
@@ -28,7 +33,7 @@ const CardAddress = ({navigation}) => {
           <TouchableOpacity
             style={styles.buttonChangeAddress}
             onPress={() => {
-              navigation.navigate('AddressRecent', {
+              navigation.navigate('AddressTyping', {
                 getListAddressAction: cartActions.getListCartAddress,
 
                 getListAddressSelectorFunc: getListCartAddressSelector,
@@ -52,7 +57,9 @@ const CardAddress = ({navigation}) => {
         </View>
       </View>
       <View style={styles.wrapAddressContent}>
-        <Text style={styles.valueAddress}>{location?.address}</Text>
+        <Text style={styles.valueAddress}>
+          {selectedCartAddress?.fullAddress || location?.fullAddress}
+        </Text>
       </View>
     </View>
   );

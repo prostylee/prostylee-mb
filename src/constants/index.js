@@ -52,7 +52,7 @@ export const PRODUCT_SORT_ITEM = [
   {label: 'Phổ biến nhất', value: 2},
   {label: 'Hàng mới về', value: 3},
   {label: 'Giá thấp', value: 4},
-  {label: 'Giá cao nhất', value: 5},
+  {label: 'Giá cao', value: 5},
   {label: 'Đánh giá tốt nhất', value: 6},
 ];
 // VOUCHER SORT
