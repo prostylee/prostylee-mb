@@ -63,6 +63,7 @@ const ProductDetail = (props) => {
   const [ratingPos, setRatingPos] = React.useState(0);
   const [suggestPos, setSuggestPos] = React.useState(0);
   const [refreshing, handleRefreshing] = React.useState(false);
+
   /*Animated*/
   const HEIGHT_HEADER = (WIDTH * 4) / 3 + getStatusBarHeight();
   const scrollAnimated = React.useRef(new Animated.Value(0)).current;
@@ -232,6 +233,60 @@ const ProductDetail = (props) => {
     if (!productDataLoading) handleRefreshing(false);
   }, [productDataLoading]);
 
+  React.useEffect(() => {
+    if (
+      !productData?.productAttributeOptionResponse ||
+      !productData?.productAttributeOptionResponse.length
+    ) {
+      return;
+    }
+    let defaultChoiceSelect = [];
+    productData?.productAttributeOptionResponse.map((item) => {
+      defaultChoiceSelect.push({
+        ...item,
+        value: item?.productAttributeResponses?.[0],
+      });
+      return {...item};
+    });
+    setChoiceSelect(defaultChoiceSelect);
+  }, [productData]);
+
+  const getProductPriceBasedOnAttributesObject = (
+    productPriceResponseList = [],
+  ) => {
+    return productPriceResponseList.reduce((currentPriceObject, item) => {
+      let attributesGroupPriceKey = item?.productAttributes
+        ?.map((item) => item.id)
+        ?.join('-');
+      currentPriceObject[`${attributesGroupPriceKey}`] = {
+        price: item?.price,
+        priceSale: item?.priceSale,
+      };
+      return currentPriceObject;
+    }, {});
+  };
+  const getAttributesGroupKey = (list = []) => {
+    return list
+      .reduce((attributesGroupKey, item) => {
+        let arrayKey = [...attributesGroupKey];
+        arrayKey.push(item?.value?.id);
+        return arrayKey;
+      }, [])
+      .join('-');
+  };
+
+  const ProductPriceBasedOnAttributesObject = React.useMemo(
+    () =>
+      getProductPriceBasedOnAttributesObject(
+        productData?.productPriceResponseList,
+      ),
+    [JSON.stringify(productData)],
+  );
+  const SelectedAttributesGroupKey = React.useMemo(
+    () => getAttributesGroupKey(choiceSelect),
+    [JSON.stringify(choiceSelect)],
+  );
+
   if (productDataLoading && !refreshing) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -239,7 +294,6 @@ const ProductDetail = (props) => {
       </View>
     );
   }
-
   return (
     <View style={styles.container}>
       <AnimatedHeader
@@ -308,8 +362,14 @@ const ProductDetail = (props) => {
           navigation={props.navigation}
           productId={productData?.id}
           name={productData?.name}
-          price={productPriceData?.priceSale}
-          priceOriginal={productPriceData?.price}
+          price={
+            ProductPriceBasedOnAttributesObject?.[SelectedAttributesGroupKey]
+              ?.priceSale
+          }
+          priceOriginal={
+            ProductPriceBasedOnAttributesObject?.[SelectedAttributesGroupKey]
+              ?.price
+          }
           rateValue={productData?.productStatisticResponse?.resultOfRating}
           numberOfRate={productData?.productStatisticResponse?.numberOfReview}
           bookmarkStatus={productData?.saveStatusOfUserLogin || false}
