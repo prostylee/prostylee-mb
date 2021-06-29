@@ -45,13 +45,12 @@ const Item = ({item, onPress, isActive}) => {
 const ListStoreAddress = (props) => {
   const data = props.data ? props.data : [];
   const [selectedId, setSelectedId] = useState(null);
-  console.log('Active item', selectedId);
+
   const renderItem = ({item}) => {
     return (
       <Item
         item={item}
         onPress={() => {
-          console.log('SELECT ID', item.id);
           setSelectedId(item.id);
         }}
         isActive={item?.id === selectedId ? true : false}
@@ -71,7 +70,6 @@ const ListStoreAddress = (props) => {
             <Item
               item={v}
               onPress={() => {
-                console.log('SELECT ID', v.id);
                 setSelectedId(v.id);
               }}
               isActive={v?.id === selectedId ? true : false}

@@ -21,7 +21,6 @@ import {userTokenSelector} from 'redux/selectors/user';
 import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 const PersonalSaler = ({navigation}) => {
-  console.log('RERENDER');
   const dispatch = useDispatch();
   const token = useSelector((state) => userTokenSelector(state));
 
