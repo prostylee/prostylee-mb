@@ -12,7 +12,7 @@ import {
 
 import configEnv from 'config';
 import isEmpty from 'lodash/isEmpty';
-import {ThemeView, ButtonRounded, ChatIcon} from 'components';
+import {ThemeView, ButtonRounded, ChatIcon, Colors} from 'components';
 import HeaderFeed from './HeaderFeed';
 import I18n from 'i18n';
 import {useIsFocused} from '@react-navigation/native';
@@ -54,7 +54,11 @@ const Index = ({navigation}) => {
   console.log('userStatistics', JSON.stringify(userStatistics, null, 4));
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
-
+  const opacity = scrollAnimated.interpolate({
+    inputRange: [100, heightShow],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {
@@ -105,14 +109,20 @@ const Index = ({navigation}) => {
         scrollAnimated={scrollAnimated}
         restoreScrollTop={restoreScrollTop}
       />
-      <View style={styles.headerFull}>
+      <Animated.View
+        style={[
+          styles.headerFull,
+          {
+            opacity: opacity,
+          },
+        ]}>
         <TouchableOpacity style={{paddingRight: 16}}>
-          <ChatIcon color={'#ffffff'} />
+          <ChatIcon color={Colors['$white']} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
-          <Setting color="#ffffff" />
+          <Setting color={Colors['$white']} />
         </TouchableOpacity>
-      </View>
+      </Animated.View>
       <ScrollView
         ref={scrollViewRef}
         onScroll={onScrollEvent}
