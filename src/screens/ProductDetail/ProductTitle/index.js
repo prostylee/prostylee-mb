@@ -88,7 +88,7 @@ const ProductTitle = ({
       </Text>
       <View style={styles.titleRow}>
         <Text style={styles.priceOriginal}>
-          {price ? currencyFormat(priceOriginal, 'đ') : ''}
+          {priceOriginal ? currencyFormat(priceOriginal, 'đ') : ''}
         </Text>
         <TouchableOpacity
           style={styles.rating}
