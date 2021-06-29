@@ -7,7 +7,7 @@ import styles from './styles';
 
 import ScrollableTabView, {
   DefaultTabBar,
-} from 'components/ForkReactNativeSrollableTabView';
+} from 'react-native-scrollable-tab-view';
 import ProductSearchResult from './ProductSearchResult';
 import StoreSearchResult from './StoreSearchResult';
 
@@ -21,7 +21,8 @@ const SearchResult = ({navigation}) => {
           tabBarInactiveTextColor="#8B9399"
           tabBarActiveTextColor="#823FFD"
           initialPage={0}
-          renderTabBar={() => <DefaultTabBar />}>
+          renderTabBar={() => <DefaultTabBar />}
+          contentProps={{nestedScrollEnabled: true}}>
           <View
             style={{flex: 1}}
             tabLabel={i18n.t('Search.searchResultProduct')}>
