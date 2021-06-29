@@ -232,6 +232,24 @@ const ProductDetail = (props) => {
     if (!productDataLoading) handleRefreshing(false);
   }, [productDataLoading]);
 
+  React.useEffect(() => {
+    if (
+      !productData?.productAttributeOptionResponse ||
+      !productData?.productAttributeOptionResponse.length
+    ) {
+      return;
+    }
+    let defaultChoiceSelect = [];
+    productData?.productAttributeOptionResponse.map((item) => {
+      defaultChoiceSelect.push({
+        ...item,
+        value: item?.productAttributeResponses?.[0],
+      });
+      return {...item};
+    });
+    setChoiceSelect(defaultChoiceSelect);
+  }, [productData]);
+
   if (productDataLoading && !refreshing) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

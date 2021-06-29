@@ -37,23 +37,6 @@ const ProductChoice = ({choiceSelect, choiceList, setChoiceSelect}) => {
     }
   };
 
-  React.useEffect(() => {
-    if (!choiceList || !choiceList.length) {
-      return;
-    }
-    if (!choiceSelect.length) {
-      let defaultChoiceSelect = [];
-      choiceList.map((item) => {
-        defaultChoiceSelect.push({
-          ...item,
-          value: item?.productAttributeResponses?.[0],
-        });
-        return {...item};
-      });
-      setChoiceSelect(defaultChoiceSelect);
-    }
-  }, []);
-
   return (
     <View style={styles.container}>
       {choiceList.length
@@ -93,8 +76,11 @@ const ProductChoice = ({choiceSelect, choiceList, setChoiceSelect}) => {
                       let choiceButtonStyle = styles.choiceButton;
                       let choiceButtonTextStyle = styles.choiceButtonText;
                       const choiceIsSelected = choiceSelect.find(
-                        (selectItem) => selectItem.value.id === itemChoice.id,
+                        (selectItem) => {
+                          return selectItem.value.id === itemChoice.id;
+                        },
                       );
+
                       if (
                         choiceIsSelected &&
                         choiceIsSelected.value.id === itemChoice.id
