@@ -257,7 +257,7 @@ const Stores = (props) => {
             <FeaturedCategories
               data={
                 categoryList?.content && categoryList?.content?.length
-                  ? categoryList?.content
+                  ? categoryList?.content?.filter((item) => !item?.parentId)
                   : []
               }
               navigation={navigation}
