@@ -130,6 +130,7 @@ const Categories = ({navigation}) => {
           style={{borderRadius: 8}}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          directionalLockEnabled={true}
         />
       )}
     </View>
