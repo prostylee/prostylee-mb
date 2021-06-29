@@ -69,9 +69,9 @@ const VoucherList = ({navigation}) => {
   const _handleSavePress = (id) => {
     dispatch(storeActions.postSaveVoucher(id));
   };
-  const _handUsePress = () => {
-    navigation.navigate('FlashSale');
-  };
+  // const _handUsePress = () => {
+  //   navigation.navigate('FlashSale');
+  // };
 
   useEffect(() => {
     if (saveStatus === 'success') {
@@ -131,7 +131,7 @@ const VoucherList = ({navigation}) => {
               item={item}
               index={index}
               onSavePress={_handleSavePress}
-              onUsePress={_handUsePress}
+              // onUsePress={_handUsePress}
             />
           )}
           keyExtractor={(item, index) => `${item?.name}-${item?.id}`}
