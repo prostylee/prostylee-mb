@@ -10,7 +10,7 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
   },
   wrapItems: {
-    flex: 1,
+    width: WIDTH / 3,
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
