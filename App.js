@@ -6,8 +6,10 @@ import {PersistGate} from 'redux-persist/integration/react';
 
 import Index from './src';
 
-import {Provider as PaperProvider} from 'react-native-paper';
-
+import {Provider as PaperProvider, DefaultTheme} from 'react-native-paper';
+const theme = {
+  ...DefaultTheme,
+};
 const App = () => {
   useEffect(() => {
     disableLogBox();
@@ -15,7 +17,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <PaperProvider>
+        <PaperProvider theme={theme}>
           <Index />
         </PaperProvider>
       </PersistGate>
