@@ -1,5 +1,5 @@
 import {_fetch} from '../config';
-import {GET, PUT} from 'constants';
+import {GET, PUT, POST} from 'constants';
 
 export const getProfile = (id) => {
   return _fetch(GET, '/profile/' + id);
@@ -19,6 +19,14 @@ export const getStatistics = (id) => {
 
 export const getUserAddress = (payload) => {
   return _fetch(GET, '/user-addresses/userLogin', payload);
+};
+
+export const addUserAddress = (payload) => {
+  return _fetch(POST, '/user-addresses', payload);
+};
+
+export const updateUserAddress = (payload) => {
+  return _fetch(PUT, `/user-addresses/${payload.addressId}`, payload.data);
 };
 
 export const getUserPost = (payload) => {

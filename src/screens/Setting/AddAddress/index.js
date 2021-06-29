@@ -1,127 +1,360 @@
-import React, {useState} from 'react';
-import {Header, ThemeView, CustomTextInput, RadioSelectGroup} from 'components';
+import React from 'react';
+import {Header, ThemeView, CustomTextInput} from 'components';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {addressActions, addressSelectors, userActions} from 'reducers';
+import {useDispatch, useSelector} from 'react-redux';
 import I18n from 'i18n';
 import styles from './styles';
+import {SUCCESS} from 'constants';
 import {Field, Formik} from 'formik';
+import {
+  validateFullname,
+  validatePhone,
+  validatePrefecture,
+  validateDistrict,
+  validateWard,
+  validateAddress,
+} from 'utils/validatorUtils';
 import {Switch} from 'react-native-paper';
 import {MapIcon} from 'svg/common';
+import {
+  addUserAddress as addUserAddressApi,
+  updateUserAddress as updateUserAddressApi,
+} from 'services/api/userApi';
+import RNPickerSelect from 'react-native-picker-select';
 
-const addAddress = ({route, navigation}) => {
+const AddAddress = ({route, navigation}) => {
+  const dispatch = useDispatch();
   const addressCount = route.params?.addressCount || 0;
+  const currentAddress = route.params?.currentAddress || null;
+  const addressId = route.params?.addressId || null;
+  const [prefectureValue, setPrefectureValue] = React.useState('');
+  const [districtValue, setDistrictValue] = React.useState('');
+  const [wardValue, setWardValue] = React.useState('');
+  const prefectureRef = React.useRef();
+  const districtRef = React.useRef();
+  const wardRef = React.useRef();
 
-  const onChangeProvince = () => {};
+  const setDefaultData = (data) => {
+    setPrefectureValue(data.cityCode);
+    setDistrictValue(data.districtCode);
+    setWardValue(data.wardCode);
+    dispatch(addressActions.getDistrict({parentCode: data.cityCode}));
+    dispatch(addressActions.getWard({parentCode: data.districtCode}));
+  };
+  const addressDefaultValue =
+    currentAddress && currentAddress.fullAddress
+      ? currentAddress.fullAddress.split(',')
+      : null;
 
-  const onChangeDistrict = () => {};
+  // PREFECTURE
+  React.useEffect(() => {
+    dispatch(addressActions.getPrefecture());
+    if (addressId) {
+      setDefaultData(currentAddress);
+    }
+  }, []);
+  const prefectureList = useSelector((state) =>
+    addressSelectors.getPrefecture(state),
+  );
+  const prefectureListData = () => {
+    return prefectureList.map((item) => ({
+      value: {
+        value: item.code,
+        label: item.name,
+      },
+      label: item.name,
+    }));
+  };
 
-  const onChangeWard = () => {};
+  // DISTRICT
+  const getDistrictData = (value) => {
+    if (value) {
+      dispatch(addressActions.getDistrict({parentCode: value}));
+    }
+  };
+  const districtList = useSelector((state) =>
+    addressSelectors.getDistrict(state),
+  );
+  const districtListData = () => {
+    return districtList.map((item) => ({
+      value: {
+        value: item.code,
+        label: item.name,
+      },
+      label: item.name,
+    }));
+  };
+
+  // WARD
+  const getWardData = (value) => {
+    if (value) {
+      dispatch(addressActions.getWard({parentCode: value}));
+    }
+  };
+  const wardList = useSelector((state) => addressSelectors.getWard(state));
+  const wardListData = () => {
+    return wardList?.map((item) => ({
+      value: {
+        value: item.code,
+        label: item.name,
+      },
+      label: item.name,
+    }));
+  };
+
+  const HeaderRightIcon = (props) => {
+    const onPress = props.onPress ? props.onPress : () => {};
+    return (
+      <TouchableOpacity style={styles.headerIcon} onPress={onPress}>
+        <MapIcon />
+      </TouchableOpacity>
+    );
+  };
+
+  const addUserAddress = async (values) => {
+    const res = await addUserAddressApi({
+      contactName: values.name,
+      contactPhone: values.phone,
+      cityCode: prefectureValue,
+      districtCode: districtValue,
+      wardCode: wardValue,
+      address: values.address,
+      priority: values.isDefault,
+    });
+    console.log('res', JSON.stringify(res, null, 4));
+    if (res.ok && res.data.status === SUCCESS) {
+      await dispatch(userActions.getUserAddress());
+      navigation.goBack();
+    }
+  };
+
+  const updateUserAddress = async (values) => {
+    const res = await updateUserAddressApi({
+      addressId: addressId,
+      data: {
+        contactName: values.name,
+        contactPhone: values.phone,
+        cityCode: prefectureValue,
+        districtCode: districtValue,
+        wardCode: wardValue,
+        address: values.address,
+        priority: values.isDefault,
+      },
+    });
+    console.log('res', JSON.stringify(res, null, 4));
+    if (res.ok && res.data.status === SUCCESS) {
+      await dispatch(userActions.getUserAddress());
+      navigation.goBack();
+    }
+  };
+
+  const actionButton = (values) => {
+    if (addressId) {
+      updateUserAddress(values);
+    } else {
+      addUserAddress(values);
+    }
+  };
 
   return (
     <ThemeView isFullView style={styles.container}>
-      <Header
-        title={I18n.t('settingAddress.addAddress')}
-        rightIcon={<MapIcon />}
-        rightPress={() => console.log('right pressed')}
-        isDefault
-      />
-      <View style={{paddingHorizontal: 16, paddingTop: 16}}>
-        {addressCount === 0 ? (
-          <Text style={{color: '#8B9399'}}>
-            {I18n.t('settingAddress.noAddress')}
-          </Text>
-        ) : (
-          <></>
-        )}
-      </View>
-      <ScrollView>
-        <Formik
-          validateOnMount={true}
-          initialValues={{
-            name: '',
-            province: '',
-            district: '',
-            ward: '',
-          }}
-          onSubmit={(values) => console.log(values)}>
-          {({handleSubmit, values, isValid}) => (
-            <View>
-              <View style={styles.viewContactInfo}>
-                <View style={styles.viewStyle}>
-                  <Text style={{color: '#8B9399'}}>
-                    {I18n.t('settingAddress.contact')}
-                  </Text>
-                </View>
-                <View style={styles.wrapContactInfo}>
-                  <Field
-                    component={CustomTextInput}
-                    name="name"
-                    label={I18n.t('settingProfile.name')}
-                  />
-                  <Field
-                    component={CustomTextInput}
-                    name="phone"
-                    label={I18n.t('settingProfile.phone')}
-                  />
-                </View>
-              </View>
-              <View style={styles.viewAddressInfo}>
-                <View style={styles.viewStyle}>
-                  <Text style={{color: '#8B9399'}}>
-                    {I18n.t('settingAddress.address')}
-                  </Text>
-                </View>
-                <View style={styles.wrapAddressInfo}>
-                  <TouchableOpacity onPress={() => onChangeProvince()}>
-                    <Field
-                      component={CustomTextInput}
-                      disabled
-                      name="province"
-                      label={I18n.t('settingAddress.province')}
-                    />
-                  </TouchableOpacity>
+      <Formik
+        validateOnMount={true}
+        initialValues={{
+          name:
+            currentAddress && currentAddress.contactName
+              ? currentAddress.contactName
+              : '',
+          phone:
+            currentAddress && currentAddress.contactPhone
+              ? currentAddress.contactPhone
+              : '',
+          province: addressDefaultValue ? addressDefaultValue[3] : '',
+          district: addressDefaultValue ? addressDefaultValue[2] : '',
+          ward: addressDefaultValue ? addressDefaultValue[1] : '',
+          address:
+            currentAddress && currentAddress.address
+              ? currentAddress.address
+              : '',
+          isDefault:
+            currentAddress && typeof currentAddress.priority !== 'undefined'
+              ? currentAddress.priority
+              : true,
+        }}
+        onSubmit={actionButton}>
+        {({handleSubmit, values, isValid, setFieldValue}) => {
+          return (
+            <>
+              <Header
+                title={I18n.t('settingAddress.addAddress')}
+                rightIcon={<HeaderRightIcon onPress={handleSubmit} />}
+                rightPress={() => console.log('right pressed')}
+                isDefault
+              />
+              <ScrollView>
+                <View style={styles.scrollViewContent}>
+                  <View style={styles.topMessage}>
+                    {addressCount === 0 ? (
+                      <Text style={styles.topMessagetext}>
+                        {I18n.t('settingAddress.noAddress')}
+                      </Text>
+                    ) : (
+                      <></>
+                    )}
+                  </View>
+                  <View style={styles.viewContactInfo}>
+                    <View style={styles.viewStyle}>
+                      <Text style={styles.topMessagetext}>
+                        {I18n.t('settingAddress.contact')}
+                      </Text>
+                    </View>
+                    <View style={styles.wrapContactInfo}>
+                      <Field
+                        component={CustomTextInput}
+                        name="name"
+                        validate={validateFullname}
+                        label={I18n.t('settingProfile.name')}
+                        style={styles.textInputStyle}
+                      />
+                      <Field
+                        component={CustomTextInput}
+                        name="phone"
+                        validate={validatePhone}
+                        label={I18n.t('settingProfile.phone')}
+                        style={styles.textInputStyle}
+                      />
+                    </View>
+                  </View>
+                  <View style={styles.viewAddressInfo}>
+                    <View style={styles.viewStyle}>
+                      <Text style={styles.topMessagetext}>
+                        {I18n.t('settingAddress.address')}
+                      </Text>
+                    </View>
+                    <View style={styles.wrapAddressInfo}>
+                      <TouchableOpacity
+                        onPress={() =>
+                          prefectureRef.current.togglePicker(true)
+                        }>
+                        <Field
+                          component={CustomTextInput}
+                          name="province"
+                          validate={validatePrefecture}
+                          label={I18n.t('settingAddress.province')}
+                          onFocus={() => {
+                            prefectureRef.current.togglePicker(true);
+                          }}
+                          style={styles.textInputStyle}
+                        />
+                      </TouchableOpacity>
 
-                  <TouchableOpacity onPress={() => onChangeDistrict()}>
-                    <Field
-                      component={CustomTextInput}
-                      disabled
-                      name="district"
-                      label={I18n.t('settingAddress.district')}
-                    />
-                  </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => districtRef.current.togglePicker(true)}>
+                        <Field
+                          component={CustomTextInput}
+                          name="district"
+                          validate={validateDistrict}
+                          label={I18n.t('settingAddress.district')}
+                          onFocus={() => {
+                            districtRef.current.togglePicker(true);
+                          }}
+                          style={styles.textInputStyle}
+                        />
+                      </TouchableOpacity>
 
-                  <TouchableOpacity onPress={() => onChangeWard()}>
-                    <Field
-                      component={CustomTextInput}
-                      disabled
-                      name="ward"
-                      label={I18n.t('settingAddress.ward')}
-                    />
-                  </TouchableOpacity>
-                  <Field
-                    component={CustomTextInput}
-                    name="detailAddress"
-                    label={I18n.t('settingAddress.detailAddress')}
-                  />
-                </View>
-              </View>
+                      <TouchableOpacity
+                        onPress={() => wardRef.current.togglePicker(true)}>
+                        <Field
+                          component={CustomTextInput}
+                          name="ward"
+                          validate={validateWard}
+                          label={I18n.t('settingAddress.ward')}
+                          onFocus={() => {
+                            wardRef.current.togglePicker(true);
+                          }}
+                          style={styles.textInputStyle}
+                        />
+                      </TouchableOpacity>
+                      <Field
+                        component={CustomTextInput}
+                        name="address"
+                        validate={validateAddress}
+                        label={I18n.t('settingAddress.detailAddress')}
+                        style={styles.textInputStyle}
+                      />
+                    </View>
+                  </View>
 
-              <View style={styles.viewDivider}></View>
-              <View style={styles.viewSwitch}>
-                <View style={styles.viewSwitchText}>
-                  <Text style={styles.labelSwitchText}>
-                    {I18n.t('setting.setAddressAsDefault')}
-                  </Text>
+                  <View style={styles.viewDivider} />
+                  <View style={styles.viewSwitch}>
+                    <View style={styles.viewSwitchText}>
+                      <Text style={styles.labelSwitchText}>
+                        {I18n.t('setting.setAddressAsDefault')}
+                      </Text>
+                    </View>
+                    <View style={styles.viewSwitchButton}>
+                      <Switch
+                        value={values.isDefault}
+                        onValueChange={() => {
+                          setFieldValue('isDefault', !values.isDefault);
+                        }}
+                      />
+                    </View>
+                  </View>
+                  <View style={styles.pickerContainer}>
+                    <RNPickerSelect
+                      ref={prefectureRef}
+                      onValueChange={(value) => {
+                        setFieldValue('province', value?.label);
+                        getDistrictData(value?.value);
+                        setPrefectureValue(value?.value);
+                        // district
+                        setFieldValue('district', '');
+                        setDistrictValue('');
+                        // ward
+                        setFieldValue('ward', '');
+                        setWardValue('');
+                        getWardData(0);
+                      }}
+                      items={prefectureListData()}
+                      style={styles.pickerContainer}
+                    />
+                  </View>
+                  <View style={styles.pickerContainer}>
+                    <RNPickerSelect
+                      ref={districtRef}
+                      onValueChange={(value) => {
+                        setFieldValue('district', value?.label);
+                        getWardData(value?.value);
+                        setDistrictValue(value?.value);
+                        // ward
+                        setFieldValue('ward', '');
+                        setWardValue('');
+                      }}
+                      items={districtListData()}
+                      style={styles.pickerContainer}
+                    />
+                  </View>
+                  <View style={styles.pickerContainer}>
+                    <RNPickerSelect
+                      ref={wardRef}
+                      onValueChange={(value) => {
+                        setFieldValue('ward', value?.label);
+                        setWardValue(value?.value);
+                      }}
+                      items={wardListData()}
+                      style={styles.pickerContainer}
+                    />
+                  </View>
                 </View>
-                <View style={styles.viewSwitchButton}>
-                  <Switch value={true} />
-                </View>
-              </View>
-            </View>
-          )}
-        </Formik>
-      </ScrollView>
+              </ScrollView>
+            </>
+          );
+        }}
+      </Formik>
     </ThemeView>
   );
 };
 
-export default addAddress;
+export default AddAddress;
