@@ -188,30 +188,31 @@ const ProductDetail = (props) => {
       animated: true,
     });
   };
-  const handleChangeTabActiveItemWhenScrolling = (
-    currentOffset,
-    isEndReached,
-  ) => {
-    if (currentOffset + SCROLL_TRIGGER_POINT < ratingPos) {
-      if (activeTab !== 'product') {
-        setActiveTab('product');
+  const handleChangeTabActiveItemWhenScrolling = debounce(
+    (currentOffset, isEndReached) => {
+      if (currentOffset + SCROLL_TRIGGER_POINT < ratingPos) {
+        if (activeTab !== 'product') {
+          setActiveTab('product');
+        }
       }
-    }
-    if (
-      currentOffset + SCROLL_TRIGGER_POINT > ratingPos &&
-      currentOffset + SCROLL_TRIGGER_POINT < suggestPos &&
-      !isEndReached
-    ) {
-      if (activeTab !== 'rate') {
-        setActiveTab('rate');
+      if (
+        currentOffset + SCROLL_TRIGGER_POINT > ratingPos &&
+        currentOffset + SCROLL_TRIGGER_POINT < suggestPos &&
+        !isEndReached
+      ) {
+        if (activeTab !== 'rate') {
+          setActiveTab('rate');
+        }
       }
-    }
-    if (currentOffset + SCROLL_TRIGGER_POINT > suggestPos) {
-      if (activeTab !== 'suggest') {
-        setActiveTab('suggest');
+      if (currentOffset + SCROLL_TRIGGER_POINT > suggestPos) {
+        if (activeTab !== 'suggest') {
+          setActiveTab('suggest');
+        }
       }
-    }
-  };
+    },
+    50,
+    {trailing: true, leading: false, maxWait: 4000},
+  );
 
   const selectRelatedProduct = (id) => {
     scrollAnimated.setValue(0);
