@@ -24,11 +24,11 @@ const SettingAddress = () => {
   const FooterButton = () => {
     return (
       <>
-        {userAddress.length ? <View style={styles.dividerStyle} /> : null}
+        {userAddress?.length ? <View style={styles.dividerStyle} /> : null}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('SettingAddAddress', {
-              addressCount: userAddress.length,
+              addressCount: userAddress?.length,
             })
           }>
           <View style={styles.addAddressButtonView}>
@@ -48,7 +48,7 @@ const SettingAddress = () => {
       <TouchableOpacity
         onPress={() =>
           navigation.navigate('SettingAddAddress', {
-            addressCount: userAddress.length,
+            addressCount: userAddress?.length,
             currentAddress: item,
             addressId: item.id,
           })
@@ -74,7 +74,7 @@ const SettingAddress = () => {
             <RightArrow />
           </View>
         </View>
-        {index !== userAddress.length - 1 ? <Divider /> : null}
+        {index !== userAddress?.length - 1 ? <Divider /> : null}
       </TouchableOpacity>
     );
   };
