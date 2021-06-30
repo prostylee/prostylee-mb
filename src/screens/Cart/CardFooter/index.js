@@ -5,7 +5,9 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {ButtonRounded} from 'components';
+import isEmpty from 'lodash/isEmpty';
 import {Button, Chip} from 'react-native-paper';
+import i18n from 'i18n';
 import {CreditSvg, CouponSvg, RightArrow} from 'svg/common';
 import {useNavigation} from '@react-navigation/native';
 import {currencyFormat} from 'utils/currency';
@@ -21,6 +23,7 @@ const CardFooter = ({
   voucher: voucherData,
   actionButton,
   isCheckout = false,
+  disabled = true,
 }) => {
   const [total, setTotal] = useState(0);
   const [voucher, setVoucher] = useState();
@@ -86,10 +89,10 @@ const CardFooter = ({
               onPress={onChangePayment}>
               <View style={styles.labelCredit}>
                 <CreditSvg />
-                <Text>
-                  &nbsp;
-                  {paymentUsed.length ? paymentUsed[0].name : 'Thanh toán'}
-                  &nbsp;
+                <Text style={styles.paymentText}>
+                  {paymentUsed.length
+                    ? paymentUsed[0].name
+                    : i18n.t('cart.selectPayment')}
                 </Text>
                 <RightArrow />
               </View>
@@ -137,6 +140,7 @@ const CardFooter = ({
             compact={false}
             style={styles.btnCheckout}
             label={buttonText}
+            disabled={disabled || (isCheckout ? isEmpty(payment) : false)}
           />
         </View>
       </View>
@@ -144,9 +148,7 @@ const CardFooter = ({
   );
 };
 
-CardFooter.defaultProps = {
-  buttonText: 'Thanh toán',
-};
+CardFooter.defaultProps = {};
 
 CardFooter.propTypes = {};
 

@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useEffect, useState} from 'react';
-import {Text, View, ActivityIndicator, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {Text, View, TouchableOpacity} from 'react-native';
 import {LocationIcon} from 'svg/common';
+import isEmpty from 'lodash/isEmpty';
 import i18n from 'i18n';
 import {useSelector} from 'react-redux';
-import {userSelectors} from 'reducers';
 import {cartActions} from 'reducers';
 import {
   getListCartAddressLoadingSelector,
@@ -15,9 +15,29 @@ import {
 } from 'redux/selectors/cart';
 
 const CardAddress = ({navigation}) => {
-  const location = useSelector((state) => userSelectors.getUserLocation(state));
   const selectedCartAddress = useSelector((state) =>
     getSelectedCartAddressSelector(state),
+  );
+
+  const listCartAddress = useSelector((state) =>
+    getListCartAddressSelector(state),
+  );
+
+  React.useEffect(() => {
+    if (listCartAddress && listCartAddress.length) {
+      if (isEmpty(selectedCartAddress)) {
+        const defaultAddress =
+          listCartAddress.find((item) => item.priority) || null;
+        cartActions.setSelectedCartAddress(
+          defaultAddress || listCartAddress[0],
+        );
+      }
+    }
+  }, [selectedCartAddress, listCartAddress]);
+
+  console.log(
+    'selectedCartAddress',
+    JSON.stringify(selectedCartAddress, null, 4),
   );
 
   return (
@@ -57,9 +77,15 @@ const CardAddress = ({navigation}) => {
         </View>
       </View>
       <View style={styles.wrapAddressContent}>
-        <Text style={styles.valueAddress}>
-          {selectedCartAddress?.fullAddress || location?.fullAddress}
-        </Text>
+        {selectedCartAddress && selectedCartAddress?.fullAddress ? (
+          <Text style={styles.valueAddress}>
+            {selectedCartAddress.fullAddress}
+          </Text>
+        ) : (
+          <Text style={styles.valueAddressEmpty}>
+            {i18n.t('cart.addressListEmpty')}
+          </Text>
+        )}
       </View>
     </View>
   );

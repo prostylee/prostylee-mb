@@ -223,6 +223,8 @@ export default {
     seeMore: 'Xem thêm',
     yourAddress: 'Địa điểm của bạn',
     removeItemPopup: 'Xoá sản phẩm khỏi giỏ hàng?',
+    addressListEmpty: 'Xin hãy thiết lập địa chỉ giao hàng!',
+    selectPayment: 'Chọn phương thức thanh toán',
   },
   error: {
     cannotUploadImage:

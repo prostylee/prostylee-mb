@@ -152,6 +152,12 @@ const ProductDetail = (props) => {
     productSelectors.getProductCoordinated(state),
   );
 
+  React.useEffect(() => {
+    if (productData) {
+      processProductPriceData(productData.productPriceResponseList);
+    }
+  }, [productData]);
+
   // React.useEffect(() => {
   //   if (productDataLoading) {
   //     dispatch(commonActions.toggleLoading(true));
