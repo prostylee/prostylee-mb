@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {ThemeView, Header, Colors} from 'components';
 import {Divider} from 'react-native-paper';
-import {EmptyNotiOutlined} from '../../../svg/common';
+import {EmptyNotiOutlined, Remove} from '../../../svg/common';
 import HeaderLeft from './HeaderLeft';
 import HeaderRight from './HeaderRight';
 import PromotionsInfo from './PromotionsInfo';

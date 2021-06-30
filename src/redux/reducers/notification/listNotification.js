@@ -40,6 +40,7 @@ export const types = {
 
   //Delete notification
   DELETE_NOTFICATION: 'DELETE_NOTFICATION',
+  DELETE_ALL_NOTFICATION: 'DELETE_ALL_NOTFICATION',
   //COUNT UNREAD NOTI
   GET_COUNT_UNREAD_NOTI: 'GET_COUNT_UNREAD_NOTI',
   SET_COUNT_UNREAD_NOTI: 'SET_COUNT_UNREAD_NOTI',
@@ -102,6 +103,7 @@ export const actions = {
 
   //Delete notification
   deleteNotification: createAction(types.DELETE_NOTFICATION),
+  deleteAllNotification: createAction(types.DELETE_ALL_NOTFICATION),
   //COUNT UNREAD NOTI
   getCountUnreadNotification: createAction(types.GET_COUNT_UNREAD_NOTI),
   setCountUnreadNoti: createAction(types.SET_COUNT_UNREAD_NOTI),
@@ -260,6 +262,16 @@ export const handleActions = {
       listNotification: {content},
     } = state;
     const newContent = [...content].filter((item) => item.id !== payload);
+    state.listNotification.content = newContent;
+    return {
+      ...state,
+    };
+  },
+  [types.DELETE_ALL_NOTFICATION]: (state, {payload}) => {
+    const {
+      listNotification: {content},
+    } = state;
+    const newContent = [];
     state.listNotification.content = newContent;
     return {
       ...state,
