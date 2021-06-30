@@ -152,7 +152,9 @@ const ProductDetail = (props) => {
   );
 
   React.useEffect(() => {
-    processProductPriceData(productData.productPriceResponseList);
+    if (productData) {
+      processProductPriceData(productData.productPriceResponseList);
+    }
   }, [productData]);
 
   // React.useEffect(() => {
