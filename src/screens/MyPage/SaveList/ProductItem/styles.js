@@ -3,7 +3,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 const WIDTH = Dimensions.get('window').width;
 const WIDTH_IMAGE = WIDTH / 2 - 14;
-const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
+const HEIGHT_IMAGE = WIDTH_IMAGE * 1.3;
 export default EStyleSheet.create({
   container: {
     flex: 1,
@@ -14,7 +14,6 @@ export default EStyleSheet.create({
     flex: 1,
     width: WIDTH / 2,
     flexDirection: 'column',
-    borderWidth: 1,
   },
   item: {
     justifyContent: 'center',
@@ -24,7 +23,7 @@ export default EStyleSheet.create({
     marginTop: 16,
     // paddingLeft: 3,
     // paddingRight: 3,
-    borderWidth: 1,
+    // borderWidth: 1,
   },
   wrapImageThumbnail: {
     height: HEIGHT_IMAGE,
@@ -39,7 +38,7 @@ export default EStyleSheet.create({
     backgroundColor: '$red',
     bottom: 8,
     left: 8,
-    // padding: 4,
+    padding: 4,
     borderRadius: 3,
   },
   textSale: {
@@ -54,13 +53,13 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: HEIGHT_IMAGE,
-    width: WIDTH_IMAGE,
+    width: '100%',
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#E9EAEB',
   },
   title: {
-    width: WIDTH_IMAGE,
+    width: '100%',
     lineHeight: 16,
     fontSize: 13,
     fontFamily: '$font1',
@@ -71,7 +70,7 @@ export default EStyleSheet.create({
     marginTop: 12,
   },
   price: {
-    width: WIDTH_IMAGE,
+    width: '100%',
     lineHeight: 20,
     fontSize: 14,
     fontFamily: '$font1',

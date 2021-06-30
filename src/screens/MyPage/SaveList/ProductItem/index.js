@@ -7,10 +7,17 @@ import {useNavigation} from '@react-navigation/native';
 import {Image, ProductLike} from 'components';
 import {currencyFormat, priceSalePercent} from 'utils/currency';
 
-const ProductItem = ({item, id}) => {
+const ProductItem = ({item, id, index}) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.wrapItems}>
+    <View
+      style={[
+        styles.wrapItems,
+        {
+          paddingLeft: index % 2 !== 0 ? 6 : 15,
+          paddingRight: index % 2 === 0 ? 6 : 15,
+        },
+      ]}>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ProductDetail', {id: id});

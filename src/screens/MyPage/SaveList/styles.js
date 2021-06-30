@@ -7,6 +7,7 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     width: width,
+    backgroundColor: '$bgColor',
   },
   titleRow: {
     display: 'flex',
@@ -38,5 +39,11 @@ export default EStyleSheet.create({
   },
   listContainer: {
     // paddingHorizontal: 16,
+  },
+  viewFooter: {
+    paddingVertical: 20,
+  },
+  wrapWishList: {
+    flex: 1,
   },
 });
