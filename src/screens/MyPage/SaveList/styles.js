@@ -37,6 +37,6 @@ export default EStyleSheet.create({
     paddingLeft: 4,
   },
   listContainer: {
-    paddingHorizontal: 8,
+    // paddingHorizontal: 16,
   },
 });

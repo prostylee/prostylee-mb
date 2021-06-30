@@ -1,10 +1,19 @@
-import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {View, TouchableOpacity, Text, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, FlatList} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import ProductItem from './ProductItem';
 import {ThemeView, Header} from 'components';
+import {myPageActions, userSelectors} from 'reducers';
+import {useDispatch, useSelector} from 'react-redux';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {
+  getListProductSavedLoadingSelector,
+  getListProductSavedSelector,
+  getLoadProductSavedMoreLoadingSelector,
+  getHasLoadMoreProductSavedSelector,
+  getPageProductSavedSelector,
+} from 'redux/selectors/myPage';
 const data = [
   {
     id: 231,
@@ -44,23 +53,78 @@ const data = [
   },
 ];
 const SaveList = (props) => {
-  // const loading = useSelector((state) => getSaveListLoadingSelector(state));
-  // const wishListList = useSelector((state) => getListSaveListSelector(state));
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    // dispatch(cartActions.getListSaveList());
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
+
+  const loading = useSelector((state) =>
+    getListProductSavedLoadingSelector(state),
+  );
+
+  const savedProductListSelector = useSelector((state) =>
+    getListProductSavedSelector(state),
+  );
+
+  const page = useSelector((state) => getPageProductSavedSelector(state));
+
+  const hasLoadmore = useSelector((state) =>
+    getHasLoadMoreProductSavedSelector(state),
+  );
+
+  const savedProductList = savedProductListSelector?.content || [];
+
+  const loadMoreLoading = useSelector((state) =>
+    getLoadProductSavedMoreLoadingSelector(state),
+  );
+
+  const handleLoadMore = () => {
+    if (hasLoadmore) {
+      dispatch(
+        myPageActions.getListProductSavedLoadmore({
+          page: page,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
+    }
+  };
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    dispatch(
+      myPageActions.getListProductSaved({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+  };
+  React.useEffect(() => {
+    if (!loading) setIsRefreshing(false);
+  }, [loading]);
+  React.useEffect(() => {
+    dispatch(
+      myPageActions.getListProductSaved({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
   }, []);
-
   return (
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('mypage.saveList')} />
-      <View style={styles.wrapSaveList}>
+      <View style={styles.wrapWishList}>
         <FlatList
-          data={data}
+          data={savedProductList}
           renderItem={({item, index}) => {
             return (
               <View style={styles.wrapProduct}>
-                <ProductItem index={index} item={item} />
+                <ProductItem
+                  index={index}
+                  item={item?.productResponseLite}
+                  id={item?.id}
+                />
               </View>
             );
           }}
@@ -70,6 +134,9 @@ const SaveList = (props) => {
           style={styles.listContainer}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          onEndReached={handleLoadMore}
+          onRefresh={handleRefresh}
+          refreshing={isRefreshing}
         />
       </View>
     </ThemeView>
