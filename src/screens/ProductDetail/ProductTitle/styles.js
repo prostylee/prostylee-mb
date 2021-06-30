@@ -27,6 +27,12 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  notExist: {
+    fontSize: 13,
+    lineHeight: 24,
+    color: '$red',
+    paddingBottom: 2,
+  },
   price: {
     fontSize: 16,
     lineHeight: 24,

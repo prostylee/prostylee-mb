@@ -15,9 +15,11 @@ const CustomTextInput = (props) => {
   return (
     <View style={customStyles.container}>
       <TextInput
+        {...inputProps}
         style={[
           customStyles.textInput,
           props.multiline && {height: props.numberOfLines * 40},
+          props.style ? props.style : {},
         ]}
         value={value}
         onChangeText={(text) => onChange(name)(text)}
@@ -28,7 +30,6 @@ const CustomTextInput = (props) => {
         mode="flat"
         error={hasError}
         ref={inputProps.innerRef}
-        {...inputProps}
       />
       {hasError && <Text style={styles.errMsg}>{errors[name]}</Text>}
     </View>

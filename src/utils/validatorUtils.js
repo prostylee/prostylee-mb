@@ -42,3 +42,41 @@ export const validateFullname = (value) => {
   }
   return error;
 };
+
+export const validatePrefecture = (value) => {
+  let error = '';
+  if (_.isEmpty(value)) {
+    error = I18n.t('validation.required', {
+      field: I18n.t('settingAddress.province'),
+    });
+  }
+  return error;
+};
+
+export const validateDistrict = (value) => {
+  let error = '';
+  if (_.isEmpty(value)) {
+    error = I18n.t('validation.required', {
+      field: I18n.t('settingAddress.district'),
+    });
+  }
+  return error;
+};
+export const validateWard = (value) => {
+  let error = '';
+  if (_.isEmpty(value)) {
+    error = I18n.t('validation.required', {
+      field: I18n.t('settingAddress.ward'),
+    });
+  }
+  return error;
+};
+export const validateAddress = (value) => {
+  let error = '';
+  if (_.isEmpty(value)) {
+    error = I18n.t('validation.required', {
+      field: I18n.t('settingAddress.detailAddress'),
+    });
+  }
+  return error;
+};

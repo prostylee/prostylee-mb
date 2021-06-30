@@ -5,9 +5,25 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
   },
+  headerIcon: {
+    paddingHorizontal: 16,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   viewStyle: {
     paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  scrollViewContent: {
+    position: 'relative',
+  },
+  topMessage: {
+    paddingHorizontal: 16,
     paddingTop: 16,
+  },
+  topMessagetext: {
+    color: '$lightGray',
   },
   viewDivider: {
     height: 6,
@@ -40,13 +56,24 @@ export default EStyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
+  textInputStyle: {
+    paddingHorizontal: 0,
+  },
 
   wrapContactInfo: {
     backgroundColor: '$white',
     marginTop: 6,
+    paddingHorizontal: 16,
   },
   wrapAddressInfo: {
     marginTop: 6,
     backgroundColor: '$white',
+    paddingHorizontal: 16,
+  },
+  pickerContainer: {
+    position: 'absolute',
+    opacity: 0,
+    zIndex: -1,
+    bottom: -100,
   },
 });
