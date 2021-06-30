@@ -120,4 +120,8 @@ export default EStyleSheet.create({
     fontWeight: '400',
     lineHeight: 18,
   },
+  paymentText: {
+    textAlign: 'center',
+    flex: 1,
+  },
 });

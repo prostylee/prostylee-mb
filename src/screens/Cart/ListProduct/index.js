@@ -130,6 +130,7 @@ const ListProduct = ({navigation}) => {
               navigation={navigation}
               actionButton={onCheckout}
               buttonText={i18n.t('cart.payment')}
+              disabled={false}
             />
           </View>
         </>

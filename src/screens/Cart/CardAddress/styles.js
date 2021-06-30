@@ -35,4 +35,10 @@ export default EStyleSheet.create({
     lineHeight: 16,
     fontWeight: '500',
   },
+  valueAddressEmpty: {
+    color: '$red',
+    fontSize: 12,
+    lineHeight: 16,
+    fontWeight: '500',
+  },
 });
