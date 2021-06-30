@@ -46,4 +46,11 @@ export default EStyleSheet.create({
   wrapWishList: {
     flex: 1,
   },
+  notFoundText: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '$lightGray',
+    alignSelf: 'center',
+    marginTop: 20,
+  },
 });

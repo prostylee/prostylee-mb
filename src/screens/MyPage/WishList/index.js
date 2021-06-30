@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, ActivityIndicator} from 'react-native';
+import {View, FlatList, ActivityIndicator, Text} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import ProductItem from './ProductItem';
@@ -14,6 +14,7 @@ import {
   getHasLoadMoreProductLikedSelector,
   getPageProductLikedSelector,
 } from 'redux/selectors/myPage';
+import {SearchProductLoading} from 'components/Loading/contentLoader';
 
 const WishList = (props) => {
   const dispatch = useDispatch();
@@ -84,27 +85,50 @@ const WishList = (props) => {
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('mypage.wishList')} />
       <View style={styles.wrapWishList}>
-        <FlatList
-          data={likedProductList}
-          renderItem={({item, index}) => {
-            return (
-              <View style={styles.wrapProduct}>
-                <ProductItem index={index} item={item?.product} index={index} />
-              </View>
-            );
-          }}
-          numColumns={2}
-          scrollEventThrottle={1}
-          keyExtractor={(_, index) => `coordinated_product_${index}`}
-          style={styles.listContainer}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          onEndReached={handleLoadMore}
-          onRefresh={handleRefresh}
-          refreshing={isRefreshing}
-          contentContainerStyle={styles.listInner}
-          ListFooterComponent={renderFooter}
-        />
+        {loading && !isRefreshing ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              paddingBottom: 16,
+              flexWrap: 'wrap',
+              justifyContent: 'space-around',
+              overflow: 'hidden',
+            }}>
+            {Array.from('x'.repeat(4)).map(() => (
+              <SearchProductLoading />
+            ))}
+          </View>
+        ) : likedProductList && likedProductList.length ? (
+          <FlatList
+            data={likedProductList}
+            renderItem={({item, index}) => {
+              return (
+                <View style={styles.wrapProduct}>
+                  <ProductItem
+                    index={index}
+                    item={item?.product}
+                    index={index}
+                  />
+                </View>
+              );
+            }}
+            numColumns={2}
+            scrollEventThrottle={1}
+            keyExtractor={(_, index) => `coordinated_product_${index}`}
+            style={styles.listContainer}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            onEndReached={handleLoadMore}
+            onRefresh={handleRefresh}
+            refreshing={isRefreshing}
+            contentContainerStyle={styles.listInner}
+            ListFooterComponent={renderFooter}
+          />
+        ) : (
+          <Text style={styles.notFoundText}>
+            {i18n.t('Search.resultsNotfound')}
+          </Text>
+        )}
       </View>
     </ThemeView>
   );
