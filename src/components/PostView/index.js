@@ -8,20 +8,15 @@ import {Message} from 'svg/social';
 import I18n from 'i18n';
 import {ChatIcon} from 'components';
 import {FlatList} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
+import {userSelectors} from 'reducers';
+
 const WIDTH = Dimensions.get('window').width;
-const FullView = ({item}) => {
-  const {
-    name,
-    checkin,
-
-    isFollowed,
-    store,
-    heartcount,
-    commentcount,
-    avatar,
-    imageUrls,
-  } = item;
-
+const PostView = ({item, disabledLike = false, disabledComment = false}) => {
+  const {checkin, heartcount, commentcount, imageUrls} = item;
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
   return (
     <View style={styles.containerItem}>
       <View style={styles.firstRowView}>
@@ -48,19 +43,21 @@ const FullView = ({item}) => {
                 ) : null}
               </View>
             </View>
-            {/* <View style={styles.wrapFollow}>
-              {isFollowed ? (
-                <Text style={styles.subText}>
-                  {I18n.t('mypage.isFollowed')}
-                </Text>
-              ) : (
-                <TouchableOpacity>
-                  <Text style={styles.btnFollowText}>
-                    {I18n.t('mypage.isNotFollow')}
+            {userProfile?.id !== item?.userResponseLite?.id ? (
+              <View style={styles.wrapFollow}>
+                {isFollowed ? (
+                  <Text style={styles.subText}>
+                    {I18n.t('mypage.isFollowed')}
                   </Text>
-                </TouchableOpacity>
-              )}
-            </View> */}
+                ) : (
+                  <TouchableOpacity>
+                    <Text style={styles.btnFollowText}>
+                      {I18n.t('mypage.isNotFollow')}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            ) : null}
           </View>
         </View>
         <View style={styles.viewBodyItem}>
@@ -95,6 +92,7 @@ const FullView = ({item}) => {
           <View style={{flex: 3, flexDirection: 'row'}}>
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity
+                disabled={disabledLike}
                 style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Heart width={24} height={24} />
                 <Text style={styles.subText}>
@@ -102,6 +100,7 @@ const FullView = ({item}) => {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
+                disabled={disabledComment}
                 style={{
                   paddingLeft: 10,
                   flexDirection: 'row',
@@ -124,4 +123,4 @@ const FullView = ({item}) => {
   );
 };
 
-export default FullView;
+export default PostView;

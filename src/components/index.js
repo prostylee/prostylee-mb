@@ -59,6 +59,8 @@ import SortDropDown from './SortDropDown';
 import TagList from './TagList';
 import NotificationIcon from './NotificationIcon';
 
+import PostView from './PostView';
+
 export {
   ContainerWithoutScrollView,
   ButtonRounded,
@@ -119,4 +121,5 @@ export {
   SortDropDown,
   TagList,
   NotificationIcon,
+  PostView,
 };

@@ -7,147 +7,82 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-
-import {useSelector} from 'react-redux';
-
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   ContainerView as Container,
   Colors,
   ImageAnimated as Image,
 } from 'components';
 
-import {postOfUserSlector} from 'redux/selectors/user';
+import {myPageActions, userSelectors} from 'reducers';
+import {ImageGrid} from 'components/Loading/contentLoader';
 
 import styles from './styles';
 
+import {
+  getListUserPostLoadingSelector,
+  getListUserPostSelector,
+  getListUserPostCurrentPageSelector,
+  getListUserPostHasLoadmoreSelector,
+  getListUserPostLoadmoreLoadingSelector,
+} from 'redux/selectors/myPage';
+
 const {width} = Dimensions.get('window');
 
-const data = [
-  {
-    id: 134,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Nguyễn Tuấn Vũ',
-    checkin: 'Sài Gòn - Việt Nam',
-    image:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    isFollowed: true,
-    store: 'H&M',
-    heartcount: 12,
-    commentcount: 2,
-    avatar:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-  },
-  {
-    id: 135,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-  },
-  {
-    id: 136,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Nguyễn Tuấn Vũ',
-    checkin: 'Sài Gòn - Việt Nam',
-    image:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    isFollowed: true,
-    store: 'H&M',
-    heartcount: 12,
-    commentcount: 2,
-    avatar:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-  },
-  {
-    id: 137,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Nguyễn Tuấn Vũ',
-    checkin: 'Sài Gòn - Việt Nam',
-    image:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    isFollowed: true,
-    store: 'H&M',
-    heartcount: 12,
-    commentcount: 2,
-    avatar:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-  },
-  {
-    id: 138,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Nguyễn Tuấn Vũ',
-    checkin: 'Sài Gòn - Việt Nam',
-    image:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    isFollowed: true,
-    store: 'H&M',
-    heartcount: 12,
-    commentcount: 2,
-    avatar:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-  },
-  {
-    id: 139,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Nguyễn Tuấn Vũ',
-    checkin: 'Sài Gòn - Việt Nam',
-    image:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    isFollowed: true,
-    store: 'H&M',
-    heartcount: 12,
-    commentcount: 2,
-    avatar:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-  },
-  {
-    id: 140,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Nguyễn Tuấn Vũ',
-    checkin: 'Sài Gòn - Việt Nam',
-    image:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    isFollowed: true,
-    store: 'H&M',
-    heartcount: 12,
-    commentcount: 2,
-    avatar:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-  },
-
-  {
-    id: 141,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Nguyễn Tuấn Vũ',
-    checkin: 'Sài Gòn - Việt Nam',
-    image:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    isFollowed: true,
-    store: 'H&M',
-    heartcount: 12,
-    commentcount: 2,
-    avatar:
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-  },
-];
-
 const GridView = ({column, wImage, hImage, scrollEnabled}) => {
-  const loadMoreLoading = false;
+  const dispatch = useDispatch();
 
-  const postOfUser = useSelector((state) => postOfUserSlector(state));
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
+
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
+
+  const loading = useSelector((state) => getListUserPostLoadingSelector(state));
+
+  const postListSelector = useSelector((state) =>
+    getListUserPostSelector(state),
+  );
+
+  const page = useSelector((state) =>
+    getListUserPostCurrentPageSelector(state),
+  );
+
+  const hasLoadmore = useSelector((state) =>
+    getListUserPostHasLoadmoreSelector(state),
+  );
+
+  const postList = postListSelector?.content || [];
+
+  const loadMoreLoading = useSelector((state) =>
+    getListUserPostLoadmoreLoadingSelector(state),
+  );
+
+  const handleLoadMore = () => {
+    if (hasLoadmore) {
+      dispatch(
+        myPageActions.getListUserPostLoadmore({
+          userId: userProfile?.id,
+          page: page,
+          limit: LIMIT_DEFAULT,
+        }),
+      );
+    }
+  };
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    dispatch(
+      myPageActions.getListUserPost({
+        userId: userProfile?.id,
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+  };
+  React.useEffect(() => {
+    if (!loading) setIsRefreshing(false);
+  }, [loading]);
 
   const renderFooter = () => {
     if (!loadMoreLoading) {
@@ -161,40 +96,50 @@ const GridView = ({column, wImage, hImage, scrollEnabled}) => {
     );
   };
   return (
-    <FlatList
-        scrollEnabled={scrollEnabled !== undefined ? scrollEnabled:false}
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
-      key={column}
-      numColumns={column}
-      columnWrapperStyle={styles.viewCol}
-      ItemSeparatorComponent={() => <View style={styles.separator} />}
-      keyExtractor={(item, index) => 'profileMeTab' + index}
-      data={data || []}
-      renderItem={({item}) => (
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.viewImage}
-          onPress={() => {}}>
-          <Image
-            source={
-              item?.imageUrls.length
-                ? {uri: item?.imageUrls[0]}
-                : require('assets/images/default.png')
-            }
-            resizeMode="cover"
-            style={{height: wImage, width: hImage, borderRadius: 4}}
-            PlaceholderContent={<ActivityIndicator />}
-          />
-        </TouchableOpacity>
+    <>
+      {loading && !isRefreshing ? (
+        [1, 2, 3, 4, 5].map((v, i) => (
+          <View style={{paddingVertical: 16, overflow: 'hidden'}}>
+            <ImageGrid />
+          </View>
+        ))
+      ) : (
+        <FlatList
+          scrollEnabled={scrollEnabled !== undefined ? scrollEnabled : false}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          key={column}
+          numColumns={column}
+          columnWrapperStyle={styles.viewCol}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          keyExtractor={(item, index) => 'profileMeTab' + index}
+          data={postList || []}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.viewImage}
+              onPress={() => {}}>
+              <Image
+                source={
+                  item?.imageUrls.length
+                    ? {uri: item?.imageUrls[0]}
+                    : require('assets/images/default.png')
+                }
+                resizeMode="cover"
+                style={{height: wImage, width: hImage, borderRadius: 4}}
+                PlaceholderContent={<ActivityIndicator />}
+              />
+            </TouchableOpacity>
+          )}
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.5}
+          initialNumToRender={10}
+          ListFooterComponent={renderFooter}
+          refreshing={isRefreshing}
+          onRefresh={handleRefresh}
+        />
       )}
-      // onEndReached={handleLoadMore}
-      onEndReachedThreshold={0.5}
-      initialNumToRender={10}
-      ListFooterComponent={renderFooter}
-      // refreshing={refreshing}
-      // onRefresh={handleRefresh}
-    />
+    </>
   );
 };
 

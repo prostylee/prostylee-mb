@@ -10,3 +10,7 @@ export const getListProductSaleService = (payload) => {
 export const getListProductSoldService = (payload) => {
   return _fetch(GET, '/products', payload);
 };
+//LIST USER POST
+export const getListUserPostService = (payload) => {
+  return _fetch(GET, '/posts', payload);
+};

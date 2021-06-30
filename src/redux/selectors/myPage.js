@@ -53,3 +53,25 @@ export const getPageProductSoldSelector = createSelector(
   myPageReducer,
   (data) => data?.pageProductSold,
 );
+
+//LIST USER POST
+export const getListUserPostLoadingSelector = createSelector(
+  myPageReducer,
+  (data) => data?.listUserPostLoading || false,
+);
+export const getListUserPostLoadmoreLoadingSelector = createSelector(
+  myPageReducer,
+  (data) => data?.listUserPostLoadmoreLoading || false,
+);
+export const getListUserPostSelector = createSelector(
+  myPageReducer,
+  (data) => data?.listUserPost || {},
+);
+export const getListUserPostCurrentPageSelector = createSelector(
+  myPageReducer,
+  (data) => data?.listUserPostCurrentPage || 0,
+);
+export const getListUserPostHasLoadmoreSelector = createSelector(
+  myPageReducer,
+  (data) => data?.hasListUserPostLoadmore || false,
+);

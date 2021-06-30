@@ -1,5 +1,11 @@
 import {createAction, handleActions} from 'redux-actions';
 
+import {
+  types as typesUserPost,
+  actions as actionsUserPost,
+  defaultState as defaultStateUserPost,
+  handleActions as handleActionsUserPost,
+} from './userPost';
 export const types = {
   //List product from sale
   SET_LIST_PRODUCT_SALE_LOADING: 'SET_LIST_PRODUCT_SALE_LOADING',
@@ -26,6 +32,8 @@ export const types = {
     'GET_LIST_PRODUCT_SOLD_LOAD_MORE_SUCCESS',
   GET_LIST_PRODUCT_SOLD_LOAD_MORE_FAILED:
     'GET_LIST_PRODUCT_SOLD_LOAD_MORE_FAILED',
+  //List user post
+  ...typesUserPost,
 };
 
 export const actions = {
@@ -66,6 +74,8 @@ export const actions = {
   getListProductSoldLoadMoreFailed: createAction(
     types.GET_LIST_PRODUCT_SOLD_LOAD_MORE_FAILED,
   ),
+  //List user post
+  ...actionsUserPost,
 };
 
 const defaultState = {
@@ -83,6 +93,8 @@ const defaultState = {
   hasLoadMoreProductSold: false,
   pageProductSold: 0,
   limitProductSold: 12,
+  //List user post
+  ...defaultStateUserPost,
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -170,6 +182,8 @@ export default handleActions(
     [types.GET_LIST_PRODUCT_SOLD_LOAD_MORE_FAILED]: (state, {payload}) => {
       return {...state};
     },
+    //LIST USER POST
+    ...handleActionsUserPost,
   },
   defaultState,
 );

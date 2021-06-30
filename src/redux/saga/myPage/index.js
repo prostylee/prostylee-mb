@@ -7,6 +7,7 @@ import {SUCCESS} from 'constants';
 import {
   getListProductSaleService,
   getListProductSoldService,
+  getListUserPostService,
 } from 'services/api/myPageApi';
 
 //List product from sale
@@ -77,6 +78,39 @@ const getLoadMoreListProductSold = function* ({payload}) {
   }
 };
 
+//List USER POSTS
+const getListUserPost = function* ({payload}) {
+  try {
+    yield put(myPageActions.setListUserPostLoading(true));
+    const res = yield call(getListUserPostService, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(myPageActions.getListUserPostSuccess(res.data.data));
+    } else {
+      yield put(myPageActions.getListUserPostFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(myPageActions.setListUserPostLoading(false));
+  }
+};
+
+const getListUserPostLoadmore = function* ({payload}) {
+  try {
+    yield put(myPageActions.setListUserPostLoadmoreLoading(true));
+    const res = yield call(getListUserPostService, payload);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(myPageActions.getListUserPostLoadmoreSuccess(res.data.data));
+    } else {
+      yield put(myPageActions.getListUserPostLoadmoreFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(myPageActions.setListUserPostLoadmoreLoading(false));
+  }
+};
+
 const watcher = function* () {
   //List product from sale
   yield takeLatest(myPageTypes.GET_LIST_PRODUCT_SALE, getListProductSale);
@@ -89,6 +123,12 @@ const watcher = function* () {
   yield takeLatest(
     myPageTypes.GET_LIST_PRODUCT_SALE_LOAD_MORE,
     getLoadMoreListProductSold,
+  );
+  //List User post
+  yield takeLatest(myPageTypes.GET_LIST_USER_POST, getListUserPost);
+  yield takeLatest(
+    myPageTypes.GET_LIST_USER_POST_LOADMORE,
+    getListUserPostLoadmore,
   );
 };
 export default watcher();
