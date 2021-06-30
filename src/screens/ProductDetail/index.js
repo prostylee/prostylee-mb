@@ -92,7 +92,6 @@ const ProductDetail = (props) => {
   }, [productId]);
 
   React.useEffect(() => {
-    processProductPriceData(productData.productPriceResponseList);
     if (productData && productData.storeId && productData.categoryId) {
       dispatch(
         productActions.getProductCoordinated({
@@ -125,6 +124,12 @@ const ProductDetail = (props) => {
     setPriceList(attributeList);
   };
 
+  console.log(
+    'productData.productPriceResponseList',
+    JSON.stringify(priceList, null, 4),
+  );
+  console.log('productData', JSON.stringify(choiceSelect, null, 4));
+
   const productPriceData = !isEmpty(productData)
     ? productData?.price && productData?.priceSale
       ? {
@@ -151,6 +156,10 @@ const ProductDetail = (props) => {
   const productCoordinated = useSelector((state) =>
     productSelectors.getProductCoordinated(state),
   );
+
+  React.useEffect(() => {
+    processProductPriceData(productData.productPriceResponseList);
+  }, [productData]);
 
   // React.useEffect(() => {
   //   if (productDataLoading) {
