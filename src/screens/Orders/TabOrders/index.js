@@ -1,12 +1,19 @@
 import styles from './styles';
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import i18n from 'i18n';
 import ScrollableTabView, {
   ScrollableTabBar,
 } from 'components/ForkReactNativeSrollableTabView';
 import {Waiting, Delivery, Done, Cancel, Inhouse} from './Tabs';
+import {
+  commonActions,
+  myPageActions,
+  userActions,
+  userSelectors,
+} from 'reducers';
+import {useDispatch} from 'react-redux';
 
 const routes = [
   {key: 'waiting', title: 'Chờ xác nhận'},
@@ -17,6 +24,12 @@ const routes = [
 ];
 
 const TabOrders = ({navigation, status}) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('INITTTT');
+    dispatch(myPageActions.getUserOrdersStatusList());
+  }, []);
   return (
     <View style={styles.container}>
       <ScrollableTabView

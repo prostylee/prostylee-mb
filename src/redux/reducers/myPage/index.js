@@ -1,5 +1,17 @@
 import {createAction, handleActions} from 'redux-actions';
 
+import {
+  types as typesUserPost,
+  actions as actionsUserPost,
+  defaultState as defaultStateUserPost,
+  handleActions as handleActionsUserPost,
+} from './userPost';
+import {
+  types as typesUserProduct,
+  actions as actionsUserProduct,
+  defaultState as defaultStateUserProduct,
+  handleActions as handleActionsUserProduct,
+} from './userProduct';
 export const types = {
   //List product from sale
   SET_LIST_PRODUCT_SALE_LOADING: 'SET_LIST_PRODUCT_SALE_LOADING',
@@ -26,6 +38,15 @@ export const types = {
     'GET_LIST_PRODUCT_SOLD_LOAD_MORE_SUCCESS',
   GET_LIST_PRODUCT_SOLD_LOAD_MORE_FAILED:
     'GET_LIST_PRODUCT_SOLD_LOAD_MORE_FAILED',
+  //List user post
+  ...typesUserPost,
+  //User product
+  ...typesUserProduct,
+  //ORDER STATUS
+  SET_USER_ORDERS_STATUS_LOADING: 'SET_USER_ORDERS_STATUS_LOADING',
+  GET_USER_ORDERS_STATUS_LIST: 'GET_USER_ORDERS_STATUS_LIST',
+  GET_USER_ORDERS_STATUS_LIST_SUCCESS: 'GET_USER_ORDERS_STATUS_LIST_SUCCESS',
+  GET_USER_ORDERS_STATUS_LIST_FAILED: 'GET_USER_ORDERS_STATUS_LIST_FAILED',
 };
 
 export const actions = {
@@ -66,6 +87,21 @@ export const actions = {
   getListProductSoldLoadMoreFailed: createAction(
     types.GET_LIST_PRODUCT_SOLD_LOAD_MORE_FAILED,
   ),
+  //List user post
+  ...actionsUserPost,
+  //USER PRODUCT
+  ...actionsUserProduct,
+  //ORDER STATUS LIST
+  setUserOrdersStatusLoading: createAction(
+    types.SET_USER_ORDERS_STATUS_LOADING,
+  ),
+  getUserOrdersStatusList: createAction(types.GET_USER_ORDERS_STATUS_LIST),
+  getUserOrdersStatusListSuccess: createAction(
+    types.GET_USER_ORDERS_STATUS_LIST_SUCCESS,
+  ),
+  getUserOrdersStatusListFailed: createAction(
+    types.GET_USER_ORDERS_STATUS_LIST_FAILED,
+  ),
 };
 
 const defaultState = {
@@ -83,6 +119,13 @@ const defaultState = {
   hasLoadMoreProductSold: false,
   pageProductSold: 0,
   limitProductSold: 12,
+  //List user post
+  ...defaultStateUserPost,
+  //USER PRODUCT
+  ...defaultStateUserProduct,
+  //List order status
+  listOrdersStatusLoading: false,
+  listUserOrdersStatus: null,
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -169,6 +212,28 @@ export default handleActions(
     },
     [types.GET_LIST_PRODUCT_SOLD_LOAD_MORE_FAILED]: (state, {payload}) => {
       return {...state};
+    },
+    //LIST USER POST
+    ...handleActionsUserPost,
+    //USER PRODUCT
+    ...handleActionsUserProduct,
+    [types.SET_USER_ORDERS_STATUS_LOADING]: (state, {payload}) => {
+      return {
+        ...state,
+        listOrdersStatusLoading: payload,
+      };
+    },
+    [types.GET_USER_ORDERS_STATUS_LIST_SUCCESS]: (state, {payload}) => {
+      return {
+        ...state,
+        listUserOrdersStatus: payload,
+      };
+    },
+    [types.GET_USER_ORDERS_STATUS_LIST_FAILED]: (state, {payload}) => {
+      return {
+        ...state,
+        listUserOrdersStatus: {},
+      };
     },
   },
   defaultState,

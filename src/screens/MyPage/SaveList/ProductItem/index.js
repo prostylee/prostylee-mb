@@ -7,20 +7,20 @@ import {useNavigation} from '@react-navigation/native';
 import {Image, ProductLike} from 'components';
 import {currencyFormat, priceSalePercent} from 'utils/currency';
 
-const ProductItem = ({item}) => {
+const ProductItem = ({item, id}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.wrapItems}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('ProductDetail', {id: item.id});
+          navigation.navigate('ProductDetail', {id: id});
         }}>
         <View style={styles.item}>
           <View style={styles.wrapImageThumbnail}>
             <Image
               source={
-                item?.imageUrls.length
-                  ? {uri: item?.imageUrls[0]}
+                item?.imageUrl
+                  ? {uri: item?.imageUrl}
                   : require('assets/images/default.png')
               }
               resizeMode="cover"

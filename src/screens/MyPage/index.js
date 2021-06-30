@@ -17,7 +17,12 @@ import HeaderFeed from './HeaderFeed';
 import I18n from 'i18n';
 import {useIsFocused} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {commonActions, userActions, userSelectors} from 'reducers';
+import {
+  commonActions,
+  myPageActions,
+  userActions,
+  userSelectors,
+} from 'reducers';
 import {Auth} from 'aws-amplify';
 import {Grid, Full, Setting} from 'svg/common';
 
@@ -51,7 +56,6 @@ const Index = ({navigation}) => {
   );
   const userAvatar = `${configEnv.api_url}/profile/${userProfile?.id}/avatar`;
   const statisticsData = !isEmpty(userStatistics) ? userStatistics : {};
-  console.log('userStatistics', JSON.stringify(userStatistics, null, 4));
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
   const opacity = scrollAnimated.interpolate({
@@ -100,6 +104,18 @@ const Index = ({navigation}) => {
       dispatch(userActions.getStatistics(userProfile?.id));
     }
   }, [isFocused]);
+
+  React.useEffect(() => {
+    if (userProfile?.id) {
+      dispatch(
+        myPageActions.getListUserPost({
+          userId: userProfile?.id,
+          page: 0,
+          limit: 12,
+        }),
+      );
+    }
+  }, [userProfile]);
 
   return (
     <ThemeView isFullView style={styles.container}>

@@ -129,4 +129,7 @@ export default EStyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
+  headerRightContainer: {
+    flexDirection: 'row',
+  },
 });

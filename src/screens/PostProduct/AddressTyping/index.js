@@ -1,14 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
-import {
-  FlatList,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-  Dimensions,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {Text, View} from 'react-native';
+
 import {ActivityIndicator} from 'react-native-paper';
 import styles from './styles';
 import ListAddress from './ListAddress';
@@ -371,7 +364,7 @@ const AddressTyping = (navigation) => {
         //   southwest: {lat: minLat, lng: minLon},
         //   northeast: {lat: maxLat, lng: maxLon},
         // });
-
+        // console.log('JSON',JSON.stringify(json,null,2))
         let arrayLocation = mock.results?.map((item) => formatAddress(item));
         setListLocation(arrayLocation);
       } catch (err) {
@@ -464,6 +457,7 @@ const AddressTyping = (navigation) => {
             onChangeText={onChangeSearch}
             value={searchQuery}
             defaultValue={searchQuery}
+            placeholderTextColor="#555"
           />
         }
         rightComponent={<GroupHeaderRightButton haveNoti={true} />}
