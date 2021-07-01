@@ -1,12 +1,9 @@
-import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {View, TouchableOpacity, Text, FlatList} from 'react-native';
+import React from 'react';
+import {useSelector} from 'react-redux';
+import {View, Text, FlatList} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import ProductItem from './ProductItem';
-
-import IonIcons from 'react-native-vector-icons/Ionicons';
-import {useTheme} from '@react-navigation/native';
 
 import {cartActions} from 'reducers';
 
@@ -16,9 +13,6 @@ import {
 } from 'redux/selectors/cart';
 
 const ProductSimilar = (props) => {
-  const {colors} = useTheme();
-  const dispatch = useDispatch();
-
   const loading = useSelector((state) => getSuggestionLoadingSelector(state));
   const suggestionList = useSelector((state) =>
     getListSuggestionSelector(state),

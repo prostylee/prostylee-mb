@@ -4,6 +4,7 @@ import {Header, ThemeView} from 'components';
 import {useDispatch, useSelector} from 'react-redux';
 import {userActions, userSelectors} from 'reducers';
 import {LocationIcon, RightArrow, PlusSign} from 'svg/common';
+import {cartActions} from 'reducers';
 import {Divider} from 'react-native-paper';
 import styles from './styles';
 import I18n from 'i18n';
@@ -49,14 +50,10 @@ const SettingAddress = () => {
     const [itemHeight, setItemHeight] = React.useState(0);
     return (
       <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('SettingAddAddress', {
-            addressCount:
-              userAddress && userAddress.length ? userAddress.length : 0,
-            currentAddress: item,
-            addressId: item.id,
-          })
-        }>
+        onPress={() => {
+          dispatch(cartActions.setSelectedCartAddress(item));
+          navigation.goBack();
+        }}>
         <View
           style={styles.addressView}
           onLayout={(e) => setItemHeight(e.nativeEvent.layout.height)}>

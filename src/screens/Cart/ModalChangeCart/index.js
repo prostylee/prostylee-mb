@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 
 import React, {useEffect, useState} from 'react';
@@ -42,12 +41,7 @@ const ModalChangeCart = ({currentOptions, productId, closeModal}) => {
     }
   }, [productId]);
 
-  const {
-    name,
-    price = 0,
-    imageUrls,
-    productAttributeOptionResponse = [],
-  } = product;
+  const {name, price = 0, imageUrls} = product;
 
   const onChangeValue = (vl, item) => {
     const changeOptionIndex = optChosen.findIndex(

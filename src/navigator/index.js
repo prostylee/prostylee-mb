@@ -45,6 +45,7 @@ import {
   ChooseRateProduct,
   RateProduct,
   Cart,
+  CartAddressSelect,
   StoreProfileMain,
   StoreVouchers,
   //-------- Post Product --------
@@ -107,6 +108,7 @@ function SignedIn() {
       <Stack.Screen name="ChooseRateProduct" component={ChooseRateProduct} />
       <Stack.Screen name="RateProduct" component={RateProduct} />
       <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="CartAddressSelect" component={CartAddressSelect} />
       <Stack.Screen name="MyPage" component={MyPage} />
       {/******** Chat & Message ********/}
       <Stack.Screen name="ChatBox" component={ChatBox} />

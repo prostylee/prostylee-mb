@@ -1,23 +1,17 @@
 import styles from './styles';
-import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React from 'react';
+import {useSelector} from 'react-redux';
 import {View, TouchableOpacity, Text, Image} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import i18n from 'i18n';
 import {currencyFormat} from 'utils/currency';
 import {Heart, HeartFill} from 'svg/common';
-import {cartActions} from 'reducers';
-import _ from 'lodash';
 
-import {
-  getRecentLoadingSelector,
-  getListRecentSelector,
-} from 'redux/selectors/cart';
+import {getListRecentSelector} from 'redux/selectors/cart';
 import {useNavigation} from '@react-navigation/native';
 
 const ProductSimilar = (props) => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
   const imagesRef = React.useRef();
   //const selectItem = props.onSelect ? props.onSelect : () => {};
 
