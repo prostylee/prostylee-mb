@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 
 import React from 'react';
@@ -10,8 +9,6 @@ import {Button} from 'react-native-paper';
 import i18n from 'i18n';
 import {cartActions} from 'redux/reducers';
 import {getVoucherUseSelector} from 'redux/selectors/cart';
-import {checkVoucher} from 'services/api/cartApi';
-import {showMessage} from 'react-native-flash-message';
 import {TicketCutLine} from 'svg/common';
 
 const ProductItem = ({item, navigation, params}) => {
@@ -127,7 +124,6 @@ const ProductItem = ({item, navigation, params}) => {
           </View>
           <View>
             <Button
-              contentStyle={styles.button}
               labelStyle={styles.labelStyle}
               contentStyle={styles.contentStyle}
               uppercase={false}

@@ -1,13 +1,12 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {ButtonRounded} from 'components';
-import isEmpty from 'lodash/isEmpty';
-import {Button, Chip} from 'react-native-paper';
+import {Chip} from 'react-native-paper';
 import i18n from 'i18n';
+import isEmpty from 'lodash/isEmpty';
 import {CreditSvg, CouponSvg, RightArrow} from 'svg/common';
 import {useNavigation} from '@react-navigation/native';
 import {currencyFormat} from 'utils/currency';
@@ -140,7 +139,10 @@ const CardFooter = ({
             compact={false}
             style={styles.btnCheckout}
             label={buttonText}
-            disabled={disabled || (isCheckout ? isEmpty(payment) : false)}
+            disabled={
+              disabled ||
+              (isCheckout ? !payment || isEmpty(deliveryMethod) : false)
+            }
           />
         </View>
       </View>

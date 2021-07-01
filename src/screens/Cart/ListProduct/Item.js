@@ -51,7 +51,7 @@ const Item = ({product}) => {
         <View style={styles.modalChangeColor}>
           <View style={styles.contentBox}>
             <View style={styles.modalHeader}>
-              <View style={styles.wrapButtonEmpty}></View>
+              <View style={styles.wrapButtonEmpty} />
               <View style={styles.wrapButtonClose}>
                 <TouchableOpacity
                   style={styles.buttonClose}

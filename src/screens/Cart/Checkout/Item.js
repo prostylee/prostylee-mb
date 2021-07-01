@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 import React, {useEffect} from 'react';
 import {Text, View, ActivityIndicator} from 'react-native';

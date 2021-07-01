@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 import React, {useRef, useEffect, useMemo, useState} from 'react';
 import {useDispatch} from 'react-redux';
@@ -55,7 +54,7 @@ const ListProduct = ({navigation}) => {
         <View style={styles.wrapProductSuggestion}>
           <ProductSuggestion />
         </View>
-        <View style={styles.viewLoadingFooter}></View>
+        <View style={styles.viewLoadingFooter} />
       </>
     );
   };
@@ -93,7 +92,9 @@ const ListProduct = ({navigation}) => {
     navigation.navigate('CheckoutCart');
   };
   useEffect(() => {
-    if (!isSuggestionLoading && !isRecentLoading) handleRefreshing(false);
+    if (!isSuggestionLoading && !isRecentLoading) {
+      handleRefreshing(false);
+    }
   }, [isSuggestionLoading, isRecentLoading]);
 
   useEffect(() => {

@@ -26,6 +26,7 @@ import RateProduct from './RateProduct';
 import Cart from './Cart';
 import AddStory from './Story/AddStory';
 import AddStore from './Story/AddStore';
+import CartAddressSelect from './Cart/AddressSelect';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
@@ -98,6 +99,7 @@ export {
   ChooseRateProduct,
   RateProduct,
   Cart,
+  CartAddressSelect,
   AddStory,
   AddStore,
   CropPicture,

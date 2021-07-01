@@ -5,7 +5,7 @@ import {addressActions, addressSelectors, userActions} from 'reducers';
 import {useDispatch, useSelector} from 'react-redux';
 import I18n from 'i18n';
 import styles from './styles';
-import {SUCCESS} from 'constants';
+import {POST_SUCCESS} from 'constants';
 import {Field, Formik} from 'formik';
 import {
   validateFullname,
@@ -122,8 +122,7 @@ const AddAddress = ({route, navigation}) => {
       address: values.address,
       priority: values.isDefault,
     });
-    console.log('res', JSON.stringify(res, null, 4));
-    if (res.ok && res.data.status === SUCCESS) {
+    if (res.ok && res.data.status === POST_SUCCESS) {
       await dispatch(userActions.getUserAddress());
       navigation.goBack();
     }
@@ -142,8 +141,7 @@ const AddAddress = ({route, navigation}) => {
         priority: values.isDefault,
       },
     });
-    console.log('res', JSON.stringify(res, null, 4));
-    if (res.ok && res.data.status === SUCCESS) {
+    if (res.ok && res.data.status === POST_SUCCESS) {
       await dispatch(userActions.getUserAddress());
       navigation.goBack();
     }
