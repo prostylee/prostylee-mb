@@ -5,6 +5,7 @@ import ProductItem from './ProductItem';
 
 import {SearchProductLoading} from '../../Loading/contentLoader';
 import PropTypes from 'prop-types';
+import i18n from 'i18n';
 
 const ProductList = ({
   getDataFunction,
@@ -62,7 +63,9 @@ const ProductList = ({
           onRefresh={_handleRefresh}
         />
       ) : (
-        <Text>Không có dữ liệu</Text>
+        <Text style={styles.notFoundText}>
+          {i18n.t('Search.resultsNotfound')}
+        </Text>
       )}
     </View>
   );

@@ -1,17 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 import React, {useRef, useMemo} from 'react';
-import {View, FlatList, Animated, Text, ActivityIndicator} from 'react-native';
 import Product from '../../../ProductItem';
 import {currencyFormat} from 'utils/currency';
+import {ButtonRounded, ButtonOutlined, Colors} from 'components';
 import i18n from 'i18n';
+import {View, FlatList, Animated, Text, ActivityIndicator} from 'react-native';
 import {myPageActions, userSelectors} from 'reducers';
 import {
-  getListOnDeliveryOrdersLoadingSelector,
-  getListOnDeliveryOrdersSelector,
-  getListOnDeliveryOrdersLoadmoreLoadingSelector,
-  getHasLoadMoreOnDeliveryOrdersSelector,
-  getPageOnDeliveryOrdersSelector,
+  getListReceiveOrdersLoadingSelector,
+  getListReceiveOrdersSelector,
+  getListReceiveOrdersLoadmoreLoadingSelector,
+  getHasLoadMoreReceiveOrdersSelector,
+  getPageReceiveOrdersSelector,
 } from 'redux/selectors/orders';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch, useSelector} from 'react-redux';
@@ -22,8 +23,8 @@ const mockData = [
     id: 1,
     orderHistory: {
       id: 1,
-      statusName: 'Đang giao hàng',
-      actCode: 30,
+      statusName: 'Đã huỷ',
+      actCode: 90,
     },
     totalMoney: 1000_000,
     orderDetails: [
@@ -78,8 +79,8 @@ const mockData = [
     id: 1,
     orderHistory: {
       id: 1,
-      statusName: 'Đang giao hàng',
-      actCode: 30,
+      statusName: 'Đã huỷ',
+      actCode: 90,
     },
     totalMoney: 1000_000,
     orderDetails: [
@@ -131,29 +132,30 @@ const mockData = [
     ],
   },
 ];
-const DeliveryTab = ({navigation, status, actCode = 0, statusId = 0}) => {
+
+const CancelTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   const dispatch = useDispatch();
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
 
   const loading = useSelector((state) =>
-    getListOnDeliveryOrdersLoadingSelector(state),
+    getListReceiveOrdersLoadingSelector(state),
   );
 
   const loadmoreLoading = useSelector((state) =>
-    getListOnDeliveryOrdersLoadmoreLoadingSelector(state),
+    getListReceiveOrdersLoadmoreLoadingSelector(state),
   );
 
-  const page = useSelector((state) => getPageOnDeliveryOrdersSelector(state));
+  const page = useSelector((state) => getPageReceiveOrdersSelector(state));
 
   const listCancelSelector = useSelector((state) =>
-    getListOnDeliveryOrdersSelector(state),
+    getListReceiveOrdersSelector(state),
   );
 
   const listOrders = listCancelSelector?.content || [];
 
   const hasLoadmore = useSelector((state) =>
-    getHasLoadMoreOnDeliveryOrdersSelector(state),
+    getHasLoadMoreReceiveOrdersSelector(state),
   );
   const scrollAnimated = useRef(new Animated.Value(0)).current;
   const userProfile = useSelector((state) =>
@@ -164,10 +166,32 @@ const DeliveryTab = ({navigation, status, actCode = 0, statusId = 0}) => {
     {useNativeDriver: false},
   );
 
+  const renderFooter = (list = [], totalPrice = 0) => {
+    const totalItem = list?.reduce((total, item) => {
+      return (total += item?.amount);
+    }, 0);
+    return (
+      <>
+        <View style={styles.wrapFooterItem}>
+          <View style={styles.colCountFooter}>
+            <Text style={styles.labelCountFooter}>
+              {i18n.t('orders.countProduct', {count: totalItem})}
+            </Text>
+          </View>
+          <View style={styles.colTotalFooter}>
+            <Text style={styles.labelTotalFooter}>
+              {currencyFormat(totalPrice || 0, 'đ')}
+            </Text>
+          </View>
+        </View>
+      </>
+    );
+  };
+
   const handleLoadMore = () => {
     if (hasLoadmore) {
       dispatch(
-        myPageActions.getListOnDeliveryOrdersLoadmore({
+        myPageActions.getListReceiveOrdersLoadmore({
           loggedInUser: userProfile?.id,
           page: page,
           limit: LIMIT_DEFAULT,
@@ -179,7 +203,7 @@ const DeliveryTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   const handleRefresh = () => {
     setIsRefreshing(true);
     dispatch(
-      myPageActions.getListOnDeliveryOrders({
+      myPageActions.getListReceiveOrders({
         loggedInUser: userProfile?.id,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
@@ -192,8 +216,9 @@ const DeliveryTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   }, [loading]);
 
   React.useEffect(() => {
+    // if (!listOrders || !listOrders.length)
     dispatch(
-      myPageActions.getListOnDeliveryOrders({
+      myPageActions.getListReceiveOrders({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         loggedInUser: userProfile?.id,
@@ -201,26 +226,6 @@ const DeliveryTab = ({navigation, status, actCode = 0, statusId = 0}) => {
       }),
     );
   }, []);
-
-  const renderFooter = (list = [], totalPrice = 0) => {
-    const totalItem = list?.reduce((total, item) => {
-      return (total += item?.amount);
-    }, 0);
-    return (
-      <View style={styles.wrapFooterItem}>
-        <View style={styles.colCountFooter}>
-          <Text style={styles.labelCountFooter}>
-            {i18n.t('orders.countProduct', {count: totalItem})}
-          </Text>
-        </View>
-        <View style={styles.colTotalFooter}>
-          <Text style={styles.labelTotalFooter}>
-            {currencyFormat(totalPrice, 'đ')}
-          </Text>
-        </View>
-      </View>
-    );
-  };
   const renderFooterIndicator = () => {
     if (!loadmoreLoading) {
       return <View style={styles.viewFooter} />;
@@ -272,8 +277,8 @@ const DeliveryTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   );
 };
 
-DeliveryTab.defaultProps = {};
+CancelTab.defaultProps = {};
 
-DeliveryTab.propTypes = {};
+CancelTab.propTypes = {};
 
-export default DeliveryTab;
+export default CancelTab;

@@ -1,5 +1,5 @@
 import styles from './styles';
-import React, {useRef, useMemo} from 'react';
+import React, {useRef, useMemo, useState} from 'react';
 import {FlatList, Text, Animated, View} from 'react-native';
 import i18n from 'i18n';
 import {
@@ -11,111 +11,151 @@ import {
   Summary,
   Footer,
 } from '../CardDetail';
-import Product from '../../ProductItem';
+import StoreItem from '../../StoreItem';
 import {currencyFormat} from 'utils/currency';
+import {getOrderDetails} from '../../../../services/api/myPageApi';
 
-const data = [
-  {
-    brandId: 1,
-    brandResponse: {
-      description: 'Adidas brand',
-      icon: 'https://psmedia224241-staging.s3-ap-southeast-1.amazonaws.com/public/27c3092c-9f1b-49eb-ba68-ab3f091d1347/brand/adidas.png',
+const mockData = {
+  id: 1,
+  code: 'MNJH29891',
+  createdAt: '12-02-2021',
+  orderHistory: [
+    {
       id: 1,
-      name: 'Adidas',
+      statusName: 'Đang giao hàng',
+      actCode: 30,
+      updatedAt: '20-04-2020',
     },
-    productSize: 'L',
-    productColor: 'black',
-    amount: 1,
-    description: 'Áo thun nam cổ trụ hàn quốc 3',
-    id: 134,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Áo thun nam cổ trụ hàn quốc 10',
-    price: 150000,
-    priceSale: 140000,
-    productOwnerResponse: {
-      id: 1,
-      logoUrl:
-        'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-      name: 'Store',
+    {
+      id: 2,
+      statusName: 'Đã tiếp nhận đơn hàng',
+      actCode: 30,
+      updatedAt: '10-04-2020',
     },
-    storeId: 1,
+    {
+      id: 3,
+      statusName: 'Đặt hàng',
+      actCode: 30,
+      updatedAt: '09-04-2020',
+    },
+  ],
+  shippingAddress: {
+    id: 1,
+    fullName: 'Nguyen Van A',
+    phoneNumber: '0909999123',
+    address1: '129A',
+    address2: 'Nguyen Ba Tong',
+    state: 'Tan Binh',
+    city: 'Ho Chi Minh',
   },
-  {
-    brandId: 1,
-    brandResponse: {
-      description: 'Adidas brand',
-      icon: 'https://psmedia224241-staging.s3-ap-southeast-1.amazonaws.com/public/27c3092c-9f1b-49eb-ba68-ab3f091d1347/brand/adidas.png',
-      id: 1,
-      name: 'Adidas',
+  orderDetails: [
+    {
+      amount: 9,
+      id: 136,
+      productImage:
+        'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+      productName: 'Áo thun nam cổ trụ hàn quốc 10',
+      productPrice: 150000,
+      orderDetailAttributes: 'XL|Đen',
+      store: {
+        id: 1,
+        logoUrl:
+          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
+        name: 'Store',
+      },
     },
-    productSize: 'L',
-    productColor: 'black',
-    amount: 2,
-    description: 'Áo thun nam cổ trụ hàn quốc 3',
-    id: 135,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Áo thun nam cổ trụ hàn quốc 10',
-    price: 150000,
-    priceSale: 140000,
-    productOwnerResponse: {
-      id: 1,
-      logoUrl:
-        'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-      name: 'Store',
+    {
+      amount: 1,
+      id: 137,
+      productImage:
+        'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+      productName: 'Hàn quốc 10',
+      productPrice: 150000,
+      orderDetailAttributes: 'S|Xanh',
+      store: {
+        id: 2,
+        logoUrl:
+          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
+        name: 'Store 2',
+      },
     },
-    storeId: 1,
+    {
+      amount: 1,
+      id: 137,
+      productImage:
+        'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
+      productName: 'Hàn quốc 10',
+      productPrice: 150000,
+      orderDetailAttributes: 'S|Xanh',
+      store: {
+        id: 2,
+        logoUrl:
+          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
+        name: 'Store 2',
+      },
+    },
+  ],
+  totalMoney: 1000_000,
+  paymentType: 'MOMO',
+  orderDiscounts: {
+    id: 1,
+    voucherId: 2,
+    amount: 20_000,
   },
-];
+  shippingProvider: {
+    name: 'Ninja Van',
+    deliveryTime: '20-12-1998',
+    price: 15_000,
+  },
+};
 
-const ListDetail = ({navigation, dealData}) => {
+const ListDetail = ({navigation, dealData, orderData = {}}) => {
   const scrollAnimated = useRef(new Animated.Value(0)).current;
+  console.log('ORDER DATA', JSON.stringify(orderData, null, 4));
 
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
   /* Extract note */
-  const groupDataByStore = (list) => {
-    return list.reduce((acc, product) => {
-      const {storeId, productOwnerResponse, id} = product;
-      const foundIndex = acc.findIndex((element) => element.key === storeId);
-      if (foundIndex === -1) {
+  const groupDataByStore = (list = []) => {
+    return list.reduce((arrayStore, product) => {
+      let store = product?.store;
+      let idx = arrayStore.findIndex((item) => item.id === store.id);
+      if (idx === -1) {
+        // console.log('NOT FOUND');
         return [
-          ...acc,
+          ...arrayStore,
           {
-            key: storeId,
-            storeName: productOwnerResponse.name,
-            storeAvatar: productOwnerResponse.logoUrl,
-            id: id,
-            data: [product],
+            ...store,
+            products: [product],
           },
         ];
       }
-      acc[foundIndex].data = [...acc[foundIndex].data, product];
-      return acc;
+      arrayStore[idx].products = [...arrayStore[idx].products, product];
+      return arrayStore;
     }, []);
   };
 
   const groupData = useMemo(
-    () => groupDataByStore(data),
-    [JSON.stringify(data)],
+    () => groupDataByStore(orderData.orderDetails),
+    [JSON.stringify(orderData.orderDetails)],
   );
+  const getTotalDiscount = (listVouchers = []) => {
+    return listVouchers.reduce((total, item) => (total += item?.amount), 0);
+  };
 
   const renderHeader = () => {
     return (
       <>
         <View style={styles.wrapItem}>
-          <Info dealData={dealData} />
+          <Info dealData={dealData} infor={orderData} />
         </View>
         <View style={styles.wrapItem}>
-          <Tracking />
+          <Tracking timeLine={orderData?.orderHistory} />
         </View>
         <View style={styles.wrapItem}>
-          <UserInfo />
+          <UserInfo infor={orderData?.shippingAddress} />
         </View>
       </>
     );
@@ -124,14 +164,21 @@ const ListDetail = ({navigation, dealData}) => {
   const renderFooter = () => {
     return (
       <>
+        <View style={{...styles.wrapItem}}>
+          {renderFooterProduct(orderData?.orderDetails, orderData?.totalMoney)}
+        </View>
         <View style={{...styles.wrapItem, marginTop: 10}}>
-          <Payment />
+          <Payment paymentType={orderData?.paymentType} />
         </View>
         <View style={styles.wrapItem}>
-          <Delivery />
+          <Delivery shippingProvider={orderData?.shippingProvider} />
         </View>
         <View style={styles.wrapItem}>
-          <Summary />
+          <Summary
+            totalMoney={orderData?.totalMoney}
+            shippingFee={orderData?.shippingProvider?.price}
+            totalDiscount={getTotalDiscount(orderData?.orderDiscounts)}
+          />
         </View>
         <View style={styles.wrapItemFooter}>
           <Footer dealData={dealData} />
@@ -140,17 +187,20 @@ const ListDetail = ({navigation, dealData}) => {
     );
   };
 
-  const renderFooterProduct = () => {
+  const renderFooterProduct = (list = [], totalPrice = 0) => {
+    const totalItem = list?.reduce((total, item) => {
+      return (total += item?.amount);
+    }, 0);
     return (
       <View style={styles.wrapFooterItem}>
         <View style={styles.colCountFooter}>
           <Text style={styles.labelCountFooter}>
-            {i18n.t('orders.countProduct', {count: data.length})}
+            {i18n.t('orders.countProduct', {count: totalItem})}
           </Text>
         </View>
         <View style={styles.colTotalFooter}>
           <Text style={styles.labelTotalFooter}>
-            {currencyFormat(999999, 'đ')}
+            {currencyFormat(totalPrice, 'đ')}
           </Text>
         </View>
       </View>
@@ -162,9 +212,12 @@ const ListDetail = ({navigation, dealData}) => {
       <FlatList
         data={groupData}
         renderItem={({item}) => (
-          <Product navigation={navigation} product={item}>
-            {renderFooterProduct()}
-          </Product>
+          <StoreItem
+            navigation={navigation}
+            product={item}
+            status={mockData.orderHistory[0]}
+            store={item}
+          />
         )}
         numColumns={1}
         keyExtractor={(item, index) => index}

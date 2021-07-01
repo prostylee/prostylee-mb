@@ -12,7 +12,15 @@ const ListMenu = ({title, menu, style, titleStyle, rowStyle}) => {
         <View style={styles.wrapInfo}>
           {item.icon && <View style={styles.wrapIcon}>{item.icon}</View>}
           <View style={styles.wrapLabelItem}>
-            <Text style={styles.labelItem}>&nbsp;&nbsp;{item.label}</Text>
+            <Text
+              style={[
+                styles.labelItem,
+                {
+                  opacity: item?.disabled ? 0.3 : 1,
+                },
+              ]}>
+              &nbsp;&nbsp;{item.label}
+            </Text>
           </View>
         </View>
         <View style={styles.wrapRight}>

@@ -5,42 +5,58 @@ import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Image} from 'components';
 import {RightArrow} from 'svg/common';
 import {IconButton, Menu, Divider} from 'react-native-paper';
+import {getListUserOrderStatusSelector} from 'redux/selectors/myPage';
 import i18n from 'i18n';
+import {useSelector} from 'react-redux';
+import {ORDER_STATUS_ACT_CODE} from 'constants';
 
-const HeaderStore = ({header, navigation, status}) => {
+const HeaderStore = ({header, navigation, statusId = 0}) => {
   const [visible, setVisible] = useState(false);
   const {storeName, storeId, storeAvatar} = header;
   const clickItem = () => {
     console.log('Cliked!', storeId);
   };
+  const statusSelector = useSelector((state) =>
+    getListUserOrderStatusSelector(state),
+  );
+  let listStatus = statusSelector?.content || [];
+  listStatus = listStatus.sort((a, b) => a.id - b.id);
+  const getStatus = () => {
+    if (listStatus && listStatus?.length) {
+      return listStatus.find((item) => item.id === statusId) || {};
+    }
+    return {};
+  };
+
+  const status = getStatus();
 
   const renderStatus = () => {
-    switch (status) {
-      case 'waiting':
+    switch (status?.actCode) {
+      case ORDER_STATUS_ACT_CODE.PROCESSING:
         return (
-          <Text style={{...styles.textHeaderStatus, color: '#ED2727'}}>
-            {i18n.t('orders.statusWaiting')}
+          <Text style={{...styles.textHeaderStatus, color: '#823FFD'}}>
+            {status?.name}
           </Text>
         );
-      case 'delivery':
+      case ORDER_STATUS_ACT_CODE.ON_DELIVERY:
         return (
           <Text style={{...styles.textHeaderStatus, color: '#F48231'}}>
-            {i18n.t('orders.stautusCheckProgress')}
+            {status?.name}
           </Text>
         );
-      case 'done':
+      case ORDER_STATUS_ACT_CODE.COMPLETED:
         return (
           <Text style={{...styles.textHeaderStatus, color: '#3FBA44'}}>
-            {i18n.t('orders.statusDone')}
+            {status?.name}
           </Text>
         );
-      case 'cancel':
+      case ORDER_STATUS_ACT_CODE.CANCEL_ORDER:
         return (
           <Text style={{...styles.textHeaderStatus, color: '#ED2727'}}>
-            {i18n.t('orders.statusCancel')}
+            {status?.name}
           </Text>
         );
-      case 'inhouse':
+      case ORDER_STATUS_ACT_CODE.WAIT_FOR_PAYMENT:
         return (
           <Menu
             visible={visible}
@@ -65,7 +81,8 @@ const HeaderStore = ({header, navigation, status}) => {
       default:
         return (
           <Text style={{...styles.textHeaderStatus, color: '#333333'}}>
-            {i18n.t('orders.statusCancel')}
+            {/* {i18n.t('orders.statusCancel')} */}
+            {status?.name}
           </Text>
         );
     }

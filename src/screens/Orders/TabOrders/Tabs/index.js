@@ -3,3 +3,4 @@ export {default as Delivery} from './DeliveryTab';
 export {default as Done} from './DoneTab';
 export {default as Cancel} from './CancelTab';
 export {default as Inhouse} from './InhouseTab';
+export {default as WaitForPayment} from './WaitForPayment';

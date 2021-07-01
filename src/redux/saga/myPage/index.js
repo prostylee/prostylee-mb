@@ -3,6 +3,20 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {myPageActions, myPageTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
+import {
+  getListCanceledOrders,
+  getListCanceledOrdersLoadmore,
+  getListCompletedOrders,
+  getListCompletedOrdersLoadmore,
+  getListCreatedOrders,
+  getListCreatedOrdersLoadmore,
+  getListGoodIssuesOrders,
+  getListGoodIssuesOrdersLoadmore,
+  getListOnDeliveryOrders,
+  getListOnDeliveryOrdersLoadmore,
+  getListReceiveOrders,
+  getListReceiveOrdersLoadmore,
+} from './orders';
 
 import {
   getListProductSaleService,
@@ -188,7 +202,7 @@ const getListUserOrderStatus = function* ({payload}) {
   try {
     yield put(myPageActions.setUserOrdersStatusLoading(true));
     const res = yield call(getListUserOrderStatusApi, payload);
-    console.log('GET ORDER STATUS', res.data);
+
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(myPageActions.getUserOrdersStatusListSuccess(res.data.data));
     } else {
@@ -235,6 +249,51 @@ const watcher = function* () {
   yield takeLatest(
     myPageTypes.GET_LIST_PRODUCT_SAVED_LOADMORE,
     getLoadMoreListProductSaved,
+  );
+  //ORDER CANCELED
+  yield takeLatest(myPageTypes.GET_LIST_CANCELED_ORDERS, getListCanceledOrders);
+  yield takeLatest(
+    myPageTypes.GET_LIST_CANCELED_ORDERS_LOADMORE,
+    getListCanceledOrdersLoadmore,
+  );
+  //ORDERS COMPLETED
+  yield takeLatest(
+    myPageTypes.GET_LIST_COMPLETED_ORDERS,
+    getListCompletedOrders,
+  );
+  yield takeLatest(
+    myPageTypes.GET_LIST_COMPLETED_ORDERS_LOADMORE,
+    getListCompletedOrdersLoadmore,
+  );
+  //ORDER CREATED
+  yield takeLatest(myPageTypes.GET_LIST_CREATED_ORDERS, getListCreatedOrders);
+  yield takeLatest(
+    myPageTypes.GET_LIST_CREATED_ORDERS_LOADMORE,
+    getListCreatedOrdersLoadmore,
+  );
+  //ORDER GOODISSUES
+  yield takeLatest(
+    myPageTypes.GET_LIST_GOOD_ISSUES_ORDERS,
+    getListGoodIssuesOrders,
+  );
+  yield takeLatest(
+    myPageTypes.GET_LIST_GOOD_ISSUES_ORDERS_LOADMORE,
+    getListGoodIssuesOrdersLoadmore,
+  );
+  //ORDER ONDELIVERY
+  yield takeLatest(
+    myPageTypes.GET_LIST_ON_DELIVERY_ORDERS,
+    getListOnDeliveryOrders,
+  );
+  yield takeLatest(
+    myPageTypes.GET_LIST_ON_DELIVERY_ORDERS_LOADMORE,
+    getListOnDeliveryOrdersLoadmore,
+  );
+  //ORDER RECEIVED
+  yield takeLatest(myPageTypes.GET_LIST_RECEIVE_ORDERS, getListReceiveOrders);
+  yield takeLatest(
+    myPageTypes.GET_LIST_RECEIVE_ORDERS_LOADMORE,
+    getListReceiveOrdersLoadmore,
   );
 };
 export default watcher();

@@ -8,97 +8,118 @@ import {currencyFormat} from 'utils/currency';
 import {DownArrow} from 'svg/common';
 import {useNavigation} from '@react-navigation/native';
 
-const Item = ({product, status, changeCount, onChangeCount, children}) => {
+const Item = ({
+  product,
+  status,
+  changeCount,
+  onChangeCount,
+  children,
+  orderId = 0,
+}) => {
   const navigation = useNavigation();
 
-  const {storeId, storeName, storeAvatar, data} = product;
+  const {store} = product;
 
   const onViewDetail = () => {
     navigation.navigate('OrdersDetail', {
       dealId: null,
       deal: {},
       status: status,
+      orderId: orderId,
     });
+  };
+
+  const getAttributesText = () => {
+    if (
+      product?.orderDetailAttributes &&
+      product?.orderDetailAttributes?.length
+    ) {
+      let attributeString = [...product?.orderDetailAttributes]?.reduce(
+        (text, item, index) => {
+          return index !== 0 ? text + '| ' + item?.value : text + item?.value;
+        },
+        '',
+      );
+      return attributeString;
+    }
+    return '';
   };
 
   const renderBody = () => (
     <>
-      <HeaderStore header={{storeId, storeName, storeAvatar}} status={status} />
-      {data.map((item, index) => (
-        <View style={styles.productItem} key={item.id}>
-          <View style={styles.wrapImageThumbnail}>
-            <Image
-              source={
-                item?.imageUrls.length
-                  ? {uri: item?.imageUrls[0]}
-                  : require('assets/images/default.png')
-              }
-              style={styles.imageThumbnail}
-              PlaceholderContent={<ActivityIndicator />}
-            />
+      <HeaderStore
+        header={{
+          storeId: store?.id,
+          storeName: store?.name,
+          storeAvatar: store?.logoUrl,
+        }}
+        status={status}
+        statusId={status}
+      />
+      {/* {data.map((item, index) => ( */}
+      <View style={styles.productItem} key={product?.id}>
+        <View style={styles.wrapImageThumbnail}>
+          <Image
+            source={
+              product?.productImage
+                ? {uri: product?.productImage}
+                : require('assets/images/default.png')
+            }
+            style={styles.imageThumbnail}
+            PlaceholderContent={<ActivityIndicator />}
+          />
+        </View>
+        {changeCount ? (
+          <View style={styles.wrapTextContent}>
+            <View style={styles.wrapInfo}>
+              <Text numberOfLines={2} style={styles.name}>
+                {product?.productName}
+              </Text>
+              {product?.productPrice ? (
+                <Text numberOfLines={1} style={styles.price}>
+                  {currencyFormat(product?.productPrice || 0, 'đ')}
+                </Text>
+              ) : null}
+            </View>
+            <View style={styles.wrapUpDown}>
+              <View style={{...styles.wrapAttribute, flex: 1}}>
+                <Text numberOfLines={1} style={styles.name}>
+                  {getAttributesText()}
+                </Text>
+              </View>
+              <View style={styles.wrapAmount}>
+                <NumberInputUpDown
+                  value={product?.amount}
+                  onChange={onChangeCount}
+                />
+              </View>
+            </View>
           </View>
-          {changeCount ? (
+        ) : (
+          <>
             <View style={styles.wrapTextContent}>
               <View style={styles.wrapInfo}>
                 <Text numberOfLines={2} style={styles.name}>
-                  {item.name}
+                  {product?.productName}
                 </Text>
-                {item?.price ? (
+                {product?.productPrice ? (
                   <Text numberOfLines={1} style={styles.price}>
-                    {currencyFormat(item?.price, 'đ')}
+                    {currencyFormat(product?.productPrice || 0, 'đ')}
                   </Text>
                 ) : null}
               </View>
-              <View style={styles.wrapUpDown}>
-                <View style={{...styles.wrapAttribute, flex: 1}}>
-                  <Text numberOfLines={1} style={styles.name}>
-                    Size: {item.productSize}&nbsp;
-                    <Text numberOfLines={1} style={styles.textSpace}>
-                      |
-                    </Text>
-                    &nbsp;{item.productColor}
-                  </Text>
-                </View>
-                <View style={styles.wrapAmount}>
-                  <NumberInputUpDown
-                    value={item.count}
-                    onChange={onChangeCount}
-                  />
-                </View>
+              <View style={styles.wrapAttribute}>
+                <Text style={styles.name}>{getAttributesText()}</Text>
               </View>
             </View>
-          ) : (
-            <>
-              <View style={styles.wrapTextContent}>
-                <View style={styles.wrapInfo}>
-                  <Text numberOfLines={2} style={styles.name}>
-                    {item.name}
-                  </Text>
-                  {item?.price ? (
-                    <Text numberOfLines={1} style={styles.price}>
-                      {currencyFormat(item?.price, 'đ')}
-                    </Text>
-                  ) : null}
-                </View>
-                <View style={styles.wrapAttribute}>
-                  <Text numberOfLines={1} style={styles.name}>
-                    Size: {item.productSize}&nbsp;{' '}
-                    <Text numberOfLines={1} style={styles.textSpace}>
-                      |
-                    </Text>
-                    &nbsp;{item.productColor}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.wrapAmount}>
-                <Text numberOfLines={2} style={styles.count}>
-                  x{item.amount}
-                </Text>
-              </View>
-            </>
-          )}
-        </View>
-      ))}
+            <View style={styles.wrapAmount}>
+              <Text numberOfLines={2} style={styles.count}>
+                x{product?.amount}
+              </Text>
+            </View>
+          </>
+        )}
+      </View>
       {children}
     </>
   );

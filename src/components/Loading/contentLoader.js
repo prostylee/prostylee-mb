@@ -598,6 +598,60 @@ export const ImageGrid = ({
   );
 };
 
+export const OrdersLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <ContentLoader
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}
+      speed={speed}>
+      <Rect x="301" y="5" rx="3" ry="3" width="62" height="8" />
+      <Rect x="300" y="16" rx="3" ry="3" width="52" height="6" />
+      <Circle cx="16" cy="15" r="14" />
+      <Rect x="3" y="43" rx="3" ry="3" width="48" height="49" />
+      <Rect x="65" y="47" rx="3" ry="3" width="287" height="7" />
+      <Rect x="65" y="62" rx="3" ry="3" width="100" height="8" />
+      <Rect x="247" y="62" rx="3" ry="3" width="100" height="7" />
+      <Rect x="65" y="80" rx="3" ry="3" width="238" height="7" />
+      <Rect x="4" y="103" rx="3" ry="3" width="100" height="8" />
+      <Rect x="260" y="100" rx="3" ry="3" width="100" height="8" />
+    </ContentLoader>
+  );
+};
+
+export const OrderDetailsLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <ContentLoader
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}
+      speed={speed}>
+      <Rect x="3" y="3" rx="10" ry="10" width={width} height="180" />
+      <Rect x="6" y="190" rx="0" ry="0" width={width - 10} height="20" />
+      <Rect x="4" y="215" rx="0" ry="0" width="239" height="20" />
+      <Rect x="4" y="242" rx="0" ry="0" width="274" height="20" />
+    </ContentLoader>
+  );
+};
+
 HintKeywordLoading.defaultProps = {
   height: 10,
   width: deviceWidth,
@@ -774,6 +828,26 @@ PostLoading.defaultProps = {
 ImageGrid.defaultProps = {
   height: deviceWidth / 2,
   width: deviceWidth,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {
+    height: deviceHeight,
+  },
+  speed: 1.2,
+};
+OrdersLoading.defaultProps = {
+  height: deviceWidth / 4,
+  width: deviceWidth,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {
+    height: deviceHeight,
+  },
+  speed: 1.2,
+};
+OrderDetailsLoading.defaultProps = {
+  height: deviceWidth * 0.65,
+  width: deviceWidth - 32,
   backgroundColor: '#d9d9d9',
   foregroundColor: '#ecebeb',
   style: {

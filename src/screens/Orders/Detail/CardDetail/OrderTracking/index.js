@@ -40,16 +40,16 @@ const data = [
   {title: 'Giao hàng thành công'},
 ];
 
-const OrderTracking = ({navigation, currentPage}) => {
+const OrderTracking = ({navigation, currentPage, timeLine = []}) => {
   const renderLabel = (item) => {
     return (
       <View style={styles.wrapStep}>
         <View>
-          <Text style={styles.labelStepTitle}>{item.title}</Text>
+          <Text style={styles.labelStepTitle}>{item.statusName}</Text>
         </View>
-        {item.time && (
+        {item.updatedAt && (
           <View>
-            <Text style={styles.labelStepTime}>{item.time}</Text>
+            <Text style={styles.labelStepTime}>{item.updatedAt}</Text>
           </View>
         )}
       </View>
@@ -57,19 +57,24 @@ const OrderTracking = ({navigation, currentPage}) => {
   };
 
   const dt =
-    useMemo(
-      () => data.map((item) => renderLabel(item)),
-      [JSON.stringify(data)],
-    ) || [];
+    useMemo(() => {
+      return timeLine?.map((item) => renderLabel(item));
+    }, [JSON.stringify(timeLine)]) || [];
 
   return (
     <View style={styles.container}>
       <Header icon={<TrackingIcon />} title={i18n.t('orders.tracking')} />
-      <View style={styles.stepIndicator}>
+      <View
+        style={[
+          styles.stepIndicator,
+          {
+            height: timeLine && timeLine.length ? timeLine.length * 70 : 100,
+          },
+        ]}>
         <StepIndicator
-          stepCount={dt.length || 0}
+          stepCount={timeLine?.length || 0}
           customStyles={thirdIndicatorStyles}
-          currentPosition={currentPage}
+          currentPosition={timeLine?.length}
           direction="vertical"
           onPress={() => {
             console.log('pressed');

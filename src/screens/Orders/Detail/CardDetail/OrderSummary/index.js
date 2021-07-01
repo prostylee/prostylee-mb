@@ -4,7 +4,12 @@ import {View, Text} from 'react-native';
 import {currencyFormat} from 'utils/currency';
 import i18n from 'i18n';
 
-const OrderSummary = ({navigation}) => {
+const OrderSummary = ({
+  navigation,
+  totalMoney = 0,
+  shippingFee = 0,
+  totalDiscount = 0,
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.rowPrice}>
@@ -12,7 +17,9 @@ const OrderSummary = ({navigation}) => {
           <Text style={styles.labelPrice}>{i18n.t('orders.summaryTotal')}</Text>
         </View>
         <View style={styles.wrapValuePrice}>
-          <Text style={styles.valuePrice}>{currencyFormat(99999, 'đ')}</Text>
+          <Text style={styles.valuePrice}>
+            {currencyFormat(totalMoney || 0, 'đ')}
+          </Text>
         </View>
       </View>
       <View style={styles.rowPrice}>
@@ -22,7 +29,9 @@ const OrderSummary = ({navigation}) => {
           </Text>
         </View>
         <View style={styles.wrapValuePrice}>
-          <Text style={styles.valuePrice}>{currencyFormat(99999, 'đ')}</Text>
+          <Text style={styles.valuePrice}>
+            {currencyFormat(shippingFee || 0, 'đ')}
+          </Text>
         </View>
       </View>
       <View style={styles.rowPrice}>
@@ -32,7 +41,9 @@ const OrderSummary = ({navigation}) => {
           </Text>
         </View>
         <View style={styles.wrapValuePrice}>
-          <Text style={styles.valuePrice}>{currencyFormat(99999, 'đ')}</Text>
+          <Text style={styles.valuePrice}>
+            {currencyFormat(totalDiscount || 0, 'đ')}
+          </Text>
         </View>
       </View>
       <View style={styles.rowPrice}>
@@ -42,7 +53,9 @@ const OrderSummary = ({navigation}) => {
           </Text>
         </View>
         <View style={styles.wrapValuePrice}>
-          <Text style={styles.valueTotal}>{currencyFormat(99999, 'đ')}</Text>
+          <Text style={styles.valueTotal}>
+            {currencyFormat(totalMoney + shippingFee - totalDiscount, 'đ')}
+          </Text>
         </View>
       </View>
     </View>

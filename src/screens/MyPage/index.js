@@ -106,6 +106,10 @@ const Index = ({navigation}) => {
   }, [isFocused]);
 
   React.useEffect(() => {
+    dispatch(myPageActions.getUserOrdersStatusList());
+  }, []);
+
+  React.useEffect(() => {
     if (userProfile?.id) {
       dispatch(
         myPageActions.getListUserPost({

@@ -5,20 +5,20 @@ import {LocationIcon} from 'svg/common';
 import Header from '../Header';
 import i18n from 'i18n';
 
-const UserInfo = ({navigation}) => {
+const UserInfo = ({navigation, infor = {}}) => {
   return (
     <View style={styles.container}>
       <Header icon={<LocationIcon />} title={i18n.t('orders.orderAddress')} />
       <View style={styles.wrapUserBody}>
         <View>
-          <Text style={styles.labelName}>Nguyễn Hữu Pháp</Text>
+          <Text style={styles.labelName}>{infor?.fullName}</Text>
         </View>
         <View>
-          <Text style={styles.labelInfo}>0123456789</Text>
+          <Text style={styles.labelInfo}>{infor?.phoneNumber}</Text>
         </View>
         <View>
           <Text style={styles.labelInfo}>
-            56 Nguyễn Đình Chiểu, ĐaKao, Quận 1, TPHCM
+            {`${infor?.address1}, ${infor?.address2}, ${infor?.state}, ${infor?.city}`}
           </Text>
         </View>
       </View>
