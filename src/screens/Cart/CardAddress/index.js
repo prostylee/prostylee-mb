@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 import React from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
@@ -8,9 +7,7 @@ import i18n from 'i18n';
 import {useSelector} from 'react-redux';
 import {cartActions} from 'reducers';
 import {
-  getListCartAddressLoadingSelector,
   getListCartAddressSelector,
-  getListCartAddressHistorySelector,
   getSelectedCartAddressSelector,
 } from 'redux/selectors/cart';
 
@@ -35,11 +32,6 @@ const CardAddress = ({navigation}) => {
     }
   }, [selectedCartAddress, listCartAddress]);
 
-  console.log(
-    'selectedCartAddress',
-    JSON.stringify(selectedCartAddress, null, 4),
-  );
-
   return (
     <View style={styles.wrapAddress}>
       <View style={styles.wrapAddressHeader}>
@@ -53,22 +45,7 @@ const CardAddress = ({navigation}) => {
           <TouchableOpacity
             style={styles.buttonChangeAddress}
             onPress={() => {
-              navigation.navigate('AddressTyping', {
-                getListAddressAction: cartActions.getListCartAddress,
-
-                getListAddressSelectorFunc: getListCartAddressSelector,
-
-                getListAddressHistorySelectorFunc:
-                  getListCartAddressHistorySelector,
-
-                getListAddressLoadingSelectorFunc:
-                  getListCartAddressLoadingSelector,
-
-                setSelectedAddressAction: cartActions.setSelectedCartAddress,
-
-                setSelectedAddressHistoryAction:
-                  cartActions.setSelectedCartAddressHistory,
-              });
+              navigation.navigate('CartAddressSelect');
             }}>
             <Text style={styles.labelChangeAddress}>
               {i18n.t('cart.changeAddress')}

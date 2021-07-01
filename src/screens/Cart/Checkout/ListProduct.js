@@ -1,10 +1,8 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 import React, {useEffect, useState, useRef, useMemo} from 'react';
 import {useSelector} from 'react-redux';
-import {View, ActivityIndicator, FlatList, Animated, Text} from 'react-native';
+import {View, FlatList, Animated, Text} from 'react-native';
 import i18n from 'i18n';
-import {Colors} from 'components';
 import Product from './Item';
 import EmptyCart from '../EmptyCart';
 import CardFooter from '../CardFooter';
@@ -12,7 +10,7 @@ import CardAddress from '../CardAddress';
 import {CartEmpty, DeliveryIcon, DownIcon, RightIcon} from 'svg/common';
 import {currencyFormat} from 'utils/currency';
 import Collapsible from 'react-native-collapsible';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {RadioButton} from 'react-native-paper';
 import {
   getListCartSelector,

@@ -1,5 +1,5 @@
 import styles from './styles';
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {View, Text} from 'react-native';
 import i18n from 'i18n';
