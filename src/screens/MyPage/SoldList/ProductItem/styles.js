@@ -3,17 +3,16 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 const WIDTH = Dimensions.get('window').width;
 const WIDTH_IMAGE = WIDTH / 2 - 14;
-const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
+const HEIGHT_IMAGE = WIDTH_IMAGE * 1.3;
 export default EStyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 8,
     backgroundColor: '$white',
-    paddingLeft: 5,
-    paddingRight: 5,
   },
   wrapItems: {
     flex: 1,
+    width: WIDTH / 2,
     flexDirection: 'column',
   },
   item: {
@@ -22,12 +21,13 @@ export default EStyleSheet.create({
     height: 'auto',
     backgroundColor: 'transparent',
     marginTop: 16,
-    paddingLeft: 3,
-    paddingRight: 3,
+    // paddingLeft: 3,
+    // paddingRight: 3,
+    // borderWidth: 1,
   },
   wrapImageThumbnail: {
     height: HEIGHT_IMAGE,
-    width: WIDTH_IMAGE,
+    width: '100%',
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#E9EAEB',
@@ -53,13 +53,13 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: HEIGHT_IMAGE,
-    width: WIDTH_IMAGE,
+    width: '100%',
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#E9EAEB',
   },
   title: {
-    width: WIDTH_IMAGE,
+    width: '100%',
     lineHeight: 16,
     fontSize: 13,
     fontFamily: '$font1',
@@ -70,7 +70,7 @@ export default EStyleSheet.create({
     marginTop: 12,
   },
   price: {
-    width: WIDTH_IMAGE,
+    width: '100%',
     lineHeight: 20,
     fontSize: 14,
     fontFamily: '$font1',

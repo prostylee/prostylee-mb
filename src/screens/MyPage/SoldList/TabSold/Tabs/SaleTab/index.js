@@ -1,59 +1,110 @@
-import React, {useEffect} from 'react';
-import {View, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, FlatList, ActivityIndicator, Text} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import ProductItem from '../../../ProductItem';
-
-const data = [
-  {
-    id: 231,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Ao thum nam den ',
-    price: 123000,
-    priceSale: 99000,
-    amount: 1,
-    productSize: 'M',
-    productColor: 'Den',
-  },
-  {
-    id: 232,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Ao thum nam den ',
-    price: 144000,
-    priceSale: 97000,
-    amount: 1,
-    productSize: 'M',
-    productColor: 'Den',
-  },
-  {
-    id: 233,
-    imageUrls: [
-      'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-    ],
-    name: 'Ao thum nam dài tay phối kiểu dọc Caro đen trắng basic ',
-    price: 133000,
-    priceSale: 79000,
-    amount: 1,
-    productSize: 'M',
-    productColor: 'Den',
-  },
-];
+import {myPageActions, userSelectors} from 'reducers';
+import {useDispatch, useSelector} from 'react-redux';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {Colors} from 'components';
+import {
+  getListProductSaleLoadingSelector,
+  getListProductSaleSelector,
+  getLoadProductSaleMoreLoadingSelector,
+  getHasLoadMoreProductSaleSelector,
+  getPageProductSaleSelector,
+} from 'redux/selectors/myPage';
+import {SearchProductLoading} from 'components/Loading/contentLoader';
 
 const SaleTab = (props) => {
-  // const loading = useSelector((state) => getSaleTabLoadingSelector(state));
-  // const wishListList = useSelector((state) => getListSaleTabSelector(state));
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    // dispatch(cartActions.getListSaleTab());
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const loading = useSelector((state) =>
+    getListProductSaleLoadingSelector(state),
+  );
+
+  const saleProductListSelector = useSelector((state) =>
+    getListProductSaleSelector(state),
+  );
+
+  const page = useSelector((state) => getPageProductSaleSelector(state));
+
+  const hasLoadmore = useSelector((state) =>
+    getHasLoadMoreProductSaleSelector(state),
+  );
+
+  const saleProductList = saleProductListSelector?.content || [];
+
+  const loadMoreLoading = useSelector((state) =>
+    getLoadProductSaleMoreLoadingSelector(state),
+  );
+
+  const handleLoadMore = () => {
+    if (hasLoadmore) {
+      dispatch(
+        myPageActions.getListProductSaleLoadMore({
+          page: page,
+          limit: LIMIT_DEFAULT,
+          userId: userProfile?.id,
+        }),
+      );
+    }
+  };
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    dispatch(
+      myPageActions.getListProductSale({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        userId: userProfile?.id,
+      }),
+    );
+  };
+  React.useEffect(() => {
+    if (!loading) setIsRefreshing(false);
+  }, [loading]);
+  React.useEffect(() => {
+    dispatch(
+      myPageActions.getListProductSale({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        userId: userProfile?.id,
+      }),
+    );
   }, []);
+  const renderFooter = () => {
+    if (!loadMoreLoading) {
+      return <View style={styles.viewFooter} />;
+    }
+    return (
+      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+        <ActivityIndicator animating color={Colors.$purple} size="small" />
+      </View>
+    );
+  };
 
-  return (
+  return loading && !isRefreshing ? (
+    <View
+      style={{
+        flexDirection: 'row',
+        paddingBottom: 16,
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+      }}>
+      {Array.from('x'.repeat(4)).map(() => (
+        <SearchProductLoading />
+      ))}
+    </View>
+  ) : saleProductList && saleProductList.length ? (
     <FlatList
-      data={data}
+      data={saleProductList}
       renderItem={({item, index}) => {
         return (
           <View style={styles.wrapProduct}>
@@ -67,7 +118,14 @@ const SaleTab = (props) => {
       style={styles.listContainer}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
+      onEndReached={handleLoadMore}
+      onRefresh={handleRefresh}
+      refreshing={isRefreshing}
+      contentContainerStyle={styles.listInner}
+      ListFooterComponent={renderFooter}
     />
+  ) : (
+    <Text style={styles.notFoundText}>{i18n.t('Search.resultsNotfound')}</Text>
   );
 };
 

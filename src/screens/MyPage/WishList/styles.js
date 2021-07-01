@@ -36,7 +36,17 @@ export default EStyleSheet.create({
   iconContainer: {
     paddingLeft: 4,
   },
-  listContainer: {
-    paddingHorizontal: 8,
+  viewFooter: {
+    paddingVertical: 20,
+  },
+  wrapWishList: {
+    flex: 1,
+  },
+  notFoundText: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '$lightGray',
+    alignSelf: 'center',
+    marginTop: 20,
   },
 });

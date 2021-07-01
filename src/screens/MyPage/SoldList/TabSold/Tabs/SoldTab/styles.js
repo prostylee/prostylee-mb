@@ -37,6 +37,16 @@ export default EStyleSheet.create({
     paddingLeft: 4,
   },
   listContainer: {
-    paddingHorizontal: 8,
+    height: '100%',
+  },
+  viewFooter: {
+    paddingVertical: 20,
+  },
+  notFoundText: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '$lightGray',
+    alignSelf: 'center',
+    marginTop: 20,
   },
 });

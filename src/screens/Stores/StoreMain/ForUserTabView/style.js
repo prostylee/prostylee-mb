@@ -9,6 +9,7 @@ export default EStyleSheet.create({
     height: HEIGHT - 200,
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'hidden',
   },
   titleContainer: {
     padding: 16,
