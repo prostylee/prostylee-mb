@@ -28,6 +28,7 @@ const ListProduct = ({navigation, data, validateButton}) => {
   const [total, setTotal] = useState(0);
   const [valueChosen, setValueChosen] = useState();
   const [voucher, setVoucher] = useState();
+  const [productVarientPriceData, setProductVarientPriceData] = useState({});
 
   const cart = useSelector((state) => getListCartSelector(state)) || [];
   const deliveries =
@@ -45,12 +46,62 @@ const ListProduct = ({navigation, data, validateButton}) => {
   );
 
   useEffect(() => {
+    const processProductPriceData = (data) => {
+      const attributeList = {};
+      data?.map((item) => {
+        const attributeValues = item.productAttributes
+          .map((attribute) => attribute.attrValue)
+          .sort();
+        let attributeID = '';
+        attributeValues.forEach((element) => {
+          attributeID = attributeID + '_' + element;
+        });
+        attributeList[attributeID] = {
+          price: item?.price,
+          priceSale: item?.priceSale,
+        };
+      });
+      return attributeList;
+    };
+    const getProductVarient = (choiceSelect) => {
+      const choiceList = choiceSelect
+        .map((item) => item.value.attrValue)
+        .sort();
+      let attributeID = '';
+      choiceList.forEach((element) => {
+        attributeID = attributeID + '_' + element;
+      });
+      return attributeID;
+    };
+    const getProductChoicePrice = (productVarient, priceList) => {
+      if (priceList[productVarient]) {
+        return priceList[productVarient];
+      } else {
+        return 0;
+      }
+    };
+
     if (cart.length) {
       let sum = 0;
+      let productPriceVarient = {};
       cart.forEach(function (c, index) {
-        sum += c.item.priceSale * c.quantity;
+        const productVarient = getProductVarient(c.options);
+        const productPriceData = processProductPriceData(
+          c.item.productPriceResponseList,
+        );
+        const productPrice = getProductChoicePrice(
+          productVarient,
+          productPriceData,
+        );
+        productPriceVarient[`${c.item.id}${productVarient}`] = productPrice;
+        if (productPrice.priceSale) {
+          sum += productPrice.priceSale * c.quantity;
+        } else {
+          sum += productPrice.price * c.quantity;
+        }
       });
       setTotal(sum);
+      setProductVarientPriceData(productPriceVarient);
     }
   }, [JSON.stringify(cart)]);
 
@@ -226,9 +277,11 @@ const ListProduct = ({navigation, data, validateButton}) => {
       return +total + deliveryPrice + voucherPrice;
     };
     dispatch(
-      cartActions.setOrderData({
+      cartActions.createOrder({
+        productVarientPriceData,
         totalMoney: totalPrice(),
         paymentTypeId: paymentSelected,
+        shippingProviderId: valueChosen?.id,
       }),
     );
     // navigation.navigate('Home');
