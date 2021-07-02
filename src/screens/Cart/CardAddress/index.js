@@ -16,22 +16,6 @@ const CardAddress = ({navigation}) => {
     getSelectedCartAddressSelector(state),
   );
 
-  const listCartAddress = useSelector((state) =>
-    getListCartAddressSelector(state),
-  );
-
-  React.useEffect(() => {
-    if (listCartAddress && listCartAddress.length) {
-      if (isEmpty(selectedCartAddress)) {
-        const defaultAddress =
-          listCartAddress.find((item) => item.priority) || null;
-        cartActions.setSelectedCartAddress(
-          defaultAddress || listCartAddress[0],
-        );
-      }
-    }
-  }, [selectedCartAddress, listCartAddress]);
-
   return (
     <View style={styles.wrapAddress}>
       <View style={styles.wrapAddressHeader}>

@@ -16,7 +16,6 @@ import {
   getListCartSelector,
   getListDeliverySelector,
 } from 'redux/selectors/cart';
-import {cartActions} from 'reducers';
 
 const ListProduct = ({navigation, data, validateButton}) => {
   const [refreshing, handleRefreshing] = useState(false);
@@ -36,10 +35,6 @@ const ListProduct = ({navigation, data, validateButton}) => {
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
-
-  useEffect(() => {
-    cartActions.getListCartAddress();
-  }, []);
 
   useEffect(() => {
     if (cart.length) {
