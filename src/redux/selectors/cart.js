@@ -130,3 +130,12 @@ export const getSelectedCartAddressSelector = createSelector(
   cartReducer,
   (data) => data?.selectedCartAddress || {},
 );
+
+export const getOrderDataSelector = createSelector(
+  cartReducer,
+  (data) => data?.orderData || {},
+);
+export const getPaymentMethodSelector = createSelector(
+  cartReducer,
+  (data) => data?.paymentMethod || '',
+);

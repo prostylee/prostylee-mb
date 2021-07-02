@@ -14,6 +14,7 @@ import {cartActions} from 'redux/reducers';
 import {
   getListPaymentSelector,
   getListCartSelector,
+  getPaymentMethodSelector,
 } from 'redux/selectors/cart';
 
 const CardFooter = ({
@@ -26,13 +27,15 @@ const CardFooter = ({
 }) => {
   const [total, setTotal] = useState(0);
   const [voucher, setVoucher] = useState();
-  const [payment, setPayment] = useState();
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const paymentList = useSelector((state) => getListPaymentSelector(state));
   const cart = useSelector((state) => getListCartSelector(state)) || [];
+  const paymentSelected = useSelector((state) =>
+    getPaymentMethodSelector(state),
+  );
 
   useEffect(() => {
     if (cart.length) {
@@ -63,13 +66,10 @@ const CardFooter = ({
   };
 
   const onChangePayment = () => {
-    navigation.navigate('PaymentMethodCart', {
-      paymentUsed: payment,
-      onUsePayment: (item) => setPayment(item),
-    });
+    navigation.navigate('PaymentMethodCart');
   };
 
-  const paymentUsed = paymentList.filter((item) => item.id === payment);
+  const paymentUsed = paymentList.filter((item) => item.id === paymentSelected);
   const totalPrice = () => {
     const deliveryPrice =
       deliveryMethod && deliveryMethod.price ? deliveryMethod.price : 0;
@@ -141,7 +141,7 @@ const CardFooter = ({
             label={buttonText}
             disabled={
               disabled ||
-              (isCheckout ? !payment || isEmpty(deliveryMethod) : false)
+              (isCheckout ? !paymentSelected || isEmpty(deliveryMethod) : false)
             }
           />
         </View>

@@ -8,6 +8,13 @@ import {
   handleActions as handleActionsCartAddress,
 } from './cartAddress';
 
+import {
+  types as typesOrder,
+  actions as actionsOrder,
+  defaultState as defaultStateOrder,
+  handleActions as handleActionsOrder,
+} from './order';
+
 export const types = {
   //Loading
   SET_CART_LOADING: 'SET_CART_LOADING',
@@ -72,6 +79,8 @@ export const types = {
   SET_VOUCHER_USE: 'SET_VOUCHER_USE',
   // CART ADDRESS
   ...typesCartAddress,
+  // ORDER
+  ...typesOrder,
 };
 
 export const actions = {
@@ -132,6 +141,9 @@ export const actions = {
 
   //CART ADDRESS
   ...actionsCartAddress,
+
+  // ORDER
+  ...actionsOrder,
 };
 
 const intialState = {
@@ -172,6 +184,8 @@ const intialState = {
   voucherUse: null,
   //CART ADDRESS
   ...defaultStateCartAddress,
+  // ORDER
+  ...defaultStateOrder,
 };
 
 const PAGE_INIT = 0;
@@ -391,8 +405,10 @@ export default handleActions(
     [types.SET_VOUCHER_USE]: (state, {payload}) => {
       return {...state, voucherUse: payload};
     },
-    //CART ADDRESS
+    // CART ADDRESS
     ...handleActionsCartAddress,
+    // ORDER
+    ...handleActionsOrder,
   },
   intialState,
 );
