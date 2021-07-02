@@ -1,6 +1,7 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
+import {call, put, takeLatest, select} from 'redux-saga/effects';
 
 import {cartActions, cartTypes} from 'reducers';
+import {getProductVarient} from 'utils/product';
 
 import {
   getPaymentMethods,
@@ -9,6 +10,7 @@ import {
   getVoucherList,
   getDeliveryMethods,
   getUserAddress,
+  createOrders as createOrdersApi,
 } from 'services/api/cartApi';
 
 import {SUCCESS} from 'constants';
@@ -140,6 +142,88 @@ const getUserCartAddress = function* ({payload}) {
   }
 };
 
+const createOrder = function* ({payload}) {
+  /******** loading ********/
+  yield put(cartActions.createOrderLoading(true));
+  /******** loading ********/
+
+  const getUserProfile = (state) => state.user.profile;
+  const getSelectedAddress = (state) => state.cart.selectedCartAddress;
+  const getListCart = (state) => state.cart.listCart;
+  const userProfile = yield select(getUserProfile);
+  const selectedAddress = yield select(getSelectedAddress);
+  const listCart = yield select(getListCart);
+
+  const processCartData = () => {
+    return listCart?.length
+      ? listCart.map((product) => {
+          const productVarient = getProductVarient(product.options);
+          const productPrice =
+            payload.productVarientPriceData?.[
+              `${product.item.id}${productVarient}`
+            ] || {};
+
+          console.log('productVarient', productVarient);
+          console.log(
+            'productVarientPriceData',
+            payload.productVarientPriceData,
+          );
+          return {
+            storeId: product.item.storeId,
+            branchId: null,
+            productId: product.item.id,
+            productPrice: productPrice.priceSale
+              ? productPrice.priceSale
+              : productPrice.price,
+            amount: product.quantity,
+            productName: product.item.name,
+            productImage: product.item.imageUrls?.[0],
+            productAttrIds: product.options?.map((item) => item.value.id) || [],
+          };
+        })
+      : [];
+  };
+
+  try {
+    const orderData = {
+      code: null,
+      statusId: 0,
+      status: 'CREATE_ORDER',
+      buyerId: userProfile.id,
+      shippingAddress: {
+        fullName: selectedAddress.contactName,
+        email: userProfile.email,
+        phoneNumber: selectedAddress.contactPhone,
+        address1: selectedAddress.address,
+        address2: selectedAddress.wardCode,
+        state: selectedAddress.districtCode,
+        city: selectedAddress.cityCode,
+        country: null,
+        zipcode: null,
+      },
+      orderDetails: processCartData(),
+      // payload
+      totalMoney: payload.totalMoney,
+      paymentTypeId: payload.paymentTypeId,
+      shippingProviderId: payload.shippingProviderId,
+      orderDiscounts: [],
+    };
+    yield put(cartActions.setOrderData(orderData));
+    const res = yield call(createOrdersApi, orderData);
+    console.log('Create order res', JSON.stringify(res, null, 4));
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      // yield put(cartActions.resetListCart());
+      // yield put(cartActions.getListCartAddressSuccess(res.data.data.content));
+    } else {
+      // yield put(cartActions.getListCartAddressFailed());
+    }
+  } catch (e) {
+    console.error(e);
+  } finally {
+    yield put(cartActions.createOrderLoading(false));
+  }
+};
+
 const watcher = function* () {
   //List Cart
   yield takeLatest(cartTypes.SET_LIST_CART, setListCart);
@@ -164,5 +248,7 @@ const watcher = function* () {
   yield takeLatest(cartTypes.GET_LIST_DELIVERY, getListDelivery);
   //List address
   yield takeLatest(cartTypes.GET_LIST_CART_ADDRESS, getUserCartAddress);
+  // Create order
+  yield takeLatest(cartTypes.CREATE_ORDER, createOrder);
 };
 export default watcher();

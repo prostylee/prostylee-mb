@@ -36,15 +36,9 @@ export const handleActions = {
     };
   },
   [types.SET_ORDER_DATA]: (state, {payload}) => {
-    const order = {
-      code: null,
-      statusId: 0,
-      status: 'CREATE_ORDER',
-      ...payload,
-    };
     return {
       ...state,
-      orderData: order,
+      orderData: payload,
     };
   },
   [types.SET_PAYMENT_METHOD_DATA]: (state, {payload}) => {
