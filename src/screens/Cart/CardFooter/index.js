@@ -26,7 +26,6 @@ const CardFooter = ({
 }) => {
   const [total, setTotal] = useState(0);
   const [voucher, setVoucher] = useState();
-  const [payment, setPayment] = useState();
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -63,13 +62,10 @@ const CardFooter = ({
   };
 
   const onChangePayment = () => {
-    navigation.navigate('PaymentMethodCart', {
-      paymentUsed: payment,
-      onUsePayment: (item) => setPayment(item),
-    });
+    navigation.navigate('PaymentMethodCart');
   };
 
-  const paymentUsed = paymentList.filter((item) => item.id === payment);
+  const paymentUsed = paymentList.filter((item) => item.id === 'payment');
   const totalPrice = () => {
     const deliveryPrice =
       deliveryMethod && deliveryMethod.price ? deliveryMethod.price : 0;
@@ -141,7 +137,7 @@ const CardFooter = ({
             label={buttonText}
             disabled={
               disabled ||
-              (isCheckout ? !payment || isEmpty(deliveryMethod) : false)
+              (isCheckout ? !'payment' || isEmpty(deliveryMethod) : false)
             }
           />
         </View>
