@@ -135,3 +135,7 @@ export const getOrderDataSelector = createSelector(
   cartReducer,
   (data) => data?.orderData || {},
 );
+export const getPaymentMethodSelector = createSelector(
+  cartReducer,
+  (data) => data?.paymentMethod || '',
+);

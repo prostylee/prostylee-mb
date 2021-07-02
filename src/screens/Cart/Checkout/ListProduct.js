@@ -16,6 +16,7 @@ import {
   getListCartSelector,
   getListDeliverySelector,
   getOrderDataSelector,
+  getPaymentMethodSelector,
 } from 'redux/selectors/cart';
 import {cartActions} from 'reducers';
 
@@ -32,6 +33,9 @@ const ListProduct = ({navigation, data, validateButton}) => {
   const deliveries =
     useSelector((state) => getListDeliverySelector(state)) || [];
   const orderData = useSelector((state) => getOrderDataSelector(state) || {});
+  const paymentSelected = useSelector((state) =>
+    getPaymentMethodSelector(state),
+  );
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -224,7 +228,7 @@ const ListProduct = ({navigation, data, validateButton}) => {
     dispatch(
       cartActions.setOrderData({
         totalMoney: totalPrice(),
-        paymentTypeId: '',
+        paymentTypeId: paymentSelected,
       }),
     );
     // navigation.navigate('Home');

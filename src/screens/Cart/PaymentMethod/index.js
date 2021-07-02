@@ -9,33 +9,36 @@ import {RadioButton} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {cartActions} from 'reducers';
 
-import {getListPaymentSelector} from 'redux/selectors/cart';
+import {
+  getListPaymentSelector,
+  getPaymentMethodSelector,
+} from 'redux/selectors/cart';
 
 const PaymentMethod = ({route}) => {
-  const {
-    params: {onUsePayment, paymentUsed},
-  } = route;
+  // const {
+  //   params: {onUsePayment, paymentUsed},
+  // } = route;
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const [value, setValue] = useState();
 
   const paymentList = useSelector((state) => getListPaymentSelector(state));
-
+  const paymentSelected = useSelector((state) =>
+    getPaymentMethodSelector(state),
+  );
   useEffect(() => {
     dispatch(cartActions.getListPayment());
   }, []);
 
   useEffect(() => {
-    setValue(paymentUsed);
-  }, [paymentUsed]);
+    setValue(paymentSelected);
+  }, [paymentSelected]);
 
   const onChange = (vl) => {
     setValue(vl);
-    if (typeof onUsePayment === 'function') {
-      onUsePayment(vl);
-      navigation.goBack();
-    }
+    dispatch(cartActions.setPaymentMethodData(vl));
+    navigation.goBack();
   };
 
   const renderLabel = (item) => {
