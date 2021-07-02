@@ -9,12 +9,21 @@ import {getListUserOrderStatusSelector} from 'redux/selectors/myPage';
 import i18n from 'i18n';
 import {useSelector} from 'react-redux';
 import {ORDER_STATUS_ACT_CODE} from 'constants';
+import {useNavigation} from '@react-navigation/native';
 
-const HeaderStore = ({header, navigation, statusId = 0}) => {
+const HeaderStore = ({header, statusId = 0}) => {
+  const navigation = useNavigation();
+
   const [visible, setVisible] = useState(false);
+
   const {storeName, storeId, storeAvatar} = header;
+
   const clickItem = () => {
-    console.log('Cliked!', storeId);
+    if (storeId) {
+      navigation.navigate('StoreProfileMain', {
+        storeId,
+      });
+    }
   };
   const statusSelector = useSelector((state) =>
     getListUserOrderStatusSelector(state),

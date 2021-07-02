@@ -6,15 +6,12 @@ import i18n from 'i18n';
 import {ThemeView, Header} from 'components';
 import ListDetail from './ListDetail';
 import {getOrderDetails} from '../../../services/api/myPageApi';
-import {ActivityIndicator} from 'react-native-paper';
-import {OrderDetailsLoading} from 'components/Loading/contentLoader';
 
 const OrderDetail = ({navigation, route: {params}}) => {
   const [loading, setLoading] = useState(false);
   const [orderDetailsData, setOrderDetailsData] = useState({});
   const {orderId} = params;
 
-  console.log('RERENDER');
   const fetchOrderDetails = async () => {
     try {
       setLoading(true);
@@ -32,26 +29,18 @@ const OrderDetail = ({navigation, route: {params}}) => {
       fetchOrderDetails();
     }
   }, []);
+
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header isDefault title="Chi tiết đơn hàng" />
-      {loading ? (
-        <>
-          <View style={{padding: 16}}>
-            <OrderDetailsLoading />
-          </View>
-          <View style={{padding: 16}}>
-            <OrderDetailsLoading />
-          </View>
-          <View style={{padding: 16}}>
-            <OrderDetailsLoading />
-          </View>
-        </>
-      ) : (
-        <View style={styles.wrapContent}>
-          <ListDetail dealData={params} orderData={orderDetailsData} />
-        </View>
-      )}
+      <Header isDefault title={i18n.t('orders.orderDetail')} />
+      <View style={styles.wrapContent}>
+        <ListDetail
+          dealData={params}
+          orderData={orderDetailsData}
+          onRefresh={fetchOrderDetails}
+          loading={loading}
+        />
+      </View>
     </ThemeView>
   );
 };

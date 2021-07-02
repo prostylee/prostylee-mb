@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useRef, useMemo} from 'react';
+import React, {useRef} from 'react';
 import Product from '../../../ProductItem';
 import {currencyFormat} from 'utils/currency';
-import {ButtonRounded, ButtonOutlined, Colors} from 'components';
+import {Colors} from 'components';
 import i18n from 'i18n';
 import {View, FlatList, Animated, Text, ActivityIndicator} from 'react-native';
 import {myPageActions, userSelectors} from 'reducers';
@@ -17,121 +17,6 @@ import {
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {OrdersLoading} from 'components/Loading/contentLoader';
-
-const mockData = [
-  {
-    id: 1,
-    orderHistory: {
-      id: 1,
-      statusName: 'Đã huỷ',
-      actCode: 90,
-    },
-    totalMoney: 1000_000,
-    orderDetails: [
-      {
-        amount: 1,
-        id: 136,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Áo thun nam cổ trụ hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'XL|Đen',
-        store: {
-          id: 1,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store',
-        },
-      },
-      {
-        amount: 1,
-        id: 137,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'S|Xanh',
-        store: {
-          id: 2,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store 2',
-        },
-      },
-      {
-        amount: 1,
-        id: 137,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'S|Xanh',
-        store: {
-          id: 2,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store 2',
-        },
-      },
-    ],
-  },
-  {
-    id: 1,
-    orderHistory: {
-      id: 1,
-      statusName: 'Đã huỷ',
-      actCode: 90,
-    },
-    totalMoney: 1000_000,
-    orderDetails: [
-      {
-        amount: 1,
-        id: 136,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Áo thun nam cổ trụ hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'XL|Đen',
-        store: {
-          id: 1,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store',
-        },
-      },
-      {
-        amount: 1,
-        id: 137,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'S|Xanh',
-        store: {
-          id: 2,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store 2',
-        },
-      },
-      {
-        amount: 1,
-        id: 137,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'S|Xanh',
-        store: {
-          id: 2,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store 2',
-        },
-      },
-    ],
-  },
-];
 
 const CancelTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   const dispatch = useDispatch();

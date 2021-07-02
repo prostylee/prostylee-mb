@@ -21,6 +21,7 @@ export default EStyleSheet.create({
     color: '#8B9399',
     fontSize: 14,
     lineHeight: 20,
+    paddingTop: 8,
   },
   labelOrderStatus: {
     fontSize: 14,

@@ -377,6 +377,8 @@ export default {
     delete: 'Xóa',
     markAsBuy: 'Đánh dấu đã mua',
     findLocation: 'Tìm đường',
+    markAsSold: 'Đánh dấu đã bán',
+    dropProduct: 'Gỡ sản phẩm',
   },
   chat: {
     chatListTitle: 'Tin nhắn',

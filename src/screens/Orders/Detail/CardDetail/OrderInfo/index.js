@@ -3,64 +3,62 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import {OrderIdIcon} from 'svg/common';
 import i18n from 'i18n';
-const CREATE_ORDER = 0,
-  RECEIVE_ORDER = 10,
-  GOOD_ISSUE = 20,
-  DELIVERY = 30,
-  CANCEL_ORDER = 90,
-  COMPLETED = 100;
-const OrderInfo = ({dealData, infor = {}}) => {
-  const {dealId, deal, status} = dealData;
 
-  const renderStatus = (status) => {
-    switch (status?.actCode) {
-      case RECEIVE_ORDER:
+import {ORDER_STATUS_ACT_CODE} from 'constants';
+
+const OrderInfo = ({dealData = {}, infor = {}}) => {
+  const {statusName} = infor;
+
+  const renderStatus = () => {
+    switch (infor?.actCode) {
+      case ORDER_STATUS_ACT_CODE.PROCESSING:
         return (
-          <Text style={{...styles.labelOrderStatus, color: '#ED2727'}}>
-            {/* {i18n.t('orders.statusWaiting')} */}
-            {status?.statusName}
+          <Text style={{...styles.labelOrderStatus, color: '#823FFD'}}>
+            {statusName}
           </Text>
         );
-      case DELIVERY:
+      case ORDER_STATUS_ACT_CODE.ON_DELIVERY:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#F48231'}}>
-            {/* {i18n.t('orders.statusDelivery')} */}
-            {status?.statusName}
+            {statusName}
           </Text>
         );
-      case COMPLETED:
+      case ORDER_STATUS_ACT_CODE.COMPLETED:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#3FBA44'}}>
-            {/* {i18n.t('orders.statusDone')} */}
-            {status?.statusName}
+            {statusName}
           </Text>
         );
-      case CANCEL_ORDER:
+      case ORDER_STATUS_ACT_CODE.CANCEL_ORDER:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#ED2727'}}>
-            {/* {i18n.t('orders.statusCancel')} */}
-            {status?.statusName}
+            {statusName}
+          </Text>
+        );
+      case ORDER_STATUS_ACT_CODE.WAIT_FOR_PAYMENT:
+        return (
+          <Text style={{...styles.labelOrderStatus, color: '#ED2727'}}>
+            {statusName}
           </Text>
         );
 
       default:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#333333'}}>
-            {/* {i18n.t('orders.statusCancel')} */}
-            {status?.statusName}
+            {statusName}
           </Text>
         );
     }
   };
 
-  switch (status) {
-    case 'cancel':
+  switch (infor?.actCode) {
+    case ORDER_STATUS_ACT_CODE.CANCEL_ORDER:
       return (
         <View style={styles.container}>
           <View style={styles.wrapOrderId}>
             <OrderIdIcon />
             <View style={styles.wrapOrderStatus}>
-              <Text>&nbsp;{renderStatus()}</Text>
+              <Text>&nbsp;&nbsp;{renderStatus()}</Text>
             </View>
           </View>
         </View>
@@ -71,9 +69,10 @@ const OrderInfo = ({dealData, infor = {}}) => {
           <View style={styles.wrapOrderId}>
             <OrderIdIcon />
             <Text style={styles.labelOrderId}>
-              &nbsp;{i18n.t('orders.dealId', {id: infor?.code})}
+              &nbsp;&nbsp;{i18n.t('orders.dealId', {id: dealData?.code})}
             </Text>
           </View>
+
           <View style={styles.wrapOrderDate}>
             <Text style={styles.labelOrderDate}>
               {i18n.t('orders.dealDate', {

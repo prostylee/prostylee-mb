@@ -23,6 +23,8 @@ import {addReview} from 'services/api/reviewRatingApi';
 
 import {showMessage} from 'react-native-flash-message';
 
+import {POST_SUCCESS} from 'constants';
+
 const RatingProduct = ({navigation, product, productId}) => {
   const [star, setStar] = useState();
   const [imageList, setImageList] = useState([]);
@@ -58,11 +60,17 @@ const RatingProduct = ({navigation, product, productId}) => {
     };
     addReview(body)
       .then((res) => {
-        if (res.status !== 200) {
+        if (res.data.status !== POST_SUCCESS) {
           showMessage({
             message: I18n.t('rateProduct.ratingFailTitle'),
             description: I18n.t('rateProduct.ratingFailContent'),
             type: 'danger',
+            titleStyle: {fontSize: 13, fontWeight: '500'},
+            textStyle: {fontSize: 13, fontWeight: '300'},
+            icon: {icon: 'danger', position: 'left'},
+            style: {
+              alignItems: 'center',
+            },
           });
           return;
         }
@@ -70,8 +78,15 @@ const RatingProduct = ({navigation, product, productId}) => {
           message: I18n.t('rateProduct.ratingSuccessTitle'),
           description: I18n.t('rateProduct.ratingSuccessContent'),
           type: 'success',
+          position: {
+            top: 40,
+            left: 0,
+          },
+          titleStyle: {fontSize: 13, fontWeight: '500'},
+          textStyle: {fontSize: 13, fontWeight: '300'},
+          icon: {icon: 'success', position: 'left'},
         });
-        navigation.navigate('Products', {});
+        navigation.goBack();
       })
       .catch((e) => console.log('Error: ', e));
   };
@@ -167,6 +182,7 @@ const RatingProduct = ({navigation, product, productId}) => {
               label={I18n.t('rateProduct.ratingimages')}
               images={imageList}
               setImages={setImageList}
+              length={4}
             />
           </View>
         </ScrollView>

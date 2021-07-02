@@ -18,124 +18,12 @@ import {
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {OrdersLoading} from 'components/Loading/contentLoader';
+import {useNavigation} from '@react-navigation/native';
 
-const mockData = [
-  {
-    id: 1,
-    orderHistory: {
-      id: 1,
-      statusName: 'Giao hàng thành công',
-      actCode: 100,
-    },
-    totalMoney: 1000_000,
-    orderDetails: [
-      {
-        amount: 1,
-        id: 136,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Áo thun nam cổ trụ hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'XL|Đen',
-        store: {
-          id: 1,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store',
-        },
-      },
-      {
-        amount: 1,
-        id: 137,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'S|Xanh',
-        store: {
-          id: 2,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store 2',
-        },
-      },
-      {
-        amount: 1,
-        id: 137,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'S|Xanh',
-        store: {
-          id: 2,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store 2',
-        },
-      },
-    ],
-  },
-  {
-    id: 1,
-    orderHistory: {
-      id: 1,
-      statusName: 'Giao hàng thành công',
-      actCode: 100,
-    },
-    totalMoney: 1000_000,
-    orderDetails: [
-      {
-        amount: 1,
-        id: 136,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Áo thun nam cổ trụ hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'XL|Đen',
-        store: {
-          id: 1,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store',
-        },
-      },
-      {
-        amount: 1,
-        id: 137,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'S|Xanh',
-        store: {
-          id: 2,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store 2',
-        },
-      },
-      {
-        amount: 1,
-        id: 137,
-        productImage:
-          'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/600x900/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/557e3db0-c889-488b-8afd-79a8c90f17d6.jpeg',
-        productName: 'Hàn quốc 10',
-        productPrice: 150000,
-        orderDetailAttributes: 'S|Xanh',
-        store: {
-          id: 2,
-          logoUrl:
-            'https://d1fq4uh0wyvt14.cloudfront.net/fit-in/90x120/public/ec72c651-d66a-4bfb-950c-f6b8e2132f30/DA571D52-3333-4BEF-BA32-3830B6EF5617.jpg',
-          name: 'Store 2',
-        },
-      },
-    ],
-  },
-];
-
-const DoneTab = ({navigation, status, actCode, statusId = 0}) => {
+const DoneTab = ({status, actCode, statusId = 0}) => {
   const dispatch = useDispatch();
+
+  const navigation = useNavigation();
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
 
@@ -190,7 +78,11 @@ const DoneTab = ({navigation, status, actCode, statusId = 0}) => {
             <ButtonOutlined
               label={i18n.t('orders.ratingProduct')}
               labelStyle={styles.labelBtnOutline}
-              onPress={() => console.log('Đánh giá sản phẩm')}
+              onPress={() => {
+                navigation.navigate('ChooseRateProduct', {
+                  listProduct: list,
+                });
+              }}
             />
           </View>
           <View style={styles.colButtonFooterRepurchase}>
