@@ -37,7 +37,7 @@ import {dim} from 'utils/common';
 import isEmpty from 'lodash/isEmpty';
 
 /*Reducers*/
-import {productActions, productSelectors} from 'reducers';
+import {productActions, productSelectors, userSelectors} from 'reducers';
 
 /*Assets*/
 import defaultImg from '../../assets/images/default.png';
@@ -106,9 +106,13 @@ const ProductDetail = (props) => {
     productSelectors.getProductDetail(state),
   );
 
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
+
   const processProductPriceData = (data) => {
     const attributeList = {};
-    data.map((item) => {
+    data?.map((item) => {
       const attributeValues = item.productAttributes
         .map((attribute) => attribute.attrValue)
         .sort();
@@ -301,6 +305,11 @@ const ProductDetail = (props) => {
           productPriceData?.priceSale,
         )}
         activeTabProps={activeTab}
+        hasMenu={
+          productData &&
+          !productData?.storeId &&
+          productData?.productOwnerResponse?.id === userProfile?.id
+        }
       />
       <Container
         style={styles.mainContent}
@@ -416,13 +425,17 @@ const ProductDetail = (props) => {
           onSelect={selectRelatedProduct}
         />
       </Container>
-      <Footer
-        navigation={props.navigation}
-        isLike={productData?.likeStatusOfUserLogin || false}
-        productData={productData}
-        priceList={priceList}
-        choiceSelect={choiceSelect}
-      />
+      {productData &&
+      !productData?.storeId &&
+      productData?.productOwnerResponse?.id === userProfile?.id ? null : (
+        <Footer
+          navigation={props.navigation}
+          isLike={productData?.likeStatusOfUserLogin || false}
+          productData={productData}
+          priceList={priceList}
+          choiceSelect={choiceSelect}
+        />
+      )}
     </View>
   );
 };

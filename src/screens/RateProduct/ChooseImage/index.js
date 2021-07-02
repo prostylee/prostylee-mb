@@ -1,76 +1,111 @@
 import styles from './styles';
 
 import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, ActivityIndicator, Text, View} from 'react-native';
+import {
+  TouchableOpacity,
+  ActivityIndicator,
+  Text,
+  View,
+  Image,
+} from 'react-native';
 
 /*Components*/
-import {Image} from 'components';
+
 import {UploadIcon} from 'svg/common';
 import ImagePicker from 'react-native-image-crop-picker';
 
 const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
-  const [tempArray, setTempArray] = useState(
-    new Array(length - images.length - 2).fill(),
-  );
-
-  useEffect(() => {
-    setTempArray(new Array(length - images.length - 2).fill());
-  }, [JSON.stringify(images)]);
-
   const openImagePicker = async () => {
     ImagePicker.openPicker({
       mediaType: 'photo',
-      multiple: false,
-      ...pickerConfig,
+      multiple: true,
+      maxFiles: 4,
     })
       .then((res) => {
-        const tempImage = [
-          ...images,
-          {source: res.sourceURL, id: res.filename},
-        ];
+        let listImage = res?.map((item) => ({
+          source: item?.path,
+          id: item.filename,
+        }));
+        listImage = handlePushNewImage(listImage);
 
         if (typeof setImages === 'function') {
-          setImages(tempImage);
+          setImages(listImage);
         }
       })
       .catch((e) => console.log(e));
+  };
+  const handlePushNewImage = (listImagePicked = []) => {
+    let newListImage = [];
+    if (images.length) {
+      if (listImagePicked.length + images.length <= 4) {
+        newListImage = newListImage
+          .concat([...images])
+          .concat([...listImagePicked]);
+      } else {
+        let lengthRemove = 4 - images.length;
+        newListImage = [...images];
+        newListImage.splice(0, lengthRemove);
+        newListImage = listImagePicked.concat([...newListImage]);
+      }
+    } else {
+      newListImage = [...listImagePicked];
+    }
+    return newListImage;
   };
 
   return (
     <View style={styles.containerStyle}>
       <Text style={styles.labelStyle}>{label}</Text>
       <View style={styles.listImageUpload}>
-        {images?.length > 0 &&
-          images.map((item) => (
-            <Image
-              key={images.id}
-              source={
-                item.url
-                  ? {uri: item?.url}
-                  : item.source
-                  ? {uri: item.source}
-                  : require('assets/images/default.png')
-              }
-              style={styles.imageChoose}
-              PlaceholderContent={<ActivityIndicator />}
-            />
-          ))}
-
-        {images?.length < length - 1 && (
-          <TouchableOpacity
-            onPress={openImagePicker}
-            style={styles.btnImageUpload}>
-            <View style={styles.buttonUpload}>
-              <UploadIcon />
-            </View>
-          </TouchableOpacity>
-        )}
-        {tempArray.length > 0 &&
-          tempArray.map((item, index) => {
+        {images && images.length ? (
+          [0, 1, 2, 3].map((index) => {
+            if (index < images.length) {
+              return (
+                <TouchableOpacity
+                  onPress={openImagePicker}
+                  style={styles.btnImageUpload}>
+                  <Image
+                    key={images[index]?.id}
+                    source={
+                      images[index].source
+                        ? {uri: images[index].source}
+                        : require('assets/images/default.png')
+                    }
+                    style={styles.imageChoose}
+                    PlaceholderContent={<ActivityIndicator />}
+                  />
+                </TouchableOpacity>
+              );
+            }
+            if (index === images?.length) {
+              return (
+                <TouchableOpacity
+                  onPress={openImagePicker}
+                  style={styles.btnImageUpload}>
+                  <View style={styles.buttonUpload}>
+                    <UploadIcon />
+                  </View>
+                </TouchableOpacity>
+              );
+            }
             return (
               <View key={`choose-${index}`} style={styles.buttonUploadEmpty} />
             );
-          })}
+          })
+        ) : (
+          <>
+            <TouchableOpacity
+              onPress={openImagePicker}
+              style={styles.btnImageUpload}>
+              <View style={styles.buttonUpload}>
+                <UploadIcon />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.buttonUploadEmpty} />
+            <View style={styles.buttonUploadEmpty} />
+            <View style={styles.buttonUploadEmpty} />
+          </>
+        )}
       </View>
     </View>
   );

@@ -11,9 +11,11 @@ import Feather from 'react-native-vector-icons/Feather';
 import IconIcons from 'react-native-vector-icons/Ionicons';
 import {Bag} from 'components';
 import TabNav from './TabNav';
+import i18n from 'i18n';
 
 /*Proptypes*/
 import PropTypes from 'prop-types';
+import {Menu, IconButton, Divider} from 'react-native-paper';
 
 const {width: WIDTH_HEADER} = Dimensions.get('window');
 
@@ -25,9 +27,11 @@ const AnimatedHeader = ({
   scrollToComment,
   scrollToRelated,
   activeTabProps = 'product',
+  hasMenu = false,
 }) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
+  const [visible, setVisible] = React.useState(false);
   /*Dimension header*/
   const HEIGHT_HEADER = (WIDTH_HEADER * 4) / 3;
 
@@ -86,7 +90,9 @@ const AnimatedHeader = ({
         <View style={styles.rightIcons}>
           <Bag navigation={navigation} />
           <TouchableOpacity
-            // onPress={navigation.goBack}
+            onPress={() => {
+              setVisible(!visible);
+            }}
             style={styles.ellipsisIcon}>
             <Feather
               name="more-horizontal"
@@ -119,7 +125,9 @@ const AnimatedHeader = ({
         <View style={styles.rightIcons}>
           <Bag navigation={navigation} />
           <TouchableOpacity
-            // onPress={navigation.goBack}
+            onPress={() => {
+              setVisible(!visible);
+            }}
             style={styles.ellipsisIcon}>
             <Feather
               name="more-horizontal"
@@ -129,6 +137,44 @@ const AnimatedHeader = ({
           </TouchableOpacity>
         </View>
       </Animated.View>
+      {hasMenu ? (
+        <Menu
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          anchor={
+            <IconButton
+              onPress={() => setVisible(true)}
+              icon="dots-horizontal"
+              color="#000"
+              size={20}
+            />
+          }
+          contentStyle={{borderRadius: 10, padding: 0}}
+          style={styles.menuContainer}>
+          <Menu.Item
+            titleStyle={{fontSize: 13}}
+            onPress={() => {}}
+            title={i18n.t('orders.markAsSold')}
+            titleStyle={{
+              fontSize: 13,
+              lineHeight: 20,
+            }}
+            style={styles.topItemContainer}
+          />
+          <Divider />
+          <Menu.Item
+            onPress={() => {}}
+            title={i18n.t('orders.dropProduct')}
+            titleStyle={{
+              color: '#ED2727',
+              fontSize: 13,
+              lineHeight: 20,
+            }}
+            style={styles.bottomItemContainer}
+          />
+        </Menu>
+      ) : null}
+
       <TabNav
         opacity={reverseOpacity}
         scrollToTop={scrollToTop}

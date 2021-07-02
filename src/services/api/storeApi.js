@@ -30,6 +30,8 @@ export const getBannerCampaigns = (payload) => {
 export const getBrandList = (payload) => {
   return _fetch(GET, '/brands', {
     ...payload,
+    hotBrand: 'TRUE',
+    limit: 10,
   });
 };
 export const getCategories = (payload) => {

@@ -30,3 +30,7 @@ export const getListProductLikedService = (payload) => {
 export const getListProductSavedService = (payload) => {
   return _fetch(GET, '/user-wish-lists', payload);
 };
+// ORDER DETAILS
+export const getOrderDetails = (id) => {
+  return _fetch(GET, `/orders/${id}`);
+};

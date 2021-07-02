@@ -119,4 +119,25 @@ export default EStyleSheet.create({
   tabButtonTextActive: {
     color: '$purple',
   },
+  //Menu style
+  menuContainer: {
+    position: 'absolute',
+    top: 50 + getStatusBarHeight() + (Platform.OS === 'ios' ? 0 : 36),
+    right: 10,
+    maxWidth: WIDTH_HEADER / 2,
+  },
+  topItemContainer: {
+    paddingBottom: 8,
+    height: 32,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    display: 'flex',
+  },
+  bottomItemContainer: {
+    paddingTop: 8,
+    height: 32,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    display: 'flex',
+  },
 });

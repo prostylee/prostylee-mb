@@ -1,6 +1,17 @@
+import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
+const {height, width} = Dimensions.get('window');
+
 export default EStyleSheet.create({
+  wrapSection: {
+    backgroundColor: '$white',
+    alignItems: 'flex-start',
+    marginTop: 6,
+    flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
   wrapItems: {
     padding: 5,
     flexDirection: 'row',
@@ -11,6 +22,8 @@ export default EStyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 5,
+    marginBottom: 5,
   },
   wrapImageThumbnail: {
     position: 'relative',
@@ -34,6 +47,11 @@ export default EStyleSheet.create({
     left: 8,
     padding: 4,
     borderRadius: 3,
+  },
+  wrapUpDown: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   textSale: {
     fontFamily: '$font1',
@@ -91,60 +109,5 @@ export default EStyleSheet.create({
   },
   viewFooter: {
     marginBottom: 6,
-  },
-  wrapFooterItem: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderTopWidth: 1,
-    borderColor: '#F4F5F5',
-    paddingTop: 5,
-    paddingBottom: 5,
-  },
-  colCountFooter: {
-    flex: 1,
-  },
-  colButtonFooter: {
-    flex: 0.5,
-  },
-  colButtonFooterRating: {
-    flex: 0.5,
-  },
-  colButtonFooterRepurchase: {
-    flex: 0.5,
-  },
-  lableFooterRepurchase: {
-    color: '#333333',
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '500',
-  },
-  labelCountFooter: {
-    color: '#8B9399',
-    fontSize: 13,
-    lineHeight: 18,
-    fontWeight: '400',
-  },
-  labelBtnOutline: {
-    color: '#823FFD',
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '500',
-  },
-  labelBtnRounded: {
-    color: '$white',
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '500',
-  },
-  flatList: {
-    height: '100%',
-  },
-  notFoundText: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: '$lightGray',
-    alignSelf: 'center',
-    marginTop: 20,
   },
 });

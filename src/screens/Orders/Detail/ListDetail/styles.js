@@ -10,7 +10,8 @@ export default EStyleSheet.create({
   },
   wrapItem: {
     backgroundColor: '$white',
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
     marginBottom: 10,
   },
   wrapItemFooter: {padding: 10, marginBottom: 10},

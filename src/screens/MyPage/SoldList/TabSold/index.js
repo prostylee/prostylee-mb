@@ -16,7 +16,7 @@ const routes = [
 const TabSold = ({navigation, status}) => {
   return (
     <View style={styles.container}>
-      <ScrollableTabView
+      {/* <ScrollableTabView
         tabBarActiveTextColor="#823FFD"
         tabBarUnderlineStyle={{backgroundColor: '#823FFD'}}
         initialPage={routes.findIndex((item) => item.key === status)}
@@ -43,7 +43,9 @@ const TabSold = ({navigation, status}) => {
               );
           }
         })}
-      </ScrollableTabView>
+      </ScrollableTabView> */}
+
+      <Sale />
     </View>
   );
 };

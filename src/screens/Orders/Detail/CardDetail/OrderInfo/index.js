@@ -4,53 +4,61 @@ import {Text, View} from 'react-native';
 import {OrderIdIcon} from 'svg/common';
 import i18n from 'i18n';
 
-const OrderInfo = ({dealData}) => {
-  const {dealId, deal, status} = dealData;
+import {ORDER_STATUS_ACT_CODE} from 'constants';
+
+const OrderInfo = ({dealData = {}, infor = {}}) => {
+  const {statusName} = infor;
 
   const renderStatus = () => {
-    switch (status) {
-      case 'waiting':
+    switch (infor?.actCode) {
+      case ORDER_STATUS_ACT_CODE.PROCESSING:
         return (
-          <Text style={{...styles.labelOrderStatus, color: '#ED2727'}}>
-            {i18n.t('orders.statusWaiting')}
+          <Text style={{...styles.labelOrderStatus, color: '#823FFD'}}>
+            {statusName}
           </Text>
         );
-      case 'delivery':
+      case ORDER_STATUS_ACT_CODE.ON_DELIVERY:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#F48231'}}>
-            {i18n.t('orders.statusDelivery')}
+            {statusName}
           </Text>
         );
-      case 'done':
+      case ORDER_STATUS_ACT_CODE.COMPLETED:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#3FBA44'}}>
-            {i18n.t('orders.statusDone')}
+            {statusName}
           </Text>
         );
-      case 'cancel':
+      case ORDER_STATUS_ACT_CODE.CANCEL_ORDER:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#ED2727'}}>
-            {i18n.t('orders.statusCancel')}
+            {statusName}
+          </Text>
+        );
+      case ORDER_STATUS_ACT_CODE.WAIT_FOR_PAYMENT:
+        return (
+          <Text style={{...styles.labelOrderStatus, color: '#ED2727'}}>
+            {statusName}
           </Text>
         );
 
       default:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#333333'}}>
-            {i18n.t('orders.statusCancel')}
+            {statusName}
           </Text>
         );
     }
   };
 
-  switch (status) {
-    case 'cancel':
+  switch (infor?.actCode) {
+    case ORDER_STATUS_ACT_CODE.CANCEL_ORDER:
       return (
         <View style={styles.container}>
           <View style={styles.wrapOrderId}>
             <OrderIdIcon />
             <View style={styles.wrapOrderStatus}>
-              <Text>&nbsp;{renderStatus()}</Text>
+              <Text>&nbsp;&nbsp;{renderStatus()}</Text>
             </View>
           </View>
         </View>
@@ -61,15 +69,20 @@ const OrderInfo = ({dealData}) => {
           <View style={styles.wrapOrderId}>
             <OrderIdIcon />
             <Text style={styles.labelOrderId}>
-              &nbsp;{i18n.t('orders.dealId', {id: 1234567890})}
+              &nbsp;&nbsp;{i18n.t('orders.dealId', {id: dealData?.code})}
             </Text>
           </View>
+
           <View style={styles.wrapOrderDate}>
             <Text style={styles.labelOrderDate}>
-              {i18n.t('orders.dealDate', {date: '12:00, 01/01/2021'})}
+              {i18n.t('orders.dealDate', {
+                date: infor?.createdAt,
+              })}
             </Text>
           </View>
-          <View style={styles.wrapOrderStatus}>{renderStatus()}</View>
+          <View style={styles.wrapOrderStatus}>
+            {renderStatus(infor?.orderHistory?.[0])}
+          </View>
         </View>
       );
   }

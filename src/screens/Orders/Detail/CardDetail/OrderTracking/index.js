@@ -5,16 +5,18 @@ import StepIndicator from 'react-native-step-indicator';
 import {TrackingIcon} from 'svg/common';
 import Header from '../Header';
 import i18n from 'i18n';
+import {getListUserOrderStatusSelector} from 'redux/selectors/myPage';
+import {useSelector} from 'react-redux';
 
 const thirdIndicatorStyles = {
-  stepIndicatorSize: 15,
-  currentStepIndicatorSize: 15,
+  stepIndicatorSize: 16,
+  currentStepIndicatorSize: 16,
   separatorStrokeWidth: 1,
-  currentStepStrokeWidth: 1,
-  stepStrokeCurrentColor: '#823FFD',
-  stepStrokeWidth: 1,
-  stepStrokeFinishedColor: '#823FFD',
-  stepStrokeUnFinishedColor: '#dedede',
+  currentStepStrokeWidth: 3,
+  stepStrokeCurrentColor: '#fff',
+  stepStrokeWidth: 3,
+  stepStrokeFinishedColor: '#dedede',
+  stepStrokeUnFinishedColor: '#fff',
   separatorFinishedColor: '#823FFD',
   separatorUnFinishedColor: '#dedede',
   stepIndicatorFinishedColor: '#823FFD',
@@ -26,56 +28,67 @@ const thirdIndicatorStyles = {
   stepIndicatorLabelFinishedColor: 'transparent',
   stepIndicatorLabelUnFinishedColor: 'transparent',
   labelColor: '#999999',
-  labelSize: 13,
+  labelSize: 10,
   labelAlign: 'flex-start',
   currentStepLabelColor: '#823FFD',
 };
 
-const data = [
-  {title: 'Đặt thành công', time: '12:00 01/06/2021'},
-  {title: 'Chờ xác nhận', time: '12:00 01/06/2021'},
-  {title: 'Đã xác nhận', time: '13:59 03/06/2021'},
-  {title: 'Đã lấy hàng', time: '14:00 04/06/2021'},
-  {title: 'Đang giao hàng'},
-  {title: 'Giao hàng thành công'},
-];
+const OrderTracking = ({navigation, timeLine = []}) => {
+  const statusSelector = useSelector((state) =>
+    getListUserOrderStatusSelector(state),
+  );
 
-const OrderTracking = ({navigation, currentPage}) => {
+  let listStatus = statusSelector?.content || [];
+
+  listStatus = listStatus.sort((a, b) => a.id - b.id);
+
   const renderLabel = (item) => {
     return (
       <View style={styles.wrapStep}>
         <View>
-          <Text style={styles.labelStepTitle}>{item.title}</Text>
+          <Text style={styles.labelStepTitle}>{item?.statusName}</Text>
         </View>
-        {item.time && (
+        {item?.updatedAt && (
           <View>
-            <Text style={styles.labelStepTime}>{item.time}</Text>
+            <Text style={styles.labelStepTime}>{item?.updatedAt}</Text>
           </View>
         )}
       </View>
     );
   };
 
-  const dt =
-    useMemo(
-      () => data.map((item) => renderLabel(item)),
-      [JSON.stringify(data)],
-    ) || [];
+  //console.log('TIMELINE', JSON.stringify(timeLine, null, 4));
+  // console.log('ALL STATUS', JSON.stringify(listStatus, null, 2));
+
+  // const dt =
+  //   useMemo(() => {
+  //     return newTimeLine?.map((item) => renderLabel(item));
+  //   }, [JSON.stringify(newTimeLine)]) || [];
 
   return (
     <View style={styles.container}>
       <Header icon={<TrackingIcon />} title={i18n.t('orders.tracking')} />
       <View style={styles.stepIndicator}>
-        <StepIndicator
-          stepCount={dt.length || 0}
+        <View style={styles.stepWrapper}>
+          <View style={styles.circle}>
+            <View style={styles.circleInner} />
+          </View>
+          <View style={styles.seperator} />
+        </View>
+        <View style={styles.inforWrapper}>
+          <Text style={styles.labelStepTitle}>{timeLine?.[0]?.statusName}</Text>
+          <Text style={styles.labelStepTime}>{timeLine?.[0]?.updatedAt}</Text>
+        </View>
+        {/* <StepIndicator
+          stepCount={newTimeLine?.length || 0}
           customStyles={thirdIndicatorStyles}
-          currentPosition={currentPage}
+          currentPosition={newTimeLine?.length ? newTimeLine?.length - 1 : 0}
           direction="vertical"
           onPress={() => {
             console.log('pressed');
           }}
           labels={dt}
-        />
+        /> */}
       </View>
     </View>
   );

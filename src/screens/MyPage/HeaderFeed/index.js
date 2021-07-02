@@ -6,11 +6,16 @@ import {Setting, ChevronLeft} from 'svg/common';
 import {ChatIcon} from 'components';
 import {useNavigation} from '@react-navigation/native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-
+import {useSelector} from 'react-redux';
+import {userSelectors} from 'reducers';
 const {width, height} = Dimensions.get('window');
 
 const HeaderFeed = ({scrollAnimated, heightShow, restoreScrollTop}) => {
   const navigation = useNavigation();
+
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
 
   const onNavigateSetting = () => {
     navigation.navigate('Setting');
@@ -70,11 +75,17 @@ const HeaderFeed = ({scrollAnimated, heightShow, restoreScrollTop}) => {
               <View style={styles.midBorder}>
                 <View style={styles.headerUser}>
                   <Avatar.Image
-                    source={{uri: 'https://reactjs.org/logo-og.png'}}
+                    source={{
+                      uri: userProfile?.avatar
+                        ? userAvatar
+                        : 'https://reactjs.org/logo-og.png',
+                    }}
                     size={24}
                     style={styles.avatarStyle}
                   />
-                  <Text style={styles.labelUserName}>&nbsp;Alyssa Gardner</Text>
+                  <Text style={styles.labelUserName}>
+                    &nbsp;{userProfile?.fullName}
+                  </Text>
                 </View>
               </View>
             </TouchableOpacity>

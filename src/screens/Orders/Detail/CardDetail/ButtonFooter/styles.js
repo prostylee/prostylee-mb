@@ -11,6 +11,7 @@ export default EStyleSheet.create({
   rowButton: {
     flex: 1,
     flexDirection: 'row',
+    paddingBottom: 16,
   },
   colButton: {
     flex: 0.5,
@@ -19,17 +20,18 @@ export default EStyleSheet.create({
   },
   buttonOutlinedGrey: {
     borderColor: '#8B9399',
+    borderWidth: 1,
   },
 
   labelBtnOutlineGrey: {
     color: '#8B9399',
-    fontSize: 12,
+    fontSize: 13,
     lineHeight: 20,
     fontWeight: '500',
   },
   labelBtnOutline: {
     color: '#823FFD',
-    fontSize: 12,
+    fontSize: 13,
     lineHeight: 20,
     fontWeight: '500',
   },

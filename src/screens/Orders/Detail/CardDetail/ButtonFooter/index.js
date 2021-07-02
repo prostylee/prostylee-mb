@@ -3,12 +3,14 @@ import React from 'react';
 import {View} from 'react-native';
 import {ButtonOutlined} from 'components';
 import i18n from 'i18n';
+import {ORDER_STATUS} from 'constants';
+import {useNavigation} from '@react-navigation/native';
 
-const ButtonFooter = ({navigation, dealData}) => {
+const ButtonFooter = ({dealData}) => {
   const {dealId, deal, status} = dealData;
-
+  const navigation = useNavigation();
   switch (status) {
-    case 'waiting':
+    case ORDER_STATUS.CREATE_ORDER:
       return (
         <View style={styles.wrapButton}>
           <ButtonOutlined
@@ -19,7 +21,7 @@ const ButtonFooter = ({navigation, dealData}) => {
           />
         </View>
       );
-    case 'done':
+    case ORDER_STATUS.COMPLETED:
       return (
         <View style={styles.rowButton}>
           <View style={styles.colButton}>
@@ -27,7 +29,11 @@ const ButtonFooter = ({navigation, dealData}) => {
               label={i18n.t('orders.ratingProduct')}
               style={styles.buttonOutlinedGrey}
               labelStyle={styles.labelBtnOutlineGrey}
-              onPress={() => console.log('Đánh giá')}
+              onPress={() => {
+                navigation.navigate('ChooseRateProduct', {
+                  listProduct: dealData?.orderDetails,
+                });
+              }}
             />
           </View>
           <View style={styles.colButton}>
@@ -35,17 +41,19 @@ const ButtonFooter = ({navigation, dealData}) => {
               label={i18n.t('orders.repurchase')}
               labelStyle={styles.labelBtnOutline}
               onPress={() => console.log('Mua lại')}
+              style={{borderWidth: 1}}
             />
           </View>
         </View>
       );
-    case 'cancel':
+    case ORDER_STATUS.CANCEL_ORDER:
       return (
         <View style={styles.wrapButton}>
           <ButtonOutlined
             label={i18n.t('orders.repurchase')}
             labelStyle={styles.labelBtnOutline}
             onPress={() => console.log('Mua lại')}
+            style={{borderWidth: 1}}
           />
         </View>
       );

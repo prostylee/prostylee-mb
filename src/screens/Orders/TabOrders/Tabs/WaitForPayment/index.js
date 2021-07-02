@@ -1,47 +1,46 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 import React, {useRef} from 'react';
-import {View, FlatList, Animated, Text, ActivityIndicator} from 'react-native';
 import Product from '../../../ProductItem';
-
-import {LocationOutline, LocationArrow} from 'svg/common';
+import {currencyFormat} from 'utils/currency';
+import {Colors} from 'components';
 import i18n from 'i18n';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {View, FlatList, Animated, Text, ActivityIndicator} from 'react-native';
 import {myPageActions, userSelectors} from 'reducers';
 import {
-  getListGoodIssuesOrdersLoadingSelector,
-  getListGoodIssuesOrdersSelector,
-  getListGoodIssuesOrdersLoadmoreLoadingSelector,
-  getHasLoadMoreGoodIssueOrdersSelector,
-  getPageGoodIssueOrdersSelector,
+  getListReceiveOrdersLoadingSelector,
+  getListReceiveOrdersSelector,
+  getListReceiveOrdersLoadmoreLoadingSelector,
+  getHasLoadMoreReceiveOrdersSelector,
+  getPageReceiveOrdersSelector,
 } from 'redux/selectors/orders';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {OrdersLoading} from 'components/Loading/contentLoader';
 
-const InhouseTab = ({navigation, status, actCode = 0, statusId = 0}) => {
+const CancelTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   const dispatch = useDispatch();
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
 
   const loading = useSelector((state) =>
-    getListGoodIssuesOrdersLoadingSelector(state),
+    getListReceiveOrdersLoadingSelector(state),
   );
 
   const loadmoreLoading = useSelector((state) =>
-    getListGoodIssuesOrdersLoadmoreLoadingSelector(state),
+    getListReceiveOrdersLoadmoreLoadingSelector(state),
   );
 
-  const page = useSelector((state) => getPageGoodIssueOrdersSelector(state));
+  const page = useSelector((state) => getPageReceiveOrdersSelector(state));
 
   const listCancelSelector = useSelector((state) =>
-    getListGoodIssuesOrdersSelector(state),
+    getListReceiveOrdersSelector(state),
   );
 
   const listOrders = listCancelSelector?.content || [];
 
   const hasLoadmore = useSelector((state) =>
-    getHasLoadMoreGoodIssueOrdersSelector(state),
+    getHasLoadMoreReceiveOrdersSelector(state),
   );
   const scrollAnimated = useRef(new Animated.Value(0)).current;
   const userProfile = useSelector((state) =>
@@ -52,32 +51,22 @@ const InhouseTab = ({navigation, status, actCode = 0, statusId = 0}) => {
     {useNativeDriver: false},
   );
 
-  const renderFooter = () => {
+  const renderFooter = (list = [], totalPrice = 0) => {
+    const totalItem = list?.reduce((total, item) => {
+      return (total += item?.amount);
+    }, 0);
     return (
       <>
         <View style={styles.wrapFooterItem}>
-          <View style={styles.wrapFooterItemStore}>
-            <Text style={styles.labelFooterItemStore}>Femi Clothing Store</Text>
-          </View>
-          <View style={styles.wrapFooterItemAddress}>
-            <Text style={styles.labelFooterItemAddress}>
-              95 Đ. Nguyễn Trãi, Phường Phạm Ngũ Lão, Quận 1, Thành phố Hồ Chí
-              Minh
+          <View style={styles.colCountFooter}>
+            <Text style={styles.labelCountFooter}>
+              {i18n.t('orders.countProduct', {count: totalItem})}
             </Text>
           </View>
-          <View style={styles.wrapFooterLocation}>
-            <View style={styles.wrapFooterItemLocation}>
-              <LocationOutline />
-              <Text style={styles.lableFooterItemLocation}>&nbsp;2.0 Km</Text>
-            </View>
-            <View style={styles.wrapFooterItemButton}>
-              <TouchableOpacity style={styles.buttonFooterItemLocation}>
-                <LocationArrow />
-                <Text style={styles.labelFooterItemLocation}>
-                  &nbsp;{i18n.t('orders.findLocation')}
-                </Text>
-              </TouchableOpacity>
-            </View>
+          <View style={styles.colTotalFooter}>
+            <Text style={styles.labelTotalFooter}>
+              {currencyFormat(totalPrice || 0, 'đ')}
+            </Text>
           </View>
         </View>
       </>
@@ -87,7 +76,7 @@ const InhouseTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   const handleLoadMore = () => {
     if (hasLoadmore) {
       dispatch(
-        myPageActions.getListGoodIssuesOrdersLoadmore({
+        myPageActions.getListReceiveOrdersLoadmore({
           loggedInUser: userProfile?.id,
           page: page,
           limit: LIMIT_DEFAULT,
@@ -99,7 +88,7 @@ const InhouseTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   const handleRefresh = () => {
     setIsRefreshing(true);
     dispatch(
-      myPageActions.getListGoodIssuesOrders({
+      myPageActions.getListReceiveOrders({
         loggedInUser: userProfile?.id,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
@@ -112,8 +101,9 @@ const InhouseTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   }, [loading]);
 
   React.useEffect(() => {
+    // if (!listOrders || !listOrders.length)
     dispatch(
-      myPageActions.getListGoodIssuesOrders({
+      myPageActions.getListReceiveOrders({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         loggedInUser: userProfile?.id,
@@ -172,8 +162,8 @@ const InhouseTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   );
 };
 
-InhouseTab.defaultProps = {};
+CancelTab.defaultProps = {};
 
-InhouseTab.propTypes = {};
+CancelTab.propTypes = {};
 
-export default InhouseTab;
+export default CancelTab;

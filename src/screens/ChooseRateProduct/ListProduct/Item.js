@@ -13,6 +13,18 @@ const ProductItem = ({item, navigation}) => {
       product: item,
     });
   };
+  const getAttributesText = () => {
+    if (item?.orderDetailAttributes && item?.orderDetailAttributes?.length) {
+      let attributeString = [...item?.orderDetailAttributes]?.reduce(
+        (text, item, index) => {
+          return index !== 0 ? text + '| ' + item?.value : text + item?.value;
+        },
+        '',
+      );
+      return attributeString;
+    }
+    return '';
+  };
 
   return (
     <TouchableOpacity
@@ -44,11 +56,7 @@ const ProductItem = ({item, navigation}) => {
           </View>
           <View style={styles.wrapAttribute}>
             <Text numberOfLines={1} style={styles.name}>
-              Size: {item.productSize}&nbsp;{' '}
-              <Text numberOfLines={1} style={styles.textSpace}>
-                |
-              </Text>
-              &nbsp;{item.productColor}
+              {getAttributesText()}
             </Text>
           </View>
         </View>

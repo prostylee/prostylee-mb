@@ -184,4 +184,14 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  flatList: {
+    height: '100%',
+  },
+  notFoundText: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '$lightGray',
+    alignSelf: 'center',
+    marginTop: 20,
+  },
 });

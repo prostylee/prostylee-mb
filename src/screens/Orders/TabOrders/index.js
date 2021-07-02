@@ -6,87 +6,100 @@ import i18n from 'i18n';
 import ScrollableTabView, {
   ScrollableTabBar,
 } from 'components/ForkReactNativeSrollableTabView';
-import {Waiting, Delivery, Done, Cancel, Inhouse} from './Tabs';
+import {Waiting, Delivery, Done, Cancel, Inhouse, WaitForPayment} from './Tabs';
+import {myPageActions} from 'reducers';
+import {useDispatch, useSelector} from 'react-redux';
 import {
-  commonActions,
-  myPageActions,
-  userActions,
-  userSelectors,
-} from 'reducers';
-import {useDispatch} from 'react-redux';
-
-const routes = [
-  {key: 'waiting', title: 'Chờ xác nhận'},
-  {key: 'delivery', title: 'Đang giao hàng'},
-  {key: 'done', title: 'Đã hoàn thành'},
-  {key: 'inhouse', title: 'Mua tại cửa hàng'},
-  {key: 'cancel', title: 'Đã huỷ'},
-];
+  getListUserOrderStatusSelector,
+  getListUserOrderStatusLoadingSelector,
+} from 'redux/selectors/myPage';
+import {ActivityIndicator} from 'react-native-paper';
+import {ORDER_STATUS_ACT_CODE} from 'constants';
 
 const TabOrders = ({navigation, status}) => {
   const dispatch = useDispatch();
 
+  const statusSelector = useSelector((state) =>
+    getListUserOrderStatusSelector(state),
+  );
+
+  const listStatusLoading = useSelector((state) =>
+    getListUserOrderStatusLoadingSelector(state),
+  );
+
+  let listStatus = statusSelector?.content || [];
+  listStatus = listStatus.sort((a, b) => a.id - b.id);
+
   useEffect(() => {
-    console.log('INITTTT');
     dispatch(myPageActions.getUserOrdersStatusList());
   }, []);
   return (
     <View style={styles.container}>
-      <ScrollableTabView
-        tabBarActiveTextColor="#823FFD"
-        tabBarUnderlineStyle={{backgroundColor: '#823FFD'}}
-        initialPage={routes.findIndex((item) => item.key === status)}
-        renderTabBar={() => <ScrollableTabBar backgroundColor="#ffffff" />}>
-        {routes.map((item, index) => {
-          switch (item.key) {
-            case 'waiting':
-              return (
-                <View tabLabel={item.title} key={item.key}>
-                  <Waiting status={item.key} />
-                </View>
-              );
-            case 'delivery':
-              return (
-                <View tabLabel={item.title} key={item.key}>
-                  <Delivery status={item.key} />
-                </View>
-              );
-            case 'done':
-              return (
-                <View tabLabel={item.title} key={item.key}>
-                  <Done status={item.key} />
-                </View>
-              );
-            case 'cancel':
-              return (
-                <View tabLabel={item.title} key={item.key}>
-                  <Cancel status={item.key} />
-                </View>
-              );
-            case 'inhouse':
-              return (
-                <View tabLabel={item.title} key={item.key}>
-                  <Inhouse status={item.key} />
-                </View>
-              );
-            default:
-              return (
-                <View
-                  tabLabel={item.title}
-                  key={item.key}
-                  style={{
-                    flex: 1,
-                    backgroundColor: '#fff',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Text>{item.title}</Text>
-                  <Text>{'ScrollableTabBar'}</Text>
-                </View>
-              );
-          }
-        })}
-      </ScrollableTabView>
+      {listStatusLoading ? (
+        <ActivityIndicator />
+      ) : listStatus && listStatus?.length ? (
+        <ScrollableTabView
+          tabBarActiveTextColor="#823FFD"
+          tabBarUnderlineStyle={{backgroundColor: '#823FFD'}}
+          initialPage={listStatus.findIndex((item) => item.id === status)}
+          renderTabBar={() => <ScrollableTabBar backgroundColor="#ffffff" />}>
+          {listStatus.map((item, index) => {
+            switch (item.actCode) {
+              case ORDER_STATUS_ACT_CODE.PROCESSING:
+                return (
+                  <View tabLabel={item.name} key={item.key}>
+                    <Waiting status={item.key} {...item} statusId={item?.id} />
+                  </View>
+                );
+              case ORDER_STATUS_ACT_CODE.ON_DELIVERY:
+                return (
+                  <View tabLabel={item.name} key={item.key}>
+                    <Delivery status={item.key} {...item} statusId={item?.id} />
+                  </View>
+                );
+              case ORDER_STATUS_ACT_CODE.COMPLETED:
+                return (
+                  <View tabLabel={item.name} key={item.key}>
+                    <Done status={item.key} {...item} statusId={item?.id} />
+                  </View>
+                );
+              case ORDER_STATUS_ACT_CODE.CANCEL_ORDER:
+                return (
+                  <View tabLabel={item.name} key={item.key}>
+                    <Cancel status={item.key} {...item} statusId={item?.id} />
+                  </View>
+                );
+              case ORDER_STATUS_ACT_CODE.WAIT_FOR_PAYMENT:
+                return (
+                  <View tabLabel={item.name} key={item.key}>
+                    <WaitForPayment
+                      status={item.key}
+                      {...item}
+                      statusId={item?.id}
+                    />
+                  </View>
+                );
+              default:
+                return (
+                  <View
+                    tabLabel={item.title}
+                    key={item.key}
+                    style={{
+                      flex: 1,
+                      backgroundColor: '#fff',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text>{item.title}</Text>
+                    <Text>{'ScrollableTabBar'}</Text>
+                  </View>
+                );
+            }
+          })}
+        </ScrollableTabView>
+      ) : (
+        <Text>Ko co</Text>
+      )}
     </View>
   );
 };

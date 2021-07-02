@@ -12,6 +12,43 @@ import {
   defaultState as defaultStateUserProduct,
   handleActions as handleActionsUserProduct,
 } from './userProduct';
+
+import {
+  types as typesCanceledOrders,
+  actions as actionsCanceledOrders,
+  defaultState as defaultStateCanceledOrders,
+  handleActions as handleActionsCanceledOrders,
+} from './canceledOrders';
+import {
+  types as typesCompletedOrders,
+  actions as actionsCompletedOrders,
+  defaultState as defaultStateCompletedOrders,
+  handleActions as handleActionsCompletedOrders,
+} from './completedOrders';
+import {
+  types as typesCreatedOrders,
+  actions as actionsCreatedOrders,
+  defaultState as defaultStateCreatedOrders,
+  handleActions as handleActionsCreatedOrders,
+} from './createdOrders';
+import {
+  types as typesGoodIssueOrders,
+  actions as actionsGoodIssueOrders,
+  defaultState as defaultStateGoodIssueOrders,
+  handleActions as handleActionsGoodIssueOrders,
+} from './goodIssueOrders';
+import {
+  types as typesOndeliveryOrders,
+  actions as actionsOndeliveryOrders,
+  defaultState as defaultStateOndeliveryOrders,
+  handleActions as handleActionsOndeliveryOrders,
+} from './onDeliveryOrders';
+import {
+  types as typesReceivedOrders,
+  actions as actionsReceivedOrders,
+  defaultState as defaultStateReceivedOrders,
+  handleActions as handleActionsReceivedOrders,
+} from './receivedOrders';
 export const types = {
   //List product from sale
   SET_LIST_PRODUCT_SALE_LOADING: 'SET_LIST_PRODUCT_SALE_LOADING',
@@ -47,6 +84,18 @@ export const types = {
   GET_USER_ORDERS_STATUS_LIST: 'GET_USER_ORDERS_STATUS_LIST',
   GET_USER_ORDERS_STATUS_LIST_SUCCESS: 'GET_USER_ORDERS_STATUS_LIST_SUCCESS',
   GET_USER_ORDERS_STATUS_LIST_FAILED: 'GET_USER_ORDERS_STATUS_LIST_FAILED',
+  //Cancel orders
+  ...typesCanceledOrders,
+  //Completed orders
+  ...typesCompletedOrders,
+  //Created orders
+  ...typesCreatedOrders,
+  //Good issues orders
+  ...typesGoodIssueOrders,
+  //On delivery orders
+  ...typesOndeliveryOrders,
+  //Received Ordes
+  ...typesReceivedOrders,
 };
 
 export const actions = {
@@ -102,6 +151,18 @@ export const actions = {
   getUserOrdersStatusListFailed: createAction(
     types.GET_USER_ORDERS_STATUS_LIST_FAILED,
   ),
+  //Cancel orders
+  ...actionsCanceledOrders,
+  //Completed orders
+  ...actionsCompletedOrders,
+  //Created orders
+  ...actionsCreatedOrders,
+  //Good issues orders
+  ...actionsGoodIssueOrders,
+  //On delivery orders
+  ...actionsOndeliveryOrders,
+  //Received Ordes
+  ...actionsReceivedOrders,
 };
 
 const defaultState = {
@@ -126,6 +187,18 @@ const defaultState = {
   //List order status
   listOrdersStatusLoading: false,
   listUserOrdersStatus: null,
+  //Cancel orders
+  ...defaultStateCanceledOrders,
+  //Completed orders
+  ...defaultStateCompletedOrders,
+  //Created orders
+  ...defaultStateCreatedOrders,
+  //Good issues orders
+  ...defaultStateGoodIssueOrders,
+  //On delivery orders
+  ...defaultStateOndeliveryOrders,
+  //Received Ordes
+  ...defaultStateReceivedOrders,
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -235,6 +308,18 @@ export default handleActions(
         listUserOrdersStatus: {},
       };
     },
+    //Cancel orders
+    ...handleActionsCanceledOrders,
+    //Completed orders
+    ...handleActionsCompletedOrders,
+    //Created orders
+    ...handleActionsCreatedOrders,
+    //Good issues orders
+    ...handleActionsGoodIssueOrders,
+    //On delivery orders
+    ...handleActionsOndeliveryOrders,
+    //Received Ordes
+    ...handleActionsReceivedOrders,
   },
   defaultState,
 );

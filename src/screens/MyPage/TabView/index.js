@@ -6,6 +6,7 @@ import Order from '../Order';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import GridView from '../GridView';
 import FullView from '../FullView';
+import {Colors} from 'components';
 
 const HEADER_HEIGHT = 0;
 
@@ -53,7 +54,9 @@ const TabViewContainer = ({
       tabBarActiveTextColor="#823FFD"
       initialPage={0}
       renderTabBar={() => <RenderLabel />}>
-      <View style={{flex: 1}} tabLabel={'menu'}>
+      <View
+        style={{flex: 1, backgroundColor: Colors['$bgColor']}}
+        tabLabel={'menu'}>
         {viewType === 'grid' ? (
           <GridView scrollEnabled={scrollEnabled} />
         ) : (

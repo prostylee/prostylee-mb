@@ -8,10 +8,10 @@ export default EStyleSheet.create({
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
-    padding: 10,
+    paddingVertical: 10,
     borderBottomWidth: 1,
     borderColor: '#E9EAEB',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   wrapHeaderInfo: {
     flexDirection: 'row',
@@ -28,11 +28,11 @@ export default EStyleSheet.create({
     height: 16,
     width: 16,
     borderRadius: 8,
+    marginRight: 8,
   },
   textHeaderStatus: {
     fontSize: 13,
     lineHeight: 18,
     fontWeight: '400',
   },
-  
 });
