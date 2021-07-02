@@ -141,14 +141,10 @@ const AnimatedHeader = ({
         <Menu
           visible={visible}
           onDismiss={() => setVisible(false)}
-          anchor={
-            <IconButton
-              onPress={() => setVisible(true)}
-              icon="dots-horizontal"
-              color="#000"
-              size={20}
-            />
-          }
+          anchor={{
+            x: WIDTH_HEADER * 0.95,
+            y: 50,
+          }}
           contentStyle={{borderRadius: 10, padding: 0}}
           style={styles.menuContainer}>
           <Menu.Item

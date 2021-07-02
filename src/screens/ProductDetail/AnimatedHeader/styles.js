@@ -121,10 +121,10 @@ export default EStyleSheet.create({
   },
   //Menu style
   menuContainer: {
-    position: 'absolute',
-    top: 50 + getStatusBarHeight() + (Platform.OS === 'ios' ? 0 : 36),
-    right: 10,
-    maxWidth: WIDTH_HEADER / 2,
+    // position: 'absolute',
+    top: 50 + getStatusBarHeight(),
+    // right: 0,
+    maxWidth: WIDTH_HEADER * 0.5,
   },
   topItemContainer: {
     paddingBottom: 8,
