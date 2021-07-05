@@ -1,5 +1,7 @@
 import {createAction, handleActions} from 'redux-actions';
 import {showMessage} from 'react-native-flash-message';
+import {getProductVarient} from 'utils/product';
+import i18n from 'i18n';
 
 import {
   types as typesCartAddress,
@@ -201,25 +203,38 @@ export default handleActions(
     },
     [types.ADD_ITEM_TO_CART]: (state, {payload}) => {
       const currentCart = state.listCart;
-      const currentListItemId =
+      const currentListItemVarient =
         currentCart.map((item) => {
-          return item.item.id;
+          return item.productVarient;
         }) || [];
-      if (!currentListItemId.includes(payload.item.id)) {
-        currentCart.push(payload);
+      const productVarient = `${payload.item.id}${getProductVarient(
+        payload.options,
+      )}`;
+      if (!currentListItemVarient.includes(productVarient)) {
+        currentCart.push({...payload, productVarient: productVarient});
         showMessage({
-          message: 'Thêm vào giỏ hàng thành công',
+          message: i18n.t('cart.addToCartSuccess'),
           type: 'success',
           position: 'top',
         });
         return {...state, listCart: currentCart};
       } else {
+        const existedProductIndex = currentCart.findIndex(
+          (item) => item.productVarient === productVarient,
+        );
+        let existedProduct = currentCart[existedProductIndex];
+        existedProduct.quantity = existedProduct.quantity + 1;
+        const newCart = [
+          ...currentCart.slice(0, existedProductIndex),
+          existedProduct,
+          ...currentCart.slice(existedProductIndex + 1),
+        ];
         showMessage({
-          message: 'Thêm vào giỏ hàng thành công',
+          message: i18n.t('cart.addToCartSuccess'),
           type: 'success',
           position: 'top',
         });
-        return {...state, listCart: currentCart};
+        return {...state, listCart: newCart};
       }
     },
     [types.REMOVE_ITEM_FROM_CART]: (state, {payload}) => {
