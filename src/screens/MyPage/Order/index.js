@@ -35,6 +35,51 @@ const Order = () => {
     dispatch(myPageActions.getUserOrdersStatusList());
   }, []);
   const orderMenu = useMemo(() => {
+    if (!listStatus || !listStatus?.length) {
+      return [
+        {
+          icon: <WaitingIcon />,
+          label: i18n.t('mypage.waiting'),
+          navigateScreen: 'Orders',
+          dataPush: {
+            status: 'waiting',
+          },
+        },
+        {
+          icon: <DeliveryIcon />,
+          label: i18n.t('mypage.delivery'),
+          navigateScreen: 'Orders',
+          dataPush: {
+            status: 'delivery',
+          },
+        },
+        {
+          icon: <DoneIcon />,
+          label: i18n.t('mypage.done'),
+          navigateScreen: 'Orders',
+          dataPush: {
+            status: 'done',
+          },
+        },
+        {
+          icon: <InhouseIcon />,
+          label: i18n.t('mypage.inhouse'),
+          navigateScreen: 'Orders',
+          dataPush: {
+            status: 'inhouse',
+          },
+        },
+        {
+          icon: <CancelIcon />,
+          label: i18n.t('mypage.cancel'),
+          navigateScreen: 'Orders',
+          dataPush: {
+            status: 'cancel',
+          },
+        },
+      ];
+    }
+
     let route = listStatus?.map((item) => {
       switch (item?.actCode) {
         case ORDER_STATUS_ACT_CODE.WAIT_FOR_PAYMENT: {
