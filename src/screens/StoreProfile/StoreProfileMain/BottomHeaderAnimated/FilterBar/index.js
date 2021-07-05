@@ -9,6 +9,7 @@ import {useSelector} from 'react-redux';
 import {Colors, FilterButton} from 'components';
 import {getStoreProfileFilterStateSelector} from 'redux/selectors/storeProfile';
 import {storeProfileActions} from 'redux/reducers';
+import {useRoute} from '@react-navigation/native';
 
 const FilterBar = ({
   setVisible = () => {},
@@ -16,6 +17,8 @@ const FilterBar = ({
   navigation,
   activeSortItem = '',
 }) => {
+  const route = useRoute();
+  const storeId = route?.params?.storeId || 1;
   return (
     <View style={styles.wrapBlockOne}>
       <TouchableOpacity onPress={() => setVisible(!visible)}>
@@ -49,6 +52,7 @@ const FilterBar = ({
           storeProfileActions.clearStoreProfileFilterState
         }
         setFilterStateAction={storeProfileActions.setStoreProfileFilterState}
+        defaultQueryParams={{storeId: storeId}}
       />
     </View>
   );

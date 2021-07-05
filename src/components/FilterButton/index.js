@@ -12,6 +12,7 @@ const FilterButton = ({
   getFilterStateSelectorFunction,
   clearFilterStateAction,
   setFilterStateAction,
+  defaultQueryParams,
 }) => {
   const navigation = useNavigation();
 
@@ -19,8 +20,11 @@ const FilterButton = ({
     getFilterStateSelectorFunction(state),
   );
   const attributeFilterState = filterState?.attributes;
+
   const categoryFilterState = filterState.category;
+
   const price = filterState.price;
+
   let count = 0;
   count += categoryFilterState > 0 ? 1 : 0;
   count += Object.keys(
@@ -36,6 +40,7 @@ const FilterButton = ({
           getFilterStateSelectorFunction: getFilterStateSelectorFunction,
           clearFilterStateAction: clearFilterStateAction,
           setFilterStateAction: setFilterStateAction,
+          defaultQueryParams: defaultQueryParams,
         })
       }>
       <View style={styles.wrapBlockFilter}>
@@ -76,6 +81,7 @@ FilterButton.defaultProps = {
   getFilterStateSelectorFunction: () => {},
   clearFilterStateAction: {},
   setFilterStateAction: {},
+  defaultQueryParams: {},
 };
 
 FilterButton.propTypes = {
@@ -83,5 +89,6 @@ FilterButton.propTypes = {
   getFilterStateSelectorFunction: PropTypes.func.isRequired,
   clearFilterStateAction: PropTypes.object.isRequired,
   setFilterStateAction: PropTypes.object.isRequired,
+  defaultQueryParams: PropTypes.object,
 };
 export default FilterButton;

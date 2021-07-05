@@ -45,7 +45,7 @@ const ProductList = ({navigation}) => {
           }}>
           {Array.from(
             'x'.repeat(
-              productList?.length ? Math.floor(productList?.length) : 4,
+              productList?.length > 4 ? Math.floor(productList?.length) : 4,
             ),
           ).map((v, i) => (
             <SearchProductLoading key={i} />

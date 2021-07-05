@@ -7,7 +7,7 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     minHeight: ITEM_HEIGHT * 2,
   },
   titleContainer: {
@@ -99,5 +99,6 @@ export default EStyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     color: '$lightGray',
+    alignSelf: 'center',
   },
 });
