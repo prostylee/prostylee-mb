@@ -51,12 +51,13 @@ export const handleActions = {
 
   [types.GET_NEARBY_STORE_SUCCESS]: (state, {payload}) => {
     const {totalPages, content} = payload;
+
     return {
       ...state,
       nearbyStoreData: payload,
-      nearbyStorePage: PAGE_INIT,
+      nearbyStorePage: PAGE_INIT + UNIT_INCREASE,
       hasNearbyStoreLoadmore:
-        state.nearbyStorePage + UNIT_INCREASE + 1 < totalPages ? true : false,
+        PAGE_INIT + UNIT_INCREASE < totalPages ? true : false,
     };
   },
   [types.GET_NEARBY_STORE_FAILED]: (state, {payload}) => {
@@ -66,6 +67,7 @@ export const handleActions = {
   [types.GET_NEARBY_STORE_LOADMORE_SUCCESS]: (state, {payload}) => {
     const {totalPages, content} = payload;
     payload.content = state.nearbyStoreData?.content.concat(content) || [];
+    console.log('BOOLEN', state.nearbyStorePage, totalPages);
     return {
       ...state,
       nearbyStoreData: payload,

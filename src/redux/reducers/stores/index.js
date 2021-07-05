@@ -174,7 +174,7 @@ export default handleActions(
       const {totalPages} = payload;
       return {
         ...state,
-        page: PAGE_INIT,
+        page: PAGE_INIT + UNIT_INCREASE,
         hasLoadMore: state.page < totalPages ? true : false,
         listOfFuturedStores: payload,
       };

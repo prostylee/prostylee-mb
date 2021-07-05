@@ -80,6 +80,8 @@ const NearbyStore = ({navigation}) => {
       storeActions.getNearbyStore({
         latitude: location?.lat,
         longtitude: location?.lon,
+        limit: LIMIT_DEFAULT,
+        page: PAGE_DEFAULT,
       }),
     );
   }, [location]);

@@ -31,14 +31,15 @@ import styles from './styles';
 const FeaturedCategories = ({navigation}) => {
   const dispatch = useDispatch();
 
-  const followed = false;
   const location = useSelector((state) => userSelectors.getUserLocation(state));
 
   const [isRefreshing, setIsRefreshing] = useState(false);
+
   const isLoading = useSelector((state) =>
     getNearbyStoreLoadingSelector(state),
   );
   const data = useSelector((state) => getNearbyStoreSelector(state));
+
   const loadMoreLoading = useSelector((state) =>
     getNearbyStoreLoadmoreLoadingSelector(state),
   );
@@ -55,6 +56,8 @@ const FeaturedCategories = ({navigation}) => {
       storeActions.getNearbyStore({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
+        latitude: location?.lat,
+        longtitude: location?.lon,
       }),
     );
   };
@@ -62,9 +65,11 @@ const FeaturedCategories = ({navigation}) => {
   const handleLoadMore = () => {
     if (hasLoadMore) {
       dispatch(
-        storeActions.getNearbyStore({
+        storeActions.getNearbyStoreLoadmore({
           page: page,
           limit: LIMIT_DEFAULT,
+          latitude: location?.lat,
+          longtitude: location?.lon,
         }),
       );
     }
@@ -88,7 +93,7 @@ const FeaturedCategories = ({navigation}) => {
   return (
     <>
       <View style={styles.container}>
-        {isLoading && !isRefreshing ? (
+        {isLoading && !isRefreshing && !loadMoreLoading ? (
           <View>
             {[1, 2, 3].map((v) => (
               <StoreLoading />

@@ -119,8 +119,11 @@ const ProductSearchList = ({
         sortOption.sorts = 'priceSale';
         break;
       }
-      default: {
+      case 6: {
         sortOption.bestRating = true;
+        break;
+      }
+      default: {
         break;
       }
     }

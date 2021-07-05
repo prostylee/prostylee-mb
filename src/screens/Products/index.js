@@ -125,7 +125,7 @@ const Products = ({navigation}) => {
   };
 
   const handleLoadMore = () => {
-    if (hasLoadMore) {
+    if (hasLoadMore && !loadMoreLoading) {
       let newSortValue = valueSort
         ? formatSortValue(valueSort)
         : {sorts: 'name'};

@@ -128,13 +128,12 @@ export default handleActions(
     },
     [types.GET_ALL_STORE_PRODUCT_SUCCESS]: (state, {payload}) => {
       const {totalPages, content} = payload;
-
       return {
         ...state,
         allProduct: payload,
-        allProductCurrentPage: PAGE_INIT,
+        allProductCurrentPage: UNIT_INCREASE,
         hasAllProductLoadmore:
-          state.allProductCurrentPage + UNIT_INCREASE + 1 < totalPages
+          state.allProductCurrentPage + UNIT_INCREASE < totalPages
             ? true
             : false,
       };
@@ -144,14 +143,13 @@ export default handleActions(
     },
     [types.GET_ALL_STORE_PRODUCT_LOADMORE_SUCCESS]: (state, {payload}) => {
       const {totalPages, content} = payload;
-
       payload.content = state.allProduct?.content.concat(content) || [];
       return {
         ...state,
         allProduct: payload,
         allProductCurrentPage: state.allProductCurrentPage + UNIT_INCREASE,
         hasAllProductLoadmore:
-          state.allProductCurrentPage + UNIT_INCREASE + 1 < totalPages
+          state.allProductCurrentPage + UNIT_INCREASE < totalPages
             ? true
             : false,
       };

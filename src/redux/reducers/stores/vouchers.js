@@ -60,7 +60,7 @@ export const handleActions = {
     return {
       ...state,
       vouchersData: payload,
-      vouchersPage: PAGE_INIT,
+      vouchersPage: PAGE_INIT + UNIT_INCREASE,
       hasVouchersLoadmore:
         state.vouchersPage + UNIT_INCREASE + 1 < totalPages ? true : false,
     };

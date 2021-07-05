@@ -112,7 +112,7 @@ const AllProducts = ({
     );
   };
   const _handleLoadMore = () => {
-    if (!loadmoreLoading) {
+    if (hasLoadMore && !loadmoreLoading) {
       dispatch(
         storeProfileActions.getAllStoreProductLoadmore({
           limit: LIMIT_DEFAULT,
@@ -122,7 +122,6 @@ const AllProducts = ({
           storeId: storeId,
         }),
       );
-      setIsEndReached(false);
     }
   };
   const _handleFilterByTag = (queryObject) => {
@@ -146,6 +145,9 @@ const AllProducts = ({
   useEffect(() => {
     setHasLoadmore(hasLoadMore);
   });
+  useEffect(() => {
+    if (!loadmoreLoading) setIsEndReached(false);
+  }, [loadmoreLoading]);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{i18n.t('stores.allProduct')}</Text>
