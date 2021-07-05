@@ -161,6 +161,7 @@ const SearchProducts = ({navigation}) => {
     dispatch(searchActions.setProductsSearchLoading(true));
   };
   const _handleFilterByTag = (queryObject) => {
+    dispatch(searchActions.clearProductsFilterState());
     setCurrentFilterValue({
       ...queryObject,
     });

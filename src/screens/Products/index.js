@@ -188,6 +188,7 @@ const Products = ({navigation}) => {
   const _handleFilterByTag = (queryObject) => {
     setFilterValue(queryObject);
     setValueSort(null);
+    dispatch(productActions.clearProductCategoriesFilterState());
     dispatch(
       productActions.getListProduct({
         page: PAGE_DEFAULT,

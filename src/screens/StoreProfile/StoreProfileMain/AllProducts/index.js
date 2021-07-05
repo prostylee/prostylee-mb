@@ -125,6 +125,7 @@ const AllProducts = ({
   const _handleFilterByTag = (queryObject) => {
     setFilterValue(queryObject);
     setValueSort(isNull);
+    dispatch(storeProfileActions.clearStoreProfileFilterState());
     dispatch(
       storeProfileActions.getAllStoreProduct({
         page: PAGE_DEFAULT,

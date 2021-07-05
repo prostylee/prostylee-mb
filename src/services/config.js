@@ -28,6 +28,7 @@ export async function _fetch(method, path, data) {
 
   try {
     const token = await Auth.currentSession();
+    // console.log(token.idToken.jwtToken);
     if (token && token.accessToken) {
       api.setHeaders({
         Authorization: 'Bearer ' + token.idToken.jwtToken,
