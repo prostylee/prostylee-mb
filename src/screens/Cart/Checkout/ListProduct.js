@@ -223,17 +223,17 @@ const ListProduct = ({navigation, data, validateButton}) => {
               <Text style={styles.titleRadio}>{item.description}</Text>
             </View>
           </View>
-          <View style={styles.wrapPrice}>
-            <Text style={styles.priceRadio}>
-              {item.price
-                ? currencyFormat(item.price, 'đ')
-                : i18n.t('cart.freeShip')}
-            </Text>
+          <View style={styles.wrapRadioContent}>
+            <Text style={styles.contentRadio}>{item.deliveryTime}</Text>
           </View>
         </View>
 
-        <View style={styles.wrapRadioContent}>
-          <Text style={styles.contentRadio}>{item.deliveryTime}</Text>
+        <View style={styles.wrapPrice}>
+          <Text style={styles.priceRadio}>
+            {item.price
+              ? currencyFormat(item.price, 'đ')
+              : i18n.t('cart.freeShip')}
+          </Text>
         </View>
       </View>
     );

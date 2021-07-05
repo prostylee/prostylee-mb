@@ -159,8 +159,9 @@ export default EStyleSheet.create({
   },
   wrapRadio: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-between',
+    width: '100%',
   },
 
   wrapRadioTitle: {
@@ -171,6 +172,12 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-end',
+  },
+  wrapPrice: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
 
   iconRadioSub: {
