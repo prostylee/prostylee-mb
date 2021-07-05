@@ -145,6 +145,7 @@ const StoreProfileMain = (props) => {
         sorts: 'name',
         ...sortOption,
         ...filterValue,
+        storeId: storeId,
       }),
     );
   };
@@ -193,6 +194,7 @@ const StoreProfileMain = (props) => {
     height: visible ? HEIGHT : 0,
     marginTop: visible ? HEIGHT_HEADER : 0,
   };
+  console.log('VALUE SORT', valueSort);
   return (
     <View
       style={[

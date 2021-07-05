@@ -96,16 +96,7 @@ const NearbyStore = ({navigation}) => {
           height: 30,
           fontWeight: 'bold',
         }}
-        middleComponent={
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}>
-            {i18n.t('stores.textNear')}
-          </Text>
-        }
+        title={i18n.t('stores.textNear')}
       />
       <TagList onTagPress={_handleFilterByTag} options={filterTags} />
       <Divider />

@@ -27,6 +27,7 @@ import {storeProfileActions} from 'redux/reducers';
 import {useDispatch, useSelector} from 'react-redux';
 import {userSelectors} from 'reducers';
 import {isNull} from 'lodash-es';
+import {useRoute} from '@react-navigation/native';
 
 const AllProducts = ({
   navigation,
@@ -39,6 +40,8 @@ const AllProducts = ({
   valueSort = {},
 }) => {
   const dispatch = useDispatch();
+  const route = useRoute();
+  const storeId = route?.params?.storeId || 1;
 
   const location = useSelector((state) => userSelectors.getUserLocation(state));
 
@@ -114,9 +117,9 @@ const AllProducts = ({
         storeProfileActions.getAllStoreProductLoadmore({
           limit: LIMIT_DEFAULT,
           page: page,
-          storeId: 1,
           ...filterValue,
           ...valueSort,
+          storeId: storeId,
         }),
       );
       setIsEndReached(false);
@@ -124,13 +127,14 @@ const AllProducts = ({
   };
   const _handleFilterByTag = (queryObject) => {
     setFilterValue(queryObject);
-    setValueSort(isNull);
+    setValueSort(null);
     dispatch(storeProfileActions.clearStoreProfileFilterState());
     dispatch(
       storeProfileActions.getAllStoreProduct({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         ...queryObject,
+        storeId: storeId,
       }),
     );
   };

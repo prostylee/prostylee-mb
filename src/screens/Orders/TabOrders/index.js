@@ -42,7 +42,13 @@ const TabOrders = ({navigation, status}) => {
           tabBarActiveTextColor="#823FFD"
           tabBarUnderlineStyle={{backgroundColor: '#823FFD'}}
           initialPage={listStatus.findIndex((item) => item.id === status)}
-          renderTabBar={() => <ScrollableTabBar backgroundColor="#ffffff" />}>
+          renderTabBar={() => (
+            <ScrollableTabBar
+              textStyle={styles.tabbarTextStyle}
+              backgroundColor="#ffffff"
+              inactiveTextColor="#8B9399"
+            />
+          )}>
           {listStatus.map((item, index) => {
             switch (item.actCode) {
               case ORDER_STATUS_ACT_CODE.PROCESSING:

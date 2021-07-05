@@ -163,16 +163,7 @@ const ProductSearchList = ({
           height: 30,
           fontWeight: 'bold',
         }}
-        middleComponent={
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}>
-            {title ? title : ''}
-          </Text>
-        }
+        title={title || ''}
       />
       {hasFilterBar ? (
         <>
