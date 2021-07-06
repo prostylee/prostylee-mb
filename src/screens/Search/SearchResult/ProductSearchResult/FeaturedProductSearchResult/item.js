@@ -52,12 +52,16 @@ const FeaturedCategoriesItem = ({item, navigation}) => {
               <ProductLike item={item} />
             </View>
 
-            <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(item?.priceSale, 'đ')}
-            </Text>
-            <Text numberOfLines={1} style={styles.priceRoot}>
-              {currencyFormat(item?.price, 'đ')}
-            </Text>
+            {item?.priceSale ? (
+              <Text numberOfLines={1} style={styles.price}>
+                {currencyFormat(item?.priceSale, 'đ')}
+              </Text>
+            ) : null}
+            {item?.price ? (
+              <Text numberOfLines={1} style={styles.priceRoot}>
+                {currencyFormat(item?.price, 'đ')}
+              </Text>
+            ) : null}
             <View style={styles.wrapRating}>
               <ProductRatingStar
                 value={item?.productStatisticResponse?.resultOfRating || 0}
