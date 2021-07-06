@@ -204,7 +204,7 @@ Footer.defaultProps = {
   choiceSelect: [],
 };
 
-Footer.PropTypes = {
+Footer.propTypes = {
   navigation: PropTypes.object,
   productData: PropTypes.object,
   choiceSelect: PropTypes.array,

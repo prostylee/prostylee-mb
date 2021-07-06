@@ -92,7 +92,6 @@ const Index = ({navigation}) => {
     // TODO remove
     Auth.currentAuthenticatedUser()
       .then((user) => {
-        console.log('USER ' + JSON.stringify(user));
         dispatch(userActions.getProfile(user.attributes['custom:userId']));
       })
       .catch((err) => console.log(err));
@@ -170,7 +169,11 @@ const Index = ({navigation}) => {
           <View style={styles.wrapScroll}>
             <ImageBackground
               style={styles.backgroundImageStyle}
-              source={{uri: userProfile?.avatar ? userAvatar : ''}}
+              source={
+                userProfile?.avatar
+                  ? {uri: userProfile?.avatar}
+                  : require('assets/images/default.png')
+              }
               blurRadius={10}>
               <View style={styles.scrollViewStyle}>
                 <View style={styles.wrapAvatar}>

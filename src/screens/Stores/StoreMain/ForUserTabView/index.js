@@ -166,7 +166,12 @@ const ForUserTabView = ({
           renderTabBar={() => <ScrollableTabBar />}
           locked={false}>
           {tabList.map((v) => (
-            <View tabLabel={v.tabName} url={v?.apiUrl} method={v?.apiMethod} />
+            <View
+              key={v?.tabName}
+              tabLabel={v.tabName}
+              url={v?.apiUrl}
+              method={v?.apiMethod}
+            />
           ))}
         </ScrollableTabView>
       ) : null}

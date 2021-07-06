@@ -39,5 +39,7 @@ export default EStyleSheet.create({
   listContainer: {
     paddingHorizontal: 8,
     paddingBottom: 20,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });

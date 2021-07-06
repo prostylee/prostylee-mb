@@ -45,6 +45,7 @@ const Item = ({product, navigation}) => {
                     {dataItem?.options.map((op, idx) => {
                       return (
                         <View
+                          key={idx}
                           style={{
                             borderColor: 'rgba(0,0,0,0.1)',
                             borderLeftWidth: idx !== 0 ? 1 : 0,

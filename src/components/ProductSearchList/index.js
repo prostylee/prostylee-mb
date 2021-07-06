@@ -237,8 +237,8 @@ ProductSearchList.defaultProps = {
   searchDataFunction: () => {},
   getFilterStateSelectorFunction: () => {},
   filterDispatchAction: () => {},
-  setFilterStateAction: {},
-  clearFilterStateAction: {},
+  setFilterStateAction: () => {},
+  clearFilterStateAction: () => {},
 };
 
 ProductSearchList.propTypes = {
@@ -250,15 +250,15 @@ ProductSearchList.propTypes = {
   loadmoreDataFuntion: PropTypes.func.isRequired,
   tagFilterFunction: PropTypes.func,
   sortDataFunction: PropTypes.func,
-  navigation: PropTypes.object.isRequired,
+  navigation: PropTypes.object,
   getCurrentPageFunction: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   hasLoadmore: PropTypes.bool,
   searchDataFunction: PropTypes.func,
   getFilterStateSelectorFunction: PropTypes.func,
-  filterDispatchAction: PropTypes.object,
-  setFilterStateAction: PropTypes.object,
-  clearFilterStateAction: PropTypes.object,
+  filterDispatchAction: PropTypes.func,
+  setFilterStateAction: PropTypes.func,
+  clearFilterStateAction: PropTypes.func,
 };
 
 export default ProductSearchList;

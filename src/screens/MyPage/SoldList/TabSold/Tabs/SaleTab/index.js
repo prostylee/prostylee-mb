@@ -98,8 +98,8 @@ const SaleTab = (props) => {
         justifyContent: 'space-around',
         overflow: 'hidden',
       }}>
-      {Array.from('x'.repeat(4)).map(() => (
-        <SearchProductLoading />
+      {Array.from('x'.repeat(4)).map((v, index) => (
+        <SearchProductLoading key={index} />
       ))}
     </View>
   ) : saleProductList && saleProductList.length ? (

@@ -62,10 +62,10 @@ const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
             if (index < images.length) {
               return (
                 <TouchableOpacity
+                  key={index}
                   onPress={openImagePicker}
                   style={styles.btnImageUpload}>
                   <Image
-                    key={images[index]?.id}
                     source={
                       images[index].source
                         ? {uri: images[index].source}
@@ -80,6 +80,7 @@ const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
             if (index === images?.length) {
               return (
                 <TouchableOpacity
+                  key={index}
                   onPress={openImagePicker}
                   style={styles.btnImageUpload}>
                   <View style={styles.buttonUpload}>

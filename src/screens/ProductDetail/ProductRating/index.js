@@ -164,10 +164,10 @@ ProductRating.defaultProps = {
   productId: null,
 };
 
-ProductRating.PropTypes = {
+ProductRating.propTypes = {
   data: PropTypes.object,
   ref: PropTypes.element,
-  productId: PropTypes.string,
+  productId: PropTypes.number,
 };
 
 export default ProductRating;

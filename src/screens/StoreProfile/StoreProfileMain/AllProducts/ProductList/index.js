@@ -52,17 +52,22 @@ const ProductList = ({navigation}) => {
           ))}
         </View>
       ) : productList && productList.length ? (
-        <FlatList
-          contentContainerStyle={styles.listWrapper}
-          data={productList}
-          numColumns={2}
-          renderItem={({item, index}) => (
-            <ProductItem item={item} index={index} />
-          )}
-          keyExtractor={(item, index) => `${item.id}-${index}`}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-        />
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+          {/* <FlatList
+            contentContainerStyle={styles.listWrapper}
+            data={productList}
+            numColumns={2}
+            renderItem={({item, index}) => (
+              <ProductItem item={item} index={index} />
+            )}
+            keyExtractor={(item, index) => `${item.id}-${index}`}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+          /> */}
+          {productList.map((item, index) => (
+            <ProductItem item={item} index={index} key={item?.id} />
+          ))}
+        </View>
       ) : (
         <Text style={styles.notFoundText}>
           {i18n.t('Search.resultsNotfound')}

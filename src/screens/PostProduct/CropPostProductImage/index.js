@@ -117,7 +117,7 @@ const CropPostProductImage = () => {
       <Carousel
         ref={cropsRef}
         data={images}
-        activeSlideOffset
+        activeSlideOffset={0}
         initialNumToRender={4}
         renderItem={({item, index}) => {
           return <RenderCropView item={item} index={index} />;

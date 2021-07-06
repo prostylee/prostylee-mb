@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {ActivityIndicator, FlatList, Platform, StatusBar, View,} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  StatusBar,
+  View,
+} from 'react-native';
 import styles from './styles';
 import {Colors, ThemeView} from 'components';
 
@@ -9,15 +15,44 @@ import TopTrending from './TopTrending';
 import DynamicUsers from './DynamicUsers';
 import StoryBoard from './Stories';
 
-import {NewFeedContentLoading, NewFeedTrendingContentLoading,} from 'components/Loading/contentLoader';
+import {
+  NewFeedContentLoading,
+  NewFeedTrendingContentLoading,
+} from 'components/Loading/contentLoader';
 
-import {commonActions, dynamicUsersActions, newFeedActions, storeActions,} from 'redux/reducers';
-import {getHasLoadMoreSelector, getLoadMoreLoadingSelector, getNewFeedLoadingSelector, getNewFeedSelector, getPageSelector, getStories, getStoriesLoading, threeFirstNewFeedItemSelector,} from 'redux/selectors/newFeed';
-import {getTopProduct, getTopProductLoadingSelector,} from 'redux/selectors/stores';
-import {listDynamicUsersSelector, loadingSelector,} from 'redux/selectors/dynamicUsers';
+import {
+  commonActions,
+  dynamicUsersActions,
+  newFeedActions,
+  storeActions,
+} from 'redux/reducers';
+import {
+  getHasLoadMoreSelector,
+  getLoadMoreLoadingSelector,
+  getNewFeedLoadingSelector,
+  getNewFeedSelector,
+  getPageSelector,
+  getStories,
+  getStoriesLoading,
+  threeFirstNewFeedItemSelector,
+} from 'redux/selectors/newFeed';
+import {
+  getTopProduct,
+  getTopProductLoadingSelector,
+} from 'redux/selectors/stores';
+import {
+  listDynamicUsersSelector,
+  loadingSelector,
+} from 'redux/selectors/dynamicUsers';
 import {targetTypeSelector} from 'redux/selectors/common';
 
-import {LIMIT_DEFAULT, NUMBER_OF_PRODUCT, PAGE_DEFAULT, TYPE_STORE, TYPE_USER,} from 'constants';
+import {
+  LIMIT_DEFAULT,
+  NUMBER_OF_PRODUCT,
+  PAGE_DEFAULT,
+  TYPE_STORE,
+  TYPE_USER,
+} from 'constants';
 import FeedItem from './VerticalFeed/item';
 
 const NewFeedRowItemType = {
@@ -198,7 +233,6 @@ const NewFeed = ({navigation}) => {
       }
 
       setAllNewFeeds(items);
-      console.log('Render ' + items.length);
     }
   }, [
     stories,

@@ -24,8 +24,8 @@ const ProductList = ({navigation, isLoading = false, data = []}) => {
           }}>
           {Array.from(
             'x'.repeat(data?.length ? Math.floor(data?.length) : 4),
-          ).map(() => (
-            <SearchProductLoading />
+          ).map((item, index) => (
+            <SearchProductLoading key={`${item}-${index}`} />
           ))}
         </View>
       ) : data && data.length ? (

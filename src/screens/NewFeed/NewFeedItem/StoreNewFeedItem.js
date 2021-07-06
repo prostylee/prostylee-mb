@@ -20,7 +20,9 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
 
   const navigateStore = () => {
     if (newFeedItem?.storeId) {
-      RootNavigator.navigate('StoreProfileMain', {storeId: newFeedItem?.storeId});
+      RootNavigator.navigate('StoreProfileMain', {
+        storeId: newFeedItem?.storeId,
+      });
     } else {
       RootNavigator.navigate('UserProfile', {
         userId: productOwnerResponse?.id,
@@ -32,9 +34,11 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
     <View style={styles.slideWrap}>
       <NewFeedSlider
         targetType={targetType}
-        images={newFeedItem?.imageUrls || []}
-      >
-        <PriceSaleLabel price={newFeedItem?.price} priceSale={newFeedItem?.priceSale}/>
+        images={newFeedItem?.imageUrls || []}>
+        <PriceSaleLabel
+          price={newFeedItem?.price || 0}
+          priceSale={newFeedItem?.priceSale || 0}
+        />
       </NewFeedSlider>
     </View>
   );
@@ -43,10 +47,12 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
     <ContainerView fluid style={styles.description}>
       <View style={styles.wrapInfo}>
         <Text style={styles.productName}>{newFeedItem?.name}</Text>
-        <PriceLabel price={newFeedItem?.price} priceSale={newFeedItem?.priceSale}/>
+        <PriceLabel
+          price={newFeedItem?.price}
+          priceSale={newFeedItem?.priceSale}
+        />
       </View>
-      <OutlineButton label={i18n.t('common.textBuyNow')} onClick={() => {
-      }}/>
+      <OutlineButton label={i18n.t('common.textBuyNow')} onClick={() => {}} />
     </ContainerView>
   );
 
@@ -60,8 +66,8 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
         onAvatarPress={navigateStore}
         isAdvertising={newFeedItem?.isAdvertising}
       />
-      <NewFeedItemBody slider={slider} bottom={bottom}/>
-      <NewFeedItemFooter targetType={targetType} newFeedItem={newFeedItem}/>
+      <NewFeedItemBody slider={slider} bottom={bottom} />
+      <NewFeedItemFooter targetType={targetType} newFeedItem={newFeedItem} />
     </View>
   );
 };

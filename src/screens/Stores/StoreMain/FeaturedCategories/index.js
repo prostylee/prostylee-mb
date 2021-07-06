@@ -32,20 +32,23 @@ const FeaturedCategories = ({navigation, data = []}) => {
         </View>
 
         <View style={styles.wrapList}>
-          <FlatList
-            data={data && data.length ? data : [1, 2, 3, 4, 5, 6, 7]}
-            renderItem={({item, index}) => (
-              <FeaturedCategoriesItem
-                index={index}
-                navigation={navigation}
-                item={item}
-              />
-            )}
-            numColumns={2}
-            keyExtractor={(item, index) => index}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-          />
+          {data && data?.length
+            ? data.map((item, index) => (
+                <FeaturedCategoriesItem
+                  index={index}
+                  navigation={navigation}
+                  item={item}
+                  key={item?.id}
+                />
+              ))
+            : [1, 2, 3, 4, 5, 6].map((item, index) => (
+                <FeaturedCategoriesItem
+                  index={index}
+                  navigation={navigation}
+                  item={item}
+                  key={item}
+                />
+              ))}
         </View>
       </View>
     </>

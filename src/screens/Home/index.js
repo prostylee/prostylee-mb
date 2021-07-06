@@ -16,7 +16,7 @@ const Index = ({navigation}) => {
     // TODO remove
     Auth.currentAuthenticatedUser()
       .then((user) => {
-        console.log('USER ' + JSON.stringify(user));
+        // console.log('USER ' + JSON.stringify(user));
       })
       .catch((err) => console.log(err));
     dispatch(commonActions.toggleLoading(false));
@@ -32,7 +32,10 @@ const Index = ({navigation}) => {
     <View style={styles.container}>
       <Text>HOME SCREEN</Text>
       <ButtonOutlined label="Đăng Xuất Ngay" onPress={() => onSignOut()} />
-      <ButtonOutlined label="Categories Screen" onPress={() => navigation.navigate("Categories")} />
+      <ButtonOutlined
+        label="Categories Screen"
+        onPress={() => navigation.navigate('Categories')}
+      />
     </View>
   );
 };

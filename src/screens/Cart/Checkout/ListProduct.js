@@ -287,8 +287,6 @@ const ListProduct = ({navigation, data, validateButton}) => {
     // navigation.navigate('Home');
   };
 
-  console.log('orderData', JSON.stringify(orderData, null, 4));
-
   /* Extract note */
   const groupDataByStore = (list) => {
     return list.reduce((acc, product) => {

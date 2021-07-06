@@ -77,18 +77,18 @@ const FilterButton = ({
 };
 
 FilterButton.defaultProps = {
-  filterDispatchAction: {},
+  filterDispatchAction: () => {},
   getFilterStateSelectorFunction: () => {},
-  clearFilterStateAction: {},
-  setFilterStateAction: {},
+  clearFilterStateAction: () => {},
+  setFilterStateAction: () => {},
   defaultQueryParams: {},
 };
 
 FilterButton.propTypes = {
-  filterDispatchAction: PropTypes.object.isRequired,
+  filterDispatchAction: PropTypes.func.isRequired,
   getFilterStateSelectorFunction: PropTypes.func.isRequired,
-  clearFilterStateAction: PropTypes.object.isRequired,
-  setFilterStateAction: PropTypes.object.isRequired,
+  clearFilterStateAction: PropTypes.func.isRequired,
+  setFilterStateAction: PropTypes.func.isRequired,
   defaultQueryParams: PropTypes.object,
 };
 export default FilterButton;

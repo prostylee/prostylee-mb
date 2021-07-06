@@ -123,7 +123,9 @@ const VoucherList = ({navigation}) => {
       {isLoading && !isRefreshing ? (
         <View style={{flexDirection: 'column', overflow: 'hidden'}}>
           {[1, 2, 3, 4, 5, 6, 7, 8].map((v, i) =>
-            v < (SCREEN_HEIGHT - 150) / 125 ? <VouchersLoading /> : null,
+            v < (SCREEN_HEIGHT - 150) / 125 ? (
+              <VouchersLoading key={v} />
+            ) : null,
           )}
         </View>
       ) : data && data?.content?.length ? (

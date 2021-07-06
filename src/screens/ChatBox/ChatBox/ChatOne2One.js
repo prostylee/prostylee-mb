@@ -35,7 +35,7 @@ const ChatOne2One = (props) => {
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((user) => {
-        console.log('USER ' + JSON.stringify(user, null, 4));
+        // console.log('USER ' + JSON.stringify(user, null, 4));
         setCurrentUserName(user.username);
       })
       .catch((err) => console.log(err));

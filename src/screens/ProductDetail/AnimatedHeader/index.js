@@ -186,10 +186,10 @@ AnimatedHeader.defaultProps = {
   activeTabProps: 'product',
 };
 
-AnimatedHeader.PropTypes = {
-  image: PropTypes.string,
+AnimatedHeader.propTypes = {
+  image: PropTypes.array,
   heightShow: PropTypes.number,
-  scrollAnimated: PropTypes.element,
+  scrollAnimated: PropTypes.object,
   scrollToTop: PropTypes.func,
   scrollToComment: PropTypes.func,
   scrollToRelated: PropTypes.func,

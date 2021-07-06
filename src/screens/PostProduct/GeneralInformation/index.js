@@ -99,7 +99,7 @@ const AddProductsInfor = ({navigation}) => {
             {listImagePicked && listImagePicked.length ? (
               [0, 1, 2, 3].map((v) =>
                 v < listImagePicked.length ? (
-                  <TouchableOpacity onPress={openCropImagePicker}>
+                  <TouchableOpacity key={v} onPress={openCropImagePicker}>
                     <Image
                       style={styles.imgSelected}
                       source={{uri: listImagePicked[v].uri}}
@@ -107,12 +107,13 @@ const AddProductsInfor = ({navigation}) => {
                   </TouchableOpacity>
                 ) : v === listImagePicked.length ? (
                   <TouchableOpacity
+                    key={v}
                     style={styles.shapesSelected}
                     onPress={openCropImagePicker}>
                     <AddImageIcon />
                   </TouchableOpacity>
                 ) : (
-                  <TouchableOpacity onPress={openCropImagePicker}>
+                  <TouchableOpacity key={v} onPress={openCropImagePicker}>
                     <View style={styles.shapes} />
                   </TouchableOpacity>
                 ),

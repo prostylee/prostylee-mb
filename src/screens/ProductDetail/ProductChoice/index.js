@@ -127,7 +127,7 @@ ProductChoice.defaultProps = {
   choiceSelect: [],
 };
 
-ProductChoice.PropType = {
+ProductChoice.propTypes = {
   choiceSelect: PropTypes.array,
   choiceList: PropTypes.array,
   setChoiceSelect: PropTypes.func,

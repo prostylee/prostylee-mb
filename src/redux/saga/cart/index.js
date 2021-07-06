@@ -129,7 +129,6 @@ const getUserCartAddress = function* ({payload}) {
   try {
     yield put(cartActions.setListCartAddressLoading(true));
     const res = yield call(getUserAddress, payload);
-    console.log('USER ADDRESS', res.data);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(cartActions.getListCartAddressSuccess(res.data.data.content));
     } else {
@@ -163,11 +162,6 @@ const createOrder = function* ({payload}) {
               `${product.item.id}${productVarient}`
             ] || {};
 
-          console.log('productVarient', productVarient);
-          console.log(
-            'productVarientPriceData',
-            payload.productVarientPriceData,
-          );
           return {
             storeId: product.item.storeId,
             branchId: null,
@@ -210,7 +204,7 @@ const createOrder = function* ({payload}) {
     };
     yield put(cartActions.setOrderData(orderData));
     const res = yield call(createOrdersApi, orderData);
-    console.log('Create order res', JSON.stringify(res, null, 4));
+    // console.log('Create order res', JSON.stringify(res, null, 4));
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       // yield put(cartActions.resetListCart());
       // yield put(cartActions.getListCartAddressSuccess(res.data.data.content));

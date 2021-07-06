@@ -49,4 +49,11 @@ export default EStyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
   },
+  loadingWrapper: {
+    flexDirection: 'row',
+    paddingBottom: 16,
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+  },
 });

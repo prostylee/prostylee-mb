@@ -133,8 +133,10 @@ const ProductInfor = () => {
                 <View style={styles.status}>
                   <Text style={styles.title}>{item?.label}</Text>
                   <View style={styles.selectItemContainer}>
-                    {selectedAttributes?.[item?.key]?.map((v) => (
-                      <View style={styles.viewStatus}>
+                    {selectedAttributes?.[item?.key]?.map((v, index) => (
+                      <View
+                        style={styles.viewStatus}
+                        key={`${v?.name}-${index}`}>
                         <Text>{v.name}</Text>
                       </View>
                     ))}
@@ -165,12 +167,12 @@ const ProductInfor = () => {
         </TouchableOpacity>
       </View>
       <ModalSelectAttributes
-        item={selectedModalItem}
+        item={selectedModalItem || {}}
         key={selectedModalItem?.key}
         setSelectedModalItem={setSelectedModalItem}
         _handleSelectAttributes={_handleSelectAttributes}
         selectedAttributes={selectedAttributes}
-        selectedModalItem={selectedModalItem}
+        selectedModalItem={selectedModalItem || {}}
       />
     </ThemeView>
   );

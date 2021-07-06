@@ -99,7 +99,7 @@ const ProductList = ({navigation, currentFilter = {}, currentSort = {}}) => {
           }}>
           {[1, 2, 3, 4].map((v) => {
             return (
-              <View style={{width: '50%', padding: 16}}>
+              <View style={{width: '50%', padding: 16}} key={v}>
                 <SearchProductLoading />
               </View>
             );

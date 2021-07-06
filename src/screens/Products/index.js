@@ -297,7 +297,7 @@ const Products = ({navigation}) => {
                   justifyContent: 'space-around',
                 }}>
                 {[1, 2, 3, 4].map((v) => (
-                  <SearchProductLoading />
+                  <SearchProductLoading key={v} />
                 ))}
               </View>
             ) : !listProduct || !listProduct.length ? (

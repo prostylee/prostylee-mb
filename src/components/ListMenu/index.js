@@ -42,7 +42,7 @@ const ListMenu = ({title, menu, style, titleStyle, rowStyle}) => {
     <View style={{...styles.container, style}}>
       {title && (
         <View style={styles.wrapHeader}>
-          <Text style={{...styles.labelHeader, titleStyle}}>{title}</Text>
+          <Text style={{...styles.labelHeader, ...titleStyle}}>{title}</Text>
         </View>
       )}
       {menu.length &&

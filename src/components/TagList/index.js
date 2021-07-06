@@ -16,6 +16,7 @@ const TagList = ({onTagPress, options}, ref) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={options}
+        keyExtractor={(item, index) => `${item.label}-${index}`}
         renderItem={({item, index}) => (
           <Chip
             icon={item.icon}

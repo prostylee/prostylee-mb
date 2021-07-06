@@ -98,7 +98,7 @@ ProductLocation.defaultProps = {
   location: {},
 };
 
-ProductLocation.PropTypes = {
+ProductLocation.propTypes = {
   productId: PropTypes.number.isRequired,
   info: PropTypes.object,
   location: PropTypes.object,

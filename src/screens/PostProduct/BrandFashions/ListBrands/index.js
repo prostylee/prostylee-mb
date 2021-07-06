@@ -80,9 +80,11 @@ const ListBrand = ({selectedBrand, setSelectedBrand, data, disabled}) => {
 
   return loading && !refreshing ? (
     <View style={{paddingTop: 16}}>
-      {Array.from('x'.repeat(Math.round(HEIGHT - 120) / 130)).map(() => (
-        <BrandListLoading height={130} />
-      ))}
+      {Array.from('x'.repeat(Math.round(HEIGHT - 120) / 130)).map(
+        (v, index) => (
+          <BrandListLoading height={130} key={index} />
+        ),
+      )}
     </View>
   ) : (
     <FlatList
@@ -107,8 +109,8 @@ ListBrand.defaultProps = {
 };
 
 ListBrand.propTypes = {
-  selectedBrand: PropTypes.object.isRequired,
-  setSelectedBrand: PropTypes.func.isRequired,
+  selectedBrand: PropTypes.object,
+  setSelectedBrand: PropTypes.func,
   data: PropTypes.array.isRequired,
   disabled: PropTypes.bool.isRequired,
 };

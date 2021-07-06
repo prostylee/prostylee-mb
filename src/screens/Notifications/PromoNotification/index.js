@@ -114,8 +114,12 @@ const PromoNotifications = () => {
       {loading && !refreshing ? (
         <View style={styles.loadingContainter}>
           {Array.from('x'.repeat(Math.round(height - 120) / (width / 3))).map(
-            () => (
-              <NotiLoading width={width * 0.95} height={width / 3} />
+            (v, index) => (
+              <NotiLoading
+                width={width * 0.95}
+                height={width / 3}
+                key={index}
+              />
             ),
           )}
         </View>
@@ -134,7 +138,7 @@ const PromoNotifications = () => {
             </>
           )}
           numColumns={1}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => item?.id || index}
           refreshing={refreshing}
           onRefresh={handleRefresh}
           onEndReached={handleLoadMore}

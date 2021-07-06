@@ -15,7 +15,7 @@ const TextInputArea = ({
 
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
-  
+
   return (
     <View style={styles.containerStyle}>
       <Text
@@ -43,13 +43,13 @@ const labelStyle = {
   color: '#8B9399',
   fontFamily: 'System',
   position: 'relative',
-  ':after': {
-    content: '* ',
-    position: 'absolute',
-    left: 5,
-    top: 0,
-    color: '#bbb',
-  },
+  // ':after': {
+  //   content: '* ',
+  //   position: 'absolute',
+  //   left: 5,
+  //   top: 0,
+  //   color: '#bbb',
+  // },
 };
 
 export default TextInputArea;

@@ -94,11 +94,10 @@ const FeaturedCategories = ({navigation}) => {
     <>
       <View style={styles.container}>
         {isLoading && !isRefreshing && !loadMoreLoading ? (
-          <View>
-            {[1, 2, 3].map((v) => (
-              <StoreLoading />
+          <View style={{overflow: 'hidden'}}>
+            {[1, 2, 3, 4].map((v) => (
+              <StoreLoading key={v} />
             ))}
-            <StoreLoading />
           </View>
         ) : data && data?.content?.length ? (
           <FlatList

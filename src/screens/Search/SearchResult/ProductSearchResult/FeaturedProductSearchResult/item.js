@@ -53,10 +53,10 @@ const FeaturedCategoriesItem = ({item, navigation}) => {
             </View>
 
             <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(item?.priceSale, 'đ')}
+              {currencyFormat(item?.priceSale || 0, 'đ')}
             </Text>
             <Text numberOfLines={1} style={styles.priceRoot}>
-              {currencyFormat(item?.price, 'đ')}
+              {currencyFormat(item?.price || 0, 'đ')}
             </Text>
             <View style={styles.wrapRating}>
               <ProductRatingStar
