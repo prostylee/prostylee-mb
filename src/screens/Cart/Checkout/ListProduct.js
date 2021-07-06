@@ -13,9 +13,9 @@ import isEmpty from 'lodash/isEmpty';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
   getListCartSelector,
-  getOrderDataSelector,
   getPaymentMethodSelector,
   getShippingMethodSelector,
+  getVoucherUseSelector,
 } from 'redux/selectors/cart';
 import {cartActions} from 'reducers';
 
@@ -24,16 +24,15 @@ const ListProduct = ({navigation, data, validateButton}) => {
   const [refreshing, handleRefreshing] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [total, setTotal] = useState(0);
-  const [voucher, setVoucher] = useState();
   const [productVarientPriceData, setProductVarientPriceData] = useState({});
 
   const cart = useSelector((state) => getListCartSelector(state)) || [];
-  const orderData = useSelector((state) => getOrderDataSelector(state) || {});
   const paymentSelected = useSelector((state) =>
     getPaymentMethodSelector(state),
   );
   const deliveryMethod =
     useSelector((state) => getShippingMethodSelector(state)) || {};
+  const voucherUsed = useSelector((state) => getVoucherUseSelector(state));
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -113,7 +112,8 @@ const ListProduct = ({navigation, data, validateButton}) => {
   const handleLoadMore = () => {};
 
   const renderFooter = () => {
-    const voucherValue = voucher && voucher.price ? voucher.price : 0;
+    const voucherValue =
+      voucherUsed && voucherUsed.price ? voucherUsed.price : 0;
     const deliveryValue =
       deliveryMethod && deliveryMethod.price ? deliveryMethod.price : 0;
     return (
@@ -212,13 +212,15 @@ const ListProduct = ({navigation, data, validateButton}) => {
     return <CardAddress navigation={navigation} />;
   };
 
+  const totalPrice = () => {
+    const deliveryPrice =
+      deliveryMethod && deliveryMethod.price ? deliveryMethod.price : 0;
+    const voucherPrice =
+      voucherUsed && voucherUsed.price ? voucherUsed.price : 0;
+    return +total + deliveryPrice + voucherPrice;
+  };
+
   const onPayment = () => {
-    const totalPrice = () => {
-      const deliveryPrice =
-        deliveryMethod && deliveryMethod.price ? deliveryMethod.price : 0;
-      const voucherPrice = voucher && voucher.price ? voucher.price : 0;
-      return +total + deliveryPrice + voucherPrice;
-    };
     dispatch(
       cartActions.createOrder({
         productVarientPriceData,
@@ -289,10 +291,10 @@ const ListProduct = ({navigation, data, validateButton}) => {
             <CardFooter
               buttonText={i18n.t('cart.order')}
               deliveryMethod={deliveryMethod}
-              voucher={voucher}
               actionButton={onPayment}
               isCheckout
               disabled={validateButton}
+              totalPrice={totalPrice()}
             />
           </View>
         </>

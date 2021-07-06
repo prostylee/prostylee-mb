@@ -13,6 +13,7 @@ import {Image, NumberInputUpDown} from 'components';
 import i18n from 'i18n';
 import HeaderStore from './HeaderStore';
 import {currencyFormat} from 'utils/currency';
+import {getProductPrice} from 'utils/product';
 import Modal from 'react-native-modal';
 import ModalChangeCart from '../ModalChangeCart';
 import {DownArrow, Close} from 'svg/common';
@@ -23,6 +24,7 @@ const Item = ({product}) => {
   const [visible, setVisible] = useState(false);
   const [currentId, setCurrentId] = useState();
   const [currentOptions, setCurrentOptions] = useState([]);
+  const [modalProductData, setModalProductData] = useState({});
 
   const dispatch = useDispatch();
 
@@ -64,6 +66,7 @@ const Item = ({product}) => {
               productId={currentId}
               currentOptions={currentOptions}
               closeModal={() => setVisible(false)}
+              productData={modalProductData}
             />
           </View>
         </View>
@@ -71,6 +74,7 @@ const Item = ({product}) => {
       <View style={styles.wrapSection}>
         <HeaderStore header={{storeId, storeName, storeAvatar}} />
         {data.map((dataItem, index) => {
+          const productPrice = getProductPrice(dataItem);
           const item = dataItem.item ? dataItem.item : {};
           const onRemoveItem = () => {
             Alert.alert(i18n.t('caution'), i18n.t('cart.removeItemPopup'), [
@@ -109,14 +113,22 @@ const Item = ({product}) => {
                     </Text>
                     {item?.priceSale ? (
                       <Text numberOfLines={1} style={styles.price}>
-                        {currencyFormat(item?.priceSale, 'đ')}
+                        {currencyFormat(
+                          productPrice?.priceSale
+                            ? productPrice?.priceSale
+                            : productPrice?.price,
+                          'đ',
+                        )}
                       </Text>
                     ) : null}
                   </View>
                   <View style={styles.wrapAmount}>
                     <TouchableOpacity
                       style={styles.wrapSize}
-                      onPress={() => onChangeAttr(item.id, dataItem?.options)}>
+                      onPress={() => {
+                        setModalProductData(dataItem);
+                        onChangeAttr(item.id, dataItem?.options);
+                      }}>
                       <Text numberOfLines={1} style={styles.name}>
                         {dataItem?.options.map((op, idx) => {
                           return (

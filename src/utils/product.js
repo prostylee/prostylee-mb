@@ -6,3 +6,23 @@ export const getProductVarient = (choiceSelect) => {
   });
   return attributeID;
 };
+
+export const getProductPrice = (productData) => {
+  const productVarient = getProductVarient(productData.options);
+
+  const attributeList = {};
+  productData.item?.productPriceResponseList?.map((item) => {
+    const attributeValues = item.productAttributes
+      .map((attribute) => attribute.attrValue)
+      .sort();
+    let attributeID = '';
+    attributeValues.forEach((element) => {
+      attributeID = attributeID + '_' + element;
+    });
+    attributeList[attributeID] = {
+      price: item?.price,
+      priceSale: item?.priceSale,
+    };
+  });
+  return attributeList[productVarient];
+};
