@@ -46,6 +46,7 @@ import {
   RateProduct,
   Cart,
   CartAddressSelect,
+  CartSelectShippingMethod,
   StoreProfileMain,
   StoreVouchers,
   //-------- Post Product --------
@@ -109,6 +110,10 @@ function SignedIn() {
       <Stack.Screen name="RateProduct" component={RateProduct} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="CartAddressSelect" component={CartAddressSelect} />
+      <Stack.Screen
+        name="CartSelectShippingMethod"
+        component={CartSelectShippingMethod}
+      />
       <Stack.Screen name="MyPage" component={MyPage} />
       {/******** Chat & Message ********/}
       <Stack.Screen name="ChatBox" component={ChatBox} />
@@ -229,7 +234,6 @@ function SignedOut() {
 const App = React.forwardRef(() => {
   const userToken = useSelector((state) => userSelectors.getUserToken(state));
   const themeMode = useSelector((state) => commonSelectors.getThemeMode(state));
-  console.log('userToken -----' + userToken);
 
   return (
     <NavigationContainer
