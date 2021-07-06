@@ -4,6 +4,7 @@ import {Text, View, ActivityIndicator} from 'react-native';
 import {Image} from 'components';
 import HeaderStore from './HeaderStore';
 import {currencyFormat} from 'utils/currency';
+import {getProductPrice} from 'utils/product';
 
 const Item = ({product, navigation}) => {
   const {storeId, storeName, storeAvatar, data} = product;
@@ -15,6 +16,7 @@ const Item = ({product, navigation}) => {
       <View style={styles.wrapSection}>
         <HeaderStore header={{storeId, storeName, storeAvatar}} />
         {data.map((dataItem, index) => {
+          const productPrice = getProductPrice(dataItem);
           const item = dataItem.item ? dataItem.item : {};
           return (
             <View style={styles.productItem} key={item.id}>
@@ -36,7 +38,12 @@ const Item = ({product, navigation}) => {
                   </Text>
                   {item?.priceSale ? (
                     <Text numberOfLines={1} style={styles.price}>
-                      {currencyFormat(item?.priceSale, 'đ')}
+                      {currencyFormat(
+                        productPrice?.priceSale
+                          ? productPrice?.priceSale
+                          : productPrice?.price,
+                        'đ',
+                      )}
                     </Text>
                   ) : null}
                 </View>

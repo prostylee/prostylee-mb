@@ -4,88 +4,140 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {ActivityIndicator, Text, View} from 'react-native';
 import {Image} from 'components';
+import {SUCCESS} from 'constants';
 import CardVoucher from '../CardVoucher';
 import {Button} from 'react-native-paper';
 import i18n from 'i18n';
-import {cartActions} from 'redux/reducers';
-import {getVoucherUseSelector} from 'redux/selectors/cart';
+import {getProductVarient} from 'utils/product';
+import {cartActions, userSelectors} from 'reducers';
 import {TicketCutLine} from 'svg/common';
+import {verifyVoucher} from 'services/api/cartApi';
+import {showMessage} from 'react-native-flash-message';
+import {
+  getListCartSelector,
+  getPaymentMethodSelector,
+  getShippingMethodSelector,
+  getSelectedCartAddressSelector,
+} from 'redux/selectors/cart';
 
 const ProductItem = ({item, navigation, params}) => {
   const dispatch = useDispatch();
 
-  const {onUseVoucher} = params;
+  const processProductPriceData = (data) => {
+    const attributeList = {};
+    data?.map((item) => {
+      const attributeValues = item.productAttributes
+        .map((attribute) => attribute.attrValue)
+        .sort();
+      let attributeID = '';
+      attributeValues.forEach((element) => {
+        attributeID = attributeID + '_' + element;
+      });
+      attributeList[attributeID] = {
+        price: item?.price,
+        priceSale: item?.priceSale,
+      };
+    });
+    return attributeList;
+  };
+  const getProductChoicePrice = (productVarient, priceList) => {
+    if (priceList[productVarient]) {
+      return priceList[productVarient];
+    } else {
+      return 0;
+    }
+  };
+  const getProductPrice = (data, quantity) => {
+    if (data.priceSale) {
+      return data.priceSale * quantity;
+    } else {
+      return data.price * quantity;
+    }
+  };
 
-  const voucherUsed = useSelector((state) => getVoucherUseSelector(state));
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
+  const paymentSelected = useSelector((state) =>
+    getPaymentMethodSelector(state),
+  );
+  const deliveryMethod =
+    useSelector((state) => getShippingMethodSelector(state)) || {};
+  const selectedCartAddress = useSelector((state) =>
+    getSelectedCartAddressSelector(state),
+  );
+  const cart = useSelector((state) => getListCartSelector(state)) || [];
+  const cartData = cart.length
+    ? cart.map((cartItem) => {
+        const productVarient = getProductVarient(cartItem.options);
+        const productPriceData = processProductPriceData(
+          cartItem.item.productPriceResponseList,
+        );
+        const productPrice = getProductChoicePrice(
+          productVarient,
+          productPriceData,
+        );
+        return {
+          productId: cartItem.item.id,
+          quantity: cartItem.quantity,
+          amount: getProductPrice(productPrice, cartItem.quantity),
+        };
+      })
+    : [];
 
   const onUse = async () => {
-    // if (!voucherUsed || voucherUsed.id !== item.id) {
-    //   const body = {
-    //     code: 'string',
-    //     totalMoney: 0,
-    //     status: 'AWAITING_CONFIRMATION',
-    //     paymentTypeId: 0,
-    //     buyerId: 0,
-    //     shippingAddress: {
-    //       fullName: 'string',
-    //       email: 'string',
-    //       phoneNumber: 'string',
-    //       address1: 'string',
-    //       address2: 'string',
-    //       state: 'string',
-    //       city: 'string',
-    //       country: 'string',
-    //       zipcode: 'string',
-    //     },
-    //     shippingProviderId: 0,
-    //     orderDetails: [
-    //       {
-    //         storeId: 0,
-    //         branchId: 0,
-    //         productId: 0,
-    //         productPrice: 0,
-    //         amount: 0,
-    //         productName: 'string',
-    //         productImage: 'string',
-    //         productColor: 'string',
-    //         productSize: 'string',
-    //         productData: 'string',
-    //       },
-    //     ],
-    //     orderDiscounts: [
-    //       {
-    //         voucherId: 0,
-    //         amount: 0,
-    //         description: 'string',
-    //       },
-    //     ],
-    //   };
-    //   checkVoucher(body)
-    //     .then((res) => {
-    //       if (res.data.status !== 200) {
-    //         showMessage({
-    //           message: `Có lỗi xảy ra, vui lòng thử lại sau`,
-    //           type: 'danger',
-    //         });
-    //         return;
-    //       }
-    //       showMessage({
-    //         message: `Sử dụng mã giảm giá thành công`,
-    //         type: 'success',
-    //       });
-    //     })
-    //     .then(() => {
-    //       showMessage({
-    //         message: `Lỗi hệ thống!`,
-    //         type: 'danger',
-    //       });
-    //     });
-    //   await dispatch(cartActions.setVoucherUse(item));
-    // }
-    if (typeof onUseVoucher === 'function') {
-      onUseVoucher(item);
-      navigation.goBack();
-    }
+    const body = {
+      voucherId: item.id,
+      order: {
+        amount: params?.totalPrice ? params.totalPrice : 0,
+        shippingProviderId: deliveryMethod.id,
+        shippingMethodId: deliveryMethod.id,
+        shippingAddress: {
+          state: selectedCartAddress.districtCode,
+          city: selectedCartAddress.cityCode,
+          country: null,
+          zipcode: null,
+        },
+        paymentTypeId: paymentSelected,
+        buyerId: userProfile.id,
+        buyAt: 2,
+      },
+      orderDetails: cartData,
+    };
+
+    verifyVoucher(body)
+      .then(async (res) => {
+        if (res.data.status === SUCCESS) {
+          if (res.data.data.data) {
+            showMessage({
+              message: i18n.t('cart.addVoucherSuccess'),
+              type: 'success',
+              position: 'top',
+            });
+            await dispatch(cartActions.setVoucherUse(item));
+            navigation.goBack();
+          }
+          showMessage({
+            message: i18n.t('cart.addVoucherFail'),
+            type: 'danger',
+            position: 'top',
+          });
+        } else {
+          showMessage({
+            message: i18n.t('unknownMessage'),
+            type: 'success',
+            position: 'top',
+          });
+        }
+      })
+      .catch(() => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
+      });
+    return;
   };
 
   return (
