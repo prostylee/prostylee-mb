@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import styles from './styles';
 
 const PriceSaleLabel = ({price, priceSale}) => {
-
   const [discountInPercent, setDiscountInPercent] = useState(0);
 
   useEffect(() => {
@@ -40,6 +39,10 @@ const PriceSaleLabel = ({price, priceSale}) => {
 PriceSaleLabel.propTypes = {
   price: PropTypes.number.isRequired,
   priceSale: PropTypes.number.isRequired,
+};
+PriceSaleLabel.defaultProps = {
+  price: 0,
+  priceSale: 0,
 };
 
 export default PriceSaleLabel;

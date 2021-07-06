@@ -78,6 +78,7 @@ const PersonalSaler = ({navigation}) => {
   };
 
   const _handleFilterByTag = (queryObject) => {
+    dispatch(storeActions.clearPersonalSalersFilterState());
     dispatch(
       storeActions.getPersonalSalers({
         page: PAGE_DEFAULT,

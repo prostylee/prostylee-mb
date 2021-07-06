@@ -24,11 +24,17 @@ import {useRoute} from '@react-navigation/native';
 const FilterProduct = ({navigation}) => {
   const dispatch = useDispatch();
   const route = useRoute();
+
   const filterDispatchFunction = route?.params?.filterFunc || null;
+
   const getFilterStateSelectorFunction =
     route?.params?.getFilterStateSelectorFunction || null;
+
   const clearFilterStateAction = route?.params?.clearFilterStateAction || null;
+
   const setFilterStateAction = route?.params?.setFilterStateAction || null;
+
+  const defaultQueryParams = route?.params?.defaultQueryParams || {};
 
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
   const filterAttributeList = useSelector((state) =>
@@ -94,6 +100,7 @@ const FilterProduct = ({navigation}) => {
           `${priceFilterState?.join('-')}` === '0-0'
             ? undefined
             : `${priceFilterState?.join('-')}`,
+        ...defaultQueryParams,
       }),
     );
     navigation.goBack();

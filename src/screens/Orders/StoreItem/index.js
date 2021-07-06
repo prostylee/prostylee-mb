@@ -66,7 +66,7 @@ const Item = ({store, status, changeCount, onChangeCount, children}) => {
                     </View>
                     <View style={styles.wrapAmount}>
                       <NumberInputUpDown
-                        value={item?.amount}
+                        value={`${item?.amount}`}
                         onChange={onChangeCount}
                       />
                     </View>

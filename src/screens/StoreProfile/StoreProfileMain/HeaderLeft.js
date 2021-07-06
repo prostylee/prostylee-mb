@@ -1,9 +1,17 @@
 import React from 'react';
-import {TouchableOpacity, View, Text} from 'react-native';
-import {MessageOutlined, ChevronLeft, Bell} from 'svg/common';
+import {TouchableOpacity} from 'react-native';
+import {ChevronLeft} from 'svg/common';
 import styles from './styles';
-import {Header, HeaderAnimated, SearchBar, Colors, Bag} from 'components';
+import {Colors} from 'components';
+import {useDispatch} from 'react-redux';
+
+import {storeProfileActions} from 'redux/reducers';
 const HeaderLeft = ({opacity, isAnimated = false, navigation}) => {
+  const dispatch = useDispatch();
+  const onBackPress = () => {
+    dispatch(storeProfileActions.clearStoreProfileFilterState());
+    navigation.goBack();
+  };
   return isAnimated ? (
     <TouchableOpacity
       style={[
@@ -13,7 +21,7 @@ const HeaderLeft = ({opacity, isAnimated = false, navigation}) => {
           zIndex: 99999,
         },
       ]}
-      onPress={() => navigation.goBack()}>
+      onPress={onBackPress}>
       <ChevronLeft color={Colors?.['$icon']} strokeWidth={2} />
     </TouchableOpacity>
   ) : (
@@ -26,9 +34,7 @@ const HeaderLeft = ({opacity, isAnimated = false, navigation}) => {
           alignItems: 'center',
         },
       ]}
-      onPress={() => {
-        navigation.goBack();
-      }}>
+      onPress={onBackPress}>
       <ChevronLeft color="#fff" strokeWidth={2} />
     </TouchableOpacity>
   );

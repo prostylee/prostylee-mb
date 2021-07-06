@@ -43,7 +43,8 @@ import {productActions, productSelectors, userSelectors} from 'reducers';
 import defaultImg from '../../assets/images/default.png';
 
 const WIDTH = dim.width;
-const SCROLL_TRIGGER_POINT = Platform.OS === 'android' ? 90 : 140;
+const SCROLL_TRIGGER_POINT =
+  Platform.OS === 'android' ? 90 : 136 + getStatusBarHeight();
 
 const ProductDetail = (props) => {
   const dispatch = useDispatch();

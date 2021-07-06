@@ -44,7 +44,7 @@ const HeaderLeft = () => {
     });
   };
   return (
-    <TouchableOpacity style={styles.headerLeftContainer} onPress={_handlePress}>
+    <TouchableOpacity style={styles.headerLeftContainer} disabled>
       <MapPinFill color="#E82E46" width={18} height={18} backdropColor="#fff" />
       <Text style={styles.locationText}>
         {address || 'Không thể lấy vị trí'}

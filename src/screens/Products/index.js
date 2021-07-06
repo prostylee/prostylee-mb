@@ -125,7 +125,7 @@ const Products = ({navigation}) => {
   };
 
   const handleLoadMore = () => {
-    if (hasLoadMore) {
+    if (hasLoadMore && !loadMoreLoading) {
       let newSortValue = valueSort
         ? formatSortValue(valueSort)
         : {sorts: 'name'};
@@ -188,6 +188,7 @@ const Products = ({navigation}) => {
   const _handleFilterByTag = (queryObject) => {
     setFilterValue(queryObject);
     setValueSort(null);
+    dispatch(productActions.clearProductCategoriesFilterState());
     dispatch(
       productActions.getListProduct({
         page: PAGE_DEFAULT,
@@ -296,7 +297,7 @@ const Products = ({navigation}) => {
                   justifyContent: 'space-around',
                 }}>
                 {[1, 2, 3, 4].map((v) => (
-                  <SearchProductLoading />
+                  <SearchProductLoading key={v} />
                 ))}
               </View>
             ) : !listProduct || !listProduct.length ? (

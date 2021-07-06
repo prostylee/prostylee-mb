@@ -70,6 +70,7 @@ const BestSellers = ({navigation}) => {
   };
 
   const _handleFilterByTag = (queryObject) => {
+    dispatch(storeActions.clearBestSellersFilterState());
     dispatch(
       storeActions.getBestSellers({
         page: PAGE_DEFAULT,

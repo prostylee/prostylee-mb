@@ -19,4 +19,9 @@ export default EStyleSheet.create({
     alignItems: 'center',
     padding: 16,
   },
+  tabbarTextStyle: {
+    fontWeight: Platform.OS === 'android' ? '700' : '500',
+    fontSize: 14,
+    fontFamily: '$font1',
+  },
 });

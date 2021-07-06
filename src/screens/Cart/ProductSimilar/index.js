@@ -1,7 +1,7 @@
 import styles from './styles';
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {View, TouchableOpacity, Text, Image} from 'react-native';
+import {View, TouchableOpacity, Text, Image, Dimensions} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import i18n from 'i18n';
 import {currencyFormat} from 'utils/currency';
@@ -9,6 +9,7 @@ import {Heart, HeartFill} from 'svg/common';
 
 import {getListRecentSelector} from 'redux/selectors/cart';
 import {useNavigation} from '@react-navigation/native';
+const WIDTH = Dimensions.get('window').width;
 
 const ProductSimilar = (props) => {
   const navigation = useNavigation();
@@ -62,7 +63,7 @@ const ProductSimilar = (props) => {
         data={recentList}
         activeSlideAlignment={'start'}
         renderItem={renderItem}
-        sliderWidth={144 * recentList.length}
+        sliderWidth={WIDTH}
         itemWidth={144}
         inactiveSlideOpacity={1}
         inactiveSlideScale={1}

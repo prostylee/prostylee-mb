@@ -64,6 +64,7 @@ export default EStyleSheet.create({
   },
   viewFooter: {
     marginBottom: 6,
+    paddingVertical: 20,
   },
   isAdvertising: {
     color: '$lightGray',

@@ -70,9 +70,10 @@ const TopSearch = ({navigation}) => {
       {loading && !listTopSearch?.length === 0 ? (
         <>
           <View style={styles.wrapChip}>
-            {[1, 2, 3, 4, 5, 6, 7].map((item, _i) => {
+            {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
               return (
                 <TopSearchLoading
+                  key={index}
                   style={{height: 32, marginTop: 8, marginRight: 8}}
                 />
               );
@@ -89,9 +90,10 @@ const TopSearch = ({navigation}) => {
           style={styles.wrapScroll}>
           <View style={styles.wrapChip}>
             {listTopSearch && listTopSearch.length
-              ? listTopSearch.map((item) => (
+              ? listTopSearch.map((item, index) => (
                   <Chip
                     small
+                    key={`${index}${item?.id}`}
                     onPress={() => {
                       _handleTagPress(item);
                     }}

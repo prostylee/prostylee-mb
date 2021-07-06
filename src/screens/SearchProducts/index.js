@@ -102,10 +102,11 @@ const SearchProducts = ({navigation}) => {
       dispatch(searchActions.setCurrentKeyword(query));
       dispatch(
         searchActions.getProductsSearch({
-          keyword: query,
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
-          sorts: 'name',
+          keyword: query,
+          ...currentSortValue,
+          ...currentFilterValue,
         }),
       );
     }, 1000),
@@ -146,9 +147,9 @@ const SearchProducts = ({navigation}) => {
     });
     dispatch(
       searchActions.getProductsSearch({
-        keyword: searchQuery,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
+        keyword: searchQuery,
         ...sortOption,
         ...currentFilterValue,
       }),
@@ -161,6 +162,7 @@ const SearchProducts = ({navigation}) => {
     dispatch(searchActions.setProductsSearchLoading(true));
   };
   const _handleFilterByTag = (queryObject) => {
+    dispatch(searchActions.clearProductsFilterState());
     setCurrentFilterValue({
       ...queryObject,
     });
@@ -168,9 +170,9 @@ const SearchProducts = ({navigation}) => {
     setValueSort(null);
     dispatch(
       searchActions.getProductsSearch({
-        keyword: searchQuery,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
+        keyword: searchQuery,
         ...queryObject,
       }),
     );

@@ -89,7 +89,7 @@ const Item = ({
               </View>
               <View style={styles.wrapAmount}>
                 <NumberInputUpDown
-                  value={product?.amount}
+                  value={`${product?.amount}`}
                   onChange={onChangeCount}
                 />
               </View>

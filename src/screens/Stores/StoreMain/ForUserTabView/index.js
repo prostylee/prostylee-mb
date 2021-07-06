@@ -145,26 +145,37 @@ const ForUserTabView = ({
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{i18n.t('stores.forUser')}</Text>
       </View>
-      <ScrollableTabView
-        onChangeTab={({i}) => {
-          setTabIndex(i);
-        }}
-        tabBarBackgroundColor={Colors?.[`$white`]}
-        tabBarActiveTextColor={Colors?.['$purple']}
-        tabBarUnderlineStyle={{backgroundColor: Colors?.[`$purple`], height: 2}}
-        tabBarInactiveTextColor={Colors?.['$lightGray']}
-        tabBarTextStyle={{fontSize: 14, fontWeight: '500', textAlign: 'center'}}
-        initialPage={0}
-        renderTabBar={() => <ScrollableTabBar />}
-        locked={false}>
-        {tabList && tabList.length ? (
-          tabList.map((v) => (
-            <View tabLabel={v.tabName} url={v?.apiUrl} method={v?.apiMethod} />
-          ))
-        ) : (
-          <Text>{i18n.t('Search.resultsNotfound')}</Text>
-        )}
-      </ScrollableTabView>
+      {tabList && tabList.length ? (
+        <ScrollableTabView
+          onChangeTab={({i}) => {
+            setTabIndex(i);
+          }}
+          tabBarBackgroundColor={Colors?.[`$white`]}
+          tabBarActiveTextColor={Colors?.['$purple']}
+          tabBarUnderlineStyle={{
+            backgroundColor: Colors?.[`$purple`],
+            height: 2,
+          }}
+          tabBarInactiveTextColor={Colors?.['$lightGray']}
+          tabBarTextStyle={{
+            fontSize: 14,
+            fontWeight: '500',
+            textAlign: 'center',
+          }}
+          initialPage={0}
+          renderTabBar={() => <ScrollableTabBar />}
+          locked={false}>
+          {tabList.map((v) => (
+            <View
+              key={v?.tabName}
+              tabLabel={v.tabName}
+              url={v?.apiUrl}
+              method={v?.apiMethod}
+            />
+          ))}
+        </ScrollableTabView>
+      ) : null}
+
       <ProductList
         onRefresh={_handleRefresh}
         onLoadMore={_handleLoadMore}

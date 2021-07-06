@@ -147,7 +147,7 @@ ProductTitle.defaultProps = {
   numberOfRate: 0,
 };
 
-ProductTitle.PropTypes = {
+ProductTitle.propTypes = {
   productId: PropTypes.number.isRequired,
   name: PropTypes.string,
   price: PropTypes.number,

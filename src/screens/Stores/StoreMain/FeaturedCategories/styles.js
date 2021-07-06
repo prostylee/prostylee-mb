@@ -18,9 +18,11 @@ export default EStyleSheet.create({
     flex: 1,
     paddingBottom: 16,
     backgroundColor: '$white',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   wrapItems: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'column',
     backgroundColor: '$white',
     paddingVertical: 3.5,

@@ -99,7 +99,7 @@ const GridView = ({column, wImage, hImage, scrollEnabled}) => {
     <>
       {loading && !isRefreshing ? (
         [1, 2, 3, 4, 5].map((v, i) => (
-          <View style={{paddingVertical: 16, overflow: 'hidden'}}>
+          <View style={{paddingVertical: 16, overflow: 'hidden'}} key={v}>
             <ImageGrid />
           </View>
         ))

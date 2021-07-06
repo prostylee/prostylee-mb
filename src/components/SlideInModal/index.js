@@ -26,7 +26,7 @@ export default class SlideInModal extends React.PureComponent {
 
     this.state = {
       visible: false,
-      children: true,
+      children: <View />,
     };
   }
 

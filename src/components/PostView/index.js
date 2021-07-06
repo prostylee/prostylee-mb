@@ -67,6 +67,7 @@ const PostView = ({item, disabledLike = false, disabledComment = false}) => {
             pagingEnabled
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => index}
             renderItem={({item, index}) => {
               return (
                 <Image

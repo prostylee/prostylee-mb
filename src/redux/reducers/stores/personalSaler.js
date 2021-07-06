@@ -64,7 +64,7 @@ export const handleActions = {
     return {
       ...state,
       personalSalersData: payload,
-      personalSalersPage: PAGE_INIT,
+      personalSalersPage: PAGE_INIT + UNIT_INCREASE,
       hasPersonalSalersLoadmore:
         state.personalSalersPage + UNIT_INCREASE + 1 < totalPages
           ? true

@@ -30,8 +30,6 @@ const Cart = ({navigation}) => {
     dispatch(cartActions.getListCartAddress());
   }, []);
 
-  console.log(listCartAddress);
-
   React.useEffect(() => {
     if (listCartAddress && listCartAddress.length) {
       if (isEmpty(selectedCartAddress)) {

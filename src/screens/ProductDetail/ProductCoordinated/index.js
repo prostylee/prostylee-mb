@@ -31,22 +31,15 @@ const ProductSimilar = ({data, onSelect}) => {
           /> */}
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={data}
-        renderItem={({item, index}) => {
-          return (
-            <View style={styles.wrapProduct}>
-              <ProductItem index={index} item={item} onSelect={onSelect} />
-            </View>
-          );
-        }}
-        numColumns={2}
-        scrollEventThrottle={1}
-        keyExtractor={(_, index) => `coordinated_product_${index}`}
-        style={styles.listContainer}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      />
+      <View style={styles.listContainer}>
+        {data && data?.length
+          ? data.map((item, index) => (
+              <View style={styles.wrapProduct} key={item?.id || index}>
+                <ProductItem index={index} item={item} onSelect={onSelect} />
+              </View>
+            ))
+          : null}
+      </View>
     </View>
   );
 };
@@ -56,7 +49,7 @@ ProductSimilar.defaultProps = {
   onSelect: () => {},
 };
 
-ProductSimilar.PropType = {
+ProductSimilar.propTypes = {
   onSelect: PropTypes.func,
 };
 

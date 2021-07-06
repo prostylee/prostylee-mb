@@ -62,7 +62,7 @@ export const handleActions = {
     return {
       ...state,
       bestSellersData: payload,
-      bestSellersPage: PAGE_INIT,
+      bestSellersPage: PAGE_INIT + UNIT_INCREASE,
       hasBestSellersLoadmore:
         state.bestSellersPage + UNIT_INCREASE + 1 < totalPages ? true : false,
     };

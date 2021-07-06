@@ -73,7 +73,7 @@ ProductInfo.defaultProps = {
   productStatus: {},
 };
 
-ProductInfo.PropTypes = {
+ProductInfo.propTypes = {
   description: PropTypes.string,
   brand: PropTypes.object,
   productStatus: PropTypes.object,

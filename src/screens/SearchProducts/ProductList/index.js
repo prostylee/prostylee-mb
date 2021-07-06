@@ -49,13 +49,12 @@ const ProductList = ({navigation, currentFilter = {}, currentSort = {}}) => {
     return null;
   };
   const _handleLoadMore = () => {
-    if (hasLoadMore) {
+    if (hasLoadMore && !isLoadMoreLoading) {
       dispatch(
         searchActions.getProductsSearchLoadmore({
           page: page + 1,
           limit: LIMIT_DEFAULT,
           keyword: currentKeyword,
-          type: 'product',
           ...currentFilter,
           ...currentSort,
         }),
@@ -69,7 +68,7 @@ const ProductList = ({navigation, currentFilter = {}, currentSort = {}}) => {
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         keyword: currentKeyword,
-        type: 'product',
+
         ...currentFilter,
         ...currentSort,
       }),
@@ -81,10 +80,9 @@ const ProductList = ({navigation, currentFilter = {}, currentSort = {}}) => {
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         keyword: currentKeyword,
-        type: 'product',
       }),
     );
-  }, [currentKeyword]);
+  }, []);
 
   useEffect(() => {
     if (!isSearchLoading) setIsRefreshing(false);
@@ -101,7 +99,7 @@ const ProductList = ({navigation, currentFilter = {}, currentSort = {}}) => {
           }}>
           {[1, 2, 3, 4].map((v) => {
             return (
-              <View style={{width: '50%', padding: 16}}>
+              <View style={{width: '50%', padding: 16}} key={v}>
                 <SearchProductLoading />
               </View>
             );

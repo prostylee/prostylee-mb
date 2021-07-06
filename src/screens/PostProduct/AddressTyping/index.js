@@ -437,6 +437,7 @@ const AddressTyping = (navigation) => {
       }),
     );
   }, []);
+  // console.log('LIST USER LOCATION', listUserLocation);
   return (
     <ThemeView style={styles.container} isFullView>
       <Header
@@ -469,7 +470,7 @@ const AddressTyping = (navigation) => {
               {i18n.t('addProduct.selectedAddress')}
             </Text>
           </View>
-          <ListAddress data={listUserLocation} />
+          <ListAddress data={listAddress} />
         </>
       ) : loading ? (
         <View style={styles.indicatorView}>

@@ -112,6 +112,11 @@ const Maps = () => {
     dispatch(setSelectedAddressAction({...address}));
     dispatch(setSelectedAddressHistoryAction({...address}));
   };
+  React.useEffect(() => {
+    if (coordinate?.latitude && coordinate?.longitude) {
+      getAddress(coordinate.latitude, coordinate.longitude);
+    }
+  }, []);
 
   return (
     <ThemeView style={styles.wrapper} isFullView>
@@ -136,6 +141,7 @@ const Maps = () => {
           </Marker>
         </MapView>
       </View>
+
       <View style={styles.footer}>
         <View style={styles.textFooter}>
           <Text style={styles.title}>{i18n.t('addProduct.yourAddress')}</Text>

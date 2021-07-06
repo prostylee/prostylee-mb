@@ -4,6 +4,7 @@ import {RadioButton, Divider} from 'react-native-paper';
 import styles from './styles';
 import {Colors} from 'components';
 import PropTypes from 'prop-types';
+import {View} from 'react-native';
 const SortDropDown = ({
   visible,
   setVisible,
@@ -22,7 +23,7 @@ const SortDropDown = ({
         }}
         color="#823ffd">
         {options?.map((v, i, arr) => (
-          <>
+          <View key={v?.value}>
             <Divider />
             <RadioButton.Item
               color={Colors['$purple']}
@@ -42,7 +43,7 @@ const SortDropDown = ({
               label={v.label}
               mode="ios"
             />
-          </>
+          </View>
         ))}
       </RadioButton.Group>
     </Picker>
@@ -53,7 +54,7 @@ SortDropDown.defaultProps = {
   setVisible: () => {},
   setAction: () => {},
   setValueSort: () => {},
-  valueSort: '',
+  valueSort: -1,
   options: [],
 };
 
@@ -62,7 +63,7 @@ SortDropDown.propTypes = {
   setVisible: PropTypes.func.isRequired,
   setAction: PropTypes.func.isRequired,
   setValueSort: PropTypes.func.isRequired,
-  valueSort: PropTypes.string.isRequired,
+  valueSort: PropTypes.number,
   options: PropTypes.array.isRequired,
 };
 

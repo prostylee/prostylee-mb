@@ -116,7 +116,7 @@ export const handleActions = {
     return {
       ...state,
       brandList: payload,
-      brandListCurrentPage: PAGE_INIT,
+      brandListCurrentPage: PAGE_INIT + UNIT_INCREASE,
       hasBrandlistLoadmore:
         state.brandListCurrentPage + UNIT_INCREASE + 1 < totalPages
           ? true

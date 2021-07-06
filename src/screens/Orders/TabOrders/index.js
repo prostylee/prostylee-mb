@@ -42,36 +42,42 @@ const TabOrders = ({navigation, status}) => {
           tabBarActiveTextColor="#823FFD"
           tabBarUnderlineStyle={{backgroundColor: '#823FFD'}}
           initialPage={listStatus.findIndex((item) => item.id === status)}
-          renderTabBar={() => <ScrollableTabBar backgroundColor="#ffffff" />}>
+          renderTabBar={() => (
+            <ScrollableTabBar
+              textStyle={styles.tabbarTextStyle}
+              backgroundColor="#ffffff"
+              inactiveTextColor="#8B9399"
+            />
+          )}>
           {listStatus.map((item, index) => {
             switch (item.actCode) {
               case ORDER_STATUS_ACT_CODE.PROCESSING:
                 return (
-                  <View tabLabel={item.name} key={item.key}>
+                  <View tabLabel={item.name} key={item?.id}>
                     <Waiting status={item.key} {...item} statusId={item?.id} />
                   </View>
                 );
               case ORDER_STATUS_ACT_CODE.ON_DELIVERY:
                 return (
-                  <View tabLabel={item.name} key={item.key}>
+                  <View tabLabel={item.name} key={item?.id}>
                     <Delivery status={item.key} {...item} statusId={item?.id} />
                   </View>
                 );
               case ORDER_STATUS_ACT_CODE.COMPLETED:
                 return (
-                  <View tabLabel={item.name} key={item.key}>
+                  <View tabLabel={item.name} key={item?.id}>
                     <Done status={item.key} {...item} statusId={item?.id} />
                   </View>
                 );
               case ORDER_STATUS_ACT_CODE.CANCEL_ORDER:
                 return (
-                  <View tabLabel={item.name} key={item.key}>
+                  <View tabLabel={item.name} key={item?.id}>
                     <Cancel status={item.key} {...item} statusId={item?.id} />
                   </View>
                 );
               case ORDER_STATUS_ACT_CODE.WAIT_FOR_PAYMENT:
                 return (
-                  <View tabLabel={item.name} key={item.key}>
+                  <View tabLabel={item.name} key={item?.id}>
                     <WaitForPayment
                       status={item.key}
                       {...item}
@@ -83,7 +89,7 @@ const TabOrders = ({navigation, status}) => {
                 return (
                   <View
                     tabLabel={item.title}
-                    key={item.key}
+                    key={item?.id}
                     style={{
                       flex: 1,
                       backgroundColor: '#fff',

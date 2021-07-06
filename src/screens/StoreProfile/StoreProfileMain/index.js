@@ -71,7 +71,9 @@ const StoreProfileMain = (props) => {
 
   const loading = useSelector((state) => getStoreLoadingSelector(state));
   const storeInfo = useSelector((state) => getStoreInfoSelector(state));
-
+  useEffect(() => {
+    if (!valueSort) setActiveItemLabel('');
+  }, [valueSort]);
   useEffect(() => {
     dispatch(storeProfileActions.getStoreInfo(1));
     dispatch(
@@ -145,13 +147,19 @@ const StoreProfileMain = (props) => {
         sorts: 'name',
         ...sortOption,
         ...filterValue,
+        storeId: storeId,
       }),
     );
   };
   const onSort = (value) => {
     setValueSort(value);
-    let label = PRODUCT_SORT_ITEM.find((v) => v.value === value).label;
-    setActiveItemLabel(label);
+    if (value) {
+      let label = PRODUCT_SORT_ITEM.find((v) => v.value === value).label;
+      setActiveItemLabel(label);
+    } else {
+      setActiveItemLabel('');
+    }
+
     _handleSort(value);
   };
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
@@ -193,6 +201,7 @@ const StoreProfileMain = (props) => {
     height: visible ? HEIGHT : 0,
     marginTop: visible ? HEIGHT_HEADER : 0,
   };
+
   return (
     <View
       style={[
@@ -225,7 +234,7 @@ const StoreProfileMain = (props) => {
                   maxWidth: WIDTH - 160,
                   backgroundColor: '#F4F5F5',
                 }}
-                placeholder={'Tìm kiếm'}
+                placeholder={i18n.t('Search.searchInStore')}
                 onChangeText={onChangeSearch}
                 value={keyword}
                 onClear={() => onChangeSearch('')}
@@ -234,7 +243,7 @@ const StoreProfileMain = (props) => {
             </View>
             <BottomHeaderAnimated
               onSort={onSort}
-              activeItemLabel={activeItemLabel}
+              activeItemLabel={activeItemLabel || ''}
               setVisible={setVisible}
               visible={visible}
             />
@@ -248,6 +257,9 @@ const StoreProfileMain = (props) => {
         scrollAnimated={scrollAnimated}
       />
       <Header
+        leftPress={() => {
+          dispatch(storeProfileActions.clearStoreProfileFilterState());
+        }}
         leftComponent={<HeaderLeft navigation={props.navigation} />}
         rightComponent={<HeaderRight />}
         containerStyle={[styles.headerContainer]}
@@ -259,7 +271,7 @@ const StoreProfileMain = (props) => {
               zIndex: 10,
             }}
             color="#fff"
-            placeholder={'Tìm kiếm'}
+            placeholder={i18n.t('Search.searchInStore')}
             onChangeText={onChangeSearch}
             placeholderTextColor="#8B9399"
             value={keyword}

@@ -151,6 +151,7 @@ const ConditionOfProductsFilter = ({
                 onSelect={onSelect}
                 attribute={v}
                 defaultState={defaultState}
+                key={v?.id}
               />
             ) : null,
           )

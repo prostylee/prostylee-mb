@@ -135,8 +135,8 @@ const InhouseTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   return (
     <View style={styles.container}>
       {loading && !isRefreshing ? (
-        [1, 2, 3, 4, 5].map(() => (
-          <View style={{padding: 16}}>
+        [1, 2, 3, 4, 5].map((v) => (
+          <View style={{padding: 16}} key={v}>
             <OrdersLoading />
           </View>
         ))

@@ -44,7 +44,7 @@ const ProductList = ({
             justifyContent: 'space-around',
           }}>
           {[1, 2, 3, 4].map((v) => (
-            <SearchProductLoading />
+            <SearchProductLoading key={v} />
           ))}
         </View>
       ) : data && data?.content?.length ? (
@@ -88,7 +88,7 @@ ProductList.propTypes = {
   getCurrentPageFunction: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   hasLoadmore: PropTypes.bool.isRequired,
-  navigation: PropTypes.bool.isRequired,
+  navigation: PropTypes.object.isRequired,
 };
 
 export default React.memo(ProductList);

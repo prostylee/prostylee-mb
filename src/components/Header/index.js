@@ -73,7 +73,7 @@ const styles = EStyleSheet.create({
     paddingLeft: 16,
   },
   titleStyle: {
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'android' ? '700' : '500',
     fontSize: 16,
     fontFamily: '$font1',
     letterSpacing: -0.02,

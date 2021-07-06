@@ -126,7 +126,8 @@ const Item = ({product}) => {
                                 {
                                   borderLeftWidth: idx !== 0 ? 1 : 0,
                                 },
-                              ]}>
+                              ]}
+                              key={idx}>
                               <Text style={styles.addButtonText}>
                                 {`${idx > 0 ? ' ' : ''}${op.value.attrValue} `}
                               </Text>
@@ -138,7 +139,7 @@ const Item = ({product}) => {
                     </TouchableOpacity>
                     <View style={styles.wrapUpdown}>
                       <NumberInputUpDown
-                        value={+dataItem?.quantity}
+                        value={`${+dataItem?.quantity}`}
                         minValue={0}
                         onChange={(value) => onChaneAmount(value, item)}
                         onRemoveItem={() => onRemoveItem()}

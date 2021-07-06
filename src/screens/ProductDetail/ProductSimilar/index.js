@@ -22,6 +22,7 @@ const ProductSimilar = ({data, onSelect}) => {
     return (
       <TouchableOpacity
         style={styles.carouselItem}
+        key={item?.id}
         onPress={() => {
           onSelect(item.id);
         }}>
@@ -68,6 +69,7 @@ const ProductSimilar = ({data, onSelect}) => {
         inactiveSlideOpacity={1}
         inactiveSlideScale={1}
         containerCustomStyle={styles.carouselContainer}
+        keyExtractor={(item, index) => item?.id || index}
       />
     </View>
   );
@@ -78,7 +80,7 @@ ProductSimilar.defaultProps = {
   onSelect: () => {},
 };
 
-ProductSimilar.PropTypes = {
+ProductSimilar.propTypes = {
   data: PropTypes.array,
   onSelect: PropTypes.func,
 };

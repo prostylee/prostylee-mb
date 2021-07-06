@@ -262,6 +262,7 @@ export default {
     resultsNotfound: 'Không có kết quả',
     follow: 'Theo dõi',
     unfollow: 'Đã theo dõi',
+    searchInStore: 'Tìm kiếm trong cửa hàng',
   },
   Notification: {
     noData: 'Hiện tại bạn không có thông báo nào',

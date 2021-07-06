@@ -117,7 +117,9 @@ const VoucherList = ({navigation}) => {
       {isLoading && !isRefreshing ? (
         <View style={{flexDirection: 'column', overflow: 'hidden'}}>
           {[1, 2, 3, 4, 5, 6, 7, 8].map((v, i) =>
-            v < (SCREEN_HEIGHT - 150) / 125 ? <VouchersLoading /> : null,
+            v < (SCREEN_HEIGHT - 150) / 125 ? (
+              <VouchersLoading key={`${v}-${i}`} />
+            ) : null,
           )}
         </View>
       ) : data && data?.content?.length ? (
@@ -134,7 +136,7 @@ const VoucherList = ({navigation}) => {
               // onUsePress={_handUsePress}
             />
           )}
-          keyExtractor={(item, index) => `${item?.name}-${item?.id}`}
+          keyExtractor={(item, index) => `${item?.name}-${item?.id}-${index}`}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           refreshing={isRefreshing}

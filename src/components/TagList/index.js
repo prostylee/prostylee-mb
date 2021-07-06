@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 const TagList = ({onTagPress, options}, ref) => {
   const [active, setActive] = React.useState(null);
   React.useImperativeHandle(ref, () => ({
-    active: options?.[active || 0],
+    active: active ? options?.[active] : {},
   }));
   return (
     <View style={styles.wrapList}>
@@ -16,6 +16,7 @@ const TagList = ({onTagPress, options}, ref) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={options}
+        keyExtractor={(item, index) => `${item.label}-${index}`}
         renderItem={({item, index}) => (
           <Chip
             icon={item.icon}

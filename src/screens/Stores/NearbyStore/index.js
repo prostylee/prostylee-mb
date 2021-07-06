@@ -80,6 +80,8 @@ const NearbyStore = ({navigation}) => {
       storeActions.getNearbyStore({
         latitude: location?.lat,
         longtitude: location?.lon,
+        limit: LIMIT_DEFAULT,
+        page: PAGE_DEFAULT,
       }),
     );
   }, [location]);
@@ -96,16 +98,7 @@ const NearbyStore = ({navigation}) => {
           height: 30,
           fontWeight: 'bold',
         }}
-        middleComponent={
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}>
-            {i18n.t('stores.textNear')}
-          </Text>
-        }
+        title={i18n.t('stores.textNear')}
       />
       <TagList onTagPress={_handleFilterByTag} options={filterTags} />
       <Divider />

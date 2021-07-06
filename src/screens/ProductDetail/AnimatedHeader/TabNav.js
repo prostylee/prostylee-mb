@@ -80,16 +80,16 @@ const TabNav = ({
   );
 };
 
-TabNav.defaultProps={
+TabNav.defaultProps = {
   activeTabProps: 'product',
 };
 
-TabNav.PropTypes={
-  opacity:PropTypes.number,
-  scrollToTop:PropTypes.func,
-  scrollToComment:PropTypes.func,
-  scrollToRelated:PropTypes.func,
-  activeTabProps:PropTypes.string,
+TabNav.propTypes = {
+  opacity: PropTypes.object,
+  scrollToTop: PropTypes.func,
+  scrollToComment: PropTypes.func,
+  scrollToRelated: PropTypes.func,
+  activeTabProps: PropTypes.string,
 };
 
 export default TabNav;

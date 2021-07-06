@@ -51,7 +51,6 @@ export const handleActions = {
     };
   },
   [types.SET_SELECTED_CART_ADDRESS]: (state, {payload}) => {
-    console.log('payload', payload);
     return {
       ...state,
       selectedCartAddress: payload,
