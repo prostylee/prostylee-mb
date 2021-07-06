@@ -36,6 +36,10 @@ export const getVoucherList = (payload) => {
   });
 };
 
+export const verifyVoucher = (payload) => {
+  return _fetch(POST, `user-vouchers/${payload.voucherId}/verify`, payload);
+};
+
 export const checkVoucher = (payload) => {
   return _fetch(POST, '/orders/checkVoucher', payload);
 };
