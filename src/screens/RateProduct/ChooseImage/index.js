@@ -9,10 +9,13 @@ import {
   Image,
 } from 'react-native';
 
+import i18n from 'i18n';
+
 /*Components*/
 
 import {UploadIcon} from 'svg/common';
 import ImagePicker from 'react-native-image-crop-picker';
+import {showMessage} from 'react-native-flash-message';
 
 const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
   const openImagePicker = async () => {
@@ -32,7 +35,13 @@ const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
           setImages(listImage);
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
+      });
   };
   const handlePushNewImage = (listImagePicked = []) => {
     let newListImage = [];

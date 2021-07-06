@@ -44,7 +44,13 @@ const AddProductsInfor = ({navigation}) => {
       .then((res) => {
         RootNavigator.navigate('CropPostProductImage', {images: res});
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
+      });
   };
   const onSubmitPress = () => {
     if (

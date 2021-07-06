@@ -25,6 +25,7 @@ const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
 import configEnv from 'config';
 /******** chat aws ********/
 import Chat from './Chat';
+import {showMessage} from 'react-native-flash-message';
 const ChatBox = ({navigation, route}) => {
   const chatId = route?.params?.chatId ? route.params.chatId : '';
   const otherChatUserId = route?.params?.otherChatUserId
@@ -47,7 +48,13 @@ const ChatBox = ({navigation, route}) => {
       .then((user) => {
         setCurrentUser(user);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
+      });
     executeGetChat();
   }, []);
 
@@ -113,7 +120,11 @@ const ChatBox = ({navigation, route}) => {
         setChatDataList(result.data.getChat.childrens.items);
       }
     } catch (err) {
-      console.log(err);
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'success',
+        position: 'top',
+      });
     } finally {
       setLoading(false);
     }

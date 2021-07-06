@@ -8,6 +8,8 @@ import {
 import {searchActions, searchTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 
 //List FEATURED_PRODUCT_SEARCH
 const getFeaturedProductSearch = function* ({payload}) {
@@ -15,14 +17,17 @@ const getFeaturedProductSearch = function* ({payload}) {
     yield put(searchActions.setFeaturedProductSearchLoading(true));
     yield put(searchActions.setPageFeaturedProductSearchDefault());
     const res = yield call(getFeaturedProductSearchApi, payload);
-    console.log('FEATURED PRODUCT SEARCH', res);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(searchActions.getFeaturedProductSearchSuccess(res.data.data));
     } else {
       yield put(searchActions.getFeaturedProductSearchFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(searchActions.setFeaturedProductSearchLoading(false));
   }
@@ -40,7 +45,11 @@ const getLoadMoreFeaturedProductSearch = function* ({payload}) {
       yield put(searchActions.getFeaturedProductSearchLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(searchActions.setFeaturedProductSearchLoadingLoadMore(false));
   }

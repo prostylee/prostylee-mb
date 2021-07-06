@@ -29,6 +29,7 @@ import {Grid, Full, Setting} from 'svg/common';
 import {Avatar, ToggleButton} from 'react-native-paper';
 import TabViewContainer from './TabView';
 import {ScrollView} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 
 const heightShow = 334;
 let scrollFlag = true;
@@ -94,7 +95,13 @@ const Index = ({navigation}) => {
       .then((user) => {
         dispatch(userActions.getProfile(user.attributes['custom:userId']));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        showMessage({
+          message: I18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
+      });
     dispatch(commonActions.toggleLoading(false));
   }, []);
 

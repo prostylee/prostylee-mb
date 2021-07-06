@@ -2,7 +2,8 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {getDynamicUsers} from 'services/api/dynamicUsersApi';
 import {dynamicUsersActions, dynamicUsersTypes} from 'reducers';
 import {SUCCESS} from 'constants';
-
+import {showMessage} from 'react-native-flash-message';
+import moduleName from 'i18n';
 const getListDynamicUsers = function* ({payload}) {
   try {
     yield put(dynamicUsersActions.setLoading(true));
@@ -13,7 +14,11 @@ const getListDynamicUsers = function* ({payload}) {
       yield put(dynamicUsersActions.getDynamicUserFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(dynamicUsersActions.setLoading(false));
   }

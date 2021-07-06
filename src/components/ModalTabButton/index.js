@@ -81,10 +81,15 @@ const ModalTabButton = ({style, visible}) => {
       maxFiles: 4,
     })
       .then((res) => {
-        console.log(res);
         RootNavigator.navigate('CropPicture', {images: res});
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
+      });
   };
 
   const checkPickerModal = () => {

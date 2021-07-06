@@ -17,6 +17,7 @@ import {userSelectors} from 'reducers';
 import {userActions} from 'redux/reducers';
 import {SearchBar} from 'components';
 import {useRoute} from '@react-navigation/native';
+import {showMessage} from 'react-native-flash-message';
 
 const mock = {
   plus_code: {
@@ -364,11 +365,15 @@ const AddressTyping = (navigation) => {
         //   southwest: {lat: minLat, lng: minLon},
         //   northeast: {lat: maxLat, lng: maxLon},
         // });
-        // console.log('JSON',JSON.stringify(json,null,2))
+
         let arrayLocation = mock.results?.map((item) => formatAddress(item));
         setListLocation(arrayLocation);
       } catch (err) {
-        console.log('GET ADDRESS ERR', err);
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
       } finally {
         setLoading(false);
       }
@@ -437,7 +442,7 @@ const AddressTyping = (navigation) => {
       }),
     );
   }, []);
-  // console.log('LIST USER LOCATION', listUserLocation);
+
   return (
     <ThemeView style={styles.container} isFullView>
       <Header

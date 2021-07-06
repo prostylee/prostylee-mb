@@ -6,6 +6,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {userSelectors} from 'reducers';
 import {userActions} from 'redux/reducers';
 import Geolocation from '@react-native-community/geolocation';
+import i18n from 'i18n';
+import {showMessage} from 'react-native-flash-message';
+
 const useLocation = () => {
   const dispatch = useDispatch();
   const locationRedux =
@@ -50,7 +53,11 @@ const useLocation = () => {
         setLocation({...location, lon: currentLongitude, lat: currentLatitude});
       },
       (error) => {
-        console.log('GET LOCATION ERROR', error);
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
       },
       {
         // enableHighAccuracy: false,
@@ -78,7 +85,13 @@ const useLocation = () => {
             fullAddress: addressComponent.formatted_address,
           });
         })
-        .catch((error) => console.log('GET ADDRESS ERROR', error));
+        .catch((error) => {
+          showMessage({
+            message: i18n.t('unknownMessage'),
+            type: 'success',
+            position: 'top',
+          });
+        });
     }
   }, [location]);
   return location;

@@ -8,8 +8,14 @@ import {
   getListLocation as getListLocationApi,
   postProduct as postProductApi,
 } from 'services/api/postProductApi';
+
 import {postProductActions, postProductTypes} from 'reducers';
+
 import {SUCCESS, POST_SUCCESS} from 'constants';
+
+import {showMessage} from 'react-native-flash-message';
+
+import i18n from 'i18n';
 
 const getListAttributes = function* ({payload}) {
   try {
@@ -21,7 +27,11 @@ const getListAttributes = function* ({payload}) {
       yield put(postProductActions.getListAttributesFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(postProductActions.setListAttributesLoading(false));
   }
@@ -37,7 +47,11 @@ const getListProductStatus = function* ({payload}) {
       yield put(postProductActions.getListProductStatusFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(postProductActions.setListProductStatusLoading(false));
   }
@@ -54,7 +68,11 @@ const getListDeliveryType = function* ({payload}) {
       yield put(postProductActions.getListDeliveryTypeFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(postProductActions.setListDeliveryTypeLoading(false));
   }
@@ -71,7 +89,11 @@ const getListPaymentMethod = function* ({payload}) {
       yield put(postProductActions.getListPaymentMethodFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(postProductActions.setListPaymentMethodLoading(false));
   }
@@ -88,7 +110,11 @@ const getListLocation = function* ({payload}) {
       yield put(postProductActions.getListLocationFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(postProductActions.setListLocationLoading(false));
   }
@@ -104,7 +130,11 @@ const postProduct = function* ({payload}) {
       yield put(postProductActions.getPostProductFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(postProductActions.setPostProductLoading(false));
   }

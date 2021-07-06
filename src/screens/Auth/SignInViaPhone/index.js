@@ -15,9 +15,7 @@ const Index = (props) => {
     props.navigation.goBack();
   };
 
-  const onVerifyOTP = (values) => {
-    console.log('onVerifyOTP ' + JSON.stringify(values));
-  };
+  const onVerifyOTP = (values) => {};
 
   return (
     <View style={styles.container}>

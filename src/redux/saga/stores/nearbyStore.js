@@ -6,6 +6,10 @@ import {storeActions, storeTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
 
+import {showMessage} from 'react-native-flash-message';
+
+import i18n from 'i18n';
+
 //List FEATURED_PRODUCT_SEARCH
 
 const getNearbyStore = function* ({payload}) {
@@ -19,7 +23,11 @@ const getNearbyStore = function* ({payload}) {
       yield put(storeActions.getNearbyStoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setNearbyStoreLoading(false));
   }
@@ -34,7 +42,11 @@ const getNearbyStoreLoadmore = function* ({payload}) {
       yield put(storeActions.getNearbyStoreLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setNearbyStoreLoadmoreLoading(false));
   }

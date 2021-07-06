@@ -2,7 +2,8 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {getPrefectureApi} from 'services/api/addressApi';
 import {addressActions, addressTypes} from 'reducers';
 import {SUCCESS} from 'constants';
-
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 const getPrefectureData = function* ({payload}) {
   yield put(addressActions.getPrefectureLoading(true));
   try {
@@ -13,7 +14,11 @@ const getPrefectureData = function* ({payload}) {
       yield put(addressActions.getPrefectureFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(addressActions.getPrefectureLoading(false));
   }
@@ -29,7 +34,11 @@ const getDistrictData = function* ({payload}) {
       yield put(addressActions.getDistrictFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(addressActions.getDistrictLoading(false));
   }
@@ -45,7 +54,11 @@ const getWardData = function* ({payload}) {
       yield put(addressActions.getWardFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(addressActions.getWardLoading(false));
   }

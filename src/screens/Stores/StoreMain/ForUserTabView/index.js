@@ -11,6 +11,7 @@ import {useSelector} from 'react-redux';
 import {_fetch} from '../../../../services/config';
 import {GET, POST, PUT, LIMIT_DEFAULT, SUCCESS} from 'constants';
 import i18n from 'i18n';
+import {showMessage} from 'react-native-flash-message';
 
 const ForUserTabView = ({
   navigation,
@@ -56,7 +57,11 @@ const ForUserTabView = ({
         });
       }
     } catch (err) {
-      console.log('INIT DATA ERR', err);
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'success',
+        position: 'top',
+      });
     } finally {
       setIsRefreshing(false);
     }
@@ -113,7 +118,11 @@ const ForUserTabView = ({
         });
       }
     } catch (err) {
-      console.log('INIT DATA ERR', err);
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'success',
+        position: 'top',
+      });
     } finally {
       setIsLoading(false);
     }

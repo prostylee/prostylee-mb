@@ -17,7 +17,7 @@ const ButtonFooter = ({dealData}) => {
             label={i18n.t('orders.cancelDeal')}
             style={styles.buttonOutlinedGrey}
             labelStyle={styles.labelBtnOutlineGrey}
-            onPress={() => console.log('Hủy đơn hàng')}
+            onPress={() => {}}
           />
         </View>
       );
@@ -40,7 +40,7 @@ const ButtonFooter = ({dealData}) => {
             <ButtonOutlined
               label={i18n.t('orders.repurchase')}
               labelStyle={styles.labelBtnOutline}
-              onPress={() => console.log('Mua lại')}
+              onPress={() => {}}
               style={{borderWidth: 1}}
             />
           </View>
@@ -52,7 +52,7 @@ const ButtonFooter = ({dealData}) => {
           <ButtonOutlined
             label={i18n.t('orders.repurchase')}
             labelStyle={styles.labelBtnOutline}
-            onPress={() => console.log('Mua lại')}
+            onPress={() => {}}
             style={{borderWidth: 1}}
           />
         </View>

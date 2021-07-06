@@ -26,11 +26,7 @@ const TagList = () => (
       showsHorizontalScrollIndicator={false}
       data={MockTag}
       renderItem={({item, index}) => (
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}
-          key={`${item}-${index}`}>
+        <Chip small style={styles.itemChips} key={`${item}-${index}`}>
           {item}
         </Chip>
       )}

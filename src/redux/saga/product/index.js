@@ -21,6 +21,7 @@ import {
   getProductRelated as getRelatedProduct,
   getProductCoordinated as getCoordinatedProduct,
 } from 'services/api/productApi';
+import i18n from 'i18n';
 
 const getProducts = function* ({payload: {token, isRefresh}}) {
   try {
@@ -65,7 +66,6 @@ const getProducts = function* ({payload: {token, isRefresh}}) {
     }
   } catch (e) {
     //Lỗi server api
-    console.log(e);
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
       message: CONTANTS.UNKNOWN_MESSAGE,
@@ -86,7 +86,11 @@ const getListProduct = function* ({payload}) {
       yield put(productActions.getListProductFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(productActions.setListProductLoading(false));
   }
@@ -102,7 +106,11 @@ const getLoadMoreListProduct = function* ({payload}) {
       yield put(productActions.getListProductLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(productActions.setLoadingLoadMoreProduct(false));
   }
@@ -118,7 +126,11 @@ const getProductById = function* ({payload}) {
       yield put(productActions.getProductByIdSuccess());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(productActions.getProductByIdLoading(false));
   }
@@ -152,7 +164,11 @@ const getProductComments = function* ({payload}) {
       yield put(productActions.getProductCommentsAverageFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(productActions.getProductCommentsLoading(false));
   }
@@ -171,7 +187,11 @@ const getProductRelated = function* ({payload}) {
       yield put(productActions.getProductRelatedFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(productActions.getProductRelatedLoading(false));
   }
@@ -194,7 +214,11 @@ const getProductCoordinated = function* ({payload}) {
       yield put(productActions.getProductCoordinatedFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(productActions.getProductCoordinatedLoading(false));
   }

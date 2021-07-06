@@ -22,6 +22,7 @@ import {getAverage} from 'services/api/reviewRatingApi';
 
 /*Selector*/
 import {getListReviewRatingSelector} from 'redux/selectors/reviewRating';
+import {showMessage} from 'react-native-flash-message';
 
 const ReviewRating = ({navigation}) => {
   const route = useRoute();
@@ -43,7 +44,11 @@ const ReviewRating = ({navigation}) => {
       })
       .catch(() => {
         setLoading(false);
-        console.log('Có lỗi xảy ra!');
+        showMessage({
+          message: I18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
       });
   }, [productId]);
 

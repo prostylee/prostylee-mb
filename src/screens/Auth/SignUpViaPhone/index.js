@@ -1,6 +1,12 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import {ButtonRounded, Container, HeaderBack, SocialSignIn, TextButton} from 'components';
+import {
+  ButtonRounded,
+  Container,
+  HeaderBack,
+  SocialSignIn,
+  TextButton,
+} from 'components';
 
 import {useKeyboard} from '@react-native-community/hooks';
 
@@ -20,9 +26,7 @@ const Index = (props) => {
   //keyboard
   const keyboard = useKeyboard();
 
-  const onSignUp = (values) => {
-    console.log('onSignUp: ' + JSON.stringify(values));
-  };
+  const onSignUp = (values) => {};
 
   //handle funcs
   const onGoToTerms = () => {

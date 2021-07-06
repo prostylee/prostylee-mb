@@ -5,7 +5,8 @@ import {
 } from 'services/api/categoriesApi';
 import {categoriesActions, categoriesTypes} from 'reducers';
 import {SUCCESS} from 'constants';
-
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 //Left
 const getListLeftCategories = function* ({payload}) {
   try {
@@ -19,7 +20,11 @@ const getListLeftCategories = function* ({payload}) {
       yield put(categoriesActions.getListLeftCategoriesFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(categoriesActions.setLeftLoading(false));
   }
@@ -37,7 +42,11 @@ const getLoadMoreListLeftCategories = function* ({payload}) {
       yield put(categoriesActions.getListLeftCategoriesLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(categoriesActions.setLoadingLoadMoreLeftCategories(false));
   }
@@ -55,7 +64,11 @@ const getListRightCategories = function* ({payload}) {
       yield put(categoriesActions.getListRightCategoriesFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(categoriesActions.setRightLoading(false));
   }
@@ -73,7 +86,11 @@ const getLoadMoreListRightCategories = function* ({payload}) {
       yield put(categoriesActions.getListRightCategoriesLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(categoriesActions.setLoadingLoadMoreRightCategories(false));
   }

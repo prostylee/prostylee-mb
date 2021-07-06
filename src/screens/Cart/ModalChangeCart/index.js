@@ -6,12 +6,13 @@ import {RadioSelectGroup, ButtonRounded} from 'components';
 import {Dimensions} from 'react-native';
 import {currencyFormat} from 'utils/currency';
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
-import i18n from 'i18n';
+
 import {useDispatch} from 'react-redux';
 import {getProductById} from 'services/api/productApi';
 import {cartActions} from 'reducers';
 import {ScrollView} from 'react-native-gesture-handler';
-
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 const {width} = Dimensions.get('window');
 const WIDTH_IMAGE = width / 2 - 14;
 
@@ -29,14 +30,17 @@ const ModalChangeCart = ({currentOptions, productId, closeModal}) => {
         .then((res) => {
           setLoading(false);
           if (res.data.status !== 200) {
-            console.log('Có lỗi xảy ra');
             return;
           }
           setProduct(res.data.data);
         })
         .catch(() => {
+          showMessage({
+            message: i18n.t('unknownMessage'),
+            type: 'success',
+            position: 'top',
+          });
           setLoading(false);
-          console.log('Lỗi hệ thống');
         });
     }
   }, [productId]);

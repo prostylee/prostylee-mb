@@ -24,6 +24,7 @@ import {cartActions, commonActions} from 'reducers';
 
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {createChat} from 'graphqlLocal/mutations';
+import {showMessage} from 'react-native-flash-message';
 
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
 
@@ -91,10 +92,11 @@ const Footer = ({navigation, productData, priceList, choiceSelect}) => {
         setUserData(userRes.data.data);
       }
     } catch (err) {
-      console.log(
-        `cannot get profile ${productData.productOwnerResponse.id}, ${user.attributes['custom:userId']}`,
-        err,
-      );
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'success',
+        position: 'top',
+      });
     }
   };
 

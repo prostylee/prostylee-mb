@@ -3,7 +3,8 @@ import {postStatusByUser} from 'services/api/statusApi';
 import {statusActions, statusTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
-
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 const postStatus = function* (payload) {
   try {
     const res = yield call(postStatusByUser, payload.payload);
@@ -13,7 +14,11 @@ const postStatus = function* (payload) {
       yield put(statusActions.postStatusFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   }
 };
 

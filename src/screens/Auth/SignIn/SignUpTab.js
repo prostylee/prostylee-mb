@@ -30,7 +30,6 @@ const SignupTab = () => {
   };
 
   const onSignUp = async (formValues) => {
-    console.log('onSignUp');
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
       userActions.userSignUp({
@@ -43,7 +42,6 @@ const SignupTab = () => {
   };
 
   const onSignUpSuccess = async (formValues) => {
-    console.log('onSignUpSuccess');
     dispatch(commonActions.toggleLoading(false));
     RootNavigator.navigate('SignUpOTPVerification', {email: formValues.email});
   };

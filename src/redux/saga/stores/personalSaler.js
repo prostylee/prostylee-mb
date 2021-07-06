@@ -6,6 +6,10 @@ import {storeActions, storeTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
 
+import {showMessage} from 'react-native-flash-message';
+
+import i18n from 'i18n';
+
 //List FEATURED_PRODUCT_SEARCH
 
 const getPersonalSalersProducts = function* ({payload}) {
@@ -19,7 +23,11 @@ const getPersonalSalersProducts = function* ({payload}) {
       yield put(storeActions.getPersonalSalersFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setPersonalSalersLoading(false));
   }
@@ -34,7 +42,11 @@ const getPersonalSalersProductsLoadmore = function* ({payload}) {
       yield put(storeActions.getPersonalSalersLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setPersonalSalersLoadmoreLoading(false));
   }

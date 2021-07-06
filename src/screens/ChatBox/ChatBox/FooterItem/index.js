@@ -13,6 +13,7 @@ import {API, graphqlOperation, Storage} from 'aws-amplify';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
 import {createChat} from 'graphqlLocal/mutations';
+import {showMessage} from 'react-native-flash-message';
 /******** chat aws ********/
 
 const FooterItem = (props) => {
@@ -54,7 +55,6 @@ const FooterItem = (props) => {
         contentType: 'image/jpeg',
       })
         .then((result) => {
-          console.log('result.key', result.key);
           addChatImageHandler(result.key);
         })
         .catch((_) => {
@@ -129,7 +129,13 @@ const FooterItem = (props) => {
       .then((res) => {
         uploadToStorage(Platform.OS === 'ios' ? res.sourceURL : res.path);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
+      });
   };
 
   return (

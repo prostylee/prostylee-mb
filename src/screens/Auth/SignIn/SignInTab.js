@@ -41,7 +41,6 @@ const SignInTab = () => {
 
   //handle User signIn
   const onSignIn = async (formValues) => {
-    console.log('onSignIn: ' + JSON.stringify(formValues));
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
       userActions.userSignIn({

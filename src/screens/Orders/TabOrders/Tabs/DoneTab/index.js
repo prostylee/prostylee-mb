@@ -90,7 +90,7 @@ const DoneTab = ({status, actCode, statusId = 0}) => {
               label={i18n.t('orders.repurchase')}
               style={{marginLeft: 10}}
               labelStyle={styles.labelBtnRounded}
-              onPress={() => console.log('Mua lại')}
+              onPress={() => {}}
             />
           </View>
         </View>

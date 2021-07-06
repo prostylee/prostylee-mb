@@ -190,7 +190,7 @@ const AddAddress = ({route, navigation}) => {
               <Header
                 title={I18n.t('settingAddress.addAddress')}
                 rightIcon={<HeaderRightIcon onPress={handleSubmit} />}
-                rightPress={() => console.log('right pressed')}
+                rightPress={() => {}}
                 isDefault
               />
               <ScrollView>

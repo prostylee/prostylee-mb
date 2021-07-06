@@ -57,14 +57,6 @@ const OrderTracking = ({navigation, timeLine = []}) => {
     );
   };
 
-  //console.log('TIMELINE', JSON.stringify(timeLine, null, 4));
-  // console.log('ALL STATUS', JSON.stringify(listStatus, null, 2));
-
-  // const dt =
-  //   useMemo(() => {
-  //     return newTimeLine?.map((item) => renderLabel(item));
-  //   }, [JSON.stringify(newTimeLine)]) || [];
-
   return (
     <View style={styles.container}>
       <Header icon={<TrackingIcon />} title={i18n.t('orders.tracking')} />
@@ -85,7 +77,7 @@ const OrderTracking = ({navigation, timeLine = []}) => {
           currentPosition={newTimeLine?.length ? newTimeLine?.length - 1 : 0}
           direction="vertical"
           onPress={() => {
-            console.log('pressed');
+            
           }}
           labels={dt}
         /> */}

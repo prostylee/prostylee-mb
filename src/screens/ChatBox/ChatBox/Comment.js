@@ -5,11 +5,25 @@ import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {TextButton, TextInputBorderBottom, ButtonOutlined} from 'components';
-import {createComment, deleteComment, likeComment, unlikeComment} from 'graphqlLocal/mutations';
+import {
+  createComment,
+  deleteComment,
+  likeComment,
+  unlikeComment,
+} from 'graphqlLocal/mutations';
 import {getComment, listComments} from 'graphqlLocal/queries';
 import {onCreateComment, onDeleteComment} from 'graphqlLocal/subscriptions';
 import {formatTime} from 'utils/datetime';
-import {Button, Divider, List, overlay, Text, useTheme} from 'react-native-paper';
+import {
+  Button,
+  Divider,
+  List,
+  overlay,
+  Text,
+  useTheme,
+} from 'react-native-paper';
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 
 const DEFAULT_PARENT_COMMENT_ID = 'PROD_1'; // Rule: <targetType>_<targetId>
 
@@ -26,10 +40,16 @@ const Comment = (props) => {
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((user) => {
-        // console.log('USER ' + JSON.stringify(user));
+        //
         setCurrentUserName(user.username);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
+      });
 
     executeListComments();
   }, [currentUserName]);
@@ -47,17 +67,19 @@ const Comment = (props) => {
       }),
     )
       .then((result) => {
-        console.log('Comments ' + JSON.stringify(result));
         setComments(result.data.listComments.items);
       })
       .catch((err) => {
-        console.log(err);
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
       });
     dispatch(commonActions.toggleLoading(false));
   };
 
   const executeGetComment = (commentId) => {
-    console.log('executeGetComment ' + commentId);
     dispatch(commonActions.toggleLoading(true));
     API.graphql(
       graphqlOperation(getComment, {
@@ -65,11 +87,14 @@ const Comment = (props) => {
       }),
     )
       .then((result) => {
-        console.log('Comment ' + JSON.stringify(result));
         setChildrenComments(result.data.getComment.childrens.items);
       })
       .catch((err) => {
-        console.log(err);
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
       });
     dispatch(commonActions.toggleLoading(false));
   };
@@ -80,15 +105,12 @@ const Comment = (props) => {
     ).subscribe({
       next: (commentData) => {
         const addedComment = commentData.value.data.onCreateComment;
-        console.log('addedComment ' + JSON.stringify(addedComment));
 
         if (addedComment.parentId !== DEFAULT_PARENT_COMMENT_ID) {
-          console.log('NEW child');
           const updatedComments = [...childrenComments];
           updatedComments.push(addedComment);
           setChildrenComments(updatedComments);
         } else {
-          console.log('NEW root');
           const updatedComments = [...comments];
           updatedComments.push(addedComment);
           setComments(updatedComments);
@@ -101,7 +123,6 @@ const Comment = (props) => {
     ).subscribe({
       next: (commentData) => {
         const deletedComment = commentData.value.data.onDeleteComment;
-        console.log('deletedComment ' + JSON.stringify(deletedComment));
 
         if (deletedComment.parentId !== DEFAULT_PARENT_COMMENT_ID) {
           const updatedComments = childrenComments.filter(
@@ -134,7 +155,6 @@ const Comment = (props) => {
   };
 
   const addCommentHandler = async () => {
-    console.log('addCommentHandler ' + comment);
     if (!comment) {
       return;
     }
@@ -157,30 +177,24 @@ const Comment = (props) => {
         },
       }),
     );
-    console.log(
-      'Submit comment successfully with response' + JSON.stringify(response),
-    );
+
     setComment('');
   };
 
   const replyCommentHandler = (item) => {
-    console.log('replyCommentHandler ' + JSON.stringify(item));
     setParentComment(item);
     executeGetComment(item.id);
   };
 
   const deleteCommentHandler = async (item) => {
-    console.log('deleteCommentHandler ' + item.id);
     dispatch(commonActions.toggleLoading(true));
     const res = await API.graphql(
       graphqlOperation(deleteComment, {input: {id: item.id}}),
     );
     dispatch(commonActions.toggleLoading(false));
-    console.log('Delete successfully with response ' + JSON.stringify(res));
   };
 
   const likeCommentHandler = async (item) => {
-    console.log('likeCommentHandler ' + item.id);
     dispatch(commonActions.toggleLoading(true));
     const user = await Auth.currentAuthenticatedUser();
     const res = await API.graphql(
@@ -190,11 +204,9 @@ const Comment = (props) => {
       }),
     );
     dispatch(commonActions.toggleLoading(false));
-    console.log('Like successfully with response ' + JSON.stringify(res));
   };
 
   const unlikeCommentHandler = async (item) => {
-    console.log('unlikeCommentHandler ' + item.id);
     dispatch(commonActions.toggleLoading(true));
     const user = await Auth.currentAuthenticatedUser();
     const res = await API.graphql(
@@ -204,7 +216,6 @@ const Comment = (props) => {
       }),
     );
     dispatch(commonActions.toggleLoading(false));
-    console.log('Unlike successfully with response ' + JSON.stringify(res));
   };
 
   const _renderItem = ({item, index}) => {

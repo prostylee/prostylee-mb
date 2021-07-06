@@ -63,7 +63,6 @@ function ProgressItem(props) {
         if (props.progressIndex !== 0) {
           blockProgress();
           dispatch({type: PROGRESS, payload: 0});
-          console.log('Progress Change => === ', props.progressIndex);
         } else {
           isValid = false;
           dispatch({type: PROGRESS, payload: 0});

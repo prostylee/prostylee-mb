@@ -41,7 +41,13 @@ const RatingProduct = ({navigation, product, productId}) => {
       .then((user) => {
         setUserId(user.signInUserSession.idToken.payload.sub);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        showMessage({
+          message: I18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
+      });
   }, []);
 
   //handle User signIn
@@ -88,7 +94,13 @@ const RatingProduct = ({navigation, product, productId}) => {
         });
         navigation.goBack();
       })
-      .catch((e) => console.log('Error: ', e));
+      .catch((e) => {
+        showMessage({
+          message: I18n.t('unknownMessage'),
+          type: 'success',
+          position: 'top',
+        });
+      });
   };
 
   const onPickRating = (rate) => {
@@ -122,11 +134,21 @@ const RatingProduct = ({navigation, product, productId}) => {
           const name = `review_${time}.jpg`;
           await getUrl(result?.key, name);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          showMessage({
+            message: I18n.t('unknownMessage'),
+            type: 'success',
+            position: 'top',
+          });
+        });
 
       dispatch(commonActions.toggleLoading(false));
     } catch (err) {
-      console.log(err);
+      showMessage({
+        message: I18n.t('unknownMessage'),
+        type: 'success',
+        position: 'top',
+      });
     }
   };
 

@@ -12,6 +12,9 @@ import {newFeedActions, newFeedTypes} from 'reducers';
 
 import {SUCCESS, TYPE_STORE} from 'constants';
 
+import i18n from 'i18n';
+import {showMessage} from 'react-native-flash-message';
+
 const getNewFeeds = function* ({payload}) {
   try {
     yield put(newFeedActions.setLoading(true));
@@ -27,7 +30,11 @@ const getNewFeeds = function* ({payload}) {
       yield put(newFeedActions.getNewFeedFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(newFeedActions.setLoading(false));
   }
@@ -48,7 +55,11 @@ const getLoadMoreNewFeed = function* ({payload}) {
       yield put(newFeedActions.handleLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(newFeedActions.handleLoadMoreLoading(false));
   }
@@ -79,7 +90,11 @@ const getStoriesByStores = function* ({payload}) {
       yield put(newFeedActions.getStoriesByStoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(newFeedActions.setLoadingStories(false));
   }
@@ -110,7 +125,11 @@ const getStoriesByUsers = function* ({payload}) {
       yield put(newFeedActions.getStoriesByUserFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(newFeedActions.setLoadingStories(false));
   }
@@ -125,7 +144,11 @@ const getProductOfStory = function* (id) {
       yield put(newFeedActions.getProductOfStoryFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   }
 };
 
@@ -139,7 +162,11 @@ const getStoreMini = function* () {
       yield put(newFeedActions.getStoreMiniFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   } finally {
     yield put(newFeedActions.getStoreMiniLoading(false));
   }
@@ -154,7 +181,11 @@ const postStory = function* (payload) {
       yield put(newFeedActions.postStoryFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'success',
+      position: 'top',
+    });
   }
 };
 
