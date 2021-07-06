@@ -17,7 +17,7 @@ export const getDeliveryMethods = (payload) => {
   return _fetch(GET, '/shippings/providers-fee/providers-fee', {...payload});
 };
 
-export const orders = (payload) => {
+export const createOrders = (payload) => {
   return _fetch(POST, '/orders', payload);
 };
 

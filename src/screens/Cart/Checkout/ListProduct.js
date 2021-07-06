@@ -1,6 +1,6 @@
 import styles from './styles';
 import React, {useEffect, useState, useRef, useMemo} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {View, FlatList, Animated, Text} from 'react-native';
 import i18n from 'i18n';
 import Product from './Item';
@@ -15,19 +15,28 @@ import {RadioButton} from 'react-native-paper';
 import {
   getListCartSelector,
   getListDeliverySelector,
+  getOrderDataSelector,
+  getPaymentMethodSelector,
 } from 'redux/selectors/cart';
+import {cartActions} from 'reducers';
 
 const ListProduct = ({navigation, data, validateButton}) => {
+  const dispatch = useDispatch();
   const [refreshing, handleRefreshing] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [valueDelivery, setValueDelivery] = useState();
   const [total, setTotal] = useState(0);
   const [valueChosen, setValueChosen] = useState();
   const [voucher, setVoucher] = useState();
+  const [productVarientPriceData, setProductVarientPriceData] = useState({});
 
   const cart = useSelector((state) => getListCartSelector(state)) || [];
   const deliveries =
     useSelector((state) => getListDeliverySelector(state)) || [];
+  const orderData = useSelector((state) => getOrderDataSelector(state) || {});
+  const paymentSelected = useSelector((state) =>
+    getPaymentMethodSelector(state),
+  );
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -37,12 +46,62 @@ const ListProduct = ({navigation, data, validateButton}) => {
   );
 
   useEffect(() => {
+    const processProductPriceData = (data) => {
+      const attributeList = {};
+      data?.map((item) => {
+        const attributeValues = item.productAttributes
+          .map((attribute) => attribute.attrValue)
+          .sort();
+        let attributeID = '';
+        attributeValues.forEach((element) => {
+          attributeID = attributeID + '_' + element;
+        });
+        attributeList[attributeID] = {
+          price: item?.price,
+          priceSale: item?.priceSale,
+        };
+      });
+      return attributeList;
+    };
+    const getProductVarient = (choiceSelect) => {
+      const choiceList = choiceSelect
+        .map((item) => item.value.attrValue)
+        .sort();
+      let attributeID = '';
+      choiceList.forEach((element) => {
+        attributeID = attributeID + '_' + element;
+      });
+      return attributeID;
+    };
+    const getProductChoicePrice = (productVarient, priceList) => {
+      if (priceList[productVarient]) {
+        return priceList[productVarient];
+      } else {
+        return 0;
+      }
+    };
+
     if (cart.length) {
       let sum = 0;
+      let productPriceVarient = {};
       cart.forEach(function (c, index) {
-        sum += c.item.priceSale * c.quantity;
+        const productVarient = getProductVarient(c.options);
+        const productPriceData = processProductPriceData(
+          c.item.productPriceResponseList,
+        );
+        const productPrice = getProductChoicePrice(
+          productVarient,
+          productPriceData,
+        );
+        productPriceVarient[`${c.item.id}${productVarient}`] = productPrice;
+        if (productPrice.priceSale) {
+          sum += productPrice.priceSale * c.quantity;
+        } else {
+          sum += productPrice.price * c.quantity;
+        }
       });
       setTotal(sum);
+      setProductVarientPriceData(productPriceVarient);
     }
   }, [JSON.stringify(cart)]);
 
@@ -164,17 +223,17 @@ const ListProduct = ({navigation, data, validateButton}) => {
               <Text style={styles.titleRadio}>{item.description}</Text>
             </View>
           </View>
-          <View style={styles.wrapPrice}>
-            <Text style={styles.priceRadio}>
-              {item.price
-                ? currencyFormat(item.price, 'đ')
-                : i18n.t('cart.freeShip')}
-            </Text>
+          <View style={styles.wrapRadioContent}>
+            <Text style={styles.contentRadio}>{item.deliveryTime}</Text>
           </View>
         </View>
 
-        <View style={styles.wrapRadioContent}>
-          <Text style={styles.contentRadio}>{item.deliveryTime}</Text>
+        <View style={styles.wrapPrice}>
+          <Text style={styles.priceRadio}>
+            {item.price
+              ? currencyFormat(item.price, 'đ')
+              : i18n.t('cart.freeShip')}
+          </Text>
         </View>
       </View>
     );
@@ -211,8 +270,24 @@ const ListProduct = ({navigation, data, validateButton}) => {
   };
 
   const onPayment = () => {
-    navigation.navigate('Home');
+    const totalPrice = () => {
+      const deliveryPrice =
+        valueChosen && valueChosen.price ? valueChosen.price : 0;
+      const voucherPrice = voucher && voucher.price ? voucher.price : 0;
+      return +total + deliveryPrice + voucherPrice;
+    };
+    dispatch(
+      cartActions.createOrder({
+        productVarientPriceData,
+        totalMoney: totalPrice(),
+        paymentTypeId: paymentSelected,
+        shippingProviderId: valueChosen?.id,
+      }),
+    );
+    // navigation.navigate('Home');
   };
+
+  console.log('orderData', JSON.stringify(orderData, null, 4));
 
   /* Extract note */
   const groupDataByStore = (list) => {
