@@ -121,6 +121,7 @@ const ListMessage = (props) => {
   }
   return (
     <FlatList
+      showsVerticalScrollIndicator={false}
       data={chatList}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}

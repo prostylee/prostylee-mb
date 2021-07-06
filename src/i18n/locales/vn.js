@@ -226,6 +226,10 @@ export default {
     addressListEmpty: 'Xin hãy thiết lập địa chỉ giao hàng!',
     selectPayment: 'Chọn phương thức thanh toán',
     addToCartSuccess: 'Thêm vào giỏ hàng thành công',
+    choosePaymentOption:
+      'Xin hãy chọn phương thức thanh toán và vận chuyển trước khi xem mã giảm giá!',
+    addVoucherSuccess: 'Đã thêm mã khuyến mãi!',
+    addVoucherFail: 'Mã khuyến mãi không phù hợp, xin hãy chọn mã khác!',
   },
   error: {
     cannotUploadImage:

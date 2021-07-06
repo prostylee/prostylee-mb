@@ -13,10 +13,17 @@ import {cartActions} from 'reducers';
 import {ScrollView} from 'react-native-gesture-handler';
 import {showMessage} from 'react-native-flash-message';
 import i18n from 'i18n';
+import {getProductPrice} from 'utils/product';
+
 const {width} = Dimensions.get('window');
 const WIDTH_IMAGE = width / 2 - 14;
 
-const ModalChangeCart = ({currentOptions, productId, closeModal}) => {
+const ModalChangeCart = ({
+  currentOptions,
+  productId,
+  closeModal,
+  productData,
+}) => {
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState({});
   const [optChosen, setOptChosen] = useState([]);
@@ -66,6 +73,7 @@ const ModalChangeCart = ({currentOptions, productId, closeModal}) => {
       return newOptionList;
     });
   };
+  const priceData = getProductPrice(productData);
 
   const updateItemOption = () => {
     dispatch(
@@ -113,7 +121,10 @@ const ModalChangeCart = ({currentOptions, productId, closeModal}) => {
           </View>
           <View style={styles.wrapPrice}>
             <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(price || 0, 'đ')}
+              {currencyFormat(
+                priceData?.priceSale ? priceData.priceSale : priceData.price,
+                'đ',
+              )}
             </Text>
           </View>
           <ScrollView

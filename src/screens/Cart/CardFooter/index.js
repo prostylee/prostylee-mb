@@ -13,39 +13,27 @@ import {currencyFormat} from 'utils/currency';
 import {cartActions} from 'redux/reducers';
 import {
   getListPaymentSelector,
-  getListCartSelector,
   getPaymentMethodSelector,
 } from 'redux/selectors/cart';
+import {showMessage} from 'react-native-flash-message';
 
 const CardFooter = ({
   buttonText,
   deliveryMethod,
-  voucher: voucherData,
   actionButton,
   isCheckout = false,
   disabled = true,
+  totalPrice = 0,
 }) => {
-  const [total, setTotal] = useState(0);
   const [voucher, setVoucher] = useState();
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const paymentList = useSelector((state) => getListPaymentSelector(state));
-  const cart = useSelector((state) => getListCartSelector(state)) || [];
   const paymentSelected = useSelector((state) =>
     getPaymentMethodSelector(state),
   );
-
-  useEffect(() => {
-    if (cart.length) {
-      let sum = 0;
-      cart.forEach(function (c, index) {
-        sum += c.item.priceSale * c.quantity;
-      });
-      setTotal(sum);
-    }
-  }, [JSON.stringify(cart)]);
 
   const handlePress = () => {
     if (typeof actionButton === 'function') {
@@ -60,8 +48,21 @@ const CardFooter = ({
   };
 
   const onChangeVoucher = () => {
+    if (
+      disabled ||
+      (isCheckout ? !paymentSelected || isEmpty(deliveryMethod) : false)
+    ) {
+      showMessage({
+        message: i18n.t('cart.choosePaymentOption'),
+        type: 'danger',
+        position: 'top',
+        duration: 5000,
+      });
+      return;
+    }
     navigation.navigate('VoucherCart', {
       onUseVoucher: (item) => setVoucher(item),
+      totalPrice: totalPrice,
     });
   };
 
@@ -70,13 +71,6 @@ const CardFooter = ({
   };
 
   const paymentUsed = paymentList.filter((item) => item.id === paymentSelected);
-  const totalPrice = () => {
-    const deliveryPrice =
-      deliveryMethod && deliveryMethod.price ? deliveryMethod.price : 0;
-    const voucherPrice =
-      voucherData && voucherData.price ? voucherData.price : 0;
-    return +total + deliveryPrice + voucherPrice;
-  };
 
   return (
     <View style={styles.container}>
@@ -130,7 +124,7 @@ const CardFooter = ({
         <View style={styles.viewTemp}>
           <Text style={styles.viewTempTitle}>Tạm tính</Text>
           <Text style={styles.viewTempValue}>
-            {currencyFormat(totalPrice(), 'đ')}
+            {currencyFormat(totalPrice, 'đ')}
           </Text>
         </View>
         <View style={styles.viewCheckout}>

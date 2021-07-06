@@ -1,6 +1,6 @@
 import React from 'react';
 import {Header, ThemeView, CustomTextInput} from 'components';
-import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity, Platform} from 'react-native';
 import {addressActions, addressSelectors, userActions} from 'reducers';
 import {useDispatch, useSelector} from 'react-redux';
 import I18n from 'i18n';
@@ -235,10 +235,26 @@ const AddAddress = ({route, navigation}) => {
                     </View>
                     <View style={styles.wrapAddressInfo}>
                       <TouchableOpacity
-                        onPress={() =>
-                          prefectureRef.current.togglePicker(true)
-                        }>
+                        style={styles.addressButtonContainer}
+                        onPress={() => {
+                          if (Platform.OS === 'android') {
+                            prefectureRef.current.focus();
+                          } else {
+                            prefectureRef.current.togglePicker(true);
+                          }
+                        }}>
+                        <TouchableOpacity
+                          style={styles.addressButton}
+                          onPress={() => {
+                            if (Platform.OS === 'android') {
+                              prefectureRef.current.focus();
+                            } else {
+                              prefectureRef.current.togglePicker(true);
+                            }
+                          }}
+                        />
                         <Field
+                          editable={false}
                           component={CustomTextInput}
                           name="province"
                           validate={validatePrefecture}
@@ -251,8 +267,26 @@ const AddAddress = ({route, navigation}) => {
                       </TouchableOpacity>
 
                       <TouchableOpacity
-                        onPress={() => districtRef.current.togglePicker(true)}>
+                        style={styles.addressButtonContainer}
+                        onPress={() => {
+                          if (Platform.OS === 'android') {
+                            districtRef.current.focus();
+                          } else {
+                            districtRef.current.togglePicker(true);
+                          }
+                        }}>
+                        <TouchableOpacity
+                          style={styles.addressButton}
+                          onPress={() => {
+                            if (Platform.OS === 'android') {
+                              districtRef.current.focus();
+                            } else {
+                              districtRef.current.togglePicker(true);
+                            }
+                          }}
+                        />
                         <Field
+                          editable={false}
                           component={CustomTextInput}
                           name="district"
                           validate={validateDistrict}
@@ -265,16 +299,45 @@ const AddAddress = ({route, navigation}) => {
                       </TouchableOpacity>
 
                       <TouchableOpacity
-                        onPress={() => wardRef.current.togglePicker(true)}>
+                        style={styles.addressButtonContainer}
+                        onPress={() => {
+                          if (Platform.OS === 'android') {
+                            wardRef.current.focus();
+                          } else {
+                            wardRef.current.togglePicker(true);
+                          }
+                        }}>
+                        <TouchableOpacity
+                          style={styles.addressButton}
+                          onPress={() => {
+                            if (Platform.OS === 'android') {
+                              wardRef.current.focus();
+                            } else {
+                              wardRef.current.togglePicker(true);
+                            }
+                          }}
+                        />
                         <Field
+                          editable={false}
                           component={CustomTextInput}
                           name="ward"
                           validate={validateWard}
                           label={I18n.t('settingAddress.ward')}
-                          onFocus={() => {
-                            wardRef.current.togglePicker(true);
-                          }}
                           style={styles.textInputStyle}
+                          onPress={() => {
+                            if (Platform.OS === 'android') {
+                              wardRef.current.focus();
+                            } else {
+                              wardRef.current.togglePicker(true);
+                            }
+                          }}
+                          onFocus={() => {
+                            if (Platform.OS === 'android') {
+                              wardRef.current.focus();
+                            } else {
+                              wardRef.current.togglePicker(true);
+                            }
+                          }}
                         />
                       </TouchableOpacity>
                       <Field
@@ -305,7 +368,10 @@ const AddAddress = ({route, navigation}) => {
                   </View>
                   <View style={styles.pickerContainer}>
                     <RNPickerSelect
-                      ref={prefectureRef}
+                      ref={Platform.OS === 'ios' ? prefectureRef : null}
+                      pickerProps={{
+                        ref: Platform.OS === 'android' ? prefectureRef : null,
+                      }}
                       onValueChange={(value) => {
                         setFieldValue('province', value?.label);
                         getDistrictData(value?.value);
@@ -324,7 +390,10 @@ const AddAddress = ({route, navigation}) => {
                   </View>
                   <View style={styles.pickerContainer}>
                     <RNPickerSelect
-                      ref={districtRef}
+                      ref={Platform.OS === 'ios' ? districtRef : null}
+                      pickerProps={{
+                        ref: Platform.OS === 'android' ? districtRef : null,
+                      }}
                       onValueChange={(value) => {
                         setFieldValue('district', value?.label);
                         getWardData(value?.value);
@@ -339,7 +408,10 @@ const AddAddress = ({route, navigation}) => {
                   </View>
                   <View style={styles.pickerContainer}>
                     <RNPickerSelect
-                      ref={wardRef}
+                      ref={Platform.OS === 'ios' ? wardRef : null}
+                      pickerProps={{
+                        ref: Platform.OS === 'android' ? wardRef : null,
+                      }}
                       onValueChange={(value) => {
                         setFieldValue('ward', value?.label);
                         setWardValue(value?.value);
