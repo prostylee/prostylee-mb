@@ -56,8 +56,10 @@ export default EStyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     textAlign: 'left',
+    width: '100%',
   },
   wrapRadio: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
@@ -71,6 +73,10 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-end',
+  },
+  wrapInfo: {
+    flex: 1,
+    width: width - 108,
   },
   wrapPrice: {
     display: 'flex',
