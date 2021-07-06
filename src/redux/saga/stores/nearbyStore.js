@@ -25,7 +25,7 @@ const getNearbyStore = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -44,7 +44,7 @@ const getNearbyStoreLoadmore = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {

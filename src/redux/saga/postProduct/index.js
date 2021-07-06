@@ -29,7 +29,7 @@ const getListAttributes = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -49,7 +49,7 @@ const getListProductStatus = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -70,7 +70,7 @@ const getListDeliveryType = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -91,7 +91,7 @@ const getListPaymentMethod = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -112,7 +112,7 @@ const getListLocation = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -132,7 +132,7 @@ const postProduct = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {

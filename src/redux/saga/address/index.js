@@ -16,7 +16,7 @@ const getPrefectureData = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -36,7 +36,7 @@ const getDistrictData = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -56,7 +56,7 @@ const getWardData = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {

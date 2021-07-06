@@ -25,7 +25,7 @@ const getFeaturedProductSearch = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -47,7 +47,7 @@ const getLoadMoreFeaturedProductSearch = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {

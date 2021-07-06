@@ -371,7 +371,7 @@ const AddressTyping = (navigation) => {
       } catch (err) {
         showMessage({
           message: i18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       } finally {

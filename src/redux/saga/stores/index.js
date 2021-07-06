@@ -17,7 +17,7 @@ const getTopProduct = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -38,7 +38,7 @@ const getListOfFuturedStores = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -60,7 +60,7 @@ const loadMoreListOfFuturedStores = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {

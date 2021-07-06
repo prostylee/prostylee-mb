@@ -78,7 +78,7 @@ const ModalAddPictureMethod = ({visible}) => {
       .catch((e) => {
         showMessage({
           message: i18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });
@@ -95,7 +95,7 @@ const ModalAddPictureMethod = ({visible}) => {
       .catch((e) => {
         showMessage({
           message: i18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });

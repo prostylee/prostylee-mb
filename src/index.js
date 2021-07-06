@@ -152,7 +152,7 @@ const Index = () => {
     } catch (err) {
       showMessage({
         message: i18n.t('unknownMessage'),
-        type: 'success',
+        type: 'danger',
         position: 'top',
       });
       await dispatch(commonActions.toggleLoading(false));
@@ -180,7 +180,7 @@ const Index = () => {
   const onError = (error) => {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   };

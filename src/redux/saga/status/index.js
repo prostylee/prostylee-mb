@@ -16,7 +16,7 @@ const postStatus = function* (payload) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   }

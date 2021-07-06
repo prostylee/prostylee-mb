@@ -38,7 +38,7 @@ const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
       .catch((e) => {
         showMessage({
           message: i18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });

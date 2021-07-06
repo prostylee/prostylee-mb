@@ -46,7 +46,7 @@ const Comment = (props) => {
       .catch((err) => {
         showMessage({
           message: i18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });
@@ -72,7 +72,7 @@ const Comment = (props) => {
       .catch((err) => {
         showMessage({
           message: i18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });
@@ -92,7 +92,7 @@ const Comment = (props) => {
       .catch((err) => {
         showMessage({
           message: i18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });

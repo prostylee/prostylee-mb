@@ -41,7 +41,7 @@ export async function _fetch(method, path, data) {
   } catch (e) {
     showMessage({
       message: i18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   }

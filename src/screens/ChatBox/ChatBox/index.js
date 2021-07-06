@@ -51,7 +51,7 @@ const ChatBox = ({navigation, route}) => {
       .catch((err) => {
         showMessage({
           message: i18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });
@@ -122,7 +122,7 @@ const ChatBox = ({navigation, route}) => {
     } catch (err) {
       showMessage({
         message: i18n.t('unknownMessage'),
-        type: 'success',
+        type: 'danger',
         position: 'top',
       });
     } finally {

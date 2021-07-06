@@ -41,7 +41,7 @@ const ChatOne2One = (props) => {
       .catch((err) => {
         showMessage({
           message: i18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });
@@ -68,7 +68,7 @@ const ChatOne2One = (props) => {
       .catch((err) => {
         showMessage({
           message: i18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });
@@ -88,7 +88,7 @@ const ChatOne2One = (props) => {
       .catch((err) => {
         showMessage({
           message: i18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });

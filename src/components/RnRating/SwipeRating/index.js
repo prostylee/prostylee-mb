@@ -117,7 +117,7 @@ export default class SwipeRating extends Component {
       // eslint-disable-next-line no-console
       showMessage({
         message: i18n.t('unknownMessage'),
-        type: 'success',
+        type: 'danger',
         position: 'top',
       });
     }

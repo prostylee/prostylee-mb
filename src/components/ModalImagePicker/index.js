@@ -31,7 +31,7 @@ const ModalImagePicker = (props) => {
     } catch (err) {
       showMessage({
         message: i18n.t('unknownMessage'),
-        type: 'success',
+        type: 'danger',
         position: 'top',
       });
       props.onCancel();
@@ -52,7 +52,7 @@ const ModalImagePicker = (props) => {
     } catch (err) {
       showMessage({
         message: i18n.t('unknownMessage'),
-        type: 'success',
+        type: 'danger',
         position: 'top',
       });
       props.onCancel();
