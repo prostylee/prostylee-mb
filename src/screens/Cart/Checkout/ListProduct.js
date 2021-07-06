@@ -9,14 +9,13 @@ import CardFooter from '../CardFooter';
 import CardAddress from '../CardAddress';
 import {CartEmpty, DeliveryIcon, DownIcon, RightIcon} from 'svg/common';
 import {currencyFormat} from 'utils/currency';
-import Collapsible from 'react-native-collapsible';
+import isEmpty from 'lodash/isEmpty';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {RadioButton} from 'react-native-paper';
 import {
   getListCartSelector,
-  getListDeliverySelector,
   getOrderDataSelector,
   getPaymentMethodSelector,
+  getShippingMethodSelector,
 } from 'redux/selectors/cart';
 import {cartActions} from 'reducers';
 
@@ -24,19 +23,17 @@ const ListProduct = ({navigation, data, validateButton}) => {
   const dispatch = useDispatch();
   const [refreshing, handleRefreshing] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-  const [valueDelivery, setValueDelivery] = useState();
   const [total, setTotal] = useState(0);
-  const [valueChosen, setValueChosen] = useState();
   const [voucher, setVoucher] = useState();
   const [productVarientPriceData, setProductVarientPriceData] = useState({});
 
   const cart = useSelector((state) => getListCartSelector(state)) || [];
-  const deliveries =
-    useSelector((state) => getListDeliverySelector(state)) || [];
   const orderData = useSelector((state) => getOrderDataSelector(state) || {});
   const paymentSelected = useSelector((state) =>
     getPaymentMethodSelector(state),
   );
+  const deliveryMethod =
+    useSelector((state) => getShippingMethodSelector(state)) || {};
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -115,23 +112,18 @@ const ListProduct = ({navigation, data, validateButton}) => {
 
   const handleLoadMore = () => {};
 
-  const onChangeDelivery = (vl) => {
-    const items = deliveries.find((item) => item.id === vl);
-    setValueChosen(items);
-    setCollapsed(true);
-    setValueDelivery(vl);
-  };
-
   const renderFooter = () => {
     const voucherValue = voucher && voucher.price ? voucher.price : 0;
     const deliveryValue =
-      valueChosen && valueChosen.price ? valueChosen.price : 0;
+      deliveryMethod && deliveryMethod.price ? deliveryMethod.price : 0;
     return (
       <>
         <View style={styles.wrapAccordion}>
           <TouchableOpacity
             style={styles.buttonCollapseHeader}
-            onPress={() => setCollapsed(!collapsed)}>
+            onPress={() => {
+              navigation.navigate('CartSelectShippingMethod');
+            }}>
             <View style={styles.wrapCollapseHeader}>
               <View style={styles.wrapCollapseHeaderLabel}>
                 <DeliveryIcon />
@@ -145,32 +137,11 @@ const ListProduct = ({navigation, data, validateButton}) => {
               </View>
             </View>
           </TouchableOpacity>
-          {collapsed && valueChosen && (
+          {!isEmpty(deliveryMethod) && (
             <TouchableOpacity onPress={() => setCollapsed(!collapsed)}>
-              {renderDeliveryChosen(valueChosen)}
+              {renderDeliveryChosen(deliveryMethod)}
             </TouchableOpacity>
           )}
-          <Collapsible collapsed={collapsed}>
-            <RadioButton.Group
-              onValueChange={onChangeDelivery}
-              value={valueDelivery}
-              color="#823ffd"
-              style={styles.wrapRadioGroup}>
-              {listDelivery?.length > 0 &&
-                listDelivery.map((item) => (
-                  <RadioButton.Item
-                    key={`radio-${item.id}`}
-                    label={renderDelivery(item)}
-                    value={item.id}
-                    color="#823ffd"
-                    style={styles.wrapRadioButton}
-                    mode="android"
-                    position="leading"
-                    labelStyle={styles.wrapLabelRadioButton}
-                  />
-                ))}
-            </RadioButton.Group>
-          </Collapsible>
         </View>
 
         <View style={styles.wrapTotal}>
@@ -207,35 +178,7 @@ const ListProduct = ({navigation, data, validateButton}) => {
             </View>
           </View>
         </View>
-        {/* <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
-          <ActivityIndicator animating color={Colors.$purple} size="small" />
-        </View> */}
       </>
-    );
-  };
-
-  const renderDelivery = (item) => {
-    return (
-      <View style={styles.wrapRadio}>
-        <View style={styles.wrapInfo}>
-          <View>
-            <View style={styles.wrapRadioTitle}>
-              <Text style={styles.titleRadio}>{item.description}</Text>
-            </View>
-          </View>
-          <View style={styles.wrapRadioContent}>
-            <Text style={styles.contentRadio}>{item.deliveryTime}</Text>
-          </View>
-        </View>
-
-        <View style={styles.wrapPrice}>
-          <Text style={styles.priceRadio}>
-            {item.price
-              ? currencyFormat(item.price, 'đ')
-              : i18n.t('cart.freeShip')}
-          </Text>
-        </View>
-      </View>
     );
   };
 
@@ -272,7 +215,7 @@ const ListProduct = ({navigation, data, validateButton}) => {
   const onPayment = () => {
     const totalPrice = () => {
       const deliveryPrice =
-        valueChosen && valueChosen.price ? valueChosen.price : 0;
+        deliveryMethod && deliveryMethod.price ? deliveryMethod.price : 0;
       const voucherPrice = voucher && voucher.price ? voucher.price : 0;
       return +total + deliveryPrice + voucherPrice;
     };
@@ -281,13 +224,11 @@ const ListProduct = ({navigation, data, validateButton}) => {
         productVarientPriceData,
         totalMoney: totalPrice(),
         paymentTypeId: paymentSelected,
-        shippingProviderId: valueChosen?.id,
+        shippingProviderId: deliveryMethod?.id,
       }),
     );
     // navigation.navigate('Home');
   };
-
-  console.log('orderData', JSON.stringify(orderData, null, 4));
 
   /* Extract note */
   const groupDataByStore = (list) => {
@@ -318,8 +259,6 @@ const ListProduct = ({navigation, data, validateButton}) => {
     [JSON.stringify(cart)],
   );
 
-  const listDelivery = useMemo(() => deliveries, [JSON.stringify(deliveries)]);
-
   return (
     <View style={styles.container}>
       {Object.keys(groupData).length > 0 ? (
@@ -349,7 +288,7 @@ const ListProduct = ({navigation, data, validateButton}) => {
           <View style={styles.wrapFooter}>
             <CardFooter
               buttonText={i18n.t('cart.order')}
-              deliveryMethod={valueChosen}
+              deliveryMethod={deliveryMethod}
               voucher={voucher}
               actionButton={onPayment}
               isCheckout

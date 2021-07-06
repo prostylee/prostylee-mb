@@ -139,3 +139,7 @@ export const getPaymentMethodSelector = createSelector(
   cartReducer,
   (data) => data?.paymentMethod || '',
 );
+export const getShippingMethodSelector = createSelector(
+  cartReducer,
+  (data) => data?.shippingMethod || '',
+);
