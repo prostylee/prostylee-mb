@@ -116,16 +116,17 @@ const ProductItem = ({item, navigation, params}) => {
             });
             await dispatch(cartActions.setVoucherUse(item));
             navigation.goBack();
+          } else {
+            showMessage({
+              message: i18n.t('cart.addVoucherFail'),
+              type: 'danger',
+              position: 'top',
+            });
           }
-          showMessage({
-            message: i18n.t('cart.addVoucherFail'),
-            type: 'danger',
-            position: 'top',
-          });
         } else {
           showMessage({
             message: i18n.t('unknownMessage'),
-            type: 'success',
+            type: 'danger',
             position: 'top',
           });
         }
