@@ -58,6 +58,17 @@ export default EStyleSheet.create({
   },
   textInputStyle: {
     paddingHorizontal: 0,
+    zIndex: -1,
+  },
+  addressButtonContainer: {
+    position: 'relative',
+  },
+  addressButton: {
+    height: 64,
+    width: Dimensions.get('window').width - 32,
+    zIndex: 10,
+    top: 12,
+    position: 'absolute',
   },
 
   wrapContactInfo: {
