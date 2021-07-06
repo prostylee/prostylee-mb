@@ -10,6 +10,7 @@ export const types = {
 
   SET_ORDER_DATA: 'SET_ORDER_DATA',
   SET_PAYMENT_METHOD_DATA: 'SET_PAYMENT_METHOD_DATA',
+  SET_SHIPPING_METHOD_DATA: 'SET_SHIPPING_METHOD_DATA',
 };
 
 export const actions = {
@@ -20,11 +21,13 @@ export const actions = {
 
   setOrderData: createAction(types.SET_ORDER_DATA),
   setPaymentMethodData: createAction(types.SET_PAYMENT_METHOD_DATA),
+  setShippingMethodData: createAction(types.SET_SHIPPING_METHOD_DATA),
 };
 
 export const intialState = {
   orderData: null,
   paymentMethod: null,
+  shippingMethod: null,
   createOrderLoading: false,
 };
 
@@ -45,6 +48,12 @@ export const handleActions = {
     return {
       ...state,
       paymentMethod: payload,
+    };
+  },
+  [types.SET_SHIPPING_METHOD_DATA]: (state, {payload}) => {
+    return {
+      ...state,
+      shippingMethod: payload,
     };
   },
 };
