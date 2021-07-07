@@ -96,7 +96,7 @@ const Index = ({navigation}) => {
       .then((user) => {
         dispatch(userActions.getProfile(user.attributes['custom:userId']));
       })
-      .catch((err) => {
+      .catch((_) => {
         showMessage({
           message: I18n.t('unknownMessage'),
           type: 'danger',

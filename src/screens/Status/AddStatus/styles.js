@@ -69,7 +69,7 @@ export default EStyleSheet.create({
   },
   addStoryButtonText: {
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 16,
     color: '$white',
   },
   selectStore: {

@@ -139,7 +139,7 @@ const Message = (props) => {
               user.attributes['custom:userId'],
             );
           })
-          .catch((err) => {
+          .catch((_) => {
             showMessage({
               message: i18n.t('unknownMessage'),
               type: 'danger',

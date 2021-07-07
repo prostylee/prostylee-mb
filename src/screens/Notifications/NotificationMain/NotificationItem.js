@@ -42,16 +42,18 @@ const NotificationItem = ({
             showMessage({
               message: i18n.t('someThingWrong'),
               type: 'danger',
+              position: 'top',
             });
             return;
           }
           dispatch(notificationActions.setMarkAsRead(id));
           dispatch(notificationActions.setCountUnreadNoti(count - 1));
         })
-        .catch((err) => {
+        .catch((_) => {
           showMessage({
             message: i18n.t('serverError'),
             type: 'danger',
+            position: 'top',
           });
         });
     }
@@ -67,6 +69,7 @@ const NotificationItem = ({
           showMessage({
             message: i18n.t('someThingWrong'),
             type: 'danger',
+            position: 'top',
           });
           return;
         }
@@ -80,13 +83,15 @@ const NotificationItem = ({
         showMessage({
           message: i18n.t('deleteSuccess'),
           type: 'success',
+          position: 'top',
         });
         return;
       })
-      .catch((e) => {
+      .catch((_) => {
         showMessage({
           message: i18n.t('serverError'),
           type: 'danger',
+          position: 'top',
         });
       });
     if (swipeableRef && swipeableRef.current) {

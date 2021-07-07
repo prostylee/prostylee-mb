@@ -69,6 +69,7 @@ const SignInTab = () => {
     showMessage({
       message: errorMessage,
       type: 'danger',
+      position: 'top',
     });
   };
 

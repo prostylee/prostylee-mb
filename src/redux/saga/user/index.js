@@ -49,6 +49,7 @@ const userSignUp = function* ({
     yield showMessage({
       message: errorMessage,
       type: 'danger',
+      position: 'top',
     });
   }
 };
@@ -84,6 +85,7 @@ const userForgotPassword = function* ({payload: {email, onSuccess}}) {
     yield showMessage({
       message: errorMessage,
       type: 'danger',
+      position: 'top',
     });
   }
 };
@@ -107,6 +109,7 @@ const userVerifyOTP = function* ({payload: {email, otp, onSuccess}}) {
     yield showMessage({
       message: errorMessage,
       type: 'danger',
+      position: 'top',
     });
   }
 };
@@ -131,6 +134,7 @@ const resendOtpSignUp = function* ({payload: {email, onSuccess}}) {
     yield showMessage({
       message: errorMessage,
       type: 'danger',
+      position: 'top',
     });
   }
 };
@@ -154,6 +158,7 @@ const userChangePassword = function* ({
     yield showMessage({
       message: errorMessage,
       type: 'danger',
+      position: 'top',
     });
   }
 };
@@ -320,7 +325,7 @@ const userLogout = function* ({payload}) {
           .unsubscribeFromTopic(`user_${user.idToken.payload.sub}`)
           .then(() => {});
       })
-      .catch((err) => {
+      .catch((_) => {
         showMessage({
           message: I18n.t('unknownMessage'),
           type: 'danger',
@@ -340,6 +345,7 @@ const userLogout = function* ({payload}) {
     yield showMessage({
       message: UNKNOWN_MESSAGE,
       type: 'danger',
+      position: 'top',
     });
   }
 };

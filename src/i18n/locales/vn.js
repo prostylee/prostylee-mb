@@ -233,7 +233,7 @@ export default {
   },
   error: {
     cannotUploadImage:
-      'Xuất hiện khi upload hình. Bạn hãy kiểm tra lại kết nối mạng nhé!',
+      'Lỗi xuất hiện khi upload hình. Bạn hãy kiểm tra lại kết nối mạng nhé!',
     cannotGetImage: 'Không thể chọn hình ảnh này. Xin hãy thử lại!',
     formError: 'Lỗi form, xin hãy thử lại sau!',
   },
