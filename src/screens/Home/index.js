@@ -17,7 +17,7 @@ const Index = ({navigation}) => {
     // TODO remove
     Auth.currentAuthenticatedUser()
       .then((user) => {})
-      .catch((err) => {
+      .catch((_) => {
         showMessage({
           message: i18n.t('unknownMessage'),
           type: 'danger',

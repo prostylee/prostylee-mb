@@ -29,6 +29,7 @@ const StoreInfo = ({storeInfo = {}}) => {
       showMessage({
         message: `${res?.data?.status}: ${res?.data?.error}`,
         type: 'danger',
+        position: 'top',
       });
     }
   };

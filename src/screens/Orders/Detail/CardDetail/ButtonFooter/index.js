@@ -30,6 +30,7 @@ const ButtonFooter = ({dealData}) => {
       if (res.data.status !== 200) {
         showMessage({
           message: i18n.t('someThingWrong'),
+          position: 'top',
           type: 'danger',
         });
         return;
@@ -37,6 +38,7 @@ const ButtonFooter = ({dealData}) => {
       showMessage({
         message: i18n.t('mypage.cancelSuccess'),
         type: 'success',
+        position: 'top',
       });
       dispatch(
         myPageActions.getListCanceledOrders({

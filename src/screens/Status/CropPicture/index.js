@@ -95,13 +95,14 @@ const CropPicture = () => {
         });
       } else if (Platform.OS === 'android') {
         images.forEach(async (_, index) => {
-          await handlePress(index);
+          await handleCropAndroid(index);
         });
       }
     } else {
       showMessage({
         message: i18n.t('addStatus.checkAll'),
         type: 'danger',
+        position: 'top',
       });
     }
   };
@@ -150,7 +151,7 @@ const CropPicture = () => {
       return {};
     }
   };
-  const handlePress = React.useCallback(
+  const handleCropAndroid = React.useCallback(
     async (index) => {
       const croppedImage =
         Platform.OS === 'ios' ? images[index].sourceURL : images[index].path;

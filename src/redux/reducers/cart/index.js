@@ -292,6 +292,7 @@ export default handleActions(
       showMessage({
         message: 'Thêm vào giỏ hàng thành công',
         type: 'success',
+        position: 'top',
       });
       return {
         ...state,

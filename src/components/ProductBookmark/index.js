@@ -30,6 +30,7 @@ const ProductBookmark = ({item, likeSize = 22, unlikeSize = 24}) => {
         showMessage({
           message: `${result?.data?.status}: ${result?.data?.error}`,
           type: 'danger',
+          position: 'top',
         });
       }
       handleClickLike(false);

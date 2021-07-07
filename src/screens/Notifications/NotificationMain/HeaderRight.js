@@ -17,6 +17,7 @@ const HeaderRight = () => {
           showMessage({
             message: i18n.t('someThingWrong'),
             type: 'danger',
+            position: 'top',
           });
           return;
         }
@@ -24,12 +25,14 @@ const HeaderRight = () => {
         showMessage({
           message: i18n.t('setMarkAllAsRead'),
           type: 'success',
+          position: 'top',
         });
       })
       .catch(() => {
         showMessage({
           message: i18n.t('serverError'),
           type: 'danger',
+          position: 'top',
         });
       });
   };
@@ -40,6 +43,7 @@ const HeaderRight = () => {
           showMessage({
             message: i18n.t('someThingWrong'),
             type: 'danger',
+            position: 'top',
           });
           return;
         }
@@ -48,12 +52,14 @@ const HeaderRight = () => {
         showMessage({
           message: i18n.t('deleteSuccess'),
           type: 'success',
+          position: 'top',
         });
       })
       .catch(() => {
         showMessage({
           message: i18n.t('serverError'),
           type: 'danger',
+          position: 'top',
         });
       });
   };

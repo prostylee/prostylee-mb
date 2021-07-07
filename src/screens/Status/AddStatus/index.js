@@ -41,7 +41,7 @@ const AddStatus = (props) => {
       .then((user) => {
         setUserId(user.signInUserSession.idToken.payload.sub);
       })
-      .catch((err) =>
+      .catch((_) =>
         showMessage({
           message: i18n.t('unknownMessage'),
           type: 'danger',
