@@ -60,6 +60,7 @@ import TagList from './TagList';
 import NotificationIcon from './NotificationIcon';
 
 import PostView from './PostView';
+import ActionSheet from './ActionSheet';
 
 export {
   ContainerWithoutScrollView,
@@ -122,4 +123,5 @@ export {
   TagList,
   NotificationIcon,
   PostView,
+  ActionSheet,
 };

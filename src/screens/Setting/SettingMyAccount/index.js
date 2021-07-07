@@ -14,6 +14,7 @@ import {
   CustomTextInput,
   ButtonRounded,
   RnDateTimePicker,
+  ActionSheet,
 } from 'components';
 import {showMessage} from 'react-native-flash-message';
 import RNPickerSelect from 'react-native-picker-select';
@@ -36,8 +37,14 @@ import {Storage} from 'aws-amplify';
 
 import {updateAvatar} from 'services/api/myPageApi';
 
+const CANCEL_INDEX = 0;
+// const DESTRUCTIVE_INDEX = 0;
+const PICK_IMAGE_OPTIONS = ['Huỷ', 'Chọn từ bộ sưu tập ảnh', 'Chụp hình'];
+
 const SettingMyAccount = () => {
   const navigation = useNavigation();
+
+  const actionSheetRef = React.useRef();
 
   const dispatch = useDispatch();
 
@@ -117,13 +124,14 @@ const SettingMyAccount = () => {
     );
     navigation.goBack();
   };
-
-  const onChangeAvaterPress = () => {
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-      multiple: false,
-      maxFiles: 1,
+  const onCaptureImagePress = () => {
+    ImagePicker.openCamera({
+      width: 600,
+      height: 600,
       cropping: true,
+      compressImageQuality: 0.8,
+      includeBase64: true,
+      mediaType: 'photo',
     })
       .then((res) => {
         let image = {
@@ -134,11 +142,37 @@ const SettingMyAccount = () => {
         setUserAvatar(image);
       })
       .catch((e) => {
-        showMessage({
-          message: I18n.t('unknownMessage'),
-          type: 'danger',
-          position: 'top',
-        });
+        // showMessage({
+        //   message: I18n.t('unknownMessage'),
+        //   type: 'danger',
+        //   position: 'top',
+        // });
+      });
+  };
+
+  const onPickImagePress = () => {
+    ImagePicker.openPicker({
+      mediaType: 'photo',
+      multiple: false,
+      maxFiles: 1,
+      cropping: true,
+      width: 600,
+      height: 600,
+    })
+      .then((res) => {
+        let image = {
+          path: res?.path,
+          name: res.filename,
+          id: `${new Date().valueOf()}-${res?.filename}`,
+        };
+        setUserAvatar(image);
+      })
+      .catch((e) => {
+        // showMessage({
+        //   message: I18n.t('unknownMessage'),
+        //   type: 'danger',
+        //   position: 'top',
+        // });
       });
   };
 
@@ -201,6 +235,14 @@ const SettingMyAccount = () => {
     }
   };
 
+  React.useEffect(() => {
+    return () => {
+      ImagePicker.clean()
+        .then((res) => {})
+        .catch((err) => {});
+    };
+  }, []);
+
   return (
     <ThemeView isFullView style={styles.container}>
       <KeyboardAvoidingView
@@ -220,7 +262,9 @@ const SettingMyAccount = () => {
             <View style={styles.imageViewButton}>
               <TouchableOpacity
                 style={styles.buttonView}
-                onPress={onChangeAvaterPress}>
+                onPress={() => {
+                  actionSheetRef.current.show();
+                }}>
                 <Camera color="#FFFFFF" />
                 <Text style={styles.imageViewButtonText}>
                   {I18n.t('settingProfile.changeImage')}
@@ -355,6 +399,20 @@ const SettingMyAccount = () => {
           </Formik>
         </ScrollView>
       </KeyboardAvoidingView>
+      <ActionSheet
+        ref={actionSheetRef}
+        options={PICK_IMAGE_OPTIONS}
+        cancelButtonIndex={CANCEL_INDEX}
+        onPress={(value) => {
+          if (value === 1) {
+            onPickImagePress();
+            return;
+          }
+          if (value === 2) {
+            onCaptureImagePress();
+          }
+        }}
+      />
     </ThemeView>
   );
 };
