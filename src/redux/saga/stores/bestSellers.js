@@ -6,6 +6,10 @@ import {storeActions, storeTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
 
+import {showMessage} from 'react-native-flash-message';
+
+import i18n from 'i18n';
+
 const getBestSellers = function* ({payload}) {
   try {
     yield put(storeActions.setBestSellersLoading(true));
@@ -17,7 +21,11 @@ const getBestSellers = function* ({payload}) {
       yield put(storeActions.getBestSellersFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setBestSellersLoading(false));
   }
@@ -32,7 +40,11 @@ const getBestSellersLoadmore = function* ({payload}) {
       yield put(storeActions.getBestSellersLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setNearbyStoreLoadmoreLoading(false));
   }

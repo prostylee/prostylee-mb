@@ -1,6 +1,11 @@
 import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
-import {ButtonRounded, ContainerWithoutScrollView, HeaderBack, TextButton} from 'components';
+import {
+  ButtonRounded,
+  ContainerWithoutScrollView,
+  HeaderBack,
+  TextButton,
+} from 'components';
 
 import I18n from 'i18n';
 import {commonActions, userActions} from 'reducers';
@@ -30,7 +35,6 @@ const Index = (props) => {
   };
 
   const onVerifyOTP = async (formValues) => {
-    console.log('onVerifyOTP ' + props.route.params.email);
     await dispatch(commonActions.toggleLoading(true));
     dispatch(
       userActions.userVerifyOTP({
@@ -56,7 +60,6 @@ const Index = (props) => {
   };
 
   const onResendOTP = async () => {
-    console.log('onResendOTP ' + props.route.params.email);
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
       userActions.resendOtpSignUp({
@@ -67,7 +70,6 @@ const Index = (props) => {
   };
 
   const onResendOTPSuccess = async () => {
-    console.log('onResendOTPSuccess ' + props.route.params.email);
     await dispatch(commonActions.toggleLoading(false));
     showMessage({
       message: I18n.t('resendOTPSuccess'),
@@ -80,7 +82,7 @@ const Index = (props) => {
     <View style={styles.container}>
       <ContainerWithoutScrollView>
         <View style={styles.mainWrapper}>
-          <HeaderBack title={I18n.t('enterOTP')} onBack={() => onGoBack()}/>
+          <HeaderBack title={I18n.t('enterOTP')} onBack={() => onGoBack()} />
           <Formik
             validateOnMount={true}
             initialValues={{code: ''}}

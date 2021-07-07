@@ -6,9 +6,7 @@ import {RightArrow} from 'svg/common';
 
 const HeaderStore = ({header, navigation}) => {
   const {storeName, storeId, storeAvatar} = header;
-  const clickItem = () => {
-    console.log('Cliked!', storeId);
-  };
+  const clickItem = () => {};
 
   return (
     <View style={styles.wrapHeader}>

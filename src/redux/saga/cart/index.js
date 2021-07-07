@@ -14,14 +14,19 @@ import {
 } from 'services/api/cartApi';
 
 import {SUCCESS} from 'constants';
-
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 //List Cart
 const setListCart = function* ({payload}) {
   try {
     yield put(cartActions.setCartLoading(true));
     yield put(cartActions.setListCartSuccess(payload));
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(cartActions.setCartLoading(false));
   }
@@ -37,7 +42,11 @@ const getListPayment = function* ({payload}) {
       yield put(cartActions.getListPaymentFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(cartActions.setCartLoading(false));
   }
@@ -53,7 +62,11 @@ const getListRecent = function* ({payload}) {
       yield put(cartActions.getListRecentFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(cartActions.setRecentLoading(false));
   }
@@ -69,7 +82,11 @@ const getListSuggestion = function* ({payload}) {
       yield put(cartActions.getListSuggestionFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(cartActions.setSuggestionLoading(false));
   }
@@ -87,7 +104,11 @@ const getListVoucher = function* ({payload}) {
       yield put(cartActions.getListVoucherFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(cartActions.setVoucherLoading(false));
   }
@@ -103,7 +124,11 @@ const getLoadMoreListVoucher = function* ({payload}) {
       yield put(cartActions.getListVoucherLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(cartActions.setLoadingLoadMoreVoucher(false));
   }
@@ -119,7 +144,11 @@ const getListDelivery = function* ({payload}) {
       yield put(cartActions.getListDeliveryFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(cartActions.setDeliveryLoading(false));
   }
@@ -135,7 +164,11 @@ const getUserCartAddress = function* ({payload}) {
       yield put(cartActions.getListCartAddressFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(cartActions.setListCartAddressLoading(false));
   }
@@ -204,7 +237,7 @@ const createOrder = function* ({payload}) {
     };
     yield put(cartActions.setOrderData(orderData));
     const res = yield call(createOrdersApi, orderData);
-    // console.log('Create order res', JSON.stringify(res, null, 4));
+
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       // yield put(cartActions.resetListCart());
       // yield put(cartActions.getListCartAddressSuccess(res.data.data.content));
@@ -212,7 +245,11 @@ const createOrder = function* ({payload}) {
       // yield put(cartActions.getListCartAddressFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(cartActions.createOrderLoading(false));
   }

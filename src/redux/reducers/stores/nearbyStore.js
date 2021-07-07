@@ -67,7 +67,6 @@ export const handleActions = {
   [types.GET_NEARBY_STORE_LOADMORE_SUCCESS]: (state, {payload}) => {
     const {totalPages, content} = payload;
     payload.content = state.nearbyStoreData?.content.concat(content) || [];
-    console.log('BOOLEN', state.nearbyStorePage, totalPages);
     return {
       ...state,
       nearbyStoreData: payload,

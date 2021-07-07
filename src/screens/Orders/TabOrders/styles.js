@@ -24,4 +24,12 @@ export default EStyleSheet.create({
     fontSize: 14,
     fontFamily: '$font1',
   },
+  notFountText: {
+    alignSelf: 'center',
+    fontSize: 14,
+    fontWeight: '400',
+    color: '$lightGray',
+    lineHeight: 20,
+    marginTop: 20,
+  },
 });

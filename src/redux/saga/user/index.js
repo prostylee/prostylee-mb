@@ -29,13 +29,11 @@ const userSignUp = function* ({
         name: fullname,
       },
     };
-    console.log('Request ' + request);
+
     const {user} = yield Auth.signUp(request);
-    console.log('Auth.signUp  ' + JSON.stringify(user));
+
     yield onSuccess();
   } catch (e) {
-    console.log(e);
-
     let errorMessage = UNKNOWN_MESSAGE;
     if (e.code === 'InvalidPasswordException') {
       errorMessage = I18n.t('validation.invalid', {
@@ -58,14 +56,13 @@ const userSignUp = function* ({
 const userSignIn = function* ({payload: {email, password, onSuccess, onFail}}) {
   try {
     const user = yield Auth.signIn(email, password);
-    console.log('Sign-in successfully!!!');
+
     yield authService.setUserName({username: user.username});
     yield authService.setAuthUser(user);
     yield fetchProfile({payload: user.attributes['custom:userId']});
     yield put(userActions.userSignInSuccess(user));
     yield onSuccess();
   } catch (e) {
-    console.log(e);
     yield onFail(e.code);
   }
 };
@@ -73,11 +70,9 @@ const userSignIn = function* ({payload: {email, password, onSuccess, onFail}}) {
 const userForgotPassword = function* ({payload: {email, onSuccess}}) {
   try {
     const res = yield Auth.forgotPassword(email);
-    console.log('Auth.forgotPassword ' + res);
+
     yield onSuccess();
   } catch (e) {
-    console.log(e);
-
     let errorMessage = UNKNOWN_MESSAGE;
     if (e.code === 'UserNotFoundException') {
       errorMessage = I18n.t('unExistedEmail');
@@ -96,11 +91,9 @@ const userForgotPassword = function* ({payload: {email, onSuccess}}) {
 const userVerifyOTP = function* ({payload: {email, otp, onSuccess}}) {
   try {
     const res = yield Auth.confirmSignUp(email, otp);
-    console.log('Verify successful ' + JSON.stringify(res));
+
     yield onSuccess();
   } catch (e) {
-    console.log(e);
-
     let errorMessage = UNKNOWN_MESSAGE;
     if (e.code === 'CodeMismatchException') {
       errorMessage = I18n.t('invalidOTP');
@@ -119,14 +112,11 @@ const userVerifyOTP = function* ({payload: {email, otp, onSuccess}}) {
 };
 
 const resendOtpSignUp = function* ({payload: {email, onSuccess}}) {
-  console.log('Auth.resendOtpSignUp ' + email);
   try {
     const res = yield Auth.resendSignUp(email);
-    console.log('Auth.resendOtpSignUp ' + JSON.stringify(res));
+
     yield onSuccess();
   } catch (e) {
-    console.log(e);
-
     let errorMessage = UNKNOWN_MESSAGE;
     if (
       e.code === 'InvalidParameterException' ||
@@ -150,11 +140,10 @@ const userChangePassword = function* ({
 }) {
   try {
     const res = yield Auth.forgotPasswordSubmit(email, password, newPassword);
-    console.log('Auth.forgotPasswordSubmit ' + res);
+
     yield onSuccess();
   } catch (e) {
     //Lỗi server api
-    console.log(e);
 
     let errorMessage = UNKNOWN_MESSAGE;
     if (e.code === 'CodeMismatchException') {
@@ -172,14 +161,18 @@ const userChangePassword = function* ({
 const fetchProfile = function* ({payload}) {
   try {
     const res = yield call(getProfile, payload);
-    console.log('GET PROFILE RES', res.data);
+
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(userActions.getProfileSuccess(res.data.data));
     } else {
       yield put(userActions.getProfileFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: I18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   }
 };
 
@@ -192,7 +185,11 @@ const getStatisticsOfUser = function* ({payload}) {
       yield put(userActions.getStatisticsFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: I18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   }
 };
 
@@ -205,21 +202,29 @@ const getPostsOfUser = function* ({payload}) {
       yield put(userActions.getUserPostFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: I18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   }
 };
 
 const getProductByUser = function* ({payload}) {
   try {
     const res = yield call(getProductsByUser, payload);
-    console.log(res);
+
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(userActions.getProductByUserSuccess(res.data.data));
     } else {
       yield put(userActions.getProductByUserFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: I18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   }
 };
 
@@ -233,7 +238,11 @@ const updateUserProfile = function* ({payload}) {
       yield put(userActions.updateUserProfileFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: I18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(commonActions.toggleLoading(false));
   }
@@ -261,7 +270,11 @@ const getUserAddress = function* ({payload}) {
       yield put(userActions.getUserAddressFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: I18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(userActions.getUserAddressLoading(false));
   }
@@ -289,7 +302,11 @@ const getUserAddressMore = function* ({payload}) {
       yield put(userActions.getUserAddressMoreFail());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: I18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(userActions.getUserAddressMoreLoading(false));
   }
@@ -301,9 +318,15 @@ const userLogout = function* ({payload}) {
       .then((user) => {
         messaging()
           .unsubscribeFromTopic(`user_${user.idToken.payload.sub}`)
-          .then(() => console.log('Unsubscribed fom the topic user!'));
+          .then(() => {});
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        showMessage({
+          message: I18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
+      });
 
     yield authService.logOut();
     yield put(userActions.userLogOutSuccess());
@@ -311,9 +334,8 @@ const userLogout = function* ({payload}) {
 
     yield messaging()
       .unsubscribeFromTopic('user_all')
-      .then(() => console.log('Unsubscribed fom the topic all!'));
+      .then(() => {});
   } catch (e) {
-    console.log(e);
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
       message: UNKNOWN_MESSAGE,

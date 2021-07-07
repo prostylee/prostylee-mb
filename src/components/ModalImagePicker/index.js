@@ -11,7 +11,8 @@ import styles from './styles';
 import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
-
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 const IC_GALLERY = require('assets/icons/gallery.png');
 const IC_CAMERA = require('assets/icons/camera.png');
 
@@ -28,7 +29,11 @@ const ModalImagePicker = (props) => {
       });
       props.onGetValue(image);
     } catch (err) {
-      console.log(err);
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'danger',
+        position: 'top',
+      });
       props.onCancel();
     }
   };
@@ -45,7 +50,11 @@ const ModalImagePicker = (props) => {
       });
       props.onGetValue(image);
     } catch (err) {
-      console.log(err);
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'danger',
+        position: 'top',
+      });
       props.onCancel();
     }
   };

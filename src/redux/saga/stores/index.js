@@ -2,6 +2,8 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {getTopStore} from 'services/api/storeApi';
 import {storeActions, storeTypes} from 'reducers';
 import {SUCCESS} from 'constants';
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 
 const getTopProduct = function* ({payload}) {
   try {
@@ -13,7 +15,11 @@ const getTopProduct = function* ({payload}) {
       yield put(storeActions.getTopProductFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setLoading(false));
   }
@@ -30,7 +36,11 @@ const getListOfFuturedStores = function* ({payload}) {
       yield put(storeActions.getListOfFuturedStoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setLoadingFuturedStores(false));
   }
@@ -48,7 +58,11 @@ const loadMoreListOfFuturedStores = function* ({payload}) {
       yield put(storeActions.getListOfFuturedStoresLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setLoadingLoadMoreFuturedStores(false));
   }

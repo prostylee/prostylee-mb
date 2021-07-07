@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
-import {ButtonRounded, HeaderBack,} from 'components';
+import {ButtonRounded, HeaderBack} from 'components';
 
 import I18n from 'i18n';
 
@@ -9,7 +9,13 @@ import {useDispatch} from 'react-redux';
 
 import styles from './styles';
 import {showMessage} from 'react-native-flash-message';
-import {ContainerWithoutScrollView, Countdown, CustomPinCodeInput, CustomSecureInput, TextButton,} from '../../../components';
+import {
+  ContainerWithoutScrollView,
+  Countdown,
+  CustomPinCodeInput,
+  CustomSecureInput,
+  TextButton,
+} from '../../../components';
 import {Field, Formik} from 'formik';
 import {validatePassword} from '../../../utils/validatorUtils';
 import {CODE_LENGTH} from '../../../components/CustomPinCodeInput';
@@ -27,7 +33,6 @@ const Index = (props) => {
   }, []);
 
   const onUpdateNewPassword = async (formValues) => {
-    console.log('onUpdateNewPassword: ' + JSON.stringify(formValues));
     await dispatch(commonActions.toggleLoading(true));
     dispatch(
       userActions.userChangePassword({
@@ -45,7 +50,6 @@ const Index = (props) => {
   };
 
   const onResendPassword = async () => {
-    console.log('onResendPassword ' + props.route.params.email);
     await dispatch(commonActions.toggleLoading(true));
     await dispatch(
       userActions.userForgotPassword({
@@ -56,7 +60,6 @@ const Index = (props) => {
   };
 
   const onUserForgotPasswordSuccess = async () => {
-    console.log('onResendOTPSuccess ' + props.route.params.email);
     await dispatch(commonActions.toggleLoading(false));
     showMessage({
       message: I18n.t('resendOTPSuccess'),
@@ -69,7 +72,7 @@ const Index = (props) => {
     <View style={styles.container}>
       <ContainerWithoutScrollView>
         <View style={styles.mainWrapper}>
-          <HeaderBack title={I18n.t('resetPw')} onBack={() => onGoBack()}/>
+          <HeaderBack title={I18n.t('resetPw')} onBack={() => onGoBack()} />
 
           <Formik
             validateOnMount={true}

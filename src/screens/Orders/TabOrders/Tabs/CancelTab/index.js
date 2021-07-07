@@ -75,7 +75,7 @@ const CancelTab = ({navigation, status, actCode = 0, statusId = 0}) => {
               label={i18n.t('orders.repurchase')}
               style={{marginLeft: 10}}
               titleStyle={styles.titleStyle}
-              onPress={() => console.log('Mua lại')}
+              onPress={() => {}}
             />
           </View>
         </View>

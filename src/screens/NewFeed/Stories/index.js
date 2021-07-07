@@ -54,12 +54,10 @@ const Stories = ({stories, loading, targetType}) => {
   const onScrollChange = (scrollValue) => {
     if (currentScrollValue > scrollValue) {
       onStoryNext(true);
-      console.log('next');
       setCurrentScrollValue(scrollValue);
     }
     if (currentScrollValue < scrollValue) {
       onStoryPrevious();
-      console.log('previous');
       setCurrentScrollValue(scrollValue);
     }
   };

@@ -10,7 +10,8 @@ import {
 } from 'services/api/storeApi';
 import {storeActions, storeTypes} from 'reducers';
 import {SUCCESS} from 'constants';
-
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 const getTopBanner = function* ({payload}) {
   try {
     yield put(storeActions.setStoreLoading(true));
@@ -22,7 +23,11 @@ const getTopBanner = function* ({payload}) {
       yield put(storeActions.getTopBannerFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setStoreLoading(false));
   }
@@ -39,7 +44,11 @@ const getMidBanner = function* ({payload}) {
       yield put(storeActions.getMidBannerFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setStoreLoading(false));
   }
@@ -55,7 +64,11 @@ const getBrandList = function* ({payload}) {
       yield put(storeActions.getBrandListFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setBrandListLoading(false));
   }
@@ -71,7 +84,11 @@ const getBrandListLoadmore = function* ({payload}) {
       yield put(storeActions.getBrandListLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setBrandListLoadmoreLoading(false));
   }
@@ -88,7 +105,11 @@ const getCategoryList = function* ({payload}) {
       yield put(storeActions.getCategoryListFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setStoreLoading(false));
   }
@@ -105,7 +126,11 @@ const getBottomTabList = function* ({payload}) {
       yield put(storeActions.getBottomTabListFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setStoreLoading(false));
   }

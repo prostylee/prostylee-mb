@@ -19,7 +19,6 @@ const ProductItem = ({item, index}) => {
       ]}>
       <TouchableOpacity
         onPress={() => {
-          console.log('NAVIGATION ID', item?.id);
           navigation.navigate('ProductDetail', {id: item.id});
         }}>
         <View style={styles.item}>

@@ -9,6 +9,8 @@ import {common} from './utils';
 
 import Navigator from './navigator';
 
+import i18n from 'i18n';
+
 import {
   Colors,
   ModalIndicator,
@@ -20,7 +22,7 @@ import {
 
 import NetInfo from '@react-native-community/netinfo';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import FlashMessage from 'react-native-flash-message';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
 import Geocoder from 'react-native-geocoding';
@@ -76,7 +78,6 @@ const Index = () => {
     onCodepushCheckForUpdateApp();
     async function getInfo() {
       const res = await getDeviceInfo();
-      console.log(res);
     }
 
     getInfo();
@@ -139,19 +140,21 @@ const Index = () => {
     try {
       await dispatch(commonActions.toggleLoading(true));
       let isUpdate = await codePush.checkForUpdate();
-      console.log('CHECKING FOR UPDATE APP...');
+
       if (isUpdate) {
-        console.log('has new version');
         await dispatch(commonActions.toggleLoading(false));
         setTimeout(async () => {
           await dispatch(commonActions.setRequireUpdate());
         }, 300);
       } else {
-        console.log('APP IS UP TO DATE');
         onCheckSignInSession();
       }
     } catch (err) {
-      console.log(err);
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'danger',
+        position: 'top',
+      });
       await dispatch(commonActions.toggleLoading(false));
     }
   };
@@ -159,17 +162,13 @@ const Index = () => {
   const codePushStatusDidChange = async (status) => {
     switch (status) {
       case codePush.SyncStatus.DOWNLOADING_PACKAGE:
-        console.log('Downloading package.');
         break;
       case codePush.SyncStatus.INSTALLING_UPDATE:
-        console.log('Installing update.');
         break;
       case codePush.SyncStatus.UP_TO_DATE:
-        console.log('Up-to-date.');
         onCheckSignInSession();
         break;
       case codePush.SyncStatus.UPDATE_INSTALLED:
-        console.log('Update installed.');
         onCheckSignInSession();
         break;
       default:
@@ -179,12 +178,15 @@ const Index = () => {
   };
 
   const onError = (error) => {
-    console.log('Codepush: An error occurred. ' + error);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   };
 
   const onDownloadProgress = (downloadProgress) => {
     if (downloadProgress) {
-      console.log('Downloading ' + downloadProgress.receivedBytes);
     }
   };
 
@@ -204,13 +206,10 @@ const Index = () => {
     await dispatch(commonActions.toggleLoading(true));
     Auth.currentAuthenticatedUser()
       .then((data) => {
-        console.log('Already sign-in');
         dispatch(userActions.userSignInSuccess(data));
         dispatch(commonActions.toggleLoading(false));
       })
       .catch((err) => {
-        console.log('Not sign-in yet!!!');
-        console.log(err);
         Auth.signOut({global: true});
 
         dispatch(userActions.userClearExpiredToken());
@@ -227,7 +226,6 @@ const Index = () => {
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
     if (enabled) {
-      // console.log('Authorization status:', authStatus);
       onReceiveMessage();
     }
   };
@@ -235,8 +233,6 @@ const Index = () => {
   const onReceiveMessage = async () => {
     //notification arrived when app on foreground state
     messaging().onMessage(async (remoteMessage) => {
-      console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
-
       if (
         remoteMessage.data.type &&
         remoteMessage.data.type === 'notification'
@@ -265,10 +261,6 @@ const Index = () => {
 
     //notification was opened when app on background state
     messaging().onNotificationOpenedApp(async (remoteMessage) => {
-      console.log(
-        'Notification caused app to open from background state:',
-        remoteMessage,
-      );
       if (
         remoteMessage.data.type &&
         remoteMessage.data.type === 'notification'
@@ -300,10 +292,6 @@ const Index = () => {
       .getInitialNotification()
       .then(async (remoteMessage) => {
         if (remoteMessage) {
-          console.log(
-            'Notification caused app to open from quit state:',
-            remoteMessage,
-          );
           if (
             remoteMessage.data.type &&
             remoteMessage.data.type === 'notification'

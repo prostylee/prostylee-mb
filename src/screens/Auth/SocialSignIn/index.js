@@ -28,15 +28,11 @@ const Index = ({
     Auth.federatedSignIn({provider: provider});
 
   if (oAuthError) {
-    console.log('Auth Error: ' + oAuthError);
   }
   if (oAuthUser) {
-    console.log('Auth Success');
-    // console.log('Auth Success: ' + JSON.stringify(oAuthUser));
   }
 
   React.useEffect(() => {
-    console.log('Update oAuthUser');
     dispatch(userActions.userSignInSuccess(oAuthUser));
   }, [oAuthUser]);
 

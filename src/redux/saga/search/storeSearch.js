@@ -6,8 +6,9 @@ import {
 } from 'services/api/searchApi';
 
 import {searchActions, searchTypes} from 'reducers';
-
+import i18n from 'i18n';
 import {SUCCESS} from 'constants';
+import {showMessage} from 'react-native-flash-message';
 
 //List FEATURED_PRODUCT_SEARCH
 
@@ -22,7 +23,11 @@ const getStoreSearch = function* ({payload}) {
       yield put(searchActions.getStoreSearchFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(searchActions.setStoreSearchLoading(false));
   }
@@ -37,7 +42,11 @@ const getStoreSearchLoadMore = function* ({payload}) {
       yield put(searchActions.getStoreSearchLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(searchActions.setStoreSearchLoadmoreLoading(false));
   }

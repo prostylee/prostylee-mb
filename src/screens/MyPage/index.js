@@ -8,6 +8,7 @@ import {
   Animated,
   TouchableOpacity,
   ImageBackground,
+  Platform,
 } from 'react-native';
 
 import configEnv from 'config';
@@ -29,6 +30,7 @@ import {Grid, Full, Setting} from 'svg/common';
 import {Avatar, ToggleButton} from 'react-native-paper';
 import TabViewContainer from './TabView';
 import {ScrollView} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 
 const heightShow = 334;
 let scrollFlag = true;
@@ -94,7 +96,13 @@ const Index = ({navigation}) => {
       .then((user) => {
         dispatch(userActions.getProfile(user.attributes['custom:userId']));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        showMessage({
+          message: I18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
+      });
     dispatch(commonActions.toggleLoading(false));
   }, []);
 
@@ -178,7 +186,11 @@ const Index = ({navigation}) => {
               <View style={styles.scrollViewStyle}>
                 <View style={styles.wrapAvatar}>
                   <Avatar.Image
-                    source={{uri: userAvatar}}
+                    source={
+                      userProfile?.avatar
+                        ? {uri: userProfile?.avatar}
+                        : require('assets/images/default.png')
+                    }
                     size={80}
                     style={styles.avatarStyle}
                   />
@@ -249,6 +261,9 @@ const Index = ({navigation}) => {
             setActivedTab={setActivedTab}
           />
         </View>
+        {Platform.OS === 'android' ? (
+          <View style={styles.androidTempView} />
+        ) : null}
       </ScrollView>
       {activeTab === 'menu' && (
         <View style={styles.viewType}>

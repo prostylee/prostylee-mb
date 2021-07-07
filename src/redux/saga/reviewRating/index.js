@@ -14,7 +14,7 @@ import * as CONTANTS from 'constants';
 import authService from '../../../services/authService';
 import {SUCCESS} from 'constants';
 import {getListReviewRatingService} from 'services/api/reviewRatingApi';
-
+import i18n from 'i18n';
 const getReviewRatings = function* ({payload: {token, isRefresh}}) {
   try {
     var page;
@@ -60,7 +60,7 @@ const getReviewRatings = function* ({payload: {token, isRefresh}}) {
     }
   } catch (e) {
     //Lỗi server api
-    console.log(e);
+
     yield put(commonActions.toggleLoading(false));
     yield showMessage({
       message: CONTANTS.UNKNOWN_MESSAGE,
@@ -81,7 +81,11 @@ const getListReviewRating = function* ({payload}) {
       yield put(reviewRatingActions.getListReviewRatingFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(reviewRatingActions.setListReviewRatingLoading(false));
   }
@@ -99,7 +103,11 @@ const getLoadMoreListReviewRating = function* ({payload}) {
       yield put(reviewRatingActions.getListReviewRatingLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(reviewRatingActions.setLoadingLoadMoreReviewRating(false));
   }

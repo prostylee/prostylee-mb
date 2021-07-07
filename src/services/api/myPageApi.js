@@ -1,5 +1,5 @@
 import {_fetch} from '../config';
-import {POST, GET, PUT, DELETE} from 'constants';
+import {POST, GET, PATCH} from 'constants';
 
 //PRODUCT SALE API
 export const getListProductSaleService = (payload) => {
@@ -33,4 +33,10 @@ export const getListProductSavedService = (payload) => {
 // ORDER DETAILS
 export const getOrderDetails = (id) => {
   return _fetch(GET, `/orders/${id}`);
+};
+//CANCEL ORDER
+export const cancelOrder = (params) => {
+  return _fetch(PATCH, `/orders/${params?.id}`, {
+    ...params,
+  });
 };

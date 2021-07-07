@@ -46,7 +46,7 @@ const Countdown = ({showCountdown, count, onCountDown}) => {
 Countdown.defaultProps = {
   showCountdown: true,
   count: COUNT,
-  onCountDown: () => console.log('onCountdown'),
+  onCountDown: () => {},
 };
 
 Countdown.propTypes = {

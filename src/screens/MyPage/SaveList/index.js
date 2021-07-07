@@ -87,16 +87,9 @@ const SaveList = (props) => {
       <Header isDefault title={i18n.t('mypage.saveList')} />
       <View style={styles.wrapWishList}>
         {loading && !isRefreshing ? (
-          <View
-            style={{
-              flexDirection: 'row',
-              paddingBottom: 16,
-              flexWrap: 'wrap',
-              justifyContent: 'space-around',
-              overflow: 'hidden',
-            }}>
-            {Array.from('x'.repeat(4)).map(() => (
-              <SearchProductLoading />
+          <View style={styles.loadingContainer}>
+            {Array.from('x'.repeat(4)).map((v, index) => (
+              <SearchProductLoading key={index} />
             ))}
           </View>
         ) : savedProductList && savedProductList.length ? (

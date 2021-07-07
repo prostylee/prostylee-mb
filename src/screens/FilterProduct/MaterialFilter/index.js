@@ -15,56 +15,28 @@ const Search = ({navigation}) => {
         <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
       </View>
       <View style={styles.wrapChip}>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
+        <Chip small avatar={<Trending />} style={styles.itemChips}>
           Thời trang nam
         </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
+        <Chip small avatar={<Trending />} style={styles.itemChips}>
           Phụ kiện da
         </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
+        <Chip small avatar={<Trending />} style={styles.itemChips}>
           Sale
         </Chip>
-        <Chip
-          small
-          avatar={<Trending />}
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
+        <Chip small avatar={<Trending />} style={styles.itemChips}>
           Giày da
         </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
+        <Chip small style={styles.itemChips}>
           Best-seller
         </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
+        <Chip small style={styles.itemChips}>
           Hoodie
         </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
+        <Chip small style={styles.itemChips}>
           Quần tây
         </Chip>
-        <Chip
-          small
-          onPress={() => console.log('Pressed')}
-          style={styles.itemChips}>
+        <Chip small style={styles.itemChips}>
           Dép
         </Chip>
       </View>
