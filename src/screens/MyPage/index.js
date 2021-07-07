@@ -98,7 +98,7 @@ const Index = ({navigation}) => {
       .catch((err) => {
         showMessage({
           message: I18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });

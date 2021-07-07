@@ -187,7 +187,7 @@ const getStatisticsOfUser = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: I18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   }
@@ -204,7 +204,7 @@ const getPostsOfUser = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: I18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   }
@@ -222,7 +222,7 @@ const getProductByUser = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: I18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   }
@@ -240,7 +240,7 @@ const updateUserProfile = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: I18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -272,7 +272,7 @@ const getUserAddress = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: I18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -304,7 +304,7 @@ const getUserAddressMore = function* ({payload}) {
   } catch (e) {
     showMessage({
       message: I18n.t('unknownMessage'),
-      type: 'success',
+      type: 'danger',
       position: 'top',
     });
   } finally {
@@ -323,7 +323,7 @@ const userLogout = function* ({payload}) {
       .catch((err) => {
         showMessage({
           message: I18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });

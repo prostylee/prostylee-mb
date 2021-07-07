@@ -44,7 +44,7 @@ const ModalChangeCart = ({
         .catch(() => {
           showMessage({
             message: i18n.t('unknownMessage'),
-            type: 'success',
+            type: 'danger',
             position: 'top',
           });
           setLoading(false);

@@ -46,7 +46,7 @@ const ReviewRating = ({navigation}) => {
         setLoading(false);
         showMessage({
           message: I18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });

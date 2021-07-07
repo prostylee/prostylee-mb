@@ -44,7 +44,7 @@ const RatingProduct = ({navigation, product, productId}) => {
       .catch((err) => {
         showMessage({
           message: I18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });
@@ -97,7 +97,7 @@ const RatingProduct = ({navigation, product, productId}) => {
       .catch((e) => {
         showMessage({
           message: I18n.t('unknownMessage'),
-          type: 'success',
+          type: 'danger',
           position: 'top',
         });
       });
@@ -137,7 +137,7 @@ const RatingProduct = ({navigation, product, productId}) => {
         .catch((err) => {
           showMessage({
             message: I18n.t('unknownMessage'),
-            type: 'success',
+            type: 'danger',
             position: 'top',
           });
         });
@@ -146,7 +146,7 @@ const RatingProduct = ({navigation, product, productId}) => {
     } catch (err) {
       showMessage({
         message: I18n.t('unknownMessage'),
-        type: 'success',
+        type: 'danger',
         position: 'top',
       });
     }
