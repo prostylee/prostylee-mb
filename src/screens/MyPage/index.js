@@ -261,9 +261,6 @@ const Index = ({navigation}) => {
             setActivedTab={setActivedTab}
           />
         </View>
-        {Platform.OS === 'android' ? (
-          <View style={styles.androidTempView} />
-        ) : null}
       </ScrollView>
       {activeTab === 'menu' && (
         <View style={styles.viewType}>
