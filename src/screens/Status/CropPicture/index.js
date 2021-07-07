@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, Platform} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Platform,
+  Dimensions,
+} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import i18n from 'i18n';
 import {ContainerWithoutScrollView} from 'components';
@@ -22,6 +29,12 @@ let activeIndex = 0;
 
 const CropPicture = () => {
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
+  //route
+  const route = useRoute();
+  const navigation = useNavigation();
+  const images = route?.params.images || [];
+  const isCropList = images.length > 1 ? true : false;
+  /******** iOS ********/
   const cropsRef = React.useRef();
   const cropViewRef0 = React.useRef();
   const cropViewRef1 = React.useRef();
@@ -35,12 +48,36 @@ const CropPicture = () => {
   ];
 
   const [afterCropImages, setAfterCropImages] = React.useState([]);
+  /******** iOS ********/
   const [checkImage, setCheckImage] = React.useState([]);
-  //route
-  const route = useRoute();
-  const navigation = useNavigation();
-  const images = route?.params.images || [];
-  const isCropList = images.length > 1 ? true : false;
+
+  /******** Android ********/
+  const cropWidth = Dimensions.get('window').width;
+  const cropHeight =
+    Dimensions.get('window').height - notchHeight - 64 - (isCropList ? 100 : 0);
+  let cropperWidth = 0;
+  let cropperHeight = 0;
+  if (cropHeight / cropWidth > 5 / 4) {
+    cropperWidth = cropWidth;
+    cropperHeight = (cropWidth / 4) * 5;
+  } else {
+    cropperHeight = cropHeight;
+    cropperWidth = (cropHeight / 5) * 4;
+  }
+  const cropSize = {
+    width: cropperWidth,
+    height: cropperHeight,
+  };
+  const cropAreaSize = {
+    width: cropperWidth,
+    height: cropperHeight,
+  };
+  const [cropperParams0, setCropperParams0] = React.useState({});
+  const [cropperParams1, setCropperParams1] = React.useState({});
+  const [cropperParams2, setCropperParams2] = React.useState({});
+  const [cropperParams3, setCropperParams3] = React.useState({});
+
+  /******** Android ********/
 
   //BackHandler handle
   useBackHandler(() => {
@@ -52,9 +89,15 @@ const CropPicture = () => {
 
   const cropAllImage = () => {
     if (checkImage.every((item) => item)) {
-      images.forEach(async (_, index) => {
-        await cropViewRefList[index].current.saveImage(90);
-      });
+      if (Platform.OS === 'ios') {
+        images.forEach(async (_, index) => {
+          await cropViewRefList[index].current.saveImage(90);
+        });
+      } else if (Platform.OS === 'android') {
+        images.forEach(async (_, index) => {
+          await handlePress(index);
+        });
+      }
     } else {
       showMessage({
         message: i18n.t('addStatus.checkAll'),
@@ -94,84 +137,94 @@ const CropPicture = () => {
         height: HEIGHT - notchHeight,
       };
 
-  const RenderCropView = ({item, index}) => {
-    const CROP_AREA_WIDTH = 400;
-    const CROP_AREA_HEIGHT = 500;
-
-    const [cropperParams, setCropperParams] = React.useState({});
-    const [croppedImage, setCroppedImage] = React.useState(
-      Platform.OS === 'ios' ? item.sourceURL : item.path,
-    );
-    const [layout, setLayout] = React.useState({});
-    const setCropperParamsFunc = (params) => {
-      setCropperParams(params);
-    };
-    const handlePress = async () => {
-      const cropSize = {
-        width: 400,
-        height: 500,
-      };
-      const cropAreaSize = {
-        width: CROP_AREA_WIDTH,
-        height: CROP_AREA_HEIGHT,
-      };
-
+  const cropperParams = (index) => {
+    if (index === 0) {
+      return cropperParams0;
+    } else if (index === 1) {
+      return cropperParams1;
+    } else if (index === 2) {
+      return cropperParams2;
+    } else if (index === 3) {
+      return cropperParams3;
+    } else {
+      return {};
+    }
+  };
+  const handlePress = React.useCallback(
+    async (index) => {
+      const croppedImage =
+        Platform.OS === 'ios' ? images[index].sourceURL : images[index].path;
+      const currentParams = cropperParams(index);
       try {
         const result = await ImageCropper.crop({
-          ...cropperParams,
+          ...currentParams,
           imageUri: croppedImage,
           cropSize,
           cropAreaSize,
         });
-        console.log('result', result);
-        setCroppedImage(result);
+        let imageData = afterCropImages;
+        const newImageData = {uri: result, index: index};
+        imageData[newImageData.index] = newImageData;
+        setAfterCropImages(imageData);
+        checkAllCropImage();
       } catch (error) {
         console.log(error);
       }
-    };
-    const src = {uri: croppedImage};
-    const layoutWidth = layout && layout.width ? layout.width : 0;
-    const layoutHeight = layout && layout.height ? layout.height : 0;
+    },
+    [cropperParams0, cropperParams1, cropperParams2, cropperParams3],
+  );
 
-    return (
-      <View
-        style={{width: 400, height: 500, backgroundColor: 'rgba(0, 0, 0, .3)', alignItems: 'center', justifyContent: 'center'}}
-        onLayout={({
-          nativeEvent: {
-            layout: {width, height},
-          },
-        }) => {
-          setLayout({width, height});
-        }}>
-        <ImageCropper
-          imageUri={Platform.OS === 'ios' ? item.sourceURL : item.path}
-          cropAreaWidth={CROP_AREA_WIDTH}
-          cropAreaHeight={CROP_AREA_HEIGHT}
-          containerColor="blue"
-          areaColor="black"
-          setCropperParams={setCropperParamsFunc}
+  const setCropperParamsFunc = (params, index) => {
+    switch (index) {
+      case 0:
+        setCropperParams0(params);
+        break;
+      case 1:
+        setCropperParams1(params);
+        break;
+      case 2:
+        setCropperParams2(params);
+        break;
+      case 3:
+        setCropperParams3(params);
+        break;
+      default:
+        return;
+    }
+  };
+
+  const RenderCropView = ({item, index}) => {
+    if (Platform.OS === 'android') {
+      return (
+        <View style={styles.androidListContainer}>
+          <ImageCropper
+            imageUri={Platform.OS === 'ios' ? item.sourceURL : item.path}
+            cropAreaWidth={cropperWidth}
+            cropAreaHeight={cropperHeight}
+            containerColor="#FFFFFF"
+            areaColor="#F4F5F5"
+            setCropperParams={(params) => setCropperParamsFunc(params, index)}
+          />
+        </View>
+      );
+    } else if (Platform.OS === 'ios') {
+      return (
+        <CropView
+          sourceUrl={Platform.OS === 'ios' ? item.sourceURL : item.path}
+          style={CropViewStyle}
+          ref={cropViewRefList[index]}
+          onImageCrop={(res) => {
+            let imageData = afterCropImages;
+            const newImageData = {uri: res.uri, index: index};
+            imageData[newImageData.index] = newImageData;
+            setAfterCropImages(imageData);
+            checkAllCropImage();
+          }}
+          keepAspectRatio
+          aspectRatio={{width: 4, height: 5}}
         />
-        <TouchableOpacity
-          onPress={handlePress}
-          style={{width: 200, height: 40, backgroundColor: 'green'}}
-        />
-        {croppedImage ? <Image source={src} /> : null}
-      </View>
-      // <CropView
-      //   sourceUrl={Platform.OS === 'ios' ? item.sourceURL : item.path}
-      //   style={CropViewStyle}
-      //   ref={cropViewRefList[index]}
-      //   onImageCrop={(res) => {
-      //     let imageData = afterCropImages;
-      //     const newImageData = {uri: res.uri, index: index};
-      //     imageData[newImageData.index] = newImageData;
-      //     setAfterCropImages(imageData);
-      //     checkAllCropImage();
-      //   }}
-      //   keepAspectRatio
-      //   aspectRatio={{width: 4, height: 5}}
-      // />
-    );
+      );
+    }
   };
 
   const CropImagesList = React.useMemo(() => {
