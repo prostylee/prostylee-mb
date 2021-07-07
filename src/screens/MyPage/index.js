@@ -8,6 +8,7 @@ import {
   Animated,
   TouchableOpacity,
   ImageBackground,
+  Platform,
 } from 'react-native';
 
 import configEnv from 'config';
@@ -256,6 +257,9 @@ const Index = ({navigation}) => {
             setActivedTab={setActivedTab}
           />
         </View>
+        {Platform.OS === 'android' ? (
+          <View style={styles.androidTempView} />
+        ) : null}
       </ScrollView>
       {activeTab === 'menu' && (
         <View style={styles.viewType}>

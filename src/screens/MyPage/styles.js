@@ -122,4 +122,9 @@ export default EStyleSheet.create({
     lineHeight: 20,
     fontWeight: '500',
   },
+  androidTempView: {
+    height: TABS_HEIGHT,
+    width: '100%',
+    backgroundColor: '$bgColor',
+  },
 });
