@@ -104,7 +104,9 @@ const TabOrders = ({navigation, status}) => {
           })}
         </ScrollableTabView>
       ) : (
-        <Text>Ko co</Text>
+        <Text style={styles.notFountText}>
+          {i18n.t('Search.resultsNotfound')}
+        </Text>
       )}
     </View>
   );

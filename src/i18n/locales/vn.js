@@ -294,6 +294,7 @@ export default {
     support: 'Hổ trợ',
     orders: 'Đơn hàng',
     products: 'Sản phẩm',
+    cancelSuccess: 'Huỷ đơn thành công',
   },
   setting: {
     title: 'Thiết lập tài khoản',

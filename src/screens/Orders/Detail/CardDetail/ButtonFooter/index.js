@@ -5,10 +5,32 @@ import {ButtonOutlined} from 'components';
 import i18n from 'i18n';
 import {ORDER_STATUS} from 'constants';
 import {useNavigation} from '@react-navigation/native';
+import {cancelOrder} from '../../../../../services/api/myPageApi';
+import {showMessage} from 'react-native-flash-message';
 
 const ButtonFooter = ({dealData}) => {
-  const {dealId, deal, status} = dealData;
+  const {status} = dealData;
   const navigation = useNavigation();
+
+  const onCancelOrder = () => {
+    cancelOrder({
+      id: dealData?.id,
+      act: ORDER_STATUS.CANCEL_ORDER,
+      statusId: dealData?.statusId,
+    }).then((res) => {
+      if (res.data.status !== 200) {
+        showMessage({
+          message: i18n.t('someThingWrong'),
+          type: 'danger',
+        });
+        return;
+      }
+      showMessage({
+        message: i18n.t('myPage.cancelSuccess'),
+        type: 'success',
+      });
+    });
+  };
   switch (status) {
     case ORDER_STATUS.CREATE_ORDER:
       return (
@@ -17,7 +39,7 @@ const ButtonFooter = ({dealData}) => {
             label={i18n.t('orders.cancelDeal')}
             style={styles.buttonOutlinedGrey}
             labelStyle={styles.labelBtnOutlineGrey}
-            onPress={() => {}}
+            onPress={onCancelOrder}
           />
         </View>
       );
