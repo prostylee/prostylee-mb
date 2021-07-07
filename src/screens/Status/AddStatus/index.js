@@ -12,8 +12,9 @@ import {useTheme, useRoute, useNavigation} from '@react-navigation/native';
 import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
 import Carousel from 'react-native-snap-carousel';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {hasNotch} from 'react-native-device-info';
 import {Storage, Auth} from 'aws-amplify';
-import {userTokenSelector} from 'redux/selectors/user';
 import styles from './styles';
 import i18n from 'i18n';
 import {useBackHandler} from '@react-native-community/hooks';
@@ -26,6 +27,7 @@ import {showMessage} from 'react-native-flash-message';
 const WIDTH = dim.width;
 
 const AddStatus = (props) => {
+  const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
   const dispatch = useDispatch();
   const inputRef = React.useRef();
   const inputValueRef = React.useRef();
@@ -216,8 +218,10 @@ const AddStatus = (props) => {
     );
   };
 
+  const containerStyle = [styles.container, {paddingTop: notchHeight}];
+
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       <HeaderBack
         onBack={navigation.goBack}
         title={i18n.t('addStatus.title')}
