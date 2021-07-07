@@ -6,6 +6,7 @@ import {
   Text,
   KeyboardAvoidingView,
   Platform,
+  Image,
 } from 'react-native';
 import {
   Header,
@@ -22,20 +23,37 @@ import I18n from 'i18n';
 import {Field, Formik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {userSelectors, userActions} from 'reducers';
+import ImagePicker from 'react-native-image-crop-picker';
 import {
   validateEmail,
   validateFullname,
   validatePhone,
 } from 'utils/validatorUtils';
 import moment from 'moment';
+import {useNavigation} from '@react-navigation/native';
+
+import {Storage} from 'aws-amplify';
+
+import {updateAvatar} from 'services/api/myPageApi';
 
 const SettingMyAccount = () => {
+  const navigation = useNavigation();
+
   const dispatch = useDispatch();
+
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
   );
+
+  const [userAvatar, setUserAvatar] = React.useState({
+    name: '',
+    path: userProfile?.avatar || '',
+  });
+
   const name = userProfile.fullName ? userProfile.fullName : '';
+
   const bio = userProfile.bio ? userProfile.bio : '';
+
   const gender = userProfile.gender
     ? userProfile.gender == 'M'
       ? I18n.t('male')
@@ -44,15 +62,21 @@ const SettingMyAccount = () => {
       : ''
     : '';
   const phone = userProfile.phoneNumber ? userProfile.phoneNumber : '';
+
   const email = userProfile.email ? userProfile.email : '';
+
   let birthday = '';
+
   if (userProfile.date && userProfile.month && userProfile.year) {
     birthday = `${userProfile.date}/${userProfile.month}/${userProfile.year}`;
   }
+
   const [showDatePicker, setShowDatePicker] = React.useState(false);
 
   const birthdayRef = React.useRef();
+
   const phoneRef = React.useRef();
+
   const genderRef = React.useRef();
 
   const updateUserProfile = async (payload) => {
@@ -76,6 +100,11 @@ const SettingMyAccount = () => {
       });
       return;
     }
+    const hasNewAvatar = userProfile?.avatar !== userAvatar?.path;
+    if (hasNewAvatar) {
+      uploadToStorage(userAvatar?.path, payload.name);
+    }
+
     dispatch(
       userActions.updateUserProfile({
         fullName: payload.name,
@@ -86,6 +115,90 @@ const SettingMyAccount = () => {
         ...birthdayData,
       }),
     );
+    navigation.goBack();
+  };
+
+  const onChangeAvaterPress = () => {
+    ImagePicker.openPicker({
+      mediaType: 'photo',
+      multiple: false,
+      maxFiles: 1,
+      cropping: true,
+    })
+      .then((res) => {
+        let image = {
+          path: res?.path,
+          name: res.filename,
+          id: `${new Date().valueOf()}-${res?.filename}`,
+        };
+        setUserAvatar(image);
+      })
+      .catch((e) => {
+        showMessage({
+          message: I18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
+      });
+  };
+
+  const updateUserAvatar = async (key, name, userName = '') => {
+    const signedURL = await Storage.get(key);
+    const newImg = {
+      name: name,
+      path: signedURL,
+    };
+    const res = await updateAvatar({
+      fullName: userName,
+      avatarImageInfo: {
+        name: name,
+        path: signedURL,
+      },
+    });
+    if (res.data.status !== 200) {
+      showMessage({
+        message: I18n.t('unknownMessage'),
+        type: 'danger',
+        position: 'top',
+      });
+      return;
+    }
+    setUserAvatar({...userAvatar, ...newImg});
+  };
+  const uploadToStorage = async (uri, fullName = '') => {
+    try {
+      if (!uri) {
+        return;
+      }
+
+      Storage.configure({level: 'public'}); // public | protected | private
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      const time = Date.now();
+      const fileName = `${userProfile?.id}/avatar/avatar_${time}.jpg`;
+      Storage.put(fileName, blob, {
+        contentType: 'image/jpeg',
+      })
+        .then(async (result) => {
+          const name = `avatar_${time}.jpg`;
+          await updateUserAvatar(result?.key, name, fullName);
+        })
+        .catch((err) => {
+          console.log('PUT ERROR', err);
+          showMessage({
+            message: I18n.t('unknownMessage'),
+            type: 'danger',
+            position: 'top',
+          });
+        });
+    } catch (err) {
+      console.log('UPLOAD ERR', err);
+      showMessage({
+        message: I18n.t('unknownMessage'),
+        type: 'danger',
+        position: 'top',
+      });
+    }
   };
 
   return (
@@ -96,8 +209,18 @@ const SettingMyAccount = () => {
         <Header title={I18n.t('setting.profile')} isDefault />
         <ScrollView>
           <View style={styles.imageView}>
+            <Image
+              source={
+                userAvatar?.path
+                  ? {uri: userAvatar?.path}
+                  : require('assets/images/default.png')
+              }
+              style={styles.avatar}
+            />
             <View style={styles.imageViewButton}>
-              <TouchableOpacity style={styles.buttonView}>
+              <TouchableOpacity
+                style={styles.buttonView}
+                onPress={onChangeAvaterPress}>
                 <Camera color="#FFFFFF" />
                 <Text style={styles.imageViewButtonText}>
                   {I18n.t('settingProfile.changeImage')}
