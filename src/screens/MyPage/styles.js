@@ -5,8 +5,7 @@ const barHeight = getStatusBarHeight();
 const {height, width} = Dimensions.get('window');
 const TABS_HEIGHT = 45;
 const HEIGHT_HEADER = 50 + getStatusBarHeight();
-const ANDROID_HEADER =
-  Platform.OS === 'ios' ? getStatusBarHeight() + 10 : getStatusBarHeight();
+const ANDROID_HEADER = Platform.OS === 'ios' ? getStatusBarHeight() + 10 : -16;
 
 export default EStyleSheet.create({
   container: {
@@ -121,10 +120,5 @@ export default EStyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     fontWeight: '500',
-  },
-  androidTempView: {
-    height: TABS_HEIGHT,
-    width: '100%',
-    backgroundColor: '$bgColor',
   },
 });

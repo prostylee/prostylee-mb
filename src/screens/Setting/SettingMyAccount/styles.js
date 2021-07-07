@@ -28,7 +28,8 @@ export default EStyleSheet.create({
     alignItems: 'center',
   },
   imageView: {
-    height: 150,
+    height: WIDTH,
+    width: WIDTH,
     backgroundColor: '$bgColor',
     alignItems: 'center',
     justifyContent: 'flex-end',
@@ -53,5 +54,12 @@ export default EStyleSheet.create({
     opacity: 0,
     zIndex: -1,
     bottom: -100,
+  },
+  avatar: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
 });
