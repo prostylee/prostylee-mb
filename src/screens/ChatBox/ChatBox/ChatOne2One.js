@@ -19,7 +19,8 @@ import {
   Text,
   useTheme,
 } from 'react-native-paper';
-
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
 
 const ChatOne2One = (props) => {
@@ -35,10 +36,15 @@ const ChatOne2One = (props) => {
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((user) => {
-        // console.log('USER ' + JSON.stringify(user, null, 4));
         setCurrentUserName(user.username);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
+      });
     executeListChats();
   }, [currentUserName]);
 
@@ -57,17 +63,19 @@ const ChatOne2One = (props) => {
       }),
     )
       .then((result) => {
-        console.log('Chats ' + JSON.stringify(result));
         setChats(result.data.listChats.items);
       })
       .catch((err) => {
-        console.log(err);
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
       });
     dispatch(commonActions.toggleLoading(false));
   };
 
   const executeGetChat = (chatId) => {
-    console.log('executeGetChat ' + chatId);
     dispatch(commonActions.toggleLoading(true));
     API.graphql(
       graphqlOperation(getChat, {
@@ -75,11 +83,14 @@ const ChatOne2One = (props) => {
       }),
     )
       .then((result) => {
-        console.log('Chat ' + JSON.stringify(result));
         setChildrenChats(result.data.getChat.childrens.items);
       })
       .catch((err) => {
-        console.log(err);
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
       });
     dispatch(commonActions.toggleLoading(false));
   };
@@ -90,15 +101,12 @@ const ChatOne2One = (props) => {
     ).subscribe({
       next: (chatData) => {
         const addedChat = chatData.value.data.onCreateChat;
-        console.log('addedChat ' + JSON.stringify(addedChat));
 
         if (addedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
-          console.log('NEW child');
           const updatedChats = [...childrenChats];
           updatedChats.push(addedChat);
           setChildrenChats(updatedChats);
         } else {
-          console.log('NEW root');
           const updatedChats = [...chats];
           updatedChats.push(addedChat);
           setChats(updatedChats);
@@ -111,7 +119,6 @@ const ChatOne2One = (props) => {
     ).subscribe({
       next: (chatData) => {
         const deletedChat = chatData.value.data.onDeleteChat;
-        console.log('deletedChat ' + JSON.stringify(deletedChat));
 
         if (deletedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
           const updatedChats = childrenChats.filter(
@@ -142,7 +149,6 @@ const ChatOne2One = (props) => {
   };
 
   const addChatHandler = async () => {
-    console.log('addChatHandler ' + chat);
     if (!chat) {
       return;
     }
@@ -165,26 +171,21 @@ const ChatOne2One = (props) => {
         },
       }),
     );
-    console.log(
-      'Submit chat successfully with response' + JSON.stringify(response),
-    );
+
     setChat('');
   };
 
   const replyChatHandler = (item) => {
-    console.log('replyChatHandler ' + JSON.stringify(item));
     setParentChat(item);
     executeGetChat(item.id);
   };
 
   const deleteChatHandler = async (item) => {
-    console.log('deleteChatHandler ' + item.id);
     dispatch(commonActions.toggleLoading(true));
     const res = await API.graphql(
       graphqlOperation(deleteChat, {input: {id: item.id}}),
     );
     dispatch(commonActions.toggleLoading(false));
-    console.log('Delete successfully with response ' + JSON.stringify(res));
   };
 
   const _renderItem = ({item, index}) => {

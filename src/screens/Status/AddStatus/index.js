@@ -22,6 +22,7 @@ import {commonActions, statusSelectors, statusActions} from 'reducers';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {dim} from 'utils/common';
+import {showMessage} from 'react-native-flash-message';
 
 const WIDTH = dim.width;
 
@@ -40,7 +41,13 @@ const AddStatus = (props) => {
       .then((user) => {
         setUserId(user.signInUserSession.idToken.payload.sub);
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        }),
+      );
   }, []);
 
   //route

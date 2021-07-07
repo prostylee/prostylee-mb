@@ -2,6 +2,8 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {getBranchApi} from 'services/api/branchApi';
 import {branchActions, branchTypes} from 'reducers';
 import {SUCCESS} from 'constants';
+import i18n from 'i18n';
+import {showMessage} from 'react-native-flash-message';
 
 //Left
 const getBranchData = function* ({payload}) {
@@ -14,7 +16,11 @@ const getBranchData = function* ({payload}) {
       yield put(branchActions.getBranchFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(branchActions.setBranchLoading(false));
   }

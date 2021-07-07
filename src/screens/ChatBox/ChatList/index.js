@@ -15,6 +15,7 @@ import {listChats} from 'graphqlLocal/queries';
 import {onCreateChat, onDeleteChat} from 'graphqlLocal/subscriptions';
 import {getProfile} from 'services/api/userApi';
 import {SUCCESS} from 'constants';
+import {showMessage} from 'react-native-flash-message';
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
 /******** chat aws ********/
 
@@ -99,7 +100,11 @@ const Message = (props) => {
           // }));
         }
       } catch (err) {
-        console.log(`cannot get profile ${otherUserId}`, err);
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
       } finally {
         setUserData(userDataList);
         setUserFilterData(userDataFilterList);
@@ -135,7 +140,11 @@ const Message = (props) => {
             );
           })
           .catch((err) => {
-            console.log(err);
+            showMessage({
+              message: i18n.t('unknownMessage'),
+              type: 'danger',
+              position: 'top',
+            });
           });
       }
     } finally {

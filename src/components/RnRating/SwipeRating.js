@@ -10,6 +10,9 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
+
 // RATING IMAGES WITH STATIC BACKGROUND COLOR (white)
 const STAR_IMAGE = require('./images/star.png');
 const HEART_IMAGE = require('./images/heart.png');
@@ -112,7 +115,11 @@ export default class SwipeRating extends Component {
       );
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.log(err);
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'danger',
+        position: 'top',
+      });
     }
   }
   componentDidUpdate(prevProps) {

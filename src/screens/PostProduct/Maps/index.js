@@ -13,6 +13,7 @@ import i18n from 'i18n';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {cartActions} from 'reducers';
+import {showMessage} from 'react-native-flash-message';
 
 const Maps = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,6 @@ const Maps = () => {
 
   const _handleMapPress = (e) => {
     setCoordinate(e.nativeEvent.coordinate);
-    console.log('CORR', e.nativeEvent.coordinate);
     getAddress(
       e.nativeEvent.coordinate.latitude,
       e.nativeEvent.coordinate.longitude,
@@ -56,7 +56,11 @@ const Maps = () => {
           setAddress(formatAddress(json.results[0]));
         }
       } catch (err) {
-        console.log('GET ADDRESS ERR', err);
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
       }
     },
     1000,

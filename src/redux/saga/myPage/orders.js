@@ -5,14 +5,8 @@ import {myPageActions, myPageTypes} from 'reducers';
 import {SUCCESS} from 'constants';
 
 import {getListUserOrderByStatus} from 'services/api/myPageApi';
-
-const CREATE_ORDER = 0,
-  RECEIVE_ORDER = 10,
-  GOOD_ISSUE = 20,
-  DELIVERY = 30,
-  CANCEL_ORDER = 90,
-  COMPLETED = 100;
-
+import i18n from 'i18n';
+import {showMessage} from 'react-native-flash-message';
 //Cancel Orders
 export const getListCanceledOrders = function* ({payload}) {
   try {
@@ -26,7 +20,11 @@ export const getListCanceledOrders = function* ({payload}) {
       yield put(myPageActions.getListCanceledOrdersFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListCanceledOrdersLoading(false));
   }
@@ -46,7 +44,11 @@ export const getListCanceledOrdersLoadmore = function* ({payload}) {
       yield put(myPageActions.getListCanceledOrdersLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListCanceledOrdersLoadmoreLoading(false));
   }
@@ -64,7 +66,11 @@ export const getListCompletedOrders = function* ({payload}) {
       yield put(myPageActions.getListCompletedOrdersFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListCompletedOrdersLoading(false));
   }
@@ -84,7 +90,11 @@ export const getListCompletedOrdersLoadmore = function* ({payload}) {
       yield put(myPageActions.getListCompletedOrdersLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListCompletedOrdersLoadmoreLoading(false));
   }
@@ -102,7 +112,11 @@ export const getListCreatedOrders = function* ({payload}) {
       yield put(myPageActions.getListCreatedOrdersFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListCreatedOrdersLoading(false));
   }
@@ -122,7 +136,11 @@ export const getListCreatedOrdersLoadmore = function* ({payload}) {
       yield put(myPageActions.getListCreatedOrdersLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListCreatedOrdersLoadmoreLoading(false));
   }
@@ -140,7 +158,11 @@ export const getListGoodIssuesOrders = function* ({payload}) {
       yield put(myPageActions.getListGoodIssuesOrdersFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListGoodIssuesOrdersLoading(false));
   }
@@ -160,7 +182,11 @@ export const getListGoodIssuesOrdersLoadmore = function* ({payload}) {
       yield put(myPageActions.getListGoodIssuesOrdersLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListGoodIssuesOrdersLoadmoreLoading(false));
   }
@@ -179,7 +205,11 @@ export const getListOnDeliveryOrders = function* ({payload}) {
       yield put(myPageActions.getListOnDeliveryOrdersFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListOnDeliveryOrdersLoading(false));
   }
@@ -199,7 +229,11 @@ export const getListOnDeliveryOrdersLoadmore = function* ({payload}) {
       yield put(myPageActions.getListOnDeliveryOrdersLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListOnDeliveryOrdersLoadmoreLoading(false));
   }
@@ -217,7 +251,11 @@ export const getListReceiveOrders = function* ({payload}) {
       yield put(myPageActions.getListReceiveOrdersFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListReceiveOrdersLoading(false));
   }
@@ -237,7 +275,11 @@ export const getListReceiveOrdersLoadmore = function* ({payload}) {
       yield put(myPageActions.getListReceiveOrdersLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListReceiveOrdersLoadmoreLoading(false));
   }

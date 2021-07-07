@@ -6,6 +6,7 @@ import i18n from 'i18n';
 import {ThemeView, Header} from 'components';
 import ListDetail from './ListDetail';
 import {getOrderDetails} from '../../../services/api/myPageApi';
+import {showMessage} from 'react-native-flash-message';
 
 const OrderDetail = ({navigation, route: {params}}) => {
   const [loading, setLoading] = useState(false);
@@ -18,14 +19,17 @@ const OrderDetail = ({navigation, route: {params}}) => {
       const res = await getOrderDetails(orderId);
       setOrderDetailsData(res?.data?.data);
     } catch (err) {
-      console.log('GET ORDER DETAILS ERROR', err);
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'danger',
+        position: 'top',
+      });
     } finally {
       setLoading(false);
     }
   };
   useEffect(() => {
     if (!loading) {
-      console.log('CALL API');
       fetchOrderDetails();
     }
   }, []);

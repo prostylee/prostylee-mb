@@ -9,6 +9,8 @@ import {
 import {notificationActions, notificationTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 
 //List LIST_NOTIFICATION
 const getListNotification = function* ({payload}) {
@@ -23,7 +25,11 @@ const getListNotification = function* ({payload}) {
       yield put(notificationActions.getListNotificationFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(notificationActions.setListNotificationLoading(false));
   }
@@ -41,7 +47,11 @@ const getLoadMoreListNotification = function* ({payload}) {
       yield put(notificationActions.getListNotificationLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(notificationActions.setListNotificationLoadingLoadMore(false));
   }
@@ -61,7 +71,11 @@ const getListNotificationDiscount = function* ({payload}) {
       yield put(notificationActions.getListNotificationDiscountFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(notificationActions.setListNotificationDiscountLoading(false));
   }
@@ -85,7 +99,11 @@ const getLoadMoreListNotificationDiscount = function* ({payload}) {
       );
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(
       notificationActions.setListNotificationDiscountLoadingLoadMore(false),
@@ -101,7 +119,11 @@ const getCountUnreadNoti = function* ({payload}) {
       yield put(notificationActions.setCountUnreadNoti(0));
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
     notificationActions.setCountUnreadNoti(0);
   }
 };

@@ -3,6 +3,8 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {searchActions, searchTypes} from 'reducers';
 import {SUCCESS} from 'constants';
 import {getListTopSearchService} from 'services/api/searchApi';
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 
 //List TOP_SEARCH
 const getTopSearch = function* ({payload}) {
@@ -45,7 +47,11 @@ const getTopSearch = function* ({payload}) {
       yield put(searchActions.getTopSearchFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(searchActions.setTopSearchLoading(false));
   }

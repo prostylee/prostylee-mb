@@ -6,6 +6,10 @@ import {searchActions, searchTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
 
+import {showMessage} from 'react-native-flash-message';
+
+import i18n from 'i18n';
+
 //List HINT_PRODUCT_SEARCH
 const getHintProductSearch = function* ({payload}) {
   try {
@@ -19,7 +23,11 @@ const getHintProductSearch = function* ({payload}) {
       yield put(searchActions.getHintProductSearchFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(searchActions.setHintProductSearchLoading(false));
   }
@@ -37,7 +45,11 @@ const getLoadMoreHintProductSearch = function* ({payload}) {
       yield put(searchActions.getHintProductSearchLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(searchActions.setHintProductSearchLoadingLoadMore(false));
   }

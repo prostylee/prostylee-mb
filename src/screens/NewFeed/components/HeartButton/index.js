@@ -9,13 +9,17 @@ import {like, unlike} from 'services/api/socialApi';
 import PropTypes from 'prop-types';
 import {Heart} from '../../../../svg/social';
 
-const HeartButton = ({numberOfLike, targetId, targetType, categoryId, storeId}) => {
-
+const HeartButton = ({
+  numberOfLike,
+  targetId,
+  targetType,
+  categoryId,
+  storeId,
+}) => {
   const [liked, setLiked] = useState(false);
   const [numOfLike, setNumOfLike] = useState(numberOfLike || 0);
 
   const onLikePress = async () => {
-    console.log('onLikePress: ' + liked);
     if (!liked) {
       const res = await like({
         targetId: targetId,

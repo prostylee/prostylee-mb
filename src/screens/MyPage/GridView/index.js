@@ -137,6 +137,7 @@ const GridView = ({column, wImage, hImage, scrollEnabled}) => {
           ListFooterComponent={renderFooter}
           refreshing={isRefreshing}
           onRefresh={handleRefresh}
+          contentContainerStyle={{paddingTop: 10}}
         />
       )}
     </>

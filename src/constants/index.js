@@ -17,6 +17,7 @@ export const POST = 'post';
 export const GET = 'get';
 export const PUT = 'put';
 export const DELETE = 'delete';
+export const PATCH = 'patch';
 
 //ERROR MESSAGE
 export const UNKNOWN_MESSAGE = I18n.t('unknownMessage');

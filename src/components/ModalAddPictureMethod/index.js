@@ -9,7 +9,7 @@ import RootNavigator from 'navigator/rootNavigator';
 import LinearGradient from 'react-native-linear-gradient';
 import i18n from 'i18n';
 import ImagePicker from 'react-native-image-crop-picker';
-
+import {showMessage} from 'react-native-flash-message';
 import Modal from 'react-native-modal';
 
 import {dim} from 'utils/common';
@@ -73,10 +73,15 @@ const ModalAddPictureMethod = ({visible}) => {
       mediaType: 'photo',
     })
       .then((res) => {
-        console.log(res);
         RootNavigator.navigate('AddStory', {image: res});
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
+      });
   };
 
   const openCameraPicker = async () => {
@@ -85,10 +90,15 @@ const ModalAddPictureMethod = ({visible}) => {
       cropping: false,
     })
       .then((res) => {
-        console.log(res);
         RootNavigator.navigate('AddStory', {image: res});
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
+      });
   };
 
   const checkPickerModal = () => {

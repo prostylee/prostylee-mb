@@ -36,8 +36,8 @@ const CustomPinCodeInput = (props) => {
 CustomPinCodeInput.defaultProps = {
   name: 'code',
   value: '',
-  onFulfill: () => console.log('Already fulfilled'),
-  onChange: (text) => console.log('onTextChange ' + text),
+  onFulfill: () => {},
+  onChange: (text) => {},
 };
 
 CustomPinCodeInput.propTypes = {

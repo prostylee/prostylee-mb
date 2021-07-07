@@ -8,6 +8,9 @@ import {
 import {storeActions, storeTypes} from 'reducers';
 
 import {SUCCESS, POST_SUCCESS} from 'constants';
+import {showMessage} from 'react-native-flash-message';
+
+import i18n from 'i18n';
 
 //List FEATURED_PRODUCT_SEARCH
 
@@ -22,7 +25,11 @@ const getVouchers = function* ({payload}) {
       yield put(storeActions.getVouchersFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setVouchersLoading(false));
   }
@@ -37,7 +44,11 @@ const getVouchersLoadmore = function* ({payload}) {
       yield put(storeActions.getVouchersLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(storeActions.setVouchersLoadmoreLoading(false));
   }
@@ -53,7 +64,11 @@ const postSaveVoucher = function* ({payload}) {
       yield put(storeActions.postSaveVoucherFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   }
 };
 

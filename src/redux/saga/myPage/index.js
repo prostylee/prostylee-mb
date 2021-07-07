@@ -26,6 +26,8 @@ import {
   getListProductLikedService,
   getListProductSavedService,
 } from 'services/api/myPageApi';
+import {showMessage} from 'react-native-flash-message';
+import i18n from 'i18n';
 
 //List product from sale
 const getListProductSale = function* ({payload}) {
@@ -39,7 +41,11 @@ const getListProductSale = function* ({payload}) {
       yield put(myPageActions.getListProductSaleFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListProductSaleLoading(false));
   }
@@ -55,7 +61,11 @@ const getLoadMoreListProductSale = function* ({payload}) {
       yield put(myPageActions.getListProductSaleLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setLoadingLoadMoreProductSale(false));
   }
@@ -73,7 +83,11 @@ const getListProductSold = function* ({payload}) {
       yield put(myPageActions.getListProductSoldFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListProductSoldLoading(false));
   }
@@ -89,7 +103,11 @@ const getLoadMoreListProductSold = function* ({payload}) {
       yield put(myPageActions.getListProductSoldLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setLoadingLoadMoreProductSold(false));
   }
@@ -106,7 +124,11 @@ const getListProductLiked = function* ({payload}) {
       yield put(myPageActions.getListProductLikedFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListProductLikedLoading(false));
   }
@@ -124,7 +146,11 @@ const getLoadMoreListProductLiked = function* ({payload}) {
       yield put(myPageActions.getListProductLikedLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListProductLikedLoadmoreLoading(false));
   }
@@ -141,7 +167,11 @@ const getListProductSaved = function* ({payload}) {
       yield put(myPageActions.getListProductSavedFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListProductSavedLoading(false));
   }
@@ -159,7 +189,11 @@ const getLoadMoreListProductSaved = function* ({payload}) {
       yield put(myPageActions.getListProductSavedLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListProductSavedLoadmoreLoading(false));
   }
@@ -176,7 +210,11 @@ const getListUserPost = function* ({payload}) {
       yield put(myPageActions.getListUserPostFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListUserPostLoading(false));
   }
@@ -192,7 +230,11 @@ const getListUserPostLoadmore = function* ({payload}) {
       yield put(myPageActions.getListUserPostLoadmoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setListUserPostLoadmoreLoading(false));
   }
@@ -209,7 +251,11 @@ const getListUserOrderStatus = function* ({payload}) {
       yield put(myPageActions.getUserOrdersStatusListFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(myPageActions.setUserOrdersStatusLoading(false));
   }

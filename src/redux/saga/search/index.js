@@ -6,6 +6,10 @@ import {searchActions, searchTypes} from 'reducers';
 
 import {SUCCESS} from 'constants';
 
+import {showMessage} from 'react-native-flash-message';
+
+import i18n from 'i18n';
+
 //List product from categories
 const getSearchFeaturedCategories = function* ({payload}) {
   try {
@@ -20,7 +24,11 @@ const getSearchFeaturedCategories = function* ({payload}) {
       yield put(searchActions.getSearchFeaturedCategoriesFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(searchActions.setSearchFeaturedCategoriesLoading(false));
   }
@@ -38,7 +46,11 @@ const getLoadMoreSearchFeaturedCategories = function* ({payload}) {
       yield put(searchActions.getSearchFeaturedCategoriesLoadMoreFailed());
     }
   } catch (e) {
-    console.error(e);
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   } finally {
     yield put(searchActions.setSearchFeaturedCategoriesLoadingLoadMore(false));
   }

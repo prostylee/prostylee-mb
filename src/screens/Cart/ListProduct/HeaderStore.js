@@ -7,9 +7,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 const HeaderStore = ({header, navigation}) => {
   const {storeName, storeId, storeAvatar} = header;
-  const clickItem = () => {
-    console.log('Cliked!', storeId);
-  };
+  const clickItem = () => {};
 
   return (
     <View style={styles.wrapHeader}>
