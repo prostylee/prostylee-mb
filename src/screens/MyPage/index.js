@@ -186,7 +186,11 @@ const Index = ({navigation}) => {
               <View style={styles.scrollViewStyle}>
                 <View style={styles.wrapAvatar}>
                   <Avatar.Image
-                    source={{uri: userAvatar}}
+                    source={
+                      userProfile?.avatar
+                        ? {uri: userProfile?.avatar}
+                        : require('assets/images/default.png')
+                    }
                     size={80}
                     style={styles.avatarStyle}
                   />

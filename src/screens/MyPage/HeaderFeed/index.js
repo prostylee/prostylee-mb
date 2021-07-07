@@ -77,7 +77,7 @@ const HeaderFeed = ({scrollAnimated, heightShow, restoreScrollTop}) => {
                   <Avatar.Image
                     source={{
                       uri: userProfile?.avatar
-                        ? userAvatar
+                        ? userProfile?.avatar
                         : 'https://reactjs.org/logo-og.png',
                     }}
                     size={24}
