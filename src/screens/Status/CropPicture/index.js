@@ -10,6 +10,7 @@ import styles from './styles';
 import Carousel from 'react-native-snap-carousel';
 import {useBackHandler} from '@react-native-community/hooks';
 import {CropView} from 'react-native-image-crop-tools';
+import ImageCropper from 'react-native-simple-image-cropper';
 import {Header} from 'components';
 
 import {dim} from 'utils/common';
@@ -94,21 +95,82 @@ const CropPicture = () => {
       };
 
   const RenderCropView = ({item, index}) => {
+    const CROP_AREA_WIDTH = 400;
+    const CROP_AREA_HEIGHT = 500;
+
+    const [cropperParams, setCropperParams] = React.useState({});
+    const [croppedImage, setCroppedImage] = React.useState(
+      Platform.OS === 'ios' ? item.sourceURL : item.path,
+    );
+    const [layout, setLayout] = React.useState({});
+    const setCropperParamsFunc = (params) => {
+      setCropperParams(params);
+    };
+    const handlePress = async () => {
+      const cropSize = {
+        width: 400,
+        height: 500,
+      };
+      const cropAreaSize = {
+        width: CROP_AREA_WIDTH,
+        height: CROP_AREA_HEIGHT,
+      };
+
+      try {
+        const result = await ImageCropper.crop({
+          ...cropperParams,
+          imageUri: croppedImage,
+          cropSize,
+          cropAreaSize,
+        });
+        console.log('result', result);
+        setCroppedImage(result);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const src = {uri: croppedImage};
+    const layoutWidth = layout && layout.width ? layout.width : 0;
+    const layoutHeight = layout && layout.height ? layout.height : 0;
+
     return (
-      <CropView
-        sourceUrl={Platform.OS === 'ios' ? item.sourceURL : item.path}
-        style={CropViewStyle}
-        ref={cropViewRefList[index]}
-        onImageCrop={(res) => {
-          let imageData = afterCropImages;
-          const newImageData = {uri: res.uri, index: index};
-          imageData[newImageData.index] = newImageData;
-          setAfterCropImages(imageData);
-          checkAllCropImage();
-        }}
-        keepAspectRatio
-        aspectRatio={{width: 4, height: 5}}
-      />
+      <View
+        style={{width: 400, height: 500, backgroundColor: 'rgba(0, 0, 0, .3)', alignItems: 'center', justifyContent: 'center'}}
+        onLayout={({
+          nativeEvent: {
+            layout: {width, height},
+          },
+        }) => {
+          setLayout({width, height});
+        }}>
+        <ImageCropper
+          imageUri={Platform.OS === 'ios' ? item.sourceURL : item.path}
+          cropAreaWidth={CROP_AREA_WIDTH}
+          cropAreaHeight={CROP_AREA_HEIGHT}
+          containerColor="blue"
+          areaColor="black"
+          setCropperParams={setCropperParamsFunc}
+        />
+        <TouchableOpacity
+          onPress={handlePress}
+          style={{width: 200, height: 40, backgroundColor: 'green'}}
+        />
+        {croppedImage ? <Image source={src} /> : null}
+      </View>
+      // <CropView
+      //   sourceUrl={Platform.OS === 'ios' ? item.sourceURL : item.path}
+      //   style={CropViewStyle}
+      //   ref={cropViewRefList[index]}
+      //   onImageCrop={(res) => {
+      //     let imageData = afterCropImages;
+      //     const newImageData = {uri: res.uri, index: index};
+      //     imageData[newImageData.index] = newImageData;
+      //     setAfterCropImages(imageData);
+      //     checkAllCropImage();
+      //   }}
+      //   keepAspectRatio
+      //   aspectRatio={{width: 4, height: 5}}
+      // />
     );
   };
 
