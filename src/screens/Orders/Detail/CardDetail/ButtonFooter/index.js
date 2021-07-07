@@ -3,14 +3,23 @@ import React from 'react';
 import {View} from 'react-native';
 import {ButtonOutlined} from 'components';
 import i18n from 'i18n';
-import {ORDER_STATUS} from 'constants';
+import {ORDER_STATUS, LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useNavigation} from '@react-navigation/native';
-import {cancelOrder} from '../../../../../services/api/myPageApi';
+import {cancelOrder} from 'services/api/myPageApi';
 import {showMessage} from 'react-native-flash-message';
+import {useDispatch, useSelector} from 'react-redux';
+import {myPageActions, userSelectors} from 'reducers';
 
 const ButtonFooter = ({dealData}) => {
   const {status} = dealData;
+
   const navigation = useNavigation();
+
+  const dispatch = useDispatch();
+
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
 
   const onCancelOrder = () => {
     cancelOrder({
@@ -26,9 +35,18 @@ const ButtonFooter = ({dealData}) => {
         return;
       }
       showMessage({
-        message: i18n.t('myPage.cancelSuccess'),
+        message: i18n.t('mypage.cancelSuccess'),
         type: 'success',
       });
+      dispatch(
+        myPageActions.getListCanceledOrders({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          loggedInUser: userProfile?.id,
+          statusId: dealData?.statusId,
+        }),
+      );
+      navigation.goBack();
     });
   };
   switch (status) {
