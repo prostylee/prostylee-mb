@@ -8,12 +8,10 @@ import {currencyFormat} from 'utils/currency';
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 
 import {useDispatch} from 'react-redux';
-import {getProductById} from 'services/api/productApi';
 import {cartActions} from 'reducers';
 import {ScrollView} from 'react-native-gesture-handler';
-import {showMessage} from 'react-native-flash-message';
 import i18n from 'i18n';
-import {getProductPrice} from 'utils/product';
+import {getProductVarient} from 'utils/product';
 
 const {width} = Dimensions.get('window');
 const WIDTH_IMAGE = width / 2 - 14;
@@ -24,35 +22,34 @@ const ModalChangeCart = ({
   closeModal,
   productData,
 }) => {
-  const [loading, setLoading] = useState(false);
-  const [product, setProduct] = useState({});
+  const [priceList, setPriceList] = useState({});
   const [optChosen, setOptChosen] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setLoading(true);
     setOptChosen(currentOptions);
-    if (productId) {
-      getProductById(productId)
-        .then((res) => {
-          setLoading(false);
-          if (res.data.status !== 200) {
-            return;
-          }
-          setProduct(res.data.data);
-        })
-        .catch(() => {
-          showMessage({
-            message: i18n.t('unknownMessage'),
-            type: 'danger',
-            position: 'top',
-          });
-          setLoading(false);
-        });
-    }
+    processProductPriceData(productData.item.productPriceResponseList);
   }, [productId]);
 
-  const {name, price = 0, imageUrls} = product;
+  const processProductPriceData = (data) => {
+    const attributeList = {};
+    data?.map((item) => {
+      const attributeValues = item.productAttributes
+        .map((attribute) => attribute.attrValue)
+        .sort();
+      let attributeID = '';
+      attributeValues.forEach((element) => {
+        attributeID = attributeID + '_' + element;
+      });
+      attributeList[attributeID] = {
+        price: item?.price,
+        priceSale: item?.priceSale,
+      };
+    });
+    setPriceList(attributeList);
+  };
+
+  const {name, imageUrls} = productData.item;
 
   const onChangeValue = (vl, item) => {
     const changeOptionIndex = optChosen.findIndex(
@@ -73,12 +70,18 @@ const ModalChangeCart = ({
       return newOptionList;
     });
   };
-  const priceData = getProductPrice(productData);
+  const productVarient = getProductVarient(optChosen);
+  const priceData = priceList[productVarient]
+    ? priceList[productVarient]
+    : null;
 
   const updateItemOption = () => {
+    const productVarientId = getProductVarient(currentOptions);
+    const newProductVarientId = getProductVarient(optChosen);
     dispatch(
       cartActions.updateItemOption({
-        itemId: productId,
+        itemVarientId: `${productId}${productVarientId}`,
+        newItemVarientId: `${productId}${newProductVarientId}`,
         newOptions: optChosen,
       }),
     );
@@ -102,7 +105,7 @@ const ModalChangeCart = ({
   return (
     <View style={styles.container}>
       <View style={styles.carouselImgs}>
-        <View style={{flex: 1}}>
+        <View style={styles.carouselContainer}>
           <Carousel
             sliderWidth={width}
             sliderHeight={width}
@@ -120,12 +123,18 @@ const ModalChangeCart = ({
             <Text style={styles.name}>{name}</Text>
           </View>
           <View style={styles.wrapPrice}>
-            <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(
-                priceData?.priceSale ? priceData.priceSale : priceData.price,
-                'đ',
-              )}
-            </Text>
+            {priceData ? (
+              <Text numberOfLines={1} style={styles.price}>
+                {currencyFormat(
+                  priceData?.priceSale ? priceData.priceSale : priceData.price,
+                  'đ',
+                )}
+              </Text>
+            ) : (
+              <Text style={styles.notExist}>
+                {i18n.t('productDetail.notExist')}
+              </Text>
+            )}
           </View>
           <ScrollView
             contentContainerStyle={styles.attributeListInner}

@@ -10,6 +10,9 @@ export default EStyleSheet.create({
     flex: 1,
     width: width,
   },
+  carouselContainer: {
+    flex: 1,
+  },
   carouselImgs: {
     flex: 1,
     flexDirection: 'column',
@@ -54,6 +57,12 @@ export default EStyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     fontWeight: '500',
+  },
+  notExist: {
+    fontSize: 13,
+    lineHeight: 24,
+    color: '$red',
+    paddingBottom: 2,
   },
   wrapSize: {
     paddingLeft: 10,
