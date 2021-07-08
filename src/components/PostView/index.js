@@ -17,6 +17,7 @@ const PostView = ({item, disabledLike = false, disabledComment = false}) => {
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
   );
+  const isFollowed = false;
   return (
     <View style={styles.containerItem}>
       <View style={styles.firstRowView}>
