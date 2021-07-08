@@ -76,6 +76,15 @@ const ProductInfor = () => {
       });
       return;
     }
+
+    if (!Number.isInteger(productPrice)) {
+      showMessage({
+        message: i18n.t('addProduct.priceMustBeInteger'),
+        type: 'danger',
+        position: 'top',
+      });
+      return;
+    }
     // .concat(...Object.values(selectedRadioAttributes))
     const arrayAttributesClone = []
       .concat(...Object.values(selectedAttributes))
@@ -163,9 +172,10 @@ const ProductInfor = () => {
         </View>
       </View>
       <View style={styles.button}>
-        <TouchableOpacity onPress={onSubmitPress}>
-          <ButtonRounded label={i18n.t('addProduct.descriptionButton')} />
-        </TouchableOpacity>
+        <ButtonRounded
+          onPress={onSubmitPress}
+          label={i18n.t('addProduct.descriptionButton')}
+        />
       </View>
       <ModalSelectAttributes
         item={selectedModalItem || {}}
