@@ -241,6 +241,8 @@ export default {
     addStore: 'Thêm cửa hàng',
     changeStore: 'Thay đổi cửa hàng',
     addStory: 'Chia sẻ story',
+    addStorySuccess: 'Chia sẻ story thành công!',
+    addStoryFail: 'Chia sẻ story thất bại! Hãy kiểm tra kết nối của bạn.',
   },
   addStore: {
     title: 'Thêm cửa hàng',

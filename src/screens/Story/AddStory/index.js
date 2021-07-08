@@ -228,7 +228,6 @@ const AddStory = (props) => {
             </TouchableOpacity>
             <View style={styles.addStory}>
               <ButtonRounded
-                style={styles.addStoryButton}
                 contentStyle={styles.addStoryButton}
                 labelStyle={styles.addStoryButtonText}
                 label={i18n.t('addStory.addStory')}
@@ -241,9 +240,9 @@ const AddStory = (props) => {
               style={styles.backButtonStyle}
               onPress={props.navigation.goBack}>
               <FontAwesome
-                name="chevron-circle-left"
-                color={colors['$bgColor']}
-                size={28}
+                name="chevron-left"
+                color={colors['$black']}
+                size={13}
               />
             </TouchableOpacity>
           </View>
