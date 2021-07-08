@@ -421,6 +421,7 @@ export default {
     yourLocation: 'Địa điểm của bạn',
     changeLocation: 'Thay đổi địa điểm',
     productPrice: 'Giá sản phẩm',
+    priceMustBeInteger: 'Giá của sản phẩm phải là số nguyên!',
   },
   voucher: {
     use: 'Sử dụng',
