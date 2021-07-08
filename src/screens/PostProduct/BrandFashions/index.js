@@ -68,6 +68,9 @@ const Brands = (props) => {
         }),
       );
   }, []);
+  useEffect(() => {
+    setBrandList(brandListSelector?.content);
+  }, [brandListSelector?.content]);
   return (
     <ThemeView style={styles.container} isFullView>
       <Header
