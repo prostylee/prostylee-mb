@@ -203,15 +203,15 @@ const ProductDetail = (props) => {
         }
       }
       if (
-        currentOffset > ratingPos - (notchHeight + 56) &&
-        currentOffset < suggestPos - (notchHeight + 56) &&
+        currentOffset >= ratingPos - (notchHeight + 56) &&
+        currentOffset < suggestPos - (notchHeight + 58) &&
         !isEndReached
       ) {
         if (activeTab !== 'rate') {
           setActiveTab('rate');
         }
       }
-      if (currentOffset > suggestPos - (notchHeight + 56)) {
+      if (currentOffset >= suggestPos - (notchHeight + 58)) {
         if (activeTab !== 'suggest') {
           setActiveTab('suggest');
         }
