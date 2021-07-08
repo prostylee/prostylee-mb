@@ -1,6 +1,6 @@
 import styles from './styles';
 
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {ButtonRounded} from 'components';
@@ -16,6 +16,7 @@ import {
   getPaymentMethodSelector,
 } from 'redux/selectors/cart';
 import {showMessage} from 'react-native-flash-message';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 const CardFooter = ({
   buttonText,
@@ -124,7 +125,7 @@ const CardFooter = ({
         <View style={styles.viewTemp}>
           <Text style={styles.viewTempTitle}>Tạm tính</Text>
           <Text style={styles.viewTempValue}>
-            {currencyFormat(totalPrice, 'đ')}
+            {currencyFormat(totalPrice, CURRENCY_VIET_NAM)}
           </Text>
         </View>
         <View style={styles.viewCheckout}>

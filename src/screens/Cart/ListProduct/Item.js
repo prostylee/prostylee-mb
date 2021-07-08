@@ -18,6 +18,7 @@ import Modal from 'react-native-modal';
 import ModalChangeCart from '../ModalChangeCart';
 import {DownArrow, Close} from 'svg/common';
 import {cartActions} from 'reducers';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 const Item = ({product}) => {
   const {storeId, storeName, storeAvatar, data} = product;
@@ -34,8 +35,13 @@ const Item = ({product}) => {
     setVisible(true);
   };
 
-  const onChaneAmount = (amount, item) => {
-    dispatch(cartActions.setCartAmount({item: item, newAmount: amount}));
+  const onChaneAmount = (amount, productVarient) => {
+    dispatch(
+      cartActions.setCartAmount({
+        newAmount: amount,
+        productVarient,
+      }),
+    );
   };
 
   return (
@@ -76,6 +82,10 @@ const Item = ({product}) => {
         {data.map((dataItem, index) => {
           const productPrice = getProductPrice(dataItem);
           const item = dataItem.item ? dataItem.item : {};
+          const productVarient = dataItem.productVarient
+            ? dataItem.productVarient
+            : '';
+
           const onRemoveItem = () => {
             Alert.alert(i18n.t('caution'), i18n.t('cart.removeItemPopup'), [
               {
@@ -117,7 +127,7 @@ const Item = ({product}) => {
                           productPrice?.priceSale
                             ? productPrice?.priceSale
                             : productPrice?.price,
-                          'đ',
+                          CURRENCY_VIET_NAM,
                         )}
                       </Text>
                     ) : null}
@@ -153,7 +163,9 @@ const Item = ({product}) => {
                       <NumberInputUpDown
                         value={`${+dataItem?.quantity}`}
                         minValue={0}
-                        onChange={(value) => onChaneAmount(value, item)}
+                        onChange={(value) =>
+                          onChaneAmount(value, productVarient)
+                        }
                         onRemoveItem={() => onRemoveItem()}
                       />
                     </View>

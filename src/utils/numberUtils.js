@@ -1,9 +1,11 @@
+import {CURRENCY_VIET_NAM} from 'constants';
+
 export const formatMoney = (
   amount,
   decimalCount = 2,
   decimal = '.',
   thousands = ',',
-  currency = 'đ',
+  currency = CURRENCY_VIET_NAM,
 ) => {
   try {
     if (!amount) {

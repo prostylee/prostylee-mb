@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useRef, useMemo} from 'react';
+import React, {useRef} from 'react';
 import {View, FlatList, Animated, Text, ActivityIndicator} from 'react-native';
 import Product from '../../../ProductItem';
 import {currencyFormat} from 'utils/currency';
@@ -15,13 +14,14 @@ import {
   getHasLoadMoreCompletedOrdersSelector,
   getPageCompletedOrdersSelector,
 } from 'redux/selectors/orders';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {LIMIT_DEFAULT, PAGE_DEFAULT, CURRENCY_VIET_NAM} from 'constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {OrdersLoading} from 'components/Loading/contentLoader';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 
 const DoneTab = ({status, actCode, statusId = 0}) => {
   const dispatch = useDispatch();
+  const {Colors} = useTheme();
 
   const navigation = useNavigation();
 
@@ -69,7 +69,7 @@ const DoneTab = ({status, actCode, statusId = 0}) => {
           </View>
           <View style={styles.colTotalFooter}>
             <Text style={styles.labelTotalFooter}>
-              {currencyFormat(totalPrice || 0, 'đ')}
+              {currencyFormat(totalPrice || 0, CURRENCY_VIET_NAM)}
             </Text>
           </View>
         </View>
@@ -88,7 +88,7 @@ const DoneTab = ({status, actCode, statusId = 0}) => {
           <View style={styles.colButtonFooterRepurchase}>
             <ButtonRounded
               label={i18n.t('orders.repurchase')}
-              style={{marginLeft: 10}}
+              style={styles.marginLeft10}
               labelStyle={styles.labelBtnRounded}
               onPress={() => {}}
             />
@@ -121,7 +121,9 @@ const DoneTab = ({status, actCode, statusId = 0}) => {
     );
   };
   React.useEffect(() => {
-    if (!loading) setIsRefreshing(false);
+    if (!loading) {
+      setIsRefreshing(false);
+    }
   }, [loading]);
 
   React.useEffect(() => {
@@ -149,7 +151,7 @@ const DoneTab = ({status, actCode, statusId = 0}) => {
     <View style={styles.container}>
       {loading && !isRefreshing ? (
         [1, 2, 3, 4, 5].map((v) => (
-          <View style={{padding: 16}} key={v}>
+          <View style={styles.padding16} key={v}>
             <OrdersLoading />
           </View>
         ))

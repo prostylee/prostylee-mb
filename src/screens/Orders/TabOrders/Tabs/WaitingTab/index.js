@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useRef, useMemo} from 'react';
+import React, {useRef} from 'react';
 import {View, FlatList, Animated, Text, ActivityIndicator} from 'react-native';
 import Product from '../../../ProductItem';
 import {currencyFormat} from 'utils/currency';
@@ -13,12 +12,14 @@ import {
   getHasLoadMoreCreatedOrdersSelector,
   getPageCreatedOrdersSelector,
 } from 'redux/selectors/orders';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {LIMIT_DEFAULT, PAGE_DEFAULT, CURRENCY_VIET_NAM} from 'constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {OrdersLoading} from 'components/Loading/contentLoader';
+import {useTheme} from '@react-navigation/native';
 
 const WaitingTab = ({navigation, status, actCode = 0, statusId = 0}) => {
   const dispatch = useDispatch();
+  const {Colors} = useTheme();
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
 
@@ -63,7 +64,7 @@ const WaitingTab = ({navigation, status, actCode = 0, statusId = 0}) => {
         </View>
         <View style={styles.colTotalFooter}>
           <Text style={styles.labelTotalFooter}>
-            {currencyFormat(totalPrice || 0, 'đ')}
+            {currencyFormat(totalPrice || 0, CURRENCY_VIET_NAM)}
           </Text>
         </View>
       </View>
@@ -94,7 +95,9 @@ const WaitingTab = ({navigation, status, actCode = 0, statusId = 0}) => {
     );
   };
   React.useEffect(() => {
-    if (!loading) setIsRefreshing(false);
+    if (!loading) {
+      setIsRefreshing(false);
+    }
   }, [loading]);
 
   React.useEffect(() => {
@@ -122,7 +125,7 @@ const WaitingTab = ({navigation, status, actCode = 0, statusId = 0}) => {
     <View style={styles.container}>
       {loading && !isRefreshing ? (
         [1, 2, 3, 4, 5].map((v) => (
-          <View style={{padding: 16}} key={v}>
+          <View style={styles.padding16} key={v}>
             <OrdersLoading />
           </View>
         ))

@@ -12,6 +12,9 @@ export default EStyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
   },
+  flex1: {
+    flex: 1,
+  },
   wrapItems: {
     padding: 5,
     flexDirection: 'row',
@@ -74,7 +77,6 @@ export default EStyleSheet.create({
     lineHeight: 18,
     fontSize: 13,
     fontFamily: '$font1',
-    fontWeight: 'normal',
     fontStyle: 'normal',
     textAlign: 'left',
     color: '$black',
@@ -85,7 +87,6 @@ export default EStyleSheet.create({
     lineHeight: 18,
     fontSize: 13,
     fontFamily: '$font1',
-    fontWeight: 'normal',
     fontStyle: 'normal',
     textAlign: 'left',
     color: '$black',

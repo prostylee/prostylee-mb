@@ -1,12 +1,11 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useState} from 'react';
+import React from 'react';
 import {Text, View, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {Image, NumberInputUpDown} from 'components';
 import HeaderStore from '../HeaderStore';
 import {currencyFormat} from 'utils/currency';
-import {DownArrow} from 'svg/common';
 import {useNavigation} from '@react-navigation/native';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 const Item = ({
   product,
@@ -77,12 +76,15 @@ const Item = ({
               </Text>
               {product?.productPrice ? (
                 <Text numberOfLines={1} style={styles.price}>
-                  {currencyFormat(product?.productPrice || 0, 'đ')}
+                  {currencyFormat(
+                    product?.productPrice || 0,
+                    CURRENCY_VIET_NAM,
+                  )}
                 </Text>
               ) : null}
             </View>
             <View style={styles.wrapUpDown}>
-              <View style={{...styles.wrapAttribute, flex: 1}}>
+              <View style={[styles.wrapAttribute, styles.flex1]}>
                 <Text numberOfLines={1} style={styles.name}>
                   {getAttributesText()}
                 </Text>
@@ -104,7 +106,10 @@ const Item = ({
                 </Text>
                 {product?.productPrice ? (
                   <Text numberOfLines={1} style={styles.price}>
-                    {currencyFormat(product?.productPrice || 0, 'đ')}
+                    {currencyFormat(
+                      product?.productPrice || 0,
+                      CURRENCY_VIET_NAM,
+                    )}
                   </Text>
                 ) : null}
               </View>

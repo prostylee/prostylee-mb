@@ -3,6 +3,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {currencyFormat} from 'utils/currency';
 import i18n from 'i18n';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 const OrderSummary = ({
   navigation,
@@ -18,7 +19,7 @@ const OrderSummary = ({
         </View>
         <View style={styles.wrapValuePrice}>
           <Text style={styles.valuePrice}>
-            {currencyFormat(totalMoney || 0, 'đ')}
+            {currencyFormat(totalMoney || 0, CURRENCY_VIET_NAM)}
           </Text>
         </View>
       </View>
@@ -30,7 +31,7 @@ const OrderSummary = ({
         </View>
         <View style={styles.wrapValuePrice}>
           <Text style={styles.valuePrice}>
-            {currencyFormat(shippingFee || 0, 'đ')}
+            {currencyFormat(shippingFee || 0, CURRENCY_VIET_NAM)}
           </Text>
         </View>
       </View>
@@ -42,7 +43,7 @@ const OrderSummary = ({
         </View>
         <View style={styles.wrapValuePrice}>
           <Text style={styles.valuePrice}>
-            {currencyFormat(totalDiscount || 0, 'đ')}
+            {currencyFormat(totalDiscount || 0, CURRENCY_VIET_NAM)}
           </Text>
         </View>
       </View>
@@ -54,7 +55,10 @@ const OrderSummary = ({
         </View>
         <View style={styles.wrapValuePrice}>
           <Text style={styles.valueTotal}>
-            {currencyFormat(totalMoney + shippingFee - totalDiscount, 'đ')}
+            {currencyFormat(
+              totalMoney + shippingFee - totalDiscount,
+              CURRENCY_VIET_NAM,
+            )}
           </Text>
         </View>
       </View>

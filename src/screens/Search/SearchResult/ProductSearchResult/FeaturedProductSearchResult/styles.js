@@ -5,6 +5,9 @@ const WIDTH = Dimensions.get('window').width;
 const WIDTH_IMAGE = 80;
 const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 export default EStyleSheet.create({
+  colorBlack: {
+    color: '$black',
+  },
   container: {
     flex: 1,
     marginTop: 7,

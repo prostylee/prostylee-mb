@@ -3,6 +3,7 @@ import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Image, ProductLike, ProductRatingStar} from 'components';
 import styles from './styles';
 import {currencyFormat, priceSalePercent} from 'utils/currency';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 const FeaturedCategoriesItem = ({item, navigation}) => {
   const onItemClick = () => {
@@ -39,14 +40,7 @@ const FeaturedCategoriesItem = ({item, navigation}) => {
 
           <View style={styles.wrapDetail}>
             <View style={styles.wrapTitle}>
-              <Text
-                numberOfLines={1}
-                style={[
-                  styles.title,
-                  {
-                    color: '#333333',
-                  },
-                ]}>
+              <Text numberOfLines={1} style={[styles.title, styles.colorBlack]}>
                 {item?.name}
               </Text>
               <ProductLike item={item} />
@@ -54,12 +48,12 @@ const FeaturedCategoriesItem = ({item, navigation}) => {
 
             {item?.priceSale ? (
               <Text numberOfLines={1} style={styles.price}>
-                {currencyFormat(item?.priceSale, 'đ')}
+                {currencyFormat(item?.priceSale, CURRENCY_VIET_NAM)}
               </Text>
             ) : null}
             {item?.price ? (
               <Text numberOfLines={1} style={styles.priceRoot}>
-                {currencyFormat(item?.price, 'đ')}
+                {currencyFormat(item?.price, CURRENCY_VIET_NAM)}
               </Text>
             ) : null}
             <View style={styles.wrapRating}>

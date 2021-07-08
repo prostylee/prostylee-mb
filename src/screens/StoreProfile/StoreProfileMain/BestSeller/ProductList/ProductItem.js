@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, FlatList, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity, Text} from 'react-native';
+import {CURRENCY_VIET_NAM} from 'constants';
 
-import {Image, Rating} from 'components';
-import {Heart} from 'svg/common';
+import {Image} from 'components';
 import styles from './styles';
 import picture from 'assets/images/signInBg.png';
 import {Colors, ProductLike} from 'components';
@@ -49,14 +49,14 @@ const ProductItem = ({item, index}) => {
           </Text>
           <View style={styles.toolContainer}>
             <Text style={styles.itemPrice} numberOfLines={1}>
-              {currencyFormat(item?.priceSale || 0, 'đ')}
+              {currencyFormat(item?.priceSale || 0, CURRENCY_VIET_NAM)}
             </Text>
 
             <ProductLike item={item} />
           </View>
-          <View style={{flexDirection: 'column'}}>
+          <View style={styles.directionColumn}>
             <Text style={styles.itemDiscountPrice}>
-              {currencyFormat(item?.price || 0, 'đ')}
+              {currencyFormat(item?.price || 0, CURRENCY_VIET_NAM)}
             </Text>
           </View>
         </View>

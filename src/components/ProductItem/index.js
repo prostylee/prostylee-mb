@@ -12,7 +12,7 @@ import {ImageAnimated as Image} from 'components';
 
 import {Heart} from 'svg/social';
 
-import {IMG_RATIO} from 'constants';
+import {IMG_RATIO, CURRENCY_VIET_NAM} from 'constants';
 
 import {currencyFormat} from 'utils/currency';
 
@@ -40,7 +40,9 @@ const ProductItem = ({wImage, item}) => {
         <Text numberOfLines={2} style={styles.name}>
           {item.name}
         </Text>
-        <Text style={styles.price}>{currencyFormat(item?.priceSale, 'đ')}</Text>
+        <Text style={styles.price}>
+          {currencyFormat(item?.priceSale, CURRENCY_VIET_NAM)}
+        </Text>
         <TouchableOpacity style={styles.likeIcon}>
           <Heart />
         </TouchableOpacity>

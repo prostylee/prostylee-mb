@@ -12,6 +12,7 @@ import {
 } from 'redux/selectors/cart';
 import {cartActions} from 'reducers';
 import {ButtonRounded} from 'components';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 const ListProduct = ({navigation, validateButton}) => {
   const dispatch = useDispatch();
@@ -79,7 +80,7 @@ const ListProduct = ({navigation, validateButton}) => {
         <View style={styles.wrapPrice}>
           <Text style={styles.priceRadio}>
             {item.price
-              ? currencyFormat(item.price, 'đ')
+              ? currencyFormat(item.price, CURRENCY_VIET_NAM)
               : i18n.t('cart.freeShip')}
           </Text>
         </View>

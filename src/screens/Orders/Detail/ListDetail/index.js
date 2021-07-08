@@ -1,5 +1,5 @@
 import styles from './styles';
-import React, {useRef, useMemo, useState} from 'react';
+import React, {useRef, useMemo} from 'react';
 import {FlatList, Text, Animated, View} from 'react-native';
 import i18n from 'i18n';
 import {
@@ -14,7 +14,7 @@ import {
 import StoreItem from '../../StoreItem';
 import {currencyFormat} from 'utils/currency';
 import {OrderDetailsLoading} from 'components/Loading/contentLoader';
-import {ORDER_STATUS_ACT_CODE} from 'constants';
+import {ORDER_STATUS_ACT_CODE, CURRENCY_VIET_NAM} from 'constants';
 const ListDetail = ({
   navigation,
   dealData,
@@ -62,7 +62,9 @@ const ListDetail = ({
   };
 
   React.useEffect(() => {
-    if (!loading) setIsRefreshing(false);
+    if (!loading) {
+      setIsRefreshing(false);
+    }
   }, [loading]);
   const renderHeader = () => {
     return (
@@ -72,13 +74,7 @@ const ListDetail = ({
         </View>
         {orderData?.orderHistory?.[0]?.actCode !==
         ORDER_STATUS_ACT_CODE.CANCEL_ORDER ? (
-          <View
-            style={[
-              styles.wrapItem,
-              {
-                paddingBottom: 0,
-              },
-            ]}>
+          <View style={[styles.wrapItem, styles.paddingBottomNone]}>
             <Tracking timeLine={orderData?.orderHistory} />
           </View>
         ) : null}
@@ -96,7 +92,7 @@ const ListDetail = ({
         <View style={{...styles.wrapItem}}>
           {renderFooterProduct(orderData?.orderDetails, orderData?.totalMoney)}
         </View>
-        <View style={{...styles.wrapItem, marginTop: 10}}>
+        <View style={[styles.wrapItem, styles.marginTop10]}>
           <Payment paymentType={orderData?.paymentType} />
         </View>
         <View style={styles.wrapItem}>
@@ -129,7 +125,7 @@ const ListDetail = ({
         </View>
         <View style={styles.colTotalFooter}>
           <Text style={styles.labelTotalFooter}>
-            {currencyFormat(totalPrice, 'đ')}
+            {currencyFormat(totalPrice, CURRENCY_VIET_NAM)}
           </Text>
         </View>
       </View>
@@ -140,13 +136,13 @@ const ListDetail = ({
     <View style={styles.container}>
       {loading && !isRefreshing ? (
         <>
-          <View style={{padding: 16}}>
+          <View style={styles.padding16}>
             <OrderDetailsLoading />
           </View>
-          <View style={{padding: 16}}>
+          <View style={styles.padding16}>
             <OrderDetailsLoading />
           </View>
-          <View style={{padding: 16}}>
+          <View style={styles.padding16}>
             <OrderDetailsLoading />
           </View>
         </>

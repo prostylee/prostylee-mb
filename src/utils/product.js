@@ -24,5 +24,9 @@ export const getProductPrice = (productData) => {
       priceSale: item?.priceSale,
     };
   });
-  return attributeList[productVarient];
+  if (attributeList[productVarient]) {
+    return attributeList[productVarient];
+  } else {
+    return 0;
+  }
 };

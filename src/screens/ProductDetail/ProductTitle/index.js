@@ -2,6 +2,7 @@ import styles from './styles';
 
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 /*Hooks*/
 import {useSelector} from 'react-redux';
@@ -104,8 +105,8 @@ const ProductTitle = ({
       {productPrice ? (
         <Text style={styles.price}>
           {productPrice.price
-            ? currencyFormat(productPrice.price, 'đ')
-            : currencyFormat(productPrice.priceSale, 'đ')}
+            ? currencyFormat(productPrice.price, CURRENCY_VIET_NAM)
+            : currencyFormat(productPrice.priceSale, CURRENCY_VIET_NAM)}
         </Text>
       ) : (
         <Text style={styles.notExist}>{i18n.t('productDetail.notExist')}</Text>
@@ -113,7 +114,7 @@ const ProductTitle = ({
       <View style={styles.titleRow}>
         <Text style={styles.priceOriginal}>
           {productPrice && productPrice.priceSale
-            ? currencyFormat(productPrice.priceSale, 'đ')
+            ? currencyFormat(productPrice.priceSale, CURRENCY_VIET_NAM)
             : ''}
         </Text>
         <TouchableOpacity
