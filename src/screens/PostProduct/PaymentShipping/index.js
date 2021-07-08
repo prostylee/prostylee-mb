@@ -77,12 +77,10 @@ const PaymentShipping = () => {
       return;
     }
     const {images} = postProductInfo;
-
     if (uploadList && uploadList.length) {
       postProduct();
       return;
-    }
-    uploadImages(images);
+    } else uploadImages(images);
   };
 
   const uploadImages = (images) => {
@@ -146,6 +144,19 @@ const PaymentShipping = () => {
         path: customPrefix,
       };
     });
+    const groupedAttributes = formatPriceAttribute(attributeOptions);
+
+    const newProductPriceRequest = groupedAttributes.map((item) => {
+      return {
+        name: null,
+        productId: null,
+        sku: null,
+        price: price * 1,
+        priceSale: 0,
+        productAttributes: [...item],
+      };
+    });
+
     dispatch(
       postProductActions.getPostProduct({
         brandId: brand?.id * 1,
@@ -154,21 +165,27 @@ const PaymentShipping = () => {
         name: name,
         description: description,
         price: price * 1,
-        productPriceRequest: [
-          {
-            name: null,
-            productId: null,
-            sku: null,
-            price: price * 1,
-            priceSale: 0,
-            productAttributes: [...attributeOptions],
-          },
-        ],
+        productPriceRequest: [...newProductPriceRequest],
         paymentTypes: [...selectedPaymentMethods?.map((v) => v.id)],
         shippingProviders: [...selectedDeliveryType?.map((v) => v.id)],
         productImageRequests: [...imagesList],
       }),
     );
+  };
+
+  const formatPriceAttribute = (originArray = []) => {
+    let array = [...originArray].filter((item) => item && item?.length);
+    let result = array[0].map((item) => [item]);
+    for (let i = 1; i < array.length; i++) {
+      let resultNew = [];
+      for (let k = 0; k < result.length; k++) {
+        for (let j = 0; j < array[i].length; j++) {
+          resultNew.push([...result?.[k], array[i][j]]);
+        }
+      }
+      result = resultNew;
+    }
+    return result;
   };
 
   useEffect(() => {
