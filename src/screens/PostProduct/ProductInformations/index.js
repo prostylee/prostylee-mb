@@ -77,7 +77,7 @@ const ProductInfor = () => {
       return;
     }
 
-    if (!Number.isInteger(productPrice)) {
+    if (!Number.isInteger(Number(productPrice))) {
       showMessage({
         message: i18n.t('addProduct.priceMustBeInteger'),
         type: 'danger',
