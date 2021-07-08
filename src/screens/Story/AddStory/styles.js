@@ -17,11 +17,16 @@ export default EStyleSheet.create({
   backButton: {
     position: 'absolute',
     top: 40,
-    left: 16,
+    left: 32,
   },
   backButtonStyle: {
-    width: 36,
-    height: 36,
+    width: 28,
+    height: 28,
+    backgroundColor: '$white',
+    borderRadius: 18,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   androidListContainer: {
     flex: 1,
