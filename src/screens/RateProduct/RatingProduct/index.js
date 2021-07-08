@@ -134,7 +134,7 @@ const RatingProduct = ({navigation, product, productId}) => {
           const name = `review_${time}.jpg`;
           await getUrl(result?.key, name);
         })
-        .catch((err) => {
+        .catch((_) => {
           showMessage({
             message: I18n.t('unknownMessage'),
             type: 'danger',

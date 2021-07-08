@@ -72,6 +72,7 @@ const PaymentShipping = () => {
       showMessage({
         message: i18n.t('addProduct.pleaseFillInformation'),
         type: 'danger',
+        position: 'top',
       });
       return;
     }
@@ -190,6 +191,7 @@ const PaymentShipping = () => {
       showMessage({
         message: i18n.t('addProduct.postFailed'),
         type: 'danger',
+        position: 'top',
       });
       dispatch(postProductActions.setProductInfo({postProductStatus: ''}));
       return;

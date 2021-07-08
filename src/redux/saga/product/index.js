@@ -53,6 +53,7 @@ const getProducts = function* ({payload: {token, isRefresh}}) {
       yield showMessage({
         message: CONTANTS.SESSION_EXPIRED_MESSAGE,
         type: 'danger',
+        position: 'top',
       });
       yield authService.logOut();
       yield put(userActions.userLogOutSuccess());
@@ -62,6 +63,7 @@ const getProducts = function* ({payload: {token, isRefresh}}) {
       yield showMessage({
         message: 'Lỗi khi tải danh sách khách hàng',
         type: 'danger',
+        position: 'top',
       });
     }
   } catch (e) {
@@ -70,6 +72,7 @@ const getProducts = function* ({payload: {token, isRefresh}}) {
     yield showMessage({
       message: CONTANTS.UNKNOWN_MESSAGE,
       type: 'danger',
+      position: 'top',
     });
   }
 };

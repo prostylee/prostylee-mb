@@ -62,6 +62,7 @@ const AddProductsInfor = ({navigation}) => {
       showMessage({
         message: i18n.t('addProduct.pleaseFillInformation'),
         type: 'danger',
+        position: 'top',
       });
       return;
     }

@@ -23,6 +23,12 @@ export default EStyleSheet.create({
     width: 36,
     height: 36,
   },
+  androidListContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   bottom: {
     position: 'absolute',
     bottom: 0,

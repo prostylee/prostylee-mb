@@ -57,4 +57,10 @@ export default EStyleSheet.create({
     borderRadius: 5,
     borderWidth: 2,
   },
+
+  androidListContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

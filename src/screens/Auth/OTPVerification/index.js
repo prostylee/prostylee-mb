@@ -53,6 +53,7 @@ const Index = (props) => {
     showMessage({
       message: I18n.t('invalidOTP'),
       type: 'danger',
+      position: 'top',
     });
   };
   const onResendOTP = async () => {
@@ -70,6 +71,7 @@ const Index = (props) => {
     showMessage({
       message: I18n.t('resendOTPSuccess'),
       type: 'success',
+      position: 'top',
     });
     setShowCountdown(true);
   };

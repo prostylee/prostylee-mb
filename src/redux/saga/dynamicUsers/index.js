@@ -3,7 +3,7 @@ import {getDynamicUsers} from 'services/api/dynamicUsersApi';
 import {dynamicUsersActions, dynamicUsersTypes} from 'reducers';
 import {SUCCESS} from 'constants';
 import {showMessage} from 'react-native-flash-message';
-import moduleName from 'i18n';
+import i18n from 'i18n';
 const getListDynamicUsers = function* ({payload}) {
   try {
     yield put(dynamicUsersActions.setLoading(true));

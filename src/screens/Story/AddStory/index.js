@@ -14,12 +14,14 @@ import {useBackHandler} from '@react-native-community/hooks';
 import {commonActions, newFeedSelectors, newFeedActions} from 'reducers';
 import {useDispatch, useSelector} from 'react-redux';
 import {CropView} from 'react-native-image-crop-tools';
+import ImageCropper from 'react-native-simple-image-cropper';
 
 import {dim} from 'utils/common';
 import {showMessage} from 'react-native-flash-message';
 
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
+const BOTTOM_FOOTER_HEIGHT = 76;
 
 const AddStory = (props) => {
   const dispatch = useDispatch();
@@ -32,7 +34,7 @@ const AddStory = (props) => {
       .then((user) => {
         setUserId(user.signInUserSession.idToken.payload.sub);
       })
-      .catch((err) => {
+      .catch((_) => {
         showMessage({
           message: i18n.t('unknownMessage'),
           type: 'danger',
@@ -49,6 +51,49 @@ const AddStory = (props) => {
     newFeedSelectors.getNewFeedStore(state),
   );
   const customPrefix = `/public/${userId}/stories/`;
+
+  /******** Android ********/
+  const [cropperParams, setCropperParams] = React.useState({});
+  const cropWidth = WIDTH;
+  const cropHeight = HEIGHT - notchHeight - BOTTOM_FOOTER_HEIGHT;
+  let cropperWidth = 0;
+  let cropperHeight = 0;
+  if (cropHeight / cropWidth > 16 / 9) {
+    cropperWidth = cropWidth;
+    cropperHeight = (cropWidth / 9) * 16;
+  } else {
+    cropperHeight = cropHeight;
+    cropperWidth = (cropHeight / 16) * 9;
+  }
+  const cropSize = {
+    width: cropperWidth,
+    height: cropperHeight,
+  };
+  const cropAreaSize = {
+    width: cropperWidth,
+    height: cropperHeight,
+  };
+  const setCropperParamsFunc = (params) => {
+    setCropperParams(params);
+  };
+  const handleCropAndroid = React.useCallback(async () => {
+    try {
+      const result = await ImageCropper.crop({
+        ...cropperParams,
+        imageUri: image.path,
+        cropSize,
+        cropAreaSize,
+      });
+      uploadToStorage(result);
+    } catch (_) {
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'danger',
+        position: 'top',
+      });
+    }
+  }, [cropperParams]);
+  /******** Android ********/
 
   const removeStore = async () => {
     await dispatch(newFeedActions.removeNewFeedStore());
@@ -119,7 +164,11 @@ const AddStory = (props) => {
   };
 
   const addStory = async () => {
-    await cropViewRef.current.saveImage(90);
+    if (Platform.OS === 'ios') {
+      await cropViewRef.current.saveImage(90);
+    } else if (Platform.OS === 'android') {
+      handleCropAndroid();
+    }
   };
   //BackHandler handle
   useBackHandler(() => {
@@ -131,7 +180,7 @@ const AddStory = (props) => {
 
   const viewShotStyle = {
     width: WIDTH,
-    height: HEIGHT - notchHeight - 76,
+    height: HEIGHT - notchHeight - BOTTOM_FOOTER_HEIGHT,
     overflow: 'visible',
   };
 
@@ -141,17 +190,30 @@ const AddStory = (props) => {
         safeAreaTopStyle={styles.safeAreaTopStyle}
         bgStatusBar={colors['$bgColor']}>
         <View style={styles.mainWrapper}>
-          <CropView
-            sourceUrl={Platform.OS === 'ios' ? image.sourceURL : image.path}
-            style={viewShotStyle}
-            ref={cropViewRef}
-            onImageCrop={(res) => {
-              const uri = res.uri;
-              uploadToStorage(uri);
-            }}
-            keepAspectRatio
-            aspectRatio={{width: 9, height: 16}}
-          />
+          {Platform.OS === 'ios' ? (
+            <CropView
+              sourceUrl={image.sourceURL}
+              style={viewShotStyle}
+              ref={cropViewRef}
+              onImageCrop={(res) => {
+                const uri = res.uri;
+                uploadToStorage(uri);
+              }}
+              keepAspectRatio
+              aspectRatio={{width: 9, height: 16}}
+            />
+          ) : (
+            <View style={styles.androidListContainer}>
+              <ImageCropper
+                imageUri={image.path}
+                cropAreaWidth={cropperWidth}
+                cropAreaHeight={cropperHeight}
+                containerColor="#FFFFFF"
+                areaColor="#F4F5F5"
+                setCropperParams={(params) => setCropperParamsFunc(params)}
+              />
+            </View>
+          )}
           <View style={styles.bottom}>
             <TouchableOpacity
               style={styles.addStore}
@@ -180,7 +242,7 @@ const AddStory = (props) => {
               onPress={props.navigation.goBack}>
               <FontAwesome
                 name="chevron-circle-left"
-                color="#FFFFFF"
+                color={colors['$bgColor']}
                 size={28}
               />
             </TouchableOpacity>

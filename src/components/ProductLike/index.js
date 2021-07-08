@@ -31,6 +31,7 @@ const ProductLike = ({item, likeSize = 20, unlikeSize = 16}) => {
         showMessage({
           message: `${result?.data?.status}: ${result?.data?.error}`,
           type: 'danger',
+          position: 'top',
         });
       }
       handleClickLike(false);
