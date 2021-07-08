@@ -70,6 +70,9 @@ export default EStyleSheet.create({
     fontWeight: '500',
     color: '$black',
   },
+  itemPriceSale: {
+    flexDirection: 'column',
+  },
   itemDiscountPrice: {
     fontSize: 13,
     color: '$lightGray',

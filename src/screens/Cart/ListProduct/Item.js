@@ -18,6 +18,7 @@ import Modal from 'react-native-modal';
 import ModalChangeCart from '../ModalChangeCart';
 import {DownArrow, Close} from 'svg/common';
 import {cartActions} from 'reducers';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 const Item = ({product}) => {
   const {storeId, storeName, storeAvatar, data} = product;
@@ -126,7 +127,7 @@ const Item = ({product}) => {
                           productPrice?.priceSale
                             ? productPrice?.priceSale
                             : productPrice?.price,
-                          'đ',
+                          CURRENCY_VIET_NAM,
                         )}
                       </Text>
                     ) : null}

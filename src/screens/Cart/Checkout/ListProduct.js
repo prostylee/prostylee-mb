@@ -11,6 +11,7 @@ import {CartEmpty, DeliveryIcon, DownIcon, RightIcon} from 'svg/common';
 import {currencyFormat} from 'utils/currency';
 import isEmpty from 'lodash/isEmpty';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {CURRENCY_VIET_NAM} from 'constants';
 import {
   getListCartSelector,
   getPaymentMethodSelector,
@@ -151,7 +152,7 @@ const ListProduct = ({navigation, data, validateButton}) => {
             </View>
             <View style={styles.colValueTotal}>
               <Text style={styles.valueTotal}>
-                {currencyFormat(+total, 'đ')}
+                {currencyFormat(+total, CURRENCY_VIET_NAM)}
               </Text>
             </View>
           </View>
@@ -163,7 +164,7 @@ const ListProduct = ({navigation, data, validateButton}) => {
             </View>
             <View style={styles.colValueTotal}>
               <Text style={styles.valueTotal}>
-                {currencyFormat(deliveryValue, 'đ')}
+                {currencyFormat(deliveryValue, CURRENCY_VIET_NAM)}
               </Text>
             </View>
           </View>
@@ -173,7 +174,7 @@ const ListProduct = ({navigation, data, validateButton}) => {
             </View>
             <View style={styles.colValueTotal}>
               <Text style={styles.valueTotal}>
-                {currencyFormat(voucherValue, 'đ')}
+                {currencyFormat(voucherValue, CURRENCY_VIET_NAM)}
               </Text>
             </View>
           </View>
@@ -200,7 +201,7 @@ const ListProduct = ({navigation, data, validateButton}) => {
         <View style={styles.wrapPriceChosen}>
           <Text style={styles.priceRadioChosen}>
             {item.price
-              ? currencyFormat(item.price, 'đ')
+              ? currencyFormat(item.price, CURRENCY_VIET_NAM)
               : i18n.t('cart.freeShip')}
           </Text>
         </View>

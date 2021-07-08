@@ -5,6 +5,7 @@ import {Image} from 'components';
 import HeaderStore from './HeaderStore';
 import {currencyFormat} from 'utils/currency';
 import {getProductPrice} from 'utils/product';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 const Item = ({product, navigation}) => {
   const {storeId, storeName, storeAvatar, data} = product;
@@ -42,7 +43,7 @@ const Item = ({product, navigation}) => {
                         productPrice?.priceSale
                           ? productPrice?.priceSale
                           : productPrice?.price,
-                        'đ',
+                        CURRENCY_VIET_NAM,
                       )}
                     </Text>
                   ) : null}

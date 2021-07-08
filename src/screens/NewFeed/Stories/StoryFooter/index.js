@@ -14,7 +14,7 @@ import {Image} from 'components';
 
 import {HeartStroke} from 'svg/social';
 
-import {TYPE_STORE, TYPE_USER} from 'constants';
+import {TYPE_STORE, CURRENCY_VIET_NAM} from 'constants';
 
 import {currencyFormat} from 'utils/currency';
 
@@ -23,7 +23,6 @@ const WIDTH_IMG = 48;
 const WIDTH = Dimensions.get('window').width;
 const Footer = ({openChatModal, story, targetType}) => {
   const product = story?.product || {};
-  const store = story?.store || {};
   return (
     <>
       <View style={styles.storyAction}>
@@ -58,10 +57,10 @@ const Footer = ({openChatModal, story, targetType}) => {
               {product.name}
             </Text>
             <Text style={styles.salePrice}>
-              {currencyFormat(product.priceSale, 'đ')}
+              {currencyFormat(product.priceSale, CURRENCY_VIET_NAM)}
             </Text>
             <Text style={styles.price}>
-              1{currencyFormat(product.price, 'đ')}
+              1{currencyFormat(product.price, CURRENCY_VIET_NAM)}
             </Text>
           </View>
           <TouchableOpacity style={styles.viewLike}>

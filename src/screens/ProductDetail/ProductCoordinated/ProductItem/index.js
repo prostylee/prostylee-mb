@@ -5,6 +5,7 @@ import {ActivityIndicator, Text, TouchableOpacity, View} from 'react-native';
 
 /*Components*/
 import {Image, ProductLike} from 'components';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 /*Utils*/
 import {currencyFormat, priceSalePercent} from 'utils/currency';
@@ -44,14 +45,14 @@ const ProductItem = ({item, onSelect}) => {
           </Text>
           {item?.priceSale ? (
             <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(item?.priceSale, 'đ')}
+              {currencyFormat(item?.priceSale, CURRENCY_VIET_NAM)}
             </Text>
           ) : null}
 
           <View style={styles.wrapPriceRoot}>
             {item?.price ? (
               <Text numberOfLines={1} style={styles.priceRoot}>
-                {currencyFormat(item?.price, 'đ')}
+                {currencyFormat(item?.price, CURRENCY_VIET_NAM)}
               </Text>
             ) : null}
 

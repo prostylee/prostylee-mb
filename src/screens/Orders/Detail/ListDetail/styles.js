@@ -14,6 +14,15 @@ export default EStyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 10,
   },
+  paddingBottomNone: {
+    paddingBottom: 0,
+  },
+  marginTop10: {
+    marginTop: 10,
+  },
+  padding16: {
+    padding: 16,
+  },
   wrapItemFooter: {padding: 10, marginBottom: 10},
   wrapFooterItem: {
     flex: 1,

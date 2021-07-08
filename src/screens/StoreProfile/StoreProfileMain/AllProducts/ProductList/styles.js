@@ -1,7 +1,7 @@
-import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 const ITEM_HEIGHT = 320;
 export default EStyleSheet.create({
+  directionColumn: {flexDirection: 'column'},
   container: {
     flex: 1,
     backgroundColor: '$white',

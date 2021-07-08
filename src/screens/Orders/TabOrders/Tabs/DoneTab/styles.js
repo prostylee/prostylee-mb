@@ -1,6 +1,12 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
+  marginLeft10: {
+    marginLeft: 10,
+  },
+  padding16: {
+    padding: 16,
+  },
   wrapItems: {
     padding: 5,
     flexDirection: 'row',
@@ -56,7 +62,6 @@ export default EStyleSheet.create({
     lineHeight: 18,
     fontSize: 13,
     fontFamily: '$font1',
-    fontWeight: 'normal',
     fontStyle: 'normal',
     textAlign: 'left',
     color: '$black',
@@ -67,7 +72,6 @@ export default EStyleSheet.create({
     lineHeight: 18,
     fontSize: 13,
     fontFamily: '$font1',
-    fontWeight: 'normal',
     fontStyle: 'normal',
     textAlign: 'left',
     color: '$black',

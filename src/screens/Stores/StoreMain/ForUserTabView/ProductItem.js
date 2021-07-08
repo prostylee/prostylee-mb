@@ -1,7 +1,8 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
-import {Image, Rating, ProductLike} from 'components';
+import {Image, ProductLike} from 'components';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 import styles from './style';
 import picture from 'assets/images/signInBg.png';
@@ -49,15 +50,21 @@ const ProductItem = ({item, index, navigation}) => (
         <Text style={styles.itemName} numberOfLines={2}>
           {item?.name}
         </Text>
-        <View style={{flexDirection: 'column'}}>
+        <View style={styles.directionColumn}>
           <Text style={styles.itemPrice}>
-            {currencyFormat(item?.priceSale ? Number(item?.priceSale) : 0, 'đ')}
+            {currencyFormat(
+              item?.priceSale ? Number(item?.priceSale) : 0,
+              CURRENCY_VIET_NAM,
+            )}
           </Text>
         </View>
         <View style={styles.toolContainer}>
           <View style={styles.ratingContainer}>
             <Text style={styles.itemDiscountPrice}>
-              {currencyFormat(item?.price ? Number(item?.price) : 0, 'đ')}
+              {currencyFormat(
+                item?.price ? Number(item?.price) : 0,
+                CURRENCY_VIET_NAM,
+              )}
             </Text>
           </View>
           <ProductLike item={item} />

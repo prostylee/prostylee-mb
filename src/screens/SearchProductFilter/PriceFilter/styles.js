@@ -1,7 +1,9 @@
-import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
+  black500: {
+    color: '$black500',
+  },
   wrapHeader: {
     display: 'flex',
     flexDirection: 'row',
@@ -14,6 +16,14 @@ export default EStyleSheet.create({
     paddingTop: 16,
     paddingBottom: 4,
   },
+  markerStyles: {
+    backgroundColor: '$black',
+    borderWidth: 0,
+    width: 20,
+    height: 20,
+  },
+  selectedStyles: {backgroundColor: '$black', height: 5},
+  unSelectedStyles: {backgroundColor: '$line', height: 5},
   title: {
     color: '$icon',
   },

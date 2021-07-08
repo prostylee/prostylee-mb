@@ -9,6 +9,12 @@ export default EStyleSheet.create({
     marginVertical: 8,
     borderRadius: 5,
   },
+  itemTitle: {
+    paddingLeft: 10,
+  },
+  itemName: {
+    paddingBottom: 5,
+  },
   priceItem: {
     fontWeight: 'bold',
     color: '#EA3F49',

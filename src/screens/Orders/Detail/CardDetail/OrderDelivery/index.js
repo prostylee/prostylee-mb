@@ -5,8 +5,9 @@ import {TrackingIcon} from 'svg/common';
 import Header from '../Header';
 import {currencyFormat} from 'utils/currency';
 import i18n from 'i18n';
+import {CURRENCY_VIET_NAM} from 'constants';
 
-const OrderDelivery = ({navigation, shippingProvider = {}}) => {
+const OrderDelivery = ({shippingProvider = {}}) => {
   return (
     <View style={styles.container}>
       <Header icon={<TrackingIcon />} title={i18n.t('orders.deliveryMethod')} />
@@ -17,7 +18,7 @@ const OrderDelivery = ({navigation, shippingProvider = {}}) => {
           </View>
           <View style={styles.wrapBodyPrice}>
             <Text style={styles.labelBodyPrice}>
-              {currencyFormat(shippingProvider?.price || 0, 'đ')}
+              {currencyFormat(shippingProvider?.price || 0, CURRENCY_VIET_NAM)}
             </Text>
           </View>
         </View>

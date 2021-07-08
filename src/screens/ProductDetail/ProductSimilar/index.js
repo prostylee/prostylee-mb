@@ -5,6 +5,7 @@ import {View, TouchableOpacity, Text, Image, Dimensions} from 'react-native';
 
 /*Translates*/
 import i18n from 'i18n';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 /*Components*/
 import Carousel from 'react-native-snap-carousel';
@@ -37,10 +38,10 @@ const ProductSimilar = ({data, onSelect}) => {
         <View style={styles.relatedInfo}>
           <View style={styles.relatedPriceGroup}>
             <Text style={styles.relatedPriceSale}>
-              {currencyFormat(item?.priceSale || 0, 'đ')}
+              {currencyFormat(item?.priceSale || 0, CURRENCY_VIET_NAM)}
             </Text>
             <Text style={styles.relatedPrice}>
-              {currencyFormat(item?.price || 0, 'đ')}
+              {currencyFormat(item?.price || 0, CURRENCY_VIET_NAM)}
             </Text>
           </View>
           <View style={styles.likeButton}>

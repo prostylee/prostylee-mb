@@ -1,10 +1,10 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import {ActivityIndicator, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Image, ProductLike} from 'components';
 import styles from './styles';
 import {currencyFormat, priceSalePercent} from 'utils/currency';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 const ProductItem = ({item}) => {
   const navigation = useNavigation();
@@ -39,14 +39,14 @@ const ProductItem = ({item}) => {
           </Text>
           {item?.priceSale ? (
             <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(item?.priceSale, 'đ')}
+              {currencyFormat(item?.priceSale, CURRENCY_VIET_NAM)}
             </Text>
           ) : null}
 
           <View style={styles.wrapPriceRoot}>
             {item?.price ? (
               <Text numberOfLines={1} style={styles.priceRoot}>
-                {currencyFormat(item?.price, 'đ')}
+                {currencyFormat(item?.price, CURRENCY_VIET_NAM)}
               </Text>
             ) : null}
 

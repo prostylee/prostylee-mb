@@ -1,7 +1,8 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 const HEIGHT = Dimensions.get('window').height;
 export default EStyleSheet.create({
+  directionColumn: {flexDirection: 'column'},
   container: {
     flex: 1,
     backgroundColor: '$white',

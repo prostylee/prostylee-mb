@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
 import {Image, ProductLike, ProductRatingStar} from 'components';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 import styles from './styles';
 
@@ -49,12 +50,15 @@ const ProductItem = ({item, index, navigation}) => {
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.itemName}>{item?.name}</Text>
-          <View style={{flexDirection: 'column'}}>
+          <View style={styles.directionColumn}>
             <Text style={styles.itemDiscountPrice}>
-              {currencyFormat(item?.priceSale ? item?.priceSale : 0, 'đ')}
+              {currencyFormat(
+                item?.priceSale ? item?.priceSale : 0,
+                CURRENCY_VIET_NAM,
+              )}
             </Text>
             <Text style={styles.itemPrice}>
-              {currencyFormat(item?.price ? item?.price : 0, 'đ')}
+              {currencyFormat(item?.price ? item?.price : 0, CURRENCY_VIET_NAM)}
             </Text>
           </View>
           <View style={styles.toolContainer}>
