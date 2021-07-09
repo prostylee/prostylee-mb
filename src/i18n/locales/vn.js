@@ -425,6 +425,7 @@ export default {
     changeLocation: 'Thay đổi địa điểm',
     productPrice: 'Giá sản phẩm',
     priceMustBeInteger: 'Giá của sản phẩm phải là số nguyên!',
+    limitPriceReached: 'Đã đạt giới hạn giá sản phẩm, vui lòng nhập lại',
   },
   voucher: {
     use: 'Sử dụng',

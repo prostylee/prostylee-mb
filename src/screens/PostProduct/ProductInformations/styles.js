@@ -111,7 +111,8 @@ export default StyleSheet.create({
   button: {
     width: '90%',
     alignSelf: 'center',
-    paddingVertical: 20,
+    paddingBottom: 20,
+    marginBottom: 40,
   },
   currencyUnitText: {
     textDecorationLine: 'underline',
