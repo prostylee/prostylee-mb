@@ -127,7 +127,6 @@ export const handleActions = {
 
   [types.GET_BRAND_LIST_LOADMORE_SUCCESS]: (state, {payload}) => {
     const {totalPages, content} = payload;
-    console.log('PAGE', state.brandListCurrentPage, totalPages);
     payload.content = state.brandList?.content.concat(content) || [];
     return {
       ...state,

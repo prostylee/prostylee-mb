@@ -1,8 +1,8 @@
 import React from 'react';
-import {Picker} from 'components';
+import Picker from '../Picker';
 import {RadioButton, Divider} from 'react-native-paper';
 import styles from './styles';
-import {Colors} from 'components';
+import Colors from '../Colors';
 import PropTypes from 'prop-types';
 import {View} from 'react-native';
 const SortDropDown = ({

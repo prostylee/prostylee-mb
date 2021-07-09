@@ -2,7 +2,7 @@ import styles from './styles';
 
 import React from 'react';
 import {View, TouchableWithoutFeedback, Animated, Platform} from 'react-native';
-import {ThemeView} from 'components';
+import ThemeView from '../ThemeView';
 
 const Picker = ({visible, setVisible, setAction, children}) => {
   const onOutside = () => {

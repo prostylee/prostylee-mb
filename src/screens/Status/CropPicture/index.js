@@ -169,7 +169,11 @@ const CropPicture = () => {
         setAfterCropImages(imageData);
         checkAllCropImage();
       } catch (error) {
-        console.log(error);
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
       }
     },
     [cropperParams0, cropperParams1, cropperParams2, cropperParams3],

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {TextInput as Input} from 'react-native-paper';
-import {CustomTextInput} from '../index';
+import CustomTextInput from '../CustomTextInput';
 
 const CustomSecureInput = (props) => {
   const [isSecureTextEntry, setSecureEntry] = useState(true);
