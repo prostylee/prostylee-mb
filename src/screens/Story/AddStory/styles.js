@@ -28,11 +28,6 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  androidListContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 
   bottom: {
     position: 'absolute',
