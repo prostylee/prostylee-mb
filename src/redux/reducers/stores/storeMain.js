@@ -116,11 +116,9 @@ export const handleActions = {
     return {
       ...state,
       brandList: payload,
-      brandListCurrentPage: PAGE_INIT + UNIT_INCREASE,
+      brandListCurrentPage: UNIT_INCREASE,
       hasBrandlistLoadmore:
-        state.brandListCurrentPage + UNIT_INCREASE + 1 < totalPages
-          ? true
-          : false,
+        state.brandListCurrentPage + UNIT_INCREASE <= totalPages ? true : false,
     };
   },
   [types.GET_BRAND_LIST_FAILED]: (state, {payload}) => {
@@ -129,15 +127,14 @@ export const handleActions = {
 
   [types.GET_BRAND_LIST_LOADMORE_SUCCESS]: (state, {payload}) => {
     const {totalPages, content} = payload;
-    payload.content = state.personalSalersData?.content.concat(content) || [];
+    console.log('PAGE', state.brandListCurrentPage, totalPages);
+    payload.content = state.brandList?.content.concat(content) || [];
     return {
       ...state,
       brandList: payload,
       brandListCurrentPage: state.brandListCurrentPage + UNIT_INCREASE,
       hasBrandlistLoadmore:
-        state.brandListCurrentPage + UNIT_INCREASE + 1 < totalPages
-          ? true
-          : false,
+        state.brandListCurrentPage + UNIT_INCREASE < totalPages ? true : false,
     };
   },
   [types.GET_BRAND_LIST_LOADMORE_FAILED]: (state, {payload}) => {

@@ -52,7 +52,7 @@ const ForUserTabView = ({
         setHasLoadmore(false);
         setState({
           hasLoadMore: false,
-          currentPage: 0,
+          currentPage: 1,
           data: [],
         });
       }
@@ -106,7 +106,7 @@ const ForUserTabView = ({
           UNIT_INCREASE + 1 < res.data.data.totalPages ? true : false;
         let newState = {...state};
         newState.data = res.data.data.content;
-        newState.currentPage = 0;
+        newState.currentPage = 1;
         newState.hasLoadMore = isHasLoadmore;
         setHasLoadmore(isHasLoadmore);
         setState({...newState});

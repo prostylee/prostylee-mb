@@ -32,9 +32,9 @@ const PopularBrands = ({data = []}) => {
           <FlatList
             data={data && data.length ? data : [1, 2, 3, 4, 5, 6, 7, 8]}
             horizontal
-            renderItem={({item, index}) => (
-              <BrandItem item={item} index={index} />
-            )}
+            renderItem={({item, index}) =>
+              index < 10 ? <BrandItem item={item} index={index} /> : null
+            }
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.listInner}
           />

@@ -29,11 +29,11 @@ export const getBrandListLoadmoreLoadingSelector = createSelector(
 );
 export const getBrandListCurrentPageSelector = createSelector(
   storeReducer,
-  (data) => data?.brandListCurrentPage || null,
+  (data) => data?.brandListCurrentPage || 0,
 );
 export const getBrandListHasLoadmoreSelector = createSelector(
   storeReducer,
-  (data) => data?.hasBrandlistLoadmore || null,
+  (data) => data?.hasBrandlistLoadmore || false,
 );
 
 export const getBrandListSelector = createSelector(

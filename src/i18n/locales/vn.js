@@ -166,6 +166,7 @@ export default {
     ratingNotFoundTitle: 'Oops, hiện không có đánh giá nào phù hợp',
     ratingNotFoundContent: 'Mua hàng để bổ sung vào danh sách nhé!',
     notHaveRate: 'Sản phẩm hiện chưa có đánh giá',
+    nothingToRate: 'Không còn sản phẩm nào để đánh giá',
   },
   productDetail: {
     reduce: 'Giảm',

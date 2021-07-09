@@ -197,21 +197,21 @@ const ProductDetail = (props) => {
   };
   const handleChangeTabActiveItemWhenScrolling = debounce(
     (currentOffset, isEndReached) => {
-      if (currentOffset + SCROLL_TRIGGER_POINT < ratingPos) {
+      if (currentOffset < ratingPos - (notchHeight + 56)) {
         if (activeTab !== 'product') {
           setActiveTab('product');
         }
       }
       if (
-        currentOffset + SCROLL_TRIGGER_POINT > ratingPos &&
-        currentOffset + SCROLL_TRIGGER_POINT < suggestPos &&
+        currentOffset >= ratingPos - (notchHeight + 56) &&
+        currentOffset < suggestPos - (notchHeight + 58) &&
         !isEndReached
       ) {
         if (activeTab !== 'rate') {
           setActiveTab('rate');
         }
       }
-      if (currentOffset + SCROLL_TRIGGER_POINT > suggestPos) {
+      if (currentOffset >= suggestPos - (notchHeight + 58)) {
         if (activeTab !== 'suggest') {
           setActiveTab('suggest');
         }

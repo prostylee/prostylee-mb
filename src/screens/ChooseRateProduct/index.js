@@ -12,13 +12,34 @@ import {useRoute} from '@react-navigation/native';
 
 const RateProduct = ({navigation}) => {
   const route = useRoute();
+  const onBackPress = route?.params?.onBackPress || (() => {});
+  const listProduct =
+    route?.params?.listProduct?.filter(
+      (item) => !item?.productData?.reviewedStatusOfUserLogin,
+    ) || [];
 
-  const listProduct = route?.params?.listProduct || [];
+  const listProductRef = React.useRef();
 
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header title={I18n.t('rateProduct.choose')} isDefault />
-      <ListProduct navigation={navigation} data={listProduct} />
+      <Header
+        title={I18n.t('rateProduct.choose')}
+        isDefault
+        leftPress={() => {
+          if (
+            listProductRef &&
+            listProductRef?.current &&
+            listProductRef?.current?.hasRefresh
+          ) {
+            onBackPress();
+          }
+        }}
+      />
+      <ListProduct
+        navigation={navigation}
+        data={listProduct}
+        ref={listProductRef}
+      />
     </ThemeView>
   );
 };

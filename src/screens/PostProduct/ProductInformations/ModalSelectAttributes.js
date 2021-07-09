@@ -41,7 +41,7 @@ const ModalSelectAttributes = ({
             setModalVisible={() => setSelectedModalItem({})}
             defaultState={selectedAttributes?.[item.key]}
             submitSelect={_handleSelectAttributes}
-            allowSelectMultiple={false}
+            allowSelectMultiple={true}
           />
         </View>
       </View>

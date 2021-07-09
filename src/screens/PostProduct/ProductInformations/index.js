@@ -68,6 +68,16 @@ const ProductInfor = () => {
     const idx = Object.values(selectedAttributes).findIndex(
       (item) => !item.length,
     );
+
+    let matrixOptions = [];
+    matrixOptions = Object.values(selectedAttributes).map((listOption) =>
+      listOption.map((item) => ({
+        attrValue: item?.attrValue,
+        attributeId: item?.attributeId,
+        id: null,
+      })),
+    );
+
     if (!productPrice) {
       showMessage({
         message: i18n.t('addProduct.pleaseFillInformation'),
@@ -77,7 +87,7 @@ const ProductInfor = () => {
       return;
     }
 
-    if (!Number.isInteger(Number(productPrice))) {
+    if (!Number.isInteger(productPrice * 1)) {
       showMessage({
         message: i18n.t('addProduct.priceMustBeInteger'),
         type: 'danger',
@@ -96,7 +106,7 @@ const ProductInfor = () => {
     navigation.navigate('PaymentShipping');
     dispatch(
       postProductActions.setProductInfo({
-        attributeOptions: arrayAttributesClone,
+        attributeOptions: matrixOptions,
         price: productPrice,
       }),
     );

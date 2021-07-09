@@ -55,7 +55,7 @@ const DoneTab = ({status, actCode, statusId = 0}) => {
     {useNativeDriver: false},
   );
 
-  const renderFooter = (list = [], totalPrice = 0) => {
+  const renderFooter = (list = [], totalPrice = 0, hasRated = false) => {
     const totalItem = list?.reduce((total, item) => {
       return (total += item?.amount);
     }, 0);
@@ -74,18 +74,36 @@ const DoneTab = ({status, actCode, statusId = 0}) => {
           </View>
         </View>
         <View style={styles.wrapFooterItem}>
-          <View style={styles.colButtonFooterRating}>
-            <ButtonOutlined
-              label={i18n.t('orders.ratingProduct')}
-              labelStyle={styles.labelBtnOutline}
-              onPress={() => {
-                navigation.navigate('ChooseRateProduct', {
-                  listProduct: list,
-                });
-              }}
-            />
-          </View>
-          <View style={styles.colButtonFooterRepurchase}>
+          {!hasRated ? (
+            <View style={styles.colButtonFooterRating}>
+              <ButtonOutlined
+                label={i18n.t('orders.ratingProduct')}
+                labelStyle={styles.labelBtnOutline}
+                onPress={() => {
+                  navigation.navigate('ChooseRateProduct', {
+                    listProduct: list,
+                    onBackPress: () => {
+                      dispatch(
+                        myPageActions.getListCompletedOrders({
+                          page: PAGE_DEFAULT,
+                          limit: LIMIT_DEFAULT,
+                          loggedInUser: userProfile?.id,
+                          statusId: statusId,
+                        }),
+                      );
+                    },
+                  });
+                }}
+              />
+            </View>
+          ) : null}
+          <View
+            style={[
+              styles.colButtonFooterRepurchase,
+              {
+                flex: hasRated ? 1 : 0.5,
+              },
+            ]}>
             <ButtonRounded
               label={i18n.t('orders.repurchase')}
               style={styles.marginLeft10}
@@ -146,6 +164,12 @@ const DoneTab = ({status, actCode, statusId = 0}) => {
       </View>
     );
   };
+  const hasUserRatedAllProducts = (listProduct = []) => {
+    return (
+      listProduct.filter((item) => item?.productData?.reviewedStatusOfUserLogin)
+        .length === listProduct.length
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -164,7 +188,11 @@ const DoneTab = ({status, actCode, statusId = 0}) => {
               product={item?.orderDetails?.[0]}
               status={statusId}
               orderId={item?.id}>
-              {renderFooter(item?.orderDetails, item?.totalMoney)}
+              {renderFooter(
+                item?.orderDetails,
+                item?.totalMoney,
+                hasUserRatedAllProducts(item?.orderDetails),
+              )}
             </Product>
           )}
           numColumns={1}

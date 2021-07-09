@@ -92,4 +92,11 @@ export default EStyleSheet.create({
   viewFooter: {
     marginBottom: 6,
   },
+  notFoundText: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '$lightGray',
+    alignSelf: 'center',
+    marginTop: 20,
+  },
 });

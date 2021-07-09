@@ -25,6 +25,8 @@ import {Field, Formik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {userSelectors, userActions} from 'reducers';
 import ImagePicker from 'react-native-image-crop-picker';
+import {userTokenSelector} from 'redux/selectors/user';
+
 import {
   validateEmail,
   validateFullname,
@@ -35,8 +37,6 @@ import {useNavigation} from '@react-navigation/native';
 
 import {Storage} from 'aws-amplify';
 
-import {updateAvatar} from 'services/api/myPageApi';
-
 const CANCEL_INDEX = 0;
 // const DESTRUCTIVE_INDEX = 0;
 const PICK_IMAGE_OPTIONS = ['Huỷ', 'Chọn từ bộ sưu tập ảnh', 'Chụp hình'];
@@ -45,6 +45,10 @@ const SettingMyAccount = () => {
   const navigation = useNavigation();
 
   const actionSheetRef = React.useRef();
+
+  const profile = useSelector((state) => userTokenSelector(state));
+
+  const sub = profile?.signInUserSession?.idToken?.payload?.sub;
 
   const dispatch = useDispatch();
 
@@ -109,7 +113,12 @@ const SettingMyAccount = () => {
     }
     const hasNewAvatar = userProfile?.avatar !== userAvatar?.path;
     if (hasNewAvatar) {
-      uploadToStorage(userAvatar?.path, payload.name);
+      uploadToStorage(userAvatar?.path, {
+        ...payload,
+        userGender,
+        birthdayData,
+      });
+      return;
     }
 
     dispatch(
@@ -176,30 +185,24 @@ const SettingMyAccount = () => {
       });
   };
 
-  const updateUserAvatar = async (key, name, userName = '') => {
-    const signedURL = await Storage.get(key);
-    const newImg = {
-      name: name,
-      path: signedURL,
-    };
-    const res = await updateAvatar({
-      fullName: userName,
-      avatarImageInfo: {
-        name: name,
-        path: signedURL,
-      },
-    });
-    if (res.data.status !== 200) {
-      showMessage({
-        message: I18n.t('unknownMessage'),
-        type: 'danger',
-        position: 'top',
-      });
-      return;
-    }
-    setUserAvatar({...userAvatar, ...newImg});
+  const updateUserAvatar = async (name, payload = {}, path = '') => {
+    dispatch(
+      userActions.updateUserProfile({
+        fullName: payload.name,
+        gender: payload.userGender,
+        bio: payload.bio,
+        phoneNumber: payload.phone,
+        email: payload.email,
+        ...payload.birthdayData,
+        avatarImageInfo: {
+          name: name,
+          path: path,
+        },
+      }),
+    );
+    navigation.goBack();
   };
-  const uploadToStorage = async (uri, fullName = '') => {
+  const uploadToStorage = async (uri, payload = {}) => {
     try {
       if (!uri) {
         return;
@@ -209,16 +212,17 @@ const SettingMyAccount = () => {
       const response = await fetch(uri);
       const blob = await response.blob();
       const time = Date.now();
-      const fileName = `${userProfile?.id}/avatar/avatar_${time}.jpg`;
+      const fileName = `${sub}/avatar/avatar_${time}.jpg`;
       Storage.put(fileName, blob, {
         contentType: 'image/jpeg',
       })
         .then(async (result) => {
           const name = `avatar_${time}.jpg`;
-          await updateUserAvatar(result?.key, name, fullName);
+          const path = `public/`;
+
+          await updateUserAvatar(result?.key, payload, path);
         })
         .catch((err) => {
-          console.log('PUT ERROR', err);
           showMessage({
             message: I18n.t('unknownMessage'),
             type: 'danger',
@@ -226,7 +230,6 @@ const SettingMyAccount = () => {
           });
         });
     } catch (err) {
-      console.log('UPLOAD ERR', err);
       showMessage({
         message: I18n.t('unknownMessage'),
         type: 'danger',

@@ -2,15 +2,16 @@
 import styles from './styles';
 
 import React, {useEffect, useState, useRef} from 'react';
-import {Animated, View, ActivityIndicator, FlatList} from 'react-native';
-
+import {Animated, View, ActivityIndicator, FlatList, Text} from 'react-native';
 import {Colors, ThemeView} from 'components';
 import Item from './Item';
-
 import {useDispatch} from 'react-redux';
+import i18n from 'i18n';
 
-const ListProduct = ({navigation, data}) => {
+const ListProduct = ({navigation, data}, ref) => {
   const dispatch = useDispatch();
+
+  const [listProductData, setListProductData] = useState(data || []);
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -20,6 +21,7 @@ const ListProduct = ({navigation, data}) => {
   );
 
   const [refreshing, handleRefreshing] = useState(false);
+
   const [loadMoreLoading, setLoadMoreLoading] = useState(false);
 
   useEffect(() => {}, [dispatch, refreshing]);
@@ -45,11 +47,29 @@ const ListProduct = ({navigation, data}) => {
   const leftPress = () => {
     navigation.goBack();
   };
+  useEffect(() => {
+    setListProductData(data);
+  }, [data]);
 
-  return (
+  const onRateSuccess = React.useCallback((itemId) => {
+    let newList = [...listProductData].filter((item) => item.id !== itemId);
+    setListProductData([...newList]);
+  }, []);
+
+  React.useImperativeHandle(ref, () => ({
+    hasRefresh: data?.length !== listProductData?.length || false,
+  }));
+
+  return listProductData && listProductData?.length ? (
     <FlatList
-      data={data}
-      renderItem={({item}) => <Item navigation={navigation} item={item} />}
+      data={listProductData}
+      renderItem={({item}) => (
+        <Item
+          navigation={navigation}
+          item={item}
+          onRateSuccess={onRateSuccess}
+        />
+      )}
       numColumns={1}
       keyExtractor={(item, index) => index}
       refreshing={refreshing}
@@ -61,44 +81,13 @@ const ListProduct = ({navigation, data}) => {
       showsHorizontalScrollIndicator={false}
       onScroll={onScrollEvent}
     />
+  ) : (
+    <Text style={styles.notFoundText}>
+      {i18n.t('rateProduct.nothingToRate')}
+    </Text>
   );
-};
-
-ListProduct.defaultProps = {
-  data: [
-    {
-      id: 231,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'Den',
-    },
-    {
-      id: 232,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'Den',
-    },
-    {
-      id: 233,
-      productImage:
-        'https://xuongsiquanao.vn/wp-content/uploads/2019/08/3a306dbe5fe2b8bce1f3.jpg',
-      productName: 'Ao thum nam den ',
-      productPrice: 99000,
-      amount: 1,
-      productSize: 'M',
-      productColor: 'Den',
-    },
-  ],
 };
 
 ListProduct.propTypes = {};
 
-export default ListProduct;
+export default React.forwardRef(ListProduct);
