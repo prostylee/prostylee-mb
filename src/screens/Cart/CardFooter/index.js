@@ -62,7 +62,7 @@ const CardFooter = ({
       return;
     }
     navigation.navigate('VoucherCart', {
-      onUseVoucher: (item) => setVoucher(item),
+      // onUseVoucher: (item) => setVoucher(item),
       totalPrice: totalPrice,
     });
   };
