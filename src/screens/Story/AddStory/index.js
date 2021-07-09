@@ -184,6 +184,15 @@ const AddStory = (props) => {
     overflow: 'visible',
   };
 
+  const cropViewAndroidStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: WIDTH,
+    height: HEIGHT - notchHeight - BOTTOM_FOOTER_HEIGHT,
+    overflow: 'visible',
+  };
+
   return (
     <View style={styles.container}>
       <ContainerWithoutScrollView
@@ -203,7 +212,7 @@ const AddStory = (props) => {
               aspectRatio={{width: 9, height: 16}}
             />
           ) : (
-            <View style={styles.androidListContainer}>
+            <View style={cropViewAndroidStyle}>
               <ImageCropper
                 imageUri={image.path}
                 cropAreaWidth={cropperWidth}
