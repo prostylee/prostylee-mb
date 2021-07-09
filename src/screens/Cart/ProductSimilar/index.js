@@ -6,6 +6,7 @@ import Carousel from 'react-native-snap-carousel';
 import i18n from 'i18n';
 import {currencyFormat} from 'utils/currency';
 import {Heart, HeartFill} from 'svg/common';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 import {getListRecentSelector} from 'redux/selectors/cart';
 import {useNavigation} from '@react-navigation/native';
@@ -37,10 +38,10 @@ const ProductSimilar = (props) => {
         <View style={styles.relatedInfo}>
           <View style={styles.relatedPriceGroup}>
             <Text style={styles.relatedPriceSale}>
-              {currencyFormat(item?.priceSale || 0, 'đ')}
+              {currencyFormat(item?.priceSale || 0, CURRENCY_VIET_NAM)}
             </Text>
             <Text style={styles.relatedPrice}>
-              {currencyFormat(item?.price || 0, 'đ')}
+              {currencyFormat(item?.price || 0, CURRENCY_VIET_NAM)}
             </Text>
           </View>
           <View style={styles.likeButton}>

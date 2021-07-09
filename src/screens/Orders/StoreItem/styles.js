@@ -1,9 +1,9 @@
-import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-const {height, width} = Dimensions.get('window');
-
 export default EStyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
   wrapSection: {
     backgroundColor: '$white',
     alignItems: 'flex-start',
@@ -74,7 +74,6 @@ export default EStyleSheet.create({
     lineHeight: 18,
     fontSize: 13,
     fontFamily: '$font1',
-    fontWeight: 'normal',
     fontStyle: 'normal',
     textAlign: 'left',
     color: '$black',
@@ -85,7 +84,6 @@ export default EStyleSheet.create({
     lineHeight: 18,
     fontSize: 13,
     fontFamily: '$font1',
-    fontWeight: 'normal',
     fontStyle: 'normal',
     textAlign: 'left',
     color: '$black',

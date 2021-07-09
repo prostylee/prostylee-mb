@@ -34,7 +34,7 @@ export const types = {
   ADD_ITEM_TO_CART: 'ADD_ITEM_TO_CART',
   REMOVE_ITEM_FROM_CART: 'REMOVE_ITEM_FROM_CART',
   //AMOUNT
-  SET_CART_COUPON_AMOUNT: 'SET_CART_AMOUNT',
+  SET_CART_AMOUNT: 'SET_CART_AMOUNT',
   //OPTION
   SET_CART_ITEM_UPDATE_OPTION: 'SET_CART_ITEM_UPDATE_OPTION',
 
@@ -139,7 +139,7 @@ export const actions = {
   setVoucherUse: createAction(types.SET_VOUCHER_USE),
 
   //AMOUN
-  setCartAmount: createAction(types.SET_CART_COUPON_AMOUNT),
+  setCartAmount: createAction(types.SET_CART_AMOUNT),
 
   //CART ADDRESS
   ...actionsCartAddress,
@@ -254,31 +254,67 @@ export default handleActions(
     },
     [types.SET_CART_ITEM_UPDATE_OPTION]: (state, {payload}) => {
       const currentCart = state.listCart;
-      const itemId = payload.itemId ? payload.itemId : 0;
-      if (itemId) {
+      const itemVarientId = payload.itemVarientId ? payload.itemVarientId : 0;
+      const newItemVarientId = payload.newItemVarientId
+        ? payload.newItemVarientId
+        : 0;
+
+      if (itemVarientId === newItemVarientId) {
+        return state;
+      }
+
+      if (itemVarientId) {
         const findCartIndex = currentCart.findIndex(
-          (element) => element.item.id === itemId,
+          (element) => element.productVarient === itemVarientId,
         );
-        const newItem = Object.assign({}, currentCart[findCartIndex]);
-        const newOptions = payload.newOptions
-          ? payload.newOptions
-          : newItem.options;
-        newItem.options = newOptions;
-        const newCartList = [
-          ...currentCart.slice(0, findCartIndex),
-          newItem,
-          ...currentCart.slice(findCartIndex + 1),
-        ];
-        return {...state, listCart: newCartList};
+        const existedItemVarient = currentCart.findIndex(
+          (element) => element.productVarient === newItemVarientId,
+        );
+
+        if (existedItemVarient >= 0) {
+          const newItem = Object.assign({}, currentCart[existedItemVarient]);
+          newItem.quantity =
+            newItem.quantity + currentCart[findCartIndex].quantity;
+          if (findCartIndex < existedItemVarient) {
+            const newCartList = [
+              ...currentCart.slice(0, findCartIndex),
+              ...currentCart.slice(findCartIndex + 1, existedItemVarient),
+              newItem,
+              ...currentCart.slice(existedItemVarient + 1),
+            ];
+            return {...state, listCart: newCartList};
+          } else {
+            const newCartList = [
+              ...currentCart.slice(0, existedItemVarient),
+              newItem,
+              ...currentCart.slice(existedItemVarient + 1, findCartIndex),
+              ...currentCart.slice(findCartIndex + 1),
+            ];
+            return {...state, listCart: newCartList};
+          }
+        } else {
+          const newItem = Object.assign({}, currentCart[findCartIndex]);
+          const newOptions = payload.newOptions
+            ? payload.newOptions
+            : newItem.options;
+          newItem.options = newOptions;
+          newItem.productVarient = newItemVarientId;
+          const newCartList = [
+            ...currentCart.slice(0, findCartIndex),
+            newItem,
+            ...currentCart.slice(findCartIndex + 1),
+          ];
+          return {...state, listCart: newCartList};
+        }
       } else {
         return state;
       }
     },
-    [types.SET_CART_COUPON_AMOUNT]: (state, {payload}) => {
-      const {item, newAmount} = payload;
+    [types.SET_CART_AMOUNT]: (state, {payload}) => {
+      const {newAmount, productVarient} = payload;
       const currentCart = new Array(...state.listCart);
       const findCartIndex = currentCart.findIndex(
-        (element) => element.item.id === item.id,
+        (element) => element.productVarient === productVarient,
       );
       if (findCartIndex >= 0) {
         currentCart[findCartIndex].quantity = newAmount;

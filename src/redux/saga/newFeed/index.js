@@ -176,8 +176,18 @@ const postStory = function* (payload) {
   try {
     const res = yield call(postStoriesByUser, payload.payload);
     if (res.ok && res.data.status === SUCCESS) {
+      showMessage({
+        message: i18n.t('addStory.addStorySuccess'),
+        type: 'success',
+        position: 'top',
+      });
       yield put(newFeedActions.postStorySuccess(res.data.data));
     } else {
+      showMessage({
+        message: i18n.t('addStory.addStoryFail'),
+        type: 'danger',
+        position: 'top',
+      });
       yield put(newFeedActions.postStoryFail());
     }
   } catch (e) {

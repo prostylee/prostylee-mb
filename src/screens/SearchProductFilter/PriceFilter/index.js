@@ -1,11 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, View} from 'react-native';
 import i18n from 'i18n';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import styles from './styles';
 import {Divider, Text} from 'react-native-paper';
+import {CURRENCY_VIET_NAM} from 'constants';
 
-import {Colors} from 'components';
 import {currencyFormat} from 'utils/currency';
 
 import PropTypes from 'prop-types';
@@ -27,27 +27,17 @@ const PriceFilter = ({onPriceChange, defaultState}) => {
     <>
       <View style={styles.wrapHeader}>
         <Text style={styles.title}>{i18n.t('Search.priceRange')}</Text>
-        <Text
-          style={[
-            styles.title,
-            {
-              color: Colors['$black500'],
-            },
-          ]}>
-          {currencyFormat(state[0], 'đ')} - {currencyFormat(state[1], 'đ')}
+        <Text style={[styles.title, styles.black500]}>
+          {currencyFormat(state[0], CURRENCY_VIET_NAM)} -{' '}
+          {currencyFormat(state[1], CURRENCY_VIET_NAM)}
         </Text>
       </View>
       <View style={styles.wrapChip}>
         <MultiSlider
           sliderLength={WIDTH - 32}
-          selectedStyle={{backgroundColor: Colors['$black'], height: 5}}
-          unselectedStyle={{backgroundColor: Colors['$line'], height: 5}}
-          markerStyle={{
-            backgroundColor: Colors['$black'],
-            borderWidth: 0,
-            width: 20,
-            height: 20,
-          }}
+          selectedStyle={styles.selectedStyles}
+          unselectedStyle={styles.unSelectedStyles}
+          markerStyle={styles.markerStyles}
           onValuesChange={(value) => {
             setState(value);
           }}

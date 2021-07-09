@@ -6,6 +6,7 @@ import {
   TextInput,
   Image,
   Alert,
+  Platform,
 } from 'react-native';
 import {Container, ButtonRounded, HeaderBack} from 'components';
 import {useTheme, useRoute, useNavigation} from '@react-navigation/native';
@@ -199,7 +200,9 @@ const AddStatus = (props) => {
   };
 
   const InputStatusText = () => {
-    const [textValue, setTextValue] = React.useState('');
+    const [textValue, setTextValue] = React.useState(
+      typeof inputValueRef.current === 'string' ? inputValueRef.current : '',
+    );
     return (
       <TextInput
         ref={inputRef}
@@ -218,7 +221,10 @@ const AddStatus = (props) => {
     );
   };
 
-  const containerStyle = [styles.container, {paddingTop: notchHeight}];
+  const containerStyle = [
+    styles.container,
+    {paddingTop: Platform.OS === 'android' ? notchHeight : 0},
+  ];
 
   return (
     <View style={containerStyle}>

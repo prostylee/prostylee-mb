@@ -1,15 +1,12 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
-import React, {useState} from 'react';
-import {Text, View, ActivityIndicator, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {Text, View, ActivityIndicator} from 'react-native';
 import {Image, NumberInputUpDown} from 'components';
 import HeaderStore from '../HeaderStore';
 import {currencyFormat} from 'utils/currency';
-import {DownArrow} from 'svg/common';
-import {useNavigation} from '@react-navigation/native';
+import {CURRENCY_VIET_NAM} from 'constants';
 
 const Item = ({store, status, changeCount, onChangeCount, children}) => {
-  const navigation = useNavigation();
   const getAttributesText = (orderDetailAttributes) => {
     if (orderDetailAttributes && orderDetailAttributes?.length) {
       let attributeString = [...orderDetailAttributes]?.reduce(
@@ -54,12 +51,15 @@ const Item = ({store, status, changeCount, onChangeCount, children}) => {
                     </Text>
                     {item?.productPrice ? (
                       <Text numberOfLines={1} style={styles.price}>
-                        {currencyFormat(item?.productPrice || 0, 'đ')}
+                        {currencyFormat(
+                          item?.productPrice || 0,
+                          CURRENCY_VIET_NAM,
+                        )}
                       </Text>
                     ) : null}
                   </View>
                   <View style={styles.wrapUpDown}>
-                    <View style={{...styles.wrapAttribute, flex: 1}}>
+                    <View style={[styles.wrapAttribute, styles.flex1]}>
                       <Text numberOfLines={1} style={styles.name}>
                         {getAttributesText(item?.orderDetailAttributes)}
                       </Text>
@@ -81,7 +81,10 @@ const Item = ({store, status, changeCount, onChangeCount, children}) => {
                       </Text>
                       {item?.productPrice ? (
                         <Text numberOfLines={1} style={styles.price}>
-                          {currencyFormat(item?.productPrice || 0, 'đ')}
+                          {currencyFormat(
+                            item?.productPrice || 0,
+                            CURRENCY_VIET_NAM,
+                          )}
                         </Text>
                       ) : null}
                     </View>

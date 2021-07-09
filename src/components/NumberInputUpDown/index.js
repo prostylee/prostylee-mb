@@ -47,7 +47,7 @@ const NumberInputUpDown = ({
 
   const onFocus = () => {};
 
-  const inc = () => {
+  const decrease = () => {
     if (currentValue == 1) {
       onRemoveItem();
       return;
@@ -74,7 +74,7 @@ const NumberInputUpDown = ({
     }
   };
 
-  const dec = () => {
+  const increase = () => {
     if (!currentValue) {
       setCurrentValue('0');
       if (typeof onChange === 'function') {
@@ -101,7 +101,7 @@ const NumberInputUpDown = ({
     <View style={{...styles.container, ...containerStyle}}>
       <TouchableOpacity
         style={{...styles.minusIcon, ...minusStyle}}
-        onPress={inc}
+        onPress={decrease}
         disabled={+minValue >= +currentValue}>
         {minusIcon ? minusIcon : <MinusIcon />}
       </TouchableOpacity>
@@ -122,7 +122,7 @@ const NumberInputUpDown = ({
         />
       </View>
       <TouchableOpacity
-        onPress={dec}
+        onPress={increase}
         style={{...styles.plusIcon, ...plusStyle}}>
         {plusIcon ? plusIcon : <PlusIcon />}
       </TouchableOpacity>

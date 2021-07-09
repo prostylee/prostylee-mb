@@ -2,6 +2,7 @@ import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 const WIDTH = Dimensions.get('window').width;
 export default EStyleSheet.create({
+  directionColumn: {flexDirection: 'column'},
   container: {
     flex: 1,
     backgroundColor: '$bgColor',
