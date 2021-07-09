@@ -24,13 +24,17 @@ import {addReview} from 'services/api/reviewRatingApi';
 import {showMessage} from 'react-native-flash-message';
 
 import {POST_SUCCESS} from 'constants';
+import {useRoute} from '@react-navigation/native';
 
 const RatingProduct = ({navigation, product, productId}) => {
+  const route = useRoute();
+
   const [star, setStar] = useState();
   const [imageList, setImageList] = useState([]);
   const [imgs, setImgs] = useState([]);
   const [userId, setUserId] = useState('');
   const [content, setContent] = useState('');
+  const onRateSuccess = route?.params?.onRateSuccess || (() => {});
 
   const dispatch = useDispatch();
 
@@ -92,6 +96,7 @@ const RatingProduct = ({navigation, product, productId}) => {
           textStyle: {fontSize: 13, fontWeight: '300'},
           icon: {icon: 'success', position: 'left'},
         });
+        onRateSuccess(productId);
         navigation.goBack();
       })
       .catch((e) => {

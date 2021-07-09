@@ -6,11 +6,12 @@ import {ActivityIndicator, Text, View, TouchableOpacity} from 'react-native';
 import {Image} from 'components';
 import {currencyFormat} from 'utils/currency';
 
-const ProductItem = ({item, navigation}) => {
+const ProductItem = ({item, navigation, onRateSuccess = () => {}}) => {
   const onNavigate = () => {
     navigation.navigate('RateProduct', {
       productId: item.id,
       product: item,
+      onRateSuccess: onRateSuccess,
     });
   };
   const getAttributesText = () => {

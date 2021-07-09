@@ -21,6 +21,14 @@ const ButtonFooter = ({dealData}) => {
     userSelectors.getUserProfile(state),
   );
 
+  const hasUserRatedAllProducts = (listProduct = []) => {
+    return (
+      listProduct.filter((item) => item?.productData?.reviewedStatusOfUserLogin)
+        .length === listProduct.length
+    );
+  };
+  const hasRated = hasUserRatedAllProducts(dealData?.orderDetails);
+
   const onCancelOrder = () => {
     cancelOrder({
       id: dealData?.id,
@@ -66,19 +74,28 @@ const ButtonFooter = ({dealData}) => {
     case ORDER_STATUS.COMPLETED:
       return (
         <View style={styles.rowButton}>
-          <View style={styles.colButton}>
-            <ButtonOutlined
-              label={i18n.t('orders.ratingProduct')}
-              style={styles.buttonOutlinedGrey}
-              labelStyle={styles.labelBtnOutlineGrey}
-              onPress={() => {
-                navigation.navigate('ChooseRateProduct', {
-                  listProduct: dealData?.orderDetails,
-                });
-              }}
-            />
-          </View>
-          <View style={styles.colButton}>
+          {!hasRated ? (
+            <View style={styles.colButton}>
+              <ButtonOutlined
+                label={i18n.t('orders.ratingProduct')}
+                style={styles.buttonOutlinedGrey}
+                labelStyle={styles.labelBtnOutlineGrey}
+                onPress={() => {
+                  navigation.navigate('ChooseRateProduct', {
+                    listProduct: dealData?.orderDetails,
+                  });
+                }}
+              />
+            </View>
+          ) : null}
+
+          <View
+            style={[
+              styles.colButton,
+              {
+                flex: hasRated ? 1 : 0.5,
+              },
+            ]}>
             <ButtonOutlined
               label={i18n.t('orders.repurchase')}
               labelStyle={styles.labelBtnOutline}
