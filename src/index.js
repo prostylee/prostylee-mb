@@ -144,7 +144,7 @@ const Index = () => {
       if (isUpdate) {
         await dispatch(commonActions.toggleLoading(false));
         setTimeout(async () => {
-          await dispatch(commonActions.setRequireUpdate());
+          //await dispatch(commonActions.setRequireUpdate());
         }, 300);
       } else {
         onCheckSignInSession();
