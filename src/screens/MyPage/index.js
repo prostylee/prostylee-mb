@@ -8,7 +8,6 @@ import {
   Animated,
   TouchableOpacity,
   ImageBackground,
-  Platform,
 } from 'react-native';
 
 import configEnv from 'config';
@@ -31,8 +30,10 @@ import {Avatar, ToggleButton} from 'react-native-paper';
 import TabViewContainer from './TabView';
 import {ScrollView} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 const heightShow = 334;
+const HEIGHT_HEADER = 50 + getStatusBarHeight();
 let scrollFlag = true;
 const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
   const paddingToBottom = 150;
@@ -43,11 +44,18 @@ const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
 };
 const Index = ({navigation}) => {
   const dispatch = useDispatch();
+
   const isFocused = useIsFocused();
+
   const [scrollEnabled, setScrollEnabled] = useState(true);
+
   const [viewType, setViewType] = useState('grid');
+
   const [activeTab, setActivedTab] = useState('menu');
+
   const scrollViewRef = useRef();
+
+  const [flagPos, setFlagPos] = useState(0);
 
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
@@ -253,7 +261,13 @@ const Index = ({navigation}) => {
             </ImageBackground>
           </View>
         </Animated.View>
-        <View style={styles.wrapTabView}>
+        <View
+          style={[
+            styles.wrapTabView,
+            {
+              height: flagPos - HEIGHT_HEADER,
+            },
+          ]}>
           <TabViewContainer
             scrollAnimated={scrollAnimated}
             viewType={viewType}
@@ -262,6 +276,16 @@ const Index = ({navigation}) => {
           />
         </View>
       </ScrollView>
+      <View
+        style={{width: '100%', height: 1}}
+        onLayout={({
+          nativeEvent: {
+            layout: {y},
+          },
+        }) => {
+          setFlagPos(y);
+        }}
+      />
       {activeTab === 'menu' && (
         <View style={styles.viewType}>
           <ToggleButton.Row
