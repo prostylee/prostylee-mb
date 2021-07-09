@@ -27,7 +27,8 @@ const AddStory = (props) => {
   const dispatch = useDispatch();
   const cropViewRef = React.useRef();
   const [userId, setUserId] = React.useState('');
-  const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
+  const notchHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight() + (hasNotch() ? 34 : 0) : 0;
 
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
