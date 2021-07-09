@@ -33,9 +33,6 @@ const ProductSearchList = ({
   tagFilterFunction,
   sortDataFunction,
   getFilterStateSelectorFunction,
-  filterDispatchAction,
-  setFilterStateAction,
-  clearFilterStateAction,
 }) => {
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
@@ -174,15 +171,12 @@ const ProductSearchList = ({
             setVisible={setVisible}
             visible={visible}
             navigation={navigation}
-            filterDispatchAction={filterDispatchAction}
             activeSortItem={
               valueSort
                 ? PRODUCT_SORT_ITEM.find((v) => v.value === valueSort).label
                 : ''
             }
             getFilterStateSelectorFunction={getFilterStateSelectorFunction}
-            setFilterStateAction={setFilterStateAction}
-            clearFilterStateAction={clearFilterStateAction}
           />
           <Divider />
           <View style={sortStyle}>
@@ -236,9 +230,6 @@ ProductSearchList.defaultProps = {
   hasLoadmore: false,
   searchDataFunction: () => {},
   getFilterStateSelectorFunction: () => {},
-  filterDispatchAction: () => {},
-  setFilterStateAction: () => {},
-  clearFilterStateAction: () => {},
 };
 
 ProductSearchList.propTypes = {
@@ -256,9 +247,6 @@ ProductSearchList.propTypes = {
   hasLoadmore: PropTypes.bool,
   searchDataFunction: PropTypes.func,
   getFilterStateSelectorFunction: PropTypes.func,
-  filterDispatchAction: PropTypes.func,
-  setFilterStateAction: PropTypes.func,
-  clearFilterStateAction: PropTypes.func,
 };
 
 export default ProductSearchList;

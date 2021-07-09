@@ -14,9 +14,6 @@ const FilterBar = ({
   navigation,
   activeSortItem = '',
   getFilterStateSelectorFunction = () => {},
-  filterDispatchAction = () => {},
-  clearFilterStateAction = {},
-  setFilterStateAction = {},
 }) => {
   const filterState = useSelector((state) =>
     getFilterStateSelectorFunction(state),
@@ -56,10 +53,7 @@ const FilterBar = ({
         </View>
       </TouchableOpacity>
       <FilterButton
-        filterDispatchAction={filterDispatchAction}
         getFilterStateSelectorFunction={getFilterStateSelectorFunction}
-        clearFilterStateAction={clearFilterStateAction}
-        setFilterStateAction={setFilterStateAction}
       />
     </View>
   );

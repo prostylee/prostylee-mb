@@ -88,6 +88,6 @@ const ListProduct = ({navigation, data}, ref) => {
   );
 };
 
-ListProduct.propTypes = {};
+// ListProduct.propTypes = {};
 
 export default React.forwardRef(ListProduct);

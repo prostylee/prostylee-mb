@@ -110,14 +110,9 @@ const BottomHeaderAnimated = ({
           </View>
         </TouchableOpacity>
         <FilterButton
-          filterDispatchAction={productActions.getListProduct}
           getFilterStateSelectorFunction={
             getProductCategoriesFilterStateSelector
           }
-          clearFilterStateAction={
-            productActions.clearProductCategoriesFilterState
-          }
-          setFilterStateAction={productActions.setProductCategoriesFilterState}
         />
       </View>
       <Divider />

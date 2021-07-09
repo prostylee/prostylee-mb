@@ -40,12 +40,7 @@ const FilterBar = ({
           </View>
         </View>
       </TouchableOpacity>
-      <FilterButton
-        filterDispatchAction={searchActions.getProductsSearch}
-        getFilterStateSelectorFunction={getProductFilterState}
-        clearFilterStateAction={searchActions.clearProductsFilterState}
-        setFilterStateAction={searchActions.setProductFilterState}
-      />
+      <FilterButton getFilterStateSelectorFunction={getProductFilterState} />
     </View>
   );
 };
