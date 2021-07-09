@@ -4,14 +4,16 @@ import styles from './style';
 import ProductItem from './ProductItem';
 import {SearchProductLoading} from 'components/Loading/contentLoader';
 import i18n from 'i18n';
-
+const HEIGHT_ITEM = 320;
 const ProductList = ({navigation, isLoading = false, data = []}) => {
   return (
     <View
       style={[
         styles.container,
         {
-          height: data?.length ? Math.floor(data.length / 2) * 320 : 200,
+          height: data?.length
+            ? Math.floor(data.length / 2) * HEIGHT_ITEM
+            : HEIGHT_ITEM * 2,
         },
       ]}>
       {isLoading ? (

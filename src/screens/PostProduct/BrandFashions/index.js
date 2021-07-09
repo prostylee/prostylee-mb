@@ -60,13 +60,12 @@ const Brands = (props) => {
   };
 
   useEffect(() => {
-    if (!brandList || !brandList?.length)
-      dispatch(
-        storeActions.getBrandList({
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-        }),
-      );
+    dispatch(
+      storeActions.getBrandList({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
   }, []);
   useEffect(() => {
     setBrandList(brandListSelector?.content || []);
