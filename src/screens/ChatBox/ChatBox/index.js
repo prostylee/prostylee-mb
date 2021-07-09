@@ -117,7 +117,9 @@ const ChatBox = ({navigation, route}) => {
         }),
       );
       if (result) {
-        setChatDataList(result.data.getChat.childrens.items);
+        const dataTemp = [...result.data.getChat.childrens.items];
+        dataTemp.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        setChatDataList(dataTemp);
       }
     } catch (err) {
       showMessage({
