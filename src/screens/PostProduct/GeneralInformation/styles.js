@@ -5,6 +5,7 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
   },
+  contentContainer: {flex: 1},
   wrapper: {
     marginTop: 15,
     backgroundColor: 'white',
