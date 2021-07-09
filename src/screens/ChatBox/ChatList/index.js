@@ -40,6 +40,9 @@ const Message = (props) => {
     ).subscribe({
       next: (chatData) => {
         const addedChat = chatData.value.data.onCreateChat;
+        if (addedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
+          return;
+        }
         const updatedChats = [...chatList];
         updatedChats.push(addedChat);
         setChatList(updatedChats);
