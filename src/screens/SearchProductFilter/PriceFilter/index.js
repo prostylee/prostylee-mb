@@ -15,7 +15,7 @@ const PriceFilter = ({
   onPriceChange,
   defaultState,
   minValue = 0,
-  maxValue = 50_000_000,
+  maxValue = 50000000,
 }) => {
   const priceState = defaultState.price;
   const [state, setState] = useState(

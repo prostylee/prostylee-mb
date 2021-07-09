@@ -111,7 +111,6 @@ const Stores = (props) => {
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
           position: 'mobile_store',
-          targetType: 'ads_fee',
         }),
       );
     if (!brandList || !brandList?.content?.length)

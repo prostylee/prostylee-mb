@@ -146,7 +146,7 @@ const FilterProduct = ({navigation}) => {
           <PriceFilter
             onPriceChange={_updateFilterState}
             minValue={priceRange?.minPrice || 0}
-            maxValue={priceRange?.maxPrice || 50_000_000}
+            maxValue={priceRange?.maxPrice || 50000000}
             defaultState={state}
           />
           <ConditionOfProductsFilter
