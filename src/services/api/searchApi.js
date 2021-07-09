@@ -46,3 +46,6 @@ export const getProductAttributesFilterResultsApi = (payload) => {
     ...payload,
   });
 };
+export const getPriceRangeApi = () => {
+  return _fetch(GET, '/product-price/priceRange');
+};

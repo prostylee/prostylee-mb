@@ -11,7 +11,12 @@ import {currencyFormat} from 'utils/currency';
 import PropTypes from 'prop-types';
 
 const WIDTH = Dimensions.get('window').width;
-const PriceFilter = ({onPriceChange, defaultState}) => {
+const PriceFilter = ({
+  onPriceChange,
+  defaultState,
+  minValue = 0,
+  maxValue = 50_000_000,
+}) => {
   const priceState = defaultState.price;
   const [state, setState] = useState(
     priceState && priceState.length ? [priceState[0], priceState[1]] : [0, 1],
@@ -45,10 +50,10 @@ const PriceFilter = ({onPriceChange, defaultState}) => {
             onPriceChange('price', value);
           }}
           values={[state?.[0], state?.[1]]}
-          min={0}
-          max={50000000}
+          min={minValue}
+          max={maxValue}
           markerOffsetY={2}
-          step={10000}
+          step={Math.round(maxValue / 5000)}
           enabledTwo={true}
           isMarkersSeparated={true}
         />

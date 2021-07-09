@@ -19,7 +19,10 @@ import {
   getSearchFeaturedCategoriesSelector,
   getCurrentKeyword,
 } from 'redux/selectors/search';
-import {getProductFilterState} from 'redux/selectors/search/productFilter';
+import {
+  getProductFilterState,
+  getPriceRangeSelector,
+} from 'redux/selectors/search/productFilter';
 import {useRoute} from '@react-navigation/native';
 const FilterProduct = ({navigation}) => {
   const dispatch = useDispatch();
@@ -40,6 +43,7 @@ const FilterProduct = ({navigation}) => {
   const filterAttributeList = useSelector((state) =>
     getProductFilterAttributeListSelector(state),
   );
+  const priceRange = useSelector((state) => getPriceRangeSelector(state));
 
   const filterState = useSelector((state) =>
     getFilterStateSelectorFunction(state),
@@ -95,11 +99,9 @@ const FilterProduct = ({navigation}) => {
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...newAttributes,
-        categoryId: categoryFilterState || undefined,
-        price:
-          `${priceFilterState?.join('-')}` === '0-0'
-            ? undefined
-            : `${priceFilterState?.join('-')}`,
+        categoryId: categoryFilterState > 0 ? categoryFilterState : undefined,
+        minPrice: priceFilterState?.[0] || 0,
+        maxPrice: priceFilterState?.[1] || 50_000_000,
         ...defaultQueryParams,
       }),
     );
@@ -118,6 +120,9 @@ const FilterProduct = ({navigation}) => {
           limit: LIMIT_DEFAULT,
         }),
       );
+    }
+    if (!priceRange?.minPrice || !priceRange?.maxPrice) {
+      dispatch(searchActions.getPriceRange());
     }
   }, []);
 
@@ -144,8 +149,8 @@ const FilterProduct = ({navigation}) => {
           />
           <PriceFilter
             onPriceChange={_updateFilterState}
-            minValue={0}
-            maxValue={50000000}
+            minValue={priceRange?.minPrice || 0}
+            maxValue={priceRange?.maxPrice || 50_000_000}
             defaultState={state}
           />
           <ConditionOfProductsFilter
