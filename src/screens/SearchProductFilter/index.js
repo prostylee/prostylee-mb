@@ -15,31 +15,31 @@ import {useDispatch, useSelector} from 'react-redux';
 import {searchActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {getProductFilterAttributeListSelector} from 'redux/selectors/search/productFilter';
-import {
-  getSearchFeaturedCategoriesSelector,
-  getCurrentKeyword,
-} from 'redux/selectors/search';
-import {getProductFilterState} from 'redux/selectors/search/productFilter';
+import {getSearchFeaturedCategoriesSelector} from 'redux/selectors/search';
+import {getPriceRangeSelector} from 'redux/selectors/search/productFilter';
 import {useRoute} from '@react-navigation/native';
+
+import getFilterActions from './utils';
+
 const FilterProduct = ({navigation}) => {
   const dispatch = useDispatch();
   const route = useRoute();
 
-  const filterDispatchFunction = route?.params?.filterFunc || null;
-
-  const getFilterStateSelectorFunction =
-    route?.params?.getFilterStateSelectorFunction || null;
-
-  const clearFilterStateAction = route?.params?.clearFilterStateAction || null;
-
-  const setFilterStateAction = route?.params?.setFilterStateAction || null;
+  const previousScreenName = route?.params?.previousScreenName || '';
 
   const defaultQueryParams = route?.params?.defaultQueryParams || {};
 
-  const currentKeyword = useSelector((state) => getCurrentKeyword(state));
+  const {
+    filterDispatchAction,
+    getFilterStateSelectorFunction,
+    clearFilterStateAction,
+    setFilterStateAction,
+  } = getFilterActions(previousScreenName);
+
   const filterAttributeList = useSelector((state) =>
     getProductFilterAttributeListSelector(state),
   );
+  const priceRange = useSelector((state) => getPriceRangeSelector(state));
 
   const filterState = useSelector((state) =>
     getFilterStateSelectorFunction(state),
@@ -89,17 +89,15 @@ const FilterProduct = ({navigation}) => {
     );
 
     dispatch(
-      filterDispatchFunction({
+      filterDispatchAction({
         // keyword: currentKeyword,
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         sorts: 'name',
         ...newAttributes,
-        categoryId: categoryFilterState || undefined,
-        price:
-          `${priceFilterState?.join('-')}` === '0-0'
-            ? undefined
-            : `${priceFilterState?.join('-')}`,
+        categoryId: categoryFilterState > 0 ? categoryFilterState : undefined,
+        minPrice: priceFilterState?.[0] || undefined,
+        maxPrice: priceFilterState?.[1] || undefined,
         ...defaultQueryParams,
       }),
     );
@@ -118,6 +116,9 @@ const FilterProduct = ({navigation}) => {
           limit: LIMIT_DEFAULT,
         }),
       );
+    }
+    if (!priceRange?.minPrice || !priceRange?.maxPrice) {
+      dispatch(searchActions.getPriceRange());
     }
   }, []);
 
@@ -144,8 +145,8 @@ const FilterProduct = ({navigation}) => {
           />
           <PriceFilter
             onPriceChange={_updateFilterState}
-            minValue={0}
-            maxValue={50000000}
+            minValue={priceRange?.minPrice || 0}
+            maxValue={priceRange?.maxPrice || 50000000}
             defaultState={state}
           />
           <ConditionOfProductsFilter

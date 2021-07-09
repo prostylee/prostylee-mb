@@ -33,7 +33,9 @@ const MidAdvertisingSlider = ({data = []}) => {
             <View style={styles.sliderItem}>
               <Image
                 style={styles.sliderItemImage}
-                source={item.bannerImageUrl ? {uri: item.bannerImageUrl} : img}
+                source={
+                  item.featureImageUrl ? {uri: item.featureImageUrl} : img
+                }
                 resizeMode="cover"
               />
             </View>

@@ -11,6 +11,7 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
+    paddingTop: 20,
   },
   titleContainer: {
     padding: 16,

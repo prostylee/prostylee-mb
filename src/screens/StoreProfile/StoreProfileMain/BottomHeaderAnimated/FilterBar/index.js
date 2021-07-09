@@ -46,12 +46,7 @@ const FilterBar = ({
       </TouchableOpacity>
 
       <FilterButton
-        filterDispatchAction={storeProfileActions.getAllStoreProduct}
         getFilterStateSelectorFunction={getStoreProfileFilterStateSelector}
-        clearFilterStateAction={
-          storeProfileActions.clearStoreProfileFilterState
-        }
-        setFilterStateAction={storeProfileActions.setStoreProfileFilterState}
         defaultQueryParams={{storeId: storeId}}
       />
     </View>

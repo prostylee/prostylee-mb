@@ -16,3 +16,7 @@ export const getProductFilterState = createSelector(
   searchReducer,
   (data) => data?.productFilterState || {},
 );
+export const getPriceRangeSelector = createSelector(searchReducer, (data) => ({
+  minPrice: data?.minPrice || null,
+  maxPrice: data?.maxPrice || null,
+}));

@@ -11,6 +11,7 @@ export const types = {
   GET_MID_BANNER_SUCCESS: 'GET_MID_BANNER_SUCCESS',
   GET_MID_BANNER_FAILED: 'GET_MID_BANNER_FAILED',
 
+  SET_DEFAULT_PAGE_BRAND: 'SET_DEFAULT_PAGE_BRAND',
   SET_BRAND_LIST_LOADING: 'SET_BRAND_LIST_LOADING',
   SET_BRAND_LIST_LOADMORE_LOADING: 'SET_BRAND_LIST_LOADMORE_LOADING',
   GET_BRAND_LIST: 'GET_BRAND_LIST',
@@ -54,6 +55,7 @@ export const actions = {
   getBrandListLoadmoreFailed: createAction(
     types.GET_BRAND_LIST_LOADMORE_FAILED,
   ),
+  setDefaultPageBrand: createAction(types.SET_DEFAULT_PAGE_BRAND),
 
   getCategoryList: createAction(types.GET_CATEGORY_LIST),
   getCategoryListSuccess: createAction(types.GET_CATEGORY_LIST_SUCCESS),
@@ -127,7 +129,6 @@ export const handleActions = {
 
   [types.GET_BRAND_LIST_LOADMORE_SUCCESS]: (state, {payload}) => {
     const {totalPages, content} = payload;
-    console.log('PAGE', state.brandListCurrentPage, totalPages);
     payload.content = state.brandList?.content.concat(content) || [];
     return {
       ...state,
@@ -139,6 +140,9 @@ export const handleActions = {
   },
   [types.GET_BRAND_LIST_LOADMORE_FAILED]: (state, {payload}) => {
     return {...state, brandList: {}};
+  },
+  [types.SET_DEFAULT_PAGE_BRAND]: (state, {payload}) => {
+    return {...state, brandListCurrentPage: payload};
   },
 
   //CATEGORY

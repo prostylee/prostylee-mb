@@ -3,19 +3,13 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {Filter} from 'svg/common';
 import styles from './styles';
 import i18n from 'i18n';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 
-const FilterButton = ({
-  filterDispatchAction,
-  getFilterStateSelectorFunction,
-  clearFilterStateAction,
-  setFilterStateAction,
-  defaultQueryParams,
-}) => {
+const FilterButton = ({getFilterStateSelectorFunction, defaultQueryParams}) => {
   const navigation = useNavigation();
-
+  const route = useRoute();
   const filterState = useSelector((state) =>
     getFilterStateSelectorFunction(state),
   );
@@ -36,11 +30,8 @@ const FilterButton = ({
     <TouchableOpacity
       onPress={() =>
         navigation.navigate('SearchProductFilter', {
-          filterFunc: filterDispatchAction,
-          getFilterStateSelectorFunction: getFilterStateSelectorFunction,
-          clearFilterStateAction: clearFilterStateAction,
-          setFilterStateAction: setFilterStateAction,
           defaultQueryParams: defaultQueryParams,
+          previousScreenName: route.name,
         })
       }>
       <View style={styles.wrapBlockFilter}>
@@ -77,18 +68,12 @@ const FilterButton = ({
 };
 
 FilterButton.defaultProps = {
-  filterDispatchAction: () => {},
   getFilterStateSelectorFunction: () => {},
-  clearFilterStateAction: () => {},
-  setFilterStateAction: () => {},
   defaultQueryParams: {},
 };
 
 FilterButton.propTypes = {
-  filterDispatchAction: PropTypes.func.isRequired,
   getFilterStateSelectorFunction: PropTypes.func.isRequired,
-  clearFilterStateAction: PropTypes.func.isRequired,
-  setFilterStateAction: PropTypes.func.isRequired,
   defaultQueryParams: PropTypes.object,
 };
 export default FilterButton;

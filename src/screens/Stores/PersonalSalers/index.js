@@ -18,7 +18,6 @@ import {
   getPersonalSalersFilterStateSelector,
 } from 'redux/selectors/storeMain/personalSalers';
 import {userTokenSelector} from 'redux/selectors/user';
-import {getProductFilterState} from 'redux/selectors/search/productFilter';
 
 const PersonalSaler = ({navigation}) => {
   const dispatch = useDispatch();
@@ -127,9 +126,6 @@ const PersonalSaler = ({navigation}) => {
       isLoading={isLoading}
       hasLoadmore={hasLoadmore}
       getFilterStateSelectorFunction={getPersonalSalersFilterStateSelector}
-      filterDispatchAction={storeActions.getPersonalSalers}
-      setFilterStateAction={storeActions.setPersonalSalersFilterState}
-      clearFilterStateAction={storeActions.clearPersonalSalersFilterState}
     />
   );
 };

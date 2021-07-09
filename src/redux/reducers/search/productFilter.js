@@ -8,6 +8,10 @@ export const types = {
   GET_PRODUCTS_FILTER_FAILED: 'GET_PRODUCTS_FILTER_FAILED',
   SET_PRODUCTS_FILTER_STATE: 'SET_PRODUCTS_FILTER_STATE',
   CLEAR_PRODUCTS_FILTER_STATE: 'CLEAR_PRODUCTS_FILTER_STATE',
+  //PRICE RANGE
+  GET_PRICE_RANGE: 'GET_PRICE_RANGE',
+  GET_PRICE_RANGE_SUCCESS: 'GET_PRICE_RANGE_SUCCESS',
+  GET_PRICE_RANGE_FAILED: 'GET_PRICE_RANGE_FAILED',
 };
 
 export const actions = {
@@ -18,6 +22,10 @@ export const actions = {
   getProductsFilterFailed: createAction(types.GET_PRODUCTS_FILTER_FAILED),
   setProductFilterState: createAction(types.SET_PRODUCTS_FILTER_STATE),
   clearProductsFilterState: createAction(types.CLEAR_PRODUCTS_FILTER_STATE),
+  //price range
+  getPriceRange: createAction(types.GET_PRICE_RANGE),
+  getPriceRangeSuccess: createAction(types.GET_PRICE_RANGE_SUCCESS),
+  getPriceRangeFailed: createAction(types.GET_PRICE_RANGE_FAILED),
 };
 
 export const defaultState = {
@@ -28,6 +36,8 @@ export const defaultState = {
   limitProductFilter: 12,
   getProductsFilterStatus: false,
   productFilterState: {},
+  minPrice: null,
+  maxPrice: null,
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -64,6 +74,18 @@ export const handleActions = {
         category: -1,
         price: [0, 0],
       },
+    };
+  },
+  [types.GET_PRICE_RANGE_SUCCESS]: (state, {payload}) => {
+    return {
+      ...state,
+      minPrice: parseInt(payload?.minPrice),
+      maxPrice: parseInt(payload?.maxPrice),
+    };
+  },
+  [types.GET_PRICE_RANGE_FAILED]: (state, payload) => {
+    return {
+      ...state,
     };
   },
 };

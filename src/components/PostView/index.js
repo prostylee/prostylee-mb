@@ -6,7 +6,7 @@ import {Avatar} from 'react-native-paper';
 import {MapPin, Heart, HorizontalDot, StoreIcon} from 'svg/common';
 import {Message} from 'svg/social';
 import I18n from 'i18n';
-import {ChatIcon} from 'components';
+
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {userSelectors} from 'reducers';

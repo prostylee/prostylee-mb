@@ -56,6 +56,7 @@ const getMidBanner = function* ({payload}) {
 
 const getBrandList = function* ({payload}) {
   try {
+    yield put(storeActions.setDefaultPageBrand(0));
     yield put(storeActions.setBrandListLoading(true));
     const res = yield call(getBrandListApi, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
