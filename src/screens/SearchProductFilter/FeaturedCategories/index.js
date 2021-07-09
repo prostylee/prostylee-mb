@@ -34,7 +34,11 @@ const FeaturedCategories = ({navigation, defaultState, onItemPress}) => {
           <FlatList
             horizontal
             directionalLockEnabled={true}
-            data={categories?.content ? categories?.content : [1, 2, 3, 4, 5]}
+            data={
+              categories?.content
+                ? categories?.content?.filter((item) => !item?.parentId)
+                : [1, 2, 3, 4, 5]
+            }
             renderItem={({item, index}) => (
               <FeaturedCategoriesItem
                 index={index}
