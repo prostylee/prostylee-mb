@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Dimensions,
+  Platform,
 } from 'react-native';
 import {ProgressBar} from 'react-native-paper';
 import {useRoute, useTheme} from '@react-navigation/native';
@@ -225,15 +226,15 @@ const AddProductsInfor = ({navigation}) => {
               ) : null}
             </TouchableOpacity>
           </View>
-          <View style={styles.button}>
-            <TouchableOpacity>
-              <ButtonRounded
-                label={i18n.t('addProduct.descriptionButton')}
-                onPress={onSubmitPress}
-              />
-            </TouchableOpacity>
-          </View>
         </ScrollView>
+        <View style={styles.button}>
+          <TouchableOpacity>
+            <ButtonRounded
+              label={i18n.t('addProduct.descriptionButton')}
+              onPress={onSubmitPress}
+            />
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     </ThemeView>
   );

@@ -112,7 +112,6 @@ export default StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     paddingBottom: 20,
-    marginBottom: 40,
   },
   currencyUnitText: {
     textDecorationLine: 'underline',
