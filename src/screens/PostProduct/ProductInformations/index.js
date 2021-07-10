@@ -70,6 +70,7 @@ const ProductInfor = () => {
   // };
 
   const _handleChangePrice = (value) => {
+    if (value.length > 8) console.log('lớn hơn');
     if (`${value * 1}` === 'NaN') {
       return;
     }
@@ -203,6 +204,7 @@ const ProductInfor = () => {
                   value={productPrice}
                   placeholder="0"
                   keyboardType="numeric"
+                  maxLength={8}
                 />
                 <Text style={styles.verticalLine}>|</Text>
                 <Text style={styles.currencyUnitText}>đ</Text>
@@ -218,13 +220,13 @@ const ProductInfor = () => {
             selectedAttributes={selectedAttributes}
             selectedModalItem={selectedModalItem || {}}
           />
-          <View style={styles.button}>
-            <ButtonRounded
-              onPress={onSubmitPress}
-              label={i18n.t('addProduct.descriptionButton')}
-            />
-          </View>
         </ScrollView>
+        <View style={styles.button}>
+          <ButtonRounded
+            onPress={onSubmitPress}
+            label={i18n.t('addProduct.descriptionButton')}
+          />
+        </View>
       </KeyboardAvoidingView>
     </ThemeView>
   );
