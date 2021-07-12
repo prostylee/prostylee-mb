@@ -12,7 +12,11 @@ import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
 import {deleteChat} from 'graphqlLocal/mutations';
 import {listChats} from 'graphqlLocal/queries';
-import {onCreateChat, onDeleteChat} from 'graphqlLocal/subscriptions';
+import {
+  onCreateChat,
+  onDeleteChat,
+  onUpdateChat,
+} from 'graphqlLocal/subscriptions';
 import {getProfile} from 'services/api/userApi';
 import {SUCCESS} from 'constants';
 import {showMessage} from 'react-native-flash-message';
@@ -63,6 +67,14 @@ const Message = (props) => {
       },
     });
 
+    const updateChatListener = API.graphql(
+      graphqlOperation(onUpdateChat),
+    ).subscribe({
+      next: () => {
+        executeListChats();
+      },
+    });
+
     dispatch(commonActions.toggleLoading(false));
 
     return () => {
@@ -71,6 +83,9 @@ const Message = (props) => {
       }
       if (deleteChatListener) {
         deleteChatListener.unsubscribe();
+      }
+      if (updateChatListener) {
+        updateChatListener.unsubscribe();
       }
     };
   }, [chatList, dispatch]);

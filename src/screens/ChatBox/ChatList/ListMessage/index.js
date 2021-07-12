@@ -11,10 +11,45 @@ import {RectButton} from 'react-native-gesture-handler';
 import * as dateTime from 'utils/datetime';
 import {ChatListLoading} from 'components/Loading/contentLoader';
 
+/******** chat aws ********/
+import {API, graphqlOperation, Auth} from 'aws-amplify';
+import {updateChat} from 'graphqlLocal/mutations';
+/******** chat aws ********/
+
 const Item = ({item, index, userData, onPress}) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
   const itemContent = JSON.parse(item.content) || {};
+  // TODO update api so I can use field "childrens" to update check new messages
+  const itemNewMessage = item.imageUrls;
+
+  const [currentUserSub, setCurrentUserSub] = React.useState('');
+
+  const setUserData = async () => {
+    const user = await Auth.currentAuthenticatedUser();
+    setCurrentUserSub(user.attributes.sub);
+  };
+
+  React.useEffect(() => {
+    if (!item.currentUserId) {
+      setUserData();
+    }
+  }, [item.currentUserId]);
+
+  const checkNewMessage = () => {
+    if (!itemNewMessage.length) {
+      return false;
+    } else {
+      const newMessage = itemNewMessage[0];
+      if (item.currentUserId === newMessage || currentUserSub === newMessage) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  };
+  console.log(itemNewMessage, item.currentUserId, checkNewMessage());
+
   const getNewChatTime = () => {
     if (
       dateTime.checkTimeBetween(
@@ -36,6 +71,16 @@ const Item = ({item, index, userData, onPress}) => {
       return dateTime.format(new Date(item.updatedAt), 'DD MMM');
     }
   };
+  const checkReadMessage = async () => {
+    await API.graphql(
+      graphqlOperation(updateChat, {
+        input: {
+          id: item.id,
+          imageUrls: [],
+        },
+      }),
+    );
+  };
   const renderRightActions = () => {
     return (
       <RectButton
@@ -55,12 +100,16 @@ const Item = ({item, index, userData, onPress}) => {
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableOpacity
         onPress={() => {
+          if (checkNewMessage()) {
+            checkReadMessage();
+          }
           navigation.navigate('ChatBox', {
             chatId: item.id,
             otherChatUserId: userData.id,
             userName: userData.fullName,
             userPhone: userData.phoneNumber,
             productData: itemContent,
+            fullItem: item,
           });
         }}>
         <View style={[styles.itemStyle, borderItemStyle(index)]}>
@@ -80,7 +129,7 @@ const Item = ({item, index, userData, onPress}) => {
           <Icon
             name="ellipse-sharp"
             size={7}
-            color={'transparent'}
+            color={checkNewMessage() ? '#ed2727' : 'transparent'}
             style={styles.newMessageDot}
           />
         </View>
@@ -112,6 +161,7 @@ const ListMessage = (props) => {
           userData={userData[otherUserId]}
           index={index}
           onPress={deleteChatHandler}
+          currentUserId={currentUser?.attributes.sub}
         />
       </View>
     );
