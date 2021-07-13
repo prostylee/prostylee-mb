@@ -104,9 +104,9 @@ const ProductTitle = ({
       </View>
       {productPrice ? (
         <Text style={styles.price}>
-          {productPrice.price
-            ? currencyFormat(productPrice.price, CURRENCY_VIET_NAM)
-            : currencyFormat(productPrice.priceSale, CURRENCY_VIET_NAM)}
+          {productPrice.priceSale
+            ? currencyFormat(productPrice.priceSale, CURRENCY_VIET_NAM)
+            : currencyFormat(productPrice.price, CURRENCY_VIET_NAM)}
         </Text>
       ) : (
         <Text style={styles.notExist}>{i18n.t('productDetail.notExist')}</Text>
@@ -114,7 +114,7 @@ const ProductTitle = ({
       <View style={styles.titleRow}>
         <Text style={styles.priceOriginal}>
           {productPrice && productPrice.priceSale
-            ? currencyFormat(productPrice.priceSale, CURRENCY_VIET_NAM)
+            ? currencyFormat(productPrice.price, CURRENCY_VIET_NAM)
             : ''}
         </Text>
         <TouchableOpacity

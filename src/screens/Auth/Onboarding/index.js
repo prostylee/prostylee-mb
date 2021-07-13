@@ -100,6 +100,7 @@ const Index = (props) => {
             horizontal
             pagingEnabled={true}
             bounces={false}
+            initialNumToRender={999}
             showsHorizontalScrollIndicator={false}
             onMomentumScrollEnd={onSliderScrollEnd}
           />
