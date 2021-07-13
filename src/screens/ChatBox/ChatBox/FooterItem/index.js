@@ -93,6 +93,14 @@ const FooterItem = (props) => {
       }),
     );
     onChangeText('');
+    await API.graphql(
+      graphqlOperation(updateChat, {
+        input: {
+          id: fullItem.id,
+          imageUrls: [user.attributes.sub],
+        },
+      }),
+    );
   };
 
   const addChatHandler = async () => {
@@ -154,8 +162,16 @@ const FooterItem = (props) => {
       <TextInput
         style={styles.input}
         onChangeText={onChangeText}
-        onTouchStart={() => {
+        onTouchStart={async () => {
           setEmojiShow(false);
+          await API.graphql(
+            graphqlOperation(updateChat, {
+              input: {
+                id: fullItem.id,
+                imageUrls: [],
+              },
+            }),
+          );
         }}
         value={text}
         placeholder={i18n.t('chat.inputPlaceholder')}
