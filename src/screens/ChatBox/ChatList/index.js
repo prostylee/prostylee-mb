@@ -159,7 +159,13 @@ const Message = (props) => {
           res = await getProfile(e.imageUrls[0]);
         }
         if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-          userDataList[otherUserId] = res.data.data;
+          let thisUserId = '';
+          if (otherUserId) {
+            thisUserId = otherUserId;
+          } else {
+            thisUserId = e.imageUrls[0];
+          }
+          userDataList[thisUserId] = res.data.data;
           userDataFilterList.push({
             id: res.data.data.id,
             name: res.data.data.fullName,
@@ -252,12 +258,15 @@ const Message = (props) => {
 
   const deleteChatHandler = async (item) => {
     dispatch(commonActions.toggleLoading(true));
-    if (item.participantUserIds.length === 2) {
-      await removeUserFromChat(item);
-    } else {
-      await API.graphql(graphqlOperation(deleteChat, {input: {id: item.id}}));
+    try {
+      if (item.participantUserIds.length === 2) {
+        await removeUserFromChat(item);
+      } else {
+        await API.graphql(graphqlOperation(deleteChat, {input: {id: item.id}}));
+      }
+    } finally {
+      dispatch(commonActions.toggleLoading(false));
     }
-    dispatch(commonActions.toggleLoading(false));
   };
 
   const deleteChatConfirm = async (item) => {

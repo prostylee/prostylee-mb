@@ -169,7 +169,11 @@ const ListMessage = (props) => {
       <View style={styles.itemContainer}>
         <Item
           item={item}
-          userData={userData[otherUserId]}
+          userData={
+            userData?.[otherUserId]
+              ? userData?.[otherUserId]
+              : userData?.[item.imageUrls[0]]
+          }
           index={index}
           onPress={deleteChatHandler}
           currentUserId={currentUser?.attributes.sub}
