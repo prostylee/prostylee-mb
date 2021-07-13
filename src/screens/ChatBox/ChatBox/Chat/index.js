@@ -47,7 +47,9 @@ const ChatScreen = (props) => {
       maxToRenderPerBatch={10}
       initialNumToRender={40}
       onContentSizeChange={() => {
-        messageListRef.current.scrollToEnd({animated: false});
+        setTimeout(() => {
+          messageListRef.current.scrollToEnd({animated: false});
+        }, 200);
       }}
       scrollEventThrottle={400}
       refreshing={refreshing}
