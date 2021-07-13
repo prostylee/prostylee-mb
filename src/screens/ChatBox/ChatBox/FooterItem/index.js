@@ -12,7 +12,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {API, graphqlOperation, Storage} from 'aws-amplify';
 import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
-import {createChat} from 'graphqlLocal/mutations';
+import {createChat, updateChat} from 'graphqlLocal/mutations';
 import {showMessage} from 'react-native-flash-message';
 /******** chat aws ********/
 
@@ -20,6 +20,7 @@ const FooterItem = (props) => {
   const user = props.user ? props.user : {};
   const chatId = props.chatId ? props.chatId : '';
   const otherChatUserId = props.otherChatUserId ? props.otherChatUserId : '';
+  const fullItem = props.fullItem ? props.fullItem : {};
 
   const {colors} = useTheme();
   const dispatch = useDispatch();
@@ -98,27 +99,33 @@ const FooterItem = (props) => {
     if (!text) {
       return;
     }
+    const newChatMessage = {
+      parentId: chatId,
+      ownerId: user.attributes.sub,
+      owner: user.username,
+      ownerFullname: user.attributes.name,
+      participantUserIds: [otherChatUserId, user.attributes['custom:userId']], // ['created-user-id', 'participant-user-id'], // TODO fill user id would like to chat
+      imageUrls: [], // TODO fill image urls if user attached images in chat
+      content: JSON.stringify({
+        type_view: 'text',
+        content: text,
+      }),
+      createdAt: new Date().toISOString(), // "2021-02-18T15:41:16Z"
+    };
     await API.graphql(
       graphqlOperation(createChat, {
-        input: {
-          parentId: chatId,
-          ownerId: user.attributes.sub,
-          owner: user.username,
-          ownerFullname: user.attributes.name,
-          participantUserIds: [
-            otherChatUserId,
-            user.attributes['custom:userId'],
-          ], // ['created-user-id', 'participant-user-id'], // TODO fill user id would like to chat
-          imageUrls: [], // TODO fill image urls if user attached images in chat
-          content: JSON.stringify({
-            type_view: 'text',
-            content: text,
-          }),
-          createdAt: new Date().toISOString(), // "2021-02-18T15:41:16Z"
-        },
+        input: newChatMessage,
       }),
     );
     onChangeText('');
+    await API.graphql(
+      graphqlOperation(updateChat, {
+        input: {
+          id: fullItem.id,
+          imageUrls: [user.attributes.sub],
+        },
+      }),
+    );
   };
 
   const openCamera = () => {
@@ -165,14 +172,6 @@ const FooterItem = (props) => {
             onPress={openCamera}
           />
         </View>
-        {/* <View style={styles.iconFooter}>
-          <MaterialIcon
-            name="alternate-email"
-            color={colors['$black']}
-            size={25}
-            onPress={() => {}}
-          />
-        </View> */}
         <View style={styles.iconFooter}>
           <IconFeather
             name="smile"

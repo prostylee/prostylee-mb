@@ -37,6 +37,8 @@ const ChatBox = ({navigation, route}) => {
     ? route.params.productData
     : {};
 
+  const fullItem = route?.params?.fullItem ? route.params.fullItem : {};
+
   const dispatch = useDispatch();
   const [currentUser, setCurrentUser] = React.useState();
   const [chatDataList, setChatDataList] = React.useState([]);
@@ -199,6 +201,7 @@ const ChatBox = ({navigation, route}) => {
           user={currentUser}
           otherChatUserId={otherChatUserId}
           chatId={chatId}
+          fullItem={fullItem}
         />
       </KeyboardAvoidingView>
     </ThemeView>
