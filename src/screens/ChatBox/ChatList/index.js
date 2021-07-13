@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Alert} from 'react-native';
 import styles from './style';
 import {ThemeView, Header} from 'components';
 import {Searchbar} from 'react-native-paper';
@@ -8,9 +8,9 @@ import ListMessage from './ListMessage';
 import debounce from 'lodash/debounce';
 /******** chat aws ********/
 import {API, Auth, graphqlOperation} from 'aws-amplify';
-import {useDispatch} from 'react-redux';
-import {commonActions} from 'reducers';
-import {deleteChat} from 'graphqlLocal/mutations';
+import {useDispatch, useSelector} from 'react-redux';
+import {commonActions, userSelectors} from 'reducers';
+import {deleteChat, updateChat} from 'graphqlLocal/mutations';
 import {listChats} from 'graphqlLocal/queries';
 import {
   onCreateChat,
@@ -33,6 +33,10 @@ const Message = (props) => {
   const [userFilterData, setUserFilterData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
+
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
 
   React.useEffect(() => {
     executeListChats();
@@ -72,16 +76,41 @@ const Message = (props) => {
     ).subscribe({
       next: (chatData) => {
         const updatedChat = chatData.value.data.onUpdateChat;
-        const updatedChatIndex = chatList.findIndex(
-          (item) => item.id === updatedChat.id,
-        );
-        const newChatList = [
-          ...chatList.slice(0, updatedChatIndex),
-          updatedChat,
-          ...chatList.slice(updatedChatIndex + 1),
-        ];
-        setChatList(newChatList);
-        setChatListDisplay(newChatList);
+        if (updatedChat.participantUserIds.length === 2) {
+          const updatedChatIndex = chatList.findIndex(
+            (item) => item.id === updatedChat.id,
+          );
+          const newChatList = [
+            ...chatList.slice(0, updatedChatIndex),
+            updatedChat,
+            ...chatList.slice(updatedChatIndex + 1),
+          ];
+          setChatList(newChatList);
+          setChatListDisplay(newChatList);
+        } else {
+          if (updatedChat.participantUserIds[0] == userProfile.id) {
+            const updatedChatIndex = chatList.findIndex(
+              (item) => item.id === updatedChat.id,
+            );
+            const newChatList = [
+              ...chatList.slice(0, updatedChatIndex),
+              updatedChat,
+              ...chatList.slice(updatedChatIndex + 1),
+            ];
+            setChatList(newChatList);
+            setChatListDisplay(newChatList);
+          } else {
+            const updatedChatIndex = chatList.findIndex(
+              (item) => item.id === updatedChat.id,
+            );
+            const newChatList = [
+              ...chatList.slice(0, updatedChatIndex),
+              ...chatList.slice(updatedChatIndex + 1),
+            ];
+            setChatList(newChatList);
+            setChatListDisplay(newChatList);
+          }
+        }
       },
     });
 
@@ -116,10 +145,19 @@ const Message = (props) => {
     list.forEach(async (e) => {
       const otherUserId = e.participantUserIds?.find((item) => item !== userId);
       if (!uniqueUser.includes(otherUserId)) {
-        uniqueUser.push(otherUserId);
+        if (otherUserId) {
+          uniqueUser.push(otherUserId);
+        } else {
+          uniqueUser.push(e.imageUrls[0]);
+        }
       }
       try {
-        const res = await getProfile(otherUserId);
+        let res = await getProfile(otherUserId);
+        if (otherUserId) {
+          res = await getProfile(otherUserId);
+        } else {
+          res = await getProfile(e.imageUrls[0]);
+        }
         if (res.ok && res.data.status === SUCCESS && !res.data.error) {
           userDataList[otherUserId] = res.data.data;
           userDataFilterList.push({
@@ -197,10 +235,46 @@ const Message = (props) => {
     }
   };
 
+  const removeUserFromChat = async (item) => {
+    const remainUserList = item.participantUserIds.filter(
+      (user) => user != userProfile.id,
+    );
+    await API.graphql(
+      graphqlOperation(updateChat, {
+        input: {
+          id: item.id,
+          participantUserIds: remainUserList,
+          imageUrls: [userProfile.id],
+        },
+      }),
+    );
+  };
+
   const deleteChatHandler = async (item) => {
     dispatch(commonActions.toggleLoading(true));
-    await API.graphql(graphqlOperation(deleteChat, {input: {id: item.id}}));
+    if (item.participantUserIds.length === 2) {
+      await removeUserFromChat(item);
+    } else {
+      await API.graphql(graphqlOperation(deleteChat, {input: {id: item.id}}));
+    }
     dispatch(commonActions.toggleLoading(false));
+  };
+
+  const deleteChatConfirm = async (item) => {
+    Alert.alert(i18n.t('caution'), i18n.t('chat.confirmDeleteChat'), [
+      {
+        text: i18n.t('confirm'),
+        onPress: () => {
+          deleteChatHandler(item);
+        },
+        style: 'destructive',
+      },
+      {
+        text: i18n.t('cancel'),
+        onPress: () => {},
+        style: 'cancel',
+      },
+    ]);
   };
 
   const filterSearchValue = debounce(
@@ -255,7 +329,7 @@ const Message = (props) => {
       <ListMessage
         chatList={chatListDateFilter}
         currentUser={currentUser}
-        deleteChatHandler={deleteChatHandler}
+        deleteChatHandler={deleteChatConfirm}
         userData={userData}
         loading={loading}
         refreshing={refreshing}

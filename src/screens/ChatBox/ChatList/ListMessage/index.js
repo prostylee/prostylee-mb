@@ -44,7 +44,11 @@ const Item = ({item, index, userData, onPress}) => {
       if (item.currentUserId === newMessage || currentUserSub === newMessage) {
         return false;
       } else {
-        return true;
+        if (item.participantUserIds.length === 2) {
+          return true;
+        } else {
+          return false;
+        }
       }
     }
   };
@@ -63,6 +67,14 @@ const Item = ({item, index, userData, onPress}) => {
         item.updatedAt,
         dateTime.currentDate(),
         dateTime.currentDate().subtract(1, 'day'),
+      )
+    ) {
+      return dateTime.format(new Date(item.updatedAt), 'HH:mm');
+    } else if (
+      dateTime.checkTimeBetween(
+        item.updatedAt,
+        dateTime.currentDate(),
+        dateTime.currentDate().subtract(2, 'day'),
       )
     ) {
       return i18n.t('chat.yesterday');
@@ -85,7 +97,7 @@ const Item = ({item, index, userData, onPress}) => {
       <RectButton
         style={styles.actionButton}
         onPress={() => {
-          onPress(item);
+          onPress(item, item.currentUserId);
         }}>
         <AntIcon name="delete" size={20} color="white" />
       </RectButton>

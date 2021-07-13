@@ -93,14 +93,16 @@ const FooterItem = (props) => {
       }),
     );
     onChangeText('');
-    await API.graphql(
-      graphqlOperation(updateChat, {
-        input: {
-          id: fullItem.id,
-          imageUrls: [user.attributes.sub],
-        },
-      }),
-    );
+    if (fullItem.participantUserIds.length === 2) {
+      await API.graphql(
+        graphqlOperation(updateChat, {
+          input: {
+            id: fullItem.id,
+            imageUrls: [user.attributes.sub],
+          },
+        }),
+      );
+    }
   };
 
   const addChatHandler = async () => {
@@ -126,14 +128,16 @@ const FooterItem = (props) => {
       }),
     );
     onChangeText('');
-    await API.graphql(
-      graphqlOperation(updateChat, {
-        input: {
-          id: fullItem.id,
-          imageUrls: [user.attributes.sub],
-        },
-      }),
-    );
+    if (fullItem.participantUserIds.length === 2) {
+      await API.graphql(
+        graphqlOperation(updateChat, {
+          input: {
+            id: fullItem.id,
+            imageUrls: [user.attributes.sub],
+          },
+        }),
+      );
+    }
   };
 
   const openCamera = () => {
@@ -164,14 +168,16 @@ const FooterItem = (props) => {
         onChangeText={onChangeText}
         onTouchStart={async () => {
           setEmojiShow(false);
-          await API.graphql(
-            graphqlOperation(updateChat, {
-              input: {
-                id: fullItem.id,
-                imageUrls: [],
-              },
-            }),
-          );
+          if (fullItem.participantUserIds.length === 2) {
+            await API.graphql(
+              graphqlOperation(updateChat, {
+                input: {
+                  id: fullItem.id,
+                  imageUrls: [],
+                },
+              }),
+            );
+          }
         }}
         value={text}
         placeholder={i18n.t('chat.inputPlaceholder')}

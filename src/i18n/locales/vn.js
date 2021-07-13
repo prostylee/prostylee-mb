@@ -396,6 +396,7 @@ export default {
     justNow: 'Vừa xong',
     yesterday: 'Hôm qua',
     inputPlaceholder: 'Để lại tin nhắn của bạn',
+    confirmDeleteChat: 'Bạn thật sự muốn xoá tin nhắn này?',
   },
   addProduct: {
     categoryScreenTitle: 'Thêm sản phẩm',
