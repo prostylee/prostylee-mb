@@ -70,8 +70,18 @@ const Message = (props) => {
     const updateChatListener = API.graphql(
       graphqlOperation(onUpdateChat),
     ).subscribe({
-      next: () => {
-        executeListChats();
+      next: (chatData) => {
+        const updatedChat = chatData.value.data.onUpdateChat;
+        const updatedChatIndex = chatList.findIndex(
+          (item) => item.id === updatedChat.id,
+        );
+        const newChatList = [
+          ...chatList.slice(0, updatedChatIndex),
+          updatedChat,
+          ...chatList.slice(updatedChatIndex + 1),
+        ];
+        setChatList(newChatList);
+        setChatListDisplay(newChatList);
       },
     });
 
@@ -102,8 +112,12 @@ const Message = (props) => {
   const getUserDataList = async (list, userId) => {
     let userDataList = {};
     let userDataFilterList = [];
+    let uniqueUser = [];
     list.forEach(async (e) => {
       const otherUserId = e.participantUserIds?.find((item) => item !== userId);
+      if (!uniqueUser.includes(otherUserId)) {
+        uniqueUser.push(otherUserId);
+      }
       try {
         const res = await getProfile(otherUserId);
         if (res.ok && res.data.status === SUCCESS && !res.data.error) {
@@ -123,9 +137,16 @@ const Message = (props) => {
           type: 'danger',
           position: 'top',
         });
+        setLoading(false);
       } finally {
-        setUserData(userDataList);
-        setUserFilterData(userDataFilterList);
+        if (
+          userDataFilterList.length === list.length &&
+          Object.keys(userDataList).length === uniqueUser.length
+        ) {
+          setUserData(userDataList);
+          setUserFilterData(userDataFilterList);
+          setLoading(false);
+        }
         setChatList(list);
         setChatListDisplay(list);
       }
@@ -163,9 +184,15 @@ const Message = (props) => {
               type: 'danger',
               position: 'top',
             });
+            setLoading(false);
           });
       }
-    } finally {
+    } catch (_) {
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'danger',
+        position: 'top',
+      });
       setLoading(false);
     }
   };
@@ -205,6 +232,9 @@ const Message = (props) => {
     setSearchQuery(query);
     filterSearchValue(query);
   };
+  const chatListDateFilter = chatListDisplay.sort(
+    (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt),
+  );
 
   return (
     <ThemeView style={styles.container} isFullView>
@@ -223,7 +253,7 @@ const Message = (props) => {
         />
       </View>
       <ListMessage
-        chatList={chatListDisplay}
+        chatList={chatListDateFilter}
         currentUser={currentUser}
         deleteChatHandler={deleteChatHandler}
         userData={userData}

@@ -48,7 +48,6 @@ const Item = ({item, index, userData, onPress}) => {
       }
     }
   };
-  console.log(itemNewMessage, item.currentUserId, checkNewMessage());
 
   const getNewChatTime = () => {
     if (
