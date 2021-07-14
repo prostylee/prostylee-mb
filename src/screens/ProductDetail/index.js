@@ -136,8 +136,8 @@ const ProductDetail = (props) => {
           priceSale: productData?.priceSale,
         }
       : {
-          price: productData.productPriceResponseList[0].price || 0,
-          priceSale: productData.productPriceResponseList[0].priceSale || 0,
+          price: productData.productPriceResponseList?.[0]?.price || 0,
+          priceSale: productData.productPriceResponseList?.[0]?.priceSale || 0,
         }
     : {};
   const productDataLoading = useSelector((state) =>
