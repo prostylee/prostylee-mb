@@ -10,13 +10,9 @@ import debounce from 'lodash/debounce';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {useDispatch, useSelector} from 'react-redux';
 import {commonActions, userSelectors} from 'reducers';
-import {deleteChat, updateChat} from 'graphqlLocal/mutations';
+import {updateChat} from 'graphqlLocal/mutations';
 import {listChats} from 'graphqlLocal/queries';
-import {
-  onCreateChat,
-  onDeleteChat,
-  onUpdateChat,
-} from 'graphqlLocal/subscriptions';
+import {onCreateChat, onUpdateChat} from 'graphqlLocal/subscriptions';
 import {getProfile} from 'services/api/userApi';
 import {SUCCESS} from 'constants';
 import {showMessage} from 'react-native-flash-message';
@@ -58,19 +54,6 @@ const Message = (props) => {
       },
     });
 
-    const deleteChatListener = API.graphql(
-      graphqlOperation(onDeleteChat),
-    ).subscribe({
-      next: (chatData) => {
-        const deletedChat = chatData.value.data.onDeleteChat;
-        const updatedChats = chatList.filter(
-          (cmt) => cmt.id !== deletedChat.id,
-        );
-        setChatList(updatedChats);
-        setChatListDisplay(updatedChats);
-      },
-    });
-
     const updateChatListener = API.graphql(
       graphqlOperation(onUpdateChat),
     ).subscribe({
@@ -87,7 +70,7 @@ const Message = (props) => {
           ];
           setChatList(newChatList);
           setChatListDisplay(newChatList);
-        } else {
+        } else if (updatedChat.participantUserIds.length === 1) {
           if (updatedChat.participantUserIds[0] == userProfile.id) {
             const updatedChatIndex = chatList.findIndex(
               (item) => item.id === updatedChat.id,
@@ -110,6 +93,16 @@ const Message = (props) => {
             setChatList(newChatList);
             setChatListDisplay(newChatList);
           }
+        } else {
+          const updatedChatIndex = chatList.findIndex(
+            (item) => item.id === updatedChat.id,
+          );
+          const newChatList = [
+            ...chatList.slice(0, updatedChatIndex),
+            ...chatList.slice(updatedChatIndex + 1),
+          ];
+          setChatList(newChatList);
+          setChatListDisplay(newChatList);
         }
       },
     });
@@ -119,9 +112,6 @@ const Message = (props) => {
     return () => {
       if (createChatListener) {
         createChatListener.unsubscribe();
-      }
-      if (deleteChatListener) {
-        deleteChatListener.unsubscribe();
       }
       if (updateChatListener) {
         updateChatListener.unsubscribe();
@@ -144,10 +134,12 @@ const Message = (props) => {
     let uniqueUser = [];
     list.forEach(async (e) => {
       const otherUserId = e.participantUserIds?.find((item) => item !== userId);
-      if (!uniqueUser.includes(otherUserId)) {
-        if (otherUserId) {
+      if (otherUserId) {
+        if (!uniqueUser.includes(otherUserId)) {
           uniqueUser.push(otherUserId);
-        } else {
+        }
+      } else {
+        if (!uniqueUser.includes(e.imageUrls[0])) {
           uniqueUser.push(e.imageUrls[0]);
         }
       }
@@ -170,10 +162,6 @@ const Message = (props) => {
             id: res.data.data.id,
             name: res.data.data.fullName,
           });
-          // setUserData((prev) => ({
-          //   ...prev,
-          //   [otherUserId]: res.data.data,
-          // }));
         }
       } catch (err) {
         showMessage({
@@ -241,6 +229,18 @@ const Message = (props) => {
     }
   };
 
+  const emptyUserFromChat = async (id) => {
+    await API.graphql(
+      graphqlOperation(updateChat, {
+        input: {
+          id: id,
+          participantUserIds: [],
+          imageUrls: [],
+        },
+      }),
+    );
+  };
+
   const removeUserFromChat = async (item) => {
     const remainUserList = item.participantUserIds.filter(
       (user) => user != userProfile.id,
@@ -262,7 +262,7 @@ const Message = (props) => {
       if (item.participantUserIds.length === 2) {
         await removeUserFromChat(item);
       } else {
-        await API.graphql(graphqlOperation(deleteChat, {input: {id: item.id}}));
+        await emptyUserFromChat(item.id);
       }
     } finally {
       dispatch(commonActions.toggleLoading(false));
