@@ -16,7 +16,7 @@ import {API, graphqlOperation, Auth} from 'aws-amplify';
 import {updateChat} from 'graphqlLocal/mutations';
 /******** chat aws ********/
 
-const Item = ({item, index, userData, onPress}) => {
+const Item = ({item, index, userData = {}, onPress}) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
   const itemContent = JSON.parse(item.content) || {};
@@ -172,7 +172,7 @@ const ListMessage = (props) => {
           userData={
             userData?.[otherUserId]
               ? userData?.[otherUserId]
-              : userData?.[item.imageUrls[0]]
+              : userData?.[item.imageUrls[0]] || {}
           }
           index={index}
           onPress={deleteChatHandler}

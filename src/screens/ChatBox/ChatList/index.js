@@ -48,6 +48,7 @@ const Message = (props) => {
           return;
         }
         const updatedChats = [...chatList];
+        getUserDataList([...chatList, addedChat], userProfile.id);
         updatedChats.push(addedChat);
         setChatList(updatedChats);
         setChatListDisplay(updatedChats);
@@ -133,7 +134,7 @@ const Message = (props) => {
     let userDataFilterList = [];
     let uniqueUser = [];
     list.forEach(async (e) => {
-      const otherUserId = e.participantUserIds?.find((item) => item !== userId);
+      const otherUserId = e.participantUserIds?.find((item) => item != userId);
       if (otherUserId) {
         if (!uniqueUser.includes(otherUserId)) {
           uniqueUser.push(otherUserId);
