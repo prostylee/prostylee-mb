@@ -10,10 +10,13 @@ import {categoriesActions} from 'redux/reducers';
 import {useDispatch, useSelector, shallowEqual} from 'react-redux';
 import ListParentCategories from './ListParentCategories';
 import ListChildCategories from './ListChildCategories';
+import {postProductActions} from 'redux/reducers';
 import _ from 'lodash';
-const AddProducts = ({navigation}) => {
+import {Alert} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+const AddProducts = () => {
   const dispatch = useDispatch();
-
+  const navigation = useNavigation();
   const postProductInfo = useSelector(
     (state) => getPostProductInfoSelector(state),
     shallowEqual,
@@ -48,9 +51,31 @@ const AddProducts = ({navigation}) => {
     }
   }, [postProductInfo?.category?.id]);
 
+  const _handleLeftPress = () => {
+    Alert.alert(i18n.t('caution'), i18n.t('addProduct.inforWillDelete'), [
+      {
+        text: i18n.t('confirm'),
+        onPress: () => {
+          dispatch(postProductActions.clearPostProduct());
+          navigation.goBack();
+        },
+        style: 'destructive',
+      },
+      {
+        text: i18n.t('cancel'),
+        onPress: () => {},
+        style: 'cancel',
+      },
+    ]);
+  };
+
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header isDefault title={i18n.t('addProduct.categoryScreenTitle')} />
+      <Header
+        isDefault
+        preventGobackFunction={_handleLeftPress}
+        title={i18n.t('addProduct.categoryScreenTitle')}
+      />
       {parentId ? (
         <ListChildCategories selectAction={setSelectedCategory} />
       ) : null}

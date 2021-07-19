@@ -116,6 +116,7 @@ const BestSellers = ({navigation}) => {
       isLoading={isLoading}
       hasLoadmore={hasLoadmore}
       getFilterStateSelectorFunction={getBestSellerFilterStateSelector}
+      defaultTagActiveIndex={0}
     />
   );
 };

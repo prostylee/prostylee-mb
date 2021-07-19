@@ -20,6 +20,7 @@ import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
 
 import ModalSelectAttributes from './ModalSelectAttributes';
+import IconFont from 'react-native-vector-icons/FontAwesome';
 
 import {useDispatch, useSelector, shallowEqual} from 'react-redux';
 import {
@@ -40,9 +41,13 @@ const ProductInfor = () => {
     shallowEqual,
   );
 
-  const [productPrice, setProductPrice] = useState(null);
-  // const [selectedRadioAttributes, setSelectedRadioAttributes] = useState([]);
-  const [selectedAttributes, setSelectedAttributes] = useState({});
+  const [productPrice, setProductPrice] = useState(
+    postProductInfo?.price ? postProductInfo?.price + '' : null,
+  );
+
+  const [selectedAttributes, setSelectedAttributes] = useState(
+    postProductInfo?.attributeOptions || {},
+  );
 
   const loading = useSelector((state) =>
     getListAttributesLoadingSelector(state),
@@ -79,7 +84,7 @@ const ProductInfor = () => {
 
   const onSubmitPress = () => {
     const idx = Object.values(selectedAttributes).findIndex(
-      (item) => !item.length,
+      (item) => item.length,
     );
 
     let matrixOptions = [];
@@ -91,6 +96,14 @@ const ProductInfor = () => {
       })),
     );
 
+    if (idx === -1) {
+      showMessage({
+        message: i18n.t('addProduct.chooseAtLeastOne'),
+        type: 'danger',
+        position: 'top',
+      });
+      return;
+    }
     if (!productPrice) {
       showMessage({
         message: i18n.t('addProduct.pleaseFillInformation'),
@@ -151,6 +164,15 @@ const ProductInfor = () => {
     }
   }, [listAttributes]);
 
+  const _handleLeftPress = () => {
+    dispatch(
+      postProductActions.setProductInfo({
+        attributeOptions: selectedAttributes,
+        price: productPrice,
+      }),
+    );
+  };
+
   return (
     <ThemeView style={styles.container} isFullView>
       <KeyboardAvoidingView
@@ -160,6 +182,7 @@ const ProductInfor = () => {
           <Header
             isDefault
             title={i18n.t('addProduct.productInformationTitle')}
+            leftPress={_handleLeftPress}
           />
           <ProgressBar progress={0.67} color="#823FFD" />
           <View
@@ -194,9 +217,12 @@ const ProductInfor = () => {
               : null}
 
             <View style={styles.boxWrap}>
-              <Text style={styles.title}>
-                {i18n.t('addProduct.productPrice')}
-              </Text>
+              <View style={styles.wrapTitle}>
+                <Text style={styles.title}>
+                  {i18n.t('addProduct.productPrice')}
+                </Text>
+                <IconFont name="asterisk" size={6} color="red" />
+              </View>
               <View style={styles.inputPrice}>
                 <TextInput
                   style={styles.input}

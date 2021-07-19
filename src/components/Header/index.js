@@ -21,10 +21,15 @@ const Header = ({
   leftComponent,
   leftStyle,
   isDefault,
+  preventGobackFunction,
 }) => {
   const navigation = useNavigation();
 
   const _goBack = () => {
+    if (preventGobackFunction) {
+      preventGobackFunction();
+      return;
+    }
     navigation.goBack();
     if (leftPress) {
       leftPress();

@@ -3,8 +3,6 @@ const {width, height} = Dimensions.get('window');
 export default StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 10,
-    height: '100%',
   },
   wrapper: {
     marginTop: 15,
@@ -73,7 +71,7 @@ export default StyleSheet.create({
   contentColors: {
     bottom: 0,
     width,
-    height: '70%',
+    height: '50%',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     backgroundColor: 'white',
@@ -111,7 +109,7 @@ export default StyleSheet.create({
   button: {
     width: '90%',
     alignSelf: 'center',
-    paddingBottom: 20,
+    paddingBottom: 44,
   },
   currencyUnitText: {
     textDecorationLine: 'underline',
@@ -134,5 +132,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-end',
+  },
+  wrapTitle: {
+    flexDirection: 'row',
   },
 });

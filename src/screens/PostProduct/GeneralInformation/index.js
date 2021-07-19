@@ -9,6 +9,7 @@ import {
   ScrollView,
   Dimensions,
   Platform,
+  SafeAreaView,
 } from 'react-native';
 import {ProgressBar} from 'react-native-paper';
 import {useRoute, useTheme} from '@react-navigation/native';
@@ -27,23 +28,35 @@ import {rem} from 'utils/common';
 const HEIGHT_HEADER = Platform.OS === 'ios' ? 78 * rem + 45 : 80 * rem + 45;
 const AddProductsInfor = ({navigation}) => {
   const dispatch = useDispatch();
-  const route = useRoute();
-  const {colors} = useTheme();
-
-  const images = route?.params?.images || [];
-
-  const [listImagePicked, setListImagePicked] = React.useState(images);
-
-  const productNameRef = React.useRef();
-  const productDescriptionRef = React.useRef();
-
-  const [productName, setProductName] = React.useState('');
-  const [productDescription, setProductDescription] = React.useState('');
 
   const postProductInfo = useSelector(
     (state) => getPostProductInfoSelector(state),
     shallowEqual,
   );
+
+  const route = useRoute();
+  const {colors} = useTheme();
+
+  const images = route?.params?.images || [];
+
+  const [listImagePicked, setListImagePicked] = React.useState(
+    images.length
+      ? images
+      : postProductInfo?.images
+      ? postProductInfo?.images
+      : [],
+  );
+
+  const productNameRef = React.useRef();
+  const productDescriptionRef = React.useRef();
+
+  const [productName, setProductName] = React.useState(
+    postProductInfo?.name || '',
+  );
+  const [productDescription, setProductDescription] = React.useState(
+    postProductInfo?.description || '',
+  );
+
   const {brand} = postProductInfo;
   const HEIGHT = Dimensions.get('window').height;
   const openCropImagePicker = async () => {
@@ -55,13 +68,7 @@ const AddProductsInfor = ({navigation}) => {
       .then((res) => {
         RootNavigator.navigate('CropPostProductImage', {images: res});
       })
-      .catch((e) => {
-        showMessage({
-          message: i18n.t('unknownMessage'),
-          type: 'danger',
-          position: 'top',
-        });
-      });
+      .catch((e) => {});
   };
   const onSubmitPress = () => {
     if (
@@ -104,6 +111,17 @@ const AddProductsInfor = ({navigation}) => {
     }
     return;
   }, [images]);
+
+  const _handleLeftPress = () => {
+    dispatch(
+      postProductActions.setProductInfo({
+        name: productName,
+        description: productDescription,
+        images: listImagePicked,
+      }),
+    );
+  };
+
   return (
     <ThemeView style={styles.container} isFullView>
       <KeyboardAvoidingView
@@ -113,6 +131,7 @@ const AddProductsInfor = ({navigation}) => {
           <Header
             isDefault
             title={i18n.t('addProduct.generalInformationTitle')}
+            leftPress={_handleLeftPress}
           />
           <ProgressBar progress={0.33} color={colors['$purple']} />
           <View
@@ -120,19 +139,22 @@ const AddProductsInfor = ({navigation}) => {
               height: HEIGHT - HEIGHT_HEADER,
             }}>
             <View style={styles.wrapper}>
-              <Text style={styles.title}>
-                {i18n.t('addProduct.generalDescription')}
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={styles.title}>
+                  {i18n.t('addProduct.generalDescription')}
+                </Text>
+                <IconFont name="asterisk" size={6} color="red" />
+              </View>
+
               <View style={styles.wrapperBorder}>
                 {listImagePicked && listImagePicked.length ? (
                   [0, 1, 2, 3].map((v) =>
                     v < listImagePicked.length ? (
-                      <TouchableOpacity key={v} onPress={openCropImagePicker}>
-                        <Image
-                          style={styles.imgSelected}
-                          source={{uri: listImagePicked[v].uri}}
-                        />
-                      </TouchableOpacity>
+                      <Image
+                        style={styles.imgSelected}
+                        source={{uri: listImagePicked[v].uri}}
+                        key={v}
+                      />
                     ) : v === listImagePicked.length ? (
                       <TouchableOpacity
                         key={v}
@@ -141,9 +163,7 @@ const AddProductsInfor = ({navigation}) => {
                         <AddImageIcon />
                       </TouchableOpacity>
                     ) : (
-                      <TouchableOpacity key={v} onPress={openCropImagePicker}>
-                        <View style={styles.shapes} />
-                      </TouchableOpacity>
+                      <View style={styles.shapes} key={v} />
                     ),
                   )
                 ) : (
@@ -159,7 +179,9 @@ const AddProductsInfor = ({navigation}) => {
                   </>
                 )}
               </View>
-              <Text style={styles.textPrimary}>Primary</Text>
+              <Text style={styles.textPrimary}>
+                {i18n.t('addProduct.primaryImg')}
+              </Text>
             </View>
 
             <TouchableOpacity
@@ -196,9 +218,10 @@ const AddProductsInfor = ({navigation}) => {
                 <IconFont name="asterisk" size={6} color="red" />
               </View>
               <TextInput
-                style={styles.productNameInput}
+                style={styles.descriptionInput}
                 ref={productDescriptionRef}
                 maxLength={255}
+                multiline={true}
                 value={productDescription}
                 onChangeText={(text) => setProductDescription(text)}
               />
@@ -207,9 +230,13 @@ const AddProductsInfor = ({navigation}) => {
             <TouchableOpacity
               style={styles.brandWrap}
               onPress={() => navigation.navigate('BrandFashions')}>
-              <Text style={styles.title}>
-                {i18n.t('addProduct.descriptionBrand')}
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={styles.title}>
+                  {i18n.t('addProduct.descriptionBrand')}
+                </Text>
+                <IconFont name="asterisk" size={6} color="red" />
+              </View>
+
               {brand ? (
                 <View style={styles.brand}>
                   <Text>{brand?.name}</Text>
@@ -217,7 +244,7 @@ const AddProductsInfor = ({navigation}) => {
                     source={
                       brand.icon
                         ? {uri: brand.icon}
-                        : require('assets/images/uniqlo.png')
+                        : require('assets/images/default.png')
                     }
                     resizeMode={'cover'}
                     style={styles.imgBrand}

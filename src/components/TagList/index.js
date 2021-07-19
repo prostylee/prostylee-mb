@@ -4,8 +4,8 @@ import {Chip} from 'react-native-paper';
 import styles from './styles';
 import PropTypes from 'prop-types';
 
-const TagList = ({onTagPress, options}, ref) => {
-  const [active, setActive] = React.useState(null);
+const TagList = ({onTagPress, options, defaultActiveIndex}, ref) => {
+  const [active, setActive] = React.useState(defaultActiveIndex);
   React.useImperativeHandle(ref, () => ({
     active: active ? options?.[active] : {},
   }));

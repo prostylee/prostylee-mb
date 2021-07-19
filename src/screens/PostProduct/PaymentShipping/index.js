@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import {ActivityIndicator, ProgressBar} from 'react-native-paper';
-import {Header, ButtonRounded, ThemeView} from 'components';
+import {Header, ButtonRounded, ThemeView, SlideInModal} from 'components';
 
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -30,68 +30,53 @@ import {
 import {Storage, Auth} from 'aws-amplify';
 import {postProductActions} from 'redux/reducers';
 
+import {postProduct as postProductApi} from 'services/api/postProductApi';
+import {POST_SUCCESS} from 'constants';
+
+import Loading from './LoadingIndicatorView';
+
 const PaymentShipping = () => {
   const WIDTH = Dimensions.get('window').width;
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
-  const profile = useSelector((state) => userTokenSelector(state));
-  const role = profile?.signInUserSession?.idToken?.payload?.['cognito:groups'];
-  const sub = profile?.signInUserSession?.idToken?.payload?.sub;
-
-  const [selectedPaymentMethods, setSelectedPaymentMethods] = useState([]);
-  const [selectedDeliveryType, setSelectedDeliveryType] = useState([]);
-
-  const [uploadList, setUploadList] = useState([]);
-  const [doneUpload, setDoneUpload] = useState(false);
-
-  const [submitLoading, setSubmitLoading] = useState(false);
-
-  const postProductLoading = useSelector((state) =>
-    getPostProductLoadingSelector(state),
-  );
-  const postProductStatus = useSelector((state) =>
-    getPostProductStatusSelector(state),
-  );
-
-  const customPrefix = `/public/${sub}/posts/`;
 
   const postProductInfo = useSelector(
     (state) => getPostProductInfoSelector(state),
     shallowEqual,
   );
 
+  const profile = useSelector((state) => userTokenSelector(state));
+  const role = profile?.signInUserSession?.idToken?.payload?.['cognito:groups'];
+  const sub = profile?.signInUserSession?.idToken?.payload?.sub;
+
+  const [postProductLoading, setPostProductLoading] = useState(false);
+
+  const [selectedPaymentMethods, setSelectedPaymentMethods] = useState(
+    postProductInfo?.paymentMethod || [],
+  );
+  const [selectedDeliveryType, setSelectedDeliveryType] = useState(
+    postProductInfo?.deliveryType || [],
+  );
+
+  const customPrefix = `/public/${sub}/posts/`;
+
   const {images} = postProductInfo;
 
-  const onChangeLocationPress = () => {
-    navigation.navigate('AddressTyping');
-  };
-
-  const _handleSubmit = () => {
-    if (!selectedPaymentMethods.length || !selectedDeliveryType.length) {
-      showMessage({
-        message: i18n.t('addProduct.pleaseFillInformation'),
-        type: 'danger',
-        position: 'top',
-      });
-      return;
-    }
-    const {images} = postProductInfo;
-    if (uploadList && uploadList.length) {
-      postProduct();
-      return;
-    } else uploadImages(images);
-  };
-
-  const uploadImages = (images) => {
-    setSubmitLoading(true);
+  const uploadImages = async (images) => {
+    let promises = [];
     if (images.length) {
-      images.forEach(async (item) => {
-        await uploadToStorage(item, images);
-      });
+      try {
+        images.forEach(async (item) => {
+          promises.push(uploadToStorage(item, images));
+        });
+        let res = await Promise.all(promises);
+        return res;
+      } catch (err) {
+        throw Error('Can not upload image');
+      }
     }
   };
-  const uploadToStorage = async (image, imageList) => {
+  const uploadToStorage = async (image) => {
     try {
       if (!image.uri) {
         return;
@@ -106,59 +91,63 @@ const PaymentShipping = () => {
           contentType: 'image/jpeg',
         });
         if (result) {
-          setUploadList((prev) => {
-            let newList = prev;
-            newList[image.index] = {
-              name: `product_${time}.jpg`,
-              index: image.index,
-            };
-            return newList;
-          });
+          return {
+            name: `product_${time}.jpg`,
+            index: image.index,
+          };
         }
       } catch (err) {
         Alert.alert(i18n.t('error.cannotUploadImage'));
-        setSubmitLoading(false);
+        throw Error('Can not upload image');
       }
     } catch (err) {
       Alert.alert(i18n.t('error.cannotGetImage'));
-      setSubmitLoading(false);
+      throw Error('Can not upload image');
     } finally {
-      if (image.index === imageList.length - 1) {
-        setDoneUpload(true);
-      }
     }
   };
-  const postProduct = () => {
-    const {
-      childrenCategory,
-      attributeOptions,
-      name,
-      description,
-      brand,
-      price,
-    } = postProductInfo;
+  const postProduct = async () => {
+    if (!selectedPaymentMethods.length || !selectedDeliveryType.length) {
+      showMessage({
+        message: i18n.t('addProduct.pleaseFillInformation'),
+        type: 'danger',
+        position: 'top',
+      });
+      return;
+    }
+    try {
+      SlideInModal.show(() => {}, <Loading />, 'fadeIn', 'fadeOut');
+      setPostProductLoading(true);
+      const upLoadedImages = await uploadImages(images);
 
-    const imagesList = uploadList.map((item) => {
-      return {
-        name: item.name,
-        path: customPrefix,
-      };
-    });
-    const groupedAttributes = formatPriceAttribute(attributeOptions);
+      const {
+        childrenCategory,
+        attributeOptions,
+        name,
+        description,
+        brand,
+        price,
+      } = postProductInfo;
 
-    const newProductPriceRequest = groupedAttributes.map((item) => {
-      return {
-        name: null,
-        productId: null,
-        sku: null,
-        price: price * 1,
-        priceSale: 0,
-        productAttributes: [...item],
-      };
-    });
+      const imagesList = upLoadedImages.map((item) => {
+        return {
+          name: item.name,
+          path: customPrefix,
+        };
+      });
+      const groupedAttributes = formatPriceAttribute(attributeOptions);
 
-    dispatch(
-      postProductActions.getPostProduct({
+      const newProductPriceRequest = groupedAttributes.map((item) => {
+        return {
+          name: null,
+          productId: null,
+          sku: null,
+          price: price * 1,
+          priceSale: 0,
+          productAttributes: [...item],
+        };
+      });
+      const res = await postProductApi({
         brandId: brand?.id * 1,
         categoryId: childrenCategory?.id * 1,
         storeId: null,
@@ -169,8 +158,55 @@ const PaymentShipping = () => {
         paymentTypes: [...selectedPaymentMethods?.map((v) => v.id)],
         shippingProviders: [...selectedDeliveryType?.map((v) => v.id)],
         productImageRequests: [...imagesList],
-      }),
-    );
+      });
+      if (res.data.status === POST_SUCCESS) {
+        navigation.navigate('Home');
+        showMessage({
+          titleStyle: {...styles.notiTitle},
+          message: i18n.t('addProduct.postSuccess'),
+          textStyle: {...styles.notiSubTitle},
+          description: postProductInfo.name,
+          type: 'success',
+          position: {
+            bottom: 90,
+            left: 0,
+          },
+          icon: {icon: 'success', position: 'left'},
+          style: {
+            ...styles.notiContainer,
+          },
+          renderFlashMessageIcon: () => (
+            <Image
+              style={styles.notiImage}
+              source={
+                images && images.length
+                  ? {
+                      uri: images[0].uri,
+                    }
+                  : require('assets/images/default.png')
+              }
+            />
+          ),
+        });
+        dispatch(postProductActions.clearPostProduct());
+        navigation.navigate('Home');
+      } else {
+        showMessage({
+          message: i18n.t('addProduct.postFailed'),
+          type: 'danger',
+          position: 'top',
+        });
+      }
+    } catch (err) {
+      showMessage({
+        message: i18n.t('addProduct.postFailed'),
+        type: 'danger',
+        position: 'top',
+      });
+    } finally {
+      setPostProductLoading(false);
+      SlideInModal.hide();
+    }
   };
 
   const formatPriceAttribute = (originArray = []) => {
@@ -188,70 +224,19 @@ const PaymentShipping = () => {
     return result;
   };
 
-  useEffect(() => {
-    if (
-      doneUpload &&
-      uploadList.length === images.length &&
-      uploadList.every((image) => Boolean(image))
-    ) {
-      postProduct();
-    }
-  }, [doneUpload, JSON.stringify(uploadList)]);
-
-  useEffect(() => {
-    if (!postProductLoading) {
-      setSubmitLoading(false);
-    }
-  }, [postProductLoading]);
-  useEffect(() => {
-    if (postProductStatus === 'failed') {
-      showMessage({
-        message: i18n.t('addProduct.postFailed'),
-        type: 'danger',
-        position: 'top',
-      });
-      dispatch(postProductActions.setProductInfo({postProductStatus: ''}));
-      return;
-    }
-    if (postProductStatus === 'success') {
-      navigation.navigate('Home');
-      showMessage({
-        titleStyle: {...styles.notiTitle},
-        message: i18n.t('addProduct.postSuccess'),
-        textStyle: {...styles.notiSubTitle},
-        description: postProductInfo.name,
-        type: 'success',
-        position: {
-          bottom: 90,
-          left: 0,
-        },
-        icon: {icon: 'success', position: 'left'},
-        style: {
-          ...styles.notiContainer,
-        },
-        renderFlashMessageIcon: () => (
-          <Image
-            style={styles.notiImage}
-            source={
-              images && images.length
-                ? {
-                    uri: images[0].uri,
-                  }
-                : require('assets/images/default.png')
-            }
-          />
-        ),
-      });
-      dispatch(postProductActions.clearPostInfo());
-    }
-  }, [postProductStatus]);
+  const _handleLeftPress = () => {
+    dispatch(
+      postProductActions.setProductInfo({
+        paymentMethod: selectedPaymentMethods,
+        deliveryType: selectedDeliveryType,
+      }),
+    );
+  };
 
   return (
-    <ThemeView
-      style={{flex: 1}}
-      pointerEvents={submitLoading ? 'none' : 'auto'}
-      isFullView>
+    <ThemeView style={{flex: 1}} isFullView>
       <Header
+        leftPress={_handleLeftPress}
         isDefault
         containerStyle={styles.headerContain}
         leftStyle={{
@@ -259,7 +244,9 @@ const PaymentShipping = () => {
           fontWeight: 'bold',
         }}
         middleComponent={
-          <Text style={styles.middleComponent}>Thông tin sản phẩm</Text>
+          <Text style={styles.middleComponent}>
+            {i18n.t('addProduct.productInformationTitle')}
+          </Text>
         }
       />
       <ProgressBar progress={1} color="#823FFD" />
@@ -302,10 +289,10 @@ const PaymentShipping = () => {
         </View>
       </View>
       <View style={styles.button}>
-        <TouchableOpacity onPress={_handleSubmit}>
+        <TouchableOpacity onPress={postProduct}>
           <ButtonRounded
             label={
-              submitLoading ? (
+              postProductLoading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
                 i18n.t('addProduct.postProduct')

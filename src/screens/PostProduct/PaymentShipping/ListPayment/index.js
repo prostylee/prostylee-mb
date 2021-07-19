@@ -18,6 +18,7 @@ import {
 } from 'redux/selectors/postProduct';
 import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
+import IconFont from 'react-native-vector-icons/FontAwesome';
 const ListPayment = ({setSelectedPaymentMethods, selectedPaymentMethods}) => {
   const [isCheckAll, setIsCheckAll] = useState(false);
 
@@ -55,7 +56,10 @@ const ListPayment = ({setSelectedPaymentMethods, selectedPaymentMethods}) => {
   return (
     <>
       <View style={styles.status}>
-        <Text style={styles.title}>{i18n.t('cart.paymentMethod')}</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={styles.title}>{i18n.t('cart.paymentMethod')}&nbsp;</Text>
+          <IconFont name="asterisk" size={6} color="red" />
+        </View>
         <TouchableOpacity
           onPress={() => {
             if (!isCheckAll) {

@@ -52,7 +52,7 @@ export default StyleSheet.create({
   button: {
     width: '90%',
     alignSelf: 'center',
-    paddingVertical: 15,
+    paddingBottom: 44,
   },
   notiContainer: {
     alignItems: 'center',
@@ -68,5 +68,17 @@ export default StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 4,
     marginRight: 12,
+  },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'column',
+  },
+  loadingText: {
+    color: '#fff',
+    fontSize: 18,
+    marginTop: 15,
   },
 });
