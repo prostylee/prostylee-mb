@@ -266,7 +266,6 @@ const AddStatus = (props) => {
         </TouchableOpacity>
         <View style={styles.addStory}>
           <ButtonRounded
-            style={styles.addStoryButton}
             contentStyle={styles.addStoryButton}
             labelStyle={styles.addStoryButtonText}
             label={i18n.t('addStatus.addStatus')}
