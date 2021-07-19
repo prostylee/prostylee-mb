@@ -9,8 +9,9 @@ import {
 import {getProductById} from 'services/api/productApi';
 import {getStoreById, getStoreMiniApi} from 'services/api/storeApi';
 import {newFeedActions, newFeedTypes} from 'reducers';
+import RootNavigator from 'navigator/rootNavigator';
 
-import {SUCCESS, TYPE_STORE} from 'constants';
+import {SUCCESS, TYPE_STORE, POST_SUCCESS} from 'constants';
 
 import i18n from 'i18n';
 import {showMessage} from 'react-native-flash-message';
@@ -175,12 +176,16 @@ const getStoreMini = function* () {
 const postStory = function* (payload) {
   try {
     const res = yield call(postStoriesByUser, payload.payload);
-    if (res.ok && res.data.status === SUCCESS) {
+    if (
+      res.ok &&
+      (res.data.status === SUCCESS || res.data.status === POST_SUCCESS)
+    ) {
       showMessage({
         message: i18n.t('addStory.addStorySuccess'),
         type: 'success',
         position: 'top',
       });
+      RootNavigator.navigate('Home');
       yield put(newFeedActions.postStorySuccess(res.data.data));
     } else {
       showMessage({

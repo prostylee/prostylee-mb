@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Platform, StatusBar} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -322,6 +322,7 @@ const Index = () => {
 
   return (
     <View style={styles.container}>
+      {Platform.OS === 'ios' && <StatusBar barStyle={'dark-content'} />}
       <Navigator />
       <FlashMessage
         position="bottom"
