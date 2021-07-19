@@ -123,7 +123,6 @@ const AddStatus = (props) => {
       }
     } finally {
       dispatch(commonActions.toggleLoading(false));
-      props.navigation.pop(2);
     }
   }, [JSON.stringify(uploadList), inputValueRef.current, storeSelected]);
 

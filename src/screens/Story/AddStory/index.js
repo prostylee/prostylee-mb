@@ -131,9 +131,6 @@ const AddStory = (props) => {
     } finally {
       removeStore();
       dispatch(commonActions.toggleLoading(false));
-      setTimeout(() => {
-        props.navigation.navigate('StoryBoard');
-      }, 600);
     }
   };
 
@@ -202,7 +199,11 @@ const AddStory = (props) => {
         <View style={styles.mainWrapper}>
           {Platform.OS === 'ios' ? (
             <CropView
-              sourceUrl={image.sourceURL}
+              sourceUrl={
+                image.sourceURL && typeof image.sourceURL === 'string'
+                  ? image.sourceURL
+                  : image.path
+              }
               style={viewShotStyle}
               ref={cropViewRef}
               onImageCrop={(res) => {
