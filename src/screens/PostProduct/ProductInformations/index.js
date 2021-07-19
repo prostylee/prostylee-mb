@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   TextInput,
   Text,
@@ -64,6 +64,9 @@ const ProductInfor = () => {
 
   const [selectedModalItem, setSelectedModalItem] = useState(false);
 
+  const priceRef = useRef();
+  const attrRef = useRef();
+
   const _handleSelectAttributes = (key, value) => {
     setSelectedAttributes({
       ...selectedAttributes,
@@ -77,7 +80,7 @@ const ProductInfor = () => {
   // };
 
   const _handleChangePrice = (value) => {
-    let parseValue = `${value}`.replaceAll('.', '');
+    let parseValue = `${value}`.split('.').join('');
     if (parseValue.length > 8) console.log('lớn hơn');
     if (`${parseValue * 1}` === 'NaN') {
       return;
@@ -160,14 +163,22 @@ const ProductInfor = () => {
     }
   }, [listAttributes]);
 
-  const _handleLeftPress = () => {
-    dispatch(
-      postProductActions.setProductInfo({
-        attributeOptions: selectedAttributes,
-        price: productPrice,
-      }),
-    );
-  };
+  useEffect(() => {
+    priceRef.current = productPrice;
+    attrRef.current = selectedAttributes;
+  }, [productPrice, selectedAttributes]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      dispatch(
+        postProductActions.setProductInfo({
+          attributeOptions: attrRef.current,
+          price: priceRef.current,
+        }),
+      );
+    });
+    return unsubscribe;
+  }, []);
 
   return (
     <ThemeView style={styles.container} isFullView>
@@ -178,7 +189,6 @@ const ProductInfor = () => {
           <Header
             isDefault
             title={i18n.t('addProduct.productInformationTitle')}
-            leftPress={_handleLeftPress}
           />
           <ProgressBar progress={0.67} color="#823FFD" />
           <View

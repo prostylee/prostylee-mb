@@ -51,31 +51,31 @@ const AddProducts = () => {
     }
   }, [postProductInfo?.category?.id]);
 
-  const _handleLeftPress = () => {
-    Alert.alert(i18n.t('caution'), i18n.t('addProduct.inforWillDelete'), [
-      {
-        text: i18n.t('confirm'),
-        onPress: () => {
-          dispatch(postProductActions.clearPostProduct());
-          navigation.goBack();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+      Alert.alert(i18n.t('caution'), i18n.t('addProduct.inforWillDelete'), [
+        {
+          text: i18n.t('confirm'),
+          onPress: () => {
+            dispatch(postProductActions.clearPostProduct());
+            navigation.dispatch(e.data.action);
+          },
+          style: 'destructive',
         },
-        style: 'destructive',
-      },
-      {
-        text: i18n.t('cancel'),
-        onPress: () => {},
-        style: 'cancel',
-      },
-    ]);
-  };
+        {
+          text: i18n.t('cancel'),
+          onPress: () => {},
+          style: 'cancel',
+        },
+      ]);
+    });
+    return unsubscribe;
+  }, []);
 
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header
-        isDefault
-        preventGobackFunction={_handleLeftPress}
-        title={i18n.t('addProduct.categoryScreenTitle')}
-      />
+      <Header isDefault title={i18n.t('addProduct.categoryScreenTitle')} />
       {parentId ? (
         <ListChildCategories selectAction={setSelectedCategory} />
       ) : null}
