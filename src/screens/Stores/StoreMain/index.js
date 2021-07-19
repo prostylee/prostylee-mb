@@ -238,6 +238,7 @@ const Stores = (props) => {
             />
 
             <AdvertisingSlider
+              loading={loading}
               data={topBannerList?.content ? topBannerList?.content : []}
             />
 
@@ -250,6 +251,7 @@ const Stores = (props) => {
             />
 
             <MidAdvertisingSlider
+              loading={loading}
               data={midBannerList?.content ? midBannerList?.content : []}
             />
             <FeaturedCategories

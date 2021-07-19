@@ -11,11 +11,11 @@ const AdvertisingSlider = ({data = []}) => {
       <View style={styles.sliderContainer}>
         <SwiperFlatList
           autoplay
-          autoplayDelay={3}
+          autoplayDelay={4}
           autoplayLoop
           autoplayLoopKeepAnimation
           scrollEnabled
-          data={data && data.length ? data : [0, 1, 2, 3, 5, 6, 7]}
+          data={data && data.length ? data : [0]}
           showPagination
           paginationStyle={{
             position: 'absolute',
