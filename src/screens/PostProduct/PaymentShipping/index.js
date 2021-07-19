@@ -27,13 +27,28 @@ import {
   getPostProductLoadingSelector,
   getPostProductStatusSelector,
 } from 'redux/selectors/postProduct';
+import {
+  commonActions,
+  dynamicUsersActions,
+  newFeedActions,
+  storeActions,
+} from 'redux/reducers';
 import {Storage, Auth} from 'aws-amplify';
 import {postProductActions} from 'redux/reducers';
 
 import {postProduct as postProductApi} from 'services/api/postProductApi';
-import {POST_SUCCESS} from 'constants';
+import {
+  POST_SUCCESS,
+  LIMIT_DEFAULT,
+  NUMBER_OF_PRODUCT,
+  PAGE_DEFAULT,
+  TYPE_STORE,
+  TYPE_USER,
+} from 'constants';
 
 import Loading from './LoadingIndicatorView';
+
+import {targetTypeSelector} from 'redux/selectors/common';
 
 const PaymentShipping = () => {
   const WIDTH = Dimensions.get('window').width;
@@ -57,6 +72,8 @@ const PaymentShipping = () => {
   const [selectedDeliveryType, setSelectedDeliveryType] = useState(
     postProductInfo?.deliveryType || [],
   );
+
+  const targetType = useSelector((state) => targetTypeSelector(state));
 
   const customPrefix = `/public/${sub}/posts/`;
 
@@ -160,6 +177,7 @@ const PaymentShipping = () => {
         productImageRequests: [...imagesList],
       });
       if (res.data.status === POST_SUCCESS) {
+        reloadNewFeed();
         navigation.navigate('Home');
         showMessage({
           titleStyle: {...styles.notiTitle},
@@ -231,6 +249,43 @@ const PaymentShipping = () => {
         deliveryType: selectedDeliveryType,
       }),
     );
+  };
+
+  const reloadNewFeed = () => {
+    dispatch(newFeedActions.resetPage());
+    dispatch(
+      newFeedActions.getNewFeed({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        newFeedType: targetType,
+      }),
+    );
+    if (targetType === TYPE_STORE) {
+      dispatch(
+        storeActions.getTopProduct({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT - 2,
+          numberOfProducts: NUMBER_OF_PRODUCT,
+        }),
+      );
+      dispatch(
+        newFeedActions.getStoriesByStore({
+          page: PAGE_DEFAULT,
+        }),
+      );
+    } else if (targetType === TYPE_USER) {
+      dispatch(
+        dynamicUsersActions.getDynamicUser({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT - 2,
+        }),
+      );
+      dispatch(
+        newFeedActions.getStoriesByUser({
+          page: PAGE_DEFAULT,
+        }),
+      );
+    }
   };
 
   return (

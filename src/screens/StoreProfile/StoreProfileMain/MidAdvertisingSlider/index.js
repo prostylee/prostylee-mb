@@ -15,7 +15,7 @@ const MidAdvertisingSlider = ({banners = []}) => {
           autoplayLoop
           autoplayLoopKeepAnimation
           scrollEnabled={false}
-          data={banners && banners.length ? banners : [0, 1, 2, 3, 5, 6, 7]}
+          data={banners && banners.length ? banners : [0]}
           showPagination
           paginationStyle={{
             position: 'absolute',

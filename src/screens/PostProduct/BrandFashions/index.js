@@ -107,9 +107,7 @@ const Brands = (props) => {
         />
       </View>
       <View style={styles.contentWrapper}>
-        {loading ? (
-          <ActivityIndicator />
-        ) : brandList?.length ? (
+        {brandList?.length ? (
           <ListBrand
             keyWord={searchQuery}
             data={brandList}

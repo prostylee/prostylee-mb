@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {ProgressBar} from 'react-native-paper';
 import {useRoute, useTheme} from '@react-navigation/native';
-import {Header, ButtonRounded, ThemeView} from 'components';
+import {Header, ButtonRounded, ThemeView, ActionSheet} from 'components';
 import i18n from 'i18n';
 import {AddImageIcon} from 'svg/common';
 import IconFont from 'react-native-vector-icons/FontAwesome';
@@ -25,9 +25,17 @@ import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
 import {postProductActions} from 'redux/reducers';
 import {showMessage} from 'react-native-flash-message';
 import {rem} from 'utils/common';
+
 const HEIGHT_HEADER = Platform.OS === 'ios' ? 78 * rem + 45 : 80 * rem + 45;
+
+const CANCEL_INDEX = 0;
+// const DESTRUCTIVE_INDEX = 0;
+const PICK_IMAGE_OPTIONS = ['Huỷ', 'Chọn từ bộ sưu tập ảnh', 'Chụp hình'];
+
 const AddProductsInfor = ({navigation}) => {
   const dispatch = useDispatch();
+
+  const actionSheetRef = React.useRef();
 
   const postProductInfo = useSelector(
     (state) => getPostProductInfoSelector(state),
@@ -35,6 +43,7 @@ const AddProductsInfor = ({navigation}) => {
   );
 
   const route = useRoute();
+
   const {colors} = useTheme();
 
   const images = route?.params?.images || [];
@@ -48,6 +57,7 @@ const AddProductsInfor = ({navigation}) => {
   );
 
   const productNameRef = React.useRef();
+
   const productDescriptionRef = React.useRef();
 
   const [productName, setProductName] = React.useState(
@@ -63,7 +73,7 @@ const AddProductsInfor = ({navigation}) => {
     ImagePicker.openPicker({
       mediaType: 'photo',
       multiple: true,
-      maxFiles: 4,
+      maxFiles: 4 - (listImagePicked?.length || 0),
     })
       .then((res) => {
         RootNavigator.navigate('CropPostProductImage', {images: res});
@@ -112,6 +122,31 @@ const AddProductsInfor = ({navigation}) => {
     return;
   }, [images]);
 
+  const onCaptureImagePress = () => {
+    ImagePicker.openCamera({
+      width: 600,
+      height: 600,
+      cropping: true,
+      compressImageQuality: 0.8,
+      includeBase64: true,
+      mediaType: 'photo',
+    })
+      .then((res) => {
+        let image = {
+          uri: res?.path,
+          index: (listImagePicked?.length || 0) + 1,
+        };
+        setListImagePicked([...listImagePicked, image]);
+      })
+      .catch((e) => {
+        // showMessage({
+        //   message: I18n.t('unknownMessage'),
+        //   type: 'danger',
+        //   position: 'top',
+        // });
+      });
+  };
+
   const _handleLeftPress = () => {
     dispatch(
       postProductActions.setProductInfo({
@@ -159,7 +194,9 @@ const AddProductsInfor = ({navigation}) => {
                       <TouchableOpacity
                         key={v}
                         style={styles.shapesSelected}
-                        onPress={openCropImagePicker}>
+                        onPress={() => {
+                          actionSheetRef.current.show();
+                        }}>
                         <AddImageIcon />
                       </TouchableOpacity>
                     ) : (
@@ -170,7 +207,9 @@ const AddProductsInfor = ({navigation}) => {
                   <>
                     <TouchableOpacity
                       style={styles.shapesSelected}
-                      onPress={openCropImagePicker}>
+                      onPress={() => {
+                        actionSheetRef.current.show();
+                      }}>
                       <AddImageIcon />
                     </TouchableOpacity>
                     <View style={styles.shapes} />
@@ -263,6 +302,20 @@ const AddProductsInfor = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
+      <ActionSheet
+        ref={actionSheetRef}
+        options={PICK_IMAGE_OPTIONS}
+        cancelButtonIndex={CANCEL_INDEX}
+        onPress={(value) => {
+          if (value === 1) {
+            openCropImagePicker();
+            return;
+          }
+          if (value === 2) {
+            onCaptureImagePress();
+          }
+        }}
+      />
     </ThemeView>
   );
 };

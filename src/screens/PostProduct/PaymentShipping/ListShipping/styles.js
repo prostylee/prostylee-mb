@@ -11,6 +11,7 @@ export default StyleSheet.create({
     fontSize: 14,
     paddingBottom: 3,
     fontWeight: '400',
+    lineHeight: 20,
   },
   status: {
     flexDirection: 'row',

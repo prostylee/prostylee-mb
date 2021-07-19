@@ -22,6 +22,8 @@ import {showMessage} from 'react-native-flash-message';
 import ModalSelectAttributes from './ModalSelectAttributes';
 import IconFont from 'react-native-vector-icons/FontAwesome';
 
+import {getNumberWidthDot} from 'utils/currency';
+
 import {useDispatch, useSelector, shallowEqual} from 'react-redux';
 import {
   getListAttributesSelector,
@@ -42,7 +44,7 @@ const ProductInfor = () => {
   );
 
   const [productPrice, setProductPrice] = useState(
-    postProductInfo?.price ? postProductInfo?.price + '' : null,
+    postProductInfo?.price ? postProductInfo?.price : null,
   );
 
   const [selectedAttributes, setSelectedAttributes] = useState(
@@ -75,11 +77,12 @@ const ProductInfor = () => {
   // };
 
   const _handleChangePrice = (value) => {
-    if (value.length > 8) console.log('lớn hơn');
-    if (`${value * 1}` === 'NaN') {
+    let parseValue = `${value}`.replaceAll('.', '');
+    if (parseValue.length > 8) console.log('lớn hơn');
+    if (`${parseValue * 1}` === 'NaN') {
       return;
     }
-    setProductPrice(value);
+    setProductPrice(parseValue);
   };
 
   const onSubmitPress = () => {
@@ -152,15 +155,8 @@ const ProductInfor = () => {
         }
         return obj;
       }, {});
-      // let radioAttributes = [...listAttributes].reduce((obj, item) => {
-      //   if (item.type === 3) {
-      //     obj[item.key] = [];
-      //     return obj;
-      //   }
-      //   return obj;
-      // }, {});
+
       setSelectedAttributes({...newAttributesObject});
-      // setSelectedRadioAttributes({...radioAttributes});
     }
   }, [listAttributes]);
 
@@ -227,10 +223,14 @@ const ProductInfor = () => {
                 <TextInput
                   style={styles.input}
                   onChangeText={_handleChangePrice}
-                  value={productPrice}
+                  value={
+                    productPrice
+                      ? getNumberWidthDot(productPrice * 1 || 0)
+                      : null
+                  }
                   placeholder="0"
                   keyboardType="numeric"
-                  maxLength={8}
+                  maxLength={10}
                 />
                 <Text style={styles.verticalLine}>|</Text>
                 <Text style={styles.currencyUnitText}>đ</Text>

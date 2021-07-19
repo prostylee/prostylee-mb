@@ -4,20 +4,26 @@ export default StyleSheet.create({
   wrapper: {
     paddingTop: 10,
   },
-  item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    textAlign: 'center',
-    marginVertical: -5,
-    marginLeft: -20,
+  // item: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   textAlign: 'center',
+  //   marginVertical: -5,
+  //   marginLeft: -20,
+  // },
+  itemTitle: {
+    fontSize: 14,
+    paddingBottom: 3,
+    fontWeight: '400',
+    lineHeight: 20,
+    marginVertical: 13,
   },
-  itemTitle: {fontSize: 14, paddingBottom: 3, fontWeight: '400'},
   itemPayment: {
     flexDirection: 'row',
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'space-between',
-    marginVertical: -5,
+
     marginLeft: -20,
     paddingHorizontal: 16,
   },

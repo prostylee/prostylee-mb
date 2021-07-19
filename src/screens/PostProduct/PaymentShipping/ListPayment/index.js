@@ -80,8 +80,9 @@ const ListPayment = ({setSelectedPaymentMethods, selectedPaymentMethods}) => {
         {loading ? (
           <ActivityIndicator />
         ) : (
-          listPaymentMethod.map((v) => (
-            <View key={`${v.name}-${v.id}`}>
+          listPaymentMethod.map((v, index) => (
+            <View key={`${v.name}-${v.id}`} style={styles.item}>
+              {index !== 0 ? <Divider /> : null}
               <View style={styles.itemPayment}>
                 <TouchableOpacity
                   onPress={() => _handleChecked(v)}
@@ -92,19 +93,7 @@ const ListPayment = ({setSelectedPaymentMethods, selectedPaymentMethods}) => {
                   />
                   <Text style={styles.itemTitle}>{v.name}</Text>
                 </TouchableOpacity>
-                {v.imageUrls && v.imageUrls.length ? (
-                  <View style={{flexDirection: 'row'}}>
-                    {v.imageUrls.map((item) => (
-                      <Image
-                        source={require('assets/images/visa.png')}
-                        resizeMode={'cover'}
-                        style={styles.image}
-                      />
-                    ))}
-                  </View>
-                ) : null}
               </View>
-              <Divider />
             </View>
           ))
         )}
