@@ -20,6 +20,7 @@ const Item = ({item, index, userData = {}, onPress}) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
   const itemContent = JSON.parse(item.content) || {};
+  const swipeItemRef = React.useRef();
   // TODO update api so I can use field "childrens" to update check new messages
   const itemNewMessage = item.imageUrls;
 
@@ -97,7 +98,7 @@ const Item = ({item, index, userData = {}, onPress}) => {
       <RectButton
         style={styles.actionButton}
         onPress={() => {
-          onPress(item, item.currentUserId);
+          onPress(item, swipeItemRef);
         }}>
         <AntIcon name="delete" size={20} color="white" />
       </RectButton>
@@ -108,7 +109,7 @@ const Item = ({item, index, userData = {}, onPress}) => {
   });
 
   return (
-    <Swipeable renderRightActions={renderRightActions}>
+    <Swipeable renderRightActions={renderRightActions} ref={swipeItemRef}>
       <TouchableOpacity
         onPress={() => {
           if (checkNewMessage()) {

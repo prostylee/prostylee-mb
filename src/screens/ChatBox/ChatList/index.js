@@ -270,7 +270,7 @@ const Message = (props) => {
     }
   };
 
-  const deleteChatConfirm = async (item) => {
+  const deleteChatConfirm = async (item, itemRef) => {
     Alert.alert(i18n.t('caution'), i18n.t('chat.confirmDeleteChat'), [
       {
         text: i18n.t('confirm'),
@@ -281,10 +281,18 @@ const Message = (props) => {
       },
       {
         text: i18n.t('cancel'),
-        onPress: () => {},
+        onPress: () => {
+          closeChatItemSwipe(itemRef);
+        },
         style: 'cancel',
       },
     ]);
+  };
+
+  const closeChatItemSwipe = (itemRef) => {
+    if (itemRef && itemRef.current) {
+      itemRef.current?.close();
+    }
   };
 
   const filterSearchValue = debounce(
@@ -296,7 +304,8 @@ const Message = (props) => {
       }
       const searchList = [];
       userFilterData.forEach((item) => {
-        if (item.name?.includes(searchValue)) {
+        const itemName = item.name?.toLowerCase();
+        if (itemName?.includes(searchValue.toLowerCase())) {
           searchList.push(`${item.id}`);
         }
       });

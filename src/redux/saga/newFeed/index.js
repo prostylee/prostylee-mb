@@ -185,7 +185,7 @@ const postStory = function* (payload) {
         type: 'success',
         position: 'top',
       });
-      RootNavigator.navigate('StoryBoard');
+      RootNavigator.navigate('Home');
       yield put(newFeedActions.postStorySuccess(res.data.data));
     } else {
       showMessage({
