@@ -62,11 +62,6 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-  addStoryButton: {
-    height: 36,
-    paddingHorizontal: 12,
-    paddingVertical: 0,
-  },
   addStoryButtonText: {
     fontSize: 14,
     lineHeight: 16,

@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {dim} from 'utils/common';
 
@@ -17,7 +18,7 @@ export default EStyleSheet.create({
   backButton: {
     position: 'absolute',
     top: 40,
-    left: 32,
+    left: Platform.OS === 'android' ? 20 : 32,
   },
   backButtonStyle: {
     width: 28,
