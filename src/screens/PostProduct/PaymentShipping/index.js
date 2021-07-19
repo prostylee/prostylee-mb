@@ -15,7 +15,7 @@ import styles from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListShippingMethod from './ListShipping';
 import ListPayment from './ListPayment';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import i18n from 'i18n';
 import {showMessage} from 'react-native-flash-message';
 import {userTokenSelector} from 'redux/selectors/user';
@@ -51,6 +51,9 @@ import Loading from './LoadingIndicatorView';
 import {targetTypeSelector} from 'redux/selectors/common';
 
 const PaymentShipping = () => {
+  const paymentRef = React.useRef();
+  const deliveryRef = React.useRef();
+
   const WIDTH = Dimensions.get('window').width;
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -242,15 +245,6 @@ const PaymentShipping = () => {
     return result;
   };
 
-  const _handleLeftPress = () => {
-    dispatch(
-      postProductActions.setProductInfo({
-        paymentMethod: selectedPaymentMethods,
-        deliveryType: selectedDeliveryType,
-      }),
-    );
-  };
-
   const reloadNewFeed = () => {
     dispatch(newFeedActions.resetPage());
     dispatch(
@@ -287,11 +281,25 @@ const PaymentShipping = () => {
       );
     }
   };
+  useEffect(() => {
+    paymentRef.current = selectedPaymentMethods;
+    deliveryRef.current = selectedDeliveryType;
+  }, [selectedDeliveryType, selectedPaymentMethods]);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      dispatch(
+        postProductActions.setProductInfo({
+          paymentMethod: paymentRef.current,
+          deliveryType: deliveryRef.current,
+        }),
+      );
+    });
+    return unsubscribe;
+  }, []);
   return (
     <ThemeView style={{flex: 1}} isFullView>
       <Header
-        leftPress={_handleLeftPress}
         isDefault
         containerStyle={styles.headerContain}
         leftStyle={{

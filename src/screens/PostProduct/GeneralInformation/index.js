@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Text,
   View,
@@ -12,7 +12,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {ProgressBar} from 'react-native-paper';
-import {useRoute, useTheme} from '@react-navigation/native';
+import {useNavigation, useRoute, useTheme} from '@react-navigation/native';
 import {Header, ButtonRounded, ThemeView, ActionSheet} from 'components';
 import i18n from 'i18n';
 import {AddImageIcon} from 'svg/common';
@@ -32,8 +32,9 @@ const CANCEL_INDEX = 0;
 // const DESTRUCTIVE_INDEX = 0;
 const PICK_IMAGE_OPTIONS = ['Huỷ', 'Chọn từ bộ sưu tập ảnh', 'Chụp hình'];
 
-const AddProductsInfor = ({navigation}) => {
+const AddProductsInfor = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const actionSheetRef = React.useRef();
 
@@ -66,6 +67,11 @@ const AddProductsInfor = ({navigation}) => {
   const [productDescription, setProductDescription] = React.useState(
     postProductInfo?.description || '',
   );
+
+  const imageRef = React.useRef();
+  const nameRef = React.useRef();
+  const brandRef = React.useRef();
+  const descriptionRef = React.useRef();
 
   const {brand} = postProductInfo;
   const HEIGHT = Dimensions.get('window').height;
@@ -147,15 +153,24 @@ const AddProductsInfor = ({navigation}) => {
       });
   };
 
-  const _handleLeftPress = () => {
-    dispatch(
-      postProductActions.setProductInfo({
-        name: productName,
-        description: productDescription,
-        images: listImagePicked,
-      }),
-    );
-  };
+  useEffect(() => {
+    nameRef.current = productName;
+    descriptionRef.current = productDescription;
+    imageRef.current = listImagePicked;
+  }, [brand, productName, productDescription, listImagePicked]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      dispatch(
+        postProductActions.setProductInfo({
+          name: nameRef.current,
+          description: descriptionRef.current,
+          images: imageRef.current,
+        }),
+      );
+    });
+    return unsubscribe;
+  }, []);
 
   return (
     <ThemeView style={styles.container} isFullView>
@@ -166,7 +181,6 @@ const AddProductsInfor = ({navigation}) => {
           <Header
             isDefault
             title={i18n.t('addProduct.generalInformationTitle')}
-            leftPress={_handleLeftPress}
           />
           <ProgressBar progress={0.33} color={colors['$purple']} />
           <View

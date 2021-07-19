@@ -61,7 +61,7 @@ const ListChildCategories = (props) => {
     <View style={styles.container}>
       <View style={styles.spaceHeader}>
         <Text style={styles.textSpace}>
-          {i18n.t('addProduct.productCategory')}
+          {i18n.t('addProduct.selectedCategory')}
         </Text>
       </View>
       <View style={styles.contentWrapper}>
