@@ -19,7 +19,7 @@ const list = [
     list: [
       {
         title: i18n.t('setting.settingChat'),
-        screen: 'SettingChat',
+        screen: 'Home', // 'SettingChat',
       },
       {
         title: i18n.t('setting.settingNotification'),
@@ -27,7 +27,7 @@ const list = [
       },
       {
         title: i18n.t('setting.settingLanguage'),
-        screen: 'SettingLanguage',
+        screen: 'Home', // 'SettingLanguage',
       },
     ],
   },

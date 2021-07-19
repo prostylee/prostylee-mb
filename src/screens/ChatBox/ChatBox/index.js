@@ -8,6 +8,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  StatusBar,
 } from 'react-native';
 import styles from './styles';
 import {Header, ThemeView} from 'components';
@@ -146,6 +147,13 @@ const ChatBox = ({navigation, route}) => {
 
   return (
     <ThemeView style={styles.wrapper} isFullView>
+      {Platform.OS === 'ios' && (
+        <StatusBar
+          barStyle="light-content"
+          translucent
+          backgroundColor="#FFF"
+        />
+      )}
       <Header
         containerStyle={styles.headerContain}
         middleComponent={

@@ -2,6 +2,7 @@
 import React from 'react';
 import {Text, View, Image} from 'react-native';
 import {Storage} from 'aws-amplify';
+import {Colors} from 'components';
 
 import styles from './stylesChatBubble';
 
@@ -115,7 +116,7 @@ const ChatBubble = (props) => {
             style={[
               styles.chatBubble,
               {
-                backgroundColor: isUser ? '#E9E9E9' : '#303030',
+                backgroundColor: isUser ? Colors['$purple'] : Colors['$white'],
                 borderTopRightRadius: borderTopRightCalc(),
                 borderBottomRightRadius: borderBottomRightCalc(),
                 borderTopLeftRadius: borderTopLeftCalc(),
@@ -127,8 +128,7 @@ const ChatBubble = (props) => {
               style={{
                 fontSize: 14,
                 lineHeight: 18,
-                opacity: 0.6,
-                color: isUser ? '#000000' : '#FFFFFF',
+                color: isUser ? Colors['$white'] : Colors['$black'],
               }}>
               {itemContent?.content || ''}
             </Text>
