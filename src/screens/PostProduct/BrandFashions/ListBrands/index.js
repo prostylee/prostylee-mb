@@ -16,7 +16,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ActivityIndicator} from 'react-native-paper';
 import {BrandListLoading} from 'components/Loading/contentLoader';
 import PropTypes from 'prop-types';
-const ListBrand = ({selectedBrand, setSelectedBrand, data, disabled}) => {
+const ListBrand = ({
+  selectedBrand,
+  setSelectedBrand,
+  data,
+  disabled,
+  keyWord,
+}) => {
   const HEIGHT = Dimensions.get('window').height;
   const dispatch = useDispatch();
   const [refreshing, setIsRefreshing] = React.useState(false);
@@ -41,6 +47,7 @@ const ListBrand = ({selectedBrand, setSelectedBrand, data, disabled}) => {
         storeActions.getBrandListLoadmore({
           page: currentPage,
           limit: LIMIT_DEFAULT,
+          keyword: keyWord,
         }),
       );
   };
@@ -50,6 +57,7 @@ const ListBrand = ({selectedBrand, setSelectedBrand, data, disabled}) => {
       storeActions.getBrandList({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
+        keyword: keyWord,
       }),
     );
   };
@@ -64,6 +72,7 @@ const ListBrand = ({selectedBrand, setSelectedBrand, data, disabled}) => {
       storeActions.getBrandList({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
+        keyword: keyWord,
       }),
     );
   }, []);
@@ -97,6 +106,7 @@ const ListBrand = ({selectedBrand, setSelectedBrand, data, disabled}) => {
       onEndReached={_handleLoadmore}
       onRefresh={_handleRefresh}
       refreshing={refreshing}
+      showsVerticalScrollIndicator={false}
     />
   );
 };

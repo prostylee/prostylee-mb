@@ -35,6 +35,10 @@ export default EStyleSheet.create({
   productNameInput: {
     marginTop: 12,
   },
+  descriptionInput: {
+    marginTop: 12,
+    minHeight: 16,
+  },
   shapes: {
     width: (WIDTH - 54) / 4,
     height: (WIDTH - 54) / 4,
@@ -101,6 +105,6 @@ export default EStyleSheet.create({
   button: {
     width: '90%',
     alignSelf: 'center',
-    paddingBottom: 20,
+    paddingBottom: 44,
   },
 });

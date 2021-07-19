@@ -20,7 +20,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
     height: 40,
     minWidth: 40,
-    marginTop: 8,
+    marginTop: 10,
     marginRight: 10,
     backgroundColor: '$white',
     borderColor: '$line',

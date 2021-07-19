@@ -17,6 +17,7 @@ import {storeActions} from 'redux/reducers';
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 import {postProductActions} from 'redux/reducers';
 import {useRoute, useTheme} from '@react-navigation/native';
+import {debounce} from 'lodash';
 const Brands = (props) => {
   const dispatch = useDispatch();
   const route = useRoute();
@@ -41,14 +42,15 @@ const Brands = (props) => {
   const {colors} = useTheme();
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedBrand, setSelectedBrand] = React.useState(brand || null);
-  const onChangeSearch = (query) => {
-    setSearchQuery(query);
-    let filterList = [...brandListSelector?.content];
-    filterList = filterList.filter(
-      (v) => `${v.name}`.toLowerCase().indexOf(query.toLowerCase()) !== -1,
+  const onChangeSearch = debounce((query) => {
+    dispatch(
+      storeActions.getBrandList({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        keyword: query,
+      }),
     );
-    setBrandList(filterList);
-  };
+  }, 500);
 
   const submitBrand = () => {
     dispatch(
@@ -67,12 +69,24 @@ const Brands = (props) => {
       }),
     );
   }, []);
+
   useEffect(() => {
     setBrandList(brandListSelector?.content || []);
   }, [brandListSelector?.content]);
+
+  const _handleLeftPress = () => {
+    dispatch(
+      storeActions.getBrandList({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
+  };
+
   return (
     <ThemeView style={styles.container} isFullView>
       <Header
+        leftPress={_handleLeftPress}
         isDefault
         leftIcon={
           <IonIcons name={'ios-close'} size={24} color={colors['$black']} />
@@ -85,7 +99,10 @@ const Brands = (props) => {
           style={styles.searchBarStyle}
           // inputStyle={styles.searchBarInput}
           placeholder={i18n.t('search')}
-          onChangeText={onChangeSearch}
+          onChangeText={(text) => {
+            setSearchQuery(text);
+            onChangeSearch(text);
+          }}
           value={searchQuery}
         />
       </View>
@@ -94,6 +111,7 @@ const Brands = (props) => {
           <ActivityIndicator />
         ) : brandList?.length ? (
           <ListBrand
+            keyWord={searchQuery}
             data={brandList}
             selectedBrand={selectedBrand}
             setSelectedBrand={setSelectedBrand}

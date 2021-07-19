@@ -12,6 +12,7 @@ import {
 import {useSelector} from 'react-redux';
 import {Checkbox} from 'react-native-paper';
 import PropTypes from 'prop-types';
+import IconFont from 'react-native-vector-icons/FontAwesome';
 const ColorInfor = ({setSelectedDeliveryType, selectedDeliveryType}) => {
   const [isCheckAll, setIsCheckAll] = useState(false);
 
@@ -65,7 +66,13 @@ const ColorInfor = ({setSelectedDeliveryType, selectedDeliveryType}) => {
   return (
     <>
       <View style={styles.status}>
-        <Text style={styles.title}>{i18n.t('cart.deliveryMethod')}</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={styles.title}>
+            {i18n.t('cart.deliveryMethod')}&nbsp;
+          </Text>
+          <IconFont name="asterisk" size={6} color="red" />
+        </View>
+
         <TouchableOpacity
           onPress={() => {
             if (!isCheckAll) {

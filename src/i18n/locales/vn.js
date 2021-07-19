@@ -403,8 +403,7 @@ export default {
     selectedCategory: 'Danh mục đã chọn',
     productCategory: 'Danh mục sản phẩm',
     generalInformationTitle: 'Thông tin chung',
-    generalDescription:
-      'Upload up to 4 photos and complete the item description.',
+    generalDescription: 'Tải lên tối đa 4 ảnh và hoàn thành mô tả sản phẩm.',
     descriptionName: 'Tên sản phẩm',
     descriptionContent: 'Mô tả sản phẩm',
     descriptionBrand: 'Thương hiệu',
@@ -427,6 +426,10 @@ export default {
     productPrice: 'Giá sản phẩm',
     priceMustBeInteger: 'Giá của sản phẩm phải là số nguyên!',
     limitPriceReached: 'Đã đạt giới hạn giá sản phẩm, vui lòng nhập lại',
+    primaryImg: 'Ảnh chính',
+    inprogress: 'Đang xử lý',
+    inforWillDelete: 'Phần thông tin đã nhập trước đó sẽ bị xoá',
+    chooseAtLeastOne: 'Sản phẩm phải có ít nhất một thuộc tính',
   },
   voucher: {
     use: 'Sử dụng',

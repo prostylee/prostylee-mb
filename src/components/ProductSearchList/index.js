@@ -33,6 +33,7 @@ const ProductSearchList = ({
   tagFilterFunction,
   sortDataFunction,
   getFilterStateSelectorFunction,
+  defaultTagActiveIndex,
 }) => {
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('filter');
@@ -200,6 +201,7 @@ const ProductSearchList = ({
             setValueSort(null);
           }}
           options={filterTags}
+          defaultActiveIndex={defaultTagActiveIndex}
         />
       ) : null}
 
@@ -230,6 +232,7 @@ ProductSearchList.defaultProps = {
   hasLoadmore: false,
   searchDataFunction: () => {},
   getFilterStateSelectorFunction: () => {},
+  defaultTagActiveIndex: null,
 };
 
 ProductSearchList.propTypes = {
@@ -247,6 +250,7 @@ ProductSearchList.propTypes = {
   hasLoadmore: PropTypes.bool,
   searchDataFunction: PropTypes.func,
   getFilterStateSelectorFunction: PropTypes.func,
+  defaultTagActiveIndex: PropTypes.number,
 };
 
 export default ProductSearchList;

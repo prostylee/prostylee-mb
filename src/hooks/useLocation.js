@@ -53,11 +53,11 @@ const useLocation = () => {
         setLocation({...location, lon: currentLongitude, lat: currentLatitude});
       },
       (error) => {
-        showMessage({
-          message: i18n.t('unknownMessage'),
-          type: 'danger',
-          position: 'top',
-        });
+        // showMessage({
+        //   message: i18n.t('unknownMessage'),
+        //   type: 'danger',
+        //   position: 'top',
+        // });
       },
       {
         // enableHighAccuracy: false,
@@ -86,11 +86,11 @@ const useLocation = () => {
           });
         })
         .catch((error) => {
-          showMessage({
-            message: i18n.t('unknownMessage'),
-            type: 'danger',
-            position: 'top',
-          });
+          // showMessage({
+          //   message: i18n.t('unknownMessage'),
+          //   type: 'danger',
+          //   position: 'top',
+          // });
         });
     }
   }, [location]);

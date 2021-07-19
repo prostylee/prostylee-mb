@@ -100,7 +100,11 @@ const NearbyStore = ({navigation}) => {
         }}
         title={i18n.t('stores.textNear')}
       />
-      <TagList onTagPress={_handleFilterByTag} options={filterTags} />
+      <TagList
+        defaultActiveIndex={0}
+        onTagPress={_handleFilterByTag}
+        options={filterTags}
+      />
       <Divider />
       <StoreResult navigation={navigation} />
     </ThemeView>

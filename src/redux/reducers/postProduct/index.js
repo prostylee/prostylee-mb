@@ -40,6 +40,8 @@ export const types = {
   GET_POST_PRODUCT: 'GET_POST_PRODUCT_LOADING',
   GET_POST_PRODUCT_SUCCESS: 'GET_POST_PRODUCT_SUCCESS',
   GET_POST_PRODUCT_FAILED: 'GET_POST_PRODUCT_FAILED',
+  //CLEAR POST PRODUCT
+  CLEAR_POST_PRODUCT: 'CLEAR_POST_PRODUCT',
 };
 
 export const actions = {
@@ -98,6 +100,8 @@ export const actions = {
   getPostProduct: createAction(types.GET_POST_PRODUCT),
   getPostProductFailed: createAction(types.GET_POST_PRODUCT_FAILED),
   getPostProductSuccess: createAction(types.GET_POST_PRODUCT_SUCCESS),
+  //CLEAR_POST_PRODUCT
+  clearPostProduct: createAction(types.CLEAR_POST_PRODUCT),
 };
 
 export const selectors = {
@@ -142,7 +146,7 @@ const defaultState = {
   sizes: null,
   colors: null,
   attributeOptions: null,
-  price: 0,
+  price: null,
 
   //phase4
   address: '',
@@ -277,6 +281,11 @@ export default handleActions(
       return {
         ...state,
         postProductStatus: 'failed',
+      };
+    },
+    [types.CLEAR_POST_PRODUCT]: (state, {payload}) => {
+      return {
+        ...defaultState,
       };
     },
   },
