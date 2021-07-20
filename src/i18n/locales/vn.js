@@ -255,6 +255,8 @@ export default {
     textPlaceholder: 'Viết chú thích...',
     addStatus: 'Đăng bài viết',
     checkAll: 'Xin hãy check lại tất cả các hình ảnh của bạn',
+    cropAll: 'Crop all',
+    cropSingle: 'Crop',
   },
   Search: {
     inputPlaceholder: 'Tìm kiếm sản phẩm, cửa hàng',
