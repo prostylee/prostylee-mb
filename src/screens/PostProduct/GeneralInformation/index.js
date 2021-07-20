@@ -118,7 +118,7 @@ const AddProductsInfor = () => {
           .concat([...images]);
         setListImagePicked([...newListImage]);
       } else {
-        let lengthRemove = 4 - images.length;
+        let lengthRemove = images.length;
         newListImage = [...listImagePicked];
         newListImage.splice(0, lengthRemove);
         newListImage = newListImage.concat([...images]);
@@ -199,11 +199,18 @@ const AddProductsInfor = () => {
                 {listImagePicked && listImagePicked.length ? (
                   [0, 1, 2, 3].map((v) =>
                     v < listImagePicked.length ? (
-                      <Image
-                        style={styles.imgSelected}
-                        source={{uri: listImagePicked[v].uri}}
+                      <TouchableOpacity
                         key={v}
-                      />
+                        style={styles.shapesSelected}
+                        onPress={() => {
+                          actionSheetRef.current.show();
+                        }}>
+                        <Image
+                          style={styles.imgSelected}
+                          source={{uri: listImagePicked[v].uri}}
+                          key={v}
+                        />
+                      </TouchableOpacity>
                     ) : v === listImagePicked.length ? (
                       <TouchableOpacity
                         key={v}
