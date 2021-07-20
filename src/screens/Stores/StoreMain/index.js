@@ -172,6 +172,7 @@ const Stores = (props) => {
       dispatch(storeProfileActions.clearStoreProfileFilterState());
     }
   }, [isFocused]);
+  console.log(brandList);
   return (
     <View style={{flex: 1, backgroundColor: '#E82E46'}}>
       <HeaderAnimated

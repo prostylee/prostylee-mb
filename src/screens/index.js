@@ -67,6 +67,7 @@ import ChatList from './ChatBox/ChatList';
 import WishList from './MyPage/WishList';
 import SoldList from './MyPage/SoldList';
 import SaveList from './MyPage/SaveList';
+import Brand from './Brand';
 
 import CropPostProductImage from './PostProduct/CropPostProductImage';
 
@@ -140,4 +141,5 @@ export {
   SaveList,
   SoldList,
   CropPostProductImage,
+  Brand,
 };
