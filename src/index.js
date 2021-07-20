@@ -100,6 +100,9 @@ const Index = () => {
   const isShowAddPictureOption = useSelector((state) =>
     commonSelectors.isShowAddPictureOption(state),
   );
+  const addPictureOptionTarget = useSelector((state) =>
+    commonSelectors.addPictureOptionTarget(state),
+  );
 
   // const isRequireUpdate = useSelector((state) =>
   //   commonSelectors.getRequireUpdate(state),
@@ -330,7 +333,10 @@ const Index = () => {
         floating={true}
       />
       <ModalTabButton visible={isShowTabButton} />
-      <ModalAddPictureMethod visible={isShowAddPictureOption} />
+      <ModalAddPictureMethod
+        visible={isShowAddPictureOption}
+        target={addPictureOptionTarget}
+      />
       <ModalIndicator visible={isLoading} />
       <SlideInModal />
       {/* <ModalRequireUpdate

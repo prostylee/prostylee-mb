@@ -11,6 +11,7 @@ export const types = {
   TOGGLE_FOCUS_MAIN_TAB: 'TOGGLE_FOCUS_MAIN_TAB',
   TOGGLE_TAB_BUTTON: 'TOGGLE_TAB_BUTTON',
   TOGGLE_ADD_PICTURE_OPTION: 'TOGGLE_ADD_PICTURE_OPTION',
+  TOGGLE_ADD_PICTURE_OPTION_TARGET: 'TOGGLE_ADD_PICTURE_OPTION_TARGET',
 };
 
 export const actions = {
@@ -24,6 +25,9 @@ export const actions = {
   toggleFocusMainTab: createAction(types.TOGGLE_FOCUS_MAIN_TAB),
   toggleTabButton: createAction(types.TOGGLE_TAB_BUTTON),
   toggleAddPictureOption: createAction(types.TOGGLE_ADD_PICTURE_OPTION),
+  toggleAddPictureOptionTarget: createAction(
+    types.TOGGLE_ADD_PICTURE_OPTION_TARGET,
+  ),
 };
 
 export const selectors = {
@@ -35,6 +39,7 @@ export const selectors = {
   isFocusedMainTab: (state) => state.common.isFocusedMainTab,
   isShowTabButton: (state) => state.common.isShowTabButton,
   isShowAddPictureOption: (state) => state.common.isShowAddPictureOption,
+  addPictureOptionTarget: (state) => state.common.addPictureOptionTarget,
 };
 
 const intialState = {
@@ -48,6 +53,7 @@ const intialState = {
   isFullView: false,
   isShowTabButton: false,
   isShowAddPictureOption: false,
+  addPictureOptionTarget: '',
 };
 
 export default handleActions(
@@ -78,6 +84,9 @@ export default handleActions(
     },
     [types.TOGGLE_ADD_PICTURE_OPTION]: (state, {payload}) => {
       return {...state, isShowAddPictureOption: payload};
+    },
+    [types.TOGGLE_ADD_PICTURE_OPTION_TARGET]: (state, {payload}) => {
+      return {...state, addPictureOptionTarget: payload};
     },
   },
   intialState,

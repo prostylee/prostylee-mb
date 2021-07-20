@@ -308,7 +308,9 @@ const CropPicture = () => {
           rightComponent={
             <TouchableOpacity style={styles.cropButton} onPress={cropAllImage}>
               <Text style={styles.cropText}>
-                {isCropList ? 'Crop All' : 'Crop'}
+                {isCropList
+                  ? i18n.t('addStatus.cropAll')
+                  : i18n.t('addStatus.cropSingle')}
               </Text>
             </TouchableOpacity>
           }
