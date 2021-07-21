@@ -68,6 +68,8 @@ const AddProductsInfor = () => {
     postProductInfo?.description || '',
   );
 
+  const [pressedImageIndex, setPressedImageIndex] = React.useState(-1);
+
   const imageRef = React.useRef();
   const nameRef = React.useRef();
   const brandRef = React.useRef();
@@ -79,7 +81,7 @@ const AddProductsInfor = () => {
     ImagePicker.openPicker({
       mediaType: 'photo',
       multiple: true,
-      maxFiles: 4 - (listImagePicked?.length || 0),
+      maxFiles: 4 - listImagePicked.length,
     })
       .then((res) => {
         RootNavigator.navigate('CropPostProductImage', {images: res});
@@ -109,6 +111,29 @@ const AddProductsInfor = () => {
     );
     navigation.navigate('ProductInformations');
   };
+
+  const handleChangePickedImage = (pressedIndex = -1) => {
+    ImagePicker.openPicker({
+      width: 600,
+      height: 600,
+      cropping: true,
+      compressImageQuality: 0.8,
+      includeBase64: true,
+      mediaType: 'photo',
+      maxFiles: 1,
+    })
+      .then((res) => {
+        let image = {
+          uri: res?.path,
+          index: (listImagePicked?.length || 0) + 1,
+        };
+        let newListImage = [...listImagePicked];
+        newListImage[pressedIndex] = image;
+        setListImagePicked([...newListImage]);
+      })
+      .catch((e) => {});
+  };
+
   React.useEffect(() => {
     if (images.length) {
       let newListImage = [];
@@ -118,7 +143,7 @@ const AddProductsInfor = () => {
           .concat([...images]);
         setListImagePicked([...newListImage]);
       } else {
-        let lengthRemove = 4 - images.length;
+        let lengthRemove = images.length;
         newListImage = [...listImagePicked];
         newListImage.splice(0, lengthRemove);
         newListImage = newListImage.concat([...images]);
@@ -128,7 +153,7 @@ const AddProductsInfor = () => {
     return;
   }, [images]);
 
-  const onCaptureImagePress = () => {
+  const onCaptureImagePress = (pressedIndex = -1) => {
     ImagePicker.openCamera({
       width: 600,
       height: 600,
@@ -142,15 +167,15 @@ const AddProductsInfor = () => {
           uri: res?.path,
           index: (listImagePicked?.length || 0) + 1,
         };
+        if (pressedIndex > -1) {
+          let newListImage = [...listImagePicked];
+          newListImage[pressedIndex] = image;
+          setListImagePicked([...newListImage]);
+          return;
+        }
         setListImagePicked([...listImagePicked, image]);
       })
-      .catch((e) => {
-        // showMessage({
-        //   message: I18n.t('unknownMessage'),
-        //   type: 'danger',
-        //   position: 'top',
-        // });
-      });
+      .catch((e) => {});
   };
 
   useEffect(() => {
@@ -197,13 +222,21 @@ const AddProductsInfor = () => {
 
               <View style={styles.wrapperBorder}>
                 {listImagePicked && listImagePicked.length ? (
-                  [0, 1, 2, 3].map((v) =>
+                  [0, 1, 2, 3].map((v, index) =>
                     v < listImagePicked.length ? (
-                      <Image
-                        style={styles.imgSelected}
-                        source={{uri: listImagePicked[v].uri}}
+                      <TouchableOpacity
                         key={v}
-                      />
+                        style={styles.shapesSelected}
+                        onPress={() => {
+                          setPressedImageIndex(index);
+                          actionSheetRef.current.show();
+                        }}>
+                        <Image
+                          style={styles.imgSelected}
+                          source={{uri: listImagePicked[v].uri}}
+                          key={v}
+                        />
+                      </TouchableOpacity>
                     ) : v === listImagePicked.length ? (
                       <TouchableOpacity
                         key={v}
@@ -320,13 +353,19 @@ const AddProductsInfor = () => {
         ref={actionSheetRef}
         options={PICK_IMAGE_OPTIONS}
         cancelButtonIndex={CANCEL_INDEX}
+        onClose={() => setPressedImageIndex(-1)}
         onPress={(value) => {
           if (value === 1) {
-            openCropImagePicker();
+            if (pressedImageIndex > -1) {
+              setTimeout(() => handleChangePickedImage(pressedImageIndex), 200);
+              return;
+            }
+            setTimeout(() => openCropImagePicker(), 200);
+
             return;
           }
           if (value === 2) {
-            onCaptureImagePress();
+            onCaptureImagePress(pressedImageIndex);
           }
         }}
       />

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import * as utils from './utils';
 import styles2 from './styles';
+import {SafeAreaView} from 'react-native';
 
 const WARN_COLOR = '#FF3B30';
 const MAX_HEIGHT = Dimensions.get('window').height * 0.7;
@@ -21,6 +22,7 @@ class ActionSheet extends React.Component {
     buttonUnderlayColor: '#F4F4F4',
     onPress: () => {},
     styles: {},
+    onClose: () => {},
   };
 
   constructor(props) {
@@ -60,14 +62,13 @@ class ActionSheet extends React.Component {
     this._hideSheet(() => {
       this.setState({visible: false}, () => {
         this.props.onPress(index);
+        this.props.onClose();
       });
     });
   };
 
   _cancel = () => {
     const {cancelButtonIndex} = this.props;
-    // 保持和 ActionSheetIOS 一致，
-    // 未设置 cancelButtonIndex 时，点击背景不隐藏 ActionSheet
     if (utils.isset(cancelButtonIndex)) {
       this.hide(cancelButtonIndex);
     }
@@ -78,6 +79,7 @@ class ActionSheet extends React.Component {
       toValue: 0,
       duration: 250,
       easing: Easing.out(Easing.ease),
+      useNativeDriver: true,
     }).start();
   };
 
@@ -85,6 +87,7 @@ class ActionSheet extends React.Component {
     Animated.timing(this.state.sheetAnim, {
       toValue: this.translateY,
       duration: 200,
+      useNativeDriver: true,
     }).start(callback);
   }
 
@@ -212,7 +215,10 @@ class ActionSheet extends React.Component {
           <Animated.View
             style={[
               styles.body,
-              {height: this.translateY, transform: [{translateY: sheetAnim}]},
+              {
+                height: this.translateY,
+                transform: [{translateY: sheetAnim}],
+              },
             ]}>
             {this._renderTitle()}
             {this._renderMessage()}
