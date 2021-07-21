@@ -5,18 +5,11 @@ import {Image} from 'components';
 import styles from './styles';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch} from 'react-redux';
-import {categoriesActions} from 'redux/reducers';
-const CategoriesRightItem = ({item, isActive = false}) => {
+import {brandActions} from 'redux/reducers';
+const BrandItem = ({item, isActive = false}) => {
   const dispatch = useDispatch();
   const clickItem = () => {
-    dispatch(categoriesActions.setCategoriesSelect(item));
-    // dispatch(
-    //   categoriesActions.getListRightCategories({
-    //     page: PAGE_DEFAULT,
-    //     limit: LIMIT_DEFAULT,
-    //     parentId: item?.id,
-    //   }),
-    // );
+    dispatch(brandActions.setSelectedBrand(item));
   };
   return (
     <View style={[styles.wrapItems, isActive ? styles.activeItem : null]}>
@@ -34,7 +27,7 @@ const CategoriesRightItem = ({item, isActive = false}) => {
           />
           <View style={{height: 32}}>
             <Text numberOfLines={2} style={styles.title}>
-              {item?.name}
+              {item?.name || 'Nike'}
             </Text>
           </View>
         </View>
@@ -43,8 +36,8 @@ const CategoriesRightItem = ({item, isActive = false}) => {
   );
 };
 
-CategoriesRightItem.defaultProps = {};
+BrandItem.defaultProps = {};
 
-CategoriesRightItem.propTypes = {};
+BrandItem.propTypes = {};
 
-export default CategoriesRightItem;
+export default BrandItem;

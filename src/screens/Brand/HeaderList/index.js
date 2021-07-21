@@ -5,26 +5,21 @@ import {View, TouchableOpacity as Touch, Text} from 'react-native';
 
 import styles from './styles';
 import {Colors, Image} from 'components';
-import ProductsCategories from '../Categories';
+import BrandList from '../BrandList';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Searchbar} from 'react-native-paper';
 import {ChevronLeft} from 'svg/common';
 import {productActions} from 'redux/reducers';
-import {
-  getCategoriesSelectSelector,
-  getCategoriesParentSelectSelector,
-} from 'redux/selectors/categories';
+
 import {useDispatch, useSelector} from 'react-redux';
+
+import {getSelectedBrandSelector} from 'redux/selectors/brand';
 let timeoutSearch = null;
 
-const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
+const HeaderList = ({heightShow, leftPress}) => {
   const dispatch = useDispatch();
-  const categorySelect = useSelector((state) =>
-    getCategoriesSelectSelector(state),
-  );
-  const categoryParentSelect = useSelector((state) =>
-    getCategoriesParentSelectSelector(state),
-  );
+
+  const selectedBrand = useSelector((state) => getSelectedBrandSelector(state));
 
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => {
@@ -36,7 +31,7 @@ const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
         productActions.getListProduct({
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
-          categoryId: categoryId,
+          brandId: selectedBrand?.id,
           sorts: 'name',
           keyword: query,
         }),
@@ -54,8 +49,8 @@ const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
       <Image
         style={styles.imageBanner}
         source={
-          categorySelect?.banner
-            ? {uri: categorySelect?.banner}
+          item?.banner
+            ? {uri: item?.banner}
             : require('assets/images/default.png')
         }
         resizeMode="cover"
@@ -74,10 +69,10 @@ const HeaderList = ({heightShow, leftPress, navigation, categoryId = 0}) => {
       </View>
       <View style={styles.wrapTitle}>
         <Text numberOfLines={1} style={styles.headTitle}>
-          {categorySelect?.name}
+          {selectedBrand?.name}
         </Text>
       </View>
-      <ProductsCategories />
+      <BrandList />
     </View>
   );
 };

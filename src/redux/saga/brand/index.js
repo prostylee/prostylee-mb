@@ -12,11 +12,10 @@ import i18n from 'i18n';
 //List product from categories
 const getListProduct = function* ({payload}) {
   try {
-    console.log('GET BRAND PRODUCTS NE ');
     yield put(brandActions.setListProductLoading(true));
     yield put(brandActions.setPageProductDefault());
     const res = yield call(getListProductApi, payload);
-    console.log('BRAND PRODUCT RES', res.data);
+
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(brandActions.getListProductSuccess(res.data.data));
     } else {

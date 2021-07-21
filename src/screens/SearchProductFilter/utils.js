@@ -11,6 +11,9 @@ import {searchActions} from 'redux/reducers';
 import {getStoreProfileFilterStateSelector} from 'redux/selectors/storeProfile';
 import {storeProfileActions} from 'redux/reducers';
 
+import {getBrandProductFilterStateSelector} from 'redux/selectors/brand';
+import {brandActions} from 'redux/reducers';
+
 const getActionFunction = (screenName = '') => {
   switch (screenName) {
     case 'BestSeller': {
@@ -53,6 +56,14 @@ const getActionFunction = (screenName = '') => {
         clearFilterStateAction:
           storeProfileActions.clearStoreProfileFilterState,
         setFilterStateAction: storeProfileActions.setStoreProfileFilterState,
+      };
+    }
+    case 'Brand': {
+      return {
+        filterDispatchAction: brandActions.getListProduct,
+        getFilterStateSelectorFunction: getBrandProductFilterStateSelector,
+        clearFilterStateAction: brandActions.clearProductCategoriesFilterState,
+        setFilterStateAction: brandActions.setProductCategoriesFilterState,
       };
     }
     default: {

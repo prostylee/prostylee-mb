@@ -8,18 +8,11 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {
-  RnRatingTap,
-  FilterButton,
-  Colors,
-  SortDropDown,
-  TagList,
-} from 'components';
+import {FilterButton, Colors, TagList} from 'components';
 
 import {PRODUCT_SORT_ITEM} from 'constants';
 
-import {getProductCategoriesFilterStateSelector} from 'redux/selectors/product';
-import {productActions} from 'redux/reducers';
+import {getBrandProductFilterStateSelector} from 'redux/selectors/brand';
 
 import {userSelectors} from 'reducers';
 import {useSelector} from 'react-redux';
@@ -110,9 +103,7 @@ const BottomHeaderAnimated = ({
           </View>
         </TouchableOpacity>
         <FilterButton
-          getFilterStateSelectorFunction={
-            getProductCategoriesFilterStateSelector
-          }
+          getFilterStateSelectorFunction={getBrandProductFilterStateSelector}
         />
       </View>
       <Divider />

@@ -16,14 +16,18 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ActivityIndicator} from 'react-native-paper';
 import {BrandListLoading} from 'components/Loading/contentLoader';
 import PropTypes from 'prop-types';
+import {brandActions} from 'redux/reducers';
+import {useNavigation} from '@react-navigation/native';
+const HEIGHT = Dimensions.get('window').height;
 const ListBrand = ({
   selectedBrand,
   setSelectedBrand,
   data,
-  disabled,
+  isReadOnly,
   keyWord,
 }) => {
-  const HEIGHT = Dimensions.get('window').height;
+  const navigation = useNavigation();
+
   const dispatch = useDispatch();
   const [refreshing, setIsRefreshing] = React.useState(false);
 
@@ -81,8 +85,14 @@ const ListBrand = ({
       <Item
         item={item}
         selectedBrand={activeBrand}
-        onPress={() => setActiveBrand(item)}
-        disabled={disabled}
+        onPress={() => {
+          if (isReadOnly) {
+            dispatch(brandActions.setSelectedBrand(item));
+            navigation.navigate('Brand');
+            return;
+          }
+          setActiveBrand(item);
+        }}
       />
     );
   };
@@ -115,14 +125,14 @@ ListBrand.defaultProps = {
   selectedBrand: {},
   setSelectedBrand: () => {},
   data: [],
-  disabled: false,
+  isReadOnly: false,
 };
 
 ListBrand.propTypes = {
   selectedBrand: PropTypes.object,
   setSelectedBrand: PropTypes.func,
   data: PropTypes.array.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };
 
 export default ListBrand;

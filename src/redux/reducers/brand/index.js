@@ -15,8 +15,9 @@ export const types = {
     'GET_LIST_BRAND_PRODUCT_LOAD_MORE_FAILED',
 
   SET_PRODUCT_CATEGORIES_FILTER_STATE: 'SET_PRODUCT_CATEGORIES_FILTER_STATE',
-  CLEAR_PRODUCT_CATEGORIES_FILTER_STATE:
-    'CLEAR_PRODUCT_CATEGORIES_FILTER_STATE',
+  CLEAR_BRAND_PRODUCT_FILTER_STATE: 'CLEAR_BRAND_PRODUCT_FILTER_STATE',
+
+  SET_BRAND_SELECT: 'SET_BRAND_SELECT',
 };
 
 export const actions = {
@@ -39,9 +40,10 @@ export const actions = {
   setProductCategoriesFilterState: createAction(
     types.SET_PRODUCT_CATEGORIES_FILTER_STATE,
   ),
-  clearProductCategoriesFilterState: createAction(
-    types.CLEAR_PRODUCT_CATEGORIES_FILTER_STATE,
+  clearBrandProductFilterState: createAction(
+    types.CLEAR_BRAND_PRODUCT_FILTER_STATE,
   ),
+  setSelectedBrand: createAction(types.SET_BRAND_SELECT),
 };
 
 export const selectors = {
@@ -49,7 +51,6 @@ export const selectors = {
 };
 
 const defaultState = {
-  products: null,
   //List product from categories
   listProductLoading: false,
   loadProductMoreLoading: false,
@@ -58,7 +59,8 @@ const defaultState = {
   pageProduct: 0,
   limitProduct: 12,
   // Product detail
-  productCategoryFilterState: {},
+  brandProductsFilterState: {},
+  selectedBrand: null,
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -112,19 +114,26 @@ export default handleActions(
     [types.SET_PRODUCT_CATEGORIES_FILTER_STATE]: (state, {payload}) => {
       return {
         ...state,
-        productCategoryFilterState: {...payload},
+        brandProductsFilterState: {...payload},
       };
     },
-    [types.CLEAR_PRODUCT_CATEGORIES_FILTER_STATE]: (state, {payload}) => {
+    [types.CLEAR_BRAND_PRODUCT_FILTER_STATE]: (state, {payload}) => {
       return {
         ...state,
-        productCategoryFilterState: {
+        brandProductsFilterState: {
           attributes: {},
           category: -1,
           price: [0, 0],
         },
       };
     },
+    [types.SET_BRAND_SELECT]: (state, {payload}) => {
+      return {
+        ...state,
+        selectedBrand: payload,
+      };
+    },
   },
+
   defaultState,
 );

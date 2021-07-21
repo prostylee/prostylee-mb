@@ -113,7 +113,7 @@ const Brands = (props) => {
             data={brandList}
             selectedBrand={selectedBrand}
             setSelectedBrand={setSelectedBrand}
-            disabled={isReadOnly}
+            isReadOnly={isReadOnly}
           />
         ) : (
           <Text style={styles.notFoundText}>

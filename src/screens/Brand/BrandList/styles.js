@@ -52,4 +52,11 @@ export default EStyleSheet.create({
     height: 90,
     padding: 8,
   },
+  viewLoadingFooter: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    paddingHorizontal: 20,
+  },
 });

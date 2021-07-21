@@ -1,34 +1,39 @@
 import {createSelector} from 'reselect';
 
-export const productReducer = (state) => state.brand;
+export const productBrandReducer = (state) => state.brand;
 
 //List product from categories
 export const getListProductLoadingSelector = createSelector(
-  productReducer,
+  productBrandReducer,
   (data) => data?.listProductLoading,
 );
 
 export const getListProductSelector = createSelector(
-  productReducer,
+  productBrandReducer,
   (data) => data?.listProduct || {},
 );
 
 export const getLoadProductMoreLoadingSelector = createSelector(
-  productReducer,
+  productBrandReducer,
   (data) => data?.loadProductMoreLoading || false,
 );
 
 export const getHasLoadMoreProductSelector = createSelector(
-  productReducer,
+  productBrandReducer,
   (data) => data?.hasLoadMoreProduct || false,
 );
 
 export const getPageProductSelector = createSelector(
-  productReducer,
+  productBrandReducer,
   (data) => data?.pageProduct,
 );
 
-export const getProductCategoriesFilterStateSelector = createSelector(
-  productReducer,
+export const getBrandProductFilterStateSelector = createSelector(
+  productBrandReducer,
   (data) => data?.productCategoryFilterState || {},
+);
+
+export const getSelectedBrandSelector = createSelector(
+  productBrandReducer,
+  (data) => data?.selectedBrand || {},
 );

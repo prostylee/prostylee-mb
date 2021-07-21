@@ -31,6 +31,8 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 import {brandActions} from '../../redux/reducers';
 
+import {getSelectedBrandSelector} from 'redux/selectors/brand';
+
 import {LIMIT_DEFAULT, PAGE_DEFAULT, PRODUCT_SORT_ITEM} from 'constants';
 
 const heightShow = 334;
@@ -49,6 +51,7 @@ const Products = ({navigation}) => {
   const [sortAction, setSortAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
   const [filterValue, setFilterValue] = useState(null);
+
   /*Animated*/
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -61,7 +64,8 @@ const Products = ({navigation}) => {
   const leftPress = () => {
     navigation.goBack();
   };
-
+  //SELECTED BRAND
+  const selectedBrand = useSelector((state) => getSelectedBrandSelector(state));
   /*Get List Product*/
   const dispatch = useDispatch();
 
@@ -90,23 +94,21 @@ const Products = ({navigation}) => {
   const page = useSelector((state) => getPageProductSelector(state));
 
   useEffect(() => {
-    console.log('FIRST TIME');
     dispatch(
       brandActions.getListProduct({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         ...filterValue,
         ...formatSortValue(valueSort),
-        brandId: 1,
+        brandId: selectedBrand?.id,
       }),
     );
     // handleRefreshing(false);
-  }, []);
+  }, [selectedBrand]);
 
   const handleRefresh = () => {
     let newSortValue = valueSort ? formatSortValue(valueSort) : {sorts: 'name'};
-    // handleRefreshing(true);
-    console.log('REFRESH NE');
+    handleRefreshing(true);
     dispatch(
       brandActions.getListProduct({
         page: PAGE_DEFAULT,
@@ -182,7 +184,7 @@ const Products = ({navigation}) => {
   const _handleFilterByTag = (queryObject) => {
     setFilterValue(queryObject);
     setValueSort(null);
-    // dispatch(brandActions.clearProductCategoriesFilterState());
+    dispatch(brandActions.clearBrandProductFilterState());
     dispatch(
       brandActions.getListProduct({
         page: PAGE_DEFAULT,
@@ -277,7 +279,6 @@ const Products = ({navigation}) => {
               leftPress={leftPress}
               navigation={navigation}
               heightShow={heightShow}
-              categoryId={1}
             />
           }
           renderItem={({item, index}) => {
