@@ -25,7 +25,7 @@ const TopTrending = ({topProduct, navigation, targetType}) => {
           containerStyle={{}}
           subTitle={i18n.t('common.textSeeMore')}
           onPress={() => {
-            navigation.navigate('Stores');
+            navigation.navigate('StoreHighlight');
           }}
         />
       </Container>

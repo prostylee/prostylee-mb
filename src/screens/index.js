@@ -55,6 +55,7 @@ import Vouchers from './Stores/Vouchers';
 import NearbyStore from './Stores/NearbyStore';
 import FlashSale from './Stores/FlashSale';
 import StoreAddress from './StoreAddress';
+import StoreHighlight from './StoreHighlight';
 import Search from './Search';
 import FilterProduct from './FilterProduct';
 import PromoNotification from './Notifications/PromoNotification';
@@ -127,6 +128,7 @@ export {
   Vouchers,
   FlashSale,
   StoreAddress,
+  StoreHighlight,
   Search,
   FilterProduct,
   PromoNotification,
