@@ -32,7 +32,7 @@ import branch from './branch';
 import myPage from './myPage';
 
 import storeProfile from './storeProfile';
-import brand from './branch';
+import brand from './brand';
 
 export default function* rootSaga() {
   yield all([

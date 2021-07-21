@@ -51,14 +51,14 @@ const Categories = ({navigation}) => {
   const page = useSelector((state) => getPageRightCategoriesSelector(state));
 
   useEffect(() => {
-    dispatch(
-      categoriesActions.getListRightCategories({
-        page: PAGE_DEFAULT,
-        limit: LIMIT_DEFAULT,
-        parentId: categoryParentSelect?.id,
-      }),
-    );
-    handleRefreshing(false);
+    // dispatch(
+    //   categoriesActions.getListRightCategories({
+    //     page: PAGE_DEFAULT,
+    //     limit: LIMIT_DEFAULT,
+    //     parentId: categoryParentSelect?.id,
+    //   }),
+    // );
+    // handleRefreshing(false);
   }, [dispatch, refreshing]);
 
   const handleRefresh = () => {

@@ -1,8 +1,6 @@
 import {createAction, handleActions} from 'redux-actions';
 
 export const types = {
-  GET_BRAND_PRODUCTS: 'GET_BRAND_PRODUCTS',
-  GET_BRAND_PRODUCTS_SUCCESS: 'GET_BRAND_PRODUCTS_SUCCESS',
   //List product from categories
   SET_LIST_BRAND_PRODUCT_LOADING: 'SET_LIST_BRAND_PRODUCT_LOADING',
   GET_LIST_BRAND_PRODUCT: 'GET_LIST_BRAND_PRODUCT',
@@ -22,8 +20,6 @@ export const types = {
 };
 
 export const actions = {
-  getProducts: createAction(types.GET_BRAND_PRODUCTS),
-  getProductsSuccess: createAction(types.GET_BRAND_PRODUCTS_SUCCESS),
   //List product from categories
   setListProductLoading: createAction(types.SET_LIST_BRAND_PRODUCT_LOADING),
   getListProduct: createAction(types.GET_LIST_BRAND_PRODUCT),
@@ -85,6 +81,7 @@ export default handleActions(
       };
     },
     [types.GET_LIST_BRAND_PRODUCT_FAILED]: (state, {payload}) => {
+      console.log('GET FAILED');
       return {
         ...state,
         listProduct: {},

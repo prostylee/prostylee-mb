@@ -15,10 +15,7 @@ import {SearchProductLoading} from 'components/Loading/contentLoader';
 import i18n from 'i18n';
 
 import ProductItem from './ProductItem';
-import {
-  getCategoriesSelectSelector,
-  getCategoriesParentSelectSelector,
-} from 'redux/selectors/categories';
+
 import {ChevronLeft} from 'svg/common';
 import HeaderList from './HeaderList';
 import BottomHeaderAnimated from './BottomHeaderAnimated';
@@ -32,7 +29,8 @@ import {
 } from 'redux/selectors/brand';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 
-import {brandActions} from 'redux/reducers';
+import {brandActions} from '../../redux/reducers';
+
 import {LIMIT_DEFAULT, PAGE_DEFAULT, PRODUCT_SORT_ITEM} from 'constants';
 
 const heightShow = 334;
@@ -54,7 +52,6 @@ const Products = ({navigation}) => {
   /*Animated*/
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
-  console.log('BRAND ACTIONs', brandActions);
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
@@ -67,13 +64,7 @@ const Products = ({navigation}) => {
 
   /*Get List Product*/
   const dispatch = useDispatch();
-  const categoriesSelect = useSelector((state) =>
-    getCategoriesSelectSelector(state),
-  );
 
-  const categoryParentSelect = useSelector((state) =>
-    getCategoriesParentSelectSelector(state),
-  );
   const [refreshing, handleRefreshing] = useState(false);
 
   const loading = useSelector(
@@ -99,6 +90,7 @@ const Products = ({navigation}) => {
   const page = useSelector((state) => getPageProductSelector(state));
 
   useEffect(() => {
+    console.log('FIRST TIME');
     dispatch(
       brandActions.getListProduct({
         page: PAGE_DEFAULT,
@@ -109,11 +101,12 @@ const Products = ({navigation}) => {
       }),
     );
     // handleRefreshing(false);
-  }, [categoriesSelect.id]);
+  }, []);
 
   const handleRefresh = () => {
     let newSortValue = valueSort ? formatSortValue(valueSort) : {sorts: 'name'};
-    handleRefreshing(true);
+    // handleRefreshing(true);
+    console.log('REFRESH NE');
     dispatch(
       brandActions.getListProduct({
         page: PAGE_DEFAULT,
@@ -189,7 +182,7 @@ const Products = ({navigation}) => {
   const _handleFilterByTag = (queryObject) => {
     setFilterValue(queryObject);
     setValueSort(null);
-    dispatch(brandActions.clearProductCategoriesFilterState());
+    // dispatch(brandActions.clearProductCategoriesFilterState());
     dispatch(
       brandActions.getListProduct({
         page: PAGE_DEFAULT,
@@ -237,7 +230,7 @@ const Products = ({navigation}) => {
           }
           midComponent={
             <Text numberOfLines={1} style={styles.textTitle}>
-              {categoryParentSelect?.name}
+              {'ADIDAS'}
             </Text>
           }
           bottomComponent={
@@ -284,7 +277,7 @@ const Products = ({navigation}) => {
               leftPress={leftPress}
               navigation={navigation}
               heightShow={heightShow}
-              categoryId={categoriesSelect?.id}
+              categoryId={1}
             />
           }
           renderItem={({item, index}) => {

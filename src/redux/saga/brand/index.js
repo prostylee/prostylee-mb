@@ -1,13 +1,6 @@
 import {call, select, put, takeLatest, delay} from 'redux-saga/effects';
 
-import {productApi} from 'services';
-import {
-  brandActions,
-  brandTypes,
-  brandSelectors,
-  userActions,
-  commonActions,
-} from 'reducers';
+import {brandActions, brandTypes} from '../../reducers';
 
 import {showMessage} from 'react-native-flash-message';
 import * as CONTANTS from 'constants';
@@ -19,7 +12,7 @@ import i18n from 'i18n';
 //List product from categories
 const getListProduct = function* ({payload}) {
   try {
-    console.log('GET BRAND PRODUCTS');
+    console.log('GET BRAND PRODUCTS NE ');
     yield put(brandActions.setListProductLoading(true));
     yield put(brandActions.setPageProductDefault());
     const res = yield call(getListProductApi, payload);
@@ -43,6 +36,7 @@ const getListProduct = function* ({payload}) {
 const getLoadMoreListProduct = function* ({payload}) {
   try {
     yield put(brandActions.setLoadingLoadMoreProduct(true));
+
     const res = yield call(getListProductApi, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(brandActions.getListProductLoadMoreSuccess(res.data.data));
