@@ -22,6 +22,7 @@ import listNotification from './notification';
 import storeMain from './stores/storeMain';
 import personalSaler from './stores/personalSaler';
 import nearbyStore from './stores/nearbyStore';
+import highlightStore from './stores/highlightStore';
 import bestSeller from './stores/bestSellers';
 import flashSale from './stores/flashSale';
 import vouchers from './stores/vouchers';
@@ -56,6 +57,7 @@ export default function* rootSaga() {
     ...storeMain,
     ...personalSaler,
     ...nearbyStore,
+    ...highlightStore,
     ...bestSeller,
     ...flashSale,
     ...vouchers,

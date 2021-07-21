@@ -37,6 +37,14 @@ export const getCategories = (payload) => {
   return _fetch(GET, '/categories', {...payload});
 };
 
+export const getHighlightStoreList = (payload) => {
+  return _fetch(GET, '/stores/top/products', {
+    numberOfProducts: 3,
+    timeRangeInDays: 100,
+    ...payload,
+  });
+};
+
 //NEARBY STORE
 export const getNearbyStore = (payload) => {
   return _fetch(GET, '/stores', {

@@ -75,6 +75,7 @@ import {
   FlashSale,
   NearbyStore,
   StoreAddress,
+  StoreHighlight,
   MyPage,
   //-------- Chat Box --------
   ChatBox,
@@ -148,6 +149,7 @@ function SignedIn() {
         }}
       />
       <Stack.Screen name="StoreAddress" component={StoreAddress} />
+      <Stack.Screen name="StoreHighlight" component={StoreHighlight} />
       <Stack.Screen name="AddStory" component={AddStory} />
       <Stack.Screen name="AddStore" component={AddStore} />
       <Stack.Screen name="CropPicture" component={CropPicture} />

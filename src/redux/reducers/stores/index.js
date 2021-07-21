@@ -15,6 +15,13 @@ import {
 } from './nearbyStore';
 
 import {
+  types as typesHighlightStore,
+  actions as actionsHighlightStore,
+  defaultState as defaultStateHighlightStore,
+  handleActions as handleActionsHighlightStore,
+} from './highlightStore';
+
+import {
   types as typesPersonalSaler,
   actions as actionsPersonalSaler,
   defaultState as defaultStatePersonalSaler,
@@ -47,13 +54,15 @@ export const types = {
   ...typesStoreMain,
   // NEARBY STORE
   ...typesNearbyStore,
+  // HIGHLIGHT STORE
+  ...typesHighlightStore,
   // PERSONAL SALERS
   ...typesPersonalSaler,
   // BEST SELLER
   ...typesBestSellers,
-  //VOUCHERS
+  // VOUCHERS
   ...typesVouchers,
-  //FLASH_SALE
+  // FLASH_SALE
   ...typesFlashSale,
 
   SET_LOADING: 'SET_LOADING',
@@ -76,15 +85,17 @@ export const types = {
 export const actions = {
   //STORE MAIN
   ...actionsStoreMain,
-  // // NEARBY STORE
+  // NEARBY STORE
   ...actionsNearbyStore,
-  // // PERSONAL SALERS
+  // HIGHLIGHT STORE
+  ...actionsHighlightStore,
+  // PERSONAL SALERS
   ...actionsPersonalSaler,
   // BEST SELLER
   ...actionsBestSellers,
-  //VOUCHER
+  // VOUCHER
   ...actionsVouchers,
-  //FLASH SALES
+  // FLASH SALES
   ...actionsFlashSale,
 
   setLoading: createAction(types.SET_LOADING),
@@ -121,11 +132,13 @@ const intialState = {
   ...defaultStateStoreMain,
   // NEARBY STORE
   ...defaultStateNearbyStore,
-  // // PERSONAL SALERS
+  // HIGHLIGHT STORE
+  ...defaultStateHighlightStore,
+  // PERSONAL SALERS
   ...defaultStatePersonalSaler,
-  //BEST SELLER
+  // BEST SELLER
   ...defaultStateBestSellers,
-  //VOUCHERS
+  // VOUCHERS
   ...defaultStateVouchers,
   // FLASH SALES
   ...defaultStateFlashSale,
@@ -142,17 +155,19 @@ const intialState = {
 
 export default handleActions(
   {
-    //STORE MAIN
+    // STORE MAIN
     ...handleActionsStoreMain,
     // NEARBY STORE
     ...handleActionsNearbyStore,
-    // // PERSONAL SALERS
+    // HIGHLIGHT STORE
+    ...handleActionsHighlightStore,
+    // PERSONAL SALERS
     ...handleActionsPersonalSaler,
-    //BEST SELLER
+    // BEST SELLER
     ...handleActionsBestSellers,
-    //VOUCHERS
+    // VOUCHERS
     ...handleActionsVouchers,
-    //FLASH SALE
+    // FLASH SALE
     ...handleActionsFlashSale,
 
     [types.SET_LOADING]: (state, {payload}) => {
