@@ -8,3 +8,7 @@ export const getBranchApi = (payload) => {
 export const getBranchCityApi = (payload) => {
   return _fetch(GET, `/branches/cities/${payload.id}`, payload);
 };
+
+export const orderAtStoreApi = (payload) => {
+  return _fetch(GET, '/v1/orders/orderAtStore', payload);
+};

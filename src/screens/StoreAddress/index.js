@@ -4,28 +4,22 @@ import styles from './styles';
 import i18n from 'i18n';
 import {Header, ButtonRounded, ThemeView} from 'components';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
-import {useTheme, useRoute} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  addressActions,
-  addressSelectors,
-  branchActions,
-  branchSelectors,
-} from 'reducers';
+import {branchActions, branchSelectors, userSelectors} from 'reducers';
 import RNPickerSelect from 'react-native-picker-select';
-import Icon from 'react-native-vector-icons/Ionicons';
 import ListStoreAddress from './ListStoreAddress';
 import EmptyStore from './Empty';
 import {MapPin} from 'svg/common';
 import Colors from 'components/Colors';
 
 const StoreAddress = (props) => {
-  const navigation = props.navigation ? props.navigation : {};
   const route = useRoute();
   const storeId = route?.params?.storeId || '';
+  const productId = route?.params?.productId || '';
   const dispatch = useDispatch();
-  const {colors} = useTheme();
   const [selectedAddress, setselectedAddress] = useState();
+  const [selectedId, setSelectedId] = useState(null);
 
   const prefecture =
     useSelector((state) => branchSelectors.getBranchCityList(state)) || [];
@@ -34,6 +28,9 @@ const StoreAddress = (props) => {
   );
   const branchDataLoading = useSelector((state) =>
     branchSelectors.getBranchListLoading(state),
+  );
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
   );
 
   React.useEffect(() => {
@@ -62,6 +59,17 @@ const StoreAddress = (props) => {
       label: item.cityName,
       value: item.cityCode,
     }));
+  };
+
+  const buyAtStore = () => {
+    dispatch(
+      branchActions.getOrderAtBranch({
+        productId: productId,
+        storeId: storeId,
+        branchId: selectedId,
+        buyerId: userProfile.id,
+      }),
+    );
   };
 
   const Dropdown = () => {
@@ -102,13 +110,19 @@ const StoreAddress = (props) => {
                 <ActivityIndicator size={'large'} color={Colors.gray} />
               </View>
             ) : (
-              <ListStoreAddress style={styles.list} data={branchData} />
+              <ListStoreAddress
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
+                style={styles.list}
+                data={branchData}
+              />
             )}
           </View>
           <View style={styles.buttonContainer}>
             <ButtonRounded
               style={styles.button}
               label={i18n.t('storeAddress.button')}
+              onPress={buyAtStore}
             />
           </View>
         </>

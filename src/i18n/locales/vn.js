@@ -196,6 +196,7 @@ export default {
     button: 'Mua tại cửa hàng',
     noBranchCity: 'Cửa hàng không có chi nhánh tại các thành phố!',
     noBranch: 'Cửa hàng không có chi nhánh ở thành phố này!',
+    cannotSendRequest: 'Không thể gửi đơn được, xin hãy thử lại sau.',
   },
   cart: {
     title: 'Giỏ hàng',
