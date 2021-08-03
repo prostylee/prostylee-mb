@@ -7,13 +7,13 @@ import {
 } from 'react-native';
 import {Colors, FollowTextButton} from 'components';
 import {StoreLoading} from 'components/Loading/contentLoader';
-import {
-  getHighlightStoreLoadingSelector,
-  getHighlightStoreLoadmoreLoadingSelector,
-  getHighlightStoreSelector,
-  hasHighlightStoreLoadmoreSelector,
-  getCurrentHighlightStorePageSelector,
-} from 'redux/selectors/storeMain/highlightStore';
+// import {
+//   getHighlightStoreLoadingSelector,
+//   getHighlightStoreLoadmoreLoadingSelector,
+//   getHighlightStoreSelector,
+//   hasHighlightStoreLoadmoreSelector,
+//   getCurrentHighlightStorePageSelector,
+// } from 'redux/selectors/storeMain/highlightStore';
 import {storeActions} from 'redux/reducers';
 import StoreItem from './item';
 import {useDispatch, useSelector} from 'react-redux';
@@ -34,22 +34,22 @@ const ListStoreHighlight = ({navigation}) => {
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const isLoading = useSelector((state) =>
-    getHighlightStoreLoadingSelector(state),
-  );
-  const data = useSelector((state) => getHighlightStoreSelector(state));
+  // const isLoading = useSelector((state) =>
+  //   getHighlightStoreLoadingSelector(state),
+  // );
+  // const data = useSelector((state) => getHighlightStoreSelector(state));
 
-  const loadMoreLoading = useSelector((state) =>
-    getHighlightStoreLoadmoreLoadingSelector(state),
-  );
+  // const loadMoreLoading = useSelector((state) =>
+  //   getHighlightStoreLoadmoreLoadingSelector(state),
+  // );
 
-  const hasLoadMore = useSelector((state) =>
-    hasHighlightStoreLoadmoreSelector(state),
-  );
+  // const hasLoadMore = useSelector((state) =>
+  //   hasHighlightStoreLoadmoreSelector(state),
+  // );
 
-  const page = useSelector((state) =>
-    getCurrentHighlightStorePageSelector(state),
-  );
+  // const page = useSelector((state) =>
+  //   getCurrentHighlightStorePageSelector(state),
+  // );
 
   const handleRefresh = () => {
     setIsRefreshing(true);
@@ -60,6 +60,8 @@ const ListStoreHighlight = ({navigation}) => {
       }),
     );
   };
+
+  return null;
 
   const handleLoadMore = () => {
     if (hasLoadMore) {
