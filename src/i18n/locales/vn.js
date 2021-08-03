@@ -194,6 +194,8 @@ export default {
   storeAddress: {
     title: 'Cửa hàng',
     button: 'Mua tại cửa hàng',
+    noBranchCity: 'Cửa hàng không có chi nhánh tại các thành phố!',
+    noBranch: 'Cửa hàng không có chi nhánh ở thành phố này!',
   },
   cart: {
     title: 'Giỏ hàng',

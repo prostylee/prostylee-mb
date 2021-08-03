@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {RadioButton} from 'react-native-paper';
 import styles from './styles';

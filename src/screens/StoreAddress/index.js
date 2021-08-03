@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ActivityIndicator} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import {Header, ButtonRounded, ThemeView} from 'components';
@@ -15,7 +15,10 @@ import {
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListStoreAddress from './ListStoreAddress';
+import EmptyStore from './Empty';
 import {MapPin} from 'svg/common';
+import Colors from 'components/Colors';
+
 const StoreAddress = (props) => {
   const navigation = props.navigation ? props.navigation : {};
   const route = useRoute();
@@ -24,22 +27,23 @@ const StoreAddress = (props) => {
   const {colors} = useTheme();
   const [selectedAddress, setselectedAddress] = useState();
 
-  const prefecture = useSelector((state) =>
-    addressSelectors.getPrefecture(state),
-  );
+  const prefecture =
+    useSelector((state) => branchSelectors.getBranchCityList(state)) || [];
   const branchData = useSelector((state) =>
     branchSelectors.getBranchList(state),
   );
+  const branchDataLoading = useSelector((state) =>
+    branchSelectors.getBranchListLoading(state),
+  );
 
   React.useEffect(() => {
-    dispatch(addressActions.getPrefecture());
+    dispatch(
+      branchActions.getBranchCity({
+        id: storeId,
+      }),
+    );
   }, []);
 
-  React.useEffect(() => {
-    if (prefecture.length && !selectedAddress) {
-      setselectedAddress(79);
-    }
-  }, [prefecture]);
   React.useEffect(() => {
     if (selectedAddress) {
       dispatch(
@@ -47,6 +51,7 @@ const StoreAddress = (props) => {
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
           storeId: storeId,
+          cityCode: selectedAddress,
         }),
       );
     }
@@ -54,8 +59,8 @@ const StoreAddress = (props) => {
 
   const getPrefectureList = () => {
     return prefecture.map((item) => ({
-      label: item.name,
-      value: item.code,
+      label: item.cityName,
+      value: item.cityCode,
     }));
   };
 
@@ -87,15 +92,27 @@ const StoreAddress = (props) => {
         }
       />
       <Dropdown />
-      <View style={styles.wrapper}>
-        <ListStoreAddress style={styles.list} data={branchData} />
-      </View>
-      <View style={styles.buttonContainer}>
-        <ButtonRounded
-          style={styles.button}
-          label={i18n.t('storeAddress.button')}
-        />
-      </View>
+      {!prefecture?.length || !branchData?.length ? (
+        <EmptyStore cityList={prefecture} branchList={branchData} />
+      ) : (
+        <>
+          <View style={styles.wrapper}>
+            {branchDataLoading ? (
+              <View>
+                <ActivityIndicator size={'large'} color={Colors.gray} />
+              </View>
+            ) : (
+              <ListStoreAddress style={styles.list} data={branchData} />
+            )}
+          </View>
+          <View style={styles.buttonContainer}>
+            <ButtonRounded
+              style={styles.button}
+              label={i18n.t('storeAddress.button')}
+            />
+          </View>
+        </>
+      )}
     </ThemeView>
   );
 };
