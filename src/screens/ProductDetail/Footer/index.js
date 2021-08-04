@@ -101,7 +101,10 @@ const Footer = ({navigation, productData, priceList, choiceSelect}) => {
   };
 
   const goToStore = () => {
-    navigation.navigate('StoreAddress', {storeId: productData.storeId});
+    navigation.navigate('StoreAddress', {
+      storeId: productData.storeId,
+      productId: productData.id,
+    });
   };
   const callSeller = (phoneNumber) => {
     if (phoneNumber) {

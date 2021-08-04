@@ -17,7 +17,7 @@ import {dim} from 'utils/common';
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
 
-const ModalAddPictureMethod = ({visible}) => {
+const ModalAddPictureMethod = ({visible, target = ''}) => {
   const dispatch = useDispatch();
   const [initRender, setInitRender] = React.useState(false);
   const [pickerModal, setPickerModal] = React.useState('');
@@ -69,36 +69,85 @@ const ModalAddPictureMethod = ({visible}) => {
     }).start();
   };
   const openLibraryPicker = async () => {
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-    })
-      .then((res) => {
-        RootNavigator.navigate('AddStory', {image: res});
-      })
-      .catch((e) => {
-        showMessage({
-          message: i18n.t('unknownMessage'),
-          type: 'danger',
-          position: 'top',
-        });
-      });
+    switch (target) {
+      case 'story': {
+        ImagePicker.openPicker({
+          mediaType: 'photo',
+        })
+          .then((res) => {
+            RootNavigator.navigate('AddStory', {image: res});
+          })
+          .catch((e) => {
+            showMessage({
+              message: i18n.t('unknownMessage'),
+              type: 'danger',
+              position: 'top',
+            });
+          });
+        break;
+      }
+      case 'status': {
+        ImagePicker.openPicker({
+          mediaType: 'photo',
+          multiple: true,
+          maxFiles: 4,
+        })
+          .then((res) => {
+            RootNavigator.navigate('CropPicture', {images: res});
+          })
+          .catch((e) => {
+            showMessage({
+              message: i18n.t('unknownMessage'),
+              type: 'danger',
+              position: 'top',
+            });
+          });
+        break;
+      }
+      default:
+        return;
+    }
   };
 
   const openCameraPicker = async () => {
-    ImagePicker.openCamera({
-      mediaType: 'photo',
-      cropping: false,
-    })
-      .then((res) => {
-        RootNavigator.navigate('AddStory', {image: res});
-      })
-      .catch((e) => {
-        showMessage({
-          message: i18n.t('unknownMessage'),
-          type: 'danger',
-          position: 'top',
-        });
-      });
+    switch (target) {
+      case 'story': {
+        ImagePicker.openCamera({
+          mediaType: 'photo',
+          cropping: false,
+        })
+          .then((res) => {
+            RootNavigator.navigate('AddStory', {image: res});
+          })
+          .catch((e) => {
+            showMessage({
+              message: i18n.t('unknownMessage'),
+              type: 'danger',
+              position: 'top',
+            });
+          });
+        break;
+      }
+      case 'status': {
+        ImagePicker.openCamera({
+          mediaType: 'photo',
+          cropping: false,
+        })
+          .then((res) => {
+            RootNavigator.navigate('CropPicture', {images: [res]});
+          })
+          .catch((e) => {
+            showMessage({
+              message: i18n.t('unknownMessage'),
+              type: 'danger',
+              position: 'top',
+            });
+          });
+        break;
+      }
+      default:
+        return;
+    }
   };
 
   const checkPickerModal = () => {
@@ -190,11 +239,13 @@ const ModalAddPictureMethod = ({visible}) => {
       }}
       onModalHide={() => {
         setTimeout(() => {
+          dispatch(commonActions.toggleAddPictureOptionTarget(''));
           checkPickerModal();
         }, 200);
       }}
       backdropColor={'transparent'}
       onBackdropPress={() => {
+        dispatch(commonActions.toggleAddPictureOptionTarget(''));
         dispatch(commonActions.toggleAddPictureOption(false));
       }}
       style={styles.modalStyle}

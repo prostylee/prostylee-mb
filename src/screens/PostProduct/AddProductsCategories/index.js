@@ -13,8 +13,10 @@ import ListChildCategories from './ListChildCategories';
 import {postProductActions} from 'redux/reducers';
 import _ from 'lodash';
 import {Alert} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 const AddProducts = () => {
+  const isFocused = useIsFocused();
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const postProductInfo = useSelector(
@@ -53,22 +55,25 @@ const AddProducts = () => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
-      e.preventDefault();
-      Alert.alert(i18n.t('caution'), i18n.t('addProduct.inforWillDelete'), [
-        {
-          text: i18n.t('confirm'),
-          onPress: () => {
-            dispatch(postProductActions.clearPostProduct());
-            navigation.dispatch(e.data.action);
+      if (isFocused) {
+        e.preventDefault();
+        Alert.alert(i18n.t('caution'), i18n.t('addProduct.inforWillDelete'), [
+          {
+            text: i18n.t('confirm'),
+            onPress: () => {
+              dispatch(postProductActions.clearPostProduct());
+              navigation.dispatch(e.data.action);
+            },
+            style: 'destructive',
           },
-          style: 'destructive',
-        },
-        {
-          text: i18n.t('cancel'),
-          onPress: () => {},
-          style: 'cancel',
-        },
-      ]);
+          {
+            text: i18n.t('cancel'),
+            onPress: () => {},
+            style: 'cancel',
+          },
+        ]);
+      }
+      return;
     });
     return unsubscribe;
   }, []);

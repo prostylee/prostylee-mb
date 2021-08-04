@@ -27,7 +27,7 @@ import Cart from './Cart';
 import AddStory from './Story/AddStory';
 import AddStore from './Story/AddStore';
 import CartAddressSelect from './Cart/AddressSelect';
-import CartSelectShippingMethod from './Cart/SelectShippingMethod';
+import CartSelectShippingMethod from './Cart/SelectShippingMethod';
 import CropPicture from './Status/CropPicture';
 import AddStatus from './Status/AddStatus';
 import AddStoreForStatus from './Status/AddStore';
@@ -55,6 +55,7 @@ import Vouchers from './Stores/Vouchers';
 import NearbyStore from './Stores/NearbyStore';
 import FlashSale from './Stores/FlashSale';
 import StoreAddress from './StoreAddress';
+import StoreHighlight from './StoreHighlight';
 import Search from './Search';
 import FilterProduct from './FilterProduct';
 import PromoNotification from './Notifications/PromoNotification';
@@ -128,6 +129,7 @@ export {
   Vouchers,
   FlashSale,
   StoreAddress,
+  StoreHighlight,
   Search,
   FilterProduct,
   PromoNotification,

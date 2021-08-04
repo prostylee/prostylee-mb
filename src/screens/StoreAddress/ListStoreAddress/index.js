@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {RadioButton} from 'react-native-paper';
 import styles from './styles';
@@ -44,26 +44,9 @@ const Item = ({item, onPress, isActive}) => {
 };
 const ListStoreAddress = (props) => {
   const data = props.data ? props.data : [];
-  const [selectedId, setSelectedId] = useState(null);
-
-  const renderItem = ({item}) => {
-    return (
-      <Item
-        item={item}
-        onPress={() => {
-          setSelectedId(item.id);
-        }}
-        isActive={item?.id === selectedId ? true : false}
-      />
-    );
-  };
+  const selectedId = props.selectedId ? props.selectedId : '';
+  const setSelectedId = props.setSelectedId ? props.setSelectedId : () => {};
   return (
-    // <FlatList
-    //   data={data}
-    //   renderItem={renderItem}
-    //   keyExtractor={(item) => item.id}
-    //   // extraData={selectedId}
-    // />
     <RadioButton.Group>
       {data && data.length
         ? data.map((v) => (

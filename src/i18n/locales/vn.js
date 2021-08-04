@@ -194,6 +194,9 @@ export default {
   storeAddress: {
     title: 'Cửa hàng',
     button: 'Mua tại cửa hàng',
+    noBranchCity: 'Cửa hàng không có chi nhánh tại các thành phố!',
+    noBranch: 'Cửa hàng không có chi nhánh ở thành phố này!',
+    cannotSendRequest: 'Không thể gửi đơn được, xin hãy thử lại sau.',
   },
   cart: {
     title: 'Giỏ hàng',
@@ -255,6 +258,8 @@ export default {
     textPlaceholder: 'Viết chú thích...',
     addStatus: 'Đăng bài viết',
     checkAll: 'Xin hãy check lại tất cả các hình ảnh của bạn',
+    cropAll: 'Crop all',
+    cropSingle: 'Crop',
   },
   Search: {
     inputPlaceholder: 'Tìm kiếm sản phẩm, cửa hàng',

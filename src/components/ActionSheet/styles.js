@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import {StyleSheet} from 'react-native';
 export const hairlineWidth = StyleSheet.hairlineWidth;
 export default {

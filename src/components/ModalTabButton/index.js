@@ -8,8 +8,6 @@ import RootNavigator from 'navigator/rootNavigator';
 import LinearGradient from 'react-native-linear-gradient';
 import * as TabsIcon from 'svg/bottomTab';
 import i18n from 'i18n';
-import ImagePicker from 'react-native-image-crop-picker';
-import {showMessage} from 'react-native-flash-message';
 
 import Modal from 'react-native-modal';
 
@@ -71,25 +69,13 @@ const ModalTabButton = ({style, visible}) => {
     }).start();
   };
   const openStoryPicker = async () => {
+    dispatch(commonActions.toggleAddPictureOptionTarget('story'));
     dispatch(commonActions.toggleAddPictureOption(true));
   };
 
   const openStatusPicker = async () => {
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-      multiple: true,
-      maxFiles: 4,
-    })
-      .then((res) => {
-        RootNavigator.navigate('CropPicture', {images: res});
-      })
-      .catch((e) => {
-        showMessage({
-          message: i18n.t('unknownMessage'),
-          type: 'danger',
-          position: 'top',
-        });
-      });
+    dispatch(commonActions.toggleAddPictureOptionTarget('status'));
+    dispatch(commonActions.toggleAddPictureOption(true));
   };
 
   const checkPickerModal = () => {
