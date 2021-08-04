@@ -232,7 +232,7 @@ const Products = ({navigation}) => {
           }
           midComponent={
             <Text numberOfLines={1} style={styles.textTitle}>
-              {'ADIDAS'}
+              {selectedBrand?.name}
             </Text>
           }
           bottomComponent={

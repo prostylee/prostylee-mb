@@ -49,8 +49,8 @@ const HeaderList = ({heightShow, leftPress}) => {
       <Image
         style={styles.imageBanner}
         source={
-          item?.banner
-            ? {uri: item?.banner}
+          selectedBrand?.banner
+            ? {uri: selectedBrand?.banner}
             : require('assets/images/default.png')
         }
         resizeMode="cover"

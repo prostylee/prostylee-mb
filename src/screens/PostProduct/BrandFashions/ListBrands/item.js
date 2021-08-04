@@ -27,8 +27,8 @@ const Item = ({item, selectedBrand, onPress, disabled}) => {
         ) : (
           <Image
             source={
-              item.icon
-                ? {uri: item.icon}
+              item?.icon
+                ? {uri: item?.icon}
                 : require('assets/images/default.png')
             }
             resizeMode={'cover'}
