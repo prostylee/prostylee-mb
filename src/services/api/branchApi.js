@@ -1,5 +1,5 @@
 import {_fetch} from '../config';
-import {GET} from 'constants';
+import {GET, POST} from 'constants';
 
 export const getBranchApi = (payload) => {
   return _fetch(GET, '/branches', payload);
@@ -10,5 +10,5 @@ export const getBranchCityApi = (payload) => {
 };
 
 export const orderAtStoreApi = (payload) => {
-  return _fetch(GET, '/v1/orders/orderAtStore', payload);
+  return _fetch(POST, '/orders/orderAtStore', payload);
 };

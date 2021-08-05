@@ -9,10 +9,12 @@ export default EStyleSheet.create({
   },
   itemContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   fomatItem: {
     flexDirection: 'column',
     paddingTop: 5,
+    flex: 1,
   },
   Card: {
     fontSize: 16,
