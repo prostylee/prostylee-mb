@@ -6,11 +6,17 @@ import styles from './styles';
 
 const Item = ({item, onPress, isActive}) => {
   const location = item.location ? item.location : {};
-  const address = `${location.address ? location.address : 'unknow'}, ${
-    location.state ? location.state : 'unknow'
-  }, ${location.city ? location.city : 'unknow'}, ${
-    location.country ? location.country : 'unknow'
-  }`;
+  let address = '';
+  if (item.fullAddress) {
+    address = item.fullAddress;
+  } else if (location) {
+    address = `${location.address ? location.address : 'unknow'}, ${
+      location.state ? location.state : 'unknow'
+    }, ${location.city ? location.city : 'unknow'}, ${
+      location.country ? location.country : 'unknow'
+    }`;
+  }
+
   const distance = item.distance ? item.distance : 'unknow';
 
   return (

@@ -55,9 +55,9 @@ const getOrderAtBranch = function* ({payload}) {
   try {
     const res = yield call(orderAtStoreApi, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      yield put(branchActions.setOrderAtBranchSuccess(res.data.data));
+      yield put(branchActions.getOrderAtBranchSuccess(res.data.data));
     } else {
-      yield put(branchActions.setOrderAtBranchFailed());
+      yield put(branchActions.getOrderAtBranchFailed());
     }
   } catch (e) {
     showMessage({
