@@ -5,6 +5,7 @@ import ProductList from './ProductList';
 import ScrollableTabView, {
   ScrollableTabBar,
 } from 'components/ForkReactNativeSrollableTabView';
+import isArray from 'lodash/isArray';
 import {Colors} from 'components';
 import {getBottomTabListSelector} from 'redux/selectors/storeMain';
 import {useSelector} from 'react-redux';
@@ -154,7 +155,7 @@ const ForUserTabView = ({
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{i18n.t('stores.forUser')}</Text>
       </View>
-      {tabList && tabList.length ? (
+      {isArray(tabList) ? (
         <ScrollableTabView
           onChangeTab={({i}) => {
             setTabIndex(i);
@@ -174,14 +175,16 @@ const ForUserTabView = ({
           initialPage={0}
           renderTabBar={() => <ScrollableTabBar />}
           locked={false}>
-          {tabList.map((v) => (
-            <View
-              key={v?.tabName}
-              tabLabel={v.tabName}
-              url={v?.apiUrl}
-              method={v?.apiMethod}
-            />
-          ))}
+          {isArray(tabList)
+            ? tabList?.map((v) => (
+                <View
+                  key={v?.tabName}
+                  tabLabel={v.tabName}
+                  url={v?.apiUrl}
+                  method={v?.apiMethod}
+                />
+              ))
+            : null}
         </ScrollableTabView>
       ) : null}
 
