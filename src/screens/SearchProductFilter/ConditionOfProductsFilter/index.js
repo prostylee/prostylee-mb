@@ -20,6 +20,8 @@ const ConditionOfProductsFilter = ({
     getProductFilterAttributeListSelector(state),
   );
 
+  console.log('filter', JSON.stringify(filterAttributeList, null, 4))
+
   const attributeFilterState = defaultState?.attributes;
 
   const [state, setState] = useState(attributeFilterState);
@@ -89,7 +91,7 @@ const ConditionOfProductsFilter = ({
         section.attributeOptions.length ? (
           section.attributeOptions.map((item, index) => (
             <View key={`${item?.id}-${index}`}>
-              <RadioButton.Item
+              {/* <RadioButton.Item
                 onPress={() =>
                   _handleCheck(
                     section.key,
@@ -131,7 +133,7 @@ const ConditionOfProductsFilter = ({
                   justifyContent: 'flex-start',
                   textAlign: 'left',
                 }}
-              />
+              /> */}
               <Divider />
             </View>
           ))
