@@ -49,6 +49,7 @@ import {targetTypeSelector} from 'redux/selectors/common';
 import {
   LIMIT_DEFAULT,
   NUMBER_OF_PRODUCT,
+  TIME_RANGE_IN_DAYS,
   PAGE_DEFAULT,
   TYPE_STORE,
   TYPE_USER,
@@ -113,8 +114,10 @@ const NewFeed = ({navigation}) => {
       dispatch(
         storeActions.getTopProduct({
           page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT - 2,
+          limit: LIMIT_DEFAULT,
+          storeId: TYPE_USER,
           numberOfProducts: NUMBER_OF_PRODUCT,
+          timeRangeInDays: TIME_RANGE_IN_DAYS,
         }),
       );
       dispatch(
@@ -127,6 +130,7 @@ const NewFeed = ({navigation}) => {
         dynamicUsersActions.getDynamicUser({
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT - 2,
+          timeRangeInDays: 30,
         }),
       );
       dispatch(
@@ -192,14 +196,6 @@ const NewFeed = ({navigation}) => {
     if (!handleLoading()) {
       const items = [];
 
-      if (stories && stories?.content?.length) {
-        items.push({
-          id: NewFeedRowItemType.STORIES.id,
-          type: NewFeedRowItemType.STORIES.type,
-          items: stories,
-        });
-      }
-
       if (threeFirstNewFeedItem && threeFirstNewFeedItem?.content?.length) {
         items.push(...threeFirstNewFeedItem?.content);
       }
@@ -234,13 +230,7 @@ const NewFeed = ({navigation}) => {
 
       setAllNewFeeds(items);
     }
-  }, [
-    stories,
-    threeFirstNewFeedItem,
-    topProduct,
-    listDynamicUsers,
-    newFeedList,
-  ]);
+  }, [threeFirstNewFeedItem, topProduct, listDynamicUsers, newFeedList]);
 
   const renderFooter = () => {
     if (!loadMoreLoading) {
@@ -255,10 +245,6 @@ const NewFeed = ({navigation}) => {
   };
 
   const renderItem = (item, index) => {
-    if (item.type === NewFeedRowItemType.STORIES.type) {
-      return <StoryBoard targetType={targetType} stories={item.items} />;
-    }
-
     if (item.type === NewFeedRowItemType.STORES.type) {
       return (
         <TopTrending
@@ -289,6 +275,10 @@ const NewFeed = ({navigation}) => {
     );
   };
 
+  const renderHeader = () => {
+    return <StoryBoard targetType={targetType} stories={stories} />;
+  };
+
   return (
     <ThemeView isFullView>
       {Platform.OS === 'android' && (
@@ -311,6 +301,7 @@ const NewFeed = ({navigation}) => {
           onEndReached={handleLoadMore}
           refreshing={refreshing}
           onRefresh={handleRefresh}
+          ListHeaderComponent={renderHeader}
           ListFooterComponent={renderFooter}
           onEndReachedThreshold={0.5}
           initialNumToRender={10}

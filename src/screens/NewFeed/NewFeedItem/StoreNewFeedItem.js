@@ -14,9 +14,11 @@ import NewFeedItemBody from './NewFeedItemBody';
 import RootNavigator from '../../../navigator/rootNavigator';
 
 const StoreNewFeedItem = ({newFeedItem, targetType}) => {
-  const productOwnerResponse = newFeedItem?.productOwnerResponse;
+  const productOwnerResponse = newFeedItem?.newFeedOwnerResponse;
   const urlImage = productOwnerResponse?.logoUrl;
   const name = productOwnerResponse?.name || '';
+  const storeId = productOwnerResponse?.id || '';
+  const address = productOwnerResponse?.fullAddress || '';
 
   const navigateStore = () => {
     if (newFeedItem?.storeId) {
@@ -46,7 +48,9 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
   const bottom = (
     <ContainerView fluid style={styles.description}>
       <View style={styles.wrapInfo}>
-        <Text style={styles.productName}>{newFeedItem?.name}</Text>
+        <Text style={styles.productName}>
+          {newFeedItem?.name || newFeedItem?.content}
+        </Text>
         <PriceLabel
           price={newFeedItem?.price}
           priceSale={newFeedItem?.priceSale}
@@ -59,12 +63,13 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
   return (
     <View style={styles.container}>
       <NewFeedItemHeader
-        targetId={newFeedItem?.id}
-        targetType={targetType}
+        subTitle={address}
+        targetId={storeId}
         title={name}
         avatar={urlImage}
         onAvatarPress={navigateStore}
         isAdvertising={newFeedItem?.isAdvertising}
+        followStatusOfUserLogin={newFeedItem?.followStatusOfUserLogin}
       />
       <NewFeedItemBody slider={slider} bottom={bottom} />
       <NewFeedItemFooter targetType={targetType} newFeedItem={newFeedItem} />

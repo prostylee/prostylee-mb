@@ -4,8 +4,7 @@ import i18n from 'i18n';
 import styles from './styles';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Avatar} from 'react-native-paper';
-import {ContainerView} from '../../../../components';
-import FollowButton from '../../components/FollowButton';
+import {ContainerView, FollowTextButton} from '../../../../components';
 import {MapPin} from '../../../../svg/common';
 
 const NewFeedItemHeader = ({
@@ -15,13 +14,11 @@ const NewFeedItemHeader = ({
   isAdvertising,
   onAvatarPress,
   targetId,
-  targetType,
+  followStatusOfUserLogin,
 }) => {
   return (
     <ContainerView style={styles.headerContainer}>
-      <TouchableOpacity
-        onPress={onAvatarPress}
-        style={[styles.headerWrap]}>
+      <TouchableOpacity onPress={onAvatarPress} style={[styles.headerWrap]}>
         <Avatar.Image
           size={32}
           source={avatar ? {uri: avatar} : require('assets/images/profile.png')}
@@ -30,7 +27,7 @@ const NewFeedItemHeader = ({
           <Text numberOfLines={1} style={styles.textTitle}>
             {title}
           </Text>
-          {subTitle && (
+          {subTitle ? (
             <View style={styles.subTitleWrapper}>
               <View style={styles.locationIcon}>
                 <MapPin />
@@ -39,15 +36,20 @@ const NewFeedItemHeader = ({
                 {subTitle}
               </Text>
             </View>
-          )}
-          {isAdvertising && (
+          ) : null}
+          {isAdvertising ? (
             <Text style={styles.isAdvertising}>
               {i18n.t('common.textAdvertisement')}
             </Text>
-          )}
+          ) : null}
         </View>
       </TouchableOpacity>
-      <FollowButton targetId={targetId} targetType={targetType} />
+      <FollowTextButton
+        item={{
+          followStatusOfUserLogin: followStatusOfUserLogin,
+          id: targetId,
+        }}
+      />
     </ContainerView>
   );
 };
@@ -60,12 +62,12 @@ NewFeedItemHeader.defaultProps = {
 
 NewFeedItemHeader.propTypes = {
   targetId: PropTypes.number.isRequired,
-  targetType: PropTypes.string.isRequired,
   avatar: PropTypes.string,
-  title: PropTypes.string.isRequired,
   subTitle: PropTypes.string,
+  title: PropTypes.string.isRequired,
   isAdvertising: PropTypes.bool,
   onAvatarPress: PropTypes.func,
+  followStatusOfUserLogin: PropTypes.bool,
 };
 
 export default NewFeedItemHeader;
