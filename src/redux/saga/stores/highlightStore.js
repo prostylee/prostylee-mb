@@ -12,7 +12,6 @@ import i18n from 'i18n';
 
 const getHighlightStore = function* ({payload}) {
   const data = {...payload};
-  data.storeId = 'USER';
   try {
     yield put(storeActions.setHighlightStoreLoading(true));
     const res = yield call(getHighlightStoreList, data);

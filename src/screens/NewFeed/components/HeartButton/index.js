@@ -15,8 +15,9 @@ const HeartButton = ({
   targetType,
   categoryId,
   storeId,
+  likeStatus = false,
 }) => {
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(likeStatus);
   const [numOfLike, setNumOfLike] = useState(numberOfLike || 0);
 
   const onLikePress = async () => {

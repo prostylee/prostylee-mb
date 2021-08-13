@@ -6,6 +6,14 @@ import {Header, ThemeView} from 'components';
 import {useDispatch, useSelector} from 'react-redux';
 import {storeActions, branchSelectors} from 'reducers';
 import ListStoreHighlight from './ListStoreHighlight';
+import {
+  LIMIT_DEFAULT,
+  NUMBER_OF_PRODUCT,
+  TIME_RANGE_IN_DAYS,
+  PAGE_DEFAULT,
+  TYPE_USER,
+} from 'constants';
+
 const StoreAddress = () => {
   const dispatch = useDispatch();
 
@@ -14,7 +22,15 @@ const StoreAddress = () => {
   );
 
   React.useEffect(() => {
-    dispatch(storeActions.getHighlightStore());
+    dispatch(
+      storeActions.getHighlightStore({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        storeId: TYPE_USER,
+        numberOfProducts: NUMBER_OF_PRODUCT,
+        timeRangeInDays: TIME_RANGE_IN_DAYS,
+      }),
+    );
   }, []);
 
   return (

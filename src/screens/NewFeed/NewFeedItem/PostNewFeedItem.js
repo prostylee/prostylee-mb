@@ -11,9 +11,11 @@ import {Store} from '../../../svg/common';
 import ReadMore from '@fawazahmed/react-native-read-more/example/src/ReadMore';
 
 const PostNewFeedItem = ({newFeedItem, targetType}) => {
-  const userResponseLite = newFeedItem?.userResponseLite;
-  const urlImage = userResponseLite?.avatar;
-  const name = userResponseLite?.fullName || '';
+  const ownerResponseLite = newFeedItem?.newFeedOwnerResponse;
+  const urlImage = ownerResponseLite?.avatar;
+  const name = ownerResponseLite?.fullName || '';
+  const userId = ownerResponseLite?.id || '';
+  const address = ownerResponseLite?.fullAddress || '';
 
   const navigateToUserProfile = () => {
     RootNavigator.navigate('UserProfile', {
@@ -43,14 +45,16 @@ const PostNewFeedItem = ({newFeedItem, targetType}) => {
       <NewFeedSlider
         targetType={targetType}
         images={newFeedItem?.imageUrls || []}>
-        {
-          newFeedItem?.storeResponseLite && (
-            <TouchableOpacity onPress={navigateToStore} style={styles.viewTagStore}>
-              <Store/>
-              <Text style={styles.textTagName}>{newFeedItem?.storeResponseLite?.name}</Text>
-            </TouchableOpacity>
-          )
-        }
+        {newFeedItem?.storeResponseLite && (
+          <TouchableOpacity
+            onPress={navigateToStore}
+            style={styles.viewTagStore}>
+            <Store />
+            <Text style={styles.textTagName}>
+              {newFeedItem?.storeResponseLite?.name}
+            </Text>
+          </TouchableOpacity>
+        )}
       </NewFeedSlider>
     </View>
   );
@@ -58,14 +62,15 @@ const PostNewFeedItem = ({newFeedItem, targetType}) => {
   return (
     <View style={styles.container}>
       <NewFeedItemHeader
-        targetId={newFeedItem?.id}
-        targetType={targetType}
+        targetId={userId}
+        subTitle={address}
         title={name}
         avatar={urlImage}
         onAvatarPress={navigateToUserProfile}
+        followStatusOfUserLogin={newFeedItem?.followStatusOfUserLogin}
       />
-      <NewFeedItemBody slider={slider} top={top}/>
-      <NewFeedItemFooter targetType={targetType} newFeedItem={newFeedItem}/>
+      <NewFeedItemBody slider={slider} top={top} />
+      <NewFeedItemFooter targetType={targetType} newFeedItem={newFeedItem} />
     </View>
   );
 };

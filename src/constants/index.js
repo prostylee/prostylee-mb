@@ -32,6 +32,7 @@ export const TYPE_USER = 'USER';
 export const PAGE_DEFAULT = 0;
 export const LIMIT_DEFAULT = 12;
 export const NUMBER_OF_PRODUCT = 3;
+export const TIME_RANGE_IN_DAYS = 100;
 export const SORT_DEFAULT = 'createdAt';
 
 //Story
