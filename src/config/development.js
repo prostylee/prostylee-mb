@@ -1,8 +1,8 @@
 //domain dùng cho việc hiển thị ảnh trên app
-export const domain_url = 'http://52.77.35.71:8090';
+export const domain_url = 'http://3.37.47.64:8090';
 
 //url api
-export const api_url = 'http://52.77.35.71:8090/api/v1';
+export const api_url = 'http://3.37.47.64:8090/api/v1';
 
 export const SERVER_FIREBASE_KEY = '';
 export const GOOGLE_API_KEY = 'AIzaSyDa4XSziMXUFBwRFLto2hT_CBZ9GHbOlkg';
