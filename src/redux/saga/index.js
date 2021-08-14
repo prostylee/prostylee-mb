@@ -33,6 +33,7 @@ import branch from './branch';
 import myPage from './myPage';
 
 import storeProfile from './storeProfile';
+import brand from './brand';
 
 export default function* rootSaga() {
   yield all([
@@ -65,5 +66,6 @@ export default function* rootSaga() {
     ...branch,
     ...myPage,
     ...storeProfile,
+    ...brand,
   ]);
 }

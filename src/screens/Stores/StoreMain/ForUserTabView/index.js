@@ -33,7 +33,7 @@ const ForUserTabView = ({
     data: [],
   });
 
-  const tabList = useSelector((state) => getBottomTabListSelector(state));
+  const tabList = useSelector((state) => getBottomTabListSelector(state)) || [];
 
   const _handleRefresh = async () => {
     try {
@@ -155,7 +155,7 @@ const ForUserTabView = ({
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{i18n.t('stores.forUser')}</Text>
       </View>
-      {isArray(tabList) ? (
+      {isArray(tabList) && tabList.length > 0 ? (
         <ScrollableTabView
           onChangeTab={({i}) => {
             setTabIndex(i);

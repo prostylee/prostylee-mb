@@ -85,6 +85,7 @@ import {
   SoldList,
   SaveList,
   CropPostProductImage,
+  Brand,
 } from 'screens';
 import PaymentMethodCart from 'screens/Cart/PaymentMethod';
 import VoucherCart from 'screens/Cart/Voucher';
@@ -192,6 +193,7 @@ function SignedIn() {
       <Stack.Screen name="SimpleWebView" component={SimpleWebView} />
       <Stack.Screen name="StoreProfileMain" component={StoreProfileMain} />
       <Stack.Screen name="StoreVouchers" component={StoreVouchers} />
+      <Stack.Screen name="Brand" component={Brand} />
     </Stack.Navigator>
   );
 }

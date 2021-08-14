@@ -80,6 +80,12 @@ import storeProfile, {
   types as storeProfileTypes,
 } from './storeProfile';
 
+import brand, {
+  actions as brandActions,
+  selectors as brandSelectors,
+  types as brandTypes,
+} from './brand';
+
 const rootReducer = combineReducers({
   common,
   product,
@@ -98,6 +104,7 @@ const rootReducer = combineReducers({
   branch,
   myPage,
   storeProfile,
+  brand,
 });
 
 export {commonActions, commonSelectors, commonTypes};
@@ -117,5 +124,6 @@ export {notificationActions, notificationTypes};
 export {branchActions, branchSelectors, branchTypes};
 export {myPageActions, myPageTypes};
 export {storeProfileActions, storeProfileTypes};
+export {brandActions, brandTypes};
 
 export default rootReducer;

@@ -10,7 +10,7 @@ const Item = ({item, selectedBrand, onPress, disabled}) => {
   const {colors} = useTheme();
   const active = selectedBrand.id === item.id;
   return (
-    <TouchableOpacity onPress={onPress} disabled={disabled}>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.itemcontainer}>
         {active ? (
           <View
@@ -27,7 +27,9 @@ const Item = ({item, selectedBrand, onPress, disabled}) => {
         ) : (
           <Image
             source={
-              item.icon ? {uri: item.icon} : require('assets/images/uniqlo.png')
+              item?.icon
+                ? {uri: item?.icon}
+                : require('assets/images/default.png')
             }
             resizeMode={'cover'}
             style={[
