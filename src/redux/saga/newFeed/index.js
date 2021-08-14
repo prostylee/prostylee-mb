@@ -1,4 +1,4 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
+import {call, put, takeLatest, select} from 'redux-saga/effects';
 import {
   getNewFeed,
   getStoriesByStore,
@@ -11,8 +11,13 @@ import {getStoreById, getStoreMiniApi} from 'services/api/storeApi';
 import {newFeedActions, newFeedTypes} from 'reducers';
 import RootNavigator from 'navigator/rootNavigator';
 
-import {SUCCESS, TYPE_STORE, POST_SUCCESS} from 'constants';
-
+import {
+  SUCCESS,
+  TYPE_STORE,
+  TYPE_USER,
+  PAGE_DEFAULT,
+  POST_SUCCESS,
+} from 'constants';
 import i18n from 'i18n';
 import {showMessage} from 'react-native-flash-message';
 
@@ -174,12 +179,21 @@ const getStoreMini = function* () {
 };
 
 const postStory = function* (payload) {
+  const getTargetType = (state) => state.common.targetType;
+  const targetType = yield select(getTargetType);
   try {
     const res = yield call(postStoriesByUser, payload.payload);
     if (
       res.ok &&
       (res.data.status === SUCCESS || res.data.status === POST_SUCCESS)
     ) {
+      if (targetType === TYPE_USER) {
+        yield put(
+          newFeedActions.getStoriesByUser({
+            page: PAGE_DEFAULT,
+          }),
+        );
+      }
       showMessage({
         message: i18n.t('addStory.addStorySuccess'),
         type: 'success',

@@ -18,6 +18,7 @@ import {
   ModalTabButton,
   SlideInModal,
   ModalAddPictureMethod,
+  ModalStory,
 } from 'components';
 
 import NetInfo from '@react-native-community/netinfo';
@@ -338,7 +339,7 @@ const Index = () => {
         target={addPictureOptionTarget}
       />
       <ModalIndicator visible={isLoading} />
-      <SlideInModal />
+      <ModalStory />
       {/* <ModalRequireUpdate
         visible={isRequireUpdate}
         onConfirm={() => onHandleUpdate()}
