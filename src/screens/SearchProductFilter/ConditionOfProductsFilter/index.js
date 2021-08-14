@@ -20,8 +20,6 @@ const ConditionOfProductsFilter = ({
     getProductFilterAttributeListSelector(state),
   );
 
-  console.log('filter', JSON.stringify(filterAttributeList, null, 4))
-
   const attributeFilterState = defaultState?.attributes;
 
   const [state, setState] = useState(attributeFilterState);
