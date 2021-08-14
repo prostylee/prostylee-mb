@@ -52,6 +52,7 @@ import ForkReactNativeSrollableTabView from './ForkReactNativeSrollableTabView';
 import Bag from './Bag';
 import ChatIcon from './ChatIcon';
 import CustomRating from './Rating';
+import ModalStory from './ModalStory';
 
 import SearchBar from './SearchBar';
 import FilterButton from './FilterButton';
@@ -120,6 +121,7 @@ export {
   SearchBar,
   FilterButton,
   SortDropDown,
+  ModalStory,
   TagList,
   NotificationIcon,
   PostView,

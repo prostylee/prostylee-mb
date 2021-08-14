@@ -12,6 +12,7 @@ export const types = {
   TOGGLE_TAB_BUTTON: 'TOGGLE_TAB_BUTTON',
   TOGGLE_ADD_PICTURE_OPTION: 'TOGGLE_ADD_PICTURE_OPTION',
   TOGGLE_ADD_PICTURE_OPTION_TARGET: 'TOGGLE_ADD_PICTURE_OPTION_TARGET',
+  TOGGLE_STORY_MODAL: 'TOGGLE_STORY_MODAL',
 };
 
 export const actions = {
@@ -28,6 +29,7 @@ export const actions = {
   toggleAddPictureOptionTarget: createAction(
     types.TOGGLE_ADD_PICTURE_OPTION_TARGET,
   ),
+  toggleStoryModal: createAction(types.TOGGLE_STORY_MODAL),
 };
 
 export const selectors = {
@@ -40,6 +42,8 @@ export const selectors = {
   isShowTabButton: (state) => state.common.isShowTabButton,
   isShowAddPictureOption: (state) => state.common.isShowAddPictureOption,
   addPictureOptionTarget: (state) => state.common.addPictureOptionTarget,
+  isShowStoryModal: (state) => state.common.isShowStoryModal,
+  storyModalInitPage: (state) => state.common.storyModalInitPage,
 };
 
 const intialState = {
@@ -54,6 +58,8 @@ const intialState = {
   isShowTabButton: false,
   isShowAddPictureOption: false,
   addPictureOptionTarget: '',
+  isShowStoryModal: false,
+  storyModalInitPage: 0,
 };
 
 export default handleActions(
@@ -87,6 +93,13 @@ export default handleActions(
     },
     [types.TOGGLE_ADD_PICTURE_OPTION_TARGET]: (state, {payload}) => {
       return {...state, addPictureOptionTarget: payload};
+    },
+    [types.TOGGLE_STORY_MODAL]: (state, {payload}) => {
+      return {
+        ...state,
+        isShowStoryModal: payload.show,
+        storyModalInitPage: payload.page || 0,
+      };
     },
   },
   intialState,

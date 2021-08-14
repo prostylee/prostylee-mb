@@ -1,65 +1,19 @@
-import React, {useRef, useState} from 'react';
-import {Modal, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {isEmpty} from 'lodash';
-import {CubeNavigationHorizontal} from 'react-native-3dcube-navigation';
-// import AllStories from './constants/AllStories';
-import StoryContainer from './StoryContainer';
+import {useDispatch} from 'react-redux';
+import {commonActions} from 'reducers';
 import StoryHorizontal from './StoryHorizontal';
 
-import {convertStoriesData} from 'utils/storyboard';
-
 const Stories = ({stories, loading, targetType}) => {
-  const [isModelOpen, setModel] = useState(false);
-  const [currentUserIndex, setCurrentUserIndex] = useState(0);
-  const [currentScrollValue, setCurrentScrollValue] = useState(0);
-  const modalScroll = useRef(null);
+  const dispatch = useDispatch();
 
   if (isEmpty(stories) || !stories?.content?.length || loading) {
     return null;
   }
 
-  const AllStories = convertStoriesData(stories.content, targetType);
-
   const onStorySelect = (index) => {
-    setCurrentUserIndex(index);
-    setModel(true);
-  };
-
-  const onStoryClose = () => {
-    setModel(false);
-  };
-
-  const onStoryNext = (isScroll) => {
-    const newIndex = currentUserIndex + 1;
-    if (AllStories.length - 1 > currentUserIndex) {
-      setCurrentUserIndex(newIndex);
-      if (!isScroll) {
-        modalScroll.current.scrollTo(newIndex, true);
-      }
-    } else {
-      setModel(false);
-    }
-  };
-
-  const onStoryPrevious = (isScroll) => {
-    const newIndex = currentUserIndex - 1;
-    if (currentUserIndex > 0) {
-      setCurrentUserIndex(newIndex);
-      if (!isScroll) {
-        modalScroll.current.scrollTo(newIndex, true);
-      }
-    }
-  };
-
-  const onScrollChange = (scrollValue) => {
-    if (currentScrollValue > scrollValue) {
-      onStoryNext(true);
-      setCurrentScrollValue(scrollValue);
-    }
-    if (currentScrollValue < scrollValue) {
-      onStoryPrevious();
-      setCurrentScrollValue(scrollValue);
-    }
+    dispatch(commonActions.toggleStoryModal({show: true, page: index}));
   };
 
   return (
@@ -70,35 +24,6 @@ const Stories = ({stories, loading, targetType}) => {
         stories={stories}
         loading={loading}
       />
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={isModelOpen}
-        style={styles.modal}
-        onShow={() => {
-          if (currentUserIndex > 0) {
-            modalScroll.current.scrollTo(currentUserIndex, false);
-          }
-        }}
-        onRequestClose={onStoryClose}>
-        <CubeNavigationHorizontal
-          callBackAfterSwipe={(g) => onScrollChange(g)}
-          ref={modalScroll}
-          animated={true}
-          style={styles.container}>
-          {AllStories.map((item, index) => (
-            <StoryContainer
-              key={'storyContainer' + targetType + index}
-              onClose={onStoryClose}
-              onStoryNext={onStoryNext}
-              onStoryPrevious={onStoryPrevious}
-              user={item}
-              targetType={targetType}
-              isNewStory={index !== currentUserIndex}
-            />
-          ))}
-        </CubeNavigationHorizontal>
-      </Modal>
     </View>
   );
 };
@@ -108,21 +33,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     backgroundColor: 'rgba(255,255,255,255)',
-  },
-  circle: {
-    width: 66,
-    margin: 4,
-    height: 66,
-    borderRadius: 33,
-    borderWidth: 2,
-    borderColor: '#72bec5',
-  },
-  modal: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 9,
-    textAlign: 'center',
   },
 });
 
