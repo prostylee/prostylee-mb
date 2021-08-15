@@ -8,6 +8,8 @@ target 'prostylee' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'Firebase/Analytics'
+
   pod 'react-native-image-crop-tools', :path => '../node_modules/react-native-image-crop-tools'
 
   target 'prostyleeTests' do
