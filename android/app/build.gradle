@@ -207,6 +207,10 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation project(path: ":@react-native-firebase_messaging")
 
+    implementation "com.google.firebase:firebase-core:15.0.2"
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation "com.google.firebase:firebase-messaging:15.0.2"
+
     implementation 'com.android.support:multidex:2.0.1'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"

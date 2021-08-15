@@ -26,6 +26,10 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
+
+import PushNotification from '@aws-amplify/pushnotification';
+import {PushNotificationIOS} from '@react-native-community/push-notification-ios';
+
 import Geocoder from 'react-native-geocoding';
 import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from './config/aws-exports';
@@ -222,7 +226,7 @@ const Index = () => {
       });
   };
 
-  //firebase Message
+  // Notification Permission
   const requestUserPermission = async () => {
     const authStatus = await messaging().requestPermission();
     const enabled =
@@ -235,8 +239,11 @@ const Index = () => {
   };
 
   const onReceiveMessage = async () => {
+    const token = await messaging().getToken();
+    console.log('token', token);
     //notification arrived when app on foreground state
     messaging().onMessage(async (remoteMessage) => {
+      console.log('foreground remoteMessage', remoteMessage);
       if (
         remoteMessage.data.type &&
         remoteMessage.data.type === 'notification'
@@ -265,6 +272,7 @@ const Index = () => {
 
     //notification was opened when app on background state
     messaging().onNotificationOpenedApp(async (remoteMessage) => {
+      console.log('background remoteMessage', remoteMessage);
       if (
         remoteMessage.data.type &&
         remoteMessage.data.type === 'notification'
@@ -295,6 +303,7 @@ const Index = () => {
     messaging()
       .getInitialNotification()
       .then(async (remoteMessage) => {
+        console.log('open app remoteMessage', remoteMessage);
         if (remoteMessage) {
           if (
             remoteMessage.data.type &&

@@ -19,6 +19,40 @@
       android:theme="@style/AppTheme"
       android:networkSecurityConfig="@xml/network_security_config"
       android:usesCleartextTraffic="true">
+
+      <!--[START Push notification config -->
+         <!-- [START firebase_service] -->
+         <service
+             android:name="com.amazonaws.amplify.pushnotification.RNPushNotificationMessagingService">
+             <intent-filter>
+                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+             </intent-filter>
+         </service>
+         <!-- [END firebase_service] -->
+         <!-- [START firebase_iid_service] -->
+         <service
+             android:name="com.amazonaws.amplify.pushnotification.RNPushNotificationDeviceIDService">
+             <intent-filter>
+                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+             </intent-filter>
+         </service>
+         <receiver
+             android:name="com.amazonaws.amplify.pushnotification.modules.RNPushNotificationBroadcastReceiver"
+             android:exported="false" >
+             <intent-filter>
+                 <action android:name="com.amazonaws.amplify.pushnotification.NOTIFICATION_OPENED"/>
+             </intent-filter>
+         </receiver>
+      <!-- [END Push notification config -->
+      <!-- AWS Notification Configurations (Old document) -->
+          <receiver
+            android:name="com.amazonaws.mobileconnectors.pinpoint.targeting.notification.PinpointNotificationReceiver" android:exported="false" >
+              <intent-filter>
+                  <action android:name="com.amazonaws.intent.fcm.NOTIFICATION_OPEN" />
+              </intent-filter>
+          </receiver>
+      <!-- AWS Notification Configurations (Old document) -->
+
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
@@ -29,6 +63,7 @@
         android:exported="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
+
           <!--<intent-filter>
               <action android:name="android.intent.action.MAIN"/>
               <action android:name="android.intent.action.VIEW"/>
