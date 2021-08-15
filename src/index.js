@@ -27,7 +27,6 @@ import FlashMessage, {showMessage} from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
 
-import PushNotification from '@aws-amplify/pushnotification';
 import {PushNotificationIOS} from '@react-native-community/push-notification-ios';
 
 import Geocoder from 'react-native-geocoding';
