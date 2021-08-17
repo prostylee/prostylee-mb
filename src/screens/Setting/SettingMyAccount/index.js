@@ -52,9 +52,8 @@ const SettingMyAccount = () => {
 
   const dispatch = useDispatch();
 
-  const userProfile = useSelector((state) =>
-    userSelectors.getUserProfile(state),
-  );
+  const userProfile =
+    useSelector((state) => userSelectors.getUserProfile(state)) || {};
 
   const [userAvatar, setUserAvatar] = React.useState({
     name: '',
