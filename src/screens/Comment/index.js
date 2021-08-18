@@ -5,7 +5,8 @@ import {ThemeView, Header} from 'components';
 const Chat = (props) => {
   return (
     <ThemeView isFullView>
-      <Header isDefault title={'Chat'} />
+      <Header isDefault title={'Comment'} />
+      
     </ThemeView>
   );
 };

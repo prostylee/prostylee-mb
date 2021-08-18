@@ -18,9 +18,9 @@ const PostNewFeedItem = ({newFeedItem, targetType}) => {
   const address = ownerResponseLite?.fullAddress || '';
 
   const navigateToUserProfile = () => {
-    RootNavigator.navigate('UserProfile', {
-      userId: newFeedItem?.userResponseLite?.id,
-    });
+    // RootNavigator.navigate('UserProfile', {
+    //   userId: newFeedItem?.userResponseLite?.id,
+    // });
   };
 
   const navigateToStore = () => {

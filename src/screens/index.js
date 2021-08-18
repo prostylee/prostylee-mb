@@ -3,7 +3,7 @@ import Categories from './Categories';
 import Products from './Products';
 import Stores from './Stores';
 import StoryBoard from './StoryBoard';
-import Chat from './Chat';
+import Comment from './Comment';
 import SignIn from './Auth/SignIn';
 import SignUpViaPhone from './Auth/SignUpViaPhone';
 import SignInOptions from './Auth/SignInOptions';
@@ -81,7 +81,7 @@ export {
   Categories,
   Products,
   StoryBoard,
-  Chat,
+  Comment,
   BestSeller,
   PersonalSalers,
   SearchProductFilter,
