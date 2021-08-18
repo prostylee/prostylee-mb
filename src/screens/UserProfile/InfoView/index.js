@@ -20,7 +20,7 @@ const InfoView = ({profile, statistics}) => {
   const navigation = useNavigation();
 
   const _navigateChat = () => {
-    navigation.navigate('Chat');
+    navigation.navigate('Comment');
   };
 
   const _followPress = async () => {

@@ -10,7 +10,7 @@ const CommentButton = ({numberOfComment}) => {
   numberOfComment = numberOfComment || 0;
 
   const openComment = () => {
-    RootNavigator.navigate('Chat');
+    RootNavigator.navigate('Comment');
   };
 
   return (

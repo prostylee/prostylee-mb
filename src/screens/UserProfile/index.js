@@ -76,7 +76,7 @@ const UserProfile = ({navigation}) => {
   };
 
   const messagePress = () => {
-    navigation.navigate('Chat');
+    navigation.navigate('Comment');
   };
 
   const morePress = () => {};

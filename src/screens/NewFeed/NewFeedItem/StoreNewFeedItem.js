@@ -21,15 +21,15 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
   const address = productOwnerResponse?.fullAddress || '';
 
   const navigateStore = () => {
-    if (newFeedItem?.storeId) {
-      RootNavigator.navigate('StoreProfileMain', {
-        storeId: newFeedItem?.storeId,
-      });
-    } else {
-      RootNavigator.navigate('UserProfile', {
-        userId: productOwnerResponse?.id,
-      });
-    }
+    // if (newFeedItem?.storeId) {
+    //   RootNavigator.navigate('StoreProfileMain', {
+    //     storeId: newFeedItem?.storeId,
+    //   });
+    // } else {
+    //   RootNavigator.navigate('UserProfile', {
+    //     userId: productOwnerResponse?.id,
+    //   });
+    // }
   };
 
   const slider = (
