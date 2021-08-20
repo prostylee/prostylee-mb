@@ -1,23 +1,23 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Alert, Platform} from 'react-native';
-import {ContainerWithoutScrollView, ButtonRounded} from 'components';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {hasNotch} from 'react-native-device-info';
-import {useTheme, useRoute} from '@react-navigation/native';
+import { View, Text, TouchableOpacity, Alert, Platform } from 'react-native';
+import { ContainerWithoutScrollView, ButtonRounded } from 'components';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { hasNotch } from 'react-native-device-info';
+import { useTheme, useRoute } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
-import {Storage, Auth} from 'aws-amplify';
+import { Storage, Auth } from 'aws-amplify';
 import styles from './styles';
 import i18n from 'i18n';
-import {useBackHandler} from '@react-native-community/hooks';
-import {commonActions, newFeedSelectors, newFeedActions} from 'reducers';
-import {useDispatch, useSelector} from 'react-redux';
-import {CropView} from 'react-native-image-crop-tools';
+import { useBackHandler } from '@react-native-community/hooks';
+import { commonActions, newFeedSelectors, newFeedActions } from 'reducers';
+import { useDispatch, useSelector } from 'react-redux';
+import { CropView } from 'react-native-image-crop-tools';
 import ImageCropper from 'react-native-simple-image-cropper';
 
-import {dim} from 'utils/common';
-import {showMessage} from 'react-native-flash-message';
+import { dim } from 'utils/common';
+import { showMessage } from 'react-native-flash-message';
 
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
@@ -140,7 +140,7 @@ const AddStory = (props) => {
         return;
       }
       dispatch(commonActions.toggleLoading(true));
-      Storage.configure({level: 'public'}); // public | protected | private
+      Storage.configure({ level: 'public' }); // public | protected | private
       const response = await fetch(uri);
       const blob = await response.blob();
       const time = Date.now();
@@ -149,7 +149,7 @@ const AddStory = (props) => {
         contentType: 'image/jpeg',
       })
         .then((result) => {
-          postStory({name: `story_${time}.jpg`});
+          postStory({ name: `story_${time}.jpg` });
         })
         .catch((_) => {
           dispatch(commonActions.toggleLoading(false));
@@ -175,7 +175,7 @@ const AddStory = (props) => {
   });
 
   //Theme
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   const viewShotStyle = {
     width: WIDTH,
@@ -194,12 +194,12 @@ const AddStory = (props) => {
 
   // Add alert for button back to comfirm 
 
-  function showAlert(){
+  function showAlert() {
     Alert.alert(
       i18n.t('addStatus.alertTitle'), i18n.t('addStatus.alert'),
       [
-        {text: i18n.t('addStatus.alertOK'), onPress: () =>{ props.navigation.navigate('Home') }},
-        {text: i18n.t('addStatus.alertCancel'), onPress: () =>{}}
+        { text: i18n.t('addStatus.alertOK'), onPress: () => { props.navigation.pop(3) } },
+        { text: i18n.t('addStatus.alertCancel'), onPress: () => { } }
       ]
     )
   }
@@ -224,7 +224,7 @@ const AddStory = (props) => {
                 uploadToStorage(uri);
               }}
               keepAspectRatio
-              aspectRatio={{width: 9, height: 16}}
+              aspectRatio={{ width: 9, height: 16 }}
             />
           ) : (
             <View style={cropViewAndroidStyle}>
