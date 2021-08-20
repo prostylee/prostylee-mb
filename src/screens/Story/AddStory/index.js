@@ -170,6 +170,7 @@ const AddStory = (props) => {
   };
   //BackHandler handle
   useBackHandler(() => {
+    showAlert()
     return true;
   });
 
@@ -190,6 +191,18 @@ const AddStory = (props) => {
     height: HEIGHT - notchHeight - BOTTOM_FOOTER_HEIGHT,
     overflow: 'visible',
   };
+
+  // Add alert for button back to comfirm 
+
+  function showAlert(){
+    Alert.alert(
+      i18n.t('addStatus.alertTitle'), i18n.t('addStatus.alert'),
+      [
+        {text: i18n.t('addStatus.alertOK'), onPress: () =>{ props.navigation.navigate('Home') }},
+        {text: i18n.t('addStatus.alertCancel'), onPress: () =>{}}
+      ]
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -249,7 +262,7 @@ const AddStory = (props) => {
           <View style={styles.backButton}>
             <TouchableOpacity
               style={styles.backButtonStyle}
-              onPress={props.navigation.goBack}>
+              onPress={showAlert}>
               <FontAwesome
                 name="chevron-left"
                 color={colors['$black']}

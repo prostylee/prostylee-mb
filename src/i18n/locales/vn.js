@@ -260,6 +260,11 @@ export default {
     checkAll: 'Xin hãy check lại tất cả các hình ảnh của bạn',
     cropAll: 'Crop all',
     cropSingle: 'Crop',
+    alertTitle: 'Hủy bài viết',
+    alert:'Bạn muốn hủy bài viết?',
+    alertOK:'Đồng ý',
+    alertCancel:'Hủy',
+
   },
   Search: {
     inputPlaceholder: 'Tìm kiếm sản phẩm, cửa hàng',

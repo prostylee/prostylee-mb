@@ -7,9 +7,10 @@ import {
   Image,
   Alert,
   Platform,
+  BackHandler,
 } from 'react-native';
 import {Container, ButtonRounded, HeaderBack} from 'components';
-import {useTheme, useRoute, useNavigation} from '@react-navigation/native';
+import {useTheme, useRoute, useNavigation,useIsFocused} from '@react-navigation/native';
 import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
 import Carousel from 'react-native-snap-carousel';
@@ -28,6 +29,7 @@ import {showMessage} from 'react-native-flash-message';
 const WIDTH = dim.width;
 
 const AddStatus = (props) => {
+  const isFocused = useIsFocused();
   const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
   const dispatch = useDispatch();
   const inputRef = React.useRef();
@@ -77,6 +79,7 @@ const AddStatus = (props) => {
 
   //BackHandler handle
   useBackHandler(() => {
+    showAlert()
     return true;
   });
 
@@ -225,10 +228,22 @@ const AddStatus = (props) => {
     {paddingTop: Platform.OS === 'android' ? notchHeight : 0},
   ];
 
+  // Add alert for button back to comfirm 
+
+  function showAlert(){
+    Alert.alert(
+      i18n.t('addStatus.alertTitle'), i18n.t('addStatus.alert'),
+      [
+        {text: i18n.t('addStatus.alertOK'), onPress: () =>{ navigation.navigate('Home') }},
+        {text: i18n.t('addStatus.alertCancel'), onPress: () =>{}}
+      ]
+    )
+  }
+
   return (
     <View style={containerStyle}>
       <HeaderBack
-        onBack={navigation.goBack}
+        onBack={showAlert}
         title={i18n.t('addStatus.title')}
       />
       <InputStatusText />
