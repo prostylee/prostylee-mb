@@ -344,7 +344,7 @@ const ProductDetail = (props) => {
             }
             activeSlideAlignment={'start'}
             renderItem={renderImageItem}
-            sliderWidth={WIDTH * productImage.length}
+            sliderWidth={WIDTH * (productImage?.length || 1)}
             itemWidth={WIDTH}
             onSnapToItem={(index) => setCurrentImage(index + 1)}
           />

@@ -3,7 +3,12 @@ import {StyleSheet, View, Platform, StatusBar} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
 
-import {commonActions, commonSelectors, userActions} from './redux/reducers';
+import {
+  commonActions,
+  commonSelectors,
+  userActions,
+  userSelectors,
+} from './redux/reducers';
 
 import {common} from './utils';
 
@@ -107,6 +112,7 @@ const Index = () => {
   const addPictureOptionTarget = useSelector((state) =>
     commonSelectors.addPictureOptionTarget(state),
   );
+  const userToken = useSelector((state) => userSelectors.getUserToken(state));
 
   // const isRequireUpdate = useSelector((state) =>
   //   commonSelectors.getRequireUpdate(state),
@@ -225,6 +231,20 @@ const Index = () => {
       });
   };
 
+  const navigateToScreen = (data) => {
+    const {target = '', screenData = {}} = data;
+    const screenDataParse = JSON.parse(screenData) || {};
+    switch (target) {
+      case 'product':
+        RootNavigator.navigate('ProductDetail', {
+          id: screenDataParse.productId,
+        });
+        break;
+      default:
+        return null;
+    }
+  };
+
   // Notification Permission
   const requestUserPermission = async () => {
     const authStatus = await messaging().requestPermission();
@@ -242,59 +262,25 @@ const Index = () => {
     console.log('token', token);
     //notification arrived when app on foreground state
     messaging().onMessage(async (remoteMessage) => {
-      console.log('foreground remoteMessage', remoteMessage);
-      if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'notification'
-      ) {
-        //do something here
-        //.........
-      } else if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'message' &&
-        remoteMessage.data.user
-      ) {
-        //do something here
-        //.........
-      } else if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'message' &&
-        !remoteMessage.data.user
-      ) {
-        //do something here
-        //.........
+      if (remoteMessage.data.type && remoteMessage.data.type === 'navigation') {
+        if (!userToken) {
+          return null;
+        }
+        // navigateToScreen(remoteMessage.data);
       } else {
-        //do something here
-        //.........
+        console.log('foreground remoteMessage', remoteMessage);
       }
     });
 
     //notification was opened when app on background state
     messaging().onNotificationOpenedApp(async (remoteMessage) => {
-      console.log('background remoteMessage', remoteMessage);
-      if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'notification'
-      ) {
-        //do something here
-        //.........
-      } else if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'message' &&
-        remoteMessage.data.user
-      ) {
-        //do something here
-        //.........
-      } else if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'message' &&
-        !remoteMessage.data.user
-      ) {
-        //do something here
-        //.........
+      if (remoteMessage.data.type && remoteMessage.data.type === 'navigation') {
+        if (!userToken) {
+          return null;
+        }
+        navigateToScreen(remoteMessage.data);
       } else {
-        //do something here
-        //.........
+        console.log('background remoteMessage', remoteMessage);
       }
     });
 
@@ -302,31 +288,17 @@ const Index = () => {
     messaging()
       .getInitialNotification()
       .then(async (remoteMessage) => {
-        console.log('open app remoteMessage', remoteMessage);
         if (remoteMessage) {
           if (
             remoteMessage.data.type &&
-            remoteMessage.data.type === 'notification'
+            remoteMessage.data.type === 'navigation'
           ) {
-            //do something here
-            //.........
-          } else if (
-            remoteMessage.data.type &&
-            remoteMessage.data.type === 'message' &&
-            remoteMessage.data.user
-          ) {
-            //do something here
-            //.........
-          } else if (
-            remoteMessage.data.type &&
-            remoteMessage.data.type === 'message' &&
-            !remoteMessage.data.user
-          ) {
-            //do something here
-            //.........
+            if (!userToken) {
+              return null;
+            }
+            navigateToScreen(remoteMessage.data);
           } else {
-            //do something here
-            //.........
+            console.log('open app remoteMessage', remoteMessage);
           }
         }
       });
