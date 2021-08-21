@@ -17,7 +17,7 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
   const productOwnerResponse = newFeedItem?.newFeedOwnerResponse;
   const urlImage = productOwnerResponse?.logoUrl;
   const name = productOwnerResponse?.name || '';
-  const storeId = productOwnerResponse?.id || '';
+  const storeId = productOwnerResponse?.id || 0;
   const address = productOwnerResponse?.fullAddress || '';
 
   const navigateStore = () => {

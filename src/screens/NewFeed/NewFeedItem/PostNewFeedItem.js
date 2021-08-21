@@ -14,7 +14,7 @@ const PostNewFeedItem = ({newFeedItem, targetType}) => {
   const ownerResponseLite = newFeedItem?.newFeedOwnerResponse;
   const urlImage = ownerResponseLite?.avatar;
   const name = ownerResponseLite?.fullName || '';
-  const userId = ownerResponseLite?.id || '';
+  const userId = ownerResponseLite?.id || 0;
   const address = ownerResponseLite?.fullAddress || '';
 
   const navigateToUserProfile = () => {
