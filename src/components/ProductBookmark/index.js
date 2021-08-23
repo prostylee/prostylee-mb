@@ -7,14 +7,19 @@ import {
 } from 'services/api/productApi';
 import * as CONTANTS from 'constants';
 import {showMessage} from 'react-native-flash-message';
+import { commonActions } from '../../redux/reducers';
+import {useDispatch} from 'react-redux';
 
 const ProductBookmark = ({item, likeSize = 22, unlikeSize = 24}) => {
+  const dispatch = useDispatch();
   const [clickLike, handleClickLike] = useState(false);
   const [like, handleLike] = useState(
     item?.bookmarkStatus ? item?.bookmarkStatus : false,
   );
   const toggleProduct = async () => {
+    await dispatch(commonActions.toggleLoading(true));
     if (clickLike) {
+      await dispatch(commonActions.toggleLoading(false));
       return null;
     } else {
       handleClickLike(true);
@@ -34,6 +39,7 @@ const ProductBookmark = ({item, likeSize = 22, unlikeSize = 24}) => {
         });
       }
       handleClickLike(false);
+      await dispatch(commonActions.toggleLoading(false));
     }
   };
   return (
