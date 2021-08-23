@@ -14,6 +14,7 @@ import Story from '../Story';
 import HeaderView from '../HeaderView';
 import StoryFooter from '../StoryFooter';
 import ProgressArray from '../ProgressArray';
+import Comment from '../Comment';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -178,8 +179,7 @@ const StoryContainer = (props) => {
           position="bottom"
           isOpen={isModelOpen}
           onClosed={closeChatModal}>
-          <View style={styles.bar} />
-          <Text>Chat</Text>
+          <Comment closeCommentModal={closeChatModal} story={story} />
         </Modal>
       </TouchableOpacity>
     </GestureRecognizer>
@@ -193,7 +193,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     // paddingTop: 30,
-    backgroundColor: 'red',
   },
   progressBarArray: {
     flexDirection: 'row',
