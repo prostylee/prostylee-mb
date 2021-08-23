@@ -9,15 +9,19 @@ import {isIphoneX} from 'utils/ui';
 import {STORY_TYPE} from 'constants';
 /******** chat aws ********/
 import {API, graphqlOperation} from 'aws-amplify';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {createComment} from 'graphqlLocal/mutations';
-import {commonActions} from 'reducers';
+import {commonActions, userSelectors} from 'reducers';
 /******** chat aws ********/
 
 const FooterInput = (props) => {
   const user = props.user ? props.user : {};
   const storyId = props.storyId ? props.storyId : '';
   const DEFAULT_PARENT_COMMENT_ID = `${STORY_TYPE}_${storyId}`; // Rule: <targetType>_<targetId>
+
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
 
   const {colors} = useTheme();
   const dispatch = useDispatch();
@@ -43,42 +47,31 @@ const FooterInput = (props) => {
       return;
     }
 
-    console.log('ojbec', {
-      parentId: DEFAULT_PARENT_COMMENT_ID,
-      ownerId: user?.attributes?.sub,
-      owner: user?.username,
-      ownerFullname: user?.attributes?.name,
-      targetId: storyId,
-      targetType: STORY_TYPE,
-      content: text,
-      numberOfLikes: 0,
-      createdAt: new Date().toISOString(), // "2021-02-18T15:41:16Z"
-    });
-
     dispatch(commonActions.toggleLoading(true));
-    // try {
-    const res = await API.graphql(
-      graphqlOperation(createComment, {
-        input: {
-          parentId: DEFAULT_PARENT_COMMENT_ID,
-          ownerId: user?.attributes?.sub,
-          owner: user.username,
-          ownerFullname: user?.attributes?.name,
-          targetId: storyId,
-          targetType: STORY_TYPE,
-          content: text,
-          numberOfLikes: 0,
-          createdAt: new Date().toISOString(), // "2021-02-18T15:41:16Z"
-        },
-      }),
-    );
-    //   console.log('res', res);
-    // } catch (error) {
-    //   console.log('error comment', error);
-    // } finally {
-    //   onChangeText('');
-    //   dispatch(commonActions.toggleLoading(false));
-    // }
+    try {
+      await API.graphql(
+        graphqlOperation(createComment, {
+          input: {
+            parentId: DEFAULT_PARENT_COMMENT_ID,
+            ownerId: user?.attributes?.sub,
+            owner: user.username,
+            ownerFullname: userProfile?.avatar
+              ? `${user?.attributes.name}&${userProfile.avatar}`
+              : user?.attributes?.name,
+            targetId: storyId,
+            targetType: STORY_TYPE,
+            content: text,
+            numberOfLikes: 0,
+            createdAt: new Date().toISOString(), // "2021-02-18T15:41:16Z"
+          },
+        }),
+      );
+    } catch (error) {
+      console.log('error comment', error);
+    } finally {
+      onChangeText('');
+      dispatch(commonActions.toggleLoading(false));
+    }
   };
 
   return (
@@ -92,16 +85,6 @@ const FooterInput = (props) => {
         onChangeText={onChangeText}
         onTouchStart={async () => {
           setEmojiShow(false);
-          // if (fullItem.participantUserIds.length === 2) {
-          //   await API.graphql(
-          //     graphqlOperation(updateChat, {
-          //       input: {
-          //         id: fullItem.id,
-          //         imageUrls: [],
-          //       },
-          //     }),
-          //   );
-          // }
         }}
         value={text}
         placeholder={i18n.t('chat.inputPlaceholder')}
@@ -113,7 +96,7 @@ const FooterInput = (props) => {
         <View style={styles.iconFooter}>
           <IconFeather
             name="smile"
-            color={colors['$black']}
+            color={colors.$black}
             size={25}
             onPress={() => {
               Keyboard.dismiss();

@@ -64,6 +64,7 @@ export default {
   storyBoard: {
     titleStoryBoard: 'Cảm hứng thời trang',
     commentTitle: 'Bình luận',
+    commentReply: 'Phản hồi',
   },
   titleOnboarding1: 'Cộng đồng thời trang lớn nhất Việt Nam',
   contentOnboarding1:

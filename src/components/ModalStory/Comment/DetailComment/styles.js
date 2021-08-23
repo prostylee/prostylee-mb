@@ -3,39 +3,17 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
-  title: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '$bgColor',
-  },
-  titleText: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '500',
-  },
-  closeButton: {
-    position: 'absolute',
-    right: 16,
-    top: 16,
-  },
-
   /**
    * comment list
    */
   list: {
     flex: 1,
-    width: '100%',
     paddingHorizontal: 16,
+    paddingLeft: 44,
   },
   commentItem: {
     width: '100%',
@@ -43,7 +21,7 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 16,
+    paddingBottom: 16,
   },
   itemAvatar: {
     width: 44,

@@ -5,15 +5,22 @@ import {
   Text,
   View,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import i18n from 'i18n';
 import IonIcons from 'react-native-vector-icons/Ionicons';
+
 import {useTheme} from '@react-navigation/native';
 import FooterInput from './FooterInput';
+import CommentItem from './CommentItem';
+import DetailComment from './DetailComment';
 
+import {useDispatch} from 'react-redux';
+import {commonActions} from 'reducers';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
-import {getComment, listComments} from 'graphqlLocal/queries';
+import {listComments} from 'graphqlLocal/queries';
+import {onCreateComment} from 'graphqlLocal/subscriptions';
 import {showMessage} from 'react-native-flash-message';
 import {STORY_TYPE} from 'constants';
 
@@ -21,9 +28,15 @@ import styles from './styles';
 
 const Comment = (props) => {
   const {colors} = useTheme();
+  const dispatch = useDispatch();
   const {closeCommentModal, story} = props;
+
+  const CommentRef = React.useRef();
   const [currentUser, setCurrentUser] = React.useState();
-  const [loading, setLoading] = React.useState(false);
+  const [listComment, setListComment] = React.useState([]);
+
+  const [parentComment, setParentComment] = React.useState({});
+  const [goToChild, setGoToChild] = React.useState(false);
 
   const storyId = story && story.id ? story.id : '';
   const DEFAULT_PARENT_COMMENT_ID = `${STORY_TYPE}_${storyId}`; // Rule: <targetType>_<targetId>
@@ -33,18 +46,42 @@ const Comment = (props) => {
       .then((user) => {
         setCurrentUser(user);
       })
-      .catch((err) => {
+      .catch(() => {
         showMessage({
           message: i18n.t('unknownMessage'),
           type: 'danger',
           position: 'top',
         });
       });
-    executeGetChat();
+    executeGetComment();
   }, []);
 
-  const executeGetChat = async () => {
-    setLoading(true);
+  React.useEffect(() => {
+    const createCommentListener = API.graphql(
+      graphqlOperation(onCreateComment),
+    ).subscribe({
+      next: (commentData) => {
+        const addedComment = commentData.value.data.onCreateComment;
+
+        console.log('addedComment', addedComment);
+        if (addedComment.parentId === DEFAULT_PARENT_COMMENT_ID) {
+          const updatedComments = [...listComment];
+          updatedComments.push(addedComment);
+          setListComment(updatedComments);
+        } else {
+        }
+      },
+    });
+
+    return () => {
+      if (createCommentListener) {
+        createCommentListener.unsubscribe();
+      }
+    };
+  }, [listComment, dispatch]);
+
+  const executeGetComment = async () => {
+    dispatch(commonActions.toggleLoading(true));
     try {
       API.graphql(
         graphqlOperation(listComments, {
@@ -57,10 +94,7 @@ const Comment = (props) => {
         }),
       )
         .then((result) => {
-          console.log(
-            'result.data.listComments.items',
-            result.data.listComments.items,
-          );
+          setListComment(result.data.listComments.items);
         })
         .catch(() => {
           showMessage({
@@ -76,8 +110,35 @@ const Comment = (props) => {
         position: 'top',
       });
     } finally {
-      setLoading(false);
+      dispatch(commonActions.toggleLoading(false));
     }
+  };
+
+  const moveToCommentDetail = (item) => {
+    if (CommentRef && CommentRef.current) {
+      CommentRef.current.scrollToEnd();
+    }
+    setParentComment(item);
+    setGoToChild(true);
+  };
+
+  const ListComment = () => {
+    return (
+      <>
+        <FlatList
+          style={styles.list}
+          renderItem={({item}) => (
+            <CommentItem
+              item={item}
+              currentUser={currentUser}
+              moveToCommentDetail={moveToCommentDetail}
+            />
+          )}
+          data={listComment}
+        />
+        <FooterInput user={currentUser} storyId={storyId} />
+      </>
+    );
   };
 
   return (
@@ -91,10 +152,18 @@ const Comment = (props) => {
         <TouchableOpacity
           style={styles.closeButton}
           onPress={closeCommentModal}>
-          <IonIcons name={'ios-close'} size={24} color={colors['$black']} />
+          <IonIcons name={'ios-close'} size={24} color={colors.$black} />
         </TouchableOpacity>
       </View>
-      <FooterInput user={currentUser} storyId={storyId} />
+      {goToChild ? (
+        <DetailComment
+          item={parentComment}
+          currentUser={currentUser}
+          goBack={() => setGoToChild(false)}
+        />
+      ) : (
+        <ListComment />
+      )}
     </KeyboardAvoidingView>
   );
 };
