@@ -77,13 +77,6 @@ const ModalAddPictureMethod = ({visible, target = ''}) => {
           .then((res) => {
             RootNavigator.navigate('AddStory', {image: res});
           })
-          .catch((e) => {
-            showMessage({
-              message: i18n.t('unknownMessage'),
-              type: 'danger',
-              position: 'top',
-            });
-          });
         break;
       }
       case 'status': {
@@ -95,13 +88,6 @@ const ModalAddPictureMethod = ({visible, target = ''}) => {
           .then((res) => {
             RootNavigator.navigate('CropPicture', {images: res});
           })
-          .catch((e) => {
-            showMessage({
-              message: i18n.t('unknownMessage'),
-              type: 'danger',
-              position: 'top',
-            });
-          });
         break;
       }
       default:
@@ -119,13 +105,6 @@ const ModalAddPictureMethod = ({visible, target = ''}) => {
           .then((res) => {
             RootNavigator.navigate('AddStory', {image: res});
           })
-          .catch((e) => {
-            showMessage({
-              message: i18n.t('unknownMessage'),
-              type: 'danger',
-              position: 'top',
-            });
-          });
         break;
       }
       case 'status': {
@@ -136,13 +115,6 @@ const ModalAddPictureMethod = ({visible, target = ''}) => {
           .then((res) => {
             RootNavigator.navigate('CropPicture', {images: [res]});
           })
-          .catch((e) => {
-            showMessage({
-              message: i18n.t('unknownMessage'),
-              type: 'danger',
-              position: 'top',
-            });
-          });
         break;
       }
       default:
