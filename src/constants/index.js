@@ -37,6 +37,7 @@ export const SORT_DEFAULT = 'createdAt';
 
 //Story
 export const STORY_DURATION = 15;
+export const STORY_TYPE = 'STORY';
 
 // CURRENCY
 export const CURRENCY_VIET_NAM = 'đ';
