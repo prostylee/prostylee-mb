@@ -63,7 +63,6 @@ const Comment = (props) => {
       next: (commentData) => {
         const addedComment = commentData.value.data.onCreateComment;
 
-        console.log('addedComment', addedComment);
         if (addedComment.parentId === DEFAULT_PARENT_COMMENT_ID) {
           const updatedComments = [...listComment];
           updatedComments.push(addedComment);
@@ -122,6 +121,14 @@ const Comment = (props) => {
     setGoToChild(true);
   };
 
+  const EmptyList = () => {
+    return (
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyText}>{i18n.t('storyBoard.noComment')}</Text>
+      </View>
+    );
+  };
+
   const ListComment = () => {
     return (
       <>
@@ -135,6 +142,7 @@ const Comment = (props) => {
             />
           )}
           data={listComment}
+          ListEmptyComponent={<EmptyList />}
         />
         <FooterInput user={currentUser} storyId={storyId} />
       </>
