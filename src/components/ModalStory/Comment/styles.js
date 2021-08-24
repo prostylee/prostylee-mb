@@ -1,4 +1,7 @@
+import {dim} from 'utils/ui';
 import EStyleSheet from 'react-native-extended-stylesheet';
+
+const WIDTH = dim.width;
 
 export default EStyleSheet.create({
   container: {
@@ -27,6 +30,18 @@ export default EStyleSheet.create({
     position: 'absolute',
     right: 16,
     top: 16,
+  },
+  emptyContainer: {
+    flex: 1,
+    width: WIDTH - 32,
+    paddingTop: 12,
+  },
+  emptyText: {
+    textAlign: 'center',
+    width: '100%',
+    fontSize: 13,
+    lineHeight: 18,
+    color: '$lightGray',
   },
 
   /**

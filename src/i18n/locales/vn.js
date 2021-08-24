@@ -65,6 +65,8 @@ export default {
     titleStoryBoard: 'Cảm hứng thời trang',
     commentTitle: 'Bình luận',
     commentReply: 'Phản hồi',
+    noComment: 'Chưa có bình luận nào.',
+    noReply: 'Chưa có phản hồi nào.',
   },
   titleOnboarding1: 'Cộng đồng thời trang lớn nhất Việt Nam',
   contentOnboarding1:

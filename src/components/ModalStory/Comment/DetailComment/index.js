@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, FlatList} from 'react-native';
+import {View, Image, FlatList, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import i18n from 'i18n';
 import {IconButton} from 'react-native-paper';
@@ -88,9 +88,18 @@ const Comment = (props) => {
     }
   };
 
+  const EmptyList = () => {
+    return (
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyText}>{i18n.t('storyBoard.noReply')}</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <IconButton
+        style={styles.backButton}
         icon={({size, color}) => (
           <Image
             source={IC_BACK}
@@ -106,6 +115,7 @@ const Comment = (props) => {
           <CommentItem item={item} currentUser={currentUser} />
         )}
         data={listComment}
+        ListEmptyComponent={<EmptyList />}
       />
       <FooterInput user={currentUser} storyId={commentId} />
     </View>
