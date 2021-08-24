@@ -9,8 +9,8 @@ export const getStoreById = (id) => {
   return _fetch(GET, `/stores/${id}`);
 };
 
-export const getStoreMiniApi = () => {
-  return _fetch(GET, '/stores/mini-stores', {});
+export const getStoreMiniApi = (payload) => {
+  return _fetch(GET, '/stores/mini-stores', payload);
 };
 // STORE MAIN
 export const getBannerGroups = (payload) => {

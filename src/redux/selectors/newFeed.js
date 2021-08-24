@@ -51,3 +51,34 @@ export const getStoreMini = createSelector(
   newFeedState,
   (data) => data?.storeMini || {},
 );
+
+export const getStoreMiniLoadMoreSelector = createSelector(
+  newFeedState,
+  (data) => data?.hasLoadMoreStoreMini || false,
+);
+
+export const getHasLoadMoreStoreMiniSelector = createSelector(
+  newFeedState,
+  (data) => data?.hasLoadMoreStoreMini || false,
+);
+
+
+export const getPageStoreMiniSelector = createSelector(
+  newFeedState,
+  (data) => data?.pageStoreMini || 0,
+);
+
+export const getLimitStoreMiniSelector = createSelector(
+  newFeedState,
+  (data) => data?.limitStoreMini || 12,
+);
+
+export const getLoadMoreStoreMiniLoadingSelector = createSelector(
+  newFeedState,
+  (data) => data?.loadMoreStoreMiniLoading,
+);
+
+export const getStoreMiniLoadingSelector = createSelector(
+  newFeedState,
+  (data) => data?.storeMiniLoading,
+);
