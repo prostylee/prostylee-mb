@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
+  Alert
 } from 'react-native';
 import {
   Header,
@@ -22,6 +23,7 @@ import {Camera} from 'svg/common';
 import styles from './styles';
 import I18n from 'i18n';
 import {Field, Formik} from 'formik';
+import { useBackHandler } from '@react-native-community/hooks';
 import {useDispatch, useSelector} from 'react-redux';
 import {userSelectors, userActions} from 'reducers';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -82,6 +84,7 @@ const SettingMyAccount = () => {
   }
 
   const [showDatePicker, setShowDatePicker] = React.useState(false);
+  const [isChange, setisChange] = React.useState(false);
 
   const birthdayRef = React.useRef();
 
@@ -245,12 +248,39 @@ const SettingMyAccount = () => {
     };
   }, []);
 
+  //add *
+  const setLabelTextInput = (text,target) =>{
+    return (
+      <Text>
+        {text}
+        {target ? (<Text style = {{color: 'red'}}>{'  *'}</Text>) : ('')}
+      </Text>
+    )
+  }
+  //BackHandler handle
+  useBackHandler(() => {
+    isChange || userAvatar.name !== ''
+    ? showAlert()
+    : navigation.goBack()
+    return true;
+  });
+  
+  function showAlert() {
+    Alert.alert(
+      I18n.t('settingProfile.alertTitle'), I18n.t('settingProfile.alert'),
+      [
+        { text: I18n.t('settingProfile.alertOK'), onPress: () => {navigation.goBack()}},
+        { text: I18n.t('settingProfile.alertCancel'), onPress: () => { } }
+      ]
+    )
+  }
+
   return (
     <ThemeView isFullView style={styles.container}>
       <KeyboardAvoidingView
         style={styles.contentContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <Header title={I18n.t('setting.profile')} isDefault />
+        <Header title={I18n.t('setting.profile')} isDefault preventGobackFunction = {isChange || userAvatar.name !== '' ? showAlert : ''}/>
         <ScrollView>
           <View style={styles.imageView}>
             <Image
@@ -304,12 +334,14 @@ const SettingMyAccount = () => {
                     component={CustomTextInput}
                     name="name"
                     validate={validateFullname}
-                    label={I18n.t('settingProfile.name')}
+                    label={setLabelTextInput(I18n.t('settingProfile.name'),true)}
+                    onChange ={() =>{setisChange(true)}}
                   />
                   <Field
                     component={CustomTextInput}
                     name="bio"
-                    label={I18n.t('settingProfile.bio')}
+                    label={setLabelTextInput(I18n.t('settingProfile.bio'),false)}
+                    onChange ={() =>{setisChange(true)}}
                   />
 
                   <View style={styles.viewDivider} />
@@ -317,18 +349,20 @@ const SettingMyAccount = () => {
                   <Field
                     component={CustomTextInput}
                     name="gender"
-                    label={I18n.t('settingProfile.gender')}
+                    label={setLabelTextInput(I18n.t('settingProfile.gender'),true)}
                     onFocus={() => {
                       genderRef.current.togglePicker(true);
                     }}
+                    onChange ={() =>{setisChange(true)}}
                   />
                   <Field
                     component={CustomTextInput}
                     name="birthday"
-                    label={I18n.t('settingProfile.birthday')}
+                    label={setLabelTextInput(I18n.t('settingProfile.birthday'),true)}
                     onFocus={() => setShowDatePicker(true)}
                     innerRef={birthdayRef}
                     onPress={() => setShowDatePicker(true)}
+                    onChange ={() =>{setisChange(true)}}
                   />
                   <Field
                     component={CustomTextInput}
@@ -337,14 +371,18 @@ const SettingMyAccount = () => {
                     innerRef={phoneRef}
                     onValueChange={(value) => {
                       values.phone = value;
+                      setisChange(true)
                     }}
-                    label={I18n.t('settingProfile.phone')}
+                    label={setLabelTextInput(I18n.t('settingProfile.phone'),true)}
+                    onChange ={() =>{setisChange(true)}}
                   />
                   <Field
                     component={CustomTextInput}
                     validate={validateEmail}
                     name="email"
-                    label={I18n.t('settingProfile.email')}
+                    label={setLabelTextInput(I18n.t('settingProfile.email'),true)}
+                    onValueChange = {() => setisChange(true) }
+                    onChange ={() =>{setisChange(true)}}
                   />
 
                   <View style={styles.viewDivider} />
@@ -353,6 +391,7 @@ const SettingMyAccount = () => {
                     component={CustomTextInput}
                     name="changePass"
                     label={I18n.t('settingProfile.changePass')}
+                    onChange ={() =>{setisChange(true)}}
                   />
                   <View style={styles.viewDivider} />
                   <View style={styles.viewDivider} />
