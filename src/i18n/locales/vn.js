@@ -268,6 +268,8 @@ export default {
     alert:'Bạn muốn hủy bài viết?',
     alertOK:'Đồng ý',
     alertCancel:'Hủy',
+    addStatusSuccess: 'Chia sẻ bài viết thành công!',
+    addStatusFail: 'Chia sẻ bài viết thất bại! Hãy kiểm tra kết nối của bạn.',
 
   },
   Search: {
@@ -336,6 +338,10 @@ export default {
     changePass: 'Đổi mật khẩu',
     buttonSave: 'Lưu thay đổi',
     changeImage: 'Thay ảnh đại diện',
+    alertTitle: 'Hủy cập nhật',
+    alert:'Bạn có chắc muốn bỏ những thay đổi này không?',
+    alertOK:'Đồng ý',
+    alertCancel:'Hủy',
   },
   settingAddress: {
     addAddress: 'Thêm địa chỉ',

@@ -67,6 +67,10 @@ const AddStore = (props) => {
   );
   React.useEffect(() => {
     setSearchDebounce();
+    //clean-up side effect (setTimeout)
+    return() =>{
+      setSearchDebounce.cancel()
+    }
   }, [setSearchDebounce]);
   const onPressItem = async (item) => {
     await dispatch(statusActions.addStatusStore(item));

@@ -26,6 +26,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { dim } from 'utils/common';
 import { showMessage } from 'react-native-flash-message';
 
+import {TYPE_USER} from '../../../constants'
+
 const WIDTH = dim.width;
 
 const AddStatus = (props) => {
@@ -105,6 +107,8 @@ const AddStatus = (props) => {
         };
       });
       if (!isEmpty(storeSelected)) {
+        //change to newfeed of user after post a status
+        dispatch(commonActions.toggleTargetType(TYPE_USER))
         await dispatch(
           statusActions.postStatus({
             description: inputValueRef.current,
@@ -115,6 +119,7 @@ const AddStatus = (props) => {
         );
         removeStore();
       } else {
+        dispatch(commonActions.toggleTargetType(TYPE_USER))
         await dispatch(
           statusActions.postStatus({
             description: inputValueRef.current,

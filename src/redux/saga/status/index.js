@@ -13,9 +13,20 @@ const postStatus = function* (payload) {
       res.ok &&
       (res.data.status === SUCCESS || res.data.status === POST_SUCCESS)
     ) {
-      RootNavigator.pop(2);
+      // show message when add status success
+      showMessage({
+        message: i18n.t('addStatus.addStatusSuccess'),
+        type: 'success',
+        position: 'top',
+      });
+      RootNavigator.navigate('Home');
       yield put(statusActions.postStatusSuccess(res.data.data));
     } else {
+      showMessage({
+        message: i18n.t('addStatus.addStatusFail'),
+        type: 'danger',
+        position: 'top',
+      });
       yield put(statusActions.postStatusFail());
     }
   } catch (e) {
