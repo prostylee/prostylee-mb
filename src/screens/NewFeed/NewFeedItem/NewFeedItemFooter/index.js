@@ -22,6 +22,7 @@ const NewFeedItemFooter = ({newFeedItem, targetType}) => {
           likeStatus={newFeedItem?.likeStatusOfUserLogin}
         />
         <CommentButton
+          newFeedItem={newFeedItem}
           numberOfComment={
             newFeedItem?.productStatisticResponse?.numberOfComment || 0
           }

@@ -6,11 +6,11 @@ import React from 'react';
 import RootNavigator from '../../../../navigator/rootNavigator';
 import {Message} from '../../../../svg/social';
 
-const CommentButton = ({numberOfComment}) => {
+const CommentButton = ({newFeedItem, numberOfComment}) => {
   numberOfComment = numberOfComment || 0;
 
   const openComment = () => {
-    RootNavigator.navigate('Comment');
+    RootNavigator.navigate('Comment', {newFeedItem});
   };
 
   return (
