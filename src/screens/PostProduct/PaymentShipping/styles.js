@@ -52,7 +52,7 @@ export default StyleSheet.create({
   button: {
     width: '90%',
     alignSelf: 'center',
-    paddingBottom: 44,
+    paddingBottom: 20,
   },
   notiContainer: {
     alignItems: 'center',

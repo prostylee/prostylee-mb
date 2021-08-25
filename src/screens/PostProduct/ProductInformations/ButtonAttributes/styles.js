@@ -33,7 +33,7 @@ export default EStyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     position: 'absolute',
-    bottom: 100,
+    bottom: 75,
   },
   checkAllButton: {
     position: 'absolute',

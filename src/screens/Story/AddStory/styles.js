@@ -32,7 +32,7 @@ export default EStyleSheet.create({
 
   bottom: {
     position: 'absolute',
-    bottom: 0,
+    bottom: -15,
     height: 76,
     width: WIDTH,
     display: 'flex',

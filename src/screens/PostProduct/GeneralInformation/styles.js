@@ -105,6 +105,6 @@ export default EStyleSheet.create({
   button: {
     width: '90%',
     alignSelf: 'center',
-    paddingBottom: 44,
+    paddingBottom: 20,
   },
 });
