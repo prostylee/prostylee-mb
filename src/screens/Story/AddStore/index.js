@@ -17,7 +17,7 @@ import {useTheme, useNavigation} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as CommonIcon from 'svg/common';
 import {StoreMiniLoading} from 'components/Loading/contentLoader';
-
+import debounce from 'lodash/debounce';
 import styles from './styles';
 import i18n from 'i18n';
 import {newFeedSelectors, newFeedActions} from 'reducers';
@@ -115,8 +115,8 @@ const AddStore = (props) => {
   //Theme
   const {colors} = useTheme();
 
-  const onSearchValue = (search) => {
-    setTimeout(() => {
+  const onSearchValue = debounce(
+    (search) => {
       dispatch(
         newFeedActions.getStoreMini({
           page: PAGE_DEFAULT,
@@ -125,8 +125,10 @@ const AddStore = (props) => {
           keyword: search,
         }),
       );
-    }, 1000);
-  };
+    },
+    1000,
+    {trailing: true, leading: false, maxWait: 4000},
+  );
 
   const onPressItem = async (item) => {
     await dispatch(newFeedActions.addNewFeedStore(item));
