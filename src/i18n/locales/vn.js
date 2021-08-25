@@ -264,6 +264,8 @@ export default {
     alert:'Bạn muốn hủy bài viết?',
     alertOK:'Đồng ý',
     alertCancel:'Hủy',
+    addStatusSuccess: 'Chia sẻ bài viết thành công!',
+    addStatusFail: 'Chia sẻ bài viết thất bại! Hãy kiểm tra kết nối của bạn.',
 
   },
   Search: {
