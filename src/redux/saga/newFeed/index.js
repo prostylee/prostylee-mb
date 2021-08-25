@@ -158,10 +158,10 @@ const getProductOfStory = function* (id) {
   }
 };
 
-const getStoreMini = function* () {
+const getStoreMini = function* (payload) {
   yield put(newFeedActions.getStoreMiniLoading(true));
   try {
-    const res = yield call(getStoreMiniApi);
+    const res = yield call(getStoreMiniApi, payload);
     if (res.ok && res.data.status === SUCCESS) {
       yield put(newFeedActions.getStoreMiniSuccess(res.data.data));
     } else {
@@ -175,6 +175,26 @@ const getStoreMini = function* () {
     });
   } finally {
     yield put(newFeedActions.getStoreMiniLoading(false));
+  }
+};
+
+const getLoadMoreStoreMini = function* ({payload}) {
+  yield put(newFeedActions.getStoreMiniLoadMoreLoading(true));
+  try {
+    const res = yield call(getStoreMiniApi, payload);
+    if (res.ok && res.data.status === SUCCESS) {
+      yield put(newFeedActions.getLoadMoreStoreMiniSuccess(res.data.data));
+    } else {
+      yield put(newFeedActions.getStoreMiniLoadMoreFailed());
+    }
+  } catch (e) {
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
+  } finally {
+    yield put(newFeedActions.getStoreMiniLoadMoreLoading(false));
   }
 };
 
@@ -225,6 +245,7 @@ const watcher = function* () {
   yield takeLatest(newFeedTypes.GET_STORIES_BY_USER, getStoriesByUsers);
   yield takeLatest(newFeedTypes.GET_PRODUCT_OF_STORIES, getProductOfStory);
   yield takeLatest(newFeedTypes.GET_STORE_MINI, getStoreMini);
+  yield takeLatest(newFeedTypes.GET_STORE_MINI_LOAD_MORE, getLoadMoreStoreMini);
   yield takeLatest(newFeedTypes.POST_STORY, postStory);
 };
 export default watcher();

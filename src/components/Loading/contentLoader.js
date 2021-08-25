@@ -97,6 +97,29 @@ export const StoreLoading = ({
   );
 };
 
+export const StoreMiniLoading = ({
+  backgroundColor,
+  foregroundColor,
+  style,
+  speed,
+  width,
+  height,
+}) => {
+  return (
+    <ContentLoader
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}
+      speed={speed}>
+      <Circle cx="31" cy="31" r="15" />
+      <Rect x="58" y="18" rx="2" ry="2" width="85%" height="10" />
+      <Rect x="58" y="34" rx="2" ry="2" width="85%" height="10" />
+    </ContentLoader>
+  );
+};
+
 export const CategoriesLeftLoading = ({
   backgroundColor,
   foregroundColor,
@@ -694,6 +717,17 @@ StoreLoading.defaultProps = {
   backgroundColor: '#d9d9d9',
   foregroundColor: '#ecebeb',
   style: {},
+  speed: 1.2,
+};
+
+StoreMiniLoading.defaultProps = {
+  height: Platform.OS === 'android' ? 70 : 80,
+  width: deviceWidth - 32,
+  backgroundColor: '#d9d9d9',
+  foregroundColor: '#ecebeb',
+  style: {
+    height: deviceHeight,
+  },
   speed: 1.2,
 };
 

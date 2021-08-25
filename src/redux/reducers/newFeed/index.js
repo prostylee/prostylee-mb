@@ -27,6 +27,10 @@ export const types = {
   GET_STORE_MINI: 'GET_STORE_MINI',
   GET_STORE_MINI_SUCCESS: 'GET_STORE_MINI_SUCCESS',
   GET_STORE_MINI_FAIL: 'GET_STORE_MINI_FAIL',
+  SET_LOAD_MORE_STORE_MINI_LOADING: 'SET_LOAD_MORE_STORE_MINI_LOADING',
+  GET_STORE_MINI_LOAD_MORE: 'GET_STORE_MINI_LOAD_MORE',
+  GET_STORE_MINI_LOAD_MORE_SUCCESS: 'GET_STORE_MINI_LOAD_MORE_SUCCESS',
+  GET_STORE_MINI_LOAD_MORE_FAILED: 'GET_STORE_MINI_LOAD_MORE_FAILED',
 
   ADD_NEW_FEED_STORE: 'ADD_NEW_FEED_STORE',
   REMOVE_NEW_FEED_STORE: 'REMOVE_NEW_FEED_STORE',
@@ -62,6 +66,16 @@ export const actions = {
   getStoreMini: createAction(types.GET_STORE_MINI),
   getStoreMiniSuccess: createAction(types.GET_STORE_MINI_SUCCESS),
   getStoreMiniFail: createAction(types.GET_STORE_MINI_FAIL),
+  getStoreMiniLoadMoreLoading: createAction(
+    types.SET_LOAD_MORE_STORE_MINI_LOADING,
+  ),
+  getStoreMiniLoadMore: createAction(types.GET_STORE_MINI_LOAD_MORE),
+  getLoadMoreStoreMiniSuccess: createAction(
+    types.GET_STORE_MINI_LOAD_MORE_SUCCESS,
+  ),
+  getStoreMiniLoadMoreFailed: createAction(
+    types.GET_STORE_MINI_LOAD_MORE_FAILED,
+  ),
 
   addNewFeedStore: createAction(types.ADD_NEW_FEED_STORE),
   removeNewFeedStore: createAction(types.REMOVE_NEW_FEED_STORE),
@@ -87,6 +101,11 @@ const intialState = {
   page: PAGE_DEFAULT,
   limit: LIMIT_DEFAULT,
   hasLoadMore: false,
+
+  loadMoreStoreMiniLoading: false,
+  hasLoadMoreStoreMini: false,
+  pageStoreMini: PAGE_DEFAULT,
+  limitStoreMini: LIMIT_DEFAULT,
 };
 
 export const selectors = {
@@ -163,11 +182,38 @@ export default handleActions(
       return {...state, storeMiniLoading: payload};
     },
     [types.GET_STORE_MINI_SUCCESS]: (state, {payload}) => {
-      return {...state, storeMini: payload};
+      const {totalPages} = payload;
+      const content = payload?.content;
+      const restContent = content.slice(FIRST_SLICE_ITEM, state.limitStoreMini);
+      return {
+        ...state,
+        pageStoreMini: PAGE_INIT,
+        storeMini: {...payload, content: restContent},
+        hasLoadMoreStoreMini: state.pageStoreMini < totalPages,
+      };
     },
     [types.GET_STORE_MINI_FAIL]: (state, {payload}) => {
       return {...state, storeMini: {}};
     },
+
+    [types.SET_LOAD_MORE_STORE_MINI_LOADING]: (state, {payload}) => {
+      return {...state, loadMoreStoreMiniLoading: payload};
+    },
+
+    [types.GET_STORE_MINI_LOAD_MORE_SUCCESS]: (state, {payload}) => {
+      const {totalPages, content} = payload;
+      payload.content = state.storeMini?.content.concat(content) || [];
+      return {
+        ...state,
+        storeMini: payload,
+        pageStoreMini: state.pageStoreMini + UNIT_INCREASE,
+        hasLoadMoreStoreMini: state.pageStoreMini + 1 < totalPages,
+      };
+    },
+    [types.GET_STORE_MINI_LOAD_MORE_FAILED]: (state, {payload}) => {
+      return {...state};
+    },
+
     [types.ADD_NEW_FEED_STORE]: (state, {payload}) => {
       return {...state, newFeedStoreSelect: payload};
     },
