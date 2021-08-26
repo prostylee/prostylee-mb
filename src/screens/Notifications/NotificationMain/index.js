@@ -49,7 +49,6 @@ const Notifications = ({navigation}) => {
     (state) => getListNotificationSelector(state),
     () => {},
   );
-
   const listListNotification = listListNotificationSelector?.content || [];
 
   const loadMoreLoading = useSelector((state) =>
@@ -122,8 +121,50 @@ const Notifications = ({navigation}) => {
           navigation.navigate('PromoNotification');
         }}
       />
-
-      {loading && !refreshing ? (
+      
+      { listListNotification && listListNotification.length ? (
+      <View style={styles.loadingContainter}>
+          {Array.from('x'.repeat(Math.round(height - 120) / (width / 3))).map(
+            (v, index) => (
+              <NotiLoading
+                width={width * 0.95}
+                height={width / 3}
+                key={index}
+              />
+            ),
+          )}
+          <FlatList
+          data={listListNotification}
+          contentContainerStyle={{paddingTop: 6}}
+          renderItem={({item}) => (
+            <>
+              <NotificationItem {...item} />
+              <Divider
+                style={{
+                  backgroundColor:
+                    item?.status !== 0 ? Colors?.bgColor : Colors?.white,
+                }}
+              />
+            </>
+          )}
+          numColumns={1}
+          keyExtractor={(item, index) => index}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          onEndReached={handleLoadMore}
+          ListFooterComponent={renderFooter}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          onEndReachedThreshold={0.7}
+        />
+        </View>
+      ) : (
+        <View style={styles.emptyView}>
+          <EmptyNotiOutlined />
+          <Text style={styles.emptyText}>{i18n.t('Notification.noData')}</Text>
+        </View>
+      )}
+      {/* {loading && !refreshing ? (
         <View style={styles.loadingContainter}>
           {Array.from('x'.repeat(Math.round(height - 120) / (width / 3))).map(
             (v, index) => (
@@ -165,7 +206,7 @@ const Notifications = ({navigation}) => {
           <EmptyNotiOutlined />
           <Text style={styles.emptyText}>{i18n.t('Notification.noData')}</Text>
         </View>
-      )}
+      )} */}
     </ThemeView>
   );
 };
