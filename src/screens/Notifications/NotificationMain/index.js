@@ -111,7 +111,6 @@ const Notifications = ({navigation}) => {
       <Header
         leftComponent={<HeaderLeft />}
         containerStyle={styles.headerContainer}
-        rightComponent={<HeaderRight />}
         isDefault={isNotTabbar}
         title={isNotTabbar ? i18n.t('bottomTab.notification') : ''}
       />
@@ -133,6 +132,9 @@ const Notifications = ({navigation}) => {
               />
             ),
           )}
+          <Header
+            rightComponent={<HeaderRight />}
+          />
           <FlatList
           data={listListNotification}
           contentContainerStyle={{paddingTop: 6}}
