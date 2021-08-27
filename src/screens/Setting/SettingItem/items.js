@@ -14,23 +14,23 @@ const list = [
       },
     ],
   },
-  {
-    title: i18n.t('setting.setting'),
-    list: [
-      {
-        title: i18n.t('setting.settingChat'),
-        screen: 'Home', // 'SettingChat',
-      },
-      {
-        title: i18n.t('setting.settingNotification'),
-        screen: 'SettingNotification',
-      },
-      {
-        title: i18n.t('setting.settingLanguage'),
-        screen: 'Home', // 'SettingLanguage',
-      },
-    ],
-  },
+  // {
+  //   title: i18n.t('setting.setting'),
+  //   list: [
+  //     {
+  //       title: i18n.t('setting.settingChat'),
+  //       screen: 'Home', // 'SettingChat',
+  //     },
+  //     {
+  //       title: i18n.t('setting.settingNotification'),
+  //       screen: 'SettingNotification',
+  //     },
+  //     {
+  //       title: i18n.t('setting.settingLanguage'),
+  //       screen: 'Home', // 'SettingLanguage',
+  //     },
+  //   ],
+  // },
 ];
 
 export default list;
