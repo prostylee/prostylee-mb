@@ -29,7 +29,11 @@ const Categories = ({navigation}) => {
         </View>
         <View style={styles.wrapRightContent}>
           <View style={styles.wrapRightBanner}>
-            <Image style={styles.imageBanner} source={{uri: banner}} />
+            {banner ? (
+              <Image style={styles.imageBanner} source={{ uri: banner }} />
+            ) : (
+              <Image style={styles.imageBanner} source={require('assets/images/default.png')} />
+            )}
           </View>
           <RightCategories navigation={navigation} />
         </View>

@@ -82,7 +82,7 @@ export default EStyleSheet.create({
   },
   priceRoot: {
     width: WIDTH_IMAGE - 20,
-    lineHeight: 16,
+    lineHeight: 20,
     fontSize: 11,
     fontFamily: '$font1',
     fontWeight: '400',
