@@ -3,11 +3,12 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {
   getVouchers as getVouchersApi,
   postSaveVouchers as postSaveVouchersApi,
+  postUnSaveVouchers as postUnSaveVouchersApi,
 } from 'services/api/storeApi';
 
 import {storeActions, storeTypes} from 'reducers';
 
-import {SUCCESS, POST_SUCCESS} from 'constants';
+import {SUCCESS, POST_SUCCESS, DELETE_SUCCESS} from 'constants';
 import {showMessage} from 'react-native-flash-message';
 
 import i18n from 'i18n';
@@ -72,10 +73,33 @@ const postSaveVoucher = function* ({payload}) {
   }
 };
 
+const postUnSaveVoucher = function* ({payload}) {
+  console.log('chuẩn bị api hủy lưu')
+  try {
+    //yield put(storeActions.setVouchersLoadmoreLoading(true));
+    const res = yield call(postUnSaveVouchersApi, payload);
+    console.log(res.ok,res.data.status)
+    if (res.ok && res.data.status === DELETE_SUCCESS && !res.data.error) {
+      console.log('thành công')
+      yield put(storeActions.postUnSaveVoucherSuccess(payload));
+    } else {
+      console.log('thất bại')
+      yield put(storeActions.postUnSaveVoucherFailed());
+    }
+  } catch (e) {
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
+  }
+};
+
 const watcher = function* () {
   //List FEATURED_PRODUCT_SEARCH
   yield takeLatest(storeTypes.GET_VOUCHERS, getVouchers);
   yield takeLatest(storeTypes.GET_VOUCHERS_LOADMORE, getVouchersLoadmore);
   yield takeLatest(storeTypes.POST_SAVE_VOUCHER, postSaveVoucher);
+  yield takeLatest(storeTypes.POST_UNSAVE_VOUCHER, postUnSaveVoucher);
 };
 export default watcher();

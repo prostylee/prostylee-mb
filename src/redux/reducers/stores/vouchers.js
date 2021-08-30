@@ -16,6 +16,11 @@ export const types = {
   POST_SAVE_VOUCHER: 'POST_SAVE_VOUCHER',
   POST_SAVE_VOUCHER_SUCCESS: 'POST_SAVE_VOUCHER_SUCCESS',
   POST_SAVE_VOUCHER_FAILED: 'POST_SAVE_VOUCHER_FAILED',
+
+  SET_UNSAVE_VOUCHER_STATUS: 'SET_UNSAVE_VOUCHER_STATUS',
+  POST_UNSAVE_VOUCHER: 'POST_UNSAVE_VOUCHER',
+  POST_UNSAVE_VOUCHER_SUCCESS: 'POST_UNSAVE_VOUCHER_SUCCESS',
+  POST_UNSAVE_VOUCHER_FAILED: 'POST_UNSAVE_VOUCHER_FAILED',
 };
 
 export const actions = {
@@ -34,6 +39,11 @@ export const actions = {
   postSaveVoucher: createAction(types.POST_SAVE_VOUCHER),
   postSaveVoucherSuccess: createAction(types.POST_SAVE_VOUCHER_SUCCESS),
   postSaveVoucherFailed: createAction(types.POST_SAVE_VOUCHER_FAILED),
+
+  setUnSaveVoucherStatus: createAction(types.SET_UNSAVE_VOUCHER_STATUS),
+  postUnSaveVoucher: createAction(types.POST_UNSAVE_VOUCHER),
+  postUnSaveVoucherSuccess: createAction(types.POST_UNSAVE_VOUCHER_SUCCESS),
+  postUnSaveVoucherFailed: createAction(types.POST_UNSAVE_VOUCHER_FAILED),
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -45,6 +55,7 @@ export const defaultState = {
   vouchersPage: 0,
   hasVouchersLoadmore: false,
   saveVoucherStatus: null,
+  unsaveVoucherStatus: null,
 };
 
 export const handleActions = {
@@ -104,10 +115,40 @@ export const handleActions = {
       saveVoucherStatus: 'failed',
     };
   },
+
+  //-----------------------addUnSave
+  [types.POST_UNSAVE_VOUCHER_SUCCESS]: (state, {payload}) => {
+    let newState = {...state?.vouchersData};
+    newState?.content?.map((v) => {
+      if (v.id === payload) {
+        v.savedUserVoucherId = null;
+      }
+      return v;
+    });
+    return {
+      ...state,
+      vouchersData: newState,
+      unsaveVoucherStatus: 'success',
+    };
+  },
+  [types.POST_UNSAVE_VOUCHER_FAILED]: (state) => {
+    return {
+      ...state,
+      unsaveVoucherStatus: 'failed',
+    };
+  },
+
   [types.SET_SAVE_VOUCHER_STATUS]: (state, {payload}) => {
     return {
       ...state,
       saveVoucherStatus: payload,
+    };
+  },
+
+  [types.SET_UNSAVE_VOUCHER_STATUS]: (state, {payload}) => {
+    return {
+      ...state,
+      unsaveVoucherStatus: payload,
     };
   },
 };

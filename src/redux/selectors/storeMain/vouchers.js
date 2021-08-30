@@ -28,3 +28,8 @@ export const postSaveVoucherStatusSelector = createSelector(
   storeReducer,
   (data) => data?.saveVoucherStatus || '',
 );
+
+export const postUnSaveVoucherStatusSelector = createSelector(
+  storeReducer,
+  (data) => data?.unsaveVoucherStatus || '',
+);
