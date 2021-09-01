@@ -12,7 +12,7 @@ import {follow, unfollow} from 'services/api/socialApi';
 import {SUCCESS} from 'constants';
 
 const Item = ({item, style, targetType}) => {
-  const [followed, setFollowed] = useState(false);
+  const [followed, setFollowed] = useState(item.followStatusOfUserLogin);
   const _followPress = async () => {
     if (!followed) {
       const res = await follow({
