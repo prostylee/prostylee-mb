@@ -17,7 +17,7 @@ const WIDTH = Dimensions.get('window').width;
 const WIDTH_IMG = (WIDTH * 0.7) / 3 - 1;
 
 const Item = ({item, style, targetType}) => {
-  const [followed, setFollowed] = useState(false);
+  const [followed, setFollowed] = useState(item.followStatusOfUserLogin);
   const products = item?.products;
   const _followPress = async () => {
     if (!followed) {
