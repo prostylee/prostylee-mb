@@ -35,7 +35,7 @@ const ProductList = ({
   }, [isLoading]);
   return (
     <View style={styles.container}>
-      {isLoading && !isRefreshing ? (
+      {data && data?.content?.length ? (
         <View
           style={{
             flexDirection: 'row',
@@ -46,8 +46,6 @@ const ProductList = ({
           {[1, 2, 3, 4].map((v) => (
             <SearchProductLoading key={v} />
           ))}
-        </View>
-      ) : data && data?.content?.length ? (
         <FlatList
           contentContainerStyle={styles.listWrapper}
           data={data?.content}
@@ -62,6 +60,7 @@ const ProductList = ({
           onEndReached={_handleLoadMore}
           onRefresh={_handleRefresh}
         />
+        </View>
       ) : (
         <Text style={styles.notFoundText}>
           {i18n.t('Search.resultsNotfound')}
