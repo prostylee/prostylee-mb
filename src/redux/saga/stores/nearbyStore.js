@@ -13,9 +13,13 @@ import i18n from 'i18n';
 //List FEATURED_PRODUCT_SEARCH
 
 const getNearbyStore = function* ({payload}) {
+  payload.latitude = 10.806406363857086;
+  payload.longtitude = 106.6634168400805;
+  console.log('p', payload);
   try {
     yield put(storeActions.setNearbyStoreLoading(true));
     const res = yield call(getNearbyStoreApi, payload);
+    console.log('r', res);
     let listStore = res?.data?.data;
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(storeActions.getNearbyStoreSuccess(listStore));

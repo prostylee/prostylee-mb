@@ -4,6 +4,12 @@ export default {
   cancel: 'Huỷ',
   logOut: 'Đăng xuất',
   caution: 'Chú ý!',
+  alertUpdate: 'Cập nhật ứng dụng',
+  descriptionUpdate:
+    'Đã có phiên bản mới, vui lòng cập nhật để có những trải nghiệm tốt hơn',
+  descriptionProgressUpdate: 'Đang cập nhật, vui lòng chờ trong ít phút',
+  buttonUpdateNewVersion: 'Cập nhật ngay',
+  resetApp: 'Khởi động lại',
   stores: {
     titleTopStore: 'Cửa hàng nổi bật',
     textNear: 'Cửa hàng gần đây',
@@ -265,12 +271,11 @@ export default {
     cropAll: 'Crop all',
     cropSingle: 'Crop',
     alertTitle: 'Hủy bài viết',
-    alert:'Bạn muốn hủy bài viết?',
-    alertOK:'Đồng ý',
-    alertCancel:'Hủy',
+    alert: 'Bạn muốn hủy bài viết?',
+    alertOK: 'Đồng ý',
+    alertCancel: 'Hủy',
     addStatusSuccess: 'Chia sẻ bài viết thành công!',
     addStatusFail: 'Chia sẻ bài viết thất bại! Hãy kiểm tra kết nối của bạn.',
-
   },
   Search: {
     inputPlaceholder: 'Tìm kiếm sản phẩm, cửa hàng',
@@ -339,9 +344,9 @@ export default {
     buttonSave: 'Lưu thay đổi',
     changeImage: 'Thay ảnh đại diện',
     alertTitle: 'Hủy cập nhật',
-    alert:'Bạn có chắc muốn bỏ những thay đổi này không?',
-    alertOK:'Đồng ý',
-    alertCancel:'Hủy',
+    alert: 'Bạn có chắc muốn bỏ những thay đổi này không?',
+    alertOK: 'Đồng ý',
+    alertCancel: 'Hủy',
   },
   settingAddress: {
     addAddress: 'Thêm địa chỉ',

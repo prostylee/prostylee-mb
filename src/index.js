@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, Platform, StatusBar} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
@@ -24,6 +24,7 @@ import {
   SlideInModal,
   ModalAddPictureMethod,
   ModalStory,
+  ModalRequireUpdate,
 } from 'components';
 
 import NetInfo from '@react-native-community/netinfo';
@@ -31,8 +32,6 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
-
-import {PushNotificationIOS} from '@react-native-community/push-notification-ios';
 
 import Geocoder from 'react-native-geocoding';
 import Amplify, {Auth} from 'aws-amplify';
@@ -85,10 +84,11 @@ const Index = () => {
   React.useEffect(() => {
     requestUserPermission();
     onCodepushCheckForUpdateApp();
+    setLoaded(false);
     async function getInfo() {
       const res = await getDeviceInfo();
+      setDeviceInfo(res);
     }
-
     getInfo();
   }, []);
 
@@ -112,6 +112,13 @@ const Index = () => {
   const addPictureOptionTarget = useSelector((state) =>
     commonSelectors.addPictureOptionTarget(state),
   );
+
+  const [loading, setLoaded] = useState(true);
+  const [isRequireUpdate, setIsRequireUpdate] = useState(false);
+  const [progressUpdate, setProgressUpdate] = useState(null);
+  const [contentUpdate, setContentUpdate] = useState(null);
+  const [deviceInfo, setDeviceInfo] = useState({});
+
   const userToken = useSelector((state) => userSelectors.getUserToken(state));
 
   // const isRequireUpdate = useSelector((state) =>
@@ -153,7 +160,8 @@ const Index = () => {
     try {
       await dispatch(commonActions.toggleLoading(true));
       let isUpdate = await codePush.checkForUpdate();
-
+      setIsRequireUpdate(isUpdate !== null ? true : false);
+      setContentUpdate(isUpdate);
       if (isUpdate) {
         await dispatch(commonActions.toggleLoading(false));
         setTimeout(async () => {
@@ -175,13 +183,17 @@ const Index = () => {
   const codePushStatusDidChange = async (status) => {
     switch (status) {
       case codePush.SyncStatus.DOWNLOADING_PACKAGE:
+        setProgressUpdate(0.25);
         break;
       case codePush.SyncStatus.INSTALLING_UPDATE:
+        setProgressUpdate(0.5);
         break;
       case codePush.SyncStatus.UP_TO_DATE:
+        setProgressUpdate(0.75);
         onCheckSignInSession();
         break;
       case codePush.SyncStatus.UPDATE_INSTALLED:
+        setProgressUpdate(1);
         onCheckSignInSession();
         break;
       default:
@@ -204,10 +216,9 @@ const Index = () => {
   };
 
   const onHandleUpdate = async () => {
-    await dispatch(commonActions.closeRequireUpdate());
     codePush.sync(
       {
-        installMode: codePush.InstallMode.IMMEDIATE,
+        installMode: codePush.InstallMode.ON_NEXT_RESTART,
       },
       codePushStatusDidChange,
       onDownloadProgress,
@@ -318,12 +329,21 @@ const Index = () => {
         visible={isShowAddPictureOption}
         target={addPictureOptionTarget}
       />
-      <ModalIndicator visible={isLoading} />
+      {isLoading ? (
+        <ModalIndicator visible={isLoading} />
+      ) : (
+        <ModalRequireUpdate
+          visible={
+            !loading && isRequireUpdate && deviceInfo?.is_emulator === false
+          }
+          contentUpdate={contentUpdate}
+          progressUpdate={progressUpdate}
+          onConfirm={() => onHandleUpdate()}
+        />
+      )}
+
       <ModalStory />
-      {/* <ModalRequireUpdate
-        visible={isRequireUpdate}
-        onConfirm={() => onHandleUpdate()}
-      /> */}
+
       <ModalNetworkWarning visible={!networkStatus} />
       <SlideInModal />
       {/* <NotificationPopup

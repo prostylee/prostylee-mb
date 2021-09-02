@@ -12,18 +12,7 @@ import 'react-native-gesture-handler';
 
 LogBox.ignoreAllLogs();
 // AppRegistry.registerComponent(appName, () => App);
-AppRegistry.registerComponent(appName, () =>
-  CodePush({
-    updateDialog: {
-      optionalInstallButtonLabel: i18n.t('codePush.installButton'),
-      optionalIgnoreButtonLabel: i18n.t('codePush.IgnoreButton'),
-      title: i18n.t('codePush.title'),
-      optionalUpdateMessage: i18n.t('codePush.updateMessage'),
-    },
-    installMode: CodePush.InstallMode.IMMEDIATE,
-    checkFrequency: CodePush.CheckFrequency.ON_APP_START,
-  })(App),
-);
+AppRegistry.registerComponent(appName, () => App);
 
 // New task registration
 AppRegistry.registerHeadlessTask(
