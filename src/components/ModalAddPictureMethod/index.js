@@ -74,7 +74,6 @@ const ModalAddPictureMethod = ({visible, target = ''}) => {
         ImagePicker.openPicker({
           mediaType: 'photo',
         }).then((res) => {
-          console.log('res', res);
           RootNavigator.navigate('AddStory', {image: res});
         });
         break;
