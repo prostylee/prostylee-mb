@@ -20,7 +20,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getListUserOrderStatusSelector} from 'redux/selectors/myPage';
 import {myPageActions} from 'reducers';
 import {ORDER_STATUS_ACT_CODE} from 'constants';
-const Order = () => {
+
+const Order = ({scrollEnabled}) => {
   const dispatch = useDispatch();
 
   const statusSelector = useSelector((state) =>
@@ -201,7 +202,9 @@ const Order = () => {
     [],
   );
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      scrollEnabled={scrollEnabled !== undefined ? scrollEnabled : false}>
       <ListMenu title={i18n.t('mypage.orders')} menu={orderMenu} />
       <ListMenu title={i18n.t('mypage.products')} menu={productMenu} />
       <ListMenu menu={settingMenu} />
