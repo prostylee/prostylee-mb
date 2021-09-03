@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import i18n from 'i18n';
-import {ContainerWithoutScrollView} from 'components';
+import {ContainerWithoutScrollView, ModalConfirm} from 'components';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {hasNotch} from 'react-native-device-info';
 import {useTheme, useRoute, useNavigation} from '@react-navigation/native';
@@ -48,6 +48,7 @@ const CropPicture = () => {
   ];
 
   const [afterCropImages, setAfterCropImages] = React.useState([]);
+  const [visible, setVisible] = React.useState(false);
   /******** iOS ********/
   const [checkImage, setCheckImage] = React.useState([]);
 
@@ -87,6 +88,18 @@ const CropPicture = () => {
   //Theme
   const {colors} = useTheme();
 
+  const cropImages = () => {
+    if (Platform.OS === 'ios') {
+      images.forEach(async (_, index) => {
+        await cropViewRefList[index].current.saveImage(90);
+      });
+    } else if (Platform.OS === 'android') {
+      images.forEach(async (_, index) => {
+        await handleCropAndroid(index);
+      });
+    }
+  };
+
   const cropAllImage = () => {
     if (checkImage.every((item) => item)) {
       if (Platform.OS === 'ios') {
@@ -99,11 +112,12 @@ const CropPicture = () => {
         });
       }
     } else {
-      showMessage({
-        message: i18n.t('addStatus.checkAll'),
-        type: 'danger',
-        position: 'top',
-      });
+      // showMessage({
+      //   message: i18n.t('addStatus.checkAll'),
+      //   type: 'danger',
+      //   position: 'top',
+      // });
+      setVisible(true);
     }
   };
 
@@ -295,30 +309,60 @@ const CropPicture = () => {
     );
   };
 
+  const onConfirm = () => {
+    if (Platform.OS === 'ios') {
+      images.forEach(async (_, index) => {
+        await cropViewRefList[index].current.saveImage(90);
+      });
+    } else if (Platform.OS === 'android') {
+      images.forEach(async (_, index) => {
+        await handleCropAndroid(index);
+      });
+    }
+    setVisible(false);
+  };
+
+  const onCancel = () => {
+    setVisible(false);
+  };
+
   return (
-    <View style={styles.container}>
-      <ContainerWithoutScrollView
-        safeAreaTopStyle={styles.safeAreaTopStyle}
-        bgStatusBar={colors['$bgColor']}>
-        <Header
-          isDefault
-          title={''}
-          containerStyle={styles.headerContainer}
-          leftIcon={<Image source={IC_BACK} style={styles.headerImage} />}
-          rightComponent={
-            <TouchableOpacity style={styles.cropButton} onPress={cropAllImage}>
-              <Text style={styles.cropText}>
-                {isCropList
-                  ? i18n.t('addStatus.cropAll')
-                  : i18n.t('addStatus.cropSingle')}
-              </Text>
-            </TouchableOpacity>
-          }
-        />
-        <View style={styles.mainWrapper}>{CropImagesList}</View>
-        {isCropList ? <ThumbImagesList /> : null}
-      </ContainerWithoutScrollView>
-    </View>
+    <>
+      <View style={styles.container}>
+        <ContainerWithoutScrollView
+          safeAreaTopStyle={styles.safeAreaTopStyle}
+          bgStatusBar={colors['$bgColor']}>
+          <Header
+            isDefault
+            title={''}
+            containerStyle={styles.headerContainer}
+            leftIcon={<Image source={IC_BACK} style={styles.headerImage} />}
+            rightComponent={
+              <TouchableOpacity
+                style={styles.cropButton}
+                onPress={cropAllImage}>
+                <Text style={styles.cropText}>
+                  {isCropList
+                    ? i18n.t('addStatus.cropAll')
+                    : i18n.t('addStatus.cropSingle')}
+                </Text>
+              </TouchableOpacity>
+            }
+          />
+          <View style={styles.mainWrapper}>{CropImagesList}</View>
+          {isCropList ? <ThumbImagesList /> : null}
+        </ContainerWithoutScrollView>
+      </View>
+      <ModalConfirm
+        onCancel={onCancel}
+        onConfirm={onConfirm}
+        visible={visible}
+        title="Xác nhận"
+        message="Hình ảnh chưa được kiểm tra lại. Bạn có muốn tiếp tục?"
+        cancelTitle="Xem lại"
+        confirmTitle="Tiếp tục"
+      />
+    </>
   );
 };
 
