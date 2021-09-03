@@ -17,6 +17,7 @@ const TabViewContainer = ({
   scrollAnimated,
   setActivedTab,
   scrollEnabled,
+  onScroll,
 }) => {
   const RenderLabel = ({tabs, goToPage, activeTab}) => {
     const translateY = scrollAnimated.interpolate({
@@ -64,7 +65,7 @@ const TabViewContainer = ({
         )}
       </View>
       <View style={{flex: 1, flexDirection: 'column'}} tabLabel={'bag'}>
-        <Order />
+        <Order scrollEnabled={scrollEnabled} />
       </View>
     </ScrollableTabView>
   );
