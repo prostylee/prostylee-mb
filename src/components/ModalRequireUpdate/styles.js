@@ -6,6 +6,11 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  modalStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   modalAlert: {
     backgroundColor: 'white',
     borderRadius: '3rem',

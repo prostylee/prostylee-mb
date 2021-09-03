@@ -73,10 +73,9 @@ const ModalAddPictureMethod = ({visible, target = ''}) => {
       case 'story': {
         ImagePicker.openPicker({
           mediaType: 'photo',
-        })
-          .then((res) => {
-            RootNavigator.navigate('AddStory', {image: res});
-          })
+        }).then((res) => {
+          RootNavigator.navigate('AddStory', {image: res});
+        });
         break;
       }
       case 'status': {
@@ -84,10 +83,9 @@ const ModalAddPictureMethod = ({visible, target = ''}) => {
           mediaType: 'photo',
           multiple: true,
           maxFiles: 4,
-        })
-          .then((res) => {
-            RootNavigator.navigate('CropPicture', {images: res});
-          })
+        }).then((res) => {
+          RootNavigator.navigate('CropPicture', {images: res});
+        });
         break;
       }
       default:
@@ -101,20 +99,18 @@ const ModalAddPictureMethod = ({visible, target = ''}) => {
         ImagePicker.openCamera({
           mediaType: 'photo',
           cropping: false,
-        })
-          .then((res) => {
-            RootNavigator.navigate('AddStory', {image: res});
-          })
+        }).then((res) => {
+          RootNavigator.navigate('AddStory', {image: res});
+        });
         break;
       }
       case 'status': {
         ImagePicker.openCamera({
           mediaType: 'photo',
           cropping: false,
-        })
-          .then((res) => {
-            RootNavigator.navigate('CropPicture', {images: [res]});
-          })
+        }).then((res) => {
+          RootNavigator.navigate('CropPicture', {images: [res]});
+        });
         break;
       }
       default:

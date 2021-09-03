@@ -19,7 +19,7 @@ import {Ruler} from 'svg/common';
 /*Proptypes*/
 import PropTypes from 'prop-types';
 
-const ProductChoice = ({choiceSelect, choiceList, setChoiceSelect}) => {
+const ProductChoice = ({choiceSelect, choiceList = [], setChoiceSelect}) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
 
@@ -39,7 +39,7 @@ const ProductChoice = ({choiceSelect, choiceList, setChoiceSelect}) => {
 
   return (
     <View style={styles.container}>
-      {choiceList.length
+      {choiceList?.length
         ? choiceList.map((item, index) => {
             return (
               <View
