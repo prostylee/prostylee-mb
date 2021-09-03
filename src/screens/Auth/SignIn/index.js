@@ -19,18 +19,12 @@ import SignUpTab from './SignUpTab';
 const initialLayout = {width: Dimensions.get('window').width};
 
 const Index = (props) => {
-  const [index, setIndex] = React.useState(0);
+  //index = 0 --> render signIn screen
+  //index = 1 --> render SignUp screen
+  // if set index = useState(0) --> render --> index of TabView = 0 --> render signIn screen --> useEffect() --> index = 1,but screen render is signIn => error
+  const [index, setIndex] = React.useState(props.route.params?.index);
   const keyboard = useKeyboard();
-
-  //UseEffect
-  React.useEffect(() => {
-    listenAuth(); // For debugging only
-    const tabIndex = props.route.params?.index;
-    if (tabIndex === 1) {
-      setIndex(tabIndex);
-    }
-  }, []);
-
+  
   //BackHandler handle
   useBackHandler(() => {
     if (props.route.name === 'SignIn') {
@@ -81,7 +75,6 @@ const Index = (props) => {
       </Text>
     </View>
   );
-
   return (
     <View style={styles.container}>
       <Container>

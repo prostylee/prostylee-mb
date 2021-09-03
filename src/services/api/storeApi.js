@@ -1,5 +1,5 @@
 import {_fetch} from '../config';
-import {GET, POST, PUT} from 'constants';
+import {GET, POST, PUT, DELETE} from 'constants';
 
 export const getTopStore = (payload) => {
   return _fetch(GET, '/stores/top/products', payload);
@@ -96,6 +96,10 @@ export const getVouchers = (payload) => {
 
 export const postSaveVouchers = (id) => {
   return _fetch(POST, `/user-vouchers/${id}`);
+};
+
+export const postUnSaveVouchers = (id) => {
+  return _fetch(DELETE, `/user-vouchers/${id}`);
 };
 
 // BOTTOM TAB LIST

@@ -14,6 +14,7 @@ import {
   getCurrentVouchersPageSelector,
   hasVouchersLoadmoreSelector,
   postSaveVoucherStatusSelector,
+  postUnSaveVoucherStatusSelector,
 } from 'redux/selectors/storeMain/vouchers';
 
 import {storeActions} from 'redux/reducers';
@@ -41,6 +42,10 @@ const VoucherList = ({navigation}) => {
     postSaveVoucherStatusSelector(state),
   );
 
+  const unsaveStatus = useSelector((state) =>
+    postUnSaveVoucherStatusSelector(state),
+  );
+
   const _handleRefresh = () => {
     setIsRefreshing(true);
     dispatch(
@@ -66,8 +71,12 @@ const VoucherList = ({navigation}) => {
     if (!isLoading) setIsRefreshing(false);
   }, [isLoading]);
 
-  const _handleSavePress = (id) => {
-    dispatch(storeActions.postSaveVoucher(id));
+  const _handleSavePress = (id,saveStatus) => {
+    if(!saveStatus){
+      dispatch(storeActions.postSaveVoucher(id));
+    }else{
+      dispatch(storeActions.postUnSaveVoucher(id));
+    }
   };
   // const _handUsePress = () => {
   //   navigation.navigate('FlashSale');
@@ -112,6 +121,47 @@ const VoucherList = ({navigation}) => {
     }
     dispatch(storeActions.setSaveVoucherStatus(''));
   }, [saveStatus]);
+
+  useEffect(() => {
+    if (unsaveStatus === 'success') {
+      showMessage({
+        titleStyle: {fontSize: 13, fontWeight: '500'},
+        message: i18n.t('stores.success'),
+        textStyle: {fontSize: 13, fontWeight: '300'},
+        description: 'hủy lưu thành công',
+
+        type: 'success',
+        position: {
+          top: 40,
+          left: 0,
+        },
+        icon: {icon: 'success', position: 'left'},
+        style: {
+          alignItems: 'center',
+        },
+      });
+    }
+    if (unsaveStatus === 'failed') {
+      showMessage({
+        titleStyle: {fontSize: 13, fontWeight: '500'},
+        message: i18n.t('stores.failed'),
+        textStyle: {fontSize: 13, fontWeight: '300'},
+        description: 'hủy lưu thất bại',
+
+        type: 'danger',
+        position: {
+          top: 40,
+          left: 0,
+        },
+        icon: {icon: 'danger', position: 'left'},
+        style: {
+          alignItems: 'center',
+        },
+      });
+    }
+    dispatch(storeActions.setUnSaveVoucherStatus(''));
+  }, [unsaveStatus]);
+
   return (
     <View style={styles.container}>
       {isLoading && !isRefreshing ? (

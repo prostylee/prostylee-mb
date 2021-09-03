@@ -37,11 +37,12 @@ const ItemBottomSide = ({onPress, item}) => (
       style={[
         styles.takeButton,
         {
-          opacity: item?.savedUserVoucherId ? 0.4 : 1,
+          opacity: item?.savedUserVoucherId ? 0.7 : 1,
         },
       ]}
-      onPress={() => onPress(item.id)}
-      disabled={item?.savedUserVoucherId ? true : false}>
+      onPress={() => onPress(item.id,item.savedUserVoucherId)}
+      // disabled={item?.savedUserVoucherId ? true : false}
+      >
       <Text style={styles.buttonText}>
         {item?.savedUserVoucherId
           ? i18n.t('voucher.saved')
