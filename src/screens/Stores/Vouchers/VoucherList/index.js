@@ -73,10 +73,8 @@ const VoucherList = ({navigation}) => {
 
   const _handleSavePress = (id,saveStatus) => {
     if(!saveStatus){
-      console.log('chạy lưu')
       dispatch(storeActions.postSaveVoucher(id));
     }else{
-      console.log('chạy hủy lưu')
       dispatch(storeActions.postUnSaveVoucher(id));
     }
   };

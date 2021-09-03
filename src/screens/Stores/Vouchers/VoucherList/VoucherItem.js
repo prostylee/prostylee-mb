@@ -57,7 +57,6 @@ const VoucherItem = ({item, onSavePress}) => {
     <VoucherDetail data={item} submit={onSavePress} />);
   };
   const {status} = item;
-  console.log("item", item.id, item.savedUserVoucherId)
   return (
     <View style={styles.itemWrapper} key={`${item.id}-${item.name}`}>
       <TouchableOpacity

@@ -74,16 +74,12 @@ const postSaveVoucher = function* ({payload}) {
 };
 
 const postUnSaveVoucher = function* ({payload}) {
-  console.log('chuẩn bị api hủy lưu')
   try {
     //yield put(storeActions.setVouchersLoadmoreLoading(true));
     const res = yield call(postUnSaveVouchersApi, payload);
-    console.log(res.ok,res.data.status)
     if (res.ok && res.data.status === DELETE_SUCCESS && !res.data.error) {
-      console.log('thành công')
       yield put(storeActions.postUnSaveVoucherSuccess(payload));
     } else {
-      console.log('thất bại')
       yield put(storeActions.postUnSaveVoucherFailed());
     }
   } catch (e) {

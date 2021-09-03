@@ -76,7 +76,6 @@ const Vouchers = ({navigation}) => {
     height: visible ? HEIGHT : 0,
     marginTop: visible ? HEIGHT_HEADER : 0,
   };
-  console.log('---------------------------------')
   return (
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('stores.voucherCode')} />
