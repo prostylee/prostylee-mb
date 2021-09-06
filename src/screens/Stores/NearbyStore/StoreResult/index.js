@@ -143,7 +143,14 @@ const FeaturedCategories = ({navigation}) => {
                                 location?.lon,
                                 item?.location?.latitude,
                                 item?.location?.longitude,
-                              ) + 'km'}
+                              )
+                            ? getDistanceFromLatLonInKm(
+                                location?.lat,
+                                location?.lon,
+                                item?.location?.latitude,
+                                item?.location?.longitude,
+                              ) + 'km'
+                            : i18n.t('stores.undefined')}
                         </Text>
                       </View>
                     </View>

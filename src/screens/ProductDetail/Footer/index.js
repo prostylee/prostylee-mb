@@ -192,7 +192,7 @@ const Footer = ({navigation, productData, priceList, choiceSelect}) => {
   return (
     <View style={styles.container}>
       <View style={styles.likeButton}>
-        <ProductLike likeSize={26} unlikeSize={24} item={productData} />
+        <ProductLike item={productData} />
       </View>
       <View style={{}}>
         <FirstButton />
