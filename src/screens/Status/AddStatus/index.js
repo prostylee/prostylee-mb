@@ -217,7 +217,7 @@ const AddStatus = (props) => {
           inputValueRef.current = text;
         }}
         value={textValue}
-        blurOnSubmit={true}
+        blurOnSubmit={false}
         placeholderTextColor={colors['$lightGray']}
       />
     );
