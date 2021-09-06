@@ -7,7 +7,7 @@ import styles from './styles';
 import I18n from 'i18n';
 import {Field, Formik} from 'formik';
 import {CustomTextInput} from '../../../components';
-import {validateEmail} from '../../../utils/validatorUtils';
+import {validatePhone} from '../../../utils/validatorUtils';
 
 const Index = (props) => {
   //back
@@ -33,7 +33,7 @@ const Index = (props) => {
               <View style={styles.form}>
                 <Field
                   component={CustomTextInput}
-                  validate={validateEmail}
+                  validate={validatePhone}
                   name="phone"
                   label={I18n.t('yourPhoneLabel')}
                   keyboardType="phone-pad"

@@ -28,6 +28,7 @@ export default {
     failed: 'Thất bại',
     discountCode: 'Mã giảm giá',
     allProduct: 'Tất cả sản phẩm',
+    undefined: 'Không xác định',
   },
   common: {
     textSeeMore: 'Xem thêm',

@@ -110,14 +110,14 @@ const SignInTab = () => {
               />
             </View>
 
-            <View style={styles.btnWrapper}>
+            {/* <View style={styles.btnWrapper}>
               <TextButton
                 icon={() => <Phone />}
                 onPress={onSignInWithPhone}
                 labelStyle={styles.iconTextLabel}
                 label={I18n.t('signInWithPhone')}
               />
-            </View>
+            </View> */}
 
             <View>
               <TextButton

@@ -18,6 +18,10 @@ const ProductSimilar = (props) => {
     getListSuggestionSelector(state),
   );
 
+  if (suggestionList && !suggestionList.length) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.titleRow}>

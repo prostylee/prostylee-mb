@@ -20,6 +20,10 @@ const ProductSimilar = (props) => {
   //const loading = useSelector((state) => getRecentLoadingSelector(state));
   const recentList = useSelector((state) => getListRecentSelector(state));
 
+  if (recentList && !recentList.length) {
+    return null;
+  }
+
   const renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
