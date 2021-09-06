@@ -89,14 +89,14 @@ const SignupTab = () => {
               />
             </View>
 
-            <View style={styles.btnWrapper}>
+            {/* <View style={styles.btnWrapper}>
               <TextButton
                 icon={() => <Phone />}
                 onPress={onSignUpWithPhone}
                 labelStyle={styles.iconTextLabel}
                 label={I18n.t('signUpWithPhone')}
               />
-            </View>
+            </View> */}
           </View>
         )}
       </Formik>
