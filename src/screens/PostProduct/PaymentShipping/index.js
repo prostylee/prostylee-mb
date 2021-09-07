@@ -8,24 +8,19 @@ import {
   Dimensions,
 } from 'react-native';
 
-import {ActivityIndicator, ProgressBar} from 'react-native-paper';
+import {ProgressBar} from 'react-native-paper';
 import {Header, ButtonRounded, ThemeView, SlideInModal} from 'components';
 
 import styles from './styles';
-import Icon from 'react-native-vector-icons/Ionicons';
 import ListShippingMethod from './ListShipping';
 import ListPayment from './ListPayment';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import i18n from 'i18n';
 import {showMessage} from 'react-native-flash-message';
 import {userTokenSelector} from 'redux/selectors/user';
 import {useDispatch, useSelector, shallowEqual} from 'react-redux';
-import {userActions} from 'reducers';
-import {BUYER} from 'constants';
 import {
   getPostProductInfoSelector,
-  getPostProductLoadingSelector,
-  getPostProductStatusSelector,
 } from 'redux/selectors/postProduct';
 import {
   commonActions,
@@ -33,7 +28,7 @@ import {
   newFeedActions,
   storeActions,
 } from 'redux/reducers';
-import {Storage, Auth} from 'aws-amplify';
+import {Storage} from 'aws-amplify';
 import {postProductActions} from 'redux/reducers';
 
 import {postProduct as postProductApi} from 'services/api/postProductApi';
@@ -138,6 +133,7 @@ const PaymentShipping = () => {
     try {
       SlideInModal.show(() => {}, <Loading />, 'fadeIn', 'fadeOut');
       setPostProductLoading(true);
+      dispatch(commonActions.toggleLoading(true));
       const upLoadedImages = await uploadImages(images);
 
       const {
@@ -226,6 +222,7 @@ const PaymentShipping = () => {
       });
     } finally {
       setPostProductLoading(false);
+      dispatch(commonActions.toggleLoading(false));
       SlideInModal.hide();
     }
   };
@@ -355,11 +352,9 @@ const PaymentShipping = () => {
         <TouchableOpacity onPress={postProduct}>
           <ButtonRounded
             label={
-              postProductLoading ? (
-                <ActivityIndicator color="#fff" />
-              ) : (
-                i18n.t('addProduct.postProduct')
-              )
+              postProductLoading
+                ? i18n.t('addProduct.postProductLoadingText')
+                : i18n.t('addProduct.postProduct')
             }
           />
         </TouchableOpacity>

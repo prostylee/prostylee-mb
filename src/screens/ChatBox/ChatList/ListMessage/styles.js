@@ -9,6 +9,13 @@ export default EStyleSheet.create({
   listContent: {
     backgroundColor: '$white',
   },
+  listEmpty: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    paddingTop: 16,
+  },
   itemContainer: {
     paddingHorizontal: 16,
   },
