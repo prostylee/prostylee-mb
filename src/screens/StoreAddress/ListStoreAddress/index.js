@@ -17,7 +17,7 @@ const Item = ({item, onPress, isActive}) => {
     }`;
   }
 
-  const distance = item.distance ? item.distance : 'unknow';
+  const distance = item.distance ? item.distance : null;
 
   return (
     <TouchableOpacity onPress={onPress}>
@@ -33,15 +33,17 @@ const Item = ({item, onPress, isActive}) => {
           <View style={styles.fomatItem}>
             <Text style={styles.Card}>{item.name}</Text>
             <Text style={[styles.fomat]}>{address}</Text>
-            <View style={styles.iconContainer}>
-              <Icon
-                name="location-outline"
-                color="grey"
-                size={13}
-                style={styles.iconStyle}
-              />
-              <Text style={styles.textDistance}>{distance}</Text>
-            </View>
+            {distance ? (
+              <View style={styles.iconContainer}>
+                <Icon
+                  name="location-outline"
+                  color="grey"
+                  size={13}
+                  style={styles.iconStyle}
+                />
+                <Text style={styles.textDistance}>{distance}</Text>
+              </View>
+            ) : null}
           </View>
         </View>
       </View>
@@ -55,8 +57,9 @@ const ListStoreAddress = (props) => {
   return (
     <RadioButton.Group>
       {data && data.length
-        ? data.map((v) => (
+        ? data.map((v, index) => (
             <Item
+              key={`store_address_${index}`}
               item={v}
               onPress={() => {
                 setSelectedId(v.id);

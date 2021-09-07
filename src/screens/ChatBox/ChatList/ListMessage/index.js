@@ -182,8 +182,18 @@ const ListMessage = (props) => {
       </View>
     );
   };
+  const EmptyList = () => {
+    return (
+      <View style={styles.listEmpty}>
+        <Text>{i18n.t('chat.emptyChatList')}</Text>
+      </View>
+    );
+  };
   if (loading && !refreshing) {
     return <ChatListLoading />;
+  }
+  if (!chatList.length) {
+    return <EmptyList />;
   }
   return (
     <FlatList

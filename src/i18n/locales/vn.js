@@ -423,6 +423,7 @@ export default {
     yesterday: 'Hôm qua',
     inputPlaceholder: 'Để lại tin nhắn của bạn',
     confirmDeleteChat: 'Bạn thật sự muốn xoá tin nhắn này?',
+    emptyChatList: 'Không có dữ liệu',
   },
   addProduct: {
     categoryScreenTitle: 'Thêm sản phẩm',
@@ -456,6 +457,7 @@ export default {
     inprogress: 'Đang xử lý',
     inforWillDelete: 'Phần thông tin đã nhập trước đó sẽ bị xoá',
     chooseAtLeastOne: 'Sản phẩm phải có ít nhất một thuộc tính',
+    postProductLoadingText: 'Đang xử lý',
   },
   voucher: {
     use: 'Sử dụng',

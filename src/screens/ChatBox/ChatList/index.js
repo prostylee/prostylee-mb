@@ -300,6 +300,7 @@ const Message = (props) => {
       const searchValue = value.trim();
       if (searchValue === '') {
         setChatListDisplay(chatList);
+        setLoading(false);
         return;
       }
       const searchList = [];
@@ -316,6 +317,7 @@ const Message = (props) => {
         return searchList.includes(otherChatUserId);
       });
       setChatListDisplay(filterResult);
+      setLoading(false);
     },
     2000,
     {trailing: true, leading: false, maxWait: 4000},
@@ -324,6 +326,7 @@ const Message = (props) => {
   const onChangeSearch = (query) => {
     setSearchQuery(query);
     filterSearchValue(query);
+    setLoading(true);
   };
   const chatListDateFilter = chatListDisplay.sort(
     (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt),
