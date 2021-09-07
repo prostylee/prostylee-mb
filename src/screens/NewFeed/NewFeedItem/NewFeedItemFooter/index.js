@@ -14,8 +14,7 @@ const NewFeedItemFooter = ({newFeedItem, targetType}) => {
         <HeartButton
           targetId={newFeedItem?.id}
           targetType={targetType}
-          categoryId={newFeedItem?.categoryId}
-          storeId={newFeedItem?.storeId}
+          itemType={newFeedItem?.type}
           numberOfLike={
             newFeedItem?.productStatisticResponse?.numberOfLike || 0
           }
