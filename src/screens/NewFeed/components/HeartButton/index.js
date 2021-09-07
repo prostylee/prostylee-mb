@@ -12,10 +12,9 @@ import {Heart} from '../../../../svg/social';
 const HeartButton = ({
   numberOfLike,
   targetId,
+  itemType,
   targetType,
-  categoryId,
-  storeId,
-  likeStatus = false,
+  likeStatus,
 }) => {
   const [liked, setLiked] = useState(likeStatus);
   const [numOfLike, setNumOfLike] = useState(numberOfLike || 0);
@@ -24,20 +23,20 @@ const HeartButton = ({
     if (!liked) {
       const res = await like({
         targetId: targetId,
-        customFieldId1: categoryId,
-        customFieldId2: storeId,
-        targetType,
+        targetType: itemType,
       });
       if (res.ok && res.data.status === SUCCESS) {
+        likeStatus = true;
         setLiked(true);
         setNumOfLike(numOfLike + 1);
       }
     } else {
       const res = await unlike({
         targetId: targetId,
-        targetType,
+        targetType: itemType,
       });
       if (res.ok && res.data.status === SUCCESS) {
+        likeStatus = false;
         setLiked(false);
         setNumOfLike(numOfLike - 1);
       }
@@ -71,8 +70,7 @@ HeartButton.propTypes = {
   numberOfLike: PropTypes.number.isRequired,
   targetId: PropTypes.number.isRequired,
   targetType: PropTypes.string.isRequired,
-  categoryId: PropTypes.number,
-  storeId: PropTypes.number,
+  itemType: PropTypes.string,
 };
 
 export default HeartButton;

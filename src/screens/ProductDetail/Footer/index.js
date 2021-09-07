@@ -36,6 +36,7 @@ const Footer = ({navigation, productData, priceList, choiceSelect}) => {
   const [userData, setUserData] = React.useState({});
   const [productExist, setProductExist] = React.useState(true);
   const attributes = productData?.productAttributeOptionResponse || [];
+  let isMounted = true;
 
   React.useEffect(() => {
     if (!isStore) {
@@ -43,6 +44,9 @@ const Footer = ({navigation, productData, priceList, choiceSelect}) => {
         getProfileData(productData.productOwnerResponse.id);
       }
     }
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const onAddToCart = () => {
@@ -82,14 +86,18 @@ const Footer = ({navigation, productData, priceList, choiceSelect}) => {
         sellerRes.data.status === SUCCESS &&
         !sellerRes.data.error
       ) {
-        setSellerData(sellerRes.data.data);
+        if (isMounted) {
+          setSellerData(sellerRes.data.data);
+        }
       }
       if (
         userRes.ok &&
         userRes.data.status === SUCCESS &&
         !userRes.data.error
       ) {
-        setUserData(userRes.data.data);
+        if (isMounted) {
+          setUserData(userRes.data.data);
+        }
       }
     } catch (err) {
       showMessage({
