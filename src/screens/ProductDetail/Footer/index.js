@@ -24,6 +24,7 @@ import {cartActions, commonActions} from 'reducers';
 
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {createChat} from 'graphqlLocal/mutations';
+import {listChats} from 'graphqlLocal/queries';
 import {showMessage} from 'react-native-flash-message';
 
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
@@ -121,6 +122,68 @@ const Footer = ({navigation, productData, priceList, choiceSelect}) => {
       Alert.alert(i18n.t('common.textNoPhoneNumber'));
     }
   };
+  const checkExistedChat = async () => {
+    dispatch(commonActions.toggleLoading(true));
+    try {
+      API.graphql(
+        graphqlOperation(listChats, {
+          filter: {
+            parentId: {eq: DEFAULT_CHAT_GROUP_ID},
+            and: [
+              {
+                participantUserIds: {
+                  contains: userData.id,
+                },
+              },
+              {
+                participantUserIds: {
+                  contains: sellerData.id,
+                },
+              },
+              {
+                content: {
+                  contains: `"id":${productData.id}`,
+                },
+              },
+            ],
+          },
+        }),
+      )
+        .then(async (result) => {
+          if (!result.data.listChats.items.length) {
+            chatWithSeller();
+          } else {
+            const latestChat =
+              result.data.listChats.items[
+                result.data.listChats.items.length - 1
+              ];
+            dispatch(commonActions.toggleLoading(false));
+            navigation.navigate('ChatBox', {
+              chatId: latestChat.id,
+              otherChatUserId: sellerData.id,
+              userName: sellerData.fullName,
+              userPhone: sellerData.phoneNumber,
+              productData: productData,
+            });
+          }
+        })
+        .catch((_) => {
+          dispatch(commonActions.toggleLoading(false));
+          showMessage({
+            message: i18n.t('unknownMessage'),
+            type: 'danger',
+            position: 'top',
+          });
+        });
+    } catch (_) {
+      dispatch(commonActions.toggleLoading(false));
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'danger',
+        position: 'top',
+      });
+    }
+  };
   const chatWithSeller = async () => {
     if (!sellerData) {
       return;
@@ -128,11 +191,11 @@ const Footer = ({navigation, productData, priceList, choiceSelect}) => {
     const product = {
       id: productData.id,
       name: productData.name,
+      imageUrls: productData.imageUrls,
       price: productData.price,
       priceSale: productData.priceSale,
       productPriceResponseList: productData.productPriceResponseList,
     };
-    dispatch(commonActions.toggleLoading(true));
     try {
       const response = await API.graphql(
         graphqlOperation(createChat, {
@@ -198,7 +261,7 @@ const Footer = ({navigation, productData, priceList, choiceSelect}) => {
         contentStyle={{}}
         labelStyle={{}}
         label={i18n.t('productDetail.buttonChat')}
-        onPress={chatWithSeller}
+        onPress={checkExistedChat}
         disabled={!productExist || attributes.length !== choiceSelect.length}
       />
     );

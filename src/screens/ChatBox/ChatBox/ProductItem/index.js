@@ -13,8 +13,8 @@ const Product = (props) => {
           priceSale: data?.priceSale,
         }
       : {
-          price: data.productPriceResponseList[0].price || 0,
-          priceSale: data.productPriceResponseList[0].priceSale || 0,
+          price: data.productPriceResponseList?.[0].price || 0,
+          priceSale: data.productPriceResponseList?.[0].priceSale || 0,
         };
   const price = productPriceData.priceSale
     ? data.priceSale
