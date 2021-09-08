@@ -1,23 +1,24 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Alert, Platform } from 'react-native';
-import { ContainerWithoutScrollView, ButtonRounded } from 'components';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { hasNotch } from 'react-native-device-info';
-import { useTheme, useRoute } from '@react-navigation/native';
+import {View, Text, TouchableOpacity, Alert, Platform} from 'react-native';
+import {ContainerWithoutScrollView, ButtonRounded} from 'components';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {hasNotch} from 'react-native-device-info';
+import {useTheme, useRoute} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
-import { Storage, Auth } from 'aws-amplify';
+import {Storage, Auth} from 'aws-amplify';
 import styles from './styles';
 import i18n from 'i18n';
-import { useBackHandler } from '@react-native-community/hooks';
-import { commonActions, newFeedSelectors, newFeedActions } from 'reducers';
-import { useDispatch, useSelector } from 'react-redux';
-import { CropView } from 'react-native-image-crop-tools';
-import ImageCropper from 'react-native-simple-image-cropper';
+import {useBackHandler} from '@react-native-community/hooks';
+import {commonActions, newFeedSelectors, newFeedActions} from 'reducers';
+import {useDispatch, useSelector} from 'react-redux';
+import {CropView} from 'react-native-image-crop-tools';
+import ImageCropper from '@locnguyen309/react-native-simple-image-crop';
+import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
 
-import { dim } from 'utils/common';
-import { showMessage } from 'react-native-flash-message';
+import {dim} from 'utils/common';
+import {showMessage} from 'react-native-flash-message';
 
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
@@ -27,8 +28,7 @@ const AddStory = (props) => {
   const dispatch = useDispatch();
   const cropViewRef = React.useRef();
   const [userId, setUserId] = React.useState('');
-  const notchHeight =
-    Platform.OS === 'ios' ? getStatusBarHeight() + (hasNotch() ? 34 : 0) : 0;
+  const notchHeight = getStatusBarHeight() + (hasNotch() ? 34 : 0);
 
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
@@ -60,11 +60,11 @@ const AddStory = (props) => {
   let cropperWidth = 0;
   let cropperHeight = 0;
   if (cropHeight / cropWidth > 16 / 9) {
-    cropperWidth = cropWidth;
-    cropperHeight = (cropWidth / 9) * 16;
+    cropperWidth = cropWidth - 8;
+    cropperHeight = ((cropWidth - 8) / 9) * 16;
   } else {
-    cropperHeight = cropHeight;
-    cropperWidth = (cropHeight / 16) * 9;
+    cropperHeight = cropHeight - 8;
+    cropperWidth = ((cropHeight - 8) / 16) * 9;
   }
   const cropSize = {
     width: cropperWidth,
@@ -140,16 +140,20 @@ const AddStory = (props) => {
         return;
       }
       dispatch(commonActions.toggleLoading(true));
-      Storage.configure({ level: 'public' }); // public | protected | private
-      const response = await fetch(uri);
+      const pngImageResult = await ImageManipulator.manipulateAsync(uri, [], {
+        compress: 1,
+        format: ImageManipulator.SaveFormat.PNG,
+      });
+      Storage.configure({level: 'public'}); // public | protected | private
+      const response = await fetch(pngImageResult.uri);
       const blob = await response.blob();
       const time = Date.now();
-      const fileName = `${userId}/stories/story_${time}.jpg`;
+      const fileName = `${userId}/stories/story_${time}.png`;
       Storage.put(fileName, blob, {
-        contentType: 'image/jpeg',
+        contentType: 'image/png',
       })
-        .then((result) => {
-          postStory({ name: `story_${time}.jpg` });
+        .then((_) => {
+          postStory({name: `story_${time}.png`});
         })
         .catch((_) => {
           dispatch(commonActions.toggleLoading(false));
@@ -170,12 +174,12 @@ const AddStory = (props) => {
   };
   //BackHandler handle
   useBackHandler(() => {
-    showAlert()
+    showAlert();
     return true;
   });
 
   //Theme
-  const { colors } = useTheme();
+  const {colors} = useTheme();
 
   const viewShotStyle = {
     width: WIDTH,
@@ -192,16 +196,41 @@ const AddStory = (props) => {
     overflow: 'visible',
   };
 
-  // Add alert for button back to comfirm 
+  const overlayStyle = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '100%',
+    height: '100%',
+  };
+
+  const overlayBorder = (index) => {
+    return {
+      width: cropperWidth / 3,
+      height: cropperHeight / 3,
+      borderTopWidth: 1,
+      borderTopColor: '#FFF',
+      borderBottomWidth: index >= 6 ? 1 : 0,
+      borderBottomColor: '#FFF',
+      borderLeftWidth: 1,
+      borderLeftColor: '#FFF',
+      borderRightWidth: index % 3 === 2 ? 1 : 0,
+      borderRightColor: '#FFF',
+    };
+  };
+
+  // Add alert for button back to comfirm
 
   function showAlert() {
-    Alert.alert(
-      i18n.t('addStatus.alertTitle'), i18n.t('addStatus.alert'),
-      [
-        { text: i18n.t('addStatus.alertOK'), onPress: () => { props.navigation.pop(3) } },
-        { text: i18n.t('addStatus.alertCancel'), onPress: () => { } }
-      ]
-    )
+    Alert.alert(i18n.t('addStatus.alertTitle'), i18n.t('addStatus.alert'), [
+      {
+        text: i18n.t('addStatus.alertOK'),
+        onPress: () => {
+          props.navigation.pop(3);
+        },
+      },
+      {text: i18n.t('addStatus.alertCancel'), onPress: () => {}},
+    ]);
   }
 
   return (
@@ -224,7 +253,7 @@ const AddStory = (props) => {
                 uploadToStorage(uri);
               }}
               keepAspectRatio
-              aspectRatio={{ width: 9, height: 16 }}
+              aspectRatio={{width: 9, height: 16}}
             />
           ) : (
             <View style={cropViewAndroidStyle}>
@@ -232,8 +261,15 @@ const AddStory = (props) => {
                 imageUri={image.path}
                 cropAreaWidth={cropperWidth}
                 cropAreaHeight={cropperHeight}
-                containerColor="#FFFFFF"
-                areaColor="#F4F5F5"
+                containerColor="#333"
+                areaColor="#333"
+                areaOverlay={
+                  <View style={overlayStyle}>
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, index) => (
+                      <View style={overlayBorder(index)} />
+                    ))}
+                  </View>
+                }
                 setCropperParams={(params) => setCropperParamsFunc(params)}
               />
             </View>

@@ -23,11 +23,12 @@ import {Camera} from 'svg/common';
 import styles from './styles';
 import I18n from 'i18n';
 import {Field, Formik} from 'formik';
-import { useBackHandler } from '@react-native-community/hooks';
+import {useBackHandler} from '@react-native-community/hooks';
 import {useDispatch, useSelector} from 'react-redux';
 import {userSelectors, userActions} from 'reducers';
 import ImagePicker from 'react-native-image-crop-picker';
 import {userTokenSelector} from 'redux/selectors/user';
+import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
 
 import {
   validateEmail,
@@ -209,22 +210,24 @@ const SettingMyAccount = () => {
       if (!uri) {
         return;
       }
-
+      const pngImageResult = await ImageManipulator.manipulateAsync(uri, [], {
+        compress: 1,
+        format: ImageManipulator.SaveFormat.PNG,
+      });
       Storage.configure({level: 'public'}); // public | protected | private
-      const response = await fetch(uri);
+      const response = await fetch(pngImageResult.uri);
       const blob = await response.blob();
       const time = Date.now();
-      const fileName = `${sub}/avatar/avatar_${time}.jpg`;
+      const fileName = `${sub}/avatar/avatar_${time}.png`;
       Storage.put(fileName, blob, {
-        contentType: 'image/jpeg',
+        contentType: 'image/png',
       })
         .then(async (result) => {
-          const name = `avatar_${time}.jpg`;
-          const path = `public/`;
+          const path = 'public/';
 
           await updateUserAvatar(result?.key, payload, path);
         })
-        .catch((err) => {
+        .catch((_) => {
           showMessage({
             message: I18n.t('unknownMessage'),
             type: 'danger',

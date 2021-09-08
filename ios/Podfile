@@ -11,6 +11,7 @@ target 'prostylee' do
   pod 'Firebase/Analytics'
 
   pod 'react-native-image-crop-tools', :path => '../node_modules/react-native-image-crop-tools'
+  pod 'react-native-image-manipulator', :path => '../node_modules/@pontusab/react-native-image-manipulator/ios'
 
   target 'prostyleeTests' do
     inherit! :complete

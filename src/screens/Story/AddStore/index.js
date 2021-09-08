@@ -180,8 +180,10 @@ const AddStore = (props) => {
             />
           </View>
           {storeMiniLoading ? (
-            [1, 2, 3, 4, 5, 6].map((v) => (
-              <View style={{padding: 16, overflow: 'hidden'}}>
+            [1, 2, 3, 4, 5, 6].map((v, index) => (
+              <View
+                key={`store_loader_${index}`}
+                style={{padding: 16, overflow: 'hidden'}}>
                 <StoreMiniLoading
                   key={v}
                   style={{padding: 16, overflow: 'hidden'}}

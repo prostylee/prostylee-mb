@@ -14,6 +14,7 @@ import {useDispatch} from 'react-redux';
 import {commonActions} from 'reducers';
 import {createChat, updateChat} from 'graphqlLocal/mutations';
 import {showMessage} from 'react-native-flash-message';
+import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
 /******** chat aws ********/
 
 const FooterItem = (props) => {
@@ -47,13 +48,17 @@ const FooterItem = (props) => {
         return;
       }
       dispatch(commonActions.toggleLoading(true));
+      const pngImageResult = await ImageManipulator.manipulateAsync(uri, [], {
+        compress: 1,
+        format: ImageManipulator.SaveFormat.PNG,
+      });
       Storage.configure({level: 'public'}); // public | protected | private
-      const response = await fetch(uri);
+      const response = await fetch(pngImageResult.uri);
       const blob = await response.blob();
       const time = Date.now();
-      const fileName = `${user.attributes.sub}/chat/chat_${time}.jpg`;
+      const fileName = `${user.attributes.sub}/chat/chat_${time}.png`;
       Storage.put(fileName, blob, {
-        contentType: 'image/jpeg',
+        contentType: 'image/png',
       })
         .then((result) => {
           addChatImageHandler(result.key);

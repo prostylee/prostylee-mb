@@ -22,6 +22,7 @@ import {Storage, Auth} from 'aws-amplify';
 import {addReview} from 'services/api/reviewRatingApi';
 
 import {showMessage} from 'react-native-flash-message';
+import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
 
 import {POST_SUCCESS} from 'constants';
 import {useRoute} from '@react-navigation/native';
@@ -127,16 +128,20 @@ const RatingProduct = ({navigation, product, productId}) => {
         return;
       }
       dispatch(commonActions.toggleLoading(true));
+      const pngImageResult = await ImageManipulator.manipulateAsync(uri, [], {
+        compress: 1,
+        format: ImageManipulator.SaveFormat.PNG,
+      });
       Storage.configure({level: 'public'}); // public | protected | private
-      const response = await fetch(uri);
+      const response = await fetch(pngImageResult.uri);
       const blob = await response.blob();
       const time = Date.now();
-      const fileName = `${userId}/reviewrating/review_${time}.jpg`;
+      const fileName = `${userId}/reviewrating/review_${time}.png`;
       Storage.put(fileName, blob, {
-        contentType: 'image/jpeg',
+        contentType: 'image/png',
       })
         .then(async (result) => {
-          const name = `review_${time}.jpg`;
+          const name = `review_${time}.png`;
           await getUrl(result?.key, name);
         })
         .catch((_) => {

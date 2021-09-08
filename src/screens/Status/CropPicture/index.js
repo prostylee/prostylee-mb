@@ -17,7 +17,7 @@ import styles from './styles';
 import Carousel from 'react-native-snap-carousel';
 import {useBackHandler} from '@react-native-community/hooks';
 import {CropView} from 'react-native-image-crop-tools';
-import ImageCropper from 'react-native-simple-image-cropper';
+import ImageCropper from '@locnguyen309/react-native-simple-image-crop';
 import {Header} from 'components';
 
 import {dim} from 'utils/common';
@@ -58,11 +58,11 @@ const CropPicture = () => {
   let cropperWidth = 0;
   let cropperHeight = 0;
   if (cropHeight / cropWidth > 5 / 4) {
-    cropperWidth = cropWidth;
-    cropperHeight = (cropWidth / 4) * 5;
+    cropperWidth = cropWidth - 8;
+    cropperHeight = ((cropWidth - 8) / 4) * 5;
   } else {
-    cropperHeight = cropHeight;
-    cropperWidth = (cropHeight / 5) * 4;
+    cropperHeight = cropHeight - 8;
+    cropperWidth = ((cropHeight - 8) / 5) * 4;
   }
   const cropSize = {
     width: cropperWidth,
@@ -198,6 +198,29 @@ const CropPicture = () => {
     }
   };
 
+  const overlayStyle = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '100%',
+    height: '100%',
+  };
+
+  const overlayBorder = (index) => {
+    return {
+      width: cropperWidth / 3,
+      height: cropperHeight / 3,
+      borderTopWidth: 1,
+      borderTopColor: '#FFF',
+      borderBottomWidth: index >= 6 ? 1 : 0,
+      borderBottomColor: '#FFF',
+      borderLeftWidth: 1,
+      borderLeftColor: '#FFF',
+      borderRightWidth: index % 3 === 2 ? 1 : 0,
+      borderRightColor: '#FFF',
+    };
+  };
+
   const RenderCropView = ({item, index}) => {
     if (Platform.OS === 'android') {
       return (
@@ -206,8 +229,15 @@ const CropPicture = () => {
             imageUri={Platform.OS === 'ios' ? item.sourceURL : item.path}
             cropAreaWidth={cropperWidth}
             cropAreaHeight={cropperHeight}
-            containerColor="#FFFFFF"
-            areaColor="#F4F5F5"
+            containerColor="#333"
+            areaColor="#333"
+            areaOverlay={
+              <View style={overlayStyle}>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, index) => (
+                  <View style={overlayBorder(index)} />
+                ))}
+              </View>
+            }
             setCropperParams={(params) => setCropperParamsFunc(params, index)}
           />
         </View>

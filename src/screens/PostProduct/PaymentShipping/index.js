@@ -17,11 +17,10 @@ import ListPayment from './ListPayment';
 import {useNavigation} from '@react-navigation/native';
 import i18n from 'i18n';
 import {showMessage} from 'react-native-flash-message';
+import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
 import {userTokenSelector} from 'redux/selectors/user';
 import {useDispatch, useSelector, shallowEqual} from 'react-redux';
-import {
-  getPostProductInfoSelector,
-} from 'redux/selectors/postProduct';
+import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
 import {
   commonActions,
   dynamicUsersActions,
@@ -96,18 +95,26 @@ const PaymentShipping = () => {
       if (!image.uri) {
         return;
       }
+      const pngImageResult = await ImageManipulator.manipulateAsync(
+        image.uri,
+        [],
+        {
+          compress: 1,
+          format: ImageManipulator.SaveFormat.PNG,
+        },
+      );
       Storage.configure({level: 'public'}); // public | protected | private
-      const response = await fetch(image.uri);
+      const response = await fetch(pngImageResult.uri);
       const blob = await response.blob();
       const time = Date.now();
-      const fileName = `${sub}/posts/product_${time}.jpg`;
+      const fileName = `${sub}/posts/product_${time}.png`;
       try {
         const result = await Storage.put(fileName, blob, {
-          contentType: 'image/jpeg',
+          contentType: 'image/png',
         });
         if (result) {
           return {
-            name: `product_${time}.jpg`,
+            name: `product_${time}.png`,
             index: image.index,
           };
         }
