@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { dim } from 'utils/common';
 import { showMessage } from 'react-native-flash-message';
+import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
 
 import {TYPE_USER} from '../../../constants'
 
@@ -140,20 +141,28 @@ const AddStatus = (props) => {
         return;
       }
       dispatch(commonActions.toggleLoading(true));
-      Storage.configure({ level: 'public' }); // public | protected | private
-      const response = await fetch(image.uri);
+      const pngImageResult = await ImageManipulator.manipulateAsync(
+        image.uri,
+        [],
+        {
+          compress: 1,
+          format: ImageManipulator.SaveFormat.PNG,
+        },
+      );
+      Storage.configure({level: 'public'}); // public | protected | private
+      const response = await fetch(pngImageResult.uri);
       const blob = await response.blob();
       const time = Date.now();
-      const fileName = `${userId}/posts/status_${time}.jpg`;
+      const fileName = `${userId}/posts/status_${time}.png`;
       try {
         const result = await Storage.put(fileName, blob, {
-          contentType: 'image/jpeg',
+          contentType: 'image/png',
         });
         if (result) {
           setUploadList((prev) => {
             let newList = prev;
             newList[image.index] = {
-              name: `status_${time}.jpg`,
+              name: `status_${time}.png`,
               index: image.index,
             };
             return newList;

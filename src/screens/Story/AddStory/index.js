@@ -15,6 +15,7 @@ import {commonActions, newFeedSelectors, newFeedActions} from 'reducers';
 import {useDispatch, useSelector} from 'react-redux';
 import {CropView} from 'react-native-image-crop-tools';
 import ImageCropper from '@locnguyen309/react-native-simple-image-crop';
+import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
 
 import {dim} from 'utils/common';
 import {showMessage} from 'react-native-flash-message';
@@ -139,16 +140,20 @@ const AddStory = (props) => {
         return;
       }
       dispatch(commonActions.toggleLoading(true));
+      const pngImageResult = await ImageManipulator.manipulateAsync(uri, [], {
+        compress: 1,
+        format: ImageManipulator.SaveFormat.PNG,
+      });
       Storage.configure({level: 'public'}); // public | protected | private
-      const response = await fetch(uri);
+      const response = await fetch(pngImageResult.uri);
       const blob = await response.blob();
       const time = Date.now();
-      const fileName = `${userId}/stories/story_${time}.jpg`;
+      const fileName = `${userId}/stories/story_${time}.png`;
       Storage.put(fileName, blob, {
-        contentType: 'image/jpeg',
+        contentType: 'image/png',
       })
-        .then((result) => {
-          postStory({name: `story_${time}.jpg`});
+        .then((_) => {
+          postStory({name: `story_${time}.png`});
         })
         .catch((_) => {
           dispatch(commonActions.toggleLoading(false));
