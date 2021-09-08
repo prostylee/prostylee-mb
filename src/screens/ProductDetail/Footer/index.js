@@ -125,6 +125,13 @@ const Footer = ({navigation, productData, priceList, choiceSelect}) => {
     if (!sellerData) {
       return;
     }
+    const product = {
+      id: productData.id,
+      name: productData.name,
+      price: productData.price,
+      priceSale: productData.priceSale,
+      productPriceResponseList: productData.productPriceResponseList,
+    };
     dispatch(commonActions.toggleLoading(true));
     try {
       const response = await API.graphql(
@@ -136,7 +143,7 @@ const Footer = ({navigation, productData, priceList, choiceSelect}) => {
             ownerFullname: userData.fullName,
             participantUserIds: [sellerData.id, userData.id],
             imageUrls: [],
-            content: JSON.stringify(productData),
+            content: JSON.stringify(product),
             createdAt: new Date().toISOString(),
           },
         }),
