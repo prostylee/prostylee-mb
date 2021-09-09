@@ -9,25 +9,30 @@ import {
   Platform,
   BackHandler,
 } from 'react-native';
-import { Container, ButtonRounded, HeaderBack } from 'components';
-import { useTheme, useRoute, useNavigation, useIsFocused } from '@react-navigation/native';
+import {Container, ButtonRounded, HeaderBack} from 'components';
+import {
+  useTheme,
+  useRoute,
+  useNavigation,
+  useIsFocused,
+} from '@react-navigation/native';
 import * as CommonIcon from 'svg/common';
 import isEmpty from 'lodash/isEmpty';
 import Carousel from 'react-native-snap-carousel';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { hasNotch } from 'react-native-device-info';
-import { Storage, Auth } from 'aws-amplify';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {hasNotch} from 'react-native-device-info';
+import {Storage, Auth} from 'aws-amplify';
 import styles from './styles';
 import i18n from 'i18n';
-import { useBackHandler } from '@react-native-community/hooks';
-import { commonActions, statusSelectors, statusActions } from 'reducers';
-import { useDispatch, useSelector } from 'react-redux';
+import {useBackHandler} from '@react-native-community/hooks';
+import {commonActions, statusSelectors, statusActions} from 'reducers';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { dim } from 'utils/common';
-import { showMessage } from 'react-native-flash-message';
+import {dim} from 'utils/common';
+import {showMessage} from 'react-native-flash-message';
 import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
 
-import {TYPE_USER} from '../../../constants'
+import {TYPE_USER} from '../../../constants';
 
 const WIDTH = dim.width;
 
@@ -82,18 +87,18 @@ const AddStatus = (props) => {
 
   //BackHandler handle
   useBackHandler(() => {
-    showAlert()
+    showAlert();
     return true;
   });
 
   //Theme
-  const { colors } = useTheme();
+  const {colors} = useTheme();
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({item, index}) => {
     return (
       <Image
         style={styles.imageStyle}
-        source={{ uri: item.uri }}
+        source={{uri: item.uri}}
         resizeMode={'contain'}
       />
     );
@@ -109,7 +114,7 @@ const AddStatus = (props) => {
       });
       if (!isEmpty(storeSelected)) {
         //change to newfeed of user after post a status
-        dispatch(commonActions.toggleTargetType(TYPE_USER))
+        dispatch(commonActions.toggleTargetType(TYPE_USER));
         await dispatch(
           statusActions.postStatus({
             description: inputValueRef.current,
@@ -120,7 +125,7 @@ const AddStatus = (props) => {
         );
         removeStore();
       } else {
-        dispatch(commonActions.toggleTargetType(TYPE_USER))
+        dispatch(commonActions.toggleTargetType(TYPE_USER));
         await dispatch(
           statusActions.postStatus({
             description: inputValueRef.current,
@@ -239,27 +244,31 @@ const AddStatus = (props) => {
 
   const containerStyle = [
     styles.container,
-    { paddingTop: Platform.OS === 'android' ? notchHeight : 0 },
+    {paddingTop: Platform.OS === 'android' ? notchHeight : 0},
   ];
 
-  // Add alert for button back to comfirm 
+  // Add alert for button back to comfirm
 
   function showAlert() {
-    Alert.alert(
-      i18n.t('addStatus.alertTitle'), i18n.t('addStatus.alert'),
-      [
-        { text: i18n.t('addStatus.alertOK'), onPress: () => { navigation.pop(3) } },
-        { text: i18n.t('addStatus.alertCancel'), onPress: () => { } }
-      ]
-    )
+    Alert.alert(i18n.t('addStatus.alertTitle'), i18n.t('addStatus.alert'), [
+      {
+        text: i18n.t('addStatus.alertCancel'),
+        style: 'cancel',
+        onPress: () => {},
+      },
+      {
+        text: i18n.t('addStatus.alertOK'),
+        style: 'destructive',
+        onPress: () => {
+          navigation.pop(3);
+        },
+      },
+    ]);
   }
 
   return (
     <View style={containerStyle}>
-      <HeaderBack
-        onBack={showAlert}
-        title={i18n.t('addStatus.title')}
-      />
+      <HeaderBack onBack={showAlert} title={i18n.t('addStatus.title')} />
       <InputStatusText />
       <Container style={styles.mainContent}>
         <View style={styles.imagesList}>

@@ -224,12 +224,17 @@ const AddStory = (props) => {
   function showAlert() {
     Alert.alert(i18n.t('addStatus.alertTitle'), i18n.t('addStatus.alert'), [
       {
+        text: i18n.t('addStatus.alertCancel'),
+        style: 'cancel',
+        onPress: () => {},
+      },
+      {
         text: i18n.t('addStatus.alertOK'),
+        style: 'destructive',
         onPress: () => {
           props.navigation.pop(3);
         },
       },
-      {text: i18n.t('addStatus.alertCancel'), onPress: () => {}},
     ]);
   }
 
