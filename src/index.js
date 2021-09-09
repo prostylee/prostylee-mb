@@ -1,14 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View, Platform, StatusBar} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
 
-import {
-  commonActions,
-  commonSelectors,
-  userActions,
-  userSelectors,
-} from './redux/reducers';
+import {commonActions, commonSelectors, userActions} from './redux/reducers';
 
 import {common} from './utils';
 
@@ -24,7 +19,6 @@ import {
   SlideInModal,
   ModalAddPictureMethod,
   ModalStory,
-  ModalRequireUpdate,
 } from 'components';
 
 import NetInfo from '@react-native-community/netinfo';
@@ -32,6 +26,8 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
+
+import {PushNotificationIOS} from '@react-native-community/push-notification-ios';
 
 import Geocoder from 'react-native-geocoding';
 import Amplify, {Auth} from 'aws-amplify';
@@ -84,17 +80,17 @@ const Index = () => {
   React.useEffect(() => {
     requestUserPermission();
     onCodepushCheckForUpdateApp();
-    setLoaded(false);
     async function getInfo() {
       const res = await getDeviceInfo();
-      setDeviceInfo(res);
     }
+
     getInfo();
   }, []);
 
   React.useEffect(() => {
     onCheckNetWorkStatus();
   });
+
 
   //redux dispatch
   const dispatch = useDispatch();
@@ -112,14 +108,6 @@ const Index = () => {
   const addPictureOptionTarget = useSelector((state) =>
     commonSelectors.addPictureOptionTarget(state),
   );
-
-  const [loading, setLoaded] = useState(true);
-  const [isRequireUpdate, setIsRequireUpdate] = useState(false);
-  const [progressUpdate, setProgressUpdate] = useState(null);
-  const [contentUpdate, setContentUpdate] = useState(null);
-  const [deviceInfo, setDeviceInfo] = useState({});
-
-  const userToken = useSelector((state) => userSelectors.getUserToken(state));
 
   // const isRequireUpdate = useSelector((state) =>
   //   commonSelectors.getRequireUpdate(state),
@@ -160,8 +148,7 @@ const Index = () => {
     try {
       await dispatch(commonActions.toggleLoading(true));
       let isUpdate = await codePush.checkForUpdate();
-      setIsRequireUpdate(isUpdate !== null ? true : false);
-      setContentUpdate(isUpdate);
+
       if (isUpdate) {
         await dispatch(commonActions.toggleLoading(false));
         setTimeout(async () => {
@@ -183,17 +170,13 @@ const Index = () => {
   const codePushStatusDidChange = async (status) => {
     switch (status) {
       case codePush.SyncStatus.DOWNLOADING_PACKAGE:
-        setProgressUpdate(0.25);
         break;
       case codePush.SyncStatus.INSTALLING_UPDATE:
-        setProgressUpdate(0.5);
         break;
       case codePush.SyncStatus.UP_TO_DATE:
-        setProgressUpdate(0.75);
         onCheckSignInSession();
         break;
       case codePush.SyncStatus.UPDATE_INSTALLED:
-        setProgressUpdate(1);
         onCheckSignInSession();
         break;
       default:
@@ -216,9 +199,10 @@ const Index = () => {
   };
 
   const onHandleUpdate = async () => {
+    await dispatch(commonActions.closeRequireUpdate());
     codePush.sync(
       {
-        installMode: codePush.InstallMode.ON_NEXT_RESTART,
+        installMode: codePush.InstallMode.IMMEDIATE,
       },
       codePushStatusDidChange,
       onDownloadProgress,
@@ -242,20 +226,6 @@ const Index = () => {
       });
   };
 
-  const navigateToScreen = (data) => {
-    const {target = '', screenData = {}} = data;
-    const screenDataParse = JSON.parse(screenData) || {};
-    switch (target) {
-      case 'product':
-        RootNavigator.navigate('ProductDetail', {
-          id: screenDataParse.productId,
-        });
-        break;
-      default:
-        return null;
-    }
-  };
-
   // Notification Permission
   const requestUserPermission = async () => {
     const authStatus = await messaging().requestPermission();
@@ -273,25 +243,59 @@ const Index = () => {
     console.log('token', token);
     //notification arrived when app on foreground state
     messaging().onMessage(async (remoteMessage) => {
-      if (remoteMessage.data.type && remoteMessage.data.type === 'navigation') {
-        if (!userToken) {
-          return null;
-        }
-        // navigateToScreen(remoteMessage.data);
+      console.log('foreground remoteMessage', remoteMessage);
+      if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'notification'
+      ) {
+        //do something here
+        //.........
+      } else if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'message' &&
+        remoteMessage.data.user
+      ) {
+        //do something here
+        //.........
+      } else if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'message' &&
+        !remoteMessage.data.user
+      ) {
+        //do something here
+        //.........
       } else {
-        console.log('foreground remoteMessage', remoteMessage);
+        //do something here
+        //.........
       }
     });
 
     //notification was opened when app on background state
     messaging().onNotificationOpenedApp(async (remoteMessage) => {
-      if (remoteMessage.data.type && remoteMessage.data.type === 'navigation') {
-        if (!userToken) {
-          return null;
-        }
-        navigateToScreen(remoteMessage.data);
+      console.log('background remoteMessage', remoteMessage);
+      if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'notification'
+      ) {
+        //do something here
+        //.........
+      } else if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'message' &&
+        remoteMessage.data.user
+      ) {
+        //do something here
+        //.........
+      } else if (
+        remoteMessage.data.type &&
+        remoteMessage.data.type === 'message' &&
+        !remoteMessage.data.user
+      ) {
+        //do something here
+        //.........
       } else {
-        console.log('background remoteMessage', remoteMessage);
+        //do something here
+        //.........
       }
     });
 
@@ -299,17 +303,31 @@ const Index = () => {
     messaging()
       .getInitialNotification()
       .then(async (remoteMessage) => {
+        console.log('open app remoteMessage', remoteMessage);
         if (remoteMessage) {
           if (
             remoteMessage.data.type &&
-            remoteMessage.data.type === 'navigation'
+            remoteMessage.data.type === 'notification'
           ) {
-            if (!userToken) {
-              return null;
-            }
-            navigateToScreen(remoteMessage.data);
+            //do something here
+            //.........
+          } else if (
+            remoteMessage.data.type &&
+            remoteMessage.data.type === 'message' &&
+            remoteMessage.data.user
+          ) {
+            //do something here
+            //.........
+          } else if (
+            remoteMessage.data.type &&
+            remoteMessage.data.type === 'message' &&
+            !remoteMessage.data.user
+          ) {
+            //do something here
+            //.........
           } else {
-            console.log('open app remoteMessage', remoteMessage);
+            //do something here
+            //.........
           }
         }
       });
@@ -329,21 +347,12 @@ const Index = () => {
         visible={isShowAddPictureOption}
         target={addPictureOptionTarget}
       />
-      {isLoading ? (
-        <ModalIndicator visible={isLoading} />
-      ) : (
-        <ModalRequireUpdate
-          visible={
-            !loading && isRequireUpdate && deviceInfo?.is_emulator === false
-          }
-          contentUpdate={contentUpdate}
-          progressUpdate={progressUpdate}
-          onConfirm={() => onHandleUpdate()}
-        />
-      )}
-
+      <ModalIndicator visible={isLoading} />
       <ModalStory />
-
+      {/* <ModalRequireUpdate
+        visible={isRequireUpdate}
+        onConfirm={() => onHandleUpdate()}
+      /> */}
       <ModalNetworkWarning visible={!networkStatus} />
       <SlideInModal />
       {/* <NotificationPopup
