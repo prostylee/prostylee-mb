@@ -15,8 +15,8 @@ import {
   SUCCESS,
   TYPE_STORE,
   TYPE_USER,
-  PAGE_DEFAULT,
   POST_SUCCESS,
+  PAGE_DEFAULT,
 } from 'constants';
 import i18n from 'i18n';
 import {showMessage} from 'react-native-flash-message';
@@ -106,10 +106,15 @@ const getStoriesByStores = function* ({payload}) {
   }
 };
 
-const getStoriesByUsers = function* ({payload}) {
+const getStoriesByUsers = function* () {
+  const limit = yield select((state) => state.newFeed.limitStories);
+  const request = {
+    limit,
+    page: PAGE_DEFAULT,
+  };
   try {
     yield put(newFeedActions.setLoadingStories(true));
-    const res = yield call(getStoriesByUser, payload);
+    const res = yield call(getStoriesByUser, request);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       let storyData = res.data.data;
       let contentWithStore = [];
@@ -138,6 +143,45 @@ const getStoriesByUsers = function* ({payload}) {
     });
   } finally {
     yield put(newFeedActions.setLoadingStories(false));
+  }
+};
+
+const getMoreStoriesByUsers = function* () {
+  const page = yield select((state) => state.newFeed.pageStories);
+  const limit = yield select((state) => state.newFeed.limitStories);
+  const stories = yield select((state) => state.newFeed.stories);
+  const request = {
+    limit,
+    page,
+  };
+  try {
+    const res = yield call(getStoriesByUser, request);
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      let storyData = res.data.data;
+      let contentWithStore = [...(stories?.content || [])];
+      for (const story of storyData.content) {
+        const storeId = story.storeId;
+        if (storeId) {
+          const productRes = yield call(getStoreById, storeId);
+          if (productRes.ok && productRes.data.status === SUCCESS) {
+            contentWithStore.push({
+              ...story,
+              store: productRes.data.data,
+            });
+          }
+        }
+      }
+      storyData.content = contentWithStore;
+      yield put(newFeedActions.getStoriesByUserMoreSuccess(storyData));
+    } else {
+      yield put(newFeedActions.getStoriesByUserMoreFailed());
+    }
+  } catch (e) {
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
   }
 };
 
@@ -208,11 +252,7 @@ const postStory = function* (payload) {
       (res.data.status === SUCCESS || res.data.status === POST_SUCCESS)
     ) {
       if (targetType === TYPE_USER) {
-        yield put(
-          newFeedActions.getStoriesByUser({
-            page: PAGE_DEFAULT,
-          }),
-        );
+        yield put(newFeedActions.getStoriesByUser());
       }
       showMessage({
         message: i18n.t('addStory.addStorySuccess'),
@@ -221,6 +261,7 @@ const postStory = function* (payload) {
       });
       RootNavigator.navigate('Home');
       yield put(newFeedActions.postStorySuccess(res.data.data));
+      yield put(newFeedActions.removeNewFeedStore());
     } else {
       showMessage({
         message: i18n.t('addStory.addStoryFail'),
@@ -243,6 +284,10 @@ const watcher = function* () {
   yield takeLatest(newFeedTypes.HANDLE_LOAD_MORE, getLoadMoreNewFeed);
   yield takeLatest(newFeedTypes.GET_STORIES_BY_STORE, getStoriesByStores);
   yield takeLatest(newFeedTypes.GET_STORIES_BY_USER, getStoriesByUsers);
+  yield takeLatest(
+    newFeedTypes.GET_STORIES_BY_USER_MORE,
+    getMoreStoriesByUsers,
+  );
   yield takeLatest(newFeedTypes.GET_PRODUCT_OF_STORIES, getProductOfStory);
   yield takeLatest(newFeedTypes.GET_STORE_MINI, getStoreMini);
   yield takeLatest(newFeedTypes.GET_STORE_MINI_LOAD_MORE, getLoadMoreStoreMini);

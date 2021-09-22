@@ -6,7 +6,7 @@ const WIDTH = Dimensions.get('window').width - 30;
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '$bgColor',
+    backgroundColor: '$white',
   },
   contentWrapper: {
     backgroundColor: '$bgColor',
@@ -23,6 +23,21 @@ export default EStyleSheet.create({
     paddingTop: 20,
     // zIndex: 99,
   },
+  animatedHeader: {
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+  },
+  animatedHeaderContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingVertical: 0,
+  },
+  headerSearchBar: {
+    maxWidth: WIDTH - 160,
+    backgroundColor: '#F4F5F5',
+  },
   headerWrap: {
     ...flexRow,
     paddingVertical: 10,
@@ -31,12 +46,14 @@ export default EStyleSheet.create({
   headerLeftContainer: {
     height: 35,
     width: '10%',
-    // maxWidth: 80,
     justifyContent: 'center',
     alignItems: 'center',
-
-    // borderWidth: 1,
     paddingLeft: 6,
+  },
+  headerSearchBarBlack: {
+    maxWidth: WIDTH - 160,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    zIndex: 10,
   },
   headerRightContainer: {
     flexDirection: 'row',

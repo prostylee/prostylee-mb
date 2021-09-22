@@ -10,15 +10,7 @@ const PopularBrands = ({data = []}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <View
-        style={[
-          styles.wrapBackground,
-          {
-            backgroundColor: '#fff',
-            paddingVertical: 12,
-            paddingBottom: 8,
-          },
-        ]}>
+      <View style={[styles.wrapBackground, styles.popularContainer]}>
         <View style={styles.wrapTitle}>
           <Text style={styles.title}>{i18n.t('stores.popularBrand')}</Text>
           <TouchableOpacity
@@ -35,6 +27,7 @@ const PopularBrands = ({data = []}) => {
             renderItem={({item, index}) =>
               index < 10 ? <BrandItem item={item} index={index} /> : null
             }
+            keyExtractor={(_, index) => `brand_item_${index}`}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.listInner}
           />

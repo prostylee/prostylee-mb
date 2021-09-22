@@ -46,6 +46,7 @@ const AddStatus = (props) => {
   const [uploadList, setUploadList] = React.useState([]);
   const [doneUpload, setDoneUpload] = React.useState(false);
   const [userId, setUserId] = React.useState('');
+  const [activeImage, setActiveImage] = React.useState(1);
 
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
@@ -195,8 +196,7 @@ const AddStatus = (props) => {
     }
   };
 
-  const ImageSlideList = () => {
-    const [activeImage, setActiveImage] = React.useState(1);
+  const ImageSlideList = React.useMemo(() => {
     return (
       <>
         <Carousel
@@ -208,17 +208,9 @@ const AddStatus = (props) => {
           itemWidth={WIDTH}
           onSnapToItem={(index) => setActiveImage(index + 1)}
         />
-        {images.length >= 1 ? (
-          <View style={styles.imagesCount}>
-            <Text
-              style={
-                styles.imageCountText
-              }>{`${activeImage}/${images.length}`}</Text>
-          </View>
-        ) : null}
       </>
     );
-  };
+  }, []);
 
   const InputStatusText = () => {
     const [textValue, setTextValue] = React.useState(
@@ -260,6 +252,7 @@ const AddStatus = (props) => {
         text: i18n.t('addStatus.alertOK'),
         style: 'destructive',
         onPress: () => {
+          removeStore();
           navigation.pop(3);
         },
       },
@@ -272,7 +265,15 @@ const AddStatus = (props) => {
       <InputStatusText />
       <Container style={styles.mainContent}>
         <View style={styles.imagesList}>
-          <ImageSlideList />
+          {ImageSlideList}
+          {images.length >= 1 ? (
+            <View style={styles.imagesCount}>
+              <Text
+                style={
+                  styles.imageCountText
+                }>{`${activeImage}/${images.length}`}</Text>
+            </View>
+          ) : null}
           {!isEmpty(storeSelected) ? (
             <View style={styles.selectStore}>
               <CommonIcon.Store width={12} height={12} />

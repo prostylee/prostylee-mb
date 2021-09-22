@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
   View,
   FlatList,
@@ -74,10 +74,6 @@ const AddStore = (props) => {
   }, [getStoreList]);
 
   React.useEffect(() => {
-    onSearchValue(searchValue);
-  }, [searchValue]);
-
-  React.useEffect(() => {
     if (storeMini && storeMini?.content && storeMini?.content?.length) {
       setStoreList(storeMini.content);
     }
@@ -115,19 +111,22 @@ const AddStore = (props) => {
   //Theme
   const {colors} = useTheme();
 
-  const onSearchValue = debounce(
-    (search) => {
-      dispatch(
-        newFeedActions.getStoreMini({
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-          sort: ['name'],
-          keyword: search,
-        }),
-      );
-    },
-    1000,
-    {trailing: true, leading: false, maxWait: 4000},
+  const onSearchValue = useCallback(
+    debounce(
+      (search) => {
+        dispatch(
+          newFeedActions.getStoreMini({
+            page: PAGE_DEFAULT,
+            limit: LIMIT_DEFAULT,
+            sort: ['name'],
+            keyword: search,
+          }),
+        );
+      },
+      2000,
+      {trailing: true, leading: false, maxWait: 4000},
+    ),
+    [],
   );
 
   const onPressItem = async (item) => {
@@ -174,7 +173,10 @@ const AddStore = (props) => {
               value={searchValue}
               showIcon
               placeholder={i18n.t('addStore.search')}
-              onChangeText={(text) => setSearchValue(text)}
+              onChangeText={(text) => {
+                setSearchValue(text);
+                onSearchValue(text);
+              }}
               editable
               style={styles.searchBox}
             />

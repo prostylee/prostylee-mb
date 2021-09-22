@@ -10,6 +10,7 @@ import {
   ImageBackground,
 } from 'react-native';
 
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import configEnv from 'config';
 import isEmpty from 'lodash/isEmpty';
 import {ThemeView, ButtonRounded, ChatIcon, Colors} from 'components';
@@ -129,8 +130,8 @@ const Index = ({navigation}) => {
       dispatch(
         myPageActions.getListUserPost({
           userId: userProfile?.id,
-          page: 0,
-          limit: 12,
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
         }),
       );
     }

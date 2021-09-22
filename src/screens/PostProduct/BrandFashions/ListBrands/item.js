@@ -13,15 +13,7 @@ const Item = ({item, selectedBrand, onPress, disabled}) => {
     <TouchableOpacity onPress={onPress}>
       <View style={styles.itemcontainer}>
         {active ? (
-          <View
-            style={[
-              styles.img,
-              {
-                backgroundColor: colors['$purple'],
-                justifyContent: 'center',
-                alignItems: 'center',
-              },
-            ]}>
+          <View style={[styles.img, styles.check]}>
             <Check />
           </View>
         ) : (

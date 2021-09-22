@@ -1,13 +1,15 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
   Animated,
   TouchableOpacity as Touch,
   View,
   Text,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import {Avatar} from 'react-native-paper';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {useRoute} from '@react-navigation/native';
 
 import styles from './styles';
 
@@ -21,19 +23,21 @@ import {ThemeView, HeaderAnimated, Colors} from 'components';
 
 import {ChevronLeft} from 'svg/common';
 import {More, Message} from 'svg/social';
+import {getProfile, getStatistics} from 'services/api/userApi';
 
-import {profileSelector, statisticsSelector} from 'redux/selectors/user';
-
-import {PAGE_DEFAULT} from 'constants';
+import {PAGE_DEFAULT, SUCCESS} from 'constants';
 
 const heightShow = Platform.OS === 'ios' ? 280 : 300;
 
 const UserProfile = ({navigation}) => {
   const dispatch = useDispatch();
   const scrollRef = useRef();
-  const profile = useSelector((state) => profileSelector(state));
-  const statistics = useSelector((state) => statisticsSelector(state));
+  const route = useRoute();
+  const userId = route?.params?.userId || 1;
 
+  const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState({});
+  const [statistics, setStatistics] = useState({});
   /*Animated*/
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
@@ -52,21 +56,42 @@ const UserProfile = ({navigation}) => {
     extrapolate: 'clamp',
   });
 
+  const getUserProfile = async () => {
+    setLoading(true);
+    try {
+      const resProfile = await getProfile(userId);
+      const resStatistics = await getStatistics(userId);
+
+      if (
+        resProfile.ok &&
+        resStatistics.ok &&
+        resProfile.data.status === SUCCESS &&
+        resStatistics.data.status === SUCCESS
+      ) {
+        setProfile(resProfile.data.data);
+        setStatistics(resStatistics.data.data);
+      }
+    } catch (e) {
+      console.log('error get data', e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    dispatch(userActions.getProfile(1));
-    dispatch(userActions.getStatistics(1));
+    getUserProfile();
     dispatch(
       userActions.getUserPost({
         page: PAGE_DEFAULT,
         limit: PAGE_DEFAULT,
-        userId: 3,
+        userId: userId,
       }),
     );
     dispatch(
       userActions.getProductByUser({
         page: PAGE_DEFAULT,
         limit: PAGE_DEFAULT,
-        userId: 3,
+        userId: userId,
       }),
     );
   }, [dispatch]);
@@ -87,6 +112,15 @@ const UserProfile = ({navigation}) => {
       animated: true,
     });
   };
+
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.mid]}>
+        <ActivityIndicator size={'large'} color={Colors['$pink']} />
+      </View>
+    );
+  }
+
   return (
     <ThemeView style={styles.container} isFullView>
       <HeaderAnimated

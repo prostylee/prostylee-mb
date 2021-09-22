@@ -18,6 +18,16 @@ export default EStyleSheet.create({
     paddingBottom: 24,
     // borderWidth: 1,
   },
+  pagingStyle: {
+    position: 'absolute',
+    bottom: 0,
+    alignSelf: 'center',
+  },
+  pagingItemStyle: {
+    width: 6,
+    height: 6,
+    marginRight: 0,
+  },
   sliderItem: {
     width: WIDTH - 32,
     height: WIDTH / 2 - 16,

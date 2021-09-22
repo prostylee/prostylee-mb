@@ -4,9 +4,19 @@ import {center, flexRow} from 'theme/style';
 
 const WIDTH = Dimensions.get('window').width - 30;
 export default EStyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     // backgroundColor: '$bgColor',
+  },
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#E82E46'
+  },
+  statusBar: {
+    backgroundColor: '#F4F5F5',
   },
   headerContainer: {
     display: 'flex',

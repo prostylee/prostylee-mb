@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
+import {useNavigation} from '@react-navigation/native';
 
 import {ContainerView} from 'components';
 import PriceLabel from '../components/PriceLabel';
@@ -14,6 +15,7 @@ import NewFeedItemBody from './NewFeedItemBody';
 import RootNavigator from '../../../navigator/rootNavigator';
 
 const StoreNewFeedItem = ({newFeedItem, targetType}) => {
+  const navigation = useNavigation();
   const productOwnerResponse = newFeedItem?.newFeedOwnerResponse;
   const urlImage = productOwnerResponse?.logoUrl;
   const name = productOwnerResponse?.name || '';
@@ -21,15 +23,17 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
   const address = productOwnerResponse?.fullAddress || '';
 
   const navigateStore = () => {
-    // if (newFeedItem?.storeId) {
-    //   RootNavigator.navigate('StoreProfileMain', {
-    //     storeId: newFeedItem?.storeId,
-    //   });
-    // } else {
-    //   RootNavigator.navigate('UserProfile', {
-    //     userId: productOwnerResponse?.id,
-    //   });
-    // }
+    if (newFeedItem?.storeId) {
+      RootNavigator.navigate('StoreProfileMain', {
+        storeId: newFeedItem?.storeId,
+      });
+    } else if (productOwnerResponse?.id) {
+      RootNavigator.navigate('UserProfile', {
+        userId: productOwnerResponse?.id,
+      });
+    } else {
+      // nothing happen
+    }
   };
 
   const slider = (
@@ -56,7 +60,12 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
           priceSale={newFeedItem?.priceSale}
         />
       </View>
-      <OutlineButton label={i18n.t('common.textBuyNow')} onClick={() => {}} />
+      <OutlineButton
+        label={i18n.t('common.textBuyNow')}
+        onClick={() => {
+          navigation.navigate('ProductDetail', {id: newFeedItem.id});
+        }}
+      />
     </ContainerView>
   );
 

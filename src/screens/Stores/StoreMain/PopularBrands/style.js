@@ -7,12 +7,16 @@ export default EStyleSheet.create({
   container: {
     width: '100%',
     height: 160,
-
     marginBottom: 8,
   },
   wrapBackground: {
     backgroundColor: 'red',
     flex: 1,
+  },
+  popularContainer: {
+    backgroundColor: '#fff',
+    paddingVertical: 12,
+    paddingBottom: 8,
   },
   wrapTitle: {
     paddingHorizontal: 16,
@@ -36,7 +40,6 @@ export default EStyleSheet.create({
   listInner: {
     height: '100%',
     paddingHorizontal: 10,
-    height: '100%',
   },
 
   itemContainer: {

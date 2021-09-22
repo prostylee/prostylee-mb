@@ -25,6 +25,12 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     paddingBottom: 4,
   },
+  storeWrapper: {
+    height: 65,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   item: {
     height: HEIGHT_IMAGE + 52,
     width: WIDTH_IMAGE + 12,

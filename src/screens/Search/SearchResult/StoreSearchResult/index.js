@@ -74,18 +74,39 @@ const FeaturedCategories = ({navigation}) => {
   };
 
   const renderFooter = () => {
-    if (isStoreSearchLoadmoreLoading)
+    if (isStoreSearchLoadmoreLoading) {
       return (
         <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
           <ActivityIndicator animating color={Colors.$purple} size="small" />
         </View>
       );
+    }
     return null;
   };
   useEffect(() => {
-    if (!loading) handleRefreshing(false);
+    if (!loading) {
+      handleRefreshing(false);
+    }
   }, [loading]);
 
+  const distanceInKm = (item) => {
+    if (
+      location &&
+      location.lat &&
+      location.lon &&
+      item?.location?.latitude &&
+      item?.location?.longitude
+    ) {
+      return getDistanceFromLatLonInKm(
+        location.lat,
+        location.lon,
+        item?.location?.latitude,
+        item?.location?.longitude,
+      );
+    } else {
+      return i18n.t('undefined') + ' ';
+    }
+  };
   return (
     <>
       <View style={styles.container}>
@@ -108,13 +129,7 @@ const FeaturedCategories = ({navigation}) => {
                         storeId: item.id,
                       });
                     }}>
-                    <View
-                      style={{
-                        height: 65,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                      }}>
+                    <View style={styles.storeWrapper}>
                       <Avatar.Image size={32} source={{uri: item.logoUrl}} />
                       <View style={{marginLeft: 10}}>
                         <Text numberOfLines={1} style={styles.storeName}>
@@ -128,12 +143,7 @@ const FeaturedCategories = ({navigation}) => {
                           <Text style={styles.isAdvertising}>
                             {item?.isAdvertising
                               ? i18n.t('common.textAdvertisement')
-                              : getDistanceFromLatLonInKm(
-                                  location.lat,
-                                  location.lon,
-                                  item?.location?.latitude,
-                                  item?.location?.longitude,
-                                ) + 'km'}
+                              : distanceInKm(item) + 'km'}
                           </Text>
                         </View>
                       </View>

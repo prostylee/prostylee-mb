@@ -11,10 +11,11 @@ import {HeartSolid, ChatSolid, ArrowSolid} from 'svg/common';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {absolute} from 'theme/style';
 import {Image} from 'components';
+import * as CommonIcon from 'svg/common';
 
 import {HeartStroke} from 'svg/social';
 
-import {TYPE_STORE, CURRENCY_VIET_NAM} from 'constants';
+import {TYPE_STORE, TYPE_USER, CURRENCY_VIET_NAM} from 'constants';
 
 import {currencyFormat} from 'utils/currency';
 
@@ -23,6 +24,7 @@ const WIDTH_IMG = 48;
 const WIDTH = Dimensions.get('window').width;
 const Footer = ({openChatModal, story, targetType}) => {
   const product = story?.product || {};
+  const store = story?.store || {};
   return (
     <>
       <View style={styles.storyAction}>
@@ -68,14 +70,12 @@ const Footer = ({openChatModal, story, targetType}) => {
           </TouchableOpacity>
         </View>
       )}
-      {/* {targetType === TYPE_USER && (
-        <View style={styles.storeContainer}>
-          <View style={styles.storeContent}>
-            <Text>Diesel Clothing Store</Text>
-          </View>
-          <View style={styles.contentRight} />
+      {targetType === TYPE_USER && !isEmpty(store) ? (
+        <View style={styles.selectStore}>
+          <CommonIcon.Store width={12} height={12} />
+          <Text style={styles.selectStoreName}>{store.name}</Text>
         </View>
-      )} */}
+      ) : null}
     </>
   );
 };
@@ -142,6 +142,23 @@ const styles = EStyleSheet.create({
   },
   contentRight: {
     width: 20,
+  },
+  selectStore: {
+    ...absolute(null, 50, 16, null),
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    height: 30,
+    borderRadius: 15,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+  },
+  selectStoreName: {
+    fontSize: 13,
+    lineHeight: 18,
+    paddingLeft: 8,
+    color: '$white',
   },
 });
 

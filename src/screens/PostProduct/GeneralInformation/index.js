@@ -9,7 +9,6 @@ import {
   ScrollView,
   Dimensions,
   Platform,
-  SafeAreaView,
 } from 'react-native';
 import {ProgressBar} from 'react-native-paper';
 import {useNavigation, useRoute, useTheme} from '@react-navigation/native';
@@ -30,8 +29,11 @@ const HEIGHT_HEADER = Platform.OS === 'ios' ? 78 * rem + 45 : 80 * rem + 45;
 
 const CANCEL_INDEX = 0;
 // const DESTRUCTIVE_INDEX = 0;
-const PICK_IMAGE_OPTIONS = ['Huỷ', 'Chọn từ bộ sưu tập ảnh', 'Chụp hình'];
-
+const PICK_IMAGE_OPTIONS = [
+  i18n.t('cancel'),
+  i18n.t('selectInLibrary'),
+  i18n.t('takePicture'),
+];
 const AddProductsInfor = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();

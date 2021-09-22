@@ -133,11 +133,7 @@ const NewFeed = ({navigation}) => {
           timeRangeInDays: 30,
         }),
       );
-      dispatch(
-        newFeedActions.getStoriesByUser({
-          page: PAGE_DEFAULT,
-        }),
-      );
+      dispatch(newFeedActions.getStoriesByUser());
     }
     handleRefreshing(false);
   }, [refreshing, targetType]);

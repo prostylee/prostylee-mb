@@ -364,7 +364,7 @@ const ProductDetail = (props) => {
         </Animated.View>
         <ProductTitle
           navigation={props.navigation}
-          productId={productData?.id}
+          productId={productData?.id || 1}
           name={productData?.name}
           priceList={priceList}
           choiceSelect={choiceSelect}

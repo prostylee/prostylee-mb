@@ -13,6 +13,15 @@ export default EStyleSheet.create({
     overflow: 'hidden',
     paddingTop: 20,
   },
+  tabUnderLine: {
+    backgroundColor: '$purple',
+    height: 2,
+  },
+  tabText: {
+    fontSize: 14,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
   titleContainer: {
     padding: 16,
     backgroundColor: '$white',
@@ -30,6 +39,12 @@ export default EStyleSheet.create({
     height: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  listLoadingWrapper: {
+    flexDirection: 'row',
+    paddingBottom: 16,
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
   },
   itemWrapper: {
     width: '$screenWidth/2',

@@ -17,20 +17,12 @@ const MidAdvertisingSlider = ({data = []}) => {
           scrollEnabled
           data={data && data.length ? data : [0]}
           showPagination
-          paginationStyle={{
-            position: 'absolute',
-            bottom: 0,
-            alignSelf: 'center',
-          }}
-          paginationStyleItem={{
-            width: 6,
-            height: 6,
-            marginRight: 0,
-          }}
+          paginationStyle={styles.pagingStyle}
+          paginationStyleItem={styles.pagingItemStyle}
           paginationActiveColor={Colors?.['$black']}
           paginationDefaultColor={Colors?.['$line']}
           renderItem={({item, index}) => (
-            <View style={styles.sliderItem}>
+            <View key={`mid_ad_item_${index}`} style={styles.sliderItem}>
               <Image
                 style={styles.sliderItemImage}
                 source={

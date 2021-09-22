@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
@@ -11,13 +10,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
 import styles from './styles';
 import {Header, Colors, HeaderAnimated, SearchBar} from 'components';
-import {
-  storeActions,
-  userActions,
-  searchActions,
-  storeProfileActions,
-  userSelectors,
-} from 'redux/reducers';
+import {storeActions, searchActions, storeProfileActions} from 'redux/reducers';
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 import CustomBackground from './CustomBackground';
 import AdvertisingSlider from './AdvertisingSlider';
@@ -50,7 +43,7 @@ const CustomSearchBar = ({onSearchFocus = () => {}}) => (
       style={styles.wrapSearchBar}
       placeholder={i18n.t('search')}
       onFocus={onSearchFocus}
-      placeholderTextColor={Colors['$lightGray']}
+      placeholderTextColor={Colors.$lightGray}
     />
   </View>
 );
@@ -77,7 +70,7 @@ const Stores = (props) => {
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const isFocused = useIsFocused();
-  //Call get location - pls do not remove
+  // Call get location - DO NOT REMOVE
   const location = useLocation();
 
   const onScrollEvent = Animated.event(
@@ -97,7 +90,7 @@ const Stores = (props) => {
   };
 
   useEffect(() => {
-    if (!topBannerList || !topBannerList?.content?.length)
+    if (!topBannerList || !topBannerList?.content?.length) {
       dispatch(
         storeActions.getTopBanner({
           page: PAGE_DEFAULT,
@@ -105,7 +98,8 @@ const Stores = (props) => {
           position: 'mobile_store',
         }),
       );
-    if (!midBannerList || !midBannerList?.content?.length)
+    }
+    if (!midBannerList || !midBannerList?.content?.length) {
       dispatch(
         storeActions.getMidBanner({
           page: PAGE_DEFAULT,
@@ -113,14 +107,16 @@ const Stores = (props) => {
           position: 'mobile_store',
         }),
       );
-    if (!brandList || !brandList?.content?.length)
+    }
+    if (!brandList || !brandList?.content?.length) {
       dispatch(
         storeActions.getBrandList({
           page: PAGE_DEFAULT,
           limit: LIMIT_DEFAULT,
         }),
       );
-    if (!categoryList || !categoryList?.content?.length)
+    }
+    if (!categoryList || !categoryList?.content?.length) {
       dispatch(
         storeActions.getCategoryList({
           page: PAGE_DEFAULT,
@@ -129,6 +125,7 @@ const Stores = (props) => {
           sorts: '+order',
         }),
       );
+    }
     dispatch(storeActions.getBottomTabList());
   }, []);
   const _handleRefresh = () => {
@@ -161,7 +158,9 @@ const Stores = (props) => {
     );
   };
   useEffect(() => {
-    if (!loading) handleRefreshing(false);
+    if (!loading) {
+      handleRefreshing(false);
+    }
   }, [loading]);
 
   useEffect(() => {
@@ -174,22 +173,20 @@ const Stores = (props) => {
   }, [isFocused]);
 
   return (
-    <View style={{flex: 1, backgroundColor: '#E82E46'}}>
+    <View style={styles.wrapper}>
       <HeaderAnimated
         bottomComponent={
           <View style={styles.animatedSearchBarContainer}>
             <SearchBar
-              style={{
-                backgroundColor: '#F4F5F5',
-              }}
+              style={styles.statusBar}
               inputStyle={styles.wrapSearchBarInput}
               placeholder={i18n.t('search')}
               onFocus={onSearchFocus}
-              placeholderTextColor={Colors['$lightGray']}
+              placeholderTextColor={Colors.$lightGray}
             />
             <HeaderRight
               isAnimated
-              color={Colors['$icon']}
+              color={Colors.$icon}
               navigation={navigation}
             />
           </View>
@@ -204,7 +201,7 @@ const Stores = (props) => {
       />
 
       <AppScrollViewIOSBounceColorsWrapper
-        style={{flex: 1}}
+        style={styles.flex1}
         topBounceColor="#E82E46"
         bottomBounceColor="#fff">
         <ScrollView
@@ -225,7 +222,7 @@ const Stores = (props) => {
               onRefresh={_handleRefresh}
             />
           }>
-          <View style={{backgroundColor: Colors['$bgColor']}}>
+          <View style={{backgroundColor: Colors.$bgColor}}>
             <CustomBackground />
 
             <Header
@@ -271,7 +268,7 @@ const Stores = (props) => {
             />
             {isEndReached ? (
               <View style={styles.listFooterContainer}>
-                <ActivityIndicator size="small" color={Colors['$purple']} />
+                <ActivityIndicator size="small" color={Colors.$purple} />
               </View>
             ) : null}
           </View>

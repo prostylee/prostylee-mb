@@ -9,13 +9,16 @@ import styles from './styles';
 const PriceLabel = ({price, priceSale}) => {
   return (
     <Text style={styles.price}>
-      {currencyFormat(priceSale ? priceSale : price, CURRENCY_VIET_NAM)}
+      {currencyFormat(
+        priceSale ? priceSale : price ? price : 0,
+        CURRENCY_VIET_NAM,
+      )}
     </Text>
   );
 };
 
 PriceLabel.propTypes = {
-  price: PropTypes.number.isRequired,
+  price: PropTypes.number,
   priceSale: PropTypes.number,
 };
 

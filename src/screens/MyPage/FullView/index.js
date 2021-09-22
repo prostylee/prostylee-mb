@@ -110,9 +110,7 @@ const FullView = ({column, wImage, hImage, scrollEnabled}) => {
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           keyExtractor={(item, index) => item?.id + '-' + index}
           data={postList}
-          renderItem={({item}) => (
-            <PostView item={item} disabledLike={true} disabledComment={true} />
-          )}
+          renderItem={({item}) => <PostView item={item} />}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.5}
           initialNumToRender={10}
