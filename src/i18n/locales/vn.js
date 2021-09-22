@@ -5,11 +5,14 @@ export default {
   logOut: 'Đăng xuất',
   caution: 'Chú ý!',
   alertUpdate: 'Cập nhật ứng dụng',
+  selectInLibrary: 'Chọn từ bộ sưu tập ảnh',
+  takePicture: 'Chụp hình',
   descriptionUpdate:
     'Đã có phiên bản mới, vui lòng cập nhật để có những trải nghiệm tốt hơn',
   descriptionProgressUpdate: 'Đang cập nhật, vui lòng chờ trong ít phút',
   buttonUpdateNewVersion: 'Cập nhật ngay',
   resetApp: 'Khởi động lại',
+  undefined: 'Không xác định',
   stores: {
     titleTopStore: 'Cửa hàng nổi bật',
     textNear: 'Cửa hàng gần đây',

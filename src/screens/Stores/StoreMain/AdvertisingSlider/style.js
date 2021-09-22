@@ -28,6 +28,16 @@ export default EStyleSheet.create({
     height: '100%',
     borderRadius: 8,
   },
+  pagingStyle: {
+    position: 'absolute',
+    bottom: -10,
+    left: 0,
+  },
+  pagingItemStyle: {
+    width: 6,
+    height: 6,
+    marginRight: 0,
+  },
   paginationReStyle: {
     position: 'absolute',
     bottom: 10,

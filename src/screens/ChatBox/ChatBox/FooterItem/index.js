@@ -8,6 +8,7 @@ import IconFeather from 'react-native-vector-icons/Feather';
 import EmojiBoard from 'react-native-emoji-board';
 import {isIphoneX} from 'utils/ui';
 import ImagePicker from 'react-native-image-crop-picker';
+import {ActionSheet} from 'components';
 /******** chat aws ********/
 import {API, graphqlOperation, Storage} from 'aws-amplify';
 import {useDispatch} from 'react-redux';
@@ -17,7 +18,16 @@ import {showMessage} from 'react-native-flash-message';
 import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
 /******** chat aws ********/
 
+const CANCEL_INDEX = 0;
+// const DESTRUCTIVE_INDEX = 0;
+const PICK_IMAGE_OPTIONS = [
+  i18n.t('cancel'),
+  i18n.t('selectInLibrary'),
+  i18n.t('takePicture'),
+];
+
 const FooterItem = (props) => {
+  const actionSheetRef = React.useRef();
   const user = props.user ? props.user : {};
   const chatId = props.chatId ? props.chatId : '';
   const otherChatUserId = props.otherChatUserId ? props.otherChatUserId : '';
@@ -145,6 +155,23 @@ const FooterItem = (props) => {
     }
   };
 
+  const openLibrary = () => {
+    ImagePicker.openPicker({
+      mediaType: 'photo',
+      multiple: false,
+    })
+      .then((res) => {
+        uploadToStorage(Platform.OS === 'ios' ? res.sourceURL : res.path);
+      })
+      .catch((e) => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
+      });
+  };
+
   const openCamera = () => {
     ImagePicker.openCamera({
       mediaType: 'photo',
@@ -193,10 +220,12 @@ const FooterItem = (props) => {
       <View style={styles.iconRow}>
         <View style={styles.iconFooter}>
           <Icon
-            name="ios-camera-outline"
+            name="ios-image"
             size={30}
             color={colors['$black']}
-            onPress={openCamera}
+            onPress={() => {
+              actionSheetRef.current.show();
+            }}
           />
         </View>
         <View style={styles.iconFooter}>
@@ -215,6 +244,20 @@ const FooterItem = (props) => {
         showBoard={emojiShow}
         onClick={(item) => onChangeText((prev) => prev + ` ${item.code}`)}
         containerStyle={styles.emoji}
+      />
+      <ActionSheet
+        ref={actionSheetRef}
+        options={PICK_IMAGE_OPTIONS}
+        cancelButtonIndex={CANCEL_INDEX}
+        onPress={(value) => {
+          if (value === 1) {
+            setTimeout(() => openLibrary(), 200);
+            return;
+          }
+          if (value === 2) {
+            setTimeout(() => openCamera(), 200);
+          }
+        }}
       />
     </View>
   );

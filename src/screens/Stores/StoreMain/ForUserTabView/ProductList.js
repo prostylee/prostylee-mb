@@ -17,13 +17,7 @@ const ProductList = ({navigation, isLoading = false, data = []}) => {
         },
       ]}>
       {isLoading ? (
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingBottom: 16,
-            flexWrap: 'wrap',
-            justifyContent: 'space-around',
-          }}>
+        <View style={styles.listLoadingWrapper}>
           {Array.from(
             'x'.repeat(data?.length ? Math.floor(data?.length) : 4),
           ).map((item, index) => (

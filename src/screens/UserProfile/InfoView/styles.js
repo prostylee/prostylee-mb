@@ -37,11 +37,16 @@ export default EStyleSheet.create({
     paddingLeft: 10,
     textAlign: 'center',
   },
-  textDescription: {
-    paddingHorizontal: 32,
-    textAlign: 'center',
+  textDescriptionContainer: {
     paddingTop: 8,
     paddingBottom: 20,
+    paddingHorizontal: 16,
+  },
+  textDescription: {
+    textAlign: 'center',
+    lineHeight: 20,
+    fontSize: 14,
+    color: '#333333',
   },
   actions: {
     ...center,

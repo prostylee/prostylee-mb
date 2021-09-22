@@ -18,7 +18,6 @@ export default StyleSheet.create({
   middleComponent: {
     textAlign: 'center',
     fontSize: 18,
-    fontWeight: 'bold',
   },
   title: {
     fontSize: 14,

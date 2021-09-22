@@ -19,6 +19,12 @@ export default EStyleSheet.create({
   containerContent: {
     paddingBottom: 40,
   },
+  check: {
+    backgroundColor: '$purple',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingContainer: {paddingTop: 16},
   Card: {
     fontSize: 14,
     color: 'black',

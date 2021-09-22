@@ -232,6 +232,7 @@ const AddStory = (props) => {
         text: i18n.t('addStatus.alertOK'),
         style: 'destructive',
         onPress: () => {
+          dispatch(newFeedActions.removeNewFeedStore());
           props.navigation.pop(3);
         },
       },

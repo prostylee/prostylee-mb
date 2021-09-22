@@ -13,8 +13,9 @@ export default EStyleSheet.create({
   },
   emptyContainer: {
     flex: 1,
-    width: WIDTH - 32,
+    width: WIDTH,
     paddingVertical: 12,
+    backgroundColor: '$white',
   },
   emptyText: {
     textAlign: 'center',
@@ -43,6 +44,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: 16,
+    paddingHorizontal: 16,
   },
   itemAvatar: {
     width: 44,

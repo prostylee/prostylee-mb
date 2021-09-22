@@ -11,16 +11,16 @@ import {Store} from '../../../svg/common';
 import ReadMore from '@fawazahmed/react-native-read-more/example/src/ReadMore';
 
 const PostNewFeedItem = ({newFeedItem, targetType}) => {
-  const ownerResponseLite = newFeedItem?.newFeedOwnerResponse;
+  const ownerResponseLite = newFeedItem?.userResponseLite;
   const urlImage = ownerResponseLite?.avatar;
   const name = ownerResponseLite?.fullName || '';
   const userId = ownerResponseLite?.id || 0;
   const address = ownerResponseLite?.fullAddress || '';
 
   const navigateToUserProfile = () => {
-    // RootNavigator.navigate('UserProfile', {
-    //   userId: newFeedItem?.userResponseLite?.id,
-    // });
+    RootNavigator.navigate('UserProfile', {
+      userId: newFeedItem?.userResponseLite?.id,
+    });
   };
 
   const navigateToStore = () => {

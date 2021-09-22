@@ -62,7 +62,6 @@ export const getHasLoadMoreStoreMiniSelector = createSelector(
   (data) => data?.hasLoadMoreStoreMini || false,
 );
 
-
 export const getPageStoreMiniSelector = createSelector(
   newFeedState,
   (data) => data?.pageStoreMini || 0,
@@ -81,4 +80,9 @@ export const getLoadMoreStoreMiniLoadingSelector = createSelector(
 export const getStoreMiniLoadingSelector = createSelector(
   newFeedState,
   (data) => data?.storeMiniLoading,
+);
+
+export const getHasLoadMoreStoriesSelector = createSelector(
+  newFeedState,
+  (data) => data?.hasLoadMoreStories,
 );

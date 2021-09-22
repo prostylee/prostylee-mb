@@ -184,7 +184,6 @@ const PaymentShipping = () => {
       });
       if (res.data.status === POST_SUCCESS) {
         reloadNewFeed();
-        navigation.navigate('Home');
         showMessage({
           titleStyle: {...styles.notiTitle},
           message: i18n.t('addProduct.postSuccess'),
@@ -278,11 +277,7 @@ const PaymentShipping = () => {
           limit: LIMIT_DEFAULT - 2,
         }),
       );
-      dispatch(
-        newFeedActions.getStoriesByUser({
-          page: PAGE_DEFAULT,
-        }),
-      );
+      dispatch(newFeedActions.getStoriesByUser());
     }
   };
   useEffect(() => {

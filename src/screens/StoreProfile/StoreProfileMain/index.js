@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
@@ -6,6 +5,7 @@ import {
   Dimensions,
   Animated,
   RefreshControl,
+  Platform,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
@@ -36,8 +36,6 @@ import {useRoute} from '@react-navigation/native';
 import HeaderLeft from './HeaderLeft';
 import HeaderRight from './HeaderRight';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {rem} from 'utils/common';
-const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 const BOTTOM_HEADER_HEIGHT = 50;
 const HEIGHT_HEADER = BOTTOM_HEADER_HEIGHT + 50 + getStatusBarHeight();
@@ -72,10 +70,12 @@ const StoreProfileMain = (props) => {
   const loading = useSelector((state) => getStoreLoadingSelector(state));
   const storeInfo = useSelector((state) => getStoreInfoSelector(state));
   useEffect(() => {
-    if (!valueSort) setActiveItemLabel('');
+    if (!valueSort) {
+      setActiveItemLabel('');
+    }
   }, [valueSort]);
   useEffect(() => {
-    dispatch(storeProfileActions.getStoreInfo(1));
+    dispatch(storeProfileActions.getStoreInfo(storeId));
     dispatch(
       storeProfileActions.getAllStoreProduct({
         page: PAGE_DEFAULT,
@@ -93,7 +93,9 @@ const StoreProfileMain = (props) => {
   }, [storeId]);
 
   useEffect(() => {
-    if (!loading) handleRefreshing(false);
+    if (!loading) {
+      handleRefreshing(false);
+    }
   }, [loading]);
 
   const onChangeSearch = (query) => {
@@ -171,7 +173,7 @@ const StoreProfileMain = (props) => {
   };
   const _handleRefresh = () => {
     handleRefreshing(true);
-    dispatch(storeProfileActions.getStoreInfo(1));
+    dispatch(storeProfileActions.getStoreInfo(storeInfo));
     dispatch(
       storeProfileActions.getAllStoreProduct({
         page: PAGE_DEFAULT,
@@ -203,37 +205,21 @@ const StoreProfileMain = (props) => {
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: '#fff',
-        },
-      ]}>
+    <View style={styles.container}>
       <HeaderAnimated
         justBottomComponent={true}
         bottomComponent={
           <Animated.View
-            style={{
-              flexDirection: 'column',
-              opacity: opacity,
-              backgroundColor: '#fff',
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                width: '100%',
-
-                paddingVertical: 0,
-              }}>
+            style={[
+              styles.animatedHeader,
+              {
+                opacity: opacity,
+              },
+            ]}>
+            <View style={styles.animatedHeaderContent}>
               <HeaderLeft isAnimated navigation={props.navigation} />
               <SearchBar
-                style={{
-                  maxWidth: WIDTH - 160,
-                  backgroundColor: '#F4F5F5',
-                }}
+                style={styles.headerSearchBar}
                 placeholder={i18n.t('Search.searchInStore')}
                 onChangeText={onChangeSearch}
                 value={keyword}
@@ -265,11 +251,7 @@ const StoreProfileMain = (props) => {
         containerStyle={[styles.headerContainer]}
         middleComponent={
           <SearchBar
-            style={{
-              maxWidth: WIDTH - 160,
-              backgroundColor: 'rgba(255,255,255,0.1)',
-              zIndex: 10,
-            }}
+            style={styles.headerSearchBarBlack}
             color="#fff"
             placeholder={i18n.t('Search.searchInStore')}
             onChangeText={onChangeSearch}

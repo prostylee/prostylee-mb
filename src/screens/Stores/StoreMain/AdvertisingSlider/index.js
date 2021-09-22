@@ -17,18 +17,10 @@ const AdvertisingSlider = ({data = []}) => {
           scrollEnabled
           data={data && data.length ? data : [0]}
           showPagination
-          paginationStyle={{
-            position: 'absolute',
-            bottom: -10,
-            left: 0,
-          }}
-          paginationStyleItem={{
-            width: 6,
-            height: 6,
-            marginRight: 0,
-          }}
+          paginationStyle={styles.pagingStyle}
+          paginationStyleItem={styles.pagingItemStyle}
           renderItem={({item, index}) => (
-            <View style={styles.sliderItem}>
+            <View key={`slider_item_${index}`} style={styles.sliderItem}>
               <Image
                 style={styles.sliderItemImage}
                 source={

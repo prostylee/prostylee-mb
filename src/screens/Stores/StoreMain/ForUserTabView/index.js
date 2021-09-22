@@ -10,7 +10,7 @@ import {Colors} from 'components';
 import {getBottomTabListSelector} from 'redux/selectors/storeMain';
 import {useSelector} from 'react-redux';
 import {_fetch} from '../../../../services/config';
-import {GET, POST, PUT, LIMIT_DEFAULT, SUCCESS} from 'constants';
+import {GET, LIMIT_DEFAULT, SUCCESS} from 'constants';
 import i18n from 'i18n';
 import {showMessage} from 'react-native-flash-message';
 
@@ -33,7 +33,8 @@ const ForUserTabView = ({
     data: [],
   });
 
-  const tabList = useSelector((state) => getBottomTabListSelector(state)) || [];
+  const tabList =
+    useSelector((stateApp) => getBottomTabListSelector(stateApp)) || [];
 
   const _handleRefresh = async () => {
     try {
@@ -162,23 +163,16 @@ const ForUserTabView = ({
           }}
           tabBarBackgroundColor={Colors?.[`$white`]}
           tabBarActiveTextColor={Colors?.['$purple']}
-          tabBarUnderlineStyle={{
-            backgroundColor: Colors?.[`$purple`],
-            height: 2,
-          }}
+          tabBarUnderlineStyle={styles.tabUnderLine}
           tabBarInactiveTextColor={Colors?.['$lightGray']}
-          tabBarTextStyle={{
-            fontSize: 14,
-            fontWeight: '500',
-            textAlign: 'center',
-          }}
+          tabBarTextStyle={styles.tabText}
           initialPage={0}
           renderTabBar={() => <ScrollableTabBar />}
           locked={false}>
           {isArray(tabList)
             ? tabList?.map((v) => (
                 <View
-                  key={v?.tabName}
+                  key={`tab_name_${v?.tabName}`}
                   tabLabel={v.tabName}
                   url={v?.apiUrl}
                   method={v?.apiMethod}

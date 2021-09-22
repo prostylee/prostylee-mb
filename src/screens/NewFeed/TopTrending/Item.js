@@ -1,6 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {Text, Dimensions, ActivityIndicator, View, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  Dimensions,
+  ActivityIndicator,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {ThemeView, Image} from 'components';
 import {Avatar, Button} from 'react-native-paper';
 import i18n from 'i18n';
@@ -62,34 +68,34 @@ const Item = ({item, style, targetType}) => {
           <Text style={styles.name}>{item?.name}</Text>
         </TouchableOpacity>
         <View style={styles.addressWrap}>
-          <MapPin/>
+          <MapPin />
           <Text style={styles.address}>{item?.address}</Text>
         </View>
       </View>
       <View style={styles.productImageWrap}>
         {products.length
           ? products.map((product, _i) => (
-            <TouchableOpacity
-              key={'productOfStore' + targetType + _i}
-              onPress={() => {
-                RootNavigator.navigate('ProductDetail', {id: product.id});
-              }}>
-              <Image
-                source={
-                  product?.imageUrl
-                    ? {uri: product.imageUrl}
-                    : require('assets/images/default.png')
-                }
-                resizeMode="cover"
-                style={{
-                  height: WIDTH_IMG,
-                  width: WIDTH_IMG,
-                  marginHorizontal: 1,
-                }}
-                PlaceholderContent={<ActivityIndicator/>}
-              />
-            </TouchableOpacity>
-          ))
+              <TouchableOpacity
+                key={'productOfStore' + targetType + _i}
+                onPress={() => {
+                  RootNavigator.navigate('ProductDetail', {id: product.id});
+                }}>
+                <Image
+                  source={
+                    product?.imageUrl
+                      ? {uri: product.imageUrl}
+                      : require('assets/images/default.png')
+                  }
+                  resizeMode="cover"
+                  style={{
+                    height: WIDTH_IMG,
+                    width: WIDTH_IMG,
+                    marginHorizontal: 1,
+                  }}
+                  PlaceholderContent={<ActivityIndicator />}
+                />
+              </TouchableOpacity>
+            ))
           : null}
       </View>
       <Button

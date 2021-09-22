@@ -5,8 +5,15 @@ import {Close, AddFriend} from 'svg/common';
 
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {flexRow, center} from 'theme/style';
+import RootNavigator from '../../../navigator/rootNavigator';
 
 const HeaderView = (props) => {
+  const goToUserPage = () => {
+    props.onClosePress();
+    RootNavigator.navigate('UserProfile', {
+      userId: props?.createdBy,
+    });
+  };
   return (
     <View style={styles.userView}>
       <View style={styles.leftHeader}>
@@ -19,7 +26,7 @@ const HeaderView = (props) => {
           style={styles.image}
         />
         <Text style={styles.name}>{props.name}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={goToUserPage}>
           <AddFriend />
         </TouchableOpacity>
       </View>

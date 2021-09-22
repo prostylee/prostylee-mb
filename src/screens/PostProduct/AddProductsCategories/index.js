@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 
 import styles from './styles';
 import i18n from 'i18n';
-import {ThemeView, Header, ButtonRounded} from 'components';
+import {ThemeView, Header} from 'components';
 
 import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
@@ -11,8 +11,7 @@ import {useDispatch, useSelector, shallowEqual} from 'react-redux';
 import ListParentCategories from './ListParentCategories';
 import ListChildCategories from './ListChildCategories';
 import {postProductActions} from 'redux/reducers';
-import _ from 'lodash';
-import {Alert} from 'react-native';
+import {Alert, BackHandler} from 'react-native';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 const AddProducts = () => {
   const isFocused = useIsFocused();
@@ -53,34 +52,41 @@ const AddProducts = () => {
     }
   }, [postProductInfo?.category?.id]);
 
+  const askForConfirmation = () => {
+    Alert.alert(i18n.t('caution'), i18n.t('addProduct.inforWillDelete'), [
+      {
+        text: i18n.t('confirm'),
+        onPress: () => {
+          dispatch(postProductActions.clearPostProduct());
+          navigation.goBack();
+        },
+        style: 'destructive',
+      },
+      {
+        text: i18n.t('cancel'),
+        onPress: () => {},
+        style: 'cancel',
+      },
+    ]);
+    return true;
+  };
+
   useEffect(() => {
-    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
-      if (isFocused) {
-        e.preventDefault();
-        Alert.alert(i18n.t('caution'), i18n.t('addProduct.inforWillDelete'), [
-          {
-            text: i18n.t('confirm'),
-            onPress: () => {
-              dispatch(postProductActions.clearPostProduct());
-              navigation.dispatch(e.data.action);
-            },
-            style: 'destructive',
-          },
-          {
-            text: i18n.t('cancel'),
-            onPress: () => {},
-            style: 'cancel',
-          },
-        ]);
-      }
-      return;
-    });
-    return unsubscribe;
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      askForConfirmation,
+    );
+
+    return () => backHandler.remove();
   }, []);
 
   return (
     <ThemeView style={styles.container} isFullView>
-      <Header isDefault title={i18n.t('addProduct.categoryScreenTitle')} />
+      <Header
+        isDefault
+        title={i18n.t('addProduct.categoryScreenTitle')}
+        preventGobackFunction={askForConfirmation}
+      />
       {parentId ? (
         <ListChildCategories selectAction={setSelectedCategory} />
       ) : null}

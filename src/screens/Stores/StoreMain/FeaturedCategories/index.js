@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
-import {View, FlatList} from 'react-native';
+import {View} from 'react-native';
 
 import styles from './styles';
 
@@ -38,7 +37,7 @@ const FeaturedCategories = ({navigation, data = []}) => {
                   index={index}
                   navigation={navigation}
                   item={item}
-                  key={item?.id}
+                  key={`category_feature_${item?.id}`}
                 />
               ))
             : [1, 2, 3, 4, 5, 6].map((item, index) => (
@@ -46,7 +45,7 @@ const FeaturedCategories = ({navigation, data = []}) => {
                   index={index}
                   navigation={navigation}
                   item={item}
-                  key={item}
+                  key={`item_feature_${item}`}
                 />
               ))}
         </View>

@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
 import i18n from 'i18n';
 import {useNavigation} from '@react-navigation/native';
-import {TouchableOpacity, View, Text} from 'react-native';
+import {View, Text, ImageBackground} from 'react-native';
 import {Avatar, Button} from 'react-native-paper';
 
 import styles from './styles';
-
-import {ImageBackground, Colors} from 'components';
 
 import {Message} from 'svg/social';
 
@@ -64,12 +62,14 @@ const InfoView = ({profile, statistics}) => {
             }
           />
         </View>
+
         <View style={styles.viewArea}>
           <Text style={styles.textName}>{profile?.fullName}</Text>
-          <Text style={styles.textDescription}>
-            I’m only a morning person on Christmas morning You are not just a
-            Follower. 📚 Bookaholic - ✈️ Travelholic
-          </Text>
+          <View style={styles.textDescriptionContainer}>
+            {profile?.bio ? (
+              <Text style={styles.textDescription}>{profile?.bio}</Text>
+            ) : null}
+          </View>
         </View>
         <View style={styles.actions}>
           <Button
@@ -79,9 +79,9 @@ const InfoView = ({profile, statistics}) => {
             style={[styles.followBtn, followed && styles.followedBtn]}>
             {i18n.t(!followed ? 'common.textFollow' : 'common.textFollowed')}
           </Button>
-          <TouchableOpacity onPress={_navigateChat} style={styles.touchMess}>
+          {/* <TouchableOpacity onPress={_navigateChat} style={styles.touchMess}>
             <Message width={18} heigh={12} color={Colors.$purple} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.statisticalView}>
           <View style={styles.viewSection}>

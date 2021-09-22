@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useCallback} from 'react';
 
 import {View, TouchableOpacity, Text} from 'react-native';
 import {Header, ButtonRounded, ThemeView, SearchBar} from 'components';
-import {ActivityIndicator, Searchbar} from 'react-native-paper';
 import i18n from 'i18n';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
@@ -42,15 +41,18 @@ const Brands = (props) => {
   const {colors} = useTheme();
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedBrand, setSelectedBrand] = React.useState(brand || null);
-  const onChangeSearch = debounce((query) => {
-    dispatch(
-      storeActions.getBrandList({
-        page: PAGE_DEFAULT,
-        limit: LIMIT_DEFAULT,
-        keyword: query,
-      }),
-    );
-  }, 500);
+  const onChangeSearch = useCallback(
+    debounce((query) => {
+      dispatch(
+        storeActions.getBrandList({
+          page: PAGE_DEFAULT,
+          limit: LIMIT_DEFAULT,
+          keyword: query,
+        }),
+      );
+    }, 1000),
+    [],
+  );
 
   const submitBrand = () => {
     dispatch(
@@ -97,7 +99,6 @@ const Brands = (props) => {
       <View style={styles.searchBarContainer}>
         <SearchBar
           style={styles.searchBarStyle}
-          // inputStyle={styles.searchBarInput}
           placeholder={i18n.t('search')}
           onChangeText={(text) => {
             setSearchQuery(text);

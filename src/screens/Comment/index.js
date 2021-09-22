@@ -134,18 +134,22 @@ const Comment = () => {
   const ListComment = () => {
     return (
       <>
-        <FlatList
-          style={styles.list}
-          renderItem={({item}) => (
-            <CommentItem
-              item={item}
-              currentUser={currentUser}
-              moveToCommentDetail={moveToCommentDetail}
-            />
-          )}
-          data={listComment}
-          ListEmptyComponent={<EmptyList />}
-        />
+        {listComment && listComment.length ? (
+          <View style={styles.list}>
+            {listComment.map((item, index) => {
+              return (
+                <CommentItem
+                  key={`comment_${index}`}
+                  item={item}
+                  currentUser={currentUser}
+                  moveToCommentDetail={moveToCommentDetail}
+                />
+              );
+            })}
+          </View>
+        ) : (
+          <EmptyList />
+        )}
         <FooterInput user={currentUser} feedId={feedId} />
       </>
     );

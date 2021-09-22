@@ -35,7 +35,7 @@ const FollowTextButton = ({item}) => {
     <TouchableOpacity onPress={_handleClick}>
       <Text
         style={{
-          color: Colors?.['$purple'],
+          color: !followed ? Colors?.['$purple'] : Colors?.['$lightGray'],
         }}>
         {!followed ? i18n.t('Search.follow') : i18n.t('Search.unfollow')}
       </Text>

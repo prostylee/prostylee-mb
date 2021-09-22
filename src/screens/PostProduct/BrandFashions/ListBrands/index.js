@@ -13,7 +13,6 @@ import {
   getBrandListHasLoadmoreSelector,
 } from 'redux/selectors/storeMain';
 import {useDispatch, useSelector} from 'react-redux';
-import {ActivityIndicator} from 'react-native-paper';
 import {BrandListLoading} from 'components/Loading/contentLoader';
 import PropTypes from 'prop-types';
 import {brandActions} from 'redux/reducers';
@@ -46,7 +45,7 @@ const ListBrand = ({
   const setActiveBrand = setSelectedBrand ? setSelectedBrand : () => {};
 
   const _handleLoadmore = () => {
-    if (hasLoadmore)
+    if (hasLoadmore) {
       dispatch(
         storeActions.getBrandListLoadmore({
           page: currentPage,
@@ -54,6 +53,7 @@ const ListBrand = ({
           keyword: keyWord,
         }),
       );
+    }
   };
   const _handleRefresh = () => {
     setIsRefreshing(true);
@@ -98,10 +98,10 @@ const ListBrand = ({
   };
 
   return loading && !refreshing ? (
-    <View style={{paddingTop: 16}}>
+    <View style={styles.loadingContainer}>
       {Array.from('x'.repeat(Math.round(HEIGHT - 120) / 130)).map(
         (v, index) => (
-          <BrandListLoading height={130} key={index} />
+          <BrandListLoading key={`loading_${index}`} height={130} />
         ),
       )}
     </View>
@@ -111,7 +111,7 @@ const ListBrand = ({
       contentContainerStyle={styles.containerContent}
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(_, index) => `brand_item_${index}`}
       numColumns={3}
       onEndReached={_handleLoadmore}
       onRefresh={_handleRefresh}

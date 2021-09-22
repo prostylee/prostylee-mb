@@ -6,6 +6,9 @@ export const types = {
   GET_NEW_FEED: 'GET_NEW_FEED',
   GET_NEW_FEED_SUCCESS: 'GET_NEW_SUCCESS',
   GET_NEW_FEED_FAILED: 'GET_NEW_FEED_FAILED',
+  GET_STORIES_BY_USER_MORE: 'GET_STORIES_BY_USER_MORE',
+  GET_STORIES_BY_USER_MORE_SUCCESS: 'GET_STORIES_BY_USER_MORE_SUCCESS',
+  GET_STORIES_BY_USER_MORE_FAILED: 'GET_STORIES_BY_USER_MORE_FAILED',
   RESET_NEW_FEED_PAGE: 'RESET_NEW_FEED_PAGE',
   SET_LOAD_MORE_LOADING: 'SET_LOAD_MORE_LOADING',
   HANDLE_LOAD_MORE: 'HANDLE_LOAD_MORE',
@@ -45,6 +48,7 @@ export const actions = {
   getNewFeed: createAction(types.GET_NEW_FEED),
   getNewFeedSuccess: createAction(types.GET_NEW_FEED_SUCCESS),
   getNewFeedFailed: createAction(types.GET_NEW_FEED_FAILED),
+
   resetPage: createAction(types.RESET_NEW_FEED_PAGE),
   handleLoadMoreLoading: createAction(types.SET_LOAD_MORE_LOADING),
   handleLoadMore: createAction(types.HANDLE_LOAD_MORE),
@@ -54,9 +58,18 @@ export const actions = {
   getStoriesByStoreSuccess: createAction(types.GET_STORIES_BY_STORE_SUCCESS),
   getStoriesByStoreFailed: createAction(types.GET_STORIES_BY_STORE_FAILED),
   setLoadingStories: createAction(types.SET_LOADING_STORIES),
+
   getStoriesByUser: createAction(types.GET_STORIES_BY_USER),
   getStoriesByUserSuccess: createAction(types.GET_STORIES_BY_USER_SUCCESS),
   getStoriesByUserFailed: createAction(types.GET_STORIES_BY_USER_FAILED),
+
+  getStoriesByUserMore: createAction(types.GET_STORIES_BY_USER_MORE),
+  getStoriesByUserMoreSuccess: createAction(
+    types.GET_STORIES_BY_USER_MORE_SUCCESS,
+  ),
+  getStoriesByUserMoreFailed: createAction(
+    types.GET_STORIES_BY_USER_MORE_FAILED,
+  ),
 
   getProductOfStory: createAction(types.GET_PRODUCT_OF_STORIES),
   getProductOfStorySuccess: createAction(types.GET_PRODUCT_OF_STORIES_SUCCESS),
@@ -91,6 +104,9 @@ const intialState = {
   storiesLoading: false,
   loadMoreLoading: false,
   stories: {},
+  pageStories: PAGE_DEFAULT,
+  limitStories: LIMIT_DEFAULT,
+  hasLoadMoreStories: false,
   newFeed: {},
   newFeedStoreSelect: {},
   threeFirstNewFeedItem: {},
@@ -167,9 +183,27 @@ export default handleActions(
       return {...state, stories: {}};
     },
     [types.GET_STORIES_BY_USER_SUCCESS]: (state, {payload}) => {
-      return {...state, stories: payload};
+      const isLastPage = payload.last || false;
+      return {
+        ...state,
+        stories: payload,
+        hasLoadMoreStories: !isLastPage,
+        pageStories: PAGE_DEFAULT + 1,
+      };
     },
     [types.GET_STORIES_BY_USER_FAILED]: (state, {payload}) => {
+      return {...state, stories: {}};
+    },
+    [types.GET_STORIES_BY_USER_MORE_SUCCESS]: (state, {payload}) => {
+      const isLastPage = payload.last || false;
+      return {
+        ...state,
+        stories: payload,
+        hasLoadMoreStories: !isLastPage,
+        pageStories: state.pageStories + 1,
+      };
+    },
+    [types.GET_STORIES_BY_USER_MORE_FAILED]: (state, {payload}) => {
       return {...state, stories: {}};
     },
     [types.GET_PRODUCT_OF_STORIES_SUCCESS]: (state, {payload}) => {
