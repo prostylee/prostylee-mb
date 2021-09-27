@@ -6,7 +6,7 @@ import voucher1 from 'assets/images/voucher1.png';
 import {TicketCutLine, CloseOutLined} from 'svg/common';
 import i18n from 'i18n';
 import PropTypes from 'prop-types';
-import moment from 'moment'
+import moment from 'moment';
 
 const ItemTopSide = ({data}) => (
   <View style={styles.topSideWrapper}>
@@ -74,15 +74,26 @@ const ItemBottomSide = ({submit, data}) => (
 
 const VoucherDetail = ({data, submit}) => {
   const {cndValidFrom, cndValidTo, description} = data;
-  const timeFrom = moment(cndValidFrom ? cndValidFrom : {}).format('DD.MM.YYYY') + ' ' + '00:00'
-  const timeTo = moment(cndValidTo ? cndValidTo : {}).format('DD.MM.YYYY') + ' ' +'23:59'
-  const detailData = [
-    {
-      title: i18n.t('voucher.effectTime'),
-      subTitle: timeFrom +  ' - ' + timeTo,
-    },
-    {title: i18n.t('voucher.voucherDescription'), subTitle: description},
-  ];
+  const timeFrom =
+    moment(cndValidFrom ? cndValidFrom : {}).format('DD.MM.YYYY') +
+    ' ' +
+    '00:00';
+  const timeTo =
+    moment(cndValidTo ? cndValidTo : {}).format('DD.MM.YYYY') + ' ' + '23:59';
+  let detailData = [];
+  if (cndValidFrom && cndValidTo) {
+    detailData = [
+      {
+        title: i18n.t('voucher.effectTime'),
+        subTitle: timeFrom + ' - ' + timeTo,
+      },
+      {title: i18n.t('voucher.voucherDescription'), subTitle: description},
+    ];
+  } else {
+    detailData = [
+      {title: i18n.t('voucher.voucherDescription'), subTitle: description},
+    ];
+  }
 
   return (
     <View style={styles.container}>
