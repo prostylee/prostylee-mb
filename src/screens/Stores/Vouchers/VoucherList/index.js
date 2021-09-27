@@ -68,13 +68,15 @@ const VoucherList = ({navigation}) => {
   };
 
   useEffect(() => {
-    if (!isLoading) setIsRefreshing(false);
+    if (!isLoading) {
+      setIsRefreshing(false);
+    }
   }, [isLoading]);
 
-  const _handleSavePress = (id,saveStatus) => {
-    if(!saveStatus){
+  const _handleSavePress = (id, savedId) => {
+    if (!savedId) {
       dispatch(storeActions.postSaveVoucher(id));
-    }else{
+    } else {
       dispatch(storeActions.postUnSaveVoucher(id));
     }
   };
@@ -179,7 +181,7 @@ const VoucherList = ({navigation}) => {
           data={data?.content}
           renderItem={({item, index}) => (
             <VoucherItem
-              key={`${item?.name}-${item?.id}`}
+              key={`${item?.name}-${item?.id}-${item?.savedUserVoucherId}`}
               item={item}
               index={index}
               onSavePress={_handleSavePress}

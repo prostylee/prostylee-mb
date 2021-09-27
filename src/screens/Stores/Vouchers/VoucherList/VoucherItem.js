@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {Image, SlideInModal} from 'components';
+import {Image, SlideInModal, Colors} from 'components';
 import i18n from 'i18n';
 import styles from './styles';
 import {TicketCutLine} from 'svg/common';
@@ -32,17 +32,23 @@ const ItemBottomSide = ({onPress, item}) => (
   <View style={styles.bottomSideWrapper} onPress={onPress}>
     <View style={styles.leftCutPoint} />
     <View style={styles.rightCutPoint} />
-    <Text style={styles.expiredDate}>HSD: {item?.cndValidTo}</Text>
+    {item?.cndValidTo ? (
+      <Text style={styles.expiredDate}>HSD: {item?.cndValidTo}</Text>
+    ) : (
+      <View />
+    )}
     <TouchableOpacity
       style={[
         styles.takeButton,
         {
-          opacity: item?.savedUserVoucherId ? 0.7 : 1,
+          backgroundColor: item?.savedUserVoucherId
+            ? Colors['$lightGray']
+            : Colors['$purple'],
         },
       ]}
-      onPress={() => onPress(item.id,item.savedUserVoucherId)}
+      onPress={() => onPress(item.id, item.savedUserVoucherId)}
       // disabled={item?.savedUserVoucherId ? true : false}
-      >
+    >
       <Text style={styles.buttonText}>
         {item?.savedUserVoucherId
           ? i18n.t('voucher.saved')
