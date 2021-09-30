@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {View} from 'react-native';
 
 import {
@@ -24,6 +24,7 @@ import {
 
 const SignupTab = () => {
   const dispatch = useDispatch();
+  const form = useRef();
 
   const onSignUpWithPhone = () => {
     RootNavigator.navigate('SignUpViaPhone');
@@ -36,7 +37,12 @@ const SignupTab = () => {
         fullname: formValues.fullname,
         email: formValues.email,
         password: formValues.password,
-        onSuccess: () => onSignUpSuccess(formValues),
+        onSuccess: () => {
+          onSignUpSuccess(formValues);
+          if (form.current) {
+            form.current.resetForm();
+          }
+        },
       }),
     );
   };
@@ -51,6 +57,7 @@ const SignupTab = () => {
       <Formik
         validateOnMount={true}
         initialValues={{fullname: '', email: '', password: ''}}
+        innerRef={form}
         onSubmit={(values) => onSignUp(values)}>
         {({handleSubmit, values, isValid}) => (
           <View style={styles.form}>
