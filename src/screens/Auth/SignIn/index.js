@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text, View, Dimensions} from 'react-native';
 
 import {Container, TextButton, SocialSignIn} from 'components';
 import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
 import {useKeyboard, useBackHandler} from '@react-native-community/hooks';
-import {listenAuth} from '../../../config/cognito-auth-listener';
+import {useIsFocused} from '@react-navigation/native';
 
 import styles from './styles';
 import I18n from 'i18n';
@@ -24,7 +24,16 @@ const Index = (props) => {
   // if set index = useState(0) --> render --> index of TabView = 0 --> render signIn screen --> useEffect() --> index = 1,but screen render is signIn => error
   const [index, setIndex] = React.useState(props.route.params?.index);
   const keyboard = useKeyboard();
-  
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      if (props.route.params?.index !== index) {
+        setIndex(props.route.params?.index);
+      }
+    }
+  }, [isFocused]);
+
   //BackHandler handle
   useBackHandler(() => {
     if (props.route.name === 'SignIn') {
