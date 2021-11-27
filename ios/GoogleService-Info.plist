@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>220857409177-sgsleasj42q409hrm1h5ehqunts064fb.apps.googleusercontent.com</string>
+	<string>626613618045-4jpunjh1fvlr8fkeffdnqlc49lpq7tlg.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.220857409177-sgsleasj42q409hrm1h5ehqunts064fb</string>
+	<string>com.googleusercontent.apps.626613618045-4jpunjh1fvlr8fkeffdnqlc49lpq7tlg</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDpnRm_TjFVj34DrL_EzHJX4vth33LNJFM</string>
+	<string>AIzaSyBqZp8PWHY4oVSRIho-8MbXpaBO4uWLxzI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>220857409177</string>
+	<string>626613618045</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>sunshine.com.prostylee</string>
+	<string>vn.prostylee</string>
 	<key>PROJECT_ID</key>
-	<string>prostylee-demo</string>
+	<string>prostylee-9c568</string>
 	<key>STORAGE_BUCKET</key>
-	<string>prostylee-demo.appspot.com</string>
+	<string>prostylee-9c568.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:220857409177:ios:269c857e7d56c8cb85e208</string>
+	<string>1:626613618045:ios:6990f2f9211a0aec5b7814</string>
+	<key>DATABASE_URL</key>
+	<string>https://prostylee-9c568.firebaseio.com</string>
 </dict>
 </plist>

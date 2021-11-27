@@ -20,14 +20,15 @@ export const api = apisauce.create({
 });
 
 export async function _fetch(method, path, data) {
-  // console.log(
-  //   '_fetch: method=' +
-  //     method +
-  //     ', path=' +
-  //     path +
-  //     ', data=' +
-  //     JSON.stringify(data),
-  // );
+  console.log(
+    'baseURL=' + config.baseURL,
+    '_fetch: method=' +
+      method +
+      ', path=' +
+      path +
+      ', data=' +
+      JSON.stringify(data),
+  );
 
   try {
     const token = await Auth.currentSession();

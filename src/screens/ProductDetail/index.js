@@ -239,6 +239,7 @@ const ProductDetail = (props) => {
     );
   };
   const ProductChoiceMemo = React.useMemo(() => {
+    // console.log('productData == ' + JSON.stringify(productData));
     return (
       <ProductChoice
         choiceList={productData?.productAttributeOptionResponse}

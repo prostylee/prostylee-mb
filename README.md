@@ -150,11 +150,14 @@ Next go to android folder:
 
 > cd android
 
-Then run command:
+Run command to build apk file:
 
 > ./gradlew assembleDebug
 
 Check generated apk file at: android/app/build/outputs/apk/debug/app-debug.apk
+
+Run command to build aab file:
+> ./gradlew bundleRelease
 
 ### Build iOS (IPA)
 
@@ -189,5 +192,5 @@ Android
 > At name="CodePushDeploymentKey"
 
 Deploy
-> appcenter codepush release-react -a sunshinesoftware.vn-gmail.com/prostylee-mb-ios -d Staging
+> appcenter codepush release-react -a prostylee.com/prostylee-ios -d Staging
 
