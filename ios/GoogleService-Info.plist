@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>626613618045-4jpunjh1fvlr8fkeffdnqlc49lpq7tlg.apps.googleusercontent.com</string>
+	<string>626613618045-4ru1hq0keplciodvpabl31c2a1d0q4b9.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.626613618045-4jpunjh1fvlr8fkeffdnqlc49lpq7tlg</string>
+	<string>com.googleusercontent.apps.626613618045-4ru1hq0keplciodvpabl31c2a1d0q4b9</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBqZp8PWHY4oVSRIho-8MbXpaBO4uWLxzI</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>vn.prostylee</string>
+	<string>com.prostylee</string>
 	<key>PROJECT_ID</key>
 	<string>prostylee-9c568</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:626613618045:ios:6990f2f9211a0aec5b7814</string>
+	<string>1:626613618045:ios:885b02e8cbd989375b7814</string>
 	<key>DATABASE_URL</key>
 	<string>https://prostylee-9c568.firebaseio.com</string>
 </dict>

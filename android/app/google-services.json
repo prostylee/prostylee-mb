@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:626613618045:android:a76ac3afef4f77e35b7814",
+        "mobilesdk_app_id": "1:626613618045:android:6335cdabc82cdb185b7814",
         "android_client_info": {
-          "package_name": "vn.prostylee"
+          "package_name": "com.prostylee"
         }
       },
       "oauth_client": [

@@ -26,6 +26,10 @@ const awsmobile = {
   "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
   "aws_appsync_apiKey": "da2-dccamjchtvfp7kopuciswnvnty",
   "aws_user_files_s3_bucket": "psmedia214808-staging",
-  "aws_user_files_s3_bucket_region": "ap-northeast-2"
+  "aws_user_files_s3_bucket_region": "ap-northeast-2",
+  "aws_mobile_analytics_app_id": "6d02cfcce5fa4d728af1dc3805fd33af",
+  "aws_mobile_analytics_app_region": "us-west-2"
 };
+
+
 export default awsmobile;

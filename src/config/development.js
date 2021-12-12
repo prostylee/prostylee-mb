@@ -1,6 +1,7 @@
 //domain dùng cho việc hiển thị ảnh trên app
 export const domain_url = 'http://3.37.47.64:8090';
-// export const domain_url = 'http://127.0.0.1:8090';
+// export const domain_url = 'http://127.0.0.1:8090'; // Access localhost from iOS emulator
+// export const domain_url = 'http://10.0.2.2:8090'; // Access localhost from Android emulator
 
 //url api
 export const api_url = domain_url + '/api/v1';

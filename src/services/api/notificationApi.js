@@ -1,5 +1,5 @@
 import {_fetch} from '../config';
-import {POST, GET, PUT, DELETE} from 'constants';
+import {DELETE, GET, POST, PUT} from 'constants';
 
 export const countNotification = (payload) => {
   return _fetch(GET, '/notifications/count', payload);
@@ -33,4 +33,8 @@ export const getListNotificationDiscountService = (payload) => {
     sorts: 'createdAt',
     ...payload,
   });
+};
+
+export const subscribePushNotificationService = (payload) => {
+  return _fetch(POST, '/push-notifications/subscribe', payload);
 };

@@ -4,6 +4,7 @@ import {
   getListNotificationService,
   getListNotificationDiscountService,
   countNotification,
+  subscribePushNotificationService,
 } from 'services/api/notificationApi';
 
 import {notificationActions, notificationTypes} from 'reducers';
@@ -127,6 +128,21 @@ const getCountUnreadNoti = function* ({payload}) {
     notificationActions.setCountUnreadNoti(0);
   }
 };
+
+const subscribePushNotification = function* ({payload}) {
+  try {
+    console.log('subscribePushNotification ...');
+    const res = yield call(subscribePushNotificationService, payload);
+    console.log('subscribePushNotification=' + JSON.stringify(res));
+  } catch (e) {
+    console.log(e)
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
+  }
+};
 const watcher = function* () {
   //List LIST_NOTIFICATION
   yield takeLatest(
@@ -148,5 +164,9 @@ const watcher = function* () {
     getLoadMoreListNotificationDiscount,
   );
   yield takeLatest(notificationTypes.GET_COUNT_UNREAD_NOTI, getCountUnreadNoti);
+  yield takeLatest(
+    notificationTypes.SUBSCRIBE_PUSH_NOTIFICATION,
+    subscribePushNotification,
+  );
 };
 export default watcher();

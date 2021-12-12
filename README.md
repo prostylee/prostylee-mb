@@ -172,6 +172,9 @@ TODO
 ## Code push
 Sign up account in CodePush https://appcenter.ms
 
+Access AppCenter with `stylee.common@gmail.com` account
+> https://appcenter.ms/users/prostylee.com
+
 Add new app ios & android
 
 Go to Distribute -> CodePush -> create standard deployment

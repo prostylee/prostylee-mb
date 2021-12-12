@@ -1,5 +1,12 @@
 import React from 'react';
-import {StyleSheet, View, Platform, StatusBar} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Platform,
+  StatusBar,
+  NativeModules,
+  Alert,
+} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -27,13 +34,10 @@ import FlashMessage, {showMessage} from 'react-native-flash-message';
 import codePush from 'react-native-code-push';
 import messaging from '@react-native-firebase/messaging';
 
-import {PushNotificationIOS} from '@react-native-community/push-notification-ios';
-
 import Geocoder from 'react-native-geocoding';
 import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from './config/aws-exports';
 import {GOOGLE_API_KEY} from 'config/development';
-// import NotificationPopup from 'react-native-push-notification-popup';
 import {
   getApplicationName,
   getDeviceId,
@@ -44,6 +48,10 @@ import {
 } from 'react-native-device-info';
 import RootNavigator from './navigator/rootNavigator';
 import LocalStorageService from './services/LocalStorageService';
+import {notificationActions} from 'redux/reducers';
+
+import PushNotification from '@aws-amplify/pushnotification';
+import {PushNotificationIOS} from '@react-native-community/push-notification-ios';
 
 Geocoder.init(GOOGLE_API_KEY, {
   language: 'vi',
@@ -56,6 +64,8 @@ Amplify.configure({
   ...awsconfig,
   storage: LocalStorageService,
 });
+
+PushNotification.configure(awsconfig);
 
 EStyleSheet.build({
   ...Colors,
@@ -78,7 +88,7 @@ const codePushOptions = {
 const Index = () => {
   // useEffect functions
   React.useEffect(() => {
-    requestUserPermission();
+    requestUserPermission(); // TODO
     onCodepushCheckForUpdateApp();
     async function getInfo() {
       const res = await getDeviceInfo();
@@ -90,7 +100,6 @@ const Index = () => {
   React.useEffect(() => {
     onCheckNetWorkStatus();
   });
-
 
   //redux dispatch
   const dispatch = useDispatch();
@@ -226,6 +235,7 @@ const Index = () => {
       });
   };
 
+  // Refer https://rnfirebase.io/messaging/usage
   // Notification Permission
   const requestUserPermission = async () => {
     const authStatus = await messaging().requestPermission();
@@ -234,103 +244,55 @@ const Index = () => {
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
     if (enabled) {
-      onReceiveMessage();
+      await onReceiveMessage();
     }
   };
+
+  /**
+   * Foreground state messages.
+   *
+   * When the application is open and in view.
+   */
+  React.useEffect(() => {
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      // Alert.alert('A new FCM message arrived!' + JSON.stringify(remoteMessage));
+    });
+
+    /**
+     * Background & Quit state messages
+     *
+     * When the application is open, however in the background (minimised).
+     * This typically occurs when the user has pressed the "home" button on the device or has switched to another app via the app switcher.
+     */
+    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+      console.log('Message handled in the background!', remoteMessage);
+      // Alert.alert(
+      //   'Message handled in the background!' + JSON.stringify(remoteMessage),
+      // );
+    });
+
+    return unsubscribe;
+  }, []);
 
   const onReceiveMessage = async () => {
     const token = await messaging().getToken();
     console.log('token', token);
-    //notification arrived when app on foreground state
-    messaging().onMessage(async (remoteMessage) => {
-      console.log('foreground remoteMessage', remoteMessage);
-      if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'notification'
-      ) {
-        //do something here
-        //.........
-      } else if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'message' &&
-        remoteMessage.data.user
-      ) {
-        //do something here
-        //.........
-      } else if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'message' &&
-        !remoteMessage.data.user
-      ) {
-        //do something here
-        //.........
-      } else {
-        //do something here
-        //.........
-      }
-    });
 
-    //notification was opened when app on background state
-    messaging().onNotificationOpenedApp(async (remoteMessage) => {
-      console.log('background remoteMessage', remoteMessage);
-      if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'notification'
-      ) {
-        //do something here
-        //.........
-      } else if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'message' &&
-        remoteMessage.data.user
-      ) {
-        //do something here
-        //.........
-      } else if (
-        remoteMessage.data.type &&
-        remoteMessage.data.type === 'message' &&
-        !remoteMessage.data.user
-      ) {
-        //do something here
-        //.........
-      } else {
-        //do something here
-        //.........
-      }
-    });
-
-    //notification was opened when app on quite state
-    messaging()
-      .getInitialNotification()
-      .then(async (remoteMessage) => {
-        console.log('open app remoteMessage', remoteMessage);
-        if (remoteMessage) {
-          if (
-            remoteMessage.data.type &&
-            remoteMessage.data.type === 'notification'
-          ) {
-            //do something here
-            //.........
-          } else if (
-            remoteMessage.data.type &&
-            remoteMessage.data.type === 'message' &&
-            remoteMessage.data.user
-          ) {
-            //do something here
-            //.........
-          } else if (
-            remoteMessage.data.type &&
-            remoteMessage.data.type === 'message' &&
-            !remoteMessage.data.user
-          ) {
-            //do something here
-            //.........
-          } else {
-            //do something here
-            //.........
-          }
-        }
-      });
+    // TODO get device info and should only call once
+    dispatch(
+      notificationActions.subscribePushNotification({
+        token,
+        deviceName: 'Android Simulator',
+        deviceId: 'ID01',
+        software: 'Android',
+        osVersion: 'Android 11',
+        osName: 'Android',
+        brand: 'Samsung',
+        manufacturer: 'Korea',
+        modelName: '2021',
+      }),
+    );
   };
 
   return (
@@ -355,11 +317,6 @@ const Index = () => {
       /> */}
       <ModalNetworkWarning visible={!networkStatus} />
       <SlideInModal />
-      {/* <NotificationPopup
-        ref={(ref) => {
-          this.popup = ref;
-        }}
-      /> */}
     </View>
   );
 };
