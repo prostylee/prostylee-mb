@@ -9,6 +9,7 @@ import IMG_SPLASH from 'assets/images/splash.png';
 import {LogoSplash} from 'svg/common';
 
 import styles from './styles';
+import {Analytics} from '@aws-amplify/analytics';
 
 const Index = (props) => {
   const isShowOnboardingScreen = useSelector((state) =>
@@ -19,10 +20,22 @@ const Index = (props) => {
   React.useEffect(() => {
     if (!isShowOnboardingScreen) {
       setTimeout(() => {
+        Analytics.record({
+          name: 'screen',
+          attributes: {
+            name: 'Sign in',
+          },
+        });
         props.navigation.navigate('SignInOptions');
       }, 1000);
     } else {
       setTimeout(() => {
+        Analytics.record({
+          name: 'screen',
+          attributes: {
+            name: 'Onboarding',
+          },
+        });
         props.navigation.navigate('Onboarding');
       }, 1000);
     }

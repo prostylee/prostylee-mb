@@ -58,3 +58,8 @@ export const getCountUnreadNotiSelector = createSelector(
   searchReducer,
   (data) => data?.countUnreadNoti || 0,
 );
+
+export const subscribePushNotification = createSelector(
+  searchReducer,
+  (data) => data?.payload || {},
+);

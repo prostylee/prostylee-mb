@@ -33,6 +33,7 @@ export const types = {
     'GET_LIST_NOTIFICATION_DISCOUNT_LOAD_MORE_SUCCESS',
   GET_LIST_NOTIFICATION_DISCOUNT_LOAD_MORE_FAILED:
     'GET_LIST_NOTIFICATION_DISCOUNT_LOAD_MORE_FAILED',
+  SUBSCRIBE_PUSH_NOTIFICATION: 'SUBSCRIBE_PUSH_NOTIFICATION',
 
   //Mark read
   SET_MARK_AS_READ: 'SET_MARK_AS_READ',
@@ -107,6 +108,7 @@ export const actions = {
   //COUNT UNREAD NOTI
   getCountUnreadNotification: createAction(types.GET_COUNT_UNREAD_NOTI),
   setCountUnreadNoti: createAction(types.SET_COUNT_UNREAD_NOTI),
+  subscribePushNotification: createAction(types.SUBSCRIBE_PUSH_NOTIFICATION),
 };
 
 export const defaultState = {
@@ -282,6 +284,12 @@ export const handleActions = {
     return {
       ...state,
       countUnreadNoti: payload,
+    };
+  },
+  [types.SUBSCRIBE_PUSH_NOTIFICATION]: (state, {payload}) => {
+    return {
+      ...state,
+      payload,
     };
   },
 };

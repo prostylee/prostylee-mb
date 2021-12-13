@@ -20,18 +20,19 @@ export const api = apisauce.create({
 });
 
 export async function _fetch(method, path, data) {
-  // console.log(
-  //   '_fetch: method=' +
-  //     method +
-  //     ', path=' +
-  //     path +
-  //     ', data=' +
-  //     JSON.stringify(data),
-  // );
+  console.log(
+    'baseURL=' + config.baseURL,
+    '_fetch: method=' +
+      method +
+      ', path=' +
+      path +
+      ', data=' +
+      JSON.stringify(data),
+  );
 
   try {
     const token = await Auth.currentSession();
-    // console.log(token.idToken.jwtToken);
+    // console.log('jwtToken===' + token.idToken.jwtToken);
     if (token && token.accessToken) {
       api.setHeaders({
         Authorization: 'Bearer ' + token.idToken.jwtToken,

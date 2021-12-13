@@ -1,40 +1,41 @@
 {
   "project_info": {
-    "project_number": "220857409177",
-    "project_id": "prostylee-demo",
-    "storage_bucket": "prostylee-demo.appspot.com"
+    "project_number": "626613618045",
+    "firebase_url": "https://prostylee-9c568.firebaseio.com",
+    "project_id": "prostylee-9c568",
+    "storage_bucket": "prostylee-9c568.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:220857409177:android:69b648deb601495f85e208",
+        "mobilesdk_app_id": "1:626613618045:android:6335cdabc82cdb185b7814",
         "android_client_info": {
           "package_name": "com.prostylee"
         }
       },
       "oauth_client": [
         {
-          "client_id": "220857409177-v1virhcv93gmm6r2dh4cicg8d2p8pm3k.apps.googleusercontent.com",
+          "client_id": "626613618045-bvni0poabqaefk8gj0trt3mqegpn9hu3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAf4KLmP4p0bw9PtwSEm3lVqaBmqquexr8"
+          "current_key": "AIzaSyDgQAUmuQdOp41oobU4vGANZ3PdB0jLtZM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "220857409177-v1virhcv93gmm6r2dh4cicg8d2p8pm3k.apps.googleusercontent.com",
+              "client_id": "626613618045-1lk293d5rt3pqp5ulkfe7bqgupb05r0e.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "220857409177-sgsleasj42q409hrm1h5ehqunts064fb.apps.googleusercontent.com",
+              "client_id": "626613618045-4jpunjh1fvlr8fkeffdnqlc49lpq7tlg.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "sunshine.com.prostylee"
+                "bundle_id": "vn.prostylee"
               }
             }
           ]

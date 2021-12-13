@@ -56,11 +56,11 @@ const Index = ({
             <Google />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/*<TouchableOpacity
           onPress={() => customProviderSignIn('Zalo')}
           style={styles.socialBtnWrapper}>
           <Zalo />
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
         {Platform.OS === 'ios' && (
           <TouchableOpacity
             onPress={() => loginWithProvider('SignInWithApple')}
