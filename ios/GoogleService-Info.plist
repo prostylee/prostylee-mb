@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>190048060709-q34u2ct4nocb8e4uc6gks1tbojb6icra.apps.googleusercontent.com</string>
+	<string>220857409177-sgsleasj42q409hrm1h5ehqunts064fb.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.190048060709-q34u2ct4nocb8e4uc6gks1tbojb6icra</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>190048060709-tve90ku0rvqv5ib31bjrd5m08h3ccoau.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.220857409177-sgsleasj42q409hrm1h5ehqunts064fb</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDIqkfXbjBkSQeAaFZchfHB9k6CzF6ctsI</string>
+	<string>AIzaSyDpnRm_TjFVj34DrL_EzHJX4vth33LNJFM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>190048060709</string>
+	<string>220857409177</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.prostylee</string>
+	<string>sunshine.com.prostylee</string>
 	<key>PROJECT_ID</key>
-	<string>propstylee</string>
+	<string>prostylee-demo</string>
 	<key>STORAGE_BUCKET</key>
-	<string>propstylee.appspot.com</string>
+	<string>prostylee-demo.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:190048060709:ios:d6f242b80cdec185b6c6cc</string>
+	<string>1:220857409177:ios:269c857e7d56c8cb85e208</string>
 </dict>
 </plist>
