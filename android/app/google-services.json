@@ -1,40 +1,48 @@
 {
   "project_info": {
-    "project_number": "220857409177",
-    "project_id": "prostylee-demo",
-    "storage_bucket": "prostylee-demo.appspot.com"
+    "project_number": "190048060709",
+    "project_id": "propstylee",
+    "storage_bucket": "propstylee.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:220857409177:android:69b648deb601495f85e208",
+        "mobilesdk_app_id": "1:190048060709:android:d83c02eb12b77bcab6c6cc",
         "android_client_info": {
           "package_name": "com.prostylee"
         }
       },
       "oauth_client": [
         {
-          "client_id": "220857409177-v1virhcv93gmm6r2dh4cicg8d2p8pm3k.apps.googleusercontent.com",
+          "client_id": "190048060709-tve90ku0rvqv5ib31bjrd5m08h3ccoau.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.prostylee",
+            "certificate_hash": "98140834c10bee37d25ddd0a71d07195c82cce21"
+          }
+        },
+        {
+          "client_id": "190048060709-0sjsaaf2hjc3k51odi7tilb28jl2lffe.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAf4KLmP4p0bw9PtwSEm3lVqaBmqquexr8"
+          "current_key": "AIzaSyBxjvFXtG1qWFbhNa2vmyjFXx_8XT_nEWs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "220857409177-v1virhcv93gmm6r2dh4cicg8d2p8pm3k.apps.googleusercontent.com",
+              "client_id": "190048060709-0sjsaaf2hjc3k51odi7tilb28jl2lffe.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "220857409177-sgsleasj42q409hrm1h5ehqunts064fb.apps.googleusercontent.com",
+              "client_id": "190048060709-20vur2v7hadpq98aoe9o8rmtr00tt1qp.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "sunshine.com.prostylee"
+                "bundle_id": "com.propstylee"
               }
             }
           ]
