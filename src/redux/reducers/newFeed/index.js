@@ -147,10 +147,9 @@ export default handleActions(
     [types.GET_NEW_FEED_SUCCESS]: (state, {payload}) => {
       const {totalPages} = payload;
       const content = payload?.content;
-      const threeFirstItem =
-        content?.length && content?.length > FIRST_SLICE_ITEM
-          ? content.slice(0, FIRST_SLICE_ITEM)
-          : [];
+      const threeFirstItem = content?.length
+        ? content.slice(0, FIRST_SLICE_ITEM)
+        : [];
       const restContent = content.slice(FIRST_SLICE_ITEM, state.limit);
       return {
         ...state,
@@ -161,7 +160,13 @@ export default handleActions(
       };
     },
     [types.GET_NEW_FEED_FAILED]: (state, {payload}) => {
-      return {...state, newFeed: {}};
+      return {
+        ...state,
+        page: PAGE_INIT,
+        newFeed: {},
+        hasLoadMore: false,
+        threeFirstItem: {},
+      };
     },
     [types.HANDLE_LOAD_MORE_SUCCESS]: (state, {payload}) => {
       const {totalPages, content} = payload;

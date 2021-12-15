@@ -6,6 +6,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {Avatar} from 'react-native-paper';
 import {ContainerView, FollowTextButton} from '../../../../components';
 import {MapPin} from '../../../../svg/common';
+import {TYPE_STORE} from 'constants';
 
 const NewFeedItemHeader = ({
   avatar,
@@ -15,6 +16,7 @@ const NewFeedItemHeader = ({
   onAvatarPress,
   targetId,
   followStatusOfUserLogin,
+  targetType = TYPE_STORE,
 }) => {
   return (
     <ContainerView style={styles.headerContainer}>
@@ -49,6 +51,7 @@ const NewFeedItemHeader = ({
           followStatusOfUserLogin: followStatusOfUserLogin,
           id: targetId,
         }}
+        targetType={targetType}
       />
     </ContainerView>
   );

@@ -74,7 +74,8 @@ const NewFeedRowItemType = {
 const NewFeed = ({navigation}) => {
   const dispatch = useDispatch();
   const [refreshing, handleRefreshing] = useState(false);
-  const [allNewFeeds, setAllNewFeeds] = useState([]);
+  const [allNewFeedsStore, setAllNewFeedsStore] = useState([]);
+  const [allNewFeedsUser, setAllNewFeedsUser] = useState([]);
 
   const newFeedList = useSelector((state) => getNewFeedSelector(state));
   const threeFirstNewFeedItem = useSelector((state) =>
@@ -224,7 +225,11 @@ const NewFeed = ({navigation}) => {
         items.push(...newFeedList?.content);
       }
 
-      setAllNewFeeds(items);
+      if (targetType === TYPE_STORE) {
+        setAllNewFeedsStore(items);
+      } else if (targetType === TYPE_USER) {
+        setAllNewFeedsUser(items);
+      }
     }
   }, [threeFirstNewFeedItem, topProduct, listDynamicUsers, newFeedList]);
 
@@ -275,6 +280,12 @@ const NewFeed = ({navigation}) => {
     return <StoryBoard targetType={targetType} stories={stories} />;
   };
 
+  const newFeedData =
+    targetType === TYPE_STORE
+      ? allNewFeedsStore
+      : targetType === TYPE_USER
+      ? allNewFeedsUser
+      : [];
   return (
     <ThemeView isFullView>
       {Platform.OS === 'android' && (
@@ -289,7 +300,7 @@ const NewFeed = ({navigation}) => {
         <LoadingComponent />
       ) : (
         <FlatList
-          data={allNewFeeds || []}
+          data={newFeedData || []}
           keyExtractor={(item, index) =>
             'newFeedKeyExtractor' + targetType + index
           }

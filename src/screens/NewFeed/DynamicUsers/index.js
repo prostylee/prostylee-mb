@@ -27,10 +27,10 @@ const DynamicUsers = ({listDynamicUsers, navigation, targetType}) => {
           title={i18n.t('dynamicUsers.titleDynamicUser')}
           style={styles.textTitle}
           containerStyle={{}}
-          subTitle={i18n.t('common.textSeeMore')}
-          onPress={() => {
-            navigation.navigate('Stores');
-          }}
+          // subTitle={i18n.t('common.textSeeMore')}
+          // onPress={() => {
+          //   navigation.navigate('Stores');
+          // }}
         />
       </Container>
       <Container fluid>
