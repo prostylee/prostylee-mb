@@ -53,7 +53,7 @@ const ProductLocation = ({productId, info, location}) => {
           <Image source={{uri: info?.logoUrl}} style={styles.infoLogo} />
           <Text style={styles.infoNameText}>{info?.name}</Text>
         </View>
-        <FollowTextButton item={{id: productId}} />
+        <FollowTextButton item={{id: info?.id || 0}} />
       </View>
       <View style={styles.mapPlaceholder}>
         <MapView

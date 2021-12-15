@@ -13,6 +13,7 @@ export default {
     textFollower: 'Followers',
     textFollowing: 'Following',
     textPost: 'Posts',
+    addressHidden: 'Address is hidden',
   },
   headerTitle: {
     featured_store: 'Featured store',

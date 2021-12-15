@@ -24,12 +24,7 @@ import {showMessage} from 'react-native-flash-message';
 const getNewFeeds = function* ({payload}) {
   try {
     yield put(newFeedActions.setLoading(true));
-    let res = {};
-    if (payload.newFeedType === TYPE_STORE) {
-      res = yield call(getNewFeed, payload);
-    } else {
-      res = yield call(getPosts, payload);
-    }
+    const res = yield call(getNewFeed, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(newFeedActions.getNewFeedSuccess(res.data.data));
     } else {
@@ -49,12 +44,7 @@ const getNewFeeds = function* ({payload}) {
 const getLoadMoreNewFeed = function* ({payload}) {
   try {
     yield put(newFeedActions.handleLoadMoreLoading(true));
-    let res = {};
-    if (payload.newFeedType === TYPE_STORE) {
-      res = yield call(getNewFeed, payload);
-    } else {
-      res = yield call(getPosts, payload);
-    }
+    const res = yield call(getNewFeed, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
       yield put(newFeedActions.handleLoadMoreSuccess(res.data.data));
     } else {

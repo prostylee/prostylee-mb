@@ -3,6 +3,7 @@ import {Text, View} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import {useNavigation} from '@react-navigation/native';
+import {TYPE_STORE} from 'constants';
 
 import {ContainerView} from 'components';
 import PriceLabel from '../components/PriceLabel';
@@ -23,9 +24,9 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
   const address = productOwnerResponse?.fullAddress || '';
 
   const navigateStore = () => {
-    if (newFeedItem?.storeId) {
+    if (targetType === TYPE_STORE) {
       RootNavigator.navigate('StoreProfileMain', {
-        storeId: newFeedItem?.storeId,
+        storeId: productOwnerResponse?.id,
       });
     } else if (productOwnerResponse?.id) {
       RootNavigator.navigate('UserProfile', {
@@ -79,6 +80,7 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
         onAvatarPress={navigateStore}
         isAdvertising={newFeedItem?.isAdvertising}
         followStatusOfUserLogin={newFeedItem?.followStatusOfUserLogin}
+        targetType={targetType}
       />
       <NewFeedItemBody slider={slider} bottom={bottom} />
       <NewFeedItemFooter targetType={targetType} newFeedItem={newFeedItem} />

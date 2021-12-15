@@ -45,6 +45,7 @@ export default {
     textNear: '2.5km',
     textNoPhoneNumber: 'Người dùng chưa đăng ký số điện thoại!',
     textBuyNow: 'Mua ngay',
+    addressHidden: 'Đã ẩn địa chỉ',
   },
   codePush: {
     installButton: 'Cập nhật',

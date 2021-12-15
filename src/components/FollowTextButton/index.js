@@ -6,20 +6,49 @@ import {
   followStoreService,
   unFollowStoreService,
 } from '../../services/api/storeApi';
+import {follow, unfollow} from '../../services/api/socialApi';
 import Colors from '../Colors';
 import PropTypes from 'prop-types';
-const FollowTextButton = ({item}) => {
+import {TYPE_STORE} from 'constants';
+
+const FollowTextButton = ({item, targetType = TYPE_STORE}) => {
   const [followed, setFollowed] = useState(
     item?.followStatusOfUserLogin ? true : false,
   );
 
-  const _handleClick = async () => {
+  const _handleClick = () => {
+    if (targetType === TYPE_STORE) {
+      followStore(item?.id);
+    } else {
+      followUser(item.id);
+    }
+  };
+
+  const followStore = async (id) => {
     let res = null;
     try {
       if (followed) {
-        res = await unFollowStoreService(item?.id);
+        res = await unFollowStoreService(id);
       } else {
-        res = await followStoreService(item?.id);
+        res = await followStoreService(id);
+      }
+      setFollowed(!followed);
+    } catch (err) {
+      showMessage({
+        message: `${res?.data?.status}: ${res?.data?.error}`,
+        type: 'danger',
+        position: 'top',
+      });
+    }
+  };
+
+  const followUser = async (id) => {
+    let res = null;
+    try {
+      if (followed) {
+        res = await follow({targetId: id, targetType: targetType});
+      } else {
+        res = await unfollow({targetId: id, targetType: targetType});
       }
       setFollowed(!followed);
     } catch (err) {

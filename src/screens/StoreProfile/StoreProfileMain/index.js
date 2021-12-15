@@ -173,7 +173,7 @@ const StoreProfileMain = (props) => {
   };
   const _handleRefresh = () => {
     handleRefreshing(true);
-    dispatch(storeProfileActions.getStoreInfo(storeInfo));
+    dispatch(storeProfileActions.getStoreInfo(storeId));
     dispatch(
       storeProfileActions.getAllStoreProduct({
         page: PAGE_DEFAULT,

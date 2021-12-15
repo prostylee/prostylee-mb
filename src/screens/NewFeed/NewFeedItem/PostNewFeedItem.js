@@ -11,15 +11,15 @@ import {Store} from '../../../svg/common';
 import ReadMore from '@fawazahmed/react-native-read-more/example/src/ReadMore';
 
 const PostNewFeedItem = ({newFeedItem, targetType}) => {
-  const ownerResponseLite = newFeedItem?.userResponseLite;
-  const urlImage = ownerResponseLite?.avatar;
-  const name = ownerResponseLite?.fullName || '';
+  const ownerResponseLite = newFeedItem?.newFeedOwnerResponse;
+  const urlImage = ownerResponseLite?.logoUrl || '';
+  const name = ownerResponseLite?.name || '';
   const userId = ownerResponseLite?.id || 0;
   const address = ownerResponseLite?.fullAddress || '';
 
   const navigateToUserProfile = () => {
     RootNavigator.navigate('UserProfile', {
-      userId: newFeedItem?.userResponseLite?.id,
+      userId: newFeedItem?.newFeedOwnerResponse?.id,
     });
   };
 
@@ -68,6 +68,7 @@ const PostNewFeedItem = ({newFeedItem, targetType}) => {
         avatar={urlImage}
         onAvatarPress={navigateToUserProfile}
         followStatusOfUserLogin={newFeedItem?.followStatusOfUserLogin}
+        targetType={targetType}
       />
       <NewFeedItemBody slider={slider} top={top} />
       <NewFeedItemFooter targetType={targetType} newFeedItem={newFeedItem} />

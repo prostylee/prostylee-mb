@@ -68,6 +68,7 @@ export default EStyleSheet.create({
     fontWeight: '500',
     color: '$white',
     margin: 0,
+    marginVertical: 0,
   },
   productImageWrap: {
     ...flexRow,
