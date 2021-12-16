@@ -3,7 +3,11 @@ import {Text, View} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import {useNavigation} from '@react-navigation/native';
-import {TYPE_STORE} from 'constants';
+import {
+  TYPE_STORE,
+  USER_POST_TYPE_PRODUCT,
+  USER_POST_TYPE_POST,
+} from 'constants';
 
 import {ContainerView} from 'components';
 import PriceLabel from '../components/PriceLabel';
@@ -14,6 +18,7 @@ import NewFeedItemFooter from '../NewFeedItem/NewFeedItemFooter';
 import NewFeedSlider from '../NewFeedItem/NewFeedSlider';
 import NewFeedItemBody from './NewFeedItemBody';
 import RootNavigator from '../../../navigator/rootNavigator';
+import ReadMore from '@fawazahmed/react-native-read-more';
 
 const StoreNewFeedItem = ({newFeedItem, targetType}) => {
   const navigation = useNavigation();
@@ -22,6 +27,7 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
   const name = productOwnerResponse?.name || '';
   const storeId = productOwnerResponse?.id || 0;
   const address = productOwnerResponse?.fullAddress || '';
+  const postType = newFeedItem?.type || USER_POST_TYPE_POST;
 
   const navigateStore = () => {
     if (targetType === TYPE_STORE) {
@@ -37,15 +43,30 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
     }
   };
 
+  const top = (
+    <ReadMore
+      numberOfLines={3}
+      seeMoreText={i18n.t('common.textSeeMore')}
+      seeLessText={i18n.t('common.textSeeLess')}
+      ellipsis={'...'}
+      seeMoreStyle={styles.seeMoreStyle}
+      seeLessStyle={styles.seeLessStyle}
+      style={styles.postContentWrapper}>
+      {newFeedItem?.content}
+    </ReadMore>
+  );
+
   const slider = (
     <View style={styles.slideWrap}>
       <NewFeedSlider
         targetType={targetType}
         images={newFeedItem?.imageUrls || []}>
-        <PriceSaleLabel
-          price={newFeedItem?.price || 0}
-          priceSale={newFeedItem?.priceSale || 0}
-        />
+        {postType === USER_POST_TYPE_PRODUCT ? (
+          <PriceSaleLabel
+            price={newFeedItem?.price || 0}
+            priceSale={newFeedItem?.priceSale || 0}
+          />
+        ) : null}
       </NewFeedSlider>
     </View>
   );
@@ -82,7 +103,11 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
         followStatusOfUserLogin={newFeedItem?.followStatusOfUserLogin}
         targetType={targetType}
       />
-      <NewFeedItemBody slider={slider} bottom={bottom} />
+      <NewFeedItemBody
+        slider={slider}
+        top={postType === USER_POST_TYPE_POST ? top : null}
+        bottom={postType === USER_POST_TYPE_PRODUCT ? bottom : null}
+      />
       <NewFeedItemFooter targetType={targetType} newFeedItem={newFeedItem} />
     </View>
   );
