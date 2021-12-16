@@ -13,7 +13,7 @@
     "@aws-amplify/pushnotification": "^4.2.4",
     "@babel/plugin-proposal-decorators": "^7.12.12",
     "@babel/preset-flow": "^7.12.1",
-    "@fawazahmed/react-native-read-more": "^2.1.1",
+    "@fawazahmed/react-native-read-more": "^2.2.2",
     "@locnguyen309/react-native-simple-image-crop": "^1.0.0",
     "@pontusab/react-native-image-manipulator": "https://github.com/pontusab/react-native-image-manipulator",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",

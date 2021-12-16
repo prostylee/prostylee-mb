@@ -8,7 +8,7 @@ import NewFeedSlider from '../NewFeedItem/NewFeedSlider';
 import NewFeedItemBody from './NewFeedItemBody';
 import RootNavigator from '../../../navigator/rootNavigator';
 import {Store} from '../../../svg/common';
-import ReadMore from '@fawazahmed/react-native-read-more/example/src/ReadMore';
+import ReadMore from '@fawazahmed/react-native-read-more';
 
 const PostNewFeedItem = ({newFeedItem, targetType}) => {
   const ownerResponseLite = newFeedItem?.newFeedOwnerResponse;
@@ -36,7 +36,7 @@ const PostNewFeedItem = ({newFeedItem, targetType}) => {
       seeMoreStyle={styles.seeMoreStyle}
       seeLessStyle={styles.seeLessStyle}
       style={styles.postContentWrapper}>
-      {newFeedItem?.description}
+      {newFeedItem?.content}
     </ReadMore>
   );
 
