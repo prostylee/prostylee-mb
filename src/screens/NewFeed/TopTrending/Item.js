@@ -10,20 +10,32 @@ import {
 import {ThemeView, Image} from 'components';
 import {Avatar, Button} from 'react-native-paper';
 import i18n from 'i18n';
-
 import styles from './styles';
 import {MapPin} from 'svg/common';
-
+import {userSelectors} from 'reducers';
 import {follow, unfollow} from 'services/api/socialApi';
-
+import {useSelector} from 'react-redux';
 import {SUCCESS} from 'constants';
 import RootNavigator from '../../../navigator/rootNavigator';
 
 const WIDTH = Dimensions.get('window').width;
 const WIDTH_IMG = (WIDTH * 0.7) / 3 - 1;
 
-const Item = ({item, style, targetType}) => {
-  const [followed, setFollowed] = useState(item.followStatusOfUserLogin);
+const Item = ({
+  item,
+  style,
+  targetType,
+  allNewFeedsStoreFollowed = [],
+  followStoreAction = () => {},
+  unFollowStoreAction = () => {},
+}) => {
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
+  const [followed, setFollowed] = useState(
+    item.followStatusOfUserLogin ||
+      allNewFeedsStoreFollowed?.includes(item?.id),
+  );
   const products = item?.products;
   const _followPress = async () => {
     if (!followed) {
@@ -32,6 +44,7 @@ const Item = ({item, style, targetType}) => {
         targetType,
       });
       if (res.ok && res.data.status === SUCCESS) {
+        followStoreAction(item?.id);
         setFollowed(true);
       }
     } else {
@@ -40,6 +53,7 @@ const Item = ({item, style, targetType}) => {
         targetType,
       });
       if (res.ok && res.data.status === SUCCESS) {
+        unFollowStoreAction(item?.id);
         setFollowed(false);
       }
     }
@@ -98,14 +112,16 @@ const Item = ({item, style, targetType}) => {
             ))
           : null}
       </View>
-      <Button
-        mode="contained"
-        uppercase={false}
-        onPress={() => _followPress()}
-        style={[styles.followBtn, followed && styles.followedBtn]}
-        labelStyle={styles.followBtnBtnLabel}>
-        {i18n.t(!followed ? 'common.textFollow' : 'common.textFollowed')}
-      </Button>
+      {userProfile?.id !== item.id ? (
+        <Button
+          mode="contained"
+          uppercase={false}
+          onPress={() => _followPress()}
+          style={[styles.followBtn, followed && styles.followedBtn]}
+          labelStyle={styles.followBtnBtnLabel}>
+          {i18n.t(!followed ? 'common.textFollow' : 'common.textFollowed')}
+        </Button>
+      ) : null}
     </ThemeView>
   );
 };

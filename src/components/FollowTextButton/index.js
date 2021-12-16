@@ -11,7 +11,12 @@ import Colors from '../Colors';
 import PropTypes from 'prop-types';
 import {TYPE_STORE} from 'constants';
 
-const FollowTextButton = ({item, targetType = TYPE_STORE}) => {
+const FollowTextButton = ({
+  item,
+  targetType = TYPE_STORE,
+  addFollowAction = () => {},
+  removeFollowAction = () => {},
+}) => {
   const [followed, setFollowed] = useState(
     item?.followStatusOfUserLogin ? true : false,
   );
@@ -29,8 +34,10 @@ const FollowTextButton = ({item, targetType = TYPE_STORE}) => {
     try {
       if (followed) {
         res = await unFollowStoreService(id);
+        removeFollowAction(item?.id);
       } else {
         res = await followStoreService(id);
+        addFollowAction(item?.id);
       }
       setFollowed(!followed);
     } catch (err) {
@@ -47,8 +54,10 @@ const FollowTextButton = ({item, targetType = TYPE_STORE}) => {
     try {
       if (followed) {
         res = await unfollow({targetId: id, targetType: targetType});
+        removeFollowAction(id);
       } else {
         res = await follow({targetId: id, targetType: targetType});
+        addFollowAction(id);
       }
       setFollowed(!followed);
     } catch (err) {

@@ -9,7 +9,14 @@ import Item from './Item';
 
 import styles from './styles';
 
-const TopTrending = ({topProduct, navigation, targetType}) => {
+const TopTrending = ({
+  topProduct,
+  navigation,
+  targetType,
+  allNewFeedsStoreFollowed = [],
+  followStoreAction = () => {},
+  unFollowStoreAction = () => {},
+}) => {
   if (isEmpty(topProduct) || !topProduct?.content?.length) {
     return null;
   }
@@ -33,9 +40,18 @@ const TopTrending = ({topProduct, navigation, targetType}) => {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {topProductList.map((item, index) => (
             <View
-              key={'topProductList' + targetType + index}
+              key={`topProductList_${targetType}_${index}_${allNewFeedsStoreFollowed?.includes(
+                Number(item?.id),
+              )}`}
               style={styles.viewContainer}>
-              <Item targetType={targetType} item={item} style={{flex: 1}} />
+              <Item
+                targetType={targetType}
+                item={item}
+                style={{flex: 1}}
+                allNewFeedsStoreFollowed={allNewFeedsStoreFollowed}
+                followStoreAction={followStoreAction}
+                unFollowStoreAction={unFollowStoreAction}
+              />
             </View>
           ))}
         </ScrollView>

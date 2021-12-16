@@ -4,9 +4,11 @@ import i18n from 'i18n';
 import styles from './styles';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Avatar} from 'react-native-paper';
-import {ContainerView, FollowTextButton} from '../../../../components';
-import {MapPin} from '../../../../svg/common';
+import {userSelectors} from 'reducers';
+import {ContainerView, FollowTextButton} from 'components';
+import {MapPin} from 'svg/common';
 import {TYPE_STORE} from 'constants';
+import {useSelector} from 'react-redux';
 
 const NewFeedItemHeader = ({
   avatar,
@@ -17,7 +19,13 @@ const NewFeedItemHeader = ({
   targetId,
   followStatusOfUserLogin,
   targetType = TYPE_STORE,
+  allNewFeedsFollowed = [],
+  addFollowAction = () => {},
+  removeFollowAction = () => {},
 }) => {
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
   return (
     <ContainerView style={styles.headerContainer}>
       <TouchableOpacity onPress={onAvatarPress} style={[styles.headerWrap]}>
@@ -46,13 +54,19 @@ const NewFeedItemHeader = ({
           ) : null}
         </View>
       </TouchableOpacity>
-      <FollowTextButton
-        item={{
-          followStatusOfUserLogin: followStatusOfUserLogin,
-          id: targetId,
-        }}
-        targetType={targetType}
-      />
+      {userProfile.id !== targetId ? (
+        <FollowTextButton
+          item={{
+            followStatusOfUserLogin:
+              followStatusOfUserLogin ||
+              allNewFeedsFollowed?.includes(targetId),
+            id: targetId,
+          }}
+          targetType={targetType}
+          addFollowAction={addFollowAction}
+          removeFollowAction={removeFollowAction}
+        />
+      ) : null}
     </ContainerView>
   );
 };

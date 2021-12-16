@@ -9,7 +9,14 @@ import Item from './Item';
 
 import styles from './styles';
 
-const DynamicUsers = ({listDynamicUsers, navigation, targetType}) => {
+const DynamicUsers = ({
+  listDynamicUsers,
+  navigation,
+  targetType,
+  allNewFeedsUserFollowed = [],
+  followUserAction = () => {},
+  unFollowUserAction = () => {},
+}) => {
   if (
     !listDynamicUsers ||
     isEmpty(listDynamicUsers) ||
@@ -37,9 +44,18 @@ const DynamicUsers = ({listDynamicUsers, navigation, targetType}) => {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {listDynamicUser.map((item, index) => (
             <View
-              key={'listDynamicUser' + targetType + index}
+              key={`listDynamicUser_${targetType}_${index}_${allNewFeedsUserFollowed?.includes(
+                Number(item?.id),
+              )}`}
               style={styles.viewContainer}>
-              <Item targetType={targetType} item={item} style={{flex: 1}} />
+              <Item
+                targetType={targetType}
+                item={item}
+                style={{flex: 1}}
+                allNewFeedsUserFollowed={allNewFeedsUserFollowed}
+                followUserAction={followUserAction}
+                unFollowUserAction={unFollowUserAction}
+              />
             </View>
           ))}
         </ScrollView>

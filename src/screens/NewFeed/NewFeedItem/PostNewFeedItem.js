@@ -14,7 +14,13 @@ import {ContainerView} from 'components';
 import PriceLabel from '../components/PriceLabel';
 import OutlineButton from '../components/OutlineButton';
 
-const PostNewFeedItem = ({newFeedItem, targetType}) => {
+const PostNewFeedItem = ({
+  newFeedItem,
+  targetType,
+  allNewFeedsFollowed = [],
+  addFollowAction = () => {},
+  removeFollowAction = () => {},
+}) => {
   const ownerResponseLite = newFeedItem?.newFeedOwnerResponse;
   const urlImage = ownerResponseLite?.logoUrl || '';
   const name = ownerResponseLite?.name || '';
@@ -97,6 +103,9 @@ const PostNewFeedItem = ({newFeedItem, targetType}) => {
         onAvatarPress={navigateToUserProfile}
         followStatusOfUserLogin={newFeedItem?.followStatusOfUserLogin}
         targetType={targetType}
+        allNewFeedsFollowed={allNewFeedsFollowed}
+        addFollowAction={addFollowAction}
+        removeFollowAction={removeFollowAction}
       />
       <NewFeedItemBody
         slider={slider}

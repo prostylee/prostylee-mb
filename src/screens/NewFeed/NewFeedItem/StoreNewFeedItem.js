@@ -20,7 +20,13 @@ import NewFeedItemBody from './NewFeedItemBody';
 import RootNavigator from '../../../navigator/rootNavigator';
 import ReadMore from '@fawazahmed/react-native-read-more';
 
-const StoreNewFeedItem = ({newFeedItem, targetType}) => {
+const StoreNewFeedItem = ({
+  newFeedItem,
+  targetType,
+  allNewFeedsFollowed = [],
+  addFollowAction = () => {},
+  removeFollowAction = () => {},
+}) => {
   const navigation = useNavigation();
   const productOwnerResponse = newFeedItem?.newFeedOwnerResponse;
   const urlImage = productOwnerResponse?.logoUrl;
@@ -102,6 +108,9 @@ const StoreNewFeedItem = ({newFeedItem, targetType}) => {
         isAdvertising={newFeedItem?.isAdvertising}
         followStatusOfUserLogin={newFeedItem?.followStatusOfUserLogin}
         targetType={targetType}
+        allNewFeedsFollowed={allNewFeedsFollowed}
+        addFollowAction={addFollowAction}
+        removeFollowAction={removeFollowAction}
       />
       <NewFeedItemBody
         slider={slider}
