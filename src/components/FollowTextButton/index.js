@@ -46,9 +46,9 @@ const FollowTextButton = ({item, targetType = TYPE_STORE}) => {
     let res = null;
     try {
       if (followed) {
-        res = await follow({targetId: id, targetType: targetType});
-      } else {
         res = await unfollow({targetId: id, targetType: targetType});
+      } else {
+        res = await follow({targetId: id, targetType: targetType});
       }
       setFollowed(!followed);
     } catch (err) {

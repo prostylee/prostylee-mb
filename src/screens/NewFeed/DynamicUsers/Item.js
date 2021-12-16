@@ -36,7 +36,7 @@ const Item = ({item, style, targetType}) => {
   };
   const navigateToUserProfile = () => {
     navigation.navigate('UserProfile', {
-      userId: item?.userResponseLite?.id,
+      userId: item?.id,
     });
   };
   const userAddress = item.userAddressResponse
