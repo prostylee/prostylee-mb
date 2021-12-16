@@ -78,7 +78,9 @@ const NewFeed = ({navigation}) => {
   const flatListRef = useRef();
   const [refreshing, handleRefreshing] = useState(false);
   const [allNewFeedsStore, setAllNewFeedsStore] = useState([]);
+  const [allNewFeedsStoreFollowed, setAllNewFeedsStoreFollowed] = useState([]);
   const [allNewFeedsUser, setAllNewFeedsUser] = useState([]);
+  const [allNewFeedsUserFollowed, setAllNewFeedsUserFollowed] = useState([]);
 
   const newFeedList = useSelector((state) => getNewFeedSelector(state));
   const threeFirstNewFeedItem = useSelector((state) =>
@@ -248,6 +250,23 @@ const NewFeed = ({navigation}) => {
 
       if (targetType === TYPE_STORE) {
         setAllNewFeedsStore(items);
+        let listFollowed = [];
+        items?.map((item) => {
+          if (
+            item?.type === NewFeedRowItemType.STORES.type ||
+            item?.type === NewFeedRowItemType.USERS.type
+          ) {
+            item?.items?.content?.map((innerItem) => {
+              if (innerItem.followStatusOfUserLogin) {
+                listFollowed.push(innerItem?.id);
+              }
+            });
+          } else {
+            if (item.followStatusOfUserLogin) {
+              listFollowed.push(item?.newFeedOwnerResponse?.id);
+            }
+          }
+        });
       } else if (targetType === TYPE_USER) {
         setAllNewFeedsUser(items);
       }
@@ -267,12 +286,41 @@ const NewFeed = ({navigation}) => {
   };
 
   const renderItem = (item, index) => {
+    const followStoreAction = (id) => {
+      setAllNewFeedsStoreFollowed((prev) => [...prev, id]);
+    };
+    const unFollowStoreAction = (id) => {
+      setAllNewFeedsStoreFollowed((prev) => {
+        const itemIndex = prev?.findIndex((item) => item === id);
+        if (itemIndex !== -1) {
+          return [...prev.slice(0, itemIndex), ...prev.slice(itemIndex + 1)];
+        } else {
+          return prev;
+        }
+      });
+    };
+    const followUserAction = (id) => {
+      setAllNewFeedsUserFollowed((prev) => [...prev, id]);
+    };
+    const unFollowUserAction = (id) => {
+      setAllNewFeedsUserFollowed((prev) => {
+        const itemIndex = prev?.findIndex((item) => item === id);
+        if (itemIndex !== -1) {
+          return [...prev.slice(0, itemIndex), ...prev.slice(itemIndex + 1)];
+        } else {
+          return prev;
+        }
+      });
+    };
     if (item.type === NewFeedRowItemType.STORES.type) {
       return (
         <TopTrending
           targetType={targetType}
           navigation={navigation}
           topProduct={item.items}
+          allNewFeedsStoreFollowed={allNewFeedsStoreFollowed}
+          followStoreAction={followStoreAction}
+          unFollowStoreAction={unFollowStoreAction}
         />
       );
     }
@@ -283,6 +331,9 @@ const NewFeed = ({navigation}) => {
           targetType={targetType}
           navigation={navigation}
           listDynamicUsers={item.items}
+          allNewFeedsUserFollowed={allNewFeedsUserFollowed}
+          followUserAction={followUserAction}
+          unFollowUserAction={unFollowUserAction}
         />
       );
     }
@@ -293,6 +344,12 @@ const NewFeed = ({navigation}) => {
         targetType={targetType}
         key={'newFeedItem' + targetType + index}
         newFeedItem={item}
+        allNewFeedsStoreFollowed={allNewFeedsStoreFollowed}
+        followStoreAction={followStoreAction}
+        unFollowStoreAction={unFollowStoreAction}
+        allNewFeedsUserFollowed={allNewFeedsUserFollowed}
+        followUserAction={followUserAction}
+        unFollowUserAction={unFollowUserAction}
       />
     );
   };
@@ -324,7 +381,15 @@ const NewFeed = ({navigation}) => {
           ref={flatListRef}
           data={newFeedData || []}
           keyExtractor={(item, index) =>
-            'newFeedKeyExtractor' + targetType + index
+            `newFeedKeyExtractor_${index}_${
+              targetType === TYPE_STORE
+                ? allNewFeedsStoreFollowed?.includes(
+                    Number(item?.newFeedOwnerResponse?.id),
+                  )
+                : allNewFeedsUserFollowed?.includes(
+                    Number(item?.newFeedOwnerResponse?.id),
+                  )
+            }`
           }
           renderItem={({item, index}) => renderItem(item, index)}
           onEndReached={handleLoadMore}
