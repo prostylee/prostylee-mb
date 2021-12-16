@@ -38,7 +38,7 @@ export default EStyleSheet.create({
     fontWeight: '500',
     lineHeight: 20,
     fontFamily: '$font1',
-    paddingTop: 16,
+    paddingVertical: 4,
   },
   address: {
     fontSize: 11,
