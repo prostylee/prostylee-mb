@@ -22,6 +22,7 @@ export default EStyleSheet.create({
   },
   wrapList: {
     flex: 1,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 0,

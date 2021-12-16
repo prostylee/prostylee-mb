@@ -63,7 +63,7 @@ const TopSearch = ({navigation}) => {
   };
 
   return (
-    <>
+    <View style={{display: 'flex'}}>
       <View style={styles.wrapHeader}>
         <Text style={styles.title}>{i18n.t('Search.topSearch')}</Text>
       </View>
@@ -87,6 +87,7 @@ const TopSearch = ({navigation}) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
+          contentContainerStyle
           style={styles.wrapScroll}>
           <View style={styles.wrapChip}>
             {listTopSearch && listTopSearch.length
@@ -105,7 +106,7 @@ const TopSearch = ({navigation}) => {
           </View>
         </ScrollView>
       )}
-    </>
+    </View>
   );
 };
 
