@@ -1,6 +1,6 @@
 import I18n from 'i18n';
 
-// API STATUS
+//API STATUS
 export const SUCCESS = 200;
 export const BAD_REQUEST = 400;
 export const SESSION_EXPIRED = 401;
@@ -9,7 +9,7 @@ export const INTERNAL_SERVER_ERROR = 500;
 export const POST_SUCCESS = 201;
 export const DELETE_SUCCESS = 204;
 
-// TIME OUT
+//TIME OUT
 export const TIME_OUT = 20000;
 
 // HTTP METHODS
@@ -19,7 +19,7 @@ export const PUT = 'put';
 export const DELETE = 'delete';
 export const PATCH = 'patch';
 
-// ERROR MESSAGE
+//ERROR MESSAGE
 export const UNKNOWN_MESSAGE = I18n.t('unknownMessage');
 export const DISCONNECT = I18n.t('disconnected');
 export const SESSION_EXPIRED_MESSAGE = I18n.t('sessionExpiredMessage');
@@ -28,10 +28,6 @@ export const SESSION_EXPIRED_MESSAGE = I18n.t('sessionExpiredMessage');
 export const TYPE_STORE = 'STORE';
 export const TYPE_USER = 'USER';
 
-// USER POST TYPE
-export const USER_POST_TYPE_PRODUCT = 'PRODUCT';
-export const USER_POST_TYPE_POST = 'POST';
-
 // PARAM QUERY
 export const PAGE_DEFAULT = 0;
 export const LIMIT_DEFAULT = 12;
@@ -39,7 +35,7 @@ export const NUMBER_OF_PRODUCT = 3;
 export const TIME_RANGE_IN_DAYS = 100;
 export const SORT_DEFAULT = 'createdAt';
 
-// STORY
+//Story
 export const STORY_DURATION = 15;
 export const STORY_TYPE = 'STORY';
 export const FEED_TYPE = 'FEED';
@@ -47,14 +43,14 @@ export const FEED_TYPE = 'FEED';
 // CURRENCY
 export const CURRENCY_VIET_NAM = 'đ';
 
-// IMG SIZE
+//IMG SIZE
 export const IMG_STATUS = 5 / 4;
 export const IMG_PRODUCT = 3 / 2;
 export const IMG_RATIO = 4 / 3;
-// NEW FEED
+//NEW FEED
 export const FIRST_SLICE_ITEM = 3;
 
-// ROLE
+//ROLE
 export const BUYER = 'BUYER';
 // PRODUCT SORT
 
@@ -75,7 +71,7 @@ export const VOUCHER_SORT_ITEM = [
   {label: 'Sử dụng nhiều nhất', value: 4},
 ];
 
-// FILTER TAG
+//FILTER TAG
 
 export const FILTER_TAGS = [
   {

@@ -1,6 +1,5 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {useIsFocused} from '@react-navigation/native';
 import {
   ActivityIndicator,
   FlatList,
@@ -74,8 +73,6 @@ const NewFeedRowItemType = {
 
 const NewFeed = ({navigation}) => {
   const dispatch = useDispatch();
-  const isFocused = useIsFocused();
-  const flatListRef = useRef();
   const [refreshing, handleRefreshing] = useState(false);
   const [allNewFeedsStore, setAllNewFeedsStore] = useState([]);
   const [allNewFeedsUser, setAllNewFeedsUser] = useState([]);
@@ -104,24 +101,6 @@ const NewFeed = ({navigation}) => {
   );
   const storiesLoading = useSelector((state) => getStoriesLoading(state));
   const stories = useSelector((state) => getStories(state));
-
-  React.useEffect(() => {
-    if (flatListRef && flatListRef.current) {
-      const unsubscribe = navigation.addListener('tabPress', (e) => {
-        if (isFocused) {
-          e.preventDefault();
-          flatListRef.current?.scrollToOffset({
-            offset: 0,
-            animated: true,
-          });
-          setTimeout(() => {
-            handleRefresh();
-          }, 200);
-        }
-      });
-      return unsubscribe;
-    }
-  }, [navigation, isFocused, flatListRef]);
 
   useEffect(() => {
     dispatch(newFeedActions.resetPage());
@@ -321,7 +300,6 @@ const NewFeed = ({navigation}) => {
         <LoadingComponent />
       ) : (
         <FlatList
-          ref={flatListRef}
           data={newFeedData || []}
           keyExtractor={(item, index) =>
             'newFeedKeyExtractor' + targetType + index
