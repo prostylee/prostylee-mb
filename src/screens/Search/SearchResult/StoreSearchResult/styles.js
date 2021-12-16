@@ -5,6 +5,7 @@ const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 export default EStyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
     backgroundColor: '$white',
     justifyContent: 'center',
     alignItems: 'center',

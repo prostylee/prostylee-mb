@@ -23,7 +23,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getCurrentKeyword} from 'redux/selectors/search';
 
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
-import {Avatar, Text} from 'react-native-paper';
+import {Avatar, Text, Divider} from 'react-native-paper';
 import {searchActions} from 'redux/reducers';
 import getDistanceFromLatLonInKm from 'utils/locationUtils';
 
@@ -118,6 +118,7 @@ const FeaturedCategories = ({navigation}) => {
           </View>
         ) : storeList && storeList?.content?.length ? (
           <FlatList
+            style={{width: '100%'}}
             data={storeList?.content}
             renderItem={({item}) => {
               return (
@@ -171,6 +172,7 @@ const FeaturedCategories = ({navigation}) => {
                       showsHorizontalScrollIndicator={false}
                     />
                   </View>
+                  <Divider />
                 </>
               );
             }}

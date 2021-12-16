@@ -1,29 +1,23 @@
-import React, {useCallback, useEffect} from 'react';
-import {Dimensions, View} from 'react-native';
+import React from 'react';
+import {View, Platform} from 'react-native';
 import i18n from 'i18n';
-
 import styles from './styles';
 
-import {ThemeView, Header, TextInputRounded, SearchBar} from 'components';
-import {Searchbar} from 'react-native-paper';
+import {ThemeView, Header, SearchBar} from 'components';
 import TopSearch from './TopSearch';
 import FeaturedCategories from './FeaturedCategories';
 import SearchResult from './SearchResult';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch, useSelector} from 'react-redux';
-import {searchActions, storeProfileActions, userActions} from 'redux/reducers';
+import {searchActions, storeProfileActions} from 'redux/reducers';
 import {getCurrentKeyword} from 'redux/selectors/search';
 import {useIsFocused} from '@react-navigation/native';
-import {userSelectors} from 'reducers';
-import useLocation from 'hooks/useLocation';
 let timeoutSearch = null;
 const Search = ({navigation}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const currentKeyword = useSelector((state) => getCurrentKeyword(state));
   const [searchQuery, setSearchQuery] = React.useState(currentKeyword);
-
-  const location = useLocation();
 
   const onChangeSearch = (query) => {
     clearTimeout(timeoutSearch);
@@ -77,6 +71,7 @@ const Search = ({navigation}) => {
         }}
         leftStyle={{
           height: 30,
+          paddingRight: 4,
         }}
         middleComponent={
           <SearchBar
@@ -101,16 +96,16 @@ const Search = ({navigation}) => {
             }}
           />
         }
+        rightComponent={<View style={{width: 16}} />}
       />
       <View style={styles.wrapContent}>
+        <SearchResult navigation={navigation} />
         {searchQuery === '' ? (
-          <>
+          <View style={styles.wrapSuggestion}>
             <TopSearch navigation={navigation} />
             <FeaturedCategories navigation={navigation} />
-          </>
-        ) : (
-          <SearchResult navigation={navigation} />
-        )}
+          </View>
+        ) : null}
       </View>
     </ThemeView>
   );

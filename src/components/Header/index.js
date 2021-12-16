@@ -72,10 +72,13 @@ const styles = EStyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '$bgColor',
     paddingBottom: '12rem',
-    height: Platform.OS === 'android' ? '78rem' : '80rem',
+    height: Platform.OS === 'android' ? 91 : 95,
   },
   backStyle: {
-    paddingLeft: 16,
+    paddingLeft: 8,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   titleStyle: {
     fontWeight: Platform.OS === 'android' ? '700' : '500',

@@ -27,6 +27,6 @@ export default EStyleSheet.create({
     backgroundColor: '$bgColor',
   },
   wrapScroll: {
-    maxHeight: 120,
+    // maxHeight: 120,
   },
 });

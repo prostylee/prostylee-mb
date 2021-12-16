@@ -2,11 +2,7 @@ import React from 'react';
 import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Image} from 'components';
 import styles from './styles';
-import {useDispatch} from 'react-redux';
-import {categoriesActions} from 'redux/reducers';
-import {Divider} from 'react-native-paper';
 const StoreSearchResultItem = ({item, index, navigation}) => {
-  const dispatch = useDispatch();
   const clickItem = () => {
     navigation.navigate('ProductDetail', {id: item.id});
   };
@@ -27,7 +23,6 @@ const StoreSearchResultItem = ({item, index, navigation}) => {
           <Text numberOfLines={2} style={styles.titleProduct}>
             {item?.name}
           </Text>
-          <Divider />
         </View>
       </TouchableOpacity>
     </View>
