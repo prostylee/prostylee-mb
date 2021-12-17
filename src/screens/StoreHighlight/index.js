@@ -38,7 +38,9 @@ const StoreAddress = () => {
       <Header
         isDefault
         middleComponent={
-          <Text style={styles.headerTitle}>{i18n.t('storeAddress.title')}</Text>
+          <Text style={styles.headerTitle}>
+            {i18n.t('stores.titleTopStore')}
+          </Text>
         }
       />
       <View style={styles.wrapper}>
