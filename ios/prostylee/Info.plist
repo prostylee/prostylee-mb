@@ -30,10 +30,8 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>14</string>
+	<string>15</string>
 	<key>CodePushDeploymentKey</key>
-	<!-- DEV: D5TlHB3p_XNUV903TccPqRq6vMXsWNDRrOJyp -->
-	<!-- PROD: TutHwsJQsyGyGleH_uF7gdID1VlBGvmc3Jn83 -->
 	<string>D5TlHB3p_XNUV903TccPqRq6vMXsWNDRrOJyp</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
