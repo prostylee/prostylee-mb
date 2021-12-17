@@ -33,6 +33,8 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
           source={
             item?.backgroundButton
               ? {uri: item?.backgroundButton}
+              : item?.banner
+              ? {uri: item?.banner}
               : require('assets/images/default.png')
           }
           resizeMode="cover"

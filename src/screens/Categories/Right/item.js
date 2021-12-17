@@ -3,9 +3,8 @@ import React from 'react';
 import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Image} from 'components';
 import styles from './styles';
-import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch} from 'react-redux';
-import {categoriesActions, productActions} from 'redux/reducers';
+import {categoriesActions} from 'redux/reducers';
 const CategoriesRightItem = ({item, navigation}) => {
   const dispatch = useDispatch();
   const clickItem = () => {
@@ -26,11 +25,9 @@ const CategoriesRightItem = ({item, navigation}) => {
             style={styles.imageThumbnail}
             PlaceholderContent={<ActivityIndicator />}
           />
-          <View style={{height: 32}}>
-            <Text numberOfLines={2} style={styles.title}>
-              {item?.name}
-            </Text>
-          </View>
+          <Text numberOfLines={2} style={styles.title}>
+            {item?.name}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>

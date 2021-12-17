@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect, useState} from 'react';
-import {View, ActivityIndicator, FlatList, Platform} from 'react-native';
+import {View, ActivityIndicator, FlatList} from 'react-native';
 
 import styles from './styles';
 
@@ -111,7 +111,7 @@ const LeftCategories = ({setBanner}) => {
               return (
                 <CategoriesLeftLoading
                   key={'CategoriesLeftLoading' + _i}
-                  style={{marginTop: 5, width: 90, height: 90}}
+                  style={styles.leftLoading}
                 />
               );
             },
