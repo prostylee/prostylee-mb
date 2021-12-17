@@ -66,6 +66,15 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  followBtnContent: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  followBtnLabel: {
+    marginVertical: 0,
+  },
   statisticalView: {
     ...flexRow,
     ...absolute(null, 24, 0, 0),
