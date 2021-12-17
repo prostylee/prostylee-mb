@@ -116,9 +116,6 @@ const NewFeed = ({navigation}) => {
             offset: 0,
             animated: true,
           });
-          setTimeout(() => {
-            handleRefresh();
-          }, 200);
         }
       });
       return unsubscribe;

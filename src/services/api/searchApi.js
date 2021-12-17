@@ -21,7 +21,7 @@ export const getSuggestionsSearchService = (payload) => {
   });
 };
 export const getFeaturedProductSearchApi = (payload) => {
-  return _fetch(GET, '/products/best-seller', {
+  return _fetch(GET, '/products/suggestions', {
     ...payload,
   });
 };

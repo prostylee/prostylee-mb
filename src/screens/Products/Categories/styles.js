@@ -6,12 +6,18 @@ export default EStyleSheet.create({
     marginTop: 44,
     height: 110,
   },
+  loadingContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  wrapList: {borderRadius: 8},
   item: {
     justifyContent: 'center',
     alignItems: 'center',
     width: 90,
     height: '100%',
-    padding: 8,
+    paddingVertical: 8,
   },
   itemActive: {
     backgroundColor: '$purpleActive',
@@ -27,10 +33,11 @@ export default EStyleSheet.create({
     borderColor: '#E9EAEB',
   },
   title: {
+    marginTop: 8,
     lineHeight: 16,
     fontSize: 11,
     fontFamily: '$font1',
-    fontWeight: 'normal',
+    fontWeight: '500',
     fontStyle: 'normal',
     textAlign: 'center',
     color: '$black',
