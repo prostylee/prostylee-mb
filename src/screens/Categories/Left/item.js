@@ -49,7 +49,7 @@ const CategoriesLeftItem = ({item, setBanner}) => {
               }
               resizeMode="cover"
               style={styles.imageThumbnail}
-              tintColor={active ? Colors['$purple'] : Colors['$black']}
+              // tintColor={active ? Colors['$purple'] : Colors['$black']}
               PlaceholderContent={<ActivityIndicator />}
             />
           </View>

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {ScrollView, View, ActivityIndicator, FlatList} from 'react-native';
 
 import styles from './styles';
@@ -24,6 +24,7 @@ import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
 const Categories = ({navigation}) => {
   const dispatch = useDispatch();
+  const categoryRef = useRef();
   const categoryParentSelect = useSelector((state) =>
     getCategoriesParentSelectSelector(state),
   );
@@ -61,6 +62,34 @@ const Categories = ({navigation}) => {
     handleRefreshing(false);
   }, [dispatch, refreshing]);
 
+  useEffect(() => {
+    if (categoryRef && categoryRef.current) {
+      const activeIndex = listRightCategories?.findIndex(
+        (item) => item.id === categoriesSelect?.id,
+      );
+      categoryRef.current.scrollToIndex({
+        index: activeIndex,
+        animated: true,
+        viewPosition: 0.5,
+      });
+    }
+  }, [categoriesSelect?.id, categoryRef]);
+
+  useEffect(() => {
+    if (categoryRef && categoryRef.current) {
+      setTimeout(() => {
+        const activeIndex = listRightCategories?.findIndex(
+          (item) => item.id === categoriesSelect?.id,
+        );
+        categoryRef.current.scrollToIndex({
+          index: activeIndex,
+          animated: true,
+          viewPosition: 0.5,
+        });
+      }, 500);
+    }
+  }, []);
+
   const handleRefresh = () => {
     handleRefreshing(true);
   };
@@ -95,12 +124,7 @@ const Categories = ({navigation}) => {
       !listRightCategories.length === 0 ? (
         <>
           <ScrollView>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-              }}>
+            <View style={styles.loadingContainer}>
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item, _i) => {
                 return (
                   <View key={'CategoriesRightLoading' + _i} style={styles.item}>
@@ -114,6 +138,7 @@ const Categories = ({navigation}) => {
       ) : (
         <FlatList
           horizontal
+          ref={categoryRef}
           data={listRightCategories}
           renderItem={({item}) => (
             <CategoriesRightItem
@@ -122,12 +147,17 @@ const Categories = ({navigation}) => {
               isActive={item?.id === categoriesSelect?.id}
             />
           )}
+          getItemLayout={(_, index) => ({
+            length: 90,
+            offset: 90 * index,
+            index,
+          })}
           keyExtractor={(item, index) => index}
           refreshing={refreshing}
           onRefresh={handleRefresh}
           onEndReached={() => handleLoadMore()}
           ListFooterComponent={renderFooter}
-          style={{borderRadius: 8}}
+          style={styles.wrapList}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           directionalLockEnabled={true}

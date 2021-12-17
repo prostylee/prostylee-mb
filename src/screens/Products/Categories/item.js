@@ -32,11 +32,9 @@ const CategoriesRightItem = ({item, isActive = false}) => {
             style={styles.imageThumbnail}
             PlaceholderContent={<ActivityIndicator />}
           />
-          <View style={{height: 32}}>
-            <Text numberOfLines={2} style={styles.title}>
-              {item?.name}
-            </Text>
-          </View>
+          <Text numberOfLines={2} style={styles.title}>
+            {item?.name}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
