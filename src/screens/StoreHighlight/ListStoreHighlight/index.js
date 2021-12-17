@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {Colors, FollowTextButton} from 'components';
 import {StoreLoading} from 'components/Loading/contentLoader';
 import {
@@ -17,7 +18,7 @@ import {
 import {storeActions} from 'redux/reducers';
 import StoreItem from './item';
 import {useDispatch, useSelector} from 'react-redux';
-import {Avatar, Text} from 'react-native-paper';
+import {Avatar, Text, Divider} from 'react-native-paper';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {MapPin} from 'svg/common';
 import getDistanceFromLatLonInKm from 'utils/locationUtils';
@@ -27,8 +28,9 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-const ListStoreHighlight = ({navigation}) => {
+const ListStoreHighlight = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const location = useSelector((state) => userSelectors.getUserLocation(state));
 
@@ -163,8 +165,10 @@ const ListStoreHighlight = ({navigation}) => {
                       }
                       showsVerticalScrollIndicator={false}
                       showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={styles.wrapListContent}
                     />
                   </View>
+                  <Divider />
                 </>
               );
             }}

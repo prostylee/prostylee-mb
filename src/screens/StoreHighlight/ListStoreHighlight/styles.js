@@ -27,6 +27,9 @@ export default EStyleSheet.create({
   wrapList: {
     flex: 1,
   },
+  wrapListContent: {
+    paddingRight: 12,
+  },
   parentItem: {
     height: 65,
     flexDirection: 'row',

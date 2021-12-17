@@ -35,7 +35,7 @@ export const USER_POST_TYPE_POST = 'POST';
 // PARAM QUERY
 export const PAGE_DEFAULT = 0;
 export const LIMIT_DEFAULT = 12;
-export const NUMBER_OF_PRODUCT = 3;
+export const NUMBER_OF_PRODUCT = 5;
 export const TIME_RANGE_IN_DAYS = 100;
 export const SORT_DEFAULT = 'createdAt';
 

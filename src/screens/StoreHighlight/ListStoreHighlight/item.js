@@ -3,7 +3,6 @@ import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Image} from 'components';
 import styles from './styles';
-import {Divider} from 'react-native-paper';
 const StoreSearchResultItem = ({item}) => {
   const navigation = useNavigation();
   const clickItem = () => {
@@ -26,7 +25,6 @@ const StoreSearchResultItem = ({item}) => {
           <Text numberOfLines={2} style={styles.titleProduct}>
             {item?.name}
           </Text>
-          <Divider />
         </View>
       </TouchableOpacity>
     </View>
