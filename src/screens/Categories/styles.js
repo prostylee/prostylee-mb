@@ -26,7 +26,7 @@ export default EStyleSheet.create({
   wrapRightContent: {
     flex: 1,
     width: '100%',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   wrapRightBanner: {
     width: '100%',

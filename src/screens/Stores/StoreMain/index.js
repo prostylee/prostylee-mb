@@ -172,6 +172,11 @@ const Stores = (props) => {
     }
   }, [isFocused]);
 
+  const featureCategoryList =
+    categoryList?.content && categoryList?.content?.length
+      ? categoryList?.content?.filter((item) => !item?.parentId)
+      : [];
+
   return (
     <View style={styles.wrapper}>
       <HeaderAnimated
@@ -253,11 +258,7 @@ const Stores = (props) => {
               data={midBannerList?.content ? midBannerList?.content : []}
             />
             <FeaturedCategories
-              data={
-                categoryList?.content && categoryList?.content?.length
-                  ? categoryList?.content?.filter((item) => !item?.parentId)
-                  : []
-              }
+              data={featureCategoryList}
               navigation={navigation}
             />
             <ForUserTabView

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 import {getCategoriesParentSelectSelector} from 'redux/selectors/categories';
 import {categoriesActions} from 'redux/reducers';
-import {IMG_RATIO, LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
+import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {Colors} from 'components';
 
 const CategoriesLeftItem = ({item, setBanner}) => {
@@ -40,29 +40,29 @@ const CategoriesLeftItem = ({item, setBanner}) => {
     <View style={styles.wrapItems}>
       <TouchableOpacity onPress={clickItem}>
         <View style={[styles.item, active ? styles.itemActive : null]}>
-          <Image
-            source={
-              item?.icon
-                ? {uri: item?.icon}
-                : require('assets/images/default.png')
-            }
-            resizeMode="cover"
-            style={styles.imageThumbnail}
-            tintColor={active ? Colors['$purple'] : Colors['$black']}
-            PlaceholderContent={<ActivityIndicator />}
-          />
-          <View style={{height: 32}}>
-            <Text
-              numberOfLines={2}
-              style={[
-                styles.title,
-                {
-                  color: active ? Colors['$purple'] : Colors['$black'],
-                },
-              ]}>
-              {item?.name}
-            </Text>
+          <View style={styles.imageThumbnailContainer}>
+            <Image
+              source={
+                item?.icon
+                  ? {uri: item?.icon}
+                  : require('assets/images/default.png')
+              }
+              resizeMode="cover"
+              style={styles.imageThumbnail}
+              tintColor={active ? Colors['$purple'] : Colors['$black']}
+              PlaceholderContent={<ActivityIndicator />}
+            />
           </View>
+          <Text
+            numberOfLines={2}
+            style={[
+              styles.title,
+              {
+                color: active ? Colors['$purple'] : Colors['$black'],
+              },
+            ]}>
+            {item?.name}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>

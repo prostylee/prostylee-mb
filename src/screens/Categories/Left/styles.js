@@ -1,12 +1,14 @@
-import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {center, flexRow} from 'theme/style';
 
-const WIDTH = Dimensions.get('window').width - 30;
 export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
+  },
+  leftLoading: {
+    marginTop: 5,
+    width: 90,
+    height: 90,
   },
   item: {
     justifyContent: 'center',
@@ -14,7 +16,7 @@ export default EStyleSheet.create({
     borderLeftWidth: 4,
     backgroundColor: '$white',
     borderLeftColor: '$white',
-    height: 80,
+    height: 88,
   },
   itemActive: {
     backgroundColor: '$purpleActive',
@@ -30,11 +32,19 @@ export default EStyleSheet.create({
     textAlign: 'center',
     color: '$black',
   },
-  imageThumbnail: {
+  imageThumbnailContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 24,
-    width: 24,
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '$borderColor',
+  },
+  imageThumbnail: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
   },
   viewFooter: {
     marginBottom: 6,

@@ -90,12 +90,7 @@ const RightCategories = ({navigation}) => {
       {(loading || !categoryParentSelect) &&
       !listRightCategories.length === 0 ? (
         <>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-            }}>
+          <View style={styles.loadingContainer}>
             {[
               1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
               20,
@@ -120,7 +115,7 @@ const RightCategories = ({navigation}) => {
           onRefresh={handleRefresh}
           onEndReached={() => handleLoadMore()}
           ListFooterComponent={renderFooter}
-          style={{borderRadius: 8}}
+          style={styles.wrapList}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         />
