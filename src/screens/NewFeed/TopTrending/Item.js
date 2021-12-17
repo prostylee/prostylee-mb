@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {
   Text,
@@ -118,6 +117,7 @@ const Item = ({
           uppercase={false}
           onPress={() => _followPress()}
           style={[styles.followBtn, followed && styles.followedBtn]}
+          contentStyle={styles.followBtnContent}
           labelStyle={styles.followBtnBtnLabel}>
           {i18n.t(!followed ? 'common.textFollow' : 'common.textFollowed')}
         </Button>

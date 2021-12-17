@@ -76,6 +76,8 @@ const InfoView = ({profile, statistics}) => {
             mode="contained"
             uppercase={false}
             onPress={() => _followPress()}
+            contentStyle={styles.followBtnContent}
+            labelStyle={styles.followBtnLabel}
             style={[styles.followBtn, followed && styles.followedBtn]}>
             {i18n.t(!followed ? 'common.textFollow' : 'common.textFollowed')}
           </Button>

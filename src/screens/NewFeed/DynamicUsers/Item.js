@@ -84,6 +84,7 @@ const Item = ({
             mode="contained"
             uppercase={false}
             onPress={() => _followPress()}
+            contentStyle={styles.followBtnContent}
             style={[styles.followBtn, followed && styles.followedBtn]}
             labelStyle={styles.followBtnBtnLabel}>
             {i18n.t(!followed ? 'common.textFollow' : 'common.textFollowed')}

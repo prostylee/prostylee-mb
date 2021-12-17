@@ -61,6 +61,12 @@ export default EStyleSheet.create({
   followedBtn: {
     backgroundColor: '$disabled',
   },
+  followBtnContent: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   followBtnBtnLabel: {
     width: '90%',
     fontFamily: '$font1',
@@ -69,7 +75,6 @@ export default EStyleSheet.create({
     color: '$white',
     margin: 0,
     marginVertical: 0,
-    paddingVertical: 8,
   },
   productImageWrap: {
     ...flexRow,
