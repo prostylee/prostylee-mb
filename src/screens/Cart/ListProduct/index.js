@@ -109,7 +109,9 @@ const ListProduct = ({navigation}) => {
       const attributeList = {};
       data?.map((item) => {
         const attributeValues = item.productAttributes
-          .map((attribute) => attribute.attrValue)
+          .map(
+            (attribute) => attribute?.productAttributeResponses?.[0]?.attrValue,
+          )
           .sort();
         let attributeID = '';
         attributeValues.forEach((element) => {

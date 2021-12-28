@@ -49,6 +49,9 @@ import {
   CartSelectShippingMethod,
   StoreProfileMain,
   StoreVouchers,
+  PaymentMethodCart,
+  VoucherCart,
+  CheckoutCart,
   //-------- Post Product --------
   AddProductsCategories,
   BrandFashions,
@@ -87,9 +90,6 @@ import {
   CropPostProductImage,
   Brand,
 } from 'screens';
-import PaymentMethodCart from 'screens/Cart/PaymentMethod';
-import VoucherCart from 'screens/Cart/Voucher';
-import CheckoutCart from 'screens/Cart/Checkout';
 import BottomTabs from './bottomTab';
 
 const Stack = createStackNavigator();

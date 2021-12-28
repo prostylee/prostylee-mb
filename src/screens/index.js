@@ -72,6 +72,10 @@ import Brand from './Brand';
 
 import CropPostProductImage from './PostProduct/CropPostProductImage';
 
+import PaymentMethodCart from './Cart/PaymentMethod';
+import VoucherCart from './Cart/Voucher';
+import CheckoutCart from './Cart/Checkout';
+
 export {
   Welcome,
   Onboarding,
@@ -144,4 +148,7 @@ export {
   SoldList,
   CropPostProductImage,
   Brand,
+  PaymentMethodCart,
+  VoucherCart,
+  CheckoutCart,
 };
