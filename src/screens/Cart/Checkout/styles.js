@@ -114,6 +114,12 @@ export default EStyleSheet.create({
     lineHeight: 20,
     fontWeight: '400',
   },
+  titleCollapseHeaderRequired: {
+    color: '$danger',
+    fontSize: 10,
+    lineHeight: 14,
+    fontWeight: '400',
+  },
   wrapTotal: {
     marginBottom: 5,
     backgroundColor: '$white',

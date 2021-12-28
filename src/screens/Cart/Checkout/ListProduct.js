@@ -47,7 +47,9 @@ const ListProduct = ({navigation, data, validateButton}) => {
       const attributeList = {};
       data?.map((item) => {
         const attributeValues = item.productAttributes
-          .map((attribute) => attribute.attrValue)
+          .map(
+            (attribute) => attribute?.productAttributeResponses?.[0]?.attrValue,
+          )
           .sort();
         let attributeID = '';
         attributeValues.forEach((element) => {
@@ -129,7 +131,8 @@ const ListProduct = ({navigation, data, validateButton}) => {
               <View style={styles.wrapCollapseHeaderLabel}>
                 <DeliveryIcon />
                 <Text style={styles.titleCollapseHeader}>
-                  &nbsp;{i18n.t('cart.deliveryMethod')}
+                  &nbsp;{i18n.t('cart.deliveryMethod')}&nbsp;
+                  <Text style={styles.titleCollapseHeaderRequired}>(*)</Text>
                 </Text>
               </View>
 
