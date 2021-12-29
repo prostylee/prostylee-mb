@@ -36,6 +36,11 @@ export const types = {
   GET_PRODUCT_COORDINATED_SUCCESS: 'GET_PRODUCT_COORDINATED_SUCCESS',
   GET_PRODUCT_COORDINATED_FAILED: 'GET_PRODUCT_COORDINATED_FAILED',
 
+  GET_PRODUCT_VIEWED_RECENTLY_LOADING: 'GET_PRODUCT_VIEWED_RECENTLY_LOADING',
+  GET_PRODUCT_VIEWED_RECENTLY: 'GET_PRODUCT_VIEWED_RECENTLY',
+  GET_PRODUCT_VIEWED_RECENTLY_SUCCESS: 'GET_PRODUCT_VIEWED_RECENTLY_SUCCESS',
+  GET_PRODUCT_VIEWED_RECENTLY_FAILED: 'GET_PRODUCT_VIEWED_RECENTLY_FAILED',
+
   SET_PRODUCT_CATEGORIES_FILTER_STATE: 'SET_PRODUCT_CATEGORIES_FILTER_STATE',
   CLEAR_PRODUCT_CATEGORIES_FILTER_STATE:
     'CLEAR_PRODUCT_CATEGORIES_FILTER_STATE',
@@ -90,6 +95,17 @@ export const actions = {
   ),
   getProductCoordinatedFail: createAction(types.GET_PRODUCT_COORDINATED_FAILED),
 
+  getProductViewedRecentlyLoading: createAction(
+    types.GET_PRODUCT_VIEWED_RECENTLY_LOADING,
+  ),
+  getProductViewedRecently: createAction(types.GET_PRODUCT_VIEWED_RECENTLY),
+  getProductViewedRecentlySuccess: createAction(
+    types.GET_PRODUCT_VIEWED_RECENTLY_SUCCESS,
+  ),
+  getProductViewedRecentlyFail: createAction(
+    types.GET_PRODUCT_VIEWED_RECENTLY_FAILED,
+  ),
+
   //FILTER STATE
   setProductCategoriesFilterState: createAction(
     types.SET_PRODUCT_CATEGORIES_FILTER_STATE,
@@ -108,6 +124,7 @@ export const selectors = {
     state.product.productDetailCommentsAverage,
   getProductRelated: (state) => state.product.productRelated,
   getProductCoordinated: (state) => state.product.productCoordinated,
+  getProductViewedRecently: (state) => state.product.productViewedRecently,
 };
 
 const defaultState = {
@@ -129,6 +146,8 @@ const defaultState = {
   productRelatedLoading: false,
   productCoordinated: {},
   productCoordinatedLoading: false,
+  productViewedRecently: {},
+  productViewedRecentlyLoading: false,
   productCategoryFilterState: {},
 };
 const PAGE_INIT = 0;
@@ -223,6 +242,16 @@ export default handleActions(
     },
     [types.GET_PRODUCT_COORDINATED_FAILED]: (state, {payload}) => {
       return {...state, productCoordinated: {}};
+    },
+
+    [types.GET_PRODUCT_VIEWED_RECENTLY_LOADING]: (state, {payload}) => {
+      return {...state, productViewedRecentlyLoading: payload};
+    },
+    [types.GET_PRODUCT_VIEWED_RECENTLY_SUCCESS]: (state, {payload}) => {
+      return {...state, productViewedRecently: payload};
+    },
+    [types.GET_PRODUCT_VIEWED_RECENTLY_FAILED]: (state, {payload}) => {
+      return {...state, productViewedRecently: {}};
     },
 
     [types.SET_PRODUCT_CATEGORIES_FILTER_STATE]: (state, {payload}) => {

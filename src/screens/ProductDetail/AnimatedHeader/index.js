@@ -37,20 +37,32 @@ const AnimatedHeader = ({
 
   /*Animated*/
   const headerColor = scrollAnimated.interpolate({
-    inputRange: [0, heightShow ? heightShow : HEIGHT_HEADER - 50],
-    outputRange: ['transparent', '#fff'],
+    inputRange: [
+      0,
+      (heightShow ? heightShow : HEIGHT_HEADER - 50) * 0.7,
+      heightShow ? heightShow : HEIGHT_HEADER - 50,
+    ],
+    outputRange: ['transparent', 'transparent', '#fff'],
     extrapolate: 'clamp',
   });
 
   const opacity = scrollAnimated.interpolate({
-    inputRange: [0, heightShow ? heightShow : HEIGHT_HEADER - 50],
-    outputRange: [1, 0],
+    inputRange: [
+      0,
+      (heightShow ? heightShow : HEIGHT_HEADER - 50) * 0.7,
+      heightShow ? heightShow : HEIGHT_HEADER - 50,
+    ],
+    outputRange: [1, 1, 0],
     extrapolate: 'clamp',
   });
 
   const reverseOpacity = scrollAnimated.interpolate({
-    inputRange: [0, heightShow ? heightShow : HEIGHT_HEADER - 50],
-    outputRange: [0, 1],
+    inputRange: [
+      0,
+      (heightShow ? heightShow : HEIGHT_HEADER - 50) * 0.7,
+      heightShow ? heightShow : HEIGHT_HEADER - 50,
+    ],
+    outputRange: [0, 0, 1],
     extrapolate: 'clamp',
   });
 
@@ -69,7 +81,9 @@ const AnimatedHeader = ({
             // backgroundColor: headerColor,
           },
         ]}>
-        <TouchableOpacity onPress={navigation.goBack} style={styles.backButton}>
+        <TouchableOpacity
+          onPress={navigation.goBack}
+          style={[styles.backButton, {paddingLeft: 29}]}>
           <IconIcons
             name="chevron-back-outline"
             color={colors['$black']}
@@ -87,9 +101,9 @@ const AnimatedHeader = ({
             ]}
           />
         </View>
-        <View style={styles.rightIcons}>
-          <Bag navigation={navigation} />
-          <TouchableOpacity
+        <View style={[styles.rightIcons, {paddingRight: 29}]}>
+          <Bag navigation={navigation} color={colors['$black']} />
+          {/* <TouchableOpacity
             onPress={() => {
               setVisible(!visible);
             }}
@@ -99,7 +113,7 @@ const AnimatedHeader = ({
               color={colors['$black']}
               size={24}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </Animated.View>
       <Animated.View
@@ -110,11 +124,13 @@ const AnimatedHeader = ({
           },
         ]}>
         <TouchableOpacity onPress={navigation.goBack} style={styles.backButton}>
-          <IconIcons
-            name="chevron-back-outline"
-            color={colors['$white']}
-            size={24}
-          />
+          <View style={styles.backButtonBtn}>
+            <IconIcons
+              name="chevron-back-outline"
+              color={colors['$white']}
+              size={24}
+            />
+          </View>
         </TouchableOpacity>
         <View style={styles.topCenterImg}>
           <Animated.Image
@@ -123,8 +139,10 @@ const AnimatedHeader = ({
           />
         </View>
         <View style={styles.rightIcons}>
-          <Bag navigation={navigation} />
-          <TouchableOpacity
+          <View style={styles.backButtonBtn}>
+            <Bag navigation={navigation} color={colors['$white']} />
+          </View>
+          {/* <TouchableOpacity
             onPress={() => {
               setVisible(!visible);
             }}
@@ -134,7 +152,7 @@ const AnimatedHeader = ({
               color={colors['$white']}
               size={24}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </Animated.View>
       {hasMenu ? (
@@ -148,7 +166,6 @@ const AnimatedHeader = ({
           contentStyle={{borderRadius: 10, padding: 0}}
           style={styles.menuContainer}>
           <Menu.Item
-            titleStyle={{fontSize: 13}}
             onPress={() => {}}
             title={i18n.t('orders.markAsSold')}
             titleStyle={{

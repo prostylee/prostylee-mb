@@ -201,10 +201,12 @@ export default {
     buttonChat: 'Chat với người bán',
     sizeHelp: 'Hướng dẫn kích thước',
     productCoordinated: 'Sản phẩm có thể phối hợp',
+    productViewedRecently: 'Đã xem gần đây',
     seeMore: 'Xem thêm',
     brand: 'Thương hiệu',
     productStatus: ' Tình trạng sản phẩm',
     notExist: 'Chưa có mẫu sản phẩm này',
+    shopNoAddress: 'Cửa hàng chưa có địa chỉ',
   },
   storeAddress: {
     title: 'Cửa hàng',

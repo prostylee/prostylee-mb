@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 /*Hooks*/
-import {useTheme} from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 
 /*Components*/
 import IconIcons from 'react-native-vector-icons/Ionicons';
@@ -29,11 +29,15 @@ import PropTypes from 'prop-types';
 
 const ProductLocation = ({productId, info, location}) => {
   const {colors} = useTheme();
-  const address = `${location.address ? location.address : ''}, ${
+  const navigation = useNavigation();
+  let address = `${location.address ? location.address : ''}, ${
     location.state ? location.state : ''
   }, ${location.city ? location.city : ''}, ${
     location.country ? location.country : ''
   }`;
+  if (address.length <= 6 && info?.fullAddress) {
+    address = info?.fullAddress;
+  }
 
   const findPathMapsApp = () => {
     const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
@@ -46,13 +50,19 @@ const ProductLocation = ({productId, info, location}) => {
     Linking.openURL(url);
   };
 
+  const goToStore = () => {
+    navigation.navigate('StoreProfileMain', {storeId: info.id});
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.locationName}>
-        <View style={styles.nameLeft}>
-          <Image source={{uri: info?.logoUrl}} style={styles.infoLogo} />
-          <Text style={styles.infoNameText}>{info?.name}</Text>
-        </View>
+        <TouchableOpacity onPress={goToStore}>
+          <View style={styles.nameLeft}>
+            <Image source={{uri: info?.logoUrl}} style={styles.infoLogo} />
+            <Text style={styles.infoNameText}>{info?.name}</Text>
+          </View>
+        </TouchableOpacity>
         <FollowTextButton item={{id: info?.id || 0}} />
       </View>
       <View style={styles.mapPlaceholder}>
@@ -69,10 +79,9 @@ const ProductLocation = ({productId, info, location}) => {
       <View style={styles.locationDirection}>
         <View style={styles.directionText}>
           <Text style={styles.directionTextStyle}>
-            {address}
-            <Text style={styles.directionTextStyleStrong}>{` • ${
-              location.distance ? location.distance : 0
-            }km`}</Text>
+            {address?.length > 6
+              ? address
+              : i18n.t('productDetail.shopNoAddress')}
           </Text>
         </View>
         <TouchableOpacity

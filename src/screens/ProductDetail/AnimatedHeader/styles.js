@@ -50,6 +50,14 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  backButtonBtn: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#A3A3A3',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   topCenterImg: {
     flex: 1,
     alignItems: 'center',
@@ -67,6 +75,7 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingRight: 16,
   },
   bagIcon: {
     height: 50,

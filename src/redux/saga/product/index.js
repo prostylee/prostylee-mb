@@ -12,7 +12,7 @@ import {
 import {showMessage} from 'react-native-flash-message';
 import * as CONTANTS from 'constants';
 import authService from '../../../services/authService';
-import {SUCCESS} from 'constants';
+import {SUCCESS, PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 import {
   getListProductService,
   getProductById as getProductByIdApi,
@@ -20,6 +20,7 @@ import {
   getProductCommentsAverage,
   getProductRelated as getRelatedProduct,
   getProductCoordinated as getCoordinatedProduct,
+  getProductViewedRecently as getProductViewedRecentlyApi,
 } from 'services/api/productApi';
 import i18n from 'i18n';
 
@@ -206,8 +207,8 @@ const getProductCoordinated = function* ({payload}) {
     const res = yield call(getCoordinatedProduct, {
       storeId: payload.storeId,
       categoryId: payload.categoryId,
-      page: 0,
-      limit: 10,
+      page: PAGE_DEFAULT,
+      limit: LIMIT_DEFAULT,
       sort: 'name',
       bestSeller: true,
     });
@@ -227,6 +228,29 @@ const getProductCoordinated = function* ({payload}) {
   }
 };
 
+const getProductViewedRecently = function* () {
+  try {
+    yield put(productActions.getProductViewedRecentlyLoading(true));
+    const res = yield call(getProductViewedRecentlyApi, {
+      page: PAGE_DEFAULT,
+      limit: LIMIT_DEFAULT,
+    });
+    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+      yield put(productActions.getProductViewedRecentlySuccess(res.data.data));
+    } else {
+      yield put(productActions.getProductViewedRecentlyFail());
+    }
+  } catch (e) {
+    showMessage({
+      message: i18n.t('unknownMessage'),
+      type: 'danger',
+      position: 'top',
+    });
+  } finally {
+    yield put(productActions.getProductViewedRecentlyLoading(false));
+  }
+};
+
 const watcher = function* () {
   // yield takeLatest(productType.GET_PRODUCTS, getCustomerList);
   //List product from categories
@@ -239,5 +263,9 @@ const watcher = function* () {
   yield takeLatest(productTypes.GET_PRODUCT_COMMENTS, getProductComments);
   yield takeLatest(productTypes.GET_PRODUCT_RELATED, getProductRelated);
   yield takeLatest(productTypes.GET_PRODUCT_COORDINATED, getProductCoordinated);
+  yield takeLatest(
+    productTypes.GET_PRODUCT_VIEWED_RECENTLY,
+    getProductViewedRecently,
+  );
 };
 export default watcher();

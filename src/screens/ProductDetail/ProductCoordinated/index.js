@@ -12,12 +12,12 @@ import ProductItem from './ProductItem';
 /*Proptypes*/
 import PropTypes from 'prop-types';
 
-const ProductSimilar = ({data, onSelect}) => {
+const ProductCoordinated = ({data, onSelect}) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleRow}>
         <Text style={styles.title}>
-          {i18n.t('productDetail.productCoordinated')}
+          {i18n.t('productDetail.productViewedRecently')}
         </Text>
         <TouchableOpacity style={styles.listMore} onPress={() => {}}>
           {/* <Text style={styles.listMoreText}>
@@ -44,13 +44,13 @@ const ProductSimilar = ({data, onSelect}) => {
   );
 };
 
-ProductSimilar.defaultProps = {
+ProductCoordinated.defaultProps = {
   data: [],
   onSelect: () => {},
 };
 
-ProductSimilar.propTypes = {
+ProductCoordinated.propTypes = {
   onSelect: PropTypes.func,
 };
 
-export default ProductSimilar;
+export default ProductCoordinated;

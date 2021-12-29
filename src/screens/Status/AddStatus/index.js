@@ -207,6 +207,8 @@ const AddStatus = (props) => {
           sliderWidth={WIDTH * images.length}
           itemWidth={WIDTH}
           onSnapToItem={(index) => setActiveImage(index + 1)}
+          enableMomentum={true}
+          decelerationRate={0.9}
         />
       </>
     );

@@ -392,6 +392,8 @@ const CropPicture = () => {
             return newData;
           })
         }
+        enableMomentum={true}
+        decelerationRate={0.9}
       />
     );
   }, [images]);
