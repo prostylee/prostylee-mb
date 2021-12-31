@@ -11,6 +11,10 @@ export default EStyleSheet.create({
     paddingLeft: 16,
     fontWeight: '500',
   },
+  rightTouch: {
+    paddingRight: 16,
+    fontWeight: '500',
+  },
   rightView: {
     ...flexRow,
     paddingRight: 16,
@@ -48,6 +52,7 @@ export default EStyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 40,
   },
   notFoundText: {
     fontSize: 14,

@@ -97,8 +97,11 @@ export default EStyleSheet.create({
   //TabNav style
 
   containerTabNav: {
-    height: 36 + 50 + (Platform.OS === 'ios' ? getStatusBarHeight() : 0),
-    paddingTop: 50 + (Platform.OS === 'ios' ? getStatusBarHeight() : 0),
+    height: 36, // + 50 + getStatusBarHeight() + (Platform.OS === 'ios' ? 0 : 36),
+    // marginTop: 50 + getStatusBarHeight() + (Platform.OS === 'ios' ? 0 : 36),
+    position: 'absolute',
+    left: 0,
+    bottom: Platform.OS === 'ios' ? -36 : 0,
     width: '100%',
     display: 'flex',
     flexDirection: 'row',

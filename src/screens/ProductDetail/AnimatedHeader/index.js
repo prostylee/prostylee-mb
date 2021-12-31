@@ -1,7 +1,14 @@
 import styles from './styles';
 
 import React from 'react';
-import {View, Dimensions, TouchableOpacity, Animated} from 'react-native';
+import {
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Animated,
+  Platform,
+} from 'react-native';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 /*Hooks*/
 import {useTheme, useNavigation} from '@react-navigation/native';
@@ -34,23 +41,32 @@ const AnimatedHeader = ({
   const [visible, setVisible] = React.useState(false);
   /*Dimension header*/
   const HEIGHT_HEADER = (WIDTH_HEADER * 4) / 3;
+  const HEADER_AND_TABS_HEIGHT =
+    36 + // tabNav
+    50 + // header
+    getStatusBarHeight() -
+    (Platform.OS === 'ios' ? 0 : 36);
 
   /*Animated*/
   const headerColor = scrollAnimated.interpolate({
     inputRange: [
       0,
-      (heightShow ? heightShow : HEIGHT_HEADER - 50) * 0.7,
-      heightShow ? heightShow : HEIGHT_HEADER - 50,
+      (heightShow ? heightShow : HEIGHT_HEADER - HEADER_AND_TABS_HEIGHT) * 0.85,
+      heightShow ? heightShow : HEIGHT_HEADER - HEADER_AND_TABS_HEIGHT,
     ],
-    outputRange: ['transparent', 'transparent', '#fff'],
+    outputRange: [
+      'rgba(255, 255, 255, 0)',
+      'rgba(255, 255, 255, 0)',
+      'rgba(255, 255, 255, 1)',
+    ],
     extrapolate: 'clamp',
   });
 
   const opacity = scrollAnimated.interpolate({
     inputRange: [
       0,
-      (heightShow ? heightShow : HEIGHT_HEADER - 50) * 0.7,
-      heightShow ? heightShow : HEIGHT_HEADER - 50,
+      (heightShow ? heightShow : HEIGHT_HEADER - HEADER_AND_TABS_HEIGHT) * 0.85,
+      heightShow ? heightShow : HEIGHT_HEADER - HEADER_AND_TABS_HEIGHT,
     ],
     outputRange: [1, 1, 0],
     extrapolate: 'clamp',
@@ -59,8 +75,8 @@ const AnimatedHeader = ({
   const reverseOpacity = scrollAnimated.interpolate({
     inputRange: [
       0,
-      (heightShow ? heightShow : HEIGHT_HEADER - 50) * 0.7,
-      heightShow ? heightShow : HEIGHT_HEADER - 50,
+      (heightShow ? heightShow : HEIGHT_HEADER - HEADER_AND_TABS_HEIGHT) * 0.85,
+      heightShow ? heightShow : HEIGHT_HEADER - HEADER_AND_TABS_HEIGHT,
     ],
     outputRange: [0, 0, 1],
     extrapolate: 'clamp',
@@ -71,14 +87,15 @@ const AnimatedHeader = ({
       style={[
         styles.container,
         {
-          backgroundColor: headerColor,
+          backgroundColor: Platform.OS === 'ios' ? headerColor : 'transparent',
         },
       ]}>
       <Animated.View
         style={[
           styles.headerTop,
           {
-            // backgroundColor: headerColor,
+            backgroundColor:
+              Platform.OS === 'ios' ? 'transparent' : headerColor,
           },
         ]}>
         <TouchableOpacity

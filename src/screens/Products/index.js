@@ -1,6 +1,5 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  Animated,
   TouchableOpacity as Touch,
   View,
   Text,
@@ -10,7 +9,8 @@ import {
 } from 'react-native';
 import styles from './styles';
 
-import {ThemeView, Colors, HeaderAnimated, SortDropDown} from 'components';
+import {ThemeView, Colors, Header, SortDropDown} from 'components';
+import CustomHeader from './CustomHeader';
 import {SearchProductLoading} from 'components/Loading/contentLoader';
 import i18n from 'i18n';
 
@@ -19,7 +19,7 @@ import {
   getCategoriesSelectSelector,
   getCategoriesParentSelectSelector,
 } from 'redux/selectors/categories';
-import {ChevronLeft} from 'svg/common';
+import {ChevronLeft, Search} from 'svg/common';
 import HeaderList from './HeaderList';
 import BottomHeaderAnimated from './BottomHeaderAnimated';
 import {useDispatch, useSelector} from 'react-redux';
@@ -35,33 +35,35 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {productActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT, PRODUCT_SORT_ITEM} from 'constants';
 
-const heightShow = 334;
 import {ProductLoading} from 'components/Loading/contentLoader';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
-const WIDTH_IMAGE = WIDTH / 2 - 14;
-const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 
-const BOTTOM_HEADER_HEIGHT = 100;
-const HEIGHT_HEADER = BOTTOM_HEADER_HEIGHT / 2 + 50 + getStatusBarHeight();
+const BOTTOM_HEADER_HEIGHT = 140;
+const HEIGHT_HEADER =
+  45 + // sort button height
+  50 + // header height
+  getStatusBarHeight();
+const HEIGHT_HEADER_WITH_CATEGORY =
+  BOTTOM_HEADER_HEIGHT +
+  50 + // header height
+  getStatusBarHeight();
 
 const Products = ({navigation}) => {
   const [sortVisible, setSortVisible] = useState(false);
   const [sortAction, setSortAction] = useState('filter');
   const [valueSort, setValueSort] = useState(null);
   const [filterValue, setFilterValue] = useState(null);
-  /*Animated*/
-  const scrollAnimated = useRef(new Animated.Value(0)).current;
 
-  const onScrollEvent = Animated.event(
-    [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
-    {useNativeDriver: false},
-  );
-
-  /*Custom action*/
+  /*Custom left action*/
   const leftPress = () => {
     navigation.goBack();
+  };
+
+  /*Custom right action*/
+  const rightPress = () => {
+    navigation.navigate('Search');
   };
 
   /*Get List Product*/
@@ -229,7 +231,7 @@ const Products = ({navigation}) => {
   return (
     <ThemeView style={styles.container} isFullView>
       <>
-        <HeaderAnimated
+        <CustomHeader
           leftComponent={
             <Touch style={styles.leftTouch} onPress={leftPress}>
               <ChevronLeft color={Colors.$black} />
@@ -239,6 +241,11 @@ const Products = ({navigation}) => {
             <Text numberOfLines={1} style={styles.textTitle}>
               {categoryParentSelect?.name}
             </Text>
+          }
+          rightComponent={
+            <Touch style={styles.rightTouch} onPress={rightPress}>
+              <Search color={Colors.$black} />
+            </Touch>
           }
           bottomComponent={
             <BottomHeaderAnimated
@@ -251,11 +258,6 @@ const Products = ({navigation}) => {
             />
           }
           bottomHeight={BOTTOM_HEADER_HEIGHT}
-          hideBottomBorder={true}
-          heightShow={heightShow - 190}
-          Animated={Animated}
-          navigation={navigation}
-          scrollAnimated={scrollAnimated}
         />
         <View style={sortStyle}>
           <SortDropDown
@@ -279,14 +281,14 @@ const Products = ({navigation}) => {
               ? listProduct
               : [0]
           }
-          ListHeaderComponent={
-            <HeaderList
-              leftPress={leftPress}
-              navigation={navigation}
-              heightShow={heightShow}
-              categoryId={categoriesSelect?.id}
-            />
-          }
+          // ListHeaderComponent={
+          //   <HeaderList
+          //     leftPress={leftPress}
+          //     navigation={navigation}
+          //     heightShow={heightShow}
+          //     categoryId={categoriesSelect?.id}
+          //   />
+          // }
           renderItem={({item, index}) => {
             return loading ? (
               <View
@@ -308,8 +310,8 @@ const Products = ({navigation}) => {
               </View>
             );
           }}
+          contentContainerStyle={{paddingTop: HEIGHT_HEADER_WITH_CATEGORY}}
           numColumns={2}
-          onScroll={onScrollEvent}
           scrollEventThrottle={1}
           keyExtractor={(item, index) => index}
           refreshing={refreshing}

@@ -69,6 +69,11 @@ const ProductDetail = (props) => {
 
   /*Animated*/
   const HEIGHT_HEADER = (WIDTH * 4) / 3 + getStatusBarHeight();
+  const HEADER_AND_TABS_HEIGHT =
+    36 + // tabNav
+    50 + // header
+    getStatusBarHeight() -
+    (Platform.OS === 'ios' ? 0 : 36);
   const scrollAnimated = React.useRef(new Animated.Value(0)).current;
 
   const onScrollEvent = Animated.event(
@@ -76,7 +81,11 @@ const ProductDetail = (props) => {
     {useNativeDriver: false},
   );
   const opacity = scrollAnimated.interpolate({
-    inputRange: [0, HEIGHT_HEADER * 0.7, HEIGHT_HEADER],
+    inputRange: [
+      0,
+      (HEIGHT_HEADER - HEADER_AND_TABS_HEIGHT) * 0.85,
+      HEIGHT_HEADER - HEADER_AND_TABS_HEIGHT,
+    ],
     outputRange: [1, 1, 0],
     extrapolate: 'clamp',
   });

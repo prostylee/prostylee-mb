@@ -7,12 +7,15 @@ import NewFeedItemHeader from '../NewFeedItem/NewFeedItemHeader';
 import NewFeedItemFooter from '../NewFeedItem/NewFeedItemFooter';
 import NewFeedSlider from '../NewFeedItem/NewFeedSlider';
 import NewFeedItemBody from './NewFeedItemBody';
+import {userSelectors} from 'reducers';
+import {useSelector} from 'react-redux';
 import RootNavigator from '../../../navigator/rootNavigator';
 import {Store} from '../../../svg/common';
 import ReadMore from '@fawazahmed/react-native-read-more';
 import {ContainerView} from 'components';
 import PriceLabel from '../components/PriceLabel';
 import OutlineButton from '../components/OutlineButton';
+import {tabsSetting} from 'config/navigator';
 
 const PostNewFeedItem = ({
   newFeedItem,
@@ -21,6 +24,9 @@ const PostNewFeedItem = ({
   addFollowAction = () => {},
   removeFollowAction = () => {},
 }) => {
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
+  );
   const ownerResponseLite = newFeedItem?.newFeedOwnerResponse;
   const urlImage = ownerResponseLite?.logoUrl || '';
   const name = ownerResponseLite?.name || '';
@@ -29,6 +35,11 @@ const PostNewFeedItem = ({
   const postType = newFeedItem?.type || USER_POST_TYPE_POST;
 
   const navigateToUserProfile = () => {
+    const {tabsNavigator} = tabsSetting;
+    if (userProfile?.id == newFeedItem?.newFeedOwnerResponse?.id) {
+      RootNavigator.navigate(tabsNavigator[4].name);
+      return;
+    }
     RootNavigator.navigate('UserProfile', {
       userId: newFeedItem?.newFeedOwnerResponse?.id,
     });
