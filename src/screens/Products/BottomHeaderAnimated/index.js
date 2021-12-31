@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
 import {Divider} from 'react-native-paper';
@@ -8,21 +8,11 @@ import i18n from 'i18n';
 
 import styles from './styles';
 
-import {
-  RnRatingTap,
-  FilterButton,
-  Colors,
-  SortDropDown,
-  TagList,
-} from 'components';
+import {FilterButton, Colors} from 'components';
 
 import {PRODUCT_SORT_ITEM} from 'constants';
 
-import {getProductCategoriesFilterStateSelector} from 'redux/selectors/product';
-import {productActions} from 'redux/reducers';
-
-import {userSelectors} from 'reducers';
-import {useSelector} from 'react-redux';
+import ProductsCategories from '../Categories';
 
 const BottomHeaderAnimated = ({
   onTagPress = () => {},
@@ -30,55 +20,6 @@ const BottomHeaderAnimated = ({
   visible,
   valueSort,
 }) => {
-  const location = useSelector((state) => userSelectors.getUserLocation(state));
-
-  const [filterTags, setFilterTags] = useState([
-    {
-      label: 'Best-seller',
-      value: {
-        bestSeller: true,
-      },
-    },
-    {
-      label: 'Gần đây',
-      value: {
-        latitude: location?.lat || 10.806406363857086,
-        longitude: location?.lon || 106.6634168400805,
-      },
-    },
-    {
-      label: 'Sale',
-      value: {
-        sale: true,
-      },
-    },
-  ]);
-
-  useEffect(() => {
-    if (location?.lat && location?.lon) {
-      setFilterTags([
-        {
-          label: 'Best-seller',
-          value: {
-            bestSeller: true,
-          },
-        },
-        {
-          label: 'Gần đây',
-          value: {
-            latitude: location?.lat,
-            longitude: location?.lon,
-          },
-        },
-        {
-          label: 'Sale',
-          value: {
-            sale: true,
-          },
-        },
-      ]);
-    }
-  }, [location?.lat, location?.lon]);
   return (
     <View style={styles.container}>
       <Divider />
@@ -109,14 +50,14 @@ const BottomHeaderAnimated = ({
             </View>
           </View>
         </TouchableOpacity>
-        <FilterButton
+        {/* <FilterButton
           getFilterStateSelectorFunction={
             getProductCategoriesFilterStateSelector
           }
-        />
+        /> */}
       </View>
       <Divider />
-      <TagList onTagPress={onTagPress} options={filterTags} />
+      <ProductsCategories />
     </View>
   );
 };

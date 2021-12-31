@@ -71,6 +71,8 @@ const ProductSimilar = ({data, onSelect}) => {
         inactiveSlideScale={1}
         containerCustomStyle={styles.carouselContainer}
         keyExtractor={(item, index) => item?.id || index}
+        enableMomentum={true}
+        decelerationRate={0.95}
       />
     </View>
   );

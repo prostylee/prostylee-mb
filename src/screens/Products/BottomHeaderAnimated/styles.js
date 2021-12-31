@@ -3,6 +3,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 export default EStyleSheet.create({
   container: {
     width: '100%',
+    height: 140,
   },
   wrapBlockOne: {
     height: 45,

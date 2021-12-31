@@ -50,6 +50,14 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  backButtonBtn: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#A3A3A3',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   topCenterImg: {
     flex: 1,
     alignItems: 'center',
@@ -67,6 +75,7 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingRight: 16,
   },
   bagIcon: {
     height: 50,
@@ -88,8 +97,11 @@ export default EStyleSheet.create({
   //TabNav style
 
   containerTabNav: {
-    height: 36 + 50 + (Platform.OS === 'ios' ? getStatusBarHeight() : 0),
-    paddingTop: 50 + (Platform.OS === 'ios' ? getStatusBarHeight() : 0),
+    height: 36, // + 50 + getStatusBarHeight() + (Platform.OS === 'ios' ? 0 : 36),
+    // marginTop: 50 + getStatusBarHeight() + (Platform.OS === 'ios' ? 0 : 36),
+    position: 'absolute',
+    left: 0,
+    bottom: Platform.OS === 'ios' ? -36 : 0,
     width: '100%',
     display: 'flex',
     flexDirection: 'row',

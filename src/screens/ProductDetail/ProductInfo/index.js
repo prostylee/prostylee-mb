@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 const ProductInfo = ({description, brand, productStatus}) => {
   const {colors} = useTheme();
 
-  const [showInfo, setShowInfo] = React.useState(false);
+  const [showInfo, setShowInfo] = React.useState(true);
 
   return (
     <View style={styles.container}>

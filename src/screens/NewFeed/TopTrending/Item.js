@@ -87,7 +87,7 @@ const Item = ({
       </View>
       <View style={styles.productImageWrap}>
         {products.length
-          ? products.map((product, _i) => (
+          ? products.slice(0, 3).map((product, _i) => (
               <TouchableOpacity
                 key={'productOfStore' + targetType + _i}
                 onPress={() => {

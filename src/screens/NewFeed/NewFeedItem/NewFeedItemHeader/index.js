@@ -55,17 +55,22 @@ const NewFeedItemHeader = ({
         </View>
       </TouchableOpacity>
       {userProfile.id !== targetId ? (
-        <FollowTextButton
-          item={{
-            followStatusOfUserLogin:
-              followStatusOfUserLogin ||
-              allNewFeedsFollowed?.includes(targetId),
-            id: targetId,
-          }}
-          targetType={targetType}
-          addFollowAction={addFollowAction}
-          removeFollowAction={removeFollowAction}
-        />
+        <View
+          style={{
+            paddingBottom: isAdvertising || Boolean(subTitle) ? 20 : 0,
+          }}>
+          <FollowTextButton
+            item={{
+              followStatusOfUserLogin:
+                followStatusOfUserLogin ||
+                allNewFeedsFollowed?.includes(targetId),
+              id: targetId,
+            }}
+            targetType={targetType}
+            addFollowAction={addFollowAction}
+            removeFollowAction={removeFollowAction}
+          />
+        </View>
       ) : null}
     </ContainerView>
   );

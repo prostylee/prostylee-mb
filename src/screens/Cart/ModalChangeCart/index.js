@@ -118,6 +118,8 @@ const ModalChangeCart = ({
             hasParallaxImages={true}
             scrollEnabled={true}
             enableSnap={true}
+            enableMomentum={true}
+            decelerationRate={0.9}
           />
         </View>
 

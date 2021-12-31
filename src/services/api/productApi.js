@@ -30,6 +30,10 @@ export const getProductCoordinated = (payload) => {
   return _fetch(GET, '/products', payload);
 };
 
+export const getProductViewedRecently = (payload) => {
+  return _fetch(GET, '/products/recent-view', payload);
+};
+
 export const getListProductService = (payload) => {
   return _fetch(GET, '/products', payload);
 };

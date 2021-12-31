@@ -22,6 +22,7 @@ import ProductInfo from './ProductInfo';
 import ProductLocation from './ProductLocation';
 import ProductRating from './ProductRating';
 import ProductSimilar from './ProductSimilar';
+import ProductViewedRecently from './ProductViewedRecently';
 import ProductCoordinated from './ProductCoordinated';
 import Footer from './Footer';
 
@@ -68,6 +69,11 @@ const ProductDetail = (props) => {
 
   /*Animated*/
   const HEIGHT_HEADER = (WIDTH * 4) / 3 + getStatusBarHeight();
+  const HEADER_AND_TABS_HEIGHT =
+    36 + // tabNav
+    50 + // header
+    getStatusBarHeight() -
+    (Platform.OS === 'ios' ? 0 : 36);
   const scrollAnimated = React.useRef(new Animated.Value(0)).current;
 
   const onScrollEvent = Animated.event(
@@ -75,8 +81,12 @@ const ProductDetail = (props) => {
     {useNativeDriver: false},
   );
   const opacity = scrollAnimated.interpolate({
-    inputRange: [0, HEIGHT_HEADER],
-    outputRange: [1, 0],
+    inputRange: [
+      0,
+      (HEIGHT_HEADER - HEADER_AND_TABS_HEIGHT) * 0.85,
+      HEIGHT_HEADER - HEADER_AND_TABS_HEIGHT,
+    ],
+    outputRange: [1, 1, 0],
     extrapolate: 'clamp',
   });
 
@@ -88,6 +98,7 @@ const ProductDetail = (props) => {
       dispatch(productActions.getProductById({id: productId}));
       dispatch(productActions.getProductComments({id: productId}));
       dispatch(productActions.getProductRelated({id: productId}));
+      dispatch(productActions.getProductViewedRecently());
       setChoiceSelect([]);
     }
   }, [productId]);
@@ -158,6 +169,10 @@ const ProductDetail = (props) => {
     productSelectors.getProductCoordinated(state),
   );
 
+  const productViewedRecently = useSelector((state) =>
+    productSelectors.getProductViewedRecently(state),
+  );
+
   React.useEffect(() => {
     if (productData) {
       processProductPriceData(productData.productPriceResponseList);
@@ -223,7 +238,7 @@ const ProductDetail = (props) => {
     {trailing: true, leading: false, maxWait: 4000},
   );
 
-  const selectRelatedProduct = (id) => {
+  const selectOtherProduct = (id) => {
     scrollAnimated.setValue(0);
     setCurrentImage(1);
     setChoiceSelect([]);
@@ -231,7 +246,7 @@ const ProductDetail = (props) => {
   };
   const handleRefresh = () => {
     handleRefreshing(true);
-    selectRelatedProduct(productId);
+    selectOtherProduct(productId);
   };
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     const paddingToBottom = 0;
@@ -350,6 +365,9 @@ const ProductDetail = (props) => {
             sliderWidth={WIDTH * (productImage?.length || 1)}
             itemWidth={WIDTH}
             onSnapToItem={(index) => setCurrentImage(index + 1)}
+            enableMomentum={true}
+            decelerationRate={0.9}
+            inactiveSlideScale={1}
           />
           <View style={styles.imageCount}>
             <Text
@@ -419,15 +437,25 @@ const ProductDetail = (props) => {
             setSuggestPos(y);
           }}
         />
-        <ProductSimilar
-          data={productRelated?.content || []}
-          onSelect={selectRelatedProduct}
-        />
-        <View style={styles.lineHrBig} />
-        <ProductCoordinated
+        {(productRelated?.content || [])?.length ? (
+          <>
+            <ProductSimilar
+              data={productRelated?.content || []}
+              onSelect={selectOtherProduct}
+            />
+            <View style={styles.lineHrBig} />
+          </>
+        ) : null}
+        {(productViewedRecently?.content || [])?.length ? (
+          <ProductViewedRecently
+            data={productViewedRecently?.content || []}
+            onSelect={selectOtherProduct}
+          />
+        ) : null}
+        {/* <ProductCoordinated
           data={productCoordinated?.content || []}
-          onSelect={selectRelatedProduct}
-        />
+          onSelect={selectOtherProduct}
+        /> */}
       </Container>
       {productData &&
       !productData?.storeId &&
