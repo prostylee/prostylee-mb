@@ -1,8 +1,7 @@
 import styles from './styles';
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {View, TouchableOpacity, Text, Image, Dimensions} from 'react-native';
-import Carousel from 'react-native-snap-carousel';
+import {View, TouchableOpacity, Text, Image, FlatList} from 'react-native';
 import i18n from 'i18n';
 import {currencyFormat} from 'utils/currency';
 import {Heart, HeartFill} from 'svg/common';
@@ -10,7 +9,6 @@ import {CURRENCY_VIET_NAM} from 'constants';
 
 import {getListRecentSelector} from 'redux/selectors/cart';
 import {useNavigation} from '@react-navigation/native';
-const WIDTH = Dimensions.get('window').width;
 
 const ProductSimilar = (props) => {
   const navigation = useNavigation();
@@ -63,18 +61,22 @@ const ProductSimilar = (props) => {
       <View style={styles.titleRow}>
         <Text style={styles.title}>{i18n.t('cart.similarProduct')}</Text>
       </View>
-      <Carousel
+      <FlatList
+        contentContainerStyle={styles.carouselContainer}
         ref={imagesRef}
+        keyExtractor={(item, index) => item?.id || index}
         data={recentList}
-        activeSlideAlignment={'start'}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        decelerationRate={0.993}
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 50,
+        }}
+        snapToInterval={144}
         renderItem={renderItem}
-        sliderWidth={WIDTH}
-        itemWidth={144}
-        inactiveSlideOpacity={1}
-        inactiveSlideScale={1}
-        containerCustomStyle={styles.carouselContainer}
-        enableMomentum={true}
-        decelerationRate={0.9}
+        getItemLayout={(_, index) => {
+          return {length: 144, offset: 144 * index, index};
+        }}
       />
     </View>
   );

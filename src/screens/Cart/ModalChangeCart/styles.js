@@ -78,7 +78,7 @@ export default EStyleSheet.create({
     left: 16,
   },
   attributeListContainer: {
-    marginBottom: '40rem + 44px',
+    // marginBottom: '40rem + 44px',
   },
   attributeListInner: {
     paddingBottom: '40rem + 44px',

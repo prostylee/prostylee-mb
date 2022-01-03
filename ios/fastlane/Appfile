@@ -1,4 +1,4 @@
-app_identifier("com.prostylee") # The bundle identifier of your app
+app_identifier("sunshine.com.prostylee") # The bundle identifier of your app
 apple_id("sunshinesoftwarevn@gmail.com") # Your Apple email address
 
 itc_team_id("122788280") # App Store Connect Team ID

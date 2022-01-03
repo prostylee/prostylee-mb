@@ -100,7 +100,7 @@ const AnimatedHeader = ({
         ]}>
         <TouchableOpacity
           onPress={navigation.goBack}
-          style={[styles.backButton, {paddingLeft: 29}]}>
+          style={[styles.backButton, {paddingLeft: 27}]}>
           <IconIcons
             name="chevron-back-outline"
             color={colors['$black']}
@@ -118,7 +118,7 @@ const AnimatedHeader = ({
             ]}
           />
         </View>
-        <View style={[styles.rightIcons, {paddingRight: 29}]}>
+        <View style={[styles.rightIcons, {paddingRight: 27}]}>
           <Bag navigation={navigation} color={colors['$black']} />
           {/* <TouchableOpacity
             onPress={() => {
