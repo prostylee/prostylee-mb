@@ -1,9 +1,8 @@
 import styles from './styles';
 
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import {RadioSelectGroup, ButtonRounded} from 'components';
-import {Dimensions} from 'react-native';
 import {currencyFormat} from 'utils/currency';
 import {CURRENCY_VIET_NAM} from 'constants';
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';

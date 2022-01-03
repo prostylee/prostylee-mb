@@ -1,14 +1,13 @@
 import styles from './styles';
 
 import React from 'react';
-import {View, TouchableOpacity, Text, Image, Dimensions} from 'react-native';
+import {View, TouchableOpacity, Text, Image, FlatList} from 'react-native';
 
 /*Translates*/
 import i18n from 'i18n';
 import {CURRENCY_VIET_NAM} from 'constants';
 
 /*Components*/
-import Carousel from 'react-native-snap-carousel';
 import {ProductLike} from 'components';
 
 /*Utils*/
@@ -16,7 +15,6 @@ import {currencyFormat} from 'utils/currency';
 
 /*Proptypes*/
 import PropTypes from 'prop-types';
-const WIDTH = Dimensions.get('window').width;
 const ProductViewedRecently = ({data, onSelect}) => {
   const imagesRef = React.useRef();
   const renderItem = ({item}) => {
@@ -60,19 +58,22 @@ const ProductViewedRecently = ({data, onSelect}) => {
           {i18n.t('productDetail.productViewedRecently')}
         </Text>
       </View>
-      <Carousel
+      <FlatList
+        contentContainerStyle={styles.carouselContainer}
         ref={imagesRef}
-        data={data}
-        activeSlideAlignment={'start'}
-        renderItem={renderItem}
-        sliderWidth={WIDTH}
-        itemWidth={144}
-        inactiveSlideOpacity={1}
-        inactiveSlideScale={1}
-        containerCustomStyle={styles.carouselContainer}
         keyExtractor={(item, index) => item?.id || index}
-        enableMomentum={true}
-        decelerationRate={0.95}
+        data={data}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        decelerationRate={0.993}
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 50,
+        }}
+        snapToInterval={144}
+        renderItem={renderItem}
+        getItemLayout={(_, index) => {
+          return {length: 144, offset: 144 * index, index};
+        }}
       />
     </View>
   );

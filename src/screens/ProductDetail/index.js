@@ -1,7 +1,14 @@
 import styles from './styles';
 
 import React from 'react';
-import {View, Text, Animated, RefreshControl, Platform} from 'react-native';
+import {
+  View,
+  Text,
+  Animated,
+  RefreshControl,
+  Platform,
+  FlatList,
+} from 'react-native';
 
 /*Hooks*/
 import {useDispatch, useSelector} from 'react-redux';
@@ -12,7 +19,6 @@ import {useRoute} from '@react-navigation/native';
 import i18n from 'i18n';
 
 /*Components*/
-import Carousel from 'react-native-snap-carousel';
 import {ProductDetailLoading} from 'components/Loading/contentLoader';
 import {Container} from 'components';
 import AnimatedHeader from './AnimatedHeader';
@@ -91,6 +97,10 @@ const ProductDetail = (props) => {
   });
 
   const productId = route?.params?.id || 232;
+
+  const onViewRef = React.useRef(({viewableItems}) => {
+    setCurrentImage(viewableItems[0] ? viewableItems[0].index + 1 : 0);
+  });
 
   React.useEffect(() => {
     if (productId) {
@@ -353,21 +363,26 @@ const ProductDetail = (props) => {
               opacity: opacity,
             },
           ]}>
-          <Carousel
+          <FlatList
             ref={imagesRef}
+            keyExtractor={(_, index) => `image_slider_${index}`}
             data={
               productData?.imageUrls && productData?.imageUrls
                 ? productData.imageUrls
                 : []
             }
-            activeSlideAlignment={'start'}
+            horizontal
+            pagingEnabled={true}
+            showsHorizontalScrollIndicator={false}
+            decelerationRate={0.993}
+            viewabilityConfig={{
+              itemVisiblePercentThreshold: 50,
+            }}
             renderItem={renderImageItem}
-            sliderWidth={WIDTH * (productImage?.length || 1)}
-            itemWidth={WIDTH}
-            onSnapToItem={(index) => setCurrentImage(index + 1)}
-            enableMomentum={true}
-            decelerationRate={0.9}
-            inactiveSlideScale={1}
+            getItemLayout={(_, index) => {
+              return {length: WIDTH, offset: WIDTH * index, index};
+            }}
+            onViewableItemsChanged={onViewRef.current}
           />
           <View style={styles.imageCount}>
             <Text

@@ -31,7 +31,7 @@ export default EStyleSheet.create({
     paddingRight: 12,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingVertical: 12,
   },
@@ -41,6 +41,7 @@ export default EStyleSheet.create({
     borderRadius: 4,
   },
   relatedName: {
+    height: 48,
     fontSize: 13,
     lineHeight: 16,
     color: '$black',
