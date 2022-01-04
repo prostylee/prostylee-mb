@@ -34,6 +34,7 @@ export default EStyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingVertical: 12,
+    position: 'relative',
   },
   relatedImage: {
     width: 132,
@@ -71,6 +72,24 @@ export default EStyleSheet.create({
     fontSize: 11,
     lineHeight: 16,
     color: '$lightGray',
+  },
+  relatedSalePercent: {
+    position: 'absolute',
+    top: 158,
+    left: 8,
+    height: 22,
+    backgroundColor: '$red',
+    borderRadius: 3,
+    paddingHorizontal: 4,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  relatedSalePercentValue: {
+    fontSize: 11,
+    lineHeight: 16,
+    fontFamily: '$font1',
+    color: '$white',
   },
   likeButton: {
     width: 20,

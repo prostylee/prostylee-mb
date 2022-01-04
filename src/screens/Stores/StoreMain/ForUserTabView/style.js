@@ -1,17 +1,9 @@
-import {Dimensions, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-const HEIGHT = Dimensions.get('window').height;
 export default EStyleSheet.create({
   directionColumn: {flexDirection: 'column'},
   container: {
-    flex: 1,
-    backgroundColor: '$white',
-    flexDirection: 'column',
-    height: HEIGHT - 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-    paddingTop: 20,
+    marginTop: 8,
   },
   tabUnderLine: {
     backgroundColor: '$purple',

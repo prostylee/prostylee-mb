@@ -152,7 +152,7 @@ const ForUserTabView = ({
     }
   }, [isEndReached]);
   return (
-    <View style={styles.contaner}>
+    <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{i18n.t('stores.forUser')}</Text>
       </View>

@@ -7,8 +7,6 @@ import {useDispatch} from 'react-redux';
 import {categoriesActions} from 'redux/reducers';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 const FeaturedCategoriesItem = ({item, index, navigation}) => {
-  const paddingLeft = index % 2 ? 4 : 12;
-  const paddingRight = index % 2 ? 12 : 0;
   const dispatch = useDispatch();
 
   const clickItem = () => {
@@ -23,16 +21,12 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
     navigation.navigate('Categories');
   };
   return (
-    <View
-      style={[
-        styles.wrapItems,
-        {paddingLeft: paddingLeft, paddingRight: paddingRight},
-      ]}>
+    <View style={styles.wrapItems}>
       <TouchableOpacity style={styles.item} onPress={clickItem}>
         <Image
           source={
-            item?.backgroundButton
-              ? {uri: item?.backgroundButton}
+            item?.icon
+              ? {uri: item?.icon}
               : item?.banner
               ? {uri: item?.banner}
               : require('assets/images/default.png')
@@ -42,9 +36,9 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
           PlaceholderContent={<ActivityIndicator />}
         />
 
-        {/* <Text numberOfLines={2} style={styles.titleCategory}>
+        <Text numberOfLines={2} style={styles.titleCategory}>
           {item.name}
-        </Text> */}
+        </Text>
       </TouchableOpacity>
     </View>
   );

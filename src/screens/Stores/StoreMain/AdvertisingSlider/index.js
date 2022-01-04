@@ -17,7 +17,6 @@ const AdvertisingSlider = ({data = []}) => {
           scrollEnabled
           data={data && data.length ? data : [0]}
           showPagination
-          paginationStyle={styles.pagingStyle}
           paginationStyleItem={styles.pagingItemStyle}
           renderItem={({item, index}) => (
             <View key={`slider_item_${index}`} style={styles.sliderItem}>

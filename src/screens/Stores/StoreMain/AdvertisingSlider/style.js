@@ -5,11 +5,8 @@ import {center, flexRow} from 'theme/style';
 const WIDTH = Dimensions.get('window').width;
 export default EStyleSheet.create({
   container: {
-    width: '100%',
-    height: WIDTH / 2,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    // borderWidth: 1,
+    width: WIDTH,
+    height: WIDTH,
   },
   sliderContainer: {
     // borderWidth: 1,
@@ -17,21 +14,14 @@ export default EStyleSheet.create({
     height: '100%',
   },
   sliderItem: {
-    width: WIDTH - 32,
+    width: WIDTH,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 8,
   },
   sliderItemImage: {
-    width: WIDTH - 32,
+    width: WIDTH,
     height: '100%',
-    borderRadius: 8,
-  },
-  pagingStyle: {
-    position: 'absolute',
-    bottom: -10,
-    left: 0,
   },
   pagingItemStyle: {
     width: 6,

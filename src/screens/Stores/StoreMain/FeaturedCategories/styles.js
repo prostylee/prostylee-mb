@@ -1,12 +1,12 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-const WIDTH = Dimensions.get('window').width - 32;
+const WIDTH = Dimensions.get('window').width;
 export default EStyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 8,
-    backgroundColor: '#F7F7F7',
+    backgroundColor: '$white',
   },
   wrapHeader: {
     backgroundColor: '$white',
@@ -16,39 +16,30 @@ export default EStyleSheet.create({
   },
   wrapList: {
     flex: 1,
-    paddingBottom: 16,
     backgroundColor: '$white',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    paddingTop: 4,
   },
   wrapItems: {
     // flex: 1,
     flexDirection: 'column',
     backgroundColor: '$white',
-    paddingVertical: 3.5,
-    height: 67,
+    width: WIDTH / 4,
   },
   item: {
-    flexDirection: 'row',
+    width: '100%',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 60,
-    width: WIDTH / 2,
-    backgroundColor: '$bgColor',
-    borderRadius: 8,
+    backgroundColor: '$white',
   },
   imageThumbnail: {
     alignItems: 'center',
-    height: '100%',
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#E9EAEB',
-    marginRight: 12,
-    borderRadius: 8,
+    height: 65,
+    width: 65,
+    borderRadius: 33,
     justifyContent: 'flex-start',
-    position: 'absolute',
-    top: 0,
-    left: 0,
   },
   title: {
     fontSize: 14,
@@ -62,10 +53,12 @@ export default EStyleSheet.create({
     color: '$purple',
   },
   titleCategory: {
+    width: '100%',
     color: '$black',
-    width: '50%',
-    marginLeft: 12,
     fontWeight: '500',
+    textAlign: 'center',
+    paddingHorizontal: 4,
+    paddingVertical: 15,
   },
   viewFooter: {
     marginBottom: 6,

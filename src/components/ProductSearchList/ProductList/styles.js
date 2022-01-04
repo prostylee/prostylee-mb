@@ -18,6 +18,12 @@ export default EStyleSheet.create({
     fontWeight: '600',
     color: '$black',
   },
+  listContainer: {
+    flexDirection: 'row',
+    paddingBottom: 16,
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
   listWrapper: {
     paddingTop: 20,
     backgroundColor: '$white',
