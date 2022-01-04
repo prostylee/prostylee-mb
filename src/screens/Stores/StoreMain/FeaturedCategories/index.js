@@ -5,7 +5,8 @@ import styles from './styles';
 
 import i18n from 'i18n';
 
-import FeaturedCategoriesItem from './item.js';
+import FeaturedCategoriesItem from './item';
+import {ChevronRight} from 'svg/common';
 
 import {Text} from 'react-native-paper';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -20,6 +21,7 @@ const FeaturedCategories = ({navigation, data = []}) => {
         <View style={styles.wrapHeader}>
           <Text style={styles.title}>{i18n.t('headerTitle.categories')}</Text>
           <TouchableOpacity
+            style={{flexDirection: 'row'}}
             onPress={() => {
               dispatch(
                 categoriesActions.setCategoriesParentSelect({id: undefined}),
@@ -27,6 +29,7 @@ const FeaturedCategories = ({navigation, data = []}) => {
               navigation.navigate('Categories');
             }}>
             <Text style={styles.seeMoreText}>{i18n.t('stores.seeMore')}</Text>
+            <ChevronRight />
           </TouchableOpacity>
         </View>
 

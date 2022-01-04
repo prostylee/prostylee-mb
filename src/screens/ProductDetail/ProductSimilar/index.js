@@ -35,12 +35,20 @@ const ProductSimilar = ({data, onSelect}) => {
         </Text>
         <View style={styles.relatedInfo}>
           <View style={styles.relatedPriceGroup}>
-            <Text style={styles.relatedPriceSale}>
-              {currencyFormat(item?.priceSale || 0, CURRENCY_VIET_NAM)}
-            </Text>
-            <Text style={styles.relatedPrice}>
-              {currencyFormat(item?.price || 0, CURRENCY_VIET_NAM)}
-            </Text>
+            {Number(item?.priceSale) < Number(item?.price) ? (
+              <>
+                <Text style={styles.relatedPriceSale}>
+                  {currencyFormat(item?.priceSale || 0, CURRENCY_VIET_NAM)}
+                </Text>
+                <Text style={styles.relatedPrice}>
+                  {currencyFormat(item?.price || 0, CURRENCY_VIET_NAM)}
+                </Text>
+              </>
+            ) : (
+              <Text style={styles.relatedPriceSale}>
+                {currencyFormat(item?.price || 0, CURRENCY_VIET_NAM)}
+              </Text>
+            )}
           </View>
           <View style={styles.likeButton}>
             <TouchableOpacity style={styles.likeButtonStyle}>
@@ -48,6 +56,16 @@ const ProductSimilar = ({data, onSelect}) => {
             </TouchableOpacity>
           </View>
         </View>
+        {Number(item?.priceSale) < Number(item?.price) ? (
+          <View style={styles.relatedSalePercent}>
+            <Text style={styles.relatedSalePercentValue}>
+              {`-${(
+                100 -
+                (Number(item?.priceSale) / Number(item?.price)) * 100
+              ).toFixed(1)}%`}
+            </Text>
+          </View>
+        ) : null}
       </TouchableOpacity>
     );
   };

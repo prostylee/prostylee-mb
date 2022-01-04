@@ -1,4 +1,5 @@
 export default {
+  name: 'ProStylee',
   test: 'Xin chào!',
   confirm: 'Đồng ý',
   cancel: 'Huỷ',
@@ -18,7 +19,11 @@ export default {
     textNear: 'Cửa hàng gần đây',
     flashSale: '🔥 Flash sale',
     personalSaler: 'Cá nhân đăng bán',
+    personalSell: 'Thương hiệu cá nhân',
+    personalSellDes: 'Sản phẩm được cá nhân đăng bán',
     nearbyShop: 'Shop gần đây',
+    nearbyStores: 'Cửa hàng quanh đây',
+    nearbyStoresDes: 'Các cửa hàng gần bạn nhất',
     voucher: 'Mã khuyến mãi',
     bestSeller: 'Best-seller',
     popularBrand: 'Thương hiệu nổi bật',

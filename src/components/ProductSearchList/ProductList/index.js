@@ -36,30 +36,24 @@ const ProductList = ({
   return (
     <View style={styles.container}>
       {data && data?.content?.length ? (
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingBottom: 16,
-            flexWrap: 'wrap',
-            justifyContent: 'space-around',
-          }}>
-          {[1, 2, 3, 4].map((v) => (
-            <SearchProductLoading key={v} />
-          ))}
-        <FlatList
-          contentContainerStyle={styles.listWrapper}
-          data={data?.content}
-          numColumns={2}
-          renderItem={({item, index}) => (
-            <ProductItem item={item} index={index} navigation={navigation} />
-          )}
-          keyExtractor={(item, index) => `${index}-${item.id}`}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          refreshing={isRefreshing}
-          onEndReached={_handleLoadMore}
-          onRefresh={_handleRefresh}
-        />
+        <View style={styles.listContainer}>
+          {isRefreshing
+            ? [1, 2, 3, 4].map((v) => <SearchProductLoading key={v} />)
+            : null}
+          <FlatList
+            contentContainerStyle={styles.listWrapper}
+            data={data?.content}
+            numColumns={2}
+            renderItem={({item, index}) => (
+              <ProductItem item={item} index={index} navigation={navigation} />
+            )}
+            keyExtractor={(item, index) => `${index}-${item.id}`}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            refreshing={isRefreshing}
+            onEndReached={_handleLoadMore}
+            onRefresh={_handleRefresh}
+          />
         </View>
       ) : (
         <Text style={styles.notFoundText}>

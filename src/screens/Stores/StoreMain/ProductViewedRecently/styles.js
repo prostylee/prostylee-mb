@@ -7,6 +7,8 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     width: width,
+    backgroundColor: '$white',
+    marginTop: 8,
   },
   titleRow: {
     display: 'flex',

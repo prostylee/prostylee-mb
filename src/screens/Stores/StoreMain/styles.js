@@ -9,11 +9,10 @@ export default EStyleSheet.create({
   },
   container: {
     flex: 1,
-    // backgroundColor: '$bgColor',
   },
   wrapper: {
     flex: 1,
-    backgroundColor: '#E82E46'
+    backgroundColor: '$white',
   },
   statusBar: {
     backgroundColor: '#F4F5F5',
@@ -33,14 +32,21 @@ export default EStyleSheet.create({
   },
   headerLeftContainer: {
     flexDirection: 'row',
-    // borderWidth: 1,
+  },
+  headerLeftItem: {
+    paddingRight: 16,
+  },
+  headerTitle: {
+    fontFamily: '$font1Bold',
+    fontSize: 18,
+    lineHeight: 24,
+    fontWeight: 'bold',
   },
   headerRightContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    paddingHorizontal: 10,
-    width: 80,
+  },
+  headerRightItem: {
+    paddingLeft: 8,
   },
   locationText: {
     fontSize: 14,

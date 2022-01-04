@@ -2,10 +2,12 @@ import React from 'react';
 
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {TouchableOpacity, View, Text} from 'react-native';
+import {ChevronRight} from 'svg/common';
 
 const Title = ({
   title,
   subTitle,
+  subTitleWithIcon,
   onPress,
   subTitleComponent,
   style,
@@ -24,6 +26,7 @@ const Title = ({
           <Text style={[styles.textStyle, textStyle && textStyle]}>
             {subTitle}
           </Text>
+          {subTitleWithIcon ? <ChevronRight /> : null}
         </TouchableOpacity>
       ) : null}
     </View>
@@ -41,6 +44,7 @@ const styles = EStyleSheet.create({
   touchSubtitle: {
     paddingVertical: 5,
     justifyContent: 'center',
+    flexDirection: 'row',
   },
   textStyle: {
     color: '$purple',

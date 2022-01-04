@@ -1,4 +1,5 @@
 export default {
+  name: 'ProStylee',
   test: 'Hi!',
   confirm: 'Agree',
   cancel: 'Cancel',

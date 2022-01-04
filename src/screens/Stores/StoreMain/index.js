@@ -9,44 +9,38 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
 import styles from './styles';
-import {Header, Colors, HeaderAnimated, SearchBar} from 'components';
+import {Header, Colors} from 'components';
 import {storeActions, searchActions, storeProfileActions} from 'redux/reducers';
-import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
-import CustomBackground from './CustomBackground';
+import {
+  PAGE_DEFAULT,
+  LIMIT_DEFAULT,
+  TIME_RANGE_IN_DAYS,
+  TYPE_USER,
+} from 'constants';
 import AdvertisingSlider from './AdvertisingSlider';
-import FunctionTags from './FunctionTags';
+import NavigationTags from './NavigationTags';
 
-import PopularBrands from './PopularBrands';
+import TopStores from './TopStores';
 import MidAdvertisingSlider from './MidAdvertisingSlider';
 import FeaturedCategories from './FeaturedCategories';
 import ForUserTabView from './ForUserTabView';
+import ProductViewedRecently from './ProductViewedRecently';
 
 import {
   getTopBannerSelector,
   getMidBannerSelector,
-  getBrandListSelector,
   getCategoryListSelector,
   getStoreMainLoadingSelector,
 } from 'redux/selectors/storeMain';
+import {getTopProduct} from 'redux/selectors/stores';
+import {productSelectors} from 'reducers';
+
 import AppScrollViewIOSBounceColorsWrapper from './AppScrollViewIOSBounceColorsWrapper';
 import {useIsFocused} from '@react-navigation/native';
 import HeaderLeft from './HeaderLeftComponent';
 import HeaderRight from './HeaderRightComponent';
-import useLocation from '../../../hooks/useLocation';
 
-const heightShow = 334;
 const BOTTOM_ENDREACHED_HEIGHT = 300;
-
-const CustomSearchBar = ({onSearchFocus = () => {}}) => (
-  <View style={styles.searchBarContainer}>
-    <SearchBar
-      style={styles.wrapSearchBar}
-      placeholder={i18n.t('search')}
-      onFocus={onSearchFocus}
-      placeholderTextColor={Colors.$lightGray}
-    />
-  </View>
-);
 
 const Stores = (props) => {
   const dispatch = useDispatch();
@@ -61,27 +55,23 @@ const Stores = (props) => {
 
   const midBannerList = useSelector((state) => getMidBannerSelector(state));
 
-  const brandList = useSelector((state) => getBrandListSelector(state));
-
   const categoryList = useSelector((state) => getCategoryListSelector(state));
 
+  const topProduct = useSelector((state) => getTopProduct(state));
+
+  const productViewedRecently = useSelector((state) =>
+    productSelectors.getProductViewedRecently(state),
+  );
   const loading = useSelector((state) => getStoreMainLoadingSelector(state));
 
   const scrollAnimated = useRef(new Animated.Value(0)).current;
 
   const isFocused = useIsFocused();
-  // Call get location - DO NOT REMOVE
-  const location = useLocation();
-
   const onScrollEvent = Animated.event(
     [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
     {useNativeDriver: false},
   );
 
-  const onSearchFocus = () => {
-    dispatch(searchActions.setCurrentKeyword(''));
-    navigation.navigate('SearchProducts');
-  };
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     return (
       layoutMeasurement.height + contentOffset.y >=
@@ -90,42 +80,38 @@ const Stores = (props) => {
   };
 
   useEffect(() => {
-    if (!topBannerList || !topBannerList?.content?.length) {
-      dispatch(
-        storeActions.getTopBanner({
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-          position: 'mobile_store',
-        }),
-      );
-    }
-    if (!midBannerList || !midBannerList?.content?.length) {
-      dispatch(
-        storeActions.getMidBanner({
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-          position: 'mobile_store',
-        }),
-      );
-    }
-    if (!brandList || !brandList?.content?.length) {
-      dispatch(
-        storeActions.getBrandList({
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-        }),
-      );
-    }
-    if (!categoryList || !categoryList?.content?.length) {
-      dispatch(
-        storeActions.getCategoryList({
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-          hotStatus: true,
-          sorts: '+order',
-        }),
-      );
-    }
+    dispatch(
+      storeActions.getTopBanner({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: '+order',
+        position: 'mobile_store',
+      }),
+    );
+    dispatch(
+      storeActions.getMidBanner({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        position: 'mobile_store',
+      }),
+    );
+    dispatch(
+      storeActions.getCategoryList({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        hotStatus: true,
+        sorts: '+order',
+      }),
+    );
+    dispatch(
+      storeActions.getTopProduct({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        storeId: TYPE_USER,
+        numberOfProducts: 1,
+        timeRangeInDays: TIME_RANGE_IN_DAYS,
+      }),
+    );
     dispatch(storeActions.getBottomTabList());
   }, []);
   const _handleRefresh = () => {
@@ -143,17 +129,20 @@ const Stores = (props) => {
       }),
     );
     dispatch(
-      storeActions.getBrandList({
-        page: PAGE_DEFAULT,
-        limit: LIMIT_DEFAULT,
-      }),
-    );
-    dispatch(
       storeActions.getCategoryList({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
         hotStatus: true,
         sorts: '+order',
+      }),
+    );
+    dispatch(
+      storeActions.getTopProduct({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        storeId: TYPE_USER,
+        numberOfProducts: 1,
+        timeRangeInDays: TIME_RANGE_IN_DAYS,
       }),
     );
   };
@@ -174,40 +163,24 @@ const Stores = (props) => {
 
   const featureCategoryList =
     categoryList?.content && categoryList?.content?.length
-      ? categoryList?.content?.filter((item) => !item?.parentId)
+      ? categoryList?.content?.slice(0, 8)
       : [];
 
   return (
     <View style={styles.wrapper}>
-      <HeaderAnimated
-        bottomComponent={
-          <View style={styles.animatedSearchBarContainer}>
-            <SearchBar
-              style={styles.statusBar}
-              inputStyle={styles.wrapSearchBarInput}
-              placeholder={i18n.t('search')}
-              onFocus={onSearchFocus}
-              placeholderTextColor={Colors.$lightGray}
-            />
-            <HeaderRight
-              isAnimated
-              color={Colors.$icon}
-              navigation={navigation}
-            />
-          </View>
+      <Header
+        leftComponent={<HeaderLeft />}
+        rightComponent={
+          <HeaderRight navigation={navigation} color={Colors['$black']} />
         }
-        justBottomComponent={true}
-        bottomHeight={30}
-        hideBottomBorder={true}
-        heightShow={heightShow - 200}
-        Animated={Animated}
-        navigation={navigation}
-        scrollAnimated={scrollAnimated}
+        title={i18n.t('name')}
+        titleStyle={styles.headerTitle}
+        containerStyle={styles.headerContainer}
       />
 
       <AppScrollViewIOSBounceColorsWrapper
         style={styles.flex1}
-        topBounceColor="#E82E46"
+        topBounceColor="#fff"
         bottomBounceColor="#fff">
         <ScrollView
           nestedScrollEnabled={true}
@@ -228,39 +201,28 @@ const Stores = (props) => {
             />
           }>
           <View style={{backgroundColor: Colors.$bgColor}}>
-            <CustomBackground />
-
-            <Header
-              leftComponent={<HeaderLeft />}
-              rightComponent={<HeaderRight navigation={navigation} />}
-              containerStyle={styles.headerContainer}
-            />
-            <CustomSearchBar
-              navigation={navigation}
-              onSearchFocus={onSearchFocus}
-            />
-
             <AdvertisingSlider
               loading={loading}
               data={topBannerList?.content ? topBannerList?.content : []}
-            />
-
-            <FunctionTags navigation={navigation} />
-
-            <PopularBrands
-              data={
-                brandList && brandList?.content?.length ? brandList.content : []
-              }
-            />
-
-            <MidAdvertisingSlider
-              loading={loading}
-              data={midBannerList?.content ? midBannerList?.content : []}
             />
             <FeaturedCategories
               data={featureCategoryList}
               navigation={navigation}
             />
+
+            <NavigationTags navigation={navigation} />
+
+            <MidAdvertisingSlider
+              loading={loading}
+              data={midBannerList?.content ? midBannerList?.content : []}
+            />
+            <TopStores topProduct={topProduct} />
+            {(productViewedRecently?.content || [])?.length ? (
+              <ProductViewedRecently
+                data={productViewedRecently?.content || []}
+                onSelect={(id) => navigation.navigate('ProductDetail', {id})}
+              />
+            ) : null}
             <ForUserTabView
               navigation={navigation}
               isEndReached={isEndReached}
