@@ -8,6 +8,8 @@ import {
   Animated,
   TouchableOpacity,
   ImageBackground,
+  TextInput,
+  Clipboard,
 } from 'react-native';
 
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
@@ -58,6 +60,8 @@ const Index = ({navigation}) => {
 
   const [flagPos, setFlagPos] = useState(0);
 
+  const [userToken, setUserToken] = useState('');
+
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
   );
@@ -104,6 +108,7 @@ const Index = ({navigation}) => {
     Auth.currentAuthenticatedUser()
       .then((user) => {
         dispatch(userActions.getProfile(user.attributes['custom:userId']));
+        setUserToken(user?.signInUserSession?.idToken?.jwtToken);
       })
       .catch((_) => {
         showMessage({
@@ -223,6 +228,38 @@ const Index = ({navigation}) => {
                       </Text>
                     </View>
                   ) : null}
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingTop: 16,
+                      paddingHorizontal: 12,
+                    }}>
+                    <Text style={{fontSize: 13, lineHeight: 18}}>Token</Text>
+                    <TextInput
+                      value={userToken}
+                      style={{
+                        height: 32,
+                        borderWidth: 1,
+                        borderColor: 'gray',
+                        borderRadius: 4,
+                        paddingHorizontal: 8,
+                        marginHorizontal: 12,
+                        flex: 1,
+                        backgroundColor: '#F2F2F2',
+                        color: '#A2A2A2',
+                      }}
+                      numberOfLines={1}
+                      editable={false}
+                    />
+                    <ButtonRounded
+                      style={styles.editButton}
+                      labelStyle={styles.editLabelButton}
+                      label={'Copy'}
+                      onPress={() => Clipboard.setString(userToken)}
+                    />
+                  </View>
                   <View style={{paddingTop: 16}}>
                     <ButtonRounded
                       style={styles.editButton}
