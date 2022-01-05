@@ -10,7 +10,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
 import styles from './styles';
 import {Header, Colors} from 'components';
-import {storeActions, searchActions, storeProfileActions} from 'redux/reducers';
+import {
+  storeActions,
+  searchActions,
+  storeProfileActions,
+  categoriesActions,
+} from 'redux/reducers';
 import {
   PAGE_DEFAULT,
   LIMIT_DEFAULT,
@@ -113,6 +118,14 @@ const Stores = (props) => {
       }),
     );
     dispatch(storeActions.getBottomTabList());
+
+    // get Parent categories
+    dispatch(
+      categoriesActions.getListLeftCategories({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      }),
+    );
   }, []);
   const _handleRefresh = () => {
     handleRefreshing(true);

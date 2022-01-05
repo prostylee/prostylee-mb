@@ -67,11 +67,13 @@ const Categories = ({navigation}) => {
       const activeIndex = listRightCategories?.findIndex(
         (item) => item.id === categoriesSelect?.id,
       );
-      categoryRef.current.scrollToIndex({
-        index: activeIndex,
-        animated: true,
-        viewPosition: 0.5,
-      });
+      if (activeIndex >= 0) {
+        categoryRef.current?.scrollToIndex({
+          index: activeIndex,
+          animated: true,
+          viewPosition: 0.5,
+        });
+      }
     }
   }, [categoriesSelect?.id, categoryRef]);
 
@@ -81,11 +83,13 @@ const Categories = ({navigation}) => {
         const activeIndex = listRightCategories?.findIndex(
           (item) => item.id === categoriesSelect?.id,
         );
-        categoryRef.current.scrollToIndex({
-          index: activeIndex,
-          animated: true,
-          viewPosition: 0.5,
-        });
+        if (activeIndex >= 0) {
+          categoryRef.current?.scrollToIndex({
+            index: activeIndex,
+            animated: true,
+            viewPosition: 0.5,
+          });
+        }
       }, 500);
     }
   }, []);
