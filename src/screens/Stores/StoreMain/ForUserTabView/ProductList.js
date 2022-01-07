@@ -1,21 +1,50 @@
 import React from 'react';
-import {View, FlatList, Text, ActivityIndicator} from 'react-native';
+import {View, Text} from 'react-native';
 import styles from './style';
-import ProductItem from './ProductItem';
+import ProductItemFull from './ProductItemFull';
+import ProductItemGrid from './ProductItemGrid';
+
 import {SearchProductLoading} from 'components/Loading/contentLoader';
 import i18n from 'i18n';
-const HEIGHT_ITEM = 320;
-const ProductList = ({navigation, isLoading = false, data = []}) => {
+const ProductList = ({
+  layout = 'full',
+  navigation,
+  isLoading = false,
+  data = [],
+}) => {
+  const renderItem = (item, index) => {
+    switch (layout) {
+      case 'full':
+        return (
+          <ProductItemFull
+            item={item}
+            index={index}
+            navigation={navigation}
+            key={`${item.id}-${index}-${item.name}`}
+          />
+        );
+      case 'grid':
+        return (
+          <ProductItemGrid
+            item={item}
+            index={index}
+            navigation={navigation}
+            key={`${item.id}-${index}-${item.name}`}
+          />
+        );
+      default:
+        return (
+          <ProductItemFull
+            item={item}
+            index={index}
+            navigation={navigation}
+            key={`${item.id}-${index}-${item.name}`}
+          />
+        );
+    }
+  };
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          height: data?.length
-            ? Math.floor(data.length / 2) * HEIGHT_ITEM
-            : HEIGHT_ITEM * 2,
-        },
-      ]}>
+    <>
       {isLoading ? (
         <View style={styles.listLoadingWrapper}>
           {Array.from(
@@ -25,22 +54,13 @@ const ProductList = ({navigation, isLoading = false, data = []}) => {
           ))}
         </View>
       ) : data && data.length ? (
-        <View style={styles.listWrapper}>
-          {data.map((item, index) => (
-            <ProductItem
-              item={item}
-              index={index}
-              navigation={navigation}
-              key={`${item.id}-${index}-${item.name}`}
-            />
-          ))}
-        </View>
+        <View style={styles.listWrapper}>{data.map(renderItem)}</View>
       ) : (
         <Text style={styles.notFoundText}>
           {i18n.t('Search.resultsNotfound')}
         </Text>
       )}
-    </View>
+    </>
   );
 };
 

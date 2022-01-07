@@ -1,60 +1,64 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  ActivityIndicator,
-  TouchableOpacity,
-  Dimensions,
-  Text,
-  View,
-} from 'react-native';
-
-import {ImageAnimated as Image} from 'components';
-
-import {Heart} from 'svg/social';
-
-import {IMG_RATIO, CURRENCY_VIET_NAM} from 'constants';
-
-import {currencyFormat} from 'utils/currency';
-
+import {ActivityIndicator, Text, TouchableOpacity, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {Image, ProductLike} from 'components';
 import styles from './styles';
+import {currencyFormat, priceSalePercent} from 'utils/currency';
+import {CURRENCY_VIET_NAM} from 'constants';
 
-const {width} = Dimensions.get('window');
-
-const ProductItem = ({wImage, item}) => {
+const ProductItem = ({item}) => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      style={styles.viewImage}
-      onPress={() => {}}>
-      <Image
-        source={
-          item?.imageUrls?.length
-            ? {uri: item?.imageUrls?.[0]}
-            : require('assets/images/default.png')
-        }
-        resizeMode="cover"
-        style={{height: wImage * IMG_RATIO, width: wImage, borderRadius: 4}}
-        PlaceholderContent={<ActivityIndicator />}
-      />
-      <View style={styles.info}>
-        <Text numberOfLines={2} style={styles.name}>
-          {item.name}
-        </Text>
-        <Text style={styles.price}>
-          {currencyFormat(item?.priceSale, CURRENCY_VIET_NAM)}
-        </Text>
-        <TouchableOpacity style={styles.likeIcon}>
-          <Heart />
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.wrapItems}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('ProductDetail', {id: item.id});
+        }}>
+        <View style={styles.item}>
+          <View style={styles.wrapImageThumbnail}>
+            <Image
+              source={
+                item?.imageUrls.length
+                  ? {uri: item?.imageUrls[0]}
+                  : require('assets/images/default.png')
+              }
+              resizeMode="cover"
+              style={styles.imageThumbnail}
+              PlaceholderContent={<ActivityIndicator />}
+            />
+            {item?.priceSale < item?.price ? (
+              <View style={styles.wrapTextSale}>
+                <Text style={styles.textSale}>
+                  -{priceSalePercent(item?.price, item?.priceSale)}%
+                </Text>
+              </View>
+            ) : null}
+          </View>
+          <Text numberOfLines={2} style={styles.title}>
+            {item.name}
+          </Text>
+          {item?.priceSale ? (
+            <Text numberOfLines={1} style={styles.price}>
+              {currencyFormat(item?.priceSale, CURRENCY_VIET_NAM)}
+            </Text>
+          ) : null}
+
+          <View style={styles.wrapPriceRoot}>
+            {item?.price ? (
+              <Text numberOfLines={1} style={styles.priceRoot}>
+                {currencyFormat(item?.price, CURRENCY_VIET_NAM)}
+              </Text>
+            ) : null}
+
+            <ProductLike item={item} />
+          </View>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
-ProductItem.defaultProps = {
-  column: 2,
-  wImage: (width - 48) / 2,
-};
+ProductItem.defaultProps = {};
 
 ProductItem.propTypes = {};
 

@@ -1,13 +1,10 @@
 import React, {useRef, useEffect, useState} from 'react';
 import {
-  Animated,
+  ScrollView,
   TouchableOpacity as Touch,
   View,
-  Text,
-  Platform,
   ActivityIndicator,
 } from 'react-native';
-import {Avatar} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 
@@ -15,21 +12,17 @@ import styles from './styles';
 
 import InfoView from './InfoView';
 import ProfileTab from './ProfileTab';
-import SwitchBottom from './SwitchBottom';
 
 import {userActions} from 'reducers';
 
-import {ThemeView, HeaderAnimated, Colors} from 'components';
+import {ThemeView, Header, Colors} from 'components';
 
-import {ChevronLeft} from 'svg/common';
-import {More, Message} from 'svg/social';
+import {More} from 'svg/social';
 import {getProfile, getStatistics} from 'services/api/userApi';
 
-import {PAGE_DEFAULT, SUCCESS} from 'constants';
+import {PAGE_DEFAULT, LIMIT_DEFAULT, SUCCESS} from 'constants';
 
-const heightShow = Platform.OS === 'ios' ? 280 : 300;
-
-const UserProfile = ({navigation}) => {
+const UserProfile = () => {
   const dispatch = useDispatch();
   const scrollRef = useRef();
   const route = useRoute();
@@ -38,23 +31,6 @@ const UserProfile = ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({});
   const [statistics, setStatistics] = useState({});
-  /*Animated*/
-  const scrollAnimated = useRef(new Animated.Value(0)).current;
-
-  const onScrollEvent = Animated.event(
-    [{nativeEvent: {contentOffset: {y: scrollAnimated}}}],
-    {useNativeDriver: false},
-  );
-  const opacity = scrollAnimated.interpolate({
-    inputRange: [0, heightShow],
-    outputRange: [0, 1],
-    extrapolate: 'clamp',
-  });
-  const marginTop = scrollAnimated.interpolate({
-    inputRange: [0, heightShow * 0.2, heightShow],
-    outputRange: [-30, 0, 0],
-    extrapolate: 'clamp',
-  });
 
   const getUserProfile = async () => {
     setLoading(true);
@@ -83,35 +59,22 @@ const UserProfile = ({navigation}) => {
     dispatch(
       userActions.getUserPost({
         page: PAGE_DEFAULT,
-        limit: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
         userId: userId,
+        sorts: '-createdAt',
       }),
     );
     dispatch(
       userActions.getProductByUser({
         page: PAGE_DEFAULT,
-        limit: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
         userId: userId,
+        sorts: '-createdAt&+name',
       }),
     );
   }, [dispatch]);
 
-  const leftPress = () => {
-    navigation.goBack();
-  };
-
-  const messagePress = () => {
-    navigation.navigate('Comment');
-  };
-
   const morePress = () => {};
-
-  const scrollProfile = () => {
-    scrollRef.current?.scrollTo({
-      y: 0,
-      animated: true,
-    });
-  };
 
   if (loading) {
     return (
@@ -123,54 +86,25 @@ const UserProfile = ({navigation}) => {
 
   return (
     <ThemeView style={styles.container} isFullView>
-      <HeaderAnimated
-        leftComponent={
-          <Touch style={styles.leftTouch} onPress={leftPress}>
-            <ChevronLeft color={Colors.$icon} />
-          </Touch>
-        }
-        midComponent={
-          <Touch onPress={scrollProfile} style={styles.mid}>
-            <Avatar.Image
-              size={24}
-              source={
-                profile?.avatar
-                  ? {uri: profile?.avatar}
-                  : require('assets/images/default.png')
-              }
-            />
-            <Text numberOfLines={1} style={styles.textTitle}>
-              {profile?.fullName}
-            </Text>
-          </Touch>
-        }
+      <Header
+        title={profile?.username || ''}
+        isDefault
         rightComponent={
-          <View style={styles.rightView}>
-            <Animated.View style={{opacity, marginTop}}>
-              <Touch style={styles.touchRight} onPress={messagePress}>
-                <Message />
-              </Touch>
-            </Animated.View>
-            <Touch style={styles.touchRight} onPress={morePress}>
-              <More />
-            </Touch>
-          </View>
+          <Touch style={styles.touchRight} onPress={morePress}>
+            <More color={Colors.$black} />
+          </Touch>
         }
-        heightShow={heightShow}
-        Animated={Animated}
-        navigation={navigation}
-        scrollAnimated={scrollAnimated}
+        containerStyle={styles.header}
       />
-      <Animated.ScrollView
+      <ScrollView
         ref={scrollRef}
-        onScroll={onScrollEvent}
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}>
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.content}>
         <InfoView statistics={statistics} profile={profile} />
         <ProfileTab />
-      </Animated.ScrollView>
-      <SwitchBottom />
+      </ScrollView>
     </ThemeView>
   );
 };

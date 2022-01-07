@@ -8,6 +8,7 @@ export default {
   alertUpdate: 'Cập nhật ứng dụng',
   selectInLibrary: 'Chọn từ bộ sưu tập ảnh',
   takePicture: 'Chụp hình',
+  message: 'Nhắn tin',
   descriptionUpdate:
     'Đã có phiên bản mới, vui lòng cập nhật để có những trải nghiệm tốt hơn',
   descriptionProgressUpdate: 'Đang cập nhật, vui lòng chờ trong ít phút',

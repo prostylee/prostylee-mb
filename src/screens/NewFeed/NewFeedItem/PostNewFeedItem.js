@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import i18n from 'i18n';
 import styles from './styles';
+import isEmpty from 'lodash/isEmpty';
 import {USER_POST_TYPE_PRODUCT, USER_POST_TYPE_POST} from 'constants';
 import NewFeedItemHeader from '../NewFeedItem/NewFeedItemHeader';
 import NewFeedItemFooter from '../NewFeedItem/NewFeedItemFooter';
@@ -27,11 +28,26 @@ const PostNewFeedItem = ({
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
   );
-  const ownerResponseLite = newFeedItem?.newFeedOwnerResponse;
-  const urlImage = ownerResponseLite?.logoUrl || '';
-  const name = ownerResponseLite?.name || '';
-  const userId = ownerResponseLite?.id || 0;
-  const address = ownerResponseLite?.fullAddress || '';
+
+  let ownerResponseLite = {};
+  let urlImage = '';
+  let name = '';
+  let userId = 0;
+  let address = '';
+
+  if (!isEmpty(newFeedItem?.newFeedOwnerResponse)) {
+    ownerResponseLite = newFeedItem?.newFeedOwnerResponse;
+    urlImage = ownerResponseLite?.logoUrl || '';
+    name = ownerResponseLite?.name || '';
+    userId = ownerResponseLite?.id || 0;
+    address = ownerResponseLite?.fullAddress || '';
+  } else if (!isEmpty(newFeedItem?.userResponseLite)) {
+    ownerResponseLite = newFeedItem?.userResponseLite;
+    urlImage = ownerResponseLite?.avatar || '';
+    name = ownerResponseLite?.fullName || '';
+    userId = ownerResponseLite?.id || 0;
+  }
+
   const postType = newFeedItem?.type || USER_POST_TYPE_POST;
 
   const navigateToUserProfile = () => {
@@ -60,7 +76,7 @@ const PostNewFeedItem = ({
       seeMoreStyle={styles.seeMoreStyle}
       seeLessStyle={styles.seeLessStyle}
       style={styles.postContentWrapper}>
-      {newFeedItem?.content}
+      {newFeedItem?.content || newFeedItem?.description}
     </ReadMore>
   );
   const bottom = (
@@ -88,18 +104,17 @@ const PostNewFeedItem = ({
       <NewFeedSlider
         targetType={targetType}
         images={newFeedItem?.imageUrls || []}>
-        {newFeedItem?.storeResponseLite ||
-          (newFeedItem?.storeAdsResponseLite && (
-            <TouchableOpacity
-              onPress={navigateToStore}
-              style={styles.viewTagStore}>
-              <Store />
-              <Text style={styles.textTagName}>
-                {newFeedItem?.storeResponseLite?.name ||
-                  newFeedItem?.storeAdsResponseLite?.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
+        {newFeedItem?.storeResponseLite || newFeedItem?.storeAdsResponseLite ? (
+          <TouchableOpacity
+            onPress={navigateToStore}
+            style={styles.viewTagStore}>
+            <Store />
+            <Text style={styles.textTagName}>
+              {newFeedItem?.storeResponseLite?.name ||
+                newFeedItem?.storeAdsResponseLite?.name}
+            </Text>
+          </TouchableOpacity>
+        ) : null}
       </NewFeedSlider>
     </View>
   );

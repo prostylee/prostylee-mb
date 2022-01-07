@@ -6,7 +6,7 @@ const {width} = Dimensions.get('window');
 export default EStyleSheet.create({
   container: {
     paddingVertical: 16,
-    backgroundColor: '$bgColor',
+    backgroundColor: '$white',
   },
   viewImage: {
     width: (width - 48) / 2,

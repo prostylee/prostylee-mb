@@ -1,31 +1,91 @@
 import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {absolute} from 'theme/style';
 
-const {width} = Dimensions.get('window');
-
+const WIDTH = Dimensions.get('window').width;
+const WIDTH_IMAGE = (WIDTH - 34) / 2;
+const HEIGHT_IMAGE = WIDTH_IMAGE * 1.5;
 export default EStyleSheet.create({
-  viewImage: {
-    width: (width - 48) / 2,
-    marginHorizontal: 8,
+  wrapItems: {
+    flex: 1,
+    flexDirection: 'column',
   },
-  info: {
-    paddingTop: 12,
+  item: {
+    width: WIDTH_IMAGE,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 'auto',
+    backgroundColor: 'transparent',
+    marginTop: 16,
   },
-  name: {
+  wrapImageThumbnail: {
+    height: HEIGHT_IMAGE,
+    width: WIDTH_IMAGE,
+    borderRadius: 4,
+    position: 'relative',
+  },
+  wrapTextSale: {
+    position: 'absolute',
+    backgroundColor: '$red',
+    bottom: 8,
+    left: 8,
+    padding: 4,
+    borderRadius: 3,
+  },
+  textSale: {
+    fontFamily: '$font1',
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: 11,
+    lineHeight: 16,
+    color: '$white',
+  },
+  imageThumbnail: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: HEIGHT_IMAGE,
+    width: WIDTH_IMAGE,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#E9EAEB',
+  },
+  title: {
+    width: WIDTH_IMAGE,
+    lineHeight: 16,
     fontSize: 13,
     fontFamily: '$font1',
-    width: '90%',
-    height: 38,
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    textAlign: 'left',
+    color: '$black',
+    marginTop: 12,
   },
   price: {
-    lineHeight: 24,
+    width: WIDTH_IMAGE,
+    lineHeight: 20,
     fontSize: 14,
-    fontWeight: '500',
     fontFamily: '$font1',
+    fontWeight: '500',
+    fontStyle: 'normal',
+    textAlign: 'left',
+    color: '$black',
+    marginTop: 8,
   },
-  likeIcon: {
-    ...absolute(null, 0, null, 0),
-    zIndex: 99,
+  priceRoot: {
+    width: WIDTH_IMAGE - 20,
+    lineHeight: 20,
+    fontSize: 11,
+    fontFamily: '$font1',
+    fontWeight: '400',
+    fontStyle: 'normal',
+    textAlign: 'left',
+    color: '$icon',
+  },
+  wrapPriceRoot: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  viewFooter: {
+    marginBottom: 6,
   },
 });

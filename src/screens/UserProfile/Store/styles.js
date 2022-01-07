@@ -5,18 +5,12 @@ const {width} = Dimensions.get('window');
 
 export default EStyleSheet.create({
   container: {
-    paddingVertical: 16,
-    backgroundColor: '$bgColor',
+    paddingHorizontal: 12,
+    backgroundColor: '$white',
   },
   viewImage: {
     width: (width - 48) / 2,
     marginHorizontal: 8,
-  },
-  viewCol: {
-    marginLeft: 8,
-  },
-  separator: {
-    height: 16,
   },
   viewFooter: {
     marginBottom: 26,

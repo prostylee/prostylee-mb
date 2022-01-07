@@ -20,7 +20,7 @@ const ItemBadge = ({value = 0}) => (
   </View>
 );
 
-const ProductItem = ({item, index, navigation}) => (
+const ProductItemFull = ({item, index, navigation}) => (
   <TouchableOpacity
     style={styles.itemWrapper}
     onPress={() => {
@@ -73,4 +73,4 @@ const ProductItem = ({item, index, navigation}) => (
     </View>
   </TouchableOpacity>
 );
-export default ProductItem;
+export default ProductItemFull;

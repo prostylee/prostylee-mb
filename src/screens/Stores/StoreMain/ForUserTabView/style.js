@@ -1,5 +1,6 @@
-import {Platform} from 'react-native';
+import {Platform, Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+const WIDTH = Dimensions.get('window').width;
 export default EStyleSheet.create({
   directionColumn: {flexDirection: 'column'},
   container: {
@@ -15,8 +16,11 @@ export default EStyleSheet.create({
     textAlign: 'center',
   },
   titleContainer: {
-    padding: 16,
+    paddingHorizontal: 16,
     backgroundColor: '$white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 14,
@@ -121,5 +125,23 @@ export default EStyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     color: '$lightGray',
+  },
+
+  itemGridWrapper: {
+    width: (WIDTH - 24 - 8) / 3,
+    height: (((WIDTH - 24 - 8) / 3) * 3) / 2,
+    borderRadius: 4,
+    marginBottom: 4,
+    position: 'relative',
+  },
+  imageGridStyle: {
+    width: (WIDTH - 24 - 8) / 3,
+    height: (((WIDTH - 24 - 8) / 3) * 3) / 2,
+    borderRadius: 4,
+  },
+  toolGridContainer: {
+    position: 'absolute',
+    bottom: 7,
+    right: 7,
   },
 });

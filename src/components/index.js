@@ -62,6 +62,7 @@ import NotificationIcon from './NotificationIcon';
 
 import PostView from './PostView';
 import ActionSheet from './ActionSheet';
+import ListLayoutSelection from './ListLayoutSelection';
 
 export {
   ContainerWithoutScrollView,
@@ -126,4 +127,5 @@ export {
   NotificationIcon,
   PostView,
   ActionSheet,
+  ListLayoutSelection,
 };
