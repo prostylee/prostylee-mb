@@ -4,17 +4,16 @@ import {flexRow, center} from 'theme/style';
 export default EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '$bgColor',
+    backgroundColor: '$white',
   },
-  leftTouch: {
-    paddingLeft: 20,
+  header: {
+    paddingHorizontal: 10,
   },
-  rightView: {
-    ...flexRow,
-    paddingRight: 20,
+  content: {
+    paddingTop: 16,
   },
   touchRight: {
-    paddingHorizontal: 4,
+    paddingRight: 8,
   },
   mid: {
     ...flexRow,

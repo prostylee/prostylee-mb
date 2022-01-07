@@ -6,7 +6,7 @@ import ScrollableTabView, {
   ScrollableTabBar,
 } from 'components/ForkReactNativeSrollableTabView';
 import isArray from 'lodash/isArray';
-import {Colors} from 'components';
+import {Colors, ListLayoutSelection} from 'components';
 import {getBottomTabListSelector} from 'redux/selectors/storeMain';
 import {useSelector} from 'react-redux';
 import {_fetch} from '../../../../services/config';
@@ -26,6 +26,7 @@ const ForUserTabView = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoadmore, setIsLoadmore] = useState(false);
+  const [layout, setLayout] = useState('full');
 
   const [state, setState] = useState({
     hasLoadMore: false,
@@ -155,6 +156,11 @@ const ForUserTabView = ({
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{i18n.t('stores.forUser')}</Text>
+        <ListLayoutSelection
+          value={layout}
+          leftAction={() => setLayout('grid')}
+          rightAction={() => setLayout('full')}
+        />
       </View>
       {isArray(tabList) && tabList.length > 0 ? (
         <ScrollableTabView
@@ -183,6 +189,7 @@ const ForUserTabView = ({
       ) : null}
 
       <ProductList
+        layout={layout}
         onRefresh={_handleRefresh}
         onLoadMore={_handleLoadMore}
         isRefreshing={isRefreshing}

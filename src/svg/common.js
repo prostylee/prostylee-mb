@@ -169,6 +169,42 @@ export const HeartSolid = ({width = 24, height = 20, color = 'white'}) => {
   );
 };
 
+export const HeartSolidLike = ({
+  width = 16,
+  height = 16,
+  color = 'white',
+  fill = '#E9EAEB',
+}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <G clipPath="url(#clip0_10005_2847)">
+        <Path
+          d="M13.2987 3.24832C12.9753 2.9241 12.5912 2.66691 12.1685 2.49144C11.7458 2.31596 11.2927 2.22565 10.8351 2.22565C10.3775 2.22565 9.92442 2.31596 9.50169 2.49144C9.07897 2.66691 8.6949 2.9241 8.37142 3.24832L7.70008 3.92087L7.02875 3.24832C6.37534 2.59373 5.48914 2.22599 4.56508 2.22599C3.64103 2.22599 2.75482 2.59373 2.10142 3.24832C1.44801 3.90291 1.08093 4.79072 1.08093 5.71644C1.08093 6.64217 1.44801 7.52998 2.10142 8.18457L2.77275 8.85712L7.70008 13.7934L12.6274 8.85712L13.2987 8.18457C13.6224 7.8605 13.8791 7.47574 14.0543 7.05225C14.2294 6.62876 14.3196 6.17485 14.3196 5.71644C14.3196 5.25804 14.2294 4.80413 14.0543 4.38064C13.8791 3.95715 13.6224 3.57238 13.2987 3.24832Z"
+          fill={fill}
+          stroke="#F4F5F5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </G>
+      <Defs>
+        <ClipPath id="clip0_10005_2847">
+          <Rect
+            width="15.2"
+            height="15.2275"
+            fill="white"
+            transform="translate(0.100098 0.323364)"
+          />
+        </ClipPath>
+      </Defs>
+    </Svg>
+  );
+};
+
 export const ChatSolid = ({width = 20, height = 20, color = 'white'}) => {
   return (
     <Svg
@@ -961,6 +997,77 @@ export const Grid = ({
       />
       <Path
         d="M9 14H4C3.44772 14 3 14.4477 3 15V20C3 20.5523 3.44772 21 4 21H9C9.55228 21 10 20.5523 10 20V15C10 14.4477 9.55228 14 9 14Z"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const GridTight = ({
+  width = 24,
+  height = 24,
+  color = '#8B9399',
+  fill = 'none',
+}) => {
+  return (
+    <Svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill={fill}
+      xmlns="http://www.w3.org/2000/svg">
+      <Path
+        d="M3 2.5H7C7.27614 2.5 7.5 2.72386 7.5 3V7C7.5 7.27614 7.27614 7.5 7 7.5H3C2.72386 7.5 2.5 7.27614 2.5 7V3C2.5 2.72386 2.72386 2.5 3 2.5Z"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M3 9.5H7C7.27614 9.5 7.5 9.72386 7.5 10V14C7.5 14.2761 7.27614 14.5 7 14.5H3C2.72386 14.5 2.5 14.2761 2.5 14V10C2.5 9.72386 2.72386 9.5 3 9.5Z"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M3 16.5H7C7.27614 16.5 7.5 16.7239 7.5 17V21C7.5 21.2761 7.27614 21.5 7 21.5H3C2.72386 21.5 2.5 21.2761 2.5 21V17C2.5 16.7239 2.72386 16.5 3 16.5Z"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M10 2.5H14C14.2761 2.5 14.5 2.72386 14.5 3V7C14.5 7.27614 14.2761 7.5 14 7.5H10C9.72386 7.5 9.5 7.27614 9.5 7V3C9.5 2.72386 9.72386 2.5 10 2.5Z"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M10 9.5H14C14.2761 9.5 14.5 9.72386 14.5 10V14C14.5 14.2761 14.2761 14.5 14 14.5H10C9.72386 14.5 9.5 14.2761 9.5 14V10C9.5 9.72386 9.72386 9.5 10 9.5Z"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M10 16.5H14C14.2761 16.5 14.5 16.7239 14.5 17V21C14.5 21.2761 14.2761 21.5 14 21.5H10C9.72386 21.5 9.5 21.2761 9.5 21V17C9.5 16.7239 9.72386 16.5 10 16.5Z"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M17 2.5H21C21.2761 2.5 21.5 2.72386 21.5 3V7C21.5 7.27614 21.2761 7.5 21 7.5H17C16.7239 7.5 16.5 7.27614 16.5 7V3C16.5 2.72386 16.7239 2.5 17 2.5Z"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M17 9.5H21C21.2761 9.5 21.5 9.72386 21.5 10V14C21.5 14.2761 21.2761 14.5 21 14.5H17C16.7239 14.5 16.5 14.2761 16.5 14V10C16.5 9.72386 16.7239 9.5 17 9.5Z"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M17 16.5H21C21.2761 16.5 21.5 16.7239 21.5 17V21C21.5 21.2761 21.2761 21.5 21 21.5H17C16.7239 21.5 16.5 21.2761 16.5 21V17C16.5 16.7239 16.7239 16.5 17 16.5Z"
         stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"

@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
+import isEmpty from 'lodash/isEmpty';
 import {useNavigation} from '@react-navigation/native';
 import {
   TYPE_STORE,
@@ -28,12 +29,20 @@ const StoreNewFeedItem = ({
   removeFollowAction = () => {},
 }) => {
   const navigation = useNavigation();
-  const productOwnerResponse = newFeedItem?.newFeedOwnerResponse;
+
+  let productOwnerResponse = {};
+
+  if (!isEmpty(newFeedItem?.newFeedOwnerResponse)) {
+    productOwnerResponse = newFeedItem?.newFeedOwnerResponse;
+  } else if (!isEmpty(newFeedItem?.productOwnerResponse)) {
+    productOwnerResponse = newFeedItem?.productOwnerResponse;
+  }
+
   const urlImage = productOwnerResponse?.logoUrl;
   const name = productOwnerResponse?.name || '';
   const storeId = productOwnerResponse?.id || 0;
   const address = productOwnerResponse?.fullAddress || '';
-  const postType = newFeedItem?.type || USER_POST_TYPE_POST;
+  const postType = newFeedItem?.type || USER_POST_TYPE_PRODUCT;
 
   const navigateStore = () => {
     if (targetType === TYPE_STORE) {
@@ -58,7 +67,7 @@ const StoreNewFeedItem = ({
       seeMoreStyle={styles.seeMoreStyle}
       seeLessStyle={styles.seeLessStyle}
       style={styles.postContentWrapper}>
-      {newFeedItem?.content}
+      {newFeedItem?.content || newFeedItem?.description}
     </ReadMore>
   );
 

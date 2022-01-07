@@ -28,6 +28,8 @@ const ProfileTab = (props) => {
         return <MeTab index={index} jumpTo={jumpTo} />;
       case 'store':
         return <StoreTab index={index} jumpTo={jumpTo} />;
+      default:
+        return null;
     }
   };
 

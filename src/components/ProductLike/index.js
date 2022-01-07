@@ -9,7 +9,13 @@ import {
 import * as CONTANTS from 'constants';
 import {showMessage} from 'react-native-flash-message';
 
-const ProductLike = ({item, likeSize = 20, unlikeSize = 20}) => {
+const ProductLike = ({
+  item,
+  likeSize = 20,
+  unlikeSize = 20,
+  likeIcon = null,
+  notLikeIcon = null,
+}) => {
   const [clickLike, handleClickLike] = useState(false);
   const [like, handleLike] = useState(
     item?.likeStatusOfUserLogin ? item?.likeStatusOfUserLogin : false,
@@ -40,7 +46,13 @@ const ProductLike = ({item, likeSize = 20, unlikeSize = 20}) => {
   return (
     <TouchableOpacity onPress={toggleProduct}>
       {!like ? (
-        <Heart width={unlikeSize} height={(unlikeSize * 20) / 23} />
+        notLikeIcon ? (
+          notLikeIcon
+        ) : (
+          <Heart width={unlikeSize} height={(unlikeSize * 20) / 23} />
+        )
+      ) : likeIcon ? (
+        likeIcon
       ) : (
         <HeartFill width={likeSize} height={(likeSize * 20) / 23} />
       )}

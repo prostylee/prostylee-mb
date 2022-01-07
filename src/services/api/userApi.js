@@ -30,13 +30,9 @@ export const updateUserAddress = (payload) => {
 };
 
 export const getUserPost = (payload) => {
-  return _fetch(GET, '/posts', {
-    params: payload,
-  });
+  return _fetch(GET, '/posts', payload);
 };
 
 export const getProductsByUser = (payload) => {
-  return _fetch(GET, '/products', {
-    params: payload,
-  });
+  return _fetch(GET, '/products', payload);
 };

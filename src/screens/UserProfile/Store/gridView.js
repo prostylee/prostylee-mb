@@ -33,11 +33,8 @@ const GridView = ({column, wImage, hImage}) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        key={column}
         numColumns={column}
-        columnWrapperStyle={styles.viewCol}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        keyExtractor={(item, index) => 'profileMeTab' + index}
+        keyExtractor={(_, index) => 'profileMeTab' + index}
         data={productByUser?.content || []}
         renderItem={({item}) => <ProductItem item={item} />}
         onEndReachedThreshold={0.5}

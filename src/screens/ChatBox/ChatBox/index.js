@@ -10,6 +10,7 @@ import {
   Platform,
   StatusBar,
 } from 'react-native';
+import isEmpty from 'lodash/isEmpty';
 import styles from './styles';
 import {Header, ThemeView} from 'components';
 import i18n from 'i18n';
@@ -192,7 +193,7 @@ const ChatBox = ({navigation, route}) => {
       <KeyboardAvoidingView
         style={styles.contentContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        {loading && !refreshing ? null : (
+        {(loading && !refreshing) || isEmpty(productData) ? null : (
           <ProductItem data={productData} navigation={navigation} />
         )}
         <View style={styles.chatListContainer}>
