@@ -14,8 +14,12 @@ import {showMessage} from 'react-native-flash-message';
 const SettingItem = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const onNavigateSetting = (screen) => {
-    navigation.navigate(screen);
+  const onNavigateSetting = (setting) => {
+    if (typeof setting?.params === 'object') {
+      navigation.navigate(setting?.screen, setting?.params);
+      return;
+    }
+    navigation.navigate(setting?.screen);
   };
 
   //funcs
@@ -39,15 +43,15 @@ const SettingItem = () => {
               <View style={styles.textViewLabel}>
                 <Text style={styles.textLabel}>{tab.title}</Text>
                 <View>
-                  {tab.list.map((list, indexList) => {
+                  {tab.list.map((item, indexList) => {
                     return (
                       <TouchableOpacity
                         key={indexList}
-                        onPress={() => onNavigateSetting(list.screen)}
+                        onPress={() => onNavigateSetting(item)}
                         style={{alignContent: 'center'}}>
                         <List.Item
                           style={styles.textItemList}
-                          title={list.title}
+                          title={item.title}
                           right={(props) => <RightArrow />}
                         />
                         {indexList == tab.list.length - 1 ? <></> : <Divider />}
@@ -66,6 +70,7 @@ const SettingItem = () => {
           label={i18n.t('logOut')}
           style={styles.buttonOutlinedRed}
           labelStyle={styles.labelBtnOutlineRed}
+          contentStyle={styles.buttonOutlinedRedContent}
           onPress={onSignOut}
         />
       </View>

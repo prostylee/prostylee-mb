@@ -3,6 +3,7 @@ export default {
   test: 'Xin chào!',
   confirm: 'Đồng ý',
   cancel: 'Huỷ',
+  done: 'Xong',
   logOut: 'Đăng xuất',
   caution: 'Chú ý!',
   alertUpdate: 'Cập nhật ứng dụng',
@@ -15,6 +16,7 @@ export default {
   buttonUpdateNewVersion: 'Cập nhật ngay',
   resetApp: 'Khởi động lại',
   undefined: 'Không xác định',
+  post: 'Bài viết',
   stores: {
     titleTopStore: 'Cửa hàng nổi bật',
     textNear: 'Cửa hàng gần đây',
@@ -336,6 +338,10 @@ export default {
     orders: 'Đơn hàng',
     products: 'Sản phẩm',
     cancelSuccess: 'Huỷ đơn thành công',
+    noProduct: 'Chưa có sản phẩm nào',
+    noProductSub: 'Hãy quay lại cửa hàng của {{name}} vào lần tới nhé',
+    noPost: 'Chưa có bài đăng nào',
+    noPostSub: 'Hãy quay lại dòng thời gian của {{name}} vào lần tới nhé',
   },
   setting: {
     title: 'Thiết lập tài khoản',
@@ -349,6 +355,7 @@ export default {
     setAddressAsDefault: 'Đặt làm địa chỉ mặc định',
     default: 'Mặc định',
     newAddress: 'Thêm địa chỉ mới',
+    order: 'Đơn hàng',
   },
   settingProfile: {
     name: 'Tên',
@@ -364,6 +371,7 @@ export default {
     alert: 'Bạn có chắc muốn bỏ những thay đổi này không?',
     alertOK: 'Đồng ý',
     alertCancel: 'Hủy',
+    manageAddress: 'Quản lý địa chỉ',
   },
   settingAddress: {
     addAddress: 'Thêm địa chỉ',

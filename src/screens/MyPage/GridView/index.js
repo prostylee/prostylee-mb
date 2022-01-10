@@ -9,11 +9,8 @@ import {
 } from 'react-native';
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  ContainerView as Container,
-  Colors,
-  ImageAnimated as Image,
-} from 'components';
+import {useNavigation} from '@react-navigation/native';
+import {Colors, ImageAnimated as Image} from 'components';
 
 import {myPageActions, userSelectors} from 'reducers';
 import {ImageGrid} from 'components/Loading/contentLoader';
@@ -27,11 +24,15 @@ import {
   getListUserPostHasLoadmoreSelector,
   getListUserPostLoadmoreLoadingSelector,
 } from 'redux/selectors/myPage';
+import {EmptyPost} from 'svg/profile';
+import {EmptyComponent} from 'components';
+import i18n from 'i18n';
 
 const {width} = Dimensions.get('window');
 
-const GridView = ({column, wImage, hImage, scrollEnabled}) => {
+const GridView = ({column, wImage, hImage}) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
 
@@ -105,9 +106,9 @@ const GridView = ({column, wImage, hImage, scrollEnabled}) => {
         ))
       ) : (
         <FlatList
-          scrollEnabled={scrollEnabled !== undefined ? scrollEnabled : false}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          scrollEnabled={false}
           key={column}
           numColumns={column}
           columnWrapperStyle={styles.viewCol}
@@ -116,9 +117,14 @@ const GridView = ({column, wImage, hImage, scrollEnabled}) => {
           data={postList || []}
           renderItem={({item}) => (
             <TouchableOpacity
-              activeOpacity={1}
               style={styles.viewImage}
-              onPress={() => {}}>
+              onPress={() =>
+                navigation.navigate('PostList', {
+                  profile: userProfile,
+                  postOfUser: {content: postList},
+                  selectedPost: item,
+                })
+              }>
               <Image
                 source={
                   item?.imageUrls.length
@@ -138,6 +144,15 @@ const GridView = ({column, wImage, hImage, scrollEnabled}) => {
           refreshing={isRefreshing}
           onRefresh={handleRefresh}
           contentContainerStyle={{paddingTop: 10}}
+          ListEmptyComponent={
+            <EmptyComponent
+              icon={<EmptyPost />}
+              title={i18n.t('mypage.noPost')}
+              subTitle={i18n.t('mypage.noPostSub', {
+                name: userProfile?.username || '',
+              })}
+            />
+          }
         />
       )}
     </>

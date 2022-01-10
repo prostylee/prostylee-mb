@@ -76,6 +76,8 @@ import PaymentMethodCart from './Cart/PaymentMethod';
 import VoucherCart from './Cart/Voucher';
 import CheckoutCart from './Cart/Checkout';
 
+import PostList from './PostList';
+
 export {
   Welcome,
   Onboarding,
@@ -151,4 +153,5 @@ export {
   PaymentMethodCart,
   VoucherCart,
   CheckoutCart,
+  PostList,
 };

@@ -4,53 +4,61 @@ import {useNavigation} from '@react-navigation/native';
 import {Image, ProductLike} from 'components';
 import styles from './styles';
 import {currencyFormat, priceSalePercent} from 'utils/currency';
-import {CURRENCY_VIET_NAM} from 'constants';
+import {CURRENCY_VIET_NAM, USER_POST_TYPE_PRODUCT} from 'constants';
 
 const ProductItem = ({item}) => {
   const navigation = useNavigation();
+  let productInfo;
+  if (item?.targetType && item?.targetType == USER_POST_TYPE_PRODUCT) {
+    productInfo = item?.product;
+  } else {
+    productInfo = item;
+  }
   return (
     <View style={styles.wrapItems}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('ProductDetail', {id: item.id});
+          navigation.navigate('ProductDetail', {id: productInfo.id});
         }}>
         <View style={styles.item}>
           <View style={styles.wrapImageThumbnail}>
             <Image
               source={
-                item?.imageUrls.length
-                  ? {uri: item?.imageUrls[0]}
+                productInfo?.imageUrls.length
+                  ? {uri: productInfo?.imageUrls[0]}
                   : require('assets/images/default.png')
               }
               resizeMode="cover"
               style={styles.imageThumbnail}
               PlaceholderContent={<ActivityIndicator />}
             />
-            {item?.priceSale < item?.price ? (
+            {productInfo?.priceSale < productInfo?.price ? (
               <View style={styles.wrapTextSale}>
                 <Text style={styles.textSale}>
-                  -{priceSalePercent(item?.price, item?.priceSale)}%
+                  -
+                  {priceSalePercent(productInfo?.price, productInfo?.priceSale)}
+                  %
                 </Text>
               </View>
             ) : null}
           </View>
           <Text numberOfLines={2} style={styles.title}>
-            {item.name}
+            {productInfo.name}
           </Text>
-          {item?.priceSale ? (
+          {productInfo?.priceSale ? (
             <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(item?.priceSale, CURRENCY_VIET_NAM)}
+              {currencyFormat(productInfo?.priceSale, CURRENCY_VIET_NAM)}
             </Text>
           ) : null}
 
           <View style={styles.wrapPriceRoot}>
-            {item?.price ? (
+            {productInfo?.price ? (
               <Text numberOfLines={1} style={styles.priceRoot}>
-                {currencyFormat(item?.price, CURRENCY_VIET_NAM)}
+                {currencyFormat(productInfo?.price, CURRENCY_VIET_NAM)}
               </Text>
             ) : null}
 
-            <ProductLike item={item} />
+            <ProductLike item={productInfo} />
           </View>
         </View>
       </TouchableOpacity>

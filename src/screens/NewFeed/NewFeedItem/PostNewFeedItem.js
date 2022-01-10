@@ -19,6 +19,7 @@ import OutlineButton from '../components/OutlineButton';
 import {tabsSetting} from 'config/navigator';
 
 const PostNewFeedItem = ({
+  showHeader = true,
   newFeedItem,
   targetType,
   allNewFeedsFollowed = [],
@@ -122,6 +123,7 @@ const PostNewFeedItem = ({
   return (
     <View style={styles.container}>
       <NewFeedItemHeader
+        showHeader={showHeader}
         targetId={userId}
         subTitle={address}
         title={name}

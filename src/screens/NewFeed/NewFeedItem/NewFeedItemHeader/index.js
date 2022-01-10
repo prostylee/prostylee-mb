@@ -11,6 +11,7 @@ import {TYPE_STORE} from 'constants';
 import {useSelector} from 'react-redux';
 
 const NewFeedItemHeader = ({
+  showHeader = true,
   avatar,
   title,
   subTitle,
@@ -26,6 +27,9 @@ const NewFeedItemHeader = ({
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
   );
+  if (!showHeader) {
+    return null;
+  }
   return (
     <ContainerView style={styles.headerContainer}>
       <TouchableOpacity onPress={onAvatarPress} style={[styles.headerWrap]}>

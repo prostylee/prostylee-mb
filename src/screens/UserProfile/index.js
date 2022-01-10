@@ -103,7 +103,7 @@ const UserProfile = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.content}>
         <InfoView statistics={statistics} profile={profile} />
-        <ProfileTab />
+        <ProfileTab profile={profile} />
       </ScrollView>
     </ThemeView>
   );

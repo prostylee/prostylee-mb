@@ -16,6 +16,11 @@ export default EStyleSheet.create({
   },
   textLabel: {
     color: '#8B9399',
+    paddingBottom: 8,
+    fontFamily: '$font1',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
   },
   textItemList: {
     left: -16,
@@ -35,6 +40,11 @@ export default EStyleSheet.create({
   },
   buttonOutlinedRed: {
     borderColor: '$red',
+    height: 36,
+    paddingVertical: 0,
+  },
+  buttonOutlinedRedContent: {
+    height: 36,
   },
 
   labelBtnOutlineRed: {
@@ -42,5 +52,6 @@ export default EStyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     fontWeight: '500',
+    marginVertical: 0,
   },
 });

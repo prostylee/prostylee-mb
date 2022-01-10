@@ -89,6 +89,7 @@ import {
   SaveList,
   CropPostProductImage,
   Brand,
+  PostList,
 } from 'screens';
 import BottomTabs from './bottomTab';
 
@@ -194,6 +195,13 @@ function SignedIn() {
       <Stack.Screen name="StoreProfileMain" component={StoreProfileMain} />
       <Stack.Screen name="StoreVouchers" component={StoreVouchers} />
       <Stack.Screen name="Brand" component={Brand} />
+      <Stack.Screen name="PostList" component={PostList} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen name="ResetPassword" component={ResetPassword} />
+      <Stack.Screen
+        name="ResetPasswordViaMail"
+        component={ResetPasswordViaMail}
+      />
     </Stack.Navigator>
   );
 }

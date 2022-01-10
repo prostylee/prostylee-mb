@@ -1,6 +1,8 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Dimensions, Platform} from 'react-native';
+import {flexRow} from 'theme/style';
+
 const barHeight = getStatusBarHeight();
 const {height, width} = Dimensions.get('window');
 const TABS_HEIGHT = 45;
@@ -15,6 +17,25 @@ export default EStyleSheet.create({
     alignItems: 'center',
     paddingBottom: 30,
   },
+  header: {
+    paddingHorizontal: 10,
+    width: '100%',
+  },
+  headerTitle: {
+    fontFamily: '$font1',
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: '500',
+    flex: 1,
+  },
+  rightHeader: {
+    ...flexRow,
+    width: 80,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingRight: 12,
+  },
+
   backgroundImageStyle: {
     width: 500,
     height: 500,
@@ -76,26 +97,24 @@ export default EStyleSheet.create({
     position: 'absolute',
     zIndex: 99,
   },
-  headerProfile: {
-    flexDirection: 'column',
-    backgroundColor: '$white',
-    flex: 1,
-  },
-  headerFull: {
-    position: 'absolute',
-    top: barHeight,
-    zIndex: 100,
-    right: 20,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: 12,
-  },
-  wrapTabView: {
-    height: height - TABS_HEIGHT - HEIGHT_HEADER - ANDROID_HEADER,
-    borderTopWidth: 1,
-    borderColor: '#E9EAEB',
-  },
+  // headerProfile: {
+  //   flexDirection: 'column',
+  //   backgroundColor: '$white',
+  //   flex: 1,
+  // },
+  // headerFull: {
+  //   position: 'absolute',
+  //   top: barHeight,
+  //   zIndex: 100,
+  //   right: 20,
+  //   justifyContent: 'space-between',
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   paddingTop: 12,
+  // },
+  // wrapTabView: {
+  //   height: height - TABS_HEIGHT - HEIGHT_HEADER - ANDROID_HEADER,
+  // },
   userNameText: {
     marginTop: 56,
     fontSize: 20,

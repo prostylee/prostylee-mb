@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 import PropTypes from 'prop-types';
 
 import {StyleSheet, TouchableOpacity, View, Text, Platform} from 'react-native';
@@ -47,7 +47,11 @@ const Header = ({
         leftComponent
       ) : null}
       {title ? (
-        <Text style={isDefault ? styles.titleStyle : titleStyle}>{title}</Text>
+        <Text
+          style={isDefault ? styles.titleStyle : titleStyle}
+          numberOfLines={1}>
+          {title}
+        </Text>
       ) : middleComponent ? (
         middleComponent
       ) : null}
@@ -65,7 +69,7 @@ const Header = ({
 const styles = EStyleSheet.create({
   container: {
     display: 'flex',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '$white',
@@ -73,12 +77,14 @@ const styles = EStyleSheet.create({
     borderBottomColor: '$bgColor',
     paddingBottom: '12rem',
     height: Platform.OS === 'android' ? 91 : 95,
+    paddingTop: getStatusBarHeight(),
   },
   backStyle: {
     paddingLeft: 8,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    height: '100%',
   },
   titleStyle: {
     fontWeight: Platform.OS === 'android' ? '700' : '500',

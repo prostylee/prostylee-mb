@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-
+import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 
 import {
@@ -19,12 +19,15 @@ import {
 import {postOfUserSlector} from 'redux/selectors/user';
 
 import styles from './styles';
+import {EmptyPost} from 'svg/profile';
+import {EmptyComponent} from 'components';
+import i18n from 'i18n';
 
 const {width} = Dimensions.get('window');
 
-const Grid = ({column, wImage, hImage}) => {
+const Grid = ({column, wImage, hImage, userProfile}) => {
   const loadMoreLoading = false;
-
+  const navigation = useNavigation();
   const postOfUser = useSelector((state) => postOfUserSlector(state));
 
   const renderFooter = () => {
@@ -51,9 +54,14 @@ const Grid = ({column, wImage, hImage}) => {
         data={postOfUser?.content || []}
         renderItem={({item}) => (
           <TouchableOpacity
-            activeOpacity={1}
             style={styles.viewImage}
-            onPress={() => {}}>
+            onPress={() =>
+              navigation.navigate('PostList', {
+                profile: userProfile,
+                postOfUser: postOfUser,
+                selectedPost: item,
+              })
+            }>
             <Image
               source={
                 item?.imageUrls.length
@@ -70,6 +78,15 @@ const Grid = ({column, wImage, hImage}) => {
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
         ListFooterComponent={renderFooter}
+        ListEmptyComponent={
+          <EmptyComponent
+            icon={<EmptyPost />}
+            title={i18n.t('mypage.noPost')}
+            subTitle={i18n.t('mypage.noPostSub', {
+              name: userProfile?.username || '',
+            })}
+          />
+        }
         // refreshing={refreshing}
         // onRefresh={handleRefresh}
       />

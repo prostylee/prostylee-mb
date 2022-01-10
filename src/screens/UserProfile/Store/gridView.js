@@ -9,10 +9,13 @@ import ProductItem from 'components/ProductItem';
 import {productByUserSelector} from 'redux/selectors/user';
 
 import styles from './styles';
+import {EmptyProduct} from 'svg/profile';
+import {EmptyComponent} from 'components';
+import i18n from 'i18n';
 
 const {width} = Dimensions.get('window');
 
-const GridView = ({column, wImage, hImage}) => {
+const GridView = ({column, wImage, hImage, userProfile}) => {
   const loadMoreLoading = false;
 
   const productByUser = useSelector((state) => productByUserSelector(state));
@@ -40,6 +43,15 @@ const GridView = ({column, wImage, hImage}) => {
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
         ListFooterComponent={renderFooter}
+        ListEmptyComponent={
+          <EmptyComponent
+            icon={<EmptyProduct />}
+            title={i18n.t('mypage.noProduct')}
+            subTitle={i18n.t('mypage.noProductSub', {
+              name: userProfile?.username || '',
+            })}
+          />
+        }
       />
     </Container>
   );

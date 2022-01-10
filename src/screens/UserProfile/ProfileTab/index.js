@@ -15,6 +15,7 @@ import styles from './styles';
 const initialLayout = {width: Dimensions.get('window').width};
 
 const ProfileTab = (props) => {
+  const userProfile = props?.profile ? props.profile : {};
   const [index, setIndex] = useState(0);
 
   const [routes] = useState([
@@ -25,9 +26,13 @@ const ProfileTab = (props) => {
   const renderScene = ({route, jumpTo}) => {
     switch (route.key) {
       case 'me':
-        return <MeTab index={index} jumpTo={jumpTo} />;
+        return (
+          <MeTab index={index} jumpTo={jumpTo} userProfile={userProfile} />
+        );
       case 'store':
-        return <StoreTab index={index} jumpTo={jumpTo} />;
+        return (
+          <StoreTab index={index} jumpTo={jumpTo} userProfile={userProfile} />
+        );
       default:
         return null;
     }

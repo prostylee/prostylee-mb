@@ -8,8 +8,8 @@ import SettingItem from './SettingItem';
 const Setting = ({navigation}) => {
   return (
     <ThemeView style={styles.container} isFullView>
-      <HeaderFeed title={i18n.t('setting.title')}/>
-      <SettingItem/>
+      <HeaderFeed title={i18n.t('setting.title')} />
+      <SettingItem />
     </ThemeView>
   );
 };

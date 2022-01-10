@@ -24,11 +24,18 @@ export const getListUserOrderByStatus = (payload) => {
 };
 //PRODUCT LIKED API
 export const getListProductLikedService = (payload) => {
-  return _fetch(GET, '/user-likes', {...payload, targetType: 'PRODUCT'});
+  return _fetch(GET, '/user-likes', {
+    ...payload,
+    targetType: 'PRODUCT',
+    sorts: '-createdAt',
+  });
 };
 //PRODUCT SAVED API
 export const getListProductSavedService = (payload) => {
-  return _fetch(GET, '/user-wish-lists', payload);
+  return _fetch(GET, '/user-wish-lists', {
+    ...payload,
+    sorts: '-createdAt',
+  });
 };
 // ORDER DETAILS
 export const getOrderDetails = (id) => {
