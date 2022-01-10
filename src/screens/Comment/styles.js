@@ -11,6 +11,9 @@ export default EStyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  header: {
+    paddingRight: 16,
+  },
   emptyContainer: {
     flex: 1,
     width: WIDTH,
@@ -27,6 +30,28 @@ export default EStyleSheet.create({
   scrollContainer: {
     flex: 1,
     width: WIDTH,
+  },
+
+  title: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingLeft: 5,
+  },
+  avatar: {
+    height: 30,
+    width: 30,
+    borderRadius: 15,
+    paddingLeft: 30,
+  },
+  name: {
+    paddingLeft: 8,
+    color: '$black',
+    fontFamily: '$font1',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
   },
 
   /**
@@ -52,11 +77,6 @@ export default EStyleSheet.create({
     height: '100%',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-  },
-  avatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
   },
   commentInfo: {
     flex: 1,

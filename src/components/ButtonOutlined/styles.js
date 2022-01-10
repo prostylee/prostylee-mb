@@ -21,6 +21,7 @@ const styles = EStyleSheet.create({
     fontFamily: '$font1',
     textAlign: 'center',
     color: '$purple',
+    marginVertical: 0,
   },
   disabledLabel: {
     color: '$white',

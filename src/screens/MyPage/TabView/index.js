@@ -1,71 +1,77 @@
 import styles from './styles';
 import React from 'react';
-import {Bag, Menu} from 'svg/common';
-import {View, TouchableOpacity, Animated} from 'react-native';
+import {Bag, Menu, Heart, BookMark} from 'svg/common';
+import {View, TouchableOpacity} from 'react-native';
 import Order from '../Order';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import GridView from '../GridView';
-import FullView from '../FullView';
-import {Colors} from 'components';
+import {
+  getListProductSaleSelector,
+  getListProductLikedSelector,
+  getListProductSavedSelector,
+} from 'redux/selectors/myPage';
+import {useSelector} from 'react-redux';
 
-const HEADER_HEIGHT = 0;
-
-const TabViewContainer = ({
-  navigation,
-  viewType,
-  style,
-  scrollAnimated,
-  setActivedTab,
-  scrollEnabled,
-  onScroll,
-}) => {
+const TabViewContainer = ({style}) => {
+  const productByUser = useSelector((state) =>
+    getListProductSaleSelector(state),
+  );
+  const productLikeByUser = useSelector((state) =>
+    getListProductLikedSelector(state),
+  );
+  const productSaveByUser = useSelector((state) =>
+    getListProductSavedSelector(state),
+  );
+  const renderItem = (name, active) => {
+    switch (name) {
+      case 'menu':
+        return <Menu color={active ? '#823FFD' : '#8B9399'} />;
+      case 'bag':
+        return <Bag color={active ? '#823FFD' : '#8B9399'} />;
+      case 'like':
+        return <Heart color={active ? '#823FFD' : '#8B9399'} />;
+      case 'save':
+        return <BookMark color={active ? '#823FFD' : '#8B9399'} />;
+      default:
+        return <Menu color={active ? '#823FFD' : '#8B9399'} />;
+    }
+  };
   const RenderLabel = ({tabs, goToPage, activeTab}) => {
-    const translateY = scrollAnimated.interpolate({
-      inputRange: [0, HEADER_HEIGHT],
-      outputRange: [0, -HEADER_HEIGHT],
-      extrapolate: 'clamp',
-    });
     return (
-      <Animated.View style={[{...styles.tabs}, {transform: [{translateY}]}]}>
+      <View style={styles.tabs}>
         {tabs.map((tab, i) => {
           return (
             <TouchableOpacity
               key={tab}
               onPress={() => {
-                setActivedTab(tab);
                 goToPage(i);
               }}
               style={[styles.tab, activeTab == i ? styles.activeTab : null]}>
-              {tab == 'menu' ? (
-                <Menu color={activeTab == i ? '#823FFD' : '#8B9399'} />
-              ) : (
-                <Bag color={activeTab == i ? '#823FFD' : '#8B9399'} />
-              )}
+              {renderItem(tab, activeTab == i)}
             </TouchableOpacity>
           );
         })}
-      </Animated.View>
+      </View>
     );
   };
 
   return (
     <ScrollableTabView
-      style={[style]}
       tabBarUnderlineStyle={{backgroundColor: '#823FFD'}}
       tabBarActiveTextColor="#823FFD"
       initialPage={0}
       renderTabBar={() => <RenderLabel />}>
-      <View
-        style={{flex: 1, backgroundColor: Colors['$bgColor']}}
-        tabLabel={'menu'}>
-        {viewType === 'grid' ? (
-          <GridView scrollEnabled={scrollEnabled} />
-        ) : (
-          <FullView scrollEnabled={scrollEnabled} />
-        )}
+      <View style={{flex: 1}} tabLabel={'menu'}>
+        <GridView />
       </View>
       <View style={{flex: 1, flexDirection: 'column'}} tabLabel={'bag'}>
-        <Order scrollEnabled={scrollEnabled} />
+        <Order productList={productByUser} />
+      </View>
+      <View style={{flex: 1, flexDirection: 'column'}} tabLabel={'like'}>
+        <Order productList={productLikeByUser} />
+      </View>
+      <View style={{flex: 1, flexDirection: 'column'}} tabLabel={'save'}>
+        <Order productList={productSaveByUser} />
       </View>
     </ScrollableTabView>
   );

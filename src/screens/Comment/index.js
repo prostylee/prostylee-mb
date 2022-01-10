@@ -2,12 +2,12 @@ import React from 'react';
 import {
   View,
   Text,
-  FlatList,
+  Image,
   Platform,
   ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
-import {ThemeView, Header} from 'components';
+import {ThemeView, Header, FollowTextButton} from 'components';
 import FeedItem from 'screens/NewFeed/VerticalFeed/item';
 import {useRoute} from '@react-navigation/native';
 import i18n from 'i18n';
@@ -22,7 +22,7 @@ import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {listComments} from 'graphqlLocal/queries';
 import {onCreateComment} from 'graphqlLocal/subscriptions';
 import {showMessage} from 'react-native-flash-message';
-import {FEED_TYPE} from 'constants';
+import {FEED_TYPE, TYPE_USER} from 'constants';
 import {targetTypeSelector} from 'redux/selectors/common';
 
 import styles from './styles';
@@ -40,6 +40,9 @@ const Comment = () => {
   const [goToChild, setGoToChild] = React.useState(false);
 
   const feedId = newFeedItem && newFeedItem.id ? newFeedItem.id : '';
+  const userProfile = newFeedItem?.userResponseLite
+    ? newFeedItem?.userResponseLite
+    : null;
   const DEFAULT_PARENT_COMMENT_ID = `${FEED_TYPE}_${feedId}`; // Rule: <targetType>_<targetId>
 
   React.useEffect(() => {
@@ -128,7 +131,13 @@ const Comment = () => {
   };
 
   const MemoFeed = React.useMemo(() => {
-    return <FeedItem newFeedItem={newFeedItem} targetType={targetType} />;
+    return (
+      <FeedItem
+        newFeedItem={newFeedItem}
+        targetType={targetType}
+        showHeader={false}
+      />
+    );
   }, []);
 
   const ListComment = () => {
@@ -157,7 +166,33 @@ const Comment = () => {
 
   return (
     <ThemeView isFullView>
-      <Header isDefault title={'Comment'} />
+      <Header
+        isDefault
+        title={userProfile ? null : 'Comment'}
+        middleComponent={
+          userProfile ? (
+            <View style={styles.title}>
+              <Image
+                style={styles.avatar}
+                source={{
+                  uri: userProfile?.avatar,
+                }}
+              />
+              <Text style={styles.name}>{userProfile?.fullName}</Text>
+            </View>
+          ) : null
+        }
+        rightComponent={
+          <FollowTextButton
+            item={{
+              followStatusOfUserLogin: newFeedItem?.followStatusOfUserLogin,
+              id: userProfile?.id || 0,
+            }}
+            targetType={TYPE_USER}
+          />
+        }
+        containerStyle={styles.header}
+      />
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>

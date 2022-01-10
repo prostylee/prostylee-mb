@@ -5,6 +5,7 @@ import StoreNewFeedItem from '../NewFeedItem/StoreNewFeedItem';
 import PostNewFeedItem from '../NewFeedItem/PostNewFeedItem';
 
 const VerticalFeedItem = ({
+  showHeader = true,
   newFeedItem,
   targetType,
   allNewFeedsStoreFollowed = [],
@@ -17,6 +18,7 @@ const VerticalFeedItem = ({
   if (targetType === TYPE_USER) {
     return (
       <PostNewFeedItem
+        showHeader={showHeader}
         newFeedItem={newFeedItem}
         targetType={targetType}
         allNewFeedsFollowed={allNewFeedsUserFollowed}

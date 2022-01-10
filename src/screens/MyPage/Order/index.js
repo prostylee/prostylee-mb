@@ -1,215 +1,69 @@
+import React from 'react';
+import {View, FlatList, ActivityIndicator, Dimensions} from 'react-native';
+
+import {ContainerView as Container, Colors} from 'components';
+
+import ProductItem from 'components/ProductItem';
+
 import styles from './styles';
-import React, {useMemo} from 'react';
-import {Linking, ScrollView} from 'react-native';
-import {ListMenu} from 'components';
-import {
-  WaitingIcon,
-  DeliveryIcon,
-  DoneIcon,
-  InhouseIcon,
-  CancelIcon,
-  SaleIcon,
-  SoldIcon,
-  HeartIcon,
-  SaveIcon,
-  SettingIcon,
-  SupportIcon,
-} from 'svg/common';
+import {EmptyProduct} from 'svg/profile';
+import {EmptyComponent} from 'components';
 import i18n from 'i18n';
-import {useDispatch, useSelector} from 'react-redux';
-import {getListUserOrderStatusSelector} from 'redux/selectors/myPage';
-import {myPageActions} from 'reducers';
-import {ORDER_STATUS_ACT_CODE} from 'constants';
+import {userSelectors} from 'reducers';
+import {useSelector} from 'react-redux';
 
-const Order = ({scrollEnabled}) => {
-  const dispatch = useDispatch();
+const {width} = Dimensions.get('window');
 
-  const statusSelector = useSelector((state) =>
-    getListUserOrderStatusSelector(state),
+const GridView = ({column, wImage, hImage, productList}) => {
+  const loadMoreLoading = false;
+  const userProfile = useSelector((state) =>
+    userSelectors.getUserProfile(state),
   );
 
-  let listStatus = statusSelector?.content || [];
-
-  listStatus = listStatus.sort((a, b) => a.id - b.id);
-
-  React.useEffect(() => {
-    dispatch(myPageActions.getUserOrdersStatusList());
-  }, []);
-  const orderMenu = useMemo(() => {
-    if (!listStatus || !listStatus?.length) {
-      return [
-        {
-          icon: <WaitingIcon />,
-          label: i18n.t('mypage.waiting'),
-          navigateScreen: 'Orders',
-          dataPush: {
-            status: 'waiting',
-          },
-        },
-        {
-          icon: <DeliveryIcon />,
-          label: i18n.t('mypage.delivery'),
-          navigateScreen: 'Orders',
-          dataPush: {
-            status: 'delivery',
-          },
-        },
-        {
-          icon: <DoneIcon />,
-          label: i18n.t('mypage.done'),
-          navigateScreen: 'Orders',
-          dataPush: {
-            status: 'done',
-          },
-        },
-        {
-          icon: <InhouseIcon />,
-          label: i18n.t('mypage.inhouse'),
-          navigateScreen: 'Orders',
-          dataPush: {
-            status: 'inhouse',
-          },
-        },
-        {
-          icon: <CancelIcon />,
-          label: i18n.t('mypage.cancel'),
-          navigateScreen: 'Orders',
-          dataPush: {
-            status: 'cancel',
-          },
-        },
-      ];
+  const renderFooter = () => {
+    if (!loadMoreLoading) {
+      return <View style={styles.viewFooter} />;
     }
 
-    let route = listStatus?.map((item) => {
-      switch (item?.actCode) {
-        case ORDER_STATUS_ACT_CODE.WAIT_FOR_PAYMENT: {
-          return {
-            ...item,
-            icon: <WaitingIcon />,
-            label: item?.name,
-            navigateScreen: 'Orders',
-            dataPush: {
-              status: item?.id,
-            },
-          };
-        }
-        case ORDER_STATUS_ACT_CODE.ON_DELIVERY: {
-          return {
-            ...item,
-            icon: <DeliveryIcon />,
-            label: item?.name,
-            navigateScreen: 'Orders',
-            dataPush: {
-              status: item?.id,
-            },
-          };
-        }
-        case ORDER_STATUS_ACT_CODE.COMPLETED: {
-          return {
-            ...item,
-            icon: <DoneIcon />,
-            label: item?.name,
-            navigateScreen: 'Orders',
-            dataPush: {
-              status: item?.id,
-            },
-          };
-        }
-        case ORDER_STATUS_ACT_CODE.PROCESSING: {
-          return {
-            ...item,
-            icon: <InhouseIcon />,
-            label: item?.name,
-            navigateScreen: 'Orders',
-            dataPush: {
-              status: item?.id,
-            },
-          };
-        }
-        case ORDER_STATUS_ACT_CODE.CANCEL_ORDER: {
-          return {
-            ...item,
-            icon: <CancelIcon />,
-            label: item?.name,
-            navigateScreen: 'Orders',
-            dataPush: {
-              status: item?.id,
-            },
-          };
-        }
-        default: {
-          return {
-            ...item,
-            icon: <CancelIcon />,
-            label: item?.name,
-            navigateScreen: 'Orders',
-            dataPush: {
-              status: item?.id,
-            },
-          };
-        }
-      }
-    });
-    return route;
-  }, [JSON.stringify(listStatus)]);
-
-  const productMenu = useMemo(
-    () => [
-      {
-        icon: <SaleIcon />,
-        label: i18n.t('mypage.saleProduct'),
-        navigateScreen: 'SoldList',
-        dataPush: {status: 'sale'},
-      },
-      {
-        icon: <SoldIcon />,
-        label: i18n.t('mypage.soldProduct'),
-        // navigateScreen: 'SoldList',
-        dataPush: {status: 'sold'},
-        disabled: true,
-      },
-    ],
-    [],
-  );
-
-  const settingMenu = useMemo(
-    () => [
-      {
-        icon: <HeartIcon />,
-        label: i18n.t('mypage.wishList'),
-        navigateScreen: 'WishList',
-        dataPush: {},
-      },
-      {
-        icon: <SaveIcon />,
-        label: i18n.t('mypage.saveList'),
-        navigateScreen: 'SaveList',
-        dataPush: {},
-      },
-      {
-        icon: <SettingIcon />,
-        label: i18n.t('mypage.accountSetting'),
-        navigateScreen: 'Setting',
-        dataPush: {},
-      },
-      {
-        icon: <SupportIcon />,
-        label: i18n.t('mypage.support'),
-        onPress: () => Linking.openURL(`tel:099999999`),
-      },
-    ],
-    [],
-  );
+    return (
+      <View style={[styles.viewFooter, styles.viewLoadingFooter]}>
+        <ActivityIndicator animating color={Colors.$purple} size="small" />
+      </View>
+    );
+  };
   return (
-    <ScrollView
-      style={styles.container}
-      scrollEnabled={scrollEnabled !== undefined ? scrollEnabled : false}>
-      <ListMenu title={i18n.t('mypage.orders')} menu={orderMenu} />
-      <ListMenu title={i18n.t('mypage.products')} menu={productMenu} />
-      <ListMenu menu={settingMenu} />
-    </ScrollView>
+    <Container fluid style={styles.container}>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        scrollEnabled={false}
+        numColumns={column}
+        keyExtractor={(_, index) => 'profileMeTab' + index}
+        data={productList?.content || []}
+        renderItem={({item}) => <ProductItem item={item} />}
+        onEndReachedThreshold={0.5}
+        initialNumToRender={10}
+        ListFooterComponent={renderFooter}
+        ListEmptyComponent={
+          <EmptyComponent
+            icon={<EmptyProduct />}
+            title={i18n.t('mypage.noProduct')}
+            subTitle={i18n.t('mypage.noProductSub', {
+              name: userProfile?.username || '',
+            })}
+          />
+        }
+      />
+    </Container>
   );
 };
 
-export default Order;
+GridView.defaultProps = {
+  column: 2,
+  wImage: (width - 48) / 2,
+  hImage: (width - 48) / 2,
+};
+
+GridView.propTypes = {};
+
+export default GridView;

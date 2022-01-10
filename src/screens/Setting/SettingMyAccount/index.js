@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
-  Alert
+  Alert,
 } from 'react-native';
 import {
   Header,
@@ -25,7 +25,7 @@ import I18n from 'i18n';
 import {Field, Formik} from 'formik';
 import {useBackHandler} from '@react-native-community/hooks';
 import {useDispatch, useSelector} from 'react-redux';
-import {userSelectors, userActions} from 'reducers';
+import {userSelectors, userActions, commonActions} from 'reducers';
 import ImagePicker from 'react-native-image-crop-picker';
 import {userTokenSelector} from 'redux/selectors/user';
 import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
@@ -252,156 +252,95 @@ const SettingMyAccount = () => {
   }, []);
 
   //add *
-  const setLabelTextInput = (text,target) =>{
+  const setLabelTextInput = (text, target) => {
     return (
       <Text>
         {text}
-        {target ? (<Text style = {{color: 'red'}}>{'  *'}</Text>) : ('')}
+        {target ? <Text style={{color: 'red'}}>{'  *'}</Text> : ''}
       </Text>
-    )
-  }
+    );
+  };
+
+  const onSubmitResetPass = async (formValues) => {
+    await dispatch(commonActions.toggleLoading(true));
+    await dispatch(
+      userActions.userForgotPassword({
+        email: formValues.email,
+        onSuccess: () => onUserForgotPasswordSuccess(formValues),
+      }),
+    );
+  };
+
+  const onUserForgotPasswordSuccess = async (formValues) => {
+    await dispatch(commonActions.toggleLoading(false));
+    navigation.navigate('ResetPassword', {email: formValues.email});
+  };
+
   //BackHandler handle
   useBackHandler(() => {
-    isChange || userAvatar.name !== ''
-    ? showAlert()
-    : navigation.goBack()
+    isChange || userAvatar.name !== '' ? showAlert() : navigation.goBack();
     return true;
   });
-  
+
   function showAlert() {
     Alert.alert(
-      I18n.t('settingProfile.alertTitle'), I18n.t('settingProfile.alert'),
+      I18n.t('settingProfile.alertTitle'),
+      I18n.t('settingProfile.alert'),
       [
-        { text: I18n.t('settingProfile.alertOK'), onPress: () => {navigation.goBack()}},
-        { text: I18n.t('settingProfile.alertCancel'), onPress: () => { } }
-      ]
-    )
+        {
+          text: I18n.t('settingProfile.alertOK'),
+          onPress: () => {
+            navigation.goBack();
+          },
+        },
+        {text: I18n.t('settingProfile.alertCancel'), onPress: () => {}},
+      ],
+    );
   }
 
   return (
     <ThemeView isFullView style={styles.container}>
-      <KeyboardAvoidingView
-        style={styles.contentContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <Header title={I18n.t('setting.profile')} isDefault preventGobackFunction = {isChange || userAvatar.name !== '' ? showAlert : ''}/>
-        <ScrollView>
-          <View style={styles.imageView}>
-            <Image
-              source={
-                userAvatar?.path
-                  ? {uri: userAvatar?.path}
-                  : require('assets/images/default.png')
-              }
-              style={styles.avatar}
-            />
-            <View style={styles.imageViewButton}>
-              <TouchableOpacity
-                style={styles.buttonView}
-                onPress={() => {
-                  actionSheetRef.current.show();
-                }}>
-                <Camera color="#FFFFFF" />
-                <Text style={styles.imageViewButtonText}>
-                  {I18n.t('settingProfile.changeImage')}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <Formik
-            validateOnMount={true}
-            initialValues={{
-              name,
-              bio,
-              gender,
-              birthday,
-              phone,
-              email,
-            }}
-            enableReinitialize={true}
-            onSubmit={(values) => updateUserProfile(values)}>
-            {({handleSubmit, setFieldValue, values, isValid}) => {
-              const changeBirthday = (value) => {
-                const dateTime = moment(value);
-                const year = dateTime.get('year');
-                const month = dateTime.get('month') + 1;
-                const date = dateTime.get('date');
-                setFieldValue('birthday', `${date}/${month}/${year}`);
-                setTimeout(() => {
-                  phoneRef.current.forceFocus();
-                }, 500);
-              };
-              const birthDayValue = moment(values.birthday, 'DD/MM/YYYY');
-              return (
-                <View style={styles.inputView}>
-                  <Field
-                    component={CustomTextInput}
-                    name="name"
-                    validate={validateFullname}
-                    label={setLabelTextInput(I18n.t('settingProfile.name'),true)}
-                    onChange ={() =>{setisChange(true)}}
-                  />
-                  <Field
-                    component={CustomTextInput}
-                    name="bio"
-                    label={setLabelTextInput(I18n.t('settingProfile.bio'),false)}
-                    onChange ={() =>{setisChange(true)}}
-                  />
-
-                  <View style={styles.viewDivider} />
-
-                  <Field
-                    component={CustomTextInput}
-                    name="gender"
-                    label={setLabelTextInput(I18n.t('settingProfile.gender'),true)}
-                    onFocus={() => {
-                      genderRef.current.togglePicker(true);
-                    }}
-                    onChange ={() =>{setisChange(true)}}
-                  />
-                  <Field
-                    component={CustomTextInput}
-                    name="birthday"
-                    label={setLabelTextInput(I18n.t('settingProfile.birthday'),true)}
-                    onFocus={() => setShowDatePicker(true)}
-                    innerRef={birthdayRef}
-                    onPress={() => setShowDatePicker(true)}
-                    onChange ={() =>{setisChange(true)}}
-                  />
-                  <Field
-                    component={CustomTextInput}
-                    validate={validatePhone}
-                    name="phone"
-                    innerRef={phoneRef}
-                    onValueChange={(value) => {
-                      values.phone = value;
-                      setisChange(true)
-                    }}
-                    label={setLabelTextInput(I18n.t('settingProfile.phone'),true)}
-                    onChange ={() =>{setisChange(true)}}
-                  />
-                  <Field
-                    component={CustomTextInput}
-                    validate={validateEmail}
-                    name="email"
-                    label={setLabelTextInput(I18n.t('settingProfile.email'),true)}
-                    onValueChange = {() => setisChange(true) }
-                    onChange ={() =>{setisChange(true)}}
-                  />
-
-                  <View style={styles.viewDivider} />
-
-                  <Field
-                    component={CustomTextInput}
-                    name="changePass"
-                    label={I18n.t('settingProfile.changePass')}
-                    onChange ={() =>{setisChange(true)}}
-                  />
-                  <View style={styles.viewDivider} />
-                  <View style={styles.viewDivider} />
-
-                  <View style={styles.buttonSave}>
-                    <ButtonRounded
-                      label={I18n.t('settingProfile.buttonSave')}
+      <Formik
+        validateOnMount={true}
+        initialValues={{
+          name,
+          bio,
+          gender,
+          birthday,
+          phone,
+          email,
+        }}
+        enableReinitialize={true}
+        onSubmit={(values) => updateUserProfile(values)}>
+        {({handleSubmit, setFieldValue, values, isValid}) => {
+          const changeBirthday = (value) => {
+            const dateTime = moment(value);
+            const year = dateTime.get('year');
+            const month = dateTime.get('month') + 1;
+            const date = dateTime.get('date');
+            setFieldValue('birthday', `${date}/${month}/${year}`);
+            setTimeout(() => {
+              phoneRef.current.forceFocus();
+            }, 500);
+          };
+          const birthDayValue = moment(values.birthday, 'DD/MM/YYYY');
+          return (
+            <>
+              <KeyboardAvoidingView
+                style={styles.contentContainer}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                <Header
+                  title={I18n.t('setting.profile')}
+                  titleStyle={styles.titleStyle}
+                  leftComponent={
+                    <TouchableOpacity
+                      onPress={navigation.goBack}
+                      style={styles.headerLeft}>
+                      <Text style={styles.headerText}>{I18n.t('cancel')}</Text>
+                    </TouchableOpacity>
+                  }
+                  rightComponent={
+                    <TouchableOpacity
                       onPress={handleSubmit}
                       disabled={
                         !isValid ||
@@ -409,54 +348,196 @@ const SettingMyAccount = () => {
                         values.email === '' ||
                         values.password === ''
                       }
+                      style={styles.headerRight}>
+                      <Text
+                        style={
+                          !isValid ||
+                          values.fullname === '' ||
+                          values.email === '' ||
+                          values.password === ''
+                            ? styles.headerTextDisabled
+                            : styles.headerText
+                        }>
+                        {I18n.t('done')}
+                      </Text>
+                    </TouchableOpacity>
+                  }
+                  preventGobackFunction={
+                    isChange || userAvatar.name !== '' ? showAlert : ''
+                  }
+                />
+                <ScrollView>
+                  <View style={styles.imageView}>
+                    <Image
+                      source={
+                        userAvatar?.path
+                          ? {uri: userAvatar?.path}
+                          : require('assets/images/default.png')
+                      }
+                      style={styles.avatar}
                     />
+                    <View style={styles.imageViewButton}>
+                      <TouchableOpacity
+                        style={styles.buttonView}
+                        onPress={() => {
+                          actionSheetRef.current.show();
+                        }}>
+                        <Camera color="#FFFFFF" />
+                        <Text style={styles.imageViewButtonText}>
+                          {I18n.t('settingProfile.changeImage')}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                  <View style={styles.pickerContainer}>
-                    <RNPickerSelect
-                      ref={genderRef}
-                      onValueChange={(value) => {
-                        setFieldValue('gender', value);
+
+                  <View style={styles.inputView}>
+                    <Field
+                      component={CustomTextInput}
+                      name="name"
+                      validate={validateFullname}
+                      label={setLabelTextInput(
+                        I18n.t('settingProfile.name'),
+                        true,
+                      )}
+                      onChange={() => {
+                        setisChange(true);
                       }}
-                      items={[
-                        {value: I18n.t('male'), label: I18n.t('male')},
-                        {value: I18n.t('female'), label: I18n.t('female')},
-                      ]}
-                      style={styles.pickerContainer}
+                    />
+                    <Field
+                      component={CustomTextInput}
+                      name="bio"
+                      label={setLabelTextInput(
+                        I18n.t('settingProfile.bio'),
+                        false,
+                      )}
+                      onChange={() => {
+                        setisChange(true);
+                      }}
+                    />
+
+                    <Field
+                      component={CustomTextInput}
+                      name="gender"
+                      label={setLabelTextInput(
+                        I18n.t('settingProfile.gender'),
+                        true,
+                      )}
+                      onFocus={() => {
+                        genderRef.current.togglePicker(true);
+                      }}
+                      onChange={() => {
+                        setisChange(true);
+                      }}
+                    />
+                    <Field
+                      component={CustomTextInput}
+                      name="birthday"
+                      label={setLabelTextInput(
+                        I18n.t('settingProfile.birthday'),
+                        true,
+                      )}
+                      onFocus={() => setShowDatePicker(true)}
+                      innerRef={birthdayRef}
+                      onPress={() => setShowDatePicker(true)}
+                      onChange={() => {
+                        setisChange(true);
+                      }}
+                    />
+                    <Field
+                      component={CustomTextInput}
+                      validate={validatePhone}
+                      name="phone"
+                      innerRef={phoneRef}
+                      onValueChange={(value) => {
+                        values.phone = value;
+                        setisChange(true);
+                      }}
+                      label={setLabelTextInput(
+                        I18n.t('settingProfile.phone'),
+                        true,
+                      )}
+                      onChange={() => {
+                        setisChange(true);
+                      }}
+                    />
+                    <Field
+                      component={CustomTextInput}
+                      validate={validateEmail}
+                      name="email"
+                      label={setLabelTextInput(
+                        I18n.t('settingProfile.email'),
+                        true,
+                      )}
+                      onValueChange={() => setisChange(true)}
+                      onChange={() => {
+                        setisChange(true);
+                      }}
+                      editable={email ? false : true}
+                    />
+
+                    <View style={styles.bottomActions}>
+                      <TouchableOpacity
+                        style={styles.bottomActionsBtn}
+                        onPress={() => onSubmitResetPass({email: email})}>
+                        <Text style={styles.bottomActionsText}>
+                          {I18n.t('settingProfile.changePass')}
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={[styles.bottomActionsBtn, styles.paddingTop12]}
+                        onPress={() => navigation.navigate('SettingAddress')}>
+                        <Text style={styles.bottomActionsText}>
+                          {I18n.t('settingProfile.manageAddress')}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.pickerContainer}>
+                      <RNPickerSelect
+                        ref={genderRef}
+                        onValueChange={(value) => {
+                          setFieldValue('gender', value);
+                        }}
+                        items={[
+                          {value: I18n.t('male'), label: I18n.t('male')},
+                          {value: I18n.t('female'), label: I18n.t('female')},
+                        ]}
+                        style={styles.pickerContainer}
+                      />
+                    </View>
+                    <RnDateTimePicker
+                      visible={showDatePicker}
+                      maxDate={new Date()}
+                      onClose={() => {
+                        changeBirthday(birthDayValue);
+                        setShowDatePicker(false);
+                      }}
+                      mode={'date'}
+                      onValueChange={(value) => {
+                        changeBirthday(value);
+                        setShowDatePicker(false);
+                      }}
                     />
                   </View>
-                  <RnDateTimePicker
-                    visible={showDatePicker}
-                    maxDate={new Date()}
-                    onClose={() => {
-                      changeBirthday(birthDayValue);
-                      setShowDatePicker(false);
-                    }}
-                    mode={'date'}
-                    onValueChange={(value) => {
-                      changeBirthday(value);
-                      setShowDatePicker(false);
-                    }}
-                  />
-                </View>
-              );
-            }}
-          </Formik>
-        </ScrollView>
-      </KeyboardAvoidingView>
-      <ActionSheet
-        ref={actionSheetRef}
-        options={PICK_IMAGE_OPTIONS}
-        cancelButtonIndex={CANCEL_INDEX}
-        onPress={(value) => {
-          if (value === 1) {
-            onPickImagePress();
-            return;
-          }
-          if (value === 2) {
-            onCaptureImagePress();
-          }
+                </ScrollView>
+              </KeyboardAvoidingView>
+              <ActionSheet
+                ref={actionSheetRef}
+                options={PICK_IMAGE_OPTIONS}
+                cancelButtonIndex={CANCEL_INDEX}
+                onPress={(value) => {
+                  if (value === 1) {
+                    onPickImagePress();
+                    return;
+                  }
+                  if (value === 2) {
+                    onCaptureImagePress();
+                  }
+                }}
+              />
+            </>
+          );
         }}
-      />
+      </Formik>
     </ThemeView>
   );
 };

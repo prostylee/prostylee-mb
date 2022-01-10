@@ -14,7 +14,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     width: width / 3,
-    paddingRight: 12,
+    paddingRight: 0,
   },
   touch: {
     paddingHorizontal: 8,
