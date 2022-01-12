@@ -1,4 +1,4 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {center, flexRow} from 'theme/style';
 
@@ -33,8 +33,6 @@ export default EStyleSheet.create({
   listInner: {
     height: '100%',
     paddingHorizontal: 10,
-    height: '100%',
-
     alignItems: 'center',
   },
 

@@ -15,6 +15,14 @@ export const types = {
   GET_STORE_INFO: 'GET_STORE_INFO',
   GET_STORE_INFO_SUCCESS: 'GET_STORE_INFO_SUCCESS',
   GET_STORE_INFO_FAILED: 'GET_STORE_INFO_FAILED',
+
+  GET_STORE_STATISTICS: 'GET_STORE_STATISTICS',
+  GET_STORE_STATISTICS_SUCCESS: 'GET_STORE_STATISTICS_SUCCESS',
+  GET_STORE_STATISTICS_FAILED: 'GET_STORE_STATISTICS_FAILED',
+
+  GET_STORE_POST: 'GET_STORE_POST',
+  GET_STORE_POST_SUCCESS: 'GET_STORE_POST_SUCCESS',
+  GET_STORE_POST_FAILED: 'GET_STORE_POST_FAILED',
   //BEST SELLER PRODUCT
   SET_STORE_BESTSELLER_PRODUCT_LOADING: 'SET_STORE_BESTSELLER_PRODUCT_LOADING',
   GET_STORE_BESTSELLER_PRODUCT: 'GET_STORE_BESTSELLER_PRODUCT',
@@ -43,6 +51,14 @@ export const actions = {
   getStoreInfo: createAction(types.GET_STORE_INFO),
   getStoreInfoSuccess: createAction(types.GET_STORE_INFO_SUCCESS),
   getStoreInfoFailed: createAction(types.GET_STORE_INFO_FAILED),
+
+  getStoreStatistics: createAction(types.GET_STORE_STATISTICS),
+  getStoreStatisticsSuccess: createAction(types.GET_STORE_STATISTICS_SUCCESS),
+  getStoreStatisticsFailed: createAction(types.GET_STORE_STATISTICS_FAILED),
+
+  getStorePost: createAction(types.GET_STORE_POST),
+  getStorePostSuccess: createAction(types.GET_STORE_POST_SUCCESS),
+  getStorePostFail: createAction(types.GET_STORE_POST_FAILED),
 
   setStoreBestSellerProductLoading: createAction(
     types.SET_STORE_BESTSELLER_PRODUCT_LOADING,
@@ -86,6 +102,8 @@ export const actions = {
 const defaultState = {
   storeProfileLoading: false,
   storeInfo: null,
+  storeStatistics: null,
+  postList: null,
   bestSellerProductLoading: false,
   bestSellerProduct: null,
   allProductLoading: false,
@@ -108,6 +126,20 @@ export default handleActions(
     },
     [types.GET_STORE_INFO_FAILED]: (state, {payload}) => {
       return {...state, storeInfo: {}};
+    },
+
+    [types.GET_STORE_STATISTICS_SUCCESS]: (state, {payload}) => {
+      return {...state, storeStatistics: payload};
+    },
+    [types.GET_STORE_STATISTICS_FAILED]: (state, {payload}) => {
+      return {...state, storeStatistics: {}};
+    },
+
+    [types.GET_STORE_POST_SUCCESS]: (state, {payload}) => {
+      return {...state, postList: payload};
+    },
+    [types.GET_STORE_POST_FAILED]: (state, {payload}) => {
+      return {...state, postList: {}};
     },
 
     [types.SET_STORE_BESTSELLER_PRODUCT_LOADING]: (state, {payload}) => {

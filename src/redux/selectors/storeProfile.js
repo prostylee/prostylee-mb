@@ -12,6 +12,16 @@ export const getStoreInfoSelector = createSelector(
   (data) => data?.storeInfo || null,
 );
 
+export const getStoreStatisticsSelector = createSelector(
+  storeProfileReducer,
+  (data) => data?.storeStatistics || null,
+);
+
+export const getStorePostSelector = createSelector(
+  storeProfileReducer,
+  (data) => data?.postList || null,
+);
+
 export const getStoreBestSellerProductLoadingSelector = createSelector(
   storeProfileReducer,
   (data) => data.bestSellerProductLoading || false,

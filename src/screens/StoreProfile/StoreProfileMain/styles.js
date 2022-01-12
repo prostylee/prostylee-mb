@@ -1,6 +1,6 @@
-import {Dimensions, Platform} from 'react-native';
+import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {center, flexRow} from 'theme/style';
+import {flexRow} from 'theme/style';
 
 const WIDTH = Dimensions.get('window').width - 30;
 export default EStyleSheet.create({
@@ -8,20 +8,28 @@ export default EStyleSheet.create({
     flex: 1,
     backgroundColor: '$white',
   },
-  contentWrapper: {
+  divider: {
+    width: '100%',
+    height: 6,
     backgroundColor: '$bgColor',
-    // paddingTop: Platform.OS === 'android' ? '78rem' : '80rem',
+  },
+  rightHeader: {
+    ...flexRow,
+    width: 80,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingRight: 12,
+  },
+  contentWrapper: {
+    backgroundColor: '$white',
   },
   headerContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    // alignItems: 'center',
     backgroundColor: '#333333',
-    // opacity: 0.79,
     borderBottomWidth: 0,
     paddingTop: 20,
-    // zIndex: 99,
   },
   animatedHeader: {
     flexDirection: 'column',
@@ -51,8 +59,7 @@ export default EStyleSheet.create({
     paddingLeft: 6,
   },
   headerSearchBarBlack: {
-    maxWidth: WIDTH - 160,
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    marginLeft: 10,
     zIndex: 10,
   },
   headerRightContainer: {
@@ -62,9 +69,6 @@ export default EStyleSheet.create({
     paddingHorizontal: 10,
     maxWidth: 80,
     height: 35,
-
-    // borderWidth: 1,
-    // borderColor: '#fff',
   },
   locationText: {
     fontSize: 14,
@@ -75,7 +79,6 @@ export default EStyleSheet.create({
   searchBarContainer: {
     width: '100%',
     paddingHorizontal: 16,
-    // height: 32,
     marginBottom: 8,
   },
 });

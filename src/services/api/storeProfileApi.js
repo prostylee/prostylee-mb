@@ -4,6 +4,12 @@ import {GET, POST, PUT} from 'constants';
 export const getStoreProfile = (id) => {
   return _fetch(GET, `/stores/${id}`);
 };
+export const getStoreStatistics = (id) => {
+  return _fetch(GET, `/statistics/store/${id}`);
+};
+export const getStorePosts = (payload) => {
+  return _fetch(GET, '/posts', payload);
+};
 export const getStoreBestSellerProduct = (payload) => {
   return _fetch(GET, '/products', {
     ...payload,
