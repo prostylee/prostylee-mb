@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './style';
+import parentStyles from '../styles';
 import {ChevronRight} from 'svg/common';
 import {FlatList} from 'react-native-gesture-handler';
 import VoucherItem from './VoucherItem';
@@ -23,34 +24,42 @@ const VoucherHorizontalList = ({navigation, storeId}) => {
       }),
     );
   }, []);
+  if (!listVoucher?.length) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
-      <View style={styles.wrapTitle}>
-        <Text style={styles.title}>{i18n.t('stores.discountCode')}</Text>
-        <TouchableOpacity
-          style={{flexDirection: 'row'}}
-          onPress={() => {
-            navigation.navigate('StoreVouchers', {
-              storeId: storeId,
-            });
-          }}>
-          <Text style={styles.seeMoreText}>{i18n.t('common.textSeeMore')}</Text>
-          <ChevronRight />
-        </TouchableOpacity>
+    <>
+      <View style={styles.container}>
+        <View style={styles.wrapTitle}>
+          <Text style={styles.title}>{i18n.t('stores.discountCode')}</Text>
+          <TouchableOpacity
+            style={{flexDirection: 'row'}}
+            onPress={() => {
+              navigation.navigate('StoreVouchers', {
+                storeId: storeId,
+              });
+            }}>
+            <Text style={styles.seeMoreText}>
+              {i18n.t('common.textSeeMore')}
+            </Text>
+            <ChevronRight />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.wrapList}>
+          <FlatList
+            data={listVoucher}
+            horizontal
+            renderItem={({item, index}) => (
+              <VoucherItem item={item} index={index} />
+            )}
+            keyExtractor={(item, index) => item.id + '-' + index}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.listInner}
+          />
+        </View>
       </View>
-      <View style={styles.wrapList}>
-        <FlatList
-          data={listVoucher}
-          horizontal
-          renderItem={({item, index}) => (
-            <VoucherItem item={item} index={index} />
-          )}
-          keyExtractor={(item, index) => item.id + '-' + index}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.listInner}
-        />
-      </View>
-    </View>
+      <View style={parentStyles.divider} />
+    </>
   );
 };
 

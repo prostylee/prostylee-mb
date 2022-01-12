@@ -17,6 +17,7 @@ export default {
   resetApp: 'Khởi động lại',
   undefined: 'Không xác định',
   post: 'Bài viết',
+  product: 'Sản phẩm',
   stores: {
     titleTopStore: 'Cửa hàng nổi bật',
     textNear: 'Cửa hàng gần đây',
@@ -40,6 +41,8 @@ export default {
     discountCode: 'Mã giảm giá',
     allProduct: 'Tất cả sản phẩm',
     undefined: 'Không xác định',
+    ratingNum: 'Đánh giá %{count}',
+    post: 'Bài đăng',
   },
   common: {
     textSeeMore: 'Xem thêm',

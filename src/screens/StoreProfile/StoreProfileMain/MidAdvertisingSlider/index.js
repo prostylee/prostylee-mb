@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import styles from './style';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
 import img from 'assets/images/slider1.png';
@@ -14,7 +14,7 @@ const MidAdvertisingSlider = ({banners = []}) => {
           autoplayDelay={3}
           autoplayLoop
           autoplayLoopKeepAnimation
-          scrollEnabled={false}
+          scrollEnabled={true}
           data={banners && banners.length ? banners : [0]}
           showPagination
           paginationStyle={{
@@ -36,7 +36,6 @@ const MidAdvertisingSlider = ({banners = []}) => {
                 source={banners && banners.length ? {uri: item} : img}
                 resizeMode="cover"
               />
-              {/* <Text>{item}</Text> */}
             </View>
           )}
         />
