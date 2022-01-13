@@ -36,6 +36,8 @@ export default EStyleSheet.create({
     color: '#333333',
     borderRadius: 0,
     padding: 0,
+    borderTopLeftRadius: 4,
+    borderBottomLeftRadius: 4,
   },
   minusText: {
     alignItems: 'center',
@@ -55,6 +57,8 @@ export default EStyleSheet.create({
     color: '#333333',
     borderRadius: 0,
     padding: 0,
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
   },
   plusText: {
     alignItems: 'center',

@@ -40,7 +40,7 @@ export default EStyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     lineHeight: 20,
-    color: '$white',
+    color: '$black500',
   },
   storeAddressText: {
     color: '$lightGray',

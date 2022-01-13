@@ -1,12 +1,16 @@
 import styles from './styles';
 import React from 'react';
 import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {Image} from 'components';
 import {RightArrow} from 'svg/common';
 
-const HeaderStore = ({header, navigation}) => {
+const HeaderStore = ({header}) => {
+  const navigation = useNavigation();
   const {storeName, storeId, storeAvatar} = header;
-  const clickItem = () => {};
+  const clickItem = () => {
+    navigation.navigate('StoreProfileMain', {storeId: storeId});
+  };
 
   return (
     <View style={styles.wrapHeader}>

@@ -1,11 +1,10 @@
 import styles from './styles';
 
 import React, {useEffect, useState} from 'react';
-import {View, Text, Dimensions} from 'react-native';
+import {View, Text, Dimensions, FlatList, Image} from 'react-native';
 import {RadioSelectGroup, ButtonRounded} from 'components';
 import {currencyFormat} from 'utils/currency';
 import {CURRENCY_VIET_NAM} from 'constants';
-import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 
 import {useDispatch} from 'react-redux';
 import {cartActions} from 'reducers';
@@ -90,16 +89,16 @@ const ModalChangeCart = ({
     closeModal();
   };
 
-  const renderItem = ({item, index}, parallaxProps) => {
+  const renderItem = ({item, index}) => {
     return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={{uri: item}}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-        />
+      <View
+        style={[
+          styles.item,
+          {
+            marginLeft: index > 0 ? 10 : 0,
+          },
+        ]}>
+        <Image source={{uri: item}} style={styles.imageContainer} />
       </View>
     );
   };
@@ -107,20 +106,27 @@ const ModalChangeCart = ({
   return (
     <View style={styles.container}>
       <View style={styles.carouselImgs}>
-        <View style={styles.carouselContainer}>
-          <Carousel
-            sliderWidth={width}
-            sliderHeight={width}
-            itemWidth={WIDTH_IMAGE}
-            data={imageUrls}
-            renderItem={renderItem}
-            hasParallaxImages={true}
-            scrollEnabled={true}
-            enableSnap={true}
-            enableMomentum={true}
-            decelerationRate={0.9}
-          />
-        </View>
+        <FlatList
+          style={{height: 0}}
+          contentContainerStyle={styles.carouselContainer}
+          keyExtractor={(item, index) => item?.id || index}
+          data={imageUrls}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          decelerationRate={0.993}
+          viewabilityConfig={{
+            itemVisiblePercentThreshold: 50,
+          }}
+          snapToInterval={WIDTH_IMAGE + 10}
+          renderItem={renderItem}
+          getItemLayout={(_, index) => {
+            return {
+              length: WIDTH_IMAGE + 10,
+              offset: (WIDTH_IMAGE + 10) * index,
+              index,
+            };
+          }}
+        />
 
         <View style={styles.wrapInfo}>
           <View style={styles.wrapName}>

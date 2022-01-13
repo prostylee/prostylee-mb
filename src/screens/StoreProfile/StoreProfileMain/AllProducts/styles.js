@@ -1,11 +1,10 @@
-import {Dimensions} from 'react-native';
+import {Platform} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 const ITEM_HEIGHT = 320;
 export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
-    minHeight: ITEM_HEIGHT * 2,
   },
   headerGroupButtonRight: {
     flexDirection: 'row',
@@ -14,6 +13,13 @@ export default EStyleSheet.create({
     alignItems: 'center',
     // borderWidth: 1,
     width: 80,
+  },
+  titleContainer: {
+    backgroundColor: '$white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
   },
   wrapBlockOne: {
     height: 45,
@@ -77,7 +83,6 @@ export default EStyleSheet.create({
     color: '$black600',
     fontFamily: '$font1',
     lineHeight: 20,
-    paddingHorizontal: 16,
     paddingTop: 12,
   },
   viewFooter: {

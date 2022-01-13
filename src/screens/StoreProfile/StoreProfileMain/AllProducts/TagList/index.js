@@ -17,14 +17,14 @@ const TagList = ({onTagPress, options, defaultActiveIndex}, ref) => {
         data={options}
         keyExtractor={(item, index) => `${item.label}-${index}`}
         renderItem={({item, index}) => {
-          const name = item.label ? item.label : item.name ? item.name : '';
+          const name = item.name ? item.name : '';
           return (
             <Chip
               icon={item.icon}
               small
               onPress={() => {
                 setActive(index);
-                onTagPress(item.value);
+                onTagPress({categoryId: item.id});
               }}
               style={[
                 styles.itemChips,

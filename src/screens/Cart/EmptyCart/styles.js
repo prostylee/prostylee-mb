@@ -12,17 +12,17 @@ export default EStyleSheet.create({
   icon: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 5,
   },
   viewTitle: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 5,
+    marginTop: 24,
   },
-  viewsubTitle: {
+  viewSubTitle: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 5,
+    paddingHorizontal: 40,
+    marginTop: 8,
   },
   title: {
     alignItems: 'center',
@@ -35,7 +35,7 @@ export default EStyleSheet.create({
     lineHeight: 28,
     color: '#333333',
   },
-  subtitle: {
+  subTitle: {
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: '$font1',
@@ -49,6 +49,6 @@ export default EStyleSheet.create({
   actionButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
+    marginTop: 24,
   },
 });

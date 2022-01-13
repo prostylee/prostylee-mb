@@ -23,7 +23,7 @@ const EmptyCart = ({
   return (
     <View style={styles.container}>
       <View style={styles.icon}>{icon ? icon : <CartEmpty />}</View>
-      <View style={styles.viewtitle}>
+      <View style={styles.viewTitle}>
         <Text style={styles.title}>{title}</Text>
       </View>
       <View style={styles.viewSubTitle}>

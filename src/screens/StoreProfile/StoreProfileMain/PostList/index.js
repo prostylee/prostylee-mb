@@ -9,13 +9,16 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import {ImageAnimated as Image} from 'components';
+import {ImageAnimated as Image, Title} from 'components';
 
 import {userSelectors} from 'reducers';
 
 import styles from './styles';
 
-import {getStorePostSelector} from 'redux/selectors/storeProfile';
+import {
+  getStoreInfoSelector,
+  getStorePostSelector,
+} from 'redux/selectors/storeProfile';
 import {EmptyPost} from 'svg/profile';
 import {EmptyComponent} from 'components';
 import i18n from 'i18n';
@@ -25,6 +28,7 @@ const {width} = Dimensions.get('window');
 const PostList = ({column, wImage, hImage}) => {
   const navigation = useNavigation();
 
+  const storeInfo = useSelector((state) => getStoreInfoSelector(state));
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
   );
@@ -40,6 +44,22 @@ const PostList = ({column, wImage, hImage}) => {
   return (
     <View style={styles.container}>
       <View style={styles.divider} />
+      <View style={styles.labelContainer}>
+        <Title
+          title={i18n.t('stores.topPost')}
+          style={styles.labelText}
+          containerStyle={{}}
+          subTitle={i18n.t('common.textSeeMore')}
+          subTitleWithIcon={true}
+          onPress={() => {
+            navigation.navigate('PostList', {
+              profile: storeInfo,
+              postOfUser: postListSelector,
+              selectedPost: null,
+            });
+          }}
+        />
+      </View>
       <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -49,17 +69,16 @@ const PostList = ({column, wImage, hImage}) => {
         columnWrapperStyle={styles.viewCol}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         keyExtractor={(item, index) => 'profileMeTab' + index}
-        data={postList || []}
+        data={postList?.slice(0, 6) || []}
         renderItem={({item}) => (
           <TouchableOpacity
             style={styles.viewImage}
-            onPress={
-              () => {}
-              // navigation.navigate('PostList', {
-              //   profile: userProfile,
-              //   postOfUser: {content: postList},
-              //   selectedPost: item,
-              // })
+            onPress={() =>
+              navigation.navigate('PostList', {
+                profile: storeInfo,
+                postOfUser: postListSelector,
+                selectedPost: item,
+              })
             }>
             <Image
               source={
@@ -75,7 +94,7 @@ const PostList = ({column, wImage, hImage}) => {
         )}
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
-        contentContainerStyle={{paddingTop: 10}}
+        contentContainerStyle={{paddingVertical: 10}}
         ListEmptyComponent={
           <EmptyComponent
             icon={<EmptyPost />}

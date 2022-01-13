@@ -184,7 +184,12 @@ const createOrder = function* ({payload}) {
   const getListCart = (state) => state.cart.listCart;
   const userProfile = yield select(getUserProfile);
   const selectedAddress = yield select(getSelectedAddress);
-  const listCart = yield select(getListCart);
+
+  const listCartInStore = yield select(getListCart);
+  const selectedItems = payload.selectedItems || [];
+  const listCart = listCartInStore.filter((item) =>
+    selectedItems?.includes(item.productVarient),
+  );
 
   const processCartData = () => {
     return listCart?.length

@@ -1,6 +1,6 @@
 import styles from './styles';
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {ButtonRounded} from 'components';
@@ -66,6 +66,18 @@ const CardFooter = ({
       totalPrice: totalPrice,
     });
   };
+
+  useEffect(() => {
+    dispatch(cartActions.getListPayment());
+  }, []);
+
+  useEffect(() => {
+    if (paymentList && paymentList?.length && isEmpty(paymentSelected)) {
+      const defaultMethod =
+        paymentList.find((item) => item.id == 1) || paymentList[0];
+      dispatch(cartActions.setPaymentMethodData(defaultMethod.id));
+    }
+  }, [paymentSelected, paymentList]);
 
   const onChangePayment = () => {
     navigation.navigate('PaymentMethodCart');

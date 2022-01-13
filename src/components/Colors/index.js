@@ -26,5 +26,6 @@ export default {
   $bgColorSearch: '#E5E5E5',
   $rateStar: '#F48231',
   $linkBlue: '#3470FB',
+  $blue500: '#3470FB',
   $bgUnReadNoti: 'rgba(130, 63, 253, 0.05)',
 };

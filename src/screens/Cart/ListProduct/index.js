@@ -23,6 +23,7 @@ const ListProduct = ({navigation}) => {
   const dispatch = useDispatch();
   const [refreshing, handleRefreshing] = useState(false);
   const [total, setTotal] = useState(0);
+  const [allItems, setAllItems] = useState([]);
 
   const cart = useSelector((state) => getListCartSelector(state)) || [];
   const isSuggestionLoading =
@@ -90,7 +91,13 @@ const ListProduct = ({navigation}) => {
   );
 
   const onCheckout = () => {
-    navigation.navigate('CheckoutCart');
+    let variantListItems = [];
+    allItems?.forEach((item) => {
+      item?.forEach((innerItem) => {
+        variantListItems.push(innerItem);
+      });
+    });
+    navigation.navigate('CheckoutCart', {selectedItems: variantListItems});
   };
   useEffect(() => {
     if (!isSuggestionLoading && !isRecentLoading) {
@@ -173,12 +180,18 @@ const ListProduct = ({navigation}) => {
             <View style={styles.wrapBody}>
               <FlatList
                 data={groupData}
-                renderItem={({item}) => (
-                  <Product navigation={navigation} product={item} />
+                renderItem={({item, index}) => (
+                  <Product
+                    navigation={navigation}
+                    product={item}
+                    allItems={allItems}
+                    setAllItems={setAllItems}
+                    index={index}
+                  />
                 )}
                 numColumns={1}
                 keyExtractor={(item, index) => `${item.storeId}_${index}`}
-                ListFooterComponent={<RenderFooter />}
+                // ListFooterComponent={<RenderFooter />}
                 style={styles.flatList}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
@@ -194,7 +207,7 @@ const ListProduct = ({navigation}) => {
               actionButton={onCheckout}
               totalPrice={total}
               buttonText={i18n.t('cart.payment')}
-              disabled={false}
+              disabled={allItems?.every((item) => !item?.length)}
             />
           </View>
         </>

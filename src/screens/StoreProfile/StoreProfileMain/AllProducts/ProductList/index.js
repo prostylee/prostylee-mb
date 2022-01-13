@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, FlatList, Text} from 'react-native';
+import {View, Text} from 'react-native';
 
 import styles from './styles';
 
-import ProductItem from './ProductItem';
+import ProductListLayout from './ProductList';
 import {
   getStoreAllProductLoadingSelector,
   getStoreAllProductSelector,
@@ -12,8 +12,7 @@ import {
 import {useSelector} from 'react-redux';
 import i18n from 'i18n';
 import {SearchProductLoading} from 'components/Loading/contentLoader';
-const ITEM_HEIGHT = 320;
-const ProductList = ({navigation}) => {
+const ProductList = ({navigation, layout}) => {
   const loading = useSelector((state) =>
     getStoreAllProductLoadingSelector(state),
   );
@@ -26,15 +25,7 @@ const ProductList = ({navigation}) => {
   const productList = allProductSelector?.content || [];
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          height: productList?.length
-            ? Math.floor(productList.length / 2) * ITEM_HEIGHT
-            : 200,
-        },
-      ]}>
+    <View style={styles.container}>
       {loading && !loadmoreLoading ? (
         <View
           style={{
@@ -52,21 +43,18 @@ const ProductList = ({navigation}) => {
           ))}
         </View>
       ) : productList && productList.length ? (
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          {/* <FlatList
-            contentContainerStyle={styles.listWrapper}
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            paddingBottom: 12,
+          }}>
+          <ProductListLayout
+            layout={layout}
+            navigation={navigation}
+            isLoading={loading && !loadmoreLoading}
             data={productList}
-            numColumns={2}
-            renderItem={({item, index}) => (
-              <ProductItem item={item} index={index} />
-            )}
-            keyExtractor={(item, index) => `${item.id}-${index}`}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-          /> */}
-          {productList.map((item, index) => (
-            <ProductItem item={item} index={index} key={item?.id} />
-          ))}
+          />
         </View>
       ) : (
         <Text style={styles.notFoundText}>
