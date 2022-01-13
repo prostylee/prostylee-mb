@@ -194,8 +194,8 @@ const postSaveVoucher = function* ({payload}) {
 const watcher = function* () {
   yield takeLatest(storeProfileTypes.GET_STORE_INFO, getStoreProfile);
   yield takeLatest(storeProfileTypes.GET_STORE_STATISTICS, getStoreStatistics);
-  yield takeLatest(storeProfileTypes.GET_STORE_POST, getAllStoreProduct);
-  yield takeLatest(storeProfileTypes.GET_ALL_STORE_PRODUCT, getStorePost);
+  yield takeLatest(storeProfileTypes.GET_STORE_POST, getStorePost);
+  yield takeLatest(storeProfileTypes.GET_ALL_STORE_PRODUCT, getAllStoreProduct);
   yield takeLatest(
     storeProfileTypes.GET_ALL_STORE_PRODUCT_LOADMORE,
     getAllStoreProductLoadmore,

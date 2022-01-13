@@ -57,10 +57,12 @@ const Item = ({product, navigation}) => {
                           style={{
                             borderColor: 'rgba(0,0,0,0.1)',
                             borderLeftWidth: idx !== 0 ? 1 : 0,
+                            paddingLeft: idx !== 0 ? 10 : 0,
+                            paddingRight: 10,
                           }}>
                           {/* <Text style={styles.name}>{`${op.label}:`}&nbsp;</Text> */}
                           <Text style={styles.addButtonText}>
-                            {`${idx > 0 ? ' ' : ''}${op.value.attrValue} `}
+                            {op.value.attrValue}
                           </Text>
                         </View>
                       );

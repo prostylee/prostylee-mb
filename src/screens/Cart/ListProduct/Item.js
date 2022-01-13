@@ -1,5 +1,5 @@
 import styles from './styles';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {useDispatch} from 'react-redux';
 import {
@@ -9,23 +9,26 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {Image, NumberInputUpDown} from 'components';
+import {Image, NumberInputUpDown, Colors} from 'components';
 import i18n from 'i18n';
 import HeaderStore from './HeaderStore';
 import {currencyFormat} from 'utils/currency';
 import {getProductPrice} from 'utils/product';
 import Modal from 'react-native-modal';
 import ModalChangeCart from '../ModalChangeCart';
-import {DownArrow, Close} from 'svg/common';
+import {DownArrow, Close, CheckBox} from 'svg/common';
 import {cartActions} from 'reducers';
 import {CURRENCY_VIET_NAM} from 'constants';
 
-const Item = ({product}) => {
+const Item = ({product, allItems = [], setAllItems = () => {}, index}) => {
   const {storeId, storeName, storeAvatar, data} = product;
   const [visible, setVisible] = useState(false);
   const [currentId, setCurrentId] = useState();
   const [currentOptions, setCurrentOptions] = useState([]);
   const [modalProductData, setModalProductData] = useState({});
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const dataVariantList = data?.map((item) => item.productVarient);
 
   const dispatch = useDispatch();
 
@@ -43,6 +46,34 @@ const Item = ({product}) => {
       }),
     );
   };
+
+  const onRemoveStoreItem = () => {
+    Alert.alert(i18n.t('caution'), i18n.t('cart.removeStoreItemPopup'), [
+      {
+        text: i18n.t('confirm'),
+        onPress: () => {
+          data.map((dataItem, index) => {
+            const item = dataItem.item ? dataItem.item : {};
+            dispatch(cartActions.removeItemFromCart(item));
+          });
+        },
+        style: 'destructive',
+      },
+      {
+        text: i18n.t('cancel'),
+        onPress: () => {},
+        style: 'cancel',
+      },
+    ]);
+  };
+
+  useEffect(() => {
+    setAllItems((prev) => {
+      let list = [...prev];
+      list[index] = selectedItems;
+      return list;
+    });
+  }, [selectedItems]);
 
   return (
     <>
@@ -78,14 +109,19 @@ const Item = ({product}) => {
         </View>
       </Modal>
       <View style={styles.wrapSection}>
-        <HeaderStore header={{storeId, storeName, storeAvatar}} />
+        <HeaderStore
+          header={{storeId, storeName, storeAvatar}}
+          onRemove={onRemoveStoreItem}
+          dataVariantList={dataVariantList}
+          selectedItems={selectedItems}
+          setSelectedItems={setSelectedItems}
+        />
         {data.map((dataItem, index) => {
           const productPrice = getProductPrice(dataItem);
           const item = dataItem.item ? dataItem.item : {};
           const productVarient = dataItem.productVarient
             ? dataItem.productVarient
             : '';
-
           const onRemoveItem = () => {
             Alert.alert(i18n.t('caution'), i18n.t('cart.removeItemPopup'), [
               {
@@ -104,6 +140,27 @@ const Item = ({product}) => {
           };
           return (
             <View style={styles.wrapItems} key={`${item.id}-${index}`}>
+              <TouchableOpacity
+                style={styles.checkContainer}
+                onPress={() => {
+                  setSelectedItems((prev) => {
+                    if (prev?.includes(productVarient)) {
+                      const itemIndex = prev?.indexOf(productVarient);
+                      return [
+                        ...prev?.slice(0, itemIndex),
+                        ...prev?.slice(itemIndex + 1),
+                      ];
+                    } else {
+                      return [...prev, productVarient];
+                    }
+                  });
+                }}>
+                {selectedItems?.includes(productVarient) ? (
+                  <CheckBox width={14} height={14} color={Colors['$blue500']} />
+                ) : (
+                  <View style={styles.checkNone} />
+                )}
+              </TouchableOpacity>
               <View style={styles.productItem}>
                 <View style={styles.wrapImageThumbnail}>
                   <Image

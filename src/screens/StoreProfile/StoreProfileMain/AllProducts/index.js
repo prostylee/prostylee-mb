@@ -1,32 +1,24 @@
-import React, {useCallback, useState, useEffect} from 'react';
-import {
-  Dimensions,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  ActivityIndicator,
-} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, ActivityIndicator} from 'react-native';
 import i18n from 'i18n';
 import styles from './styles';
 
-import {Colors, TagList} from 'components';
+import {Colors, ListLayoutSelection} from 'components';
 
 import ProductList from './ProductList';
+import TagList from './TagList';
 
-import {PAGE_DEFAULT, LIMIT_DEFAULT, FILTER_TAGS} from 'constants';
+import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
 
 import {
   getStoreAllProductCurrentPage,
   getStoreAllProductHasLoadmore,
   getStoreAllProductLoadmoreLoadingSelector,
+  getStoreInfoSelector,
 } from 'redux/selectors/storeProfile';
 
 import {storeProfileActions} from 'redux/reducers';
 import {useDispatch, useSelector} from 'react-redux';
-import {userSelectors} from 'reducers';
-import {isNull} from 'lodash-es';
 import {useRoute} from '@react-navigation/native';
 
 const AllProducts = ({
@@ -43,57 +35,24 @@ const AllProducts = ({
   const route = useRoute();
   const storeId = route?.params?.storeId || 1;
 
-  const location = useSelector((state) => userSelectors.getUserLocation(state));
+  const storeInfo = useSelector((state) => getStoreInfoSelector(state));
 
-  const [filterTags, setFilterTags] = useState([
-    {
-      label: 'Gần đây',
-      value: {
-        latitude: location?.lat || 10.806406363857086,
-        longitude: location?.lon || 106.6634168400805,
-      },
-    },
-    {
-      label: 'Best-seller',
-      value: {
-        bestSeller: true,
-      },
-    },
+  const storeCategories =
+    storeInfo?.categoryResponseLites && storeInfo?.categoryResponseLites?.length
+      ? storeInfo?.categoryResponseLites
+      : [];
 
-    {
-      label: 'Sale',
-      value: {
-        sale: true,
-      },
-    },
-  ]);
+  const [filterTags, setFilterTags] = useState(storeCategories);
+  const [layout, setLayout] = useState('full');
 
   useEffect(() => {
-    if (location?.lat && location?.lon) {
-      setFilterTags([
-        {
-          label: 'Gần đây',
-          value: {
-            latitude: location?.lat,
-            longitude: location?.lon,
-          },
-        },
-        {
-          label: 'Best-seller',
-          value: {
-            bestSeller: true,
-          },
-        },
-
-        {
-          label: 'Sale',
-          value: {
-            sale: true,
-          },
-        },
-      ]);
+    if (
+      storeInfo?.categoryResponseLites &&
+      storeInfo?.categoryResponseLites?.length
+    ) {
+      setFilterTags(storeInfo?.categoryResponseLites);
     }
-  }, [location?.lat, location?.lon]);
+  }, [storeInfo]);
 
   const hasLoadMore = useSelector((state) =>
     getStoreAllProductHasLoadmore(state),
@@ -146,13 +105,22 @@ const AllProducts = ({
     setHasLoadmore(hasLoadMore);
   });
   useEffect(() => {
-    if (!loadmoreLoading) setIsEndReached(false);
+    if (!loadmoreLoading) {
+      setIsEndReached(false);
+    }
   }, [loadmoreLoading]);
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{i18n.t('stores.allProduct')}</Text>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>{i18n.t('stores.allProduct')}</Text>
+        <ListLayoutSelection
+          value={layout}
+          leftAction={() => setLayout('grid')}
+          rightAction={() => setLayout('full')}
+        />
+      </View>
       <TagList onTagPress={_handleFilterByTag} options={filterTags} />
-      <ProductList />
+      <ProductList navigation={navigation} layout={layout} />
       {loadmoreLoading ? <Footer /> : null}
     </View>
   );

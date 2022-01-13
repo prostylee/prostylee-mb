@@ -10,12 +10,12 @@ export default EStyleSheet.create({
     flex: 1,
     width: width,
   },
-  carouselContainer: {
-    flex: 1,
-  },
   carouselImgs: {
     flex: 1,
     flexDirection: 'column',
+  },
+  carouselContainer: {
+    paddingHorizontal: 16,
   },
   wrapInfo: {
     flex: 1,
@@ -25,7 +25,6 @@ export default EStyleSheet.create({
     height: HEIGHT_IMAGE,
   },
   imageContainer: {
-    flex: 1,
     // marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
     backgroundColor: 'white',
     borderRadius: 8,

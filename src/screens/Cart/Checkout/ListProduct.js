@@ -11,6 +11,7 @@ import {CartEmpty, DeliveryIcon, DownIcon, RightIcon} from 'svg/common';
 import {currencyFormat} from 'utils/currency';
 import isEmpty from 'lodash/isEmpty';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useRoute} from '@react-navigation/native';
 import {CURRENCY_VIET_NAM} from 'constants';
 import {
   getListCartSelector,
@@ -22,6 +23,8 @@ import {cartActions} from 'reducers';
 
 const ListProduct = ({navigation, data, validateButton}) => {
   const dispatch = useDispatch();
+  const route = useRoute();
+  const selectedItems = route?.params?.selectedItems || [];
   const [refreshing, handleRefreshing] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [total, setTotal] = useState(0);
@@ -231,14 +234,18 @@ const ListProduct = ({navigation, data, validateButton}) => {
         totalMoney: totalPrice(),
         paymentTypeId: paymentSelected,
         shippingProviderId: deliveryMethod?.id,
+        selectedItems: selectedItems,
       }),
     );
     // navigation.navigate('Home');
   };
 
   /* Extract note */
-  const groupDataByStore = (list) => {
-    return list.reduce((acc, product) => {
+  const groupDataByStore = (list, selectedItems) => {
+    const selectedList = list.filter((item) =>
+      selectedItems?.includes(item.productVarient),
+    );
+    return selectedList.reduce((acc, product) => {
       const {item} = product;
       const {storeId, productOwnerResponse} = item;
       const foundIndex = acc.findIndex(
@@ -261,8 +268,8 @@ const ListProduct = ({navigation, data, validateButton}) => {
   };
 
   const groupData = useMemo(
-    () => groupDataByStore(cart),
-    [JSON.stringify(cart)],
+    () => groupDataByStore(cart, selectedItems),
+    [JSON.stringify(cart), selectedItems],
   );
 
   return (

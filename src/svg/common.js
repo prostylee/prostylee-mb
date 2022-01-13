@@ -2782,7 +2782,7 @@ export const DeleteIcon = ({
     />
   </Svg>
 );
-export const Check = ({width = 36, height = 36}) => (
+export const Check = ({width = 36, height = 36, color = '#FFF'}) => (
   <Svg
     width={width}
     height={height}
@@ -2791,8 +2791,29 @@ export const Check = ({width = 36, height = 36}) => (
     xmlns="http://www.w3.org/2000/svg">
     <Path
       d="M30 9L13.5 25.5L6 18"
-      stroke="white"
+      stroke={color}
       strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const CheckBox = ({width = 14, height = 14, color = '#3470FB'}) => (
+  <Svg
+    width={width}
+    height={height}
+    viewBox="0 0 15 14"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <Path
+      d="M0.5 4.8C0.5 3.11984 0.5 2.27976 0.82698 1.63803C1.1146 1.07354 1.57354 0.614601 2.13803 0.32698C2.77976 0 3.61984 0 5.3 0H9.7C11.3802 0 12.2202 0 12.862 0.32698C13.4265 0.614601 13.8854 1.07354 14.173 1.63803C14.5 2.27976 14.5 3.11984 14.5 4.8V9.2C14.5 10.8802 14.5 11.7202 14.173 12.362C13.8854 12.9265 13.4265 13.3854 12.862 13.673C12.2202 14 11.3802 14 9.7 14H5.3C3.61984 14 2.77976 14 2.13803 13.673C1.57354 13.3854 1.1146 12.9265 0.82698 12.362C0.5 11.7202 0.5 10.8802 0.5 9.2V4.8Z"
+      fill={color}
+    />
+    <Path
+      d="M3.5 6.5L6.5 9.5L12 4"
+      stroke="white"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -2910,7 +2931,7 @@ export const Reply = ({width = 20, height = 20, color = '#8B9399'}) => {
   );
 };
 export const TrashIcon = ({
-  height = 24,
+  height = 22,
   width = 24,
   color = '#111111',
   strokeWidth = 1.5,
@@ -2918,32 +2939,32 @@ export const TrashIcon = ({
   <Svg
     width={width}
     height={height}
-    viewBox="0 0 24 24"
+    viewBox="0 0 22 22"
     fill="none"
     xmlns="http://www.w3.org/2000/svg">
     <Path
-      d="M3 6H5H21"
+      d="M2.75 5.5H4.58333H19.25"
       stroke={color}
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <Path
-      d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"
+      d="M7.33337 5.49998V3.66665C7.33337 3.18042 7.52653 2.7141 7.87035 2.37028C8.21416 2.02647 8.68048 1.83331 9.16671 1.83331H12.8334C13.3196 1.83331 13.7859 2.02647 14.1297 2.37028C14.4736 2.7141 14.6667 3.18042 14.6667 3.66665V5.49998M17.4167 5.49998V18.3333C17.4167 18.8195 17.2236 19.2859 16.8797 19.6297C16.5359 19.9735 16.0696 20.1666 15.5834 20.1666H6.41671C5.93048 20.1666 5.46416 19.9735 5.12034 19.6297C4.77653 19.2859 4.58337 18.8195 4.58337 18.3333V5.49998H17.4167Z"
       stroke={color}
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <Path
-      d="M10 11V17"
+      d="M9.16663 10.0833V15.5833"
       stroke={color}
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <Path
-      d="M14 11V17"
+      d="M12.8334 10.0833V15.5833"
       stroke={color}
       strokeWidth="1.5"
       strokeLinecap="round"

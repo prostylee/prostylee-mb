@@ -43,6 +43,7 @@ export default {
     undefined: 'Không xác định',
     ratingNum: 'Đánh giá %{count}',
     post: 'Bài đăng',
+    topPost: 'Bài đăng hàng đầu',
   },
   common: {
     textSeeMore: 'Xem thêm',
@@ -255,6 +256,7 @@ export default {
     seeMore: 'Xem thêm',
     yourAddress: 'Địa điểm của bạn',
     removeItemPopup: 'Xoá sản phẩm khỏi giỏ hàng?',
+    removeStoreItemPopup: 'Xoá sản phẩm của cửa hàng khỏi giỏ hàng?',
     addressListEmpty: 'Xin hãy thiết lập địa chỉ giao hàng!',
     selectPayment: 'Chọn phương thức thanh toán',
     addToCartSuccess: 'Thêm vào giỏ hàng thành công',

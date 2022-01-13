@@ -25,6 +25,7 @@ const ProductList = ({navigation}) => {
       {listBestSeller && listBestSeller.length ? (
         <FlatList
           contentContainerStyle={styles.listWrapper}
+          style={{width: '100%'}}
           horizontal
           data={listBestSeller}
           numColumns={1}

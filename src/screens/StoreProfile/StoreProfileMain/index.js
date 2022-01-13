@@ -19,7 +19,6 @@ import {storeProfileActions} from 'redux/reducers';
 import {
   getStoreLoadingSelector,
   getStoreInfoSelector,
-  getStorePostSelector,
 } from 'redux/selectors/storeProfile';
 
 import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
@@ -159,7 +158,7 @@ const StoreProfileMain = (props) => {
         middleComponent={
           <SearchBar
             style={styles.headerSearchBarBlack}
-            color="#fff"
+            color="#333"
             placeholder={i18n.t('Search.searchInStore')}
             onChangeText={onChangeSearch}
             placeholderTextColor="#8B9399"
@@ -188,6 +187,7 @@ const StoreProfileMain = (props) => {
         <BestSeller />
         <View style={styles.divider} />
         <PostList />
+        <View style={styles.divider} />
         <AllProducts
           navigation={navigation}
           isEndReached={isEndReached}

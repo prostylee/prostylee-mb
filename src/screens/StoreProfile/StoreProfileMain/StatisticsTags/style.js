@@ -48,7 +48,7 @@ export default EStyleSheet.create({
     color: '$black',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 4,
     paddingHorizontal: 10,
     textAlign: 'center',
   },

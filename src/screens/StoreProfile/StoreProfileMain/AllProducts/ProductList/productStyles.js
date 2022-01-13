@@ -1,24 +1,46 @@
+import {Platform, Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+const WIDTH = Dimensions.get('window').width;
 export default EStyleSheet.create({
   directionColumn: {flexDirection: 'column'},
   container: {
-    flex: 1,
-    backgroundColor: '$white',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    marginTop: 8,
+  },
+  tabUnderLine: {
+    backgroundColor: '$purple',
+    height: 2,
+  },
+  tabText: {
+    fontSize: 14,
+    fontWeight: '500',
+    textAlign: 'center',
   },
   titleContainer: {
-    padding: 16,
+    paddingHorizontal: 16,
     backgroundColor: '$white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: Platform.OS === 'android' ? '700' : '600',
     color: '$black',
+    fontFamily: '$font1',
   },
   listWrapper: {
+    paddingTop: 10,
     backgroundColor: '$white',
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  listLoadingWrapper: {
+    flexDirection: 'row',
+    paddingBottom: 16,
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
   },
   itemWrapper: {
     width: '$screenWidth/2',
@@ -93,10 +115,33 @@ export default EStyleSheet.create({
     fontWeight: '500',
     color: '$white',
   },
+  listFooterContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 50,
+  },
   notFoundText: {
     fontSize: 14,
     fontWeight: '400',
     color: '$lightGray',
-    alignSelf: 'center',
+  },
+
+  itemGridWrapper: {
+    width: (WIDTH - 24 - 8) / 3,
+    height: (((WIDTH - 24 - 8) / 3) * 3) / 2,
+    borderRadius: 4,
+    marginBottom: 4,
+    position: 'relative',
+  },
+  imageGridStyle: {
+    width: (WIDTH - 24 - 8) / 3,
+    height: (((WIDTH - 24 - 8) / 3) * 3) / 2,
+    borderRadius: 4,
+  },
+  toolGridContainer: {
+    position: 'absolute',
+    bottom: 7,
+    right: 7,
   },
 });
