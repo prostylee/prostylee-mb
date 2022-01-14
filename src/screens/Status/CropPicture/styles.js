@@ -1,4 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {dim} from 'utils/common';
 
 const WIDTH = dim.width;
@@ -6,6 +7,7 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
+    paddingBottom: 12,
   },
   safeAreaTopStyle: {
     backgroundColor: '$bgColor',
@@ -19,7 +21,7 @@ export default EStyleSheet.create({
     height: 24,
   },
   headerContainer: {
-    height: 44,
+    height: 44 + getStatusBarHeight(),
     paddingBottom: 0,
     display: 'flex',
     alignItems: 'center',

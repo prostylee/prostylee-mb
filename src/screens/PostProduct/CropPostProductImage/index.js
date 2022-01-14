@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import i18n from 'i18n';
-import {ContainerWithoutScrollView} from 'components';
+import {ThemeView, Header} from 'components';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {hasNotch} from 'react-native-device-info';
 import {
@@ -25,7 +25,6 @@ import {useBackHandler} from '@react-native-community/hooks';
 import {CropView} from 'react-native-image-crop-tools';
 import ImageCropper from '@locnguyen309/react-native-simple-image-crop';
 import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
-import {Header} from 'components';
 import {commonActions} from 'reducers';
 import {useDispatch} from 'react-redux';
 
@@ -436,29 +435,25 @@ const CropPostProductImage = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <ContainerWithoutScrollView
-        safeAreaTopStyle={styles.safeAreaTopStyle}
-        bgStatusBar={colors['$bgColor']}>
-        <Header
-          isDefault
-          title={''}
-          containerStyle={styles.headerContainer}
-          leftIcon={<Image source={IC_BACK} style={styles.headerImage} />}
-          rightComponent={
-            <TouchableOpacity style={styles.cropButton} onPress={cropAllImage}>
-              <Text style={styles.cropText}>
-                {isCropList
-                  ? i18n.t('addProduct.cropAll')
-                  : i18n.t('addProduct.cropSingle')}
-              </Text>
-            </TouchableOpacity>
-          }
-        />
-        <View style={styles.mainWrapper}>{CropImagesList}</View>
-        {isCropList ? <ThumbImagesList /> : null}
-      </ContainerWithoutScrollView>
-    </View>
+    <ThemeView style={styles.container} isFullView>
+      <Header
+        isDefault
+        title={''}
+        containerStyle={styles.headerContainer}
+        leftIcon={<Image source={IC_BACK} style={styles.headerImage} />}
+        rightComponent={
+          <TouchableOpacity style={styles.cropButton} onPress={cropAllImage}>
+            <Text style={styles.cropText}>
+              {isCropList
+                ? i18n.t('addProduct.cropAll')
+                : i18n.t('addProduct.cropSingle')}
+            </Text>
+          </TouchableOpacity>
+        }
+      />
+      <View style={styles.mainWrapper}>{CropImagesList}</View>
+      {isCropList ? <ThumbImagesList /> : null}
+    </ThemeView>
   );
 };
 
