@@ -58,7 +58,7 @@ const NewFeedItemHeader = ({
           ) : null}
         </View>
       </TouchableOpacity>
-      {userProfile.id !== targetId ? (
+      {userProfile?.id !== targetId ? (
         <View
           style={{
             paddingBottom: isAdvertising || Boolean(subTitle) ? 20 : 0,

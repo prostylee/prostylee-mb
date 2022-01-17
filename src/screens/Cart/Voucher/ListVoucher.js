@@ -5,6 +5,7 @@ import {Animated, View, ActivityIndicator, FlatList, Text} from 'react-native';
 
 import {Colors} from 'components';
 import Item from './Item';
+import EmptyCart from '../EmptyCart';
 import {CategoriesLeftLoading} from 'components/Loading/contentLoader';
 import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
@@ -18,6 +19,7 @@ import {
 } from 'redux/selectors/cart';
 
 import {cartActions} from 'redux/reducers';
+import {EmptyVoucher} from 'svg/common';
 
 import {LIMIT_DEFAULT, PAGE_DEFAULT} from 'constants';
 
@@ -103,12 +105,19 @@ const ListVoucher = ({navigation, params}) => {
           )}
         </>
       ) : !loading && listVoucher.length === 0 ? (
-        <View style={styles.emptyList}>
-          <Text style={styles.emptyListTitle}>
-            {i18n.t('voucher.noVoucherList')}
-          </Text>
-        </View>
+        <EmptyCart
+          navigation={navigation}
+          icon={<EmptyVoucher />}
+          title={i18n.t('cart.voucherNotfound')}
+          subTitle={i18n.t('cart.voucherSubNotFound')}
+          buttonText={i18n.t('cart.voucherShoppingNow')}
+        />
       ) : (
+        // <View style={styles.emptyList}>
+        //   <Text style={styles.emptyListTitle}>
+        //     {i18n.t('voucher.noVoucherList')}
+        //   </Text>
+        // </View>
         <FlatList
           contentContainerStyle={styles.listInner}
           data={listVoucher}

@@ -72,7 +72,7 @@ const Item = ({product, navigation}) => {
               </View>
               <View style={styles.wrapAmount}>
                 <Text numberOfLines={2} style={styles.count}>
-                  x{dataItem?.quantity || 0}
+                  SL : x{dataItem?.quantity || 0}
                 </Text>
               </View>
             </View>

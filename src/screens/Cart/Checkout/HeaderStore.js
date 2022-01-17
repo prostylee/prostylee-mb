@@ -25,7 +25,7 @@ const HeaderStore = ({header}) => {
         PlaceholderContent={<ActivityIndicator />}
       />
       <TouchableOpacity onPress={clickItem} style={styles.storeName}>
-        <Text style={styles.storeNameText}>&nbsp;{storeName}&nbsp;</Text>
+        <Text style={styles.storeNameText}>{storeName}</Text>
         <RightArrow />
       </TouchableOpacity>
     </View>

@@ -50,14 +50,25 @@ export default EStyleSheet.create({
 
   wrapSize: {flex: 0.5},
   wrapUpdown: {flex: 0.5, alignItems: 'flex-end'},
-  storeName: {flex: 1, alignItems: 'center', flexDirection: 'row'},
-  storeNameText: {fontSize: 11, lineHeight: 16},
+  storeName: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 6,
+  },
+  storeNameText: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontFamily: '$font1',
+    fontWeight: '500',
+    paddingRight: 6,
+  },
   storeAvatar: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 16,
-    width: 16,
-    borderRadius: 8,
+    height: 22,
+    width: 22,
+    borderRadius: 11,
   },
   modal: {
     justifyContent: 'flex-end',
@@ -133,15 +144,22 @@ export default EStyleSheet.create({
   },
   labelTotal: {
     color: '#8B9399',
-    fontSize: 11,
-    lineHeight: 16,
+    fontSize: 13,
+    lineHeight: 18,
     fontWeight: '400',
+    fontFamily: '$font1',
   },
   valueTotal: {
     color: '#333333',
-    fontSize: 11,
-    lineHeight: 16,
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
+  },
+  valueTotalRed: {
+    color: '#EA3F49',
+  },
+  valueTotalBlue: {
+    color: '#2F80ED',
   },
   wrapRadioGroup: {
     flexDirection: 'row',
@@ -222,6 +240,7 @@ export default EStyleSheet.create({
   wrapTitleChosen: {flexDirection: 'column'},
   wrapContentChosen: {
     flexDirection: 'row',
+    paddingTop: 4,
   },
   titleChosen: {
     color: '$black',
@@ -231,9 +250,10 @@ export default EStyleSheet.create({
   },
   contentChosen: {
     color: '$lightGray',
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 13,
+    lineHeight: 18,
     fontWeight: '400',
+    fontFamily: '$font1',
   },
   priceRadioChosen: {
     color: '$red',
@@ -277,7 +297,7 @@ export default EStyleSheet.create({
   },
   wrapAmount: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
   wrapTextSale: {
     position: 'absolute',
@@ -300,7 +320,6 @@ export default EStyleSheet.create({
     height: 102,
     width: 77,
     borderRadius: 4,
-
     borderColor: '#E9EAEB',
   },
   name: {
@@ -344,5 +363,11 @@ export default EStyleSheet.create({
   },
   listInner: {
     paddingBottom: '40rem + 100',
+  },
+  count: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontFamily: '$font1',
+    fontWeight: '400',
   },
 });

@@ -30,6 +30,7 @@ export default EStyleSheet.create({
   },
   wrapRadioTitle: {
     flexDirection: 'column',
+    paddingTop: 6,
   },
 
   wrapRadioSub: {

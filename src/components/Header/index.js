@@ -75,8 +75,8 @@ const styles = EStyleSheet.create({
     backgroundColor: '$white',
     borderBottomWidth: 1,
     borderBottomColor: '$bgColor',
-    paddingBottom: '12rem',
-    height: Platform.OS === 'android' ? 91 : 95,
+    paddingBottom: 10,
+    height: 44 + getStatusBarHeight(),
     paddingTop: getStatusBarHeight(),
   },
   backStyle: {
@@ -89,6 +89,7 @@ const styles = EStyleSheet.create({
   titleStyle: {
     fontWeight: Platform.OS === 'android' ? '700' : '500',
     fontSize: 16,
+    lineHeight: 24,
     fontFamily: '$font1',
     letterSpacing: -0.02,
   },

@@ -3,8 +3,7 @@ import styles from './styles';
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {ButtonRounded} from 'components';
-import {Chip} from 'react-native-paper';
+import {ButtonRounded, Colors} from 'components';
 import i18n from 'i18n';
 import isEmpty from 'lodash/isEmpty';
 import {CreditSvg, CouponSvg, RightArrow} from 'svg/common';
@@ -100,7 +99,7 @@ const CardFooter = ({
                     ? paymentUsed[0].name
                     : i18n.t('cart.selectPayment')}
                 </Text>
-                <RightArrow />
+                <RightArrow color={Colors['$black']} />
               </View>
             </TouchableOpacity>
           </View>
@@ -111,21 +110,21 @@ const CardFooter = ({
               onPress={onChangeVoucher}>
               <View style={styles.labelCoupon}>
                 {voucher ? (
-                  <>
+                  <View style={styles.labelCoupon}>
                     <CouponSvg />
-                    <Chip style={styles.wrapChip} onClose={onRemoveCoupon}>
+                    <View style={styles.wrapChip}>
                       <Text style={styles.chipText}>&nbsp;{voucher?.code}</Text>
-                    </Chip>
-                  </>
+                    </View>
+                  </View>
                 ) : (
-                  <>
+                  <View style={styles.labelCoupon}>
                     <CouponSvg />
-                    <Chip style={styles.wrapChip}>
+                    <View style={styles.wrapChip}>
                       <Text style={styles.chipText}>
                         &nbsp;&nbsp;Mã giảm giá
                       </Text>
-                    </Chip>
-                  </>
+                    </View>
+                  </View>
                 )}
               </View>
             </TouchableOpacity>
@@ -145,6 +144,9 @@ const CardFooter = ({
             onPress={handlePress}
             compact={false}
             style={styles.btnCheckout}
+            contentStyle={{
+              height: 40,
+            }}
             label={buttonText}
             disabled={
               disabled ||

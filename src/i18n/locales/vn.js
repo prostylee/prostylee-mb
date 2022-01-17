@@ -264,6 +264,10 @@ export default {
       'Xin hãy chọn phương thức thanh toán và vận chuyển trước khi xem mã giảm giá!',
     addVoucherSuccess: 'Đã thêm mã khuyến mãi!',
     addVoucherFail: 'Mã khuyến mãi không phù hợp, xin hãy chọn mã khác!',
+    voucherNotfound: 'Chưa có mã khuyến mãi nào',
+    voucherSubNotFound:
+      'Những mã khuyến mãi hấp dẫn sẽ đến với bạn trong thời gian sớm nhất',
+    voucherShoppingNow: 'Quay lại thanh toán',
   },
   error: {
     cannotUploadImage:

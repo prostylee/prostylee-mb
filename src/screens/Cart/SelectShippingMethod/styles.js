@@ -21,6 +21,8 @@ export default EStyleSheet.create({
 
   wrapList: {
     width: '100%',
+    paddingHorizontal: 16,
+    backgroundColor: '$white',
   },
 
   wrapAccordion: {
@@ -30,13 +32,21 @@ export default EStyleSheet.create({
     marginBottom: 5,
     marginTop: 5,
   },
-  titleCollapseHeader: {
+  titleTop: {
+    paddingVertical: 12,
+    paddingLeft: 26,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     backgroundColor: '$white',
-    color: '$lightGray',
+  },
+  titleCollapseHeader: {
+    color: '$black',
     fontSize: 14,
     lineHeight: 20,
     fontWeight: '400',
-    padding: 16,
+    paddingLeft: 6,
   },
   wrapRadioGroup: {
     display: 'flex',
@@ -49,6 +59,7 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: '#F4F5F5',
+    alignItems: 'flex-start',
     backgroundColor: '$white',
   },
   wrapLabelRadioButton: {
@@ -57,6 +68,8 @@ export default EStyleSheet.create({
     justifyContent: 'flex-start',
     textAlign: 'left',
     width: '100%',
+    paddingBottom: 0,
+    height: 40,
   },
   wrapRadio: {
     display: 'flex',
@@ -66,7 +79,9 @@ export default EStyleSheet.create({
   },
 
   wrapRadioTitle: {
-    flexDirection: 'column',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 
   wrapRadioSub: {
@@ -86,22 +101,26 @@ export default EStyleSheet.create({
   },
 
   titleRadio: {
-    color: '#333333',
+    fontFamily: '$font1',
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
-    fontSize: 11,
-    lineHeight: 16,
+    color: '$black',
   },
   priceRadio: {
     color: '$red',
     fontWeight: '400',
-    fontSize: 11,
-    lineHeight: 16,
+    fontSize: 14,
+    lineHeight: 20,
+    fontFamily: '$font1',
   },
   contentRadio: {
-    color: '#8B9399',
+    fontFamily: '$font1',
+    fontSize: 14,
+    lineHeight: 20,
     fontWeight: '400',
-    fontSize: 11,
-    lineHeight: 16,
+    color: '$lightGray',
+    paddingTop: 4,
   },
 
   bottomButton: {
