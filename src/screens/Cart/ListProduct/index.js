@@ -2,7 +2,7 @@ import styles from './styles';
 import React, {useRef, useEffect, useMemo, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
-import {View, FlatList, Animated, Text} from 'react-native';
+import {View, FlatList, Animated, Text, Dimensions} from 'react-native';
 import Product from './Item';
 import EmptyCart from '../EmptyCart';
 import CardFooter from '../CardFooter';
@@ -171,6 +171,8 @@ const ListProduct = ({navigation}) => {
       setTotal(sum);
     }
   }, [JSON.stringify(cart)]);
+
+  console.log('Dimensions', Dimensions.get('window').width);
 
   return (
     <View style={styles.container}>

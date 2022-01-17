@@ -16,10 +16,12 @@ const styles = EStyleSheet.create({
   },
 
   labelStyle: {
-    fontSize: '$mediumText',
+    fontSize: '$largeText',
     fontFamily: '$font1',
     textAlign: 'center',
     color: '$white',
+    marginVertical: 0,
+    fontWeight: '500',
   },
 });
 

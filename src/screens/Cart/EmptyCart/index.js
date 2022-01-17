@@ -30,7 +30,11 @@ const EmptyCart = ({
         <Text style={styles.subTitle}>{subTitle}</Text>
       </View>
       <View style={styles.actionButton}>
-        <ButtonOutlined onPress={handlePress} label={buttonText} />
+        <ButtonOutlined
+          onPress={handlePress}
+          label={buttonText}
+          contentStyle={{height: 40}}
+        />
       </View>
     </View>
   );

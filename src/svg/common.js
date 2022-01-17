@@ -300,7 +300,7 @@ export const ChevronLeft = ({
   width = 24,
   height = 24,
   color = 'black',
-  strokeWidth = 1.5,
+  strokeWidth = 2,
 }) => {
   return (
     <Svg
@@ -2104,7 +2104,7 @@ export const LocationIcon = (props) => (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M8 15.333s6-4 6-8.666a6 6 0 10-12 0c0 4.666 6 8.666 6 8.666zm2-8.666a2 2 0 11-4 0 2 2 0 014 0z"
-      fill="#8B9399"
+      fill={props?.color ? props.color : '#8B9399'}
     />
   </Svg>
 );
@@ -2972,3 +2972,52 @@ export const TrashIcon = ({
     />
   </Svg>
 );
+
+export const EmptyVoucher = ({width = 64, height = 64}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <G clipPath="url(#clip0_10139_53980)">
+        <Path
+          d="M25.3715 21.0315C25.3715 19.7517 25.9839 18.5492 27.0188 17.7965L38.7776 9.24467C40.1802 8.2246 42.0804 8.2246 43.483 9.24468L55.2418 17.7965C56.2768 18.5492 56.8891 19.7517 56.8891 21.0315V56.5405C56.8891 58.7496 55.0982 60.5405 52.8891 60.5405H29.3715C27.1624 60.5405 25.3715 58.7496 25.3715 56.5405V21.0315Z"
+          fill="url(#paint0_linear_10139_53980)"
+        />
+        <Path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M28.9474 3.00094C27.6747 3.13531 26.5432 3.87053 25.9033 4.97882L4.31518 42.3706C3.21061 44.2838 3.86611 46.7301 5.77928 47.8347L31.1834 62.5018C33.0966 63.6064 35.5429 62.9509 36.6475 61.0377L58.2357 23.6459C58.8755 22.5376 58.9465 21.1901 58.4265 20.0207L51.0579 3.4493C50.3533 1.86459 48.7077 0.914502 46.983 1.09661L28.9474 3.00094ZM37.9969 21.3662C40.4319 22.772 43.5455 21.9377 44.9514 19.5027C46.3572 17.0677 45.5229 13.9541 43.0879 12.5483C40.6529 11.1424 37.5393 11.9767 36.1334 14.4117C34.7276 16.8467 35.5619 19.9603 37.9969 21.3662Z"
+          fill="url(#paint1_linear_10139_53980)"
+        />
+      </G>
+      <Defs>
+        <LinearGradient
+          id="paint0_linear_10139_53980"
+          x1="40.8889"
+          y1="16"
+          x2="52.4444"
+          y2="58.6667"
+          gradientUnits="userSpaceOnUse">
+          <Stop stopColor="#FEF3ED" />
+          <Stop offset="1" stopColor="#FFB0A2" />
+        </LinearGradient>
+        <LinearGradient
+          id="paint1_linear_10139_53980"
+          x1="49.403"
+          y1="1.6104"
+          x2="18.4813"
+          y2="55.1682"
+          gradientUnits="userSpaceOnUse">
+          <Stop stopColor="#FE9452" />
+          <Stop offset="1" stopColor="#EF3333" />
+        </LinearGradient>
+        <ClipPath id="clip0_10139_53980">
+          <Rect width="64" height="64" fill="white" />
+        </ClipPath>
+      </Defs>
+    </Svg>
+  );
+};

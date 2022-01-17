@@ -2,6 +2,7 @@ import styles from './styles';
 import React from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import {LocationIcon} from 'svg/common';
+import {Colors} from 'components';
 import isEmpty from 'lodash/isEmpty';
 import i18n from 'i18n';
 import {useSelector} from 'react-redux';
@@ -20,7 +21,7 @@ const CardAddress = ({navigation}) => {
     <View style={styles.wrapAddress}>
       <View style={styles.wrapAddressHeader}>
         <View style={styles.wrapLabelAddress}>
-          <LocationIcon />
+          <LocationIcon color={Colors['$black']} />
           <Text style={styles.labelAddress}>
             &nbsp;{i18n.t('cart.yourAddress')}
           </Text>

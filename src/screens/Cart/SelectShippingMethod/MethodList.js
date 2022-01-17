@@ -12,6 +12,7 @@ import {
 } from 'redux/selectors/cart';
 import {cartActions} from 'reducers';
 import {ButtonRounded} from 'components';
+import {DeliveryIcon} from 'svg/common';
 import {CURRENCY_VIET_NAM} from 'constants';
 
 const ListProduct = ({navigation, validateButton}) => {
@@ -35,9 +36,13 @@ const ListProduct = ({navigation, validateButton}) => {
   const renderFooter = () => {
     return (
       <View style={styles.wrapAccordion}>
-        <Text style={styles.titleCollapseHeader}>
-          &nbsp;{i18n.t('cart.deliveryMethod')}
-        </Text>
+        <View style={styles.titleTop}>
+          <DeliveryIcon />
+          <Text style={styles.titleCollapseHeader}>
+            &nbsp;{i18n.t('cart.deliveryMethod')}
+          </Text>
+        </View>
+
         <View>
           <RadioButton.Group
             onValueChange={onChangeDelivery}
@@ -70,19 +75,18 @@ const ListProduct = ({navigation, validateButton}) => {
           <View>
             <View style={styles.wrapRadioTitle}>
               <Text style={styles.titleRadio}>{item.description}</Text>
+              <Text style={styles.priceRadio}>
+                {item.price
+                  ? currencyFormat(item.price, CURRENCY_VIET_NAM)
+                  : i18n.t('cart.freeShip')}
+              </Text>
             </View>
           </View>
           <View style={styles.wrapRadioContent}>
-            <Text style={styles.contentRadio}>{item.deliveryTime}</Text>
+            <Text numberOfLines={1} style={styles.contentRadio}>
+              {item.deliveryTime}
+            </Text>
           </View>
-        </View>
-
-        <View style={styles.wrapPrice}>
-          <Text style={styles.priceRadio}>
-            {item.price
-              ? currencyFormat(item.price, CURRENCY_VIET_NAM)
-              : i18n.t('cart.freeShip')}
-          </Text>
         </View>
       </View>
     );

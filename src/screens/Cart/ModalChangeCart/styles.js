@@ -53,9 +53,9 @@ export default EStyleSheet.create({
   },
   price: {
     color: '#333333',
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '500',
+    fontSize: 12,
+    lineHeight: 16,
+    fontWeight: '400',
   },
   notExist: {
     fontSize: 13,

@@ -128,7 +128,11 @@ const ListProduct = ({navigation, data, validateButton}) => {
           <TouchableOpacity
             style={styles.buttonCollapseHeader}
             onPress={() => {
-              navigation.navigate('CartSelectShippingMethod');
+              if (!isEmpty(deliveryMethod)) {
+                setCollapsed(!collapsed);
+              } else {
+                navigation.navigate('CartSelectShippingMethod');
+              }
             }}>
             <View style={styles.wrapCollapseHeader}>
               <View style={styles.wrapCollapseHeaderLabel}>
@@ -144,8 +148,11 @@ const ListProduct = ({navigation, data, validateButton}) => {
               </View>
             </View>
           </TouchableOpacity>
-          {!isEmpty(deliveryMethod) && (
-            <TouchableOpacity onPress={() => setCollapsed(!collapsed)}>
+          {!isEmpty(deliveryMethod) && !collapsed && (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('CartSelectShippingMethod');
+              }}>
               {renderDeliveryChosen(deliveryMethod)}
             </TouchableOpacity>
           )}
@@ -169,7 +176,7 @@ const ListProduct = ({navigation, data, validateButton}) => {
               </Text>
             </View>
             <View style={styles.colValueTotal}>
-              <Text style={styles.valueTotal}>
+              <Text style={[styles.valueTotal, styles.valueTotalRed]}>
                 {currencyFormat(deliveryValue, CURRENCY_VIET_NAM)}
               </Text>
             </View>
@@ -179,8 +186,8 @@ const ListProduct = ({navigation, data, validateButton}) => {
               <Text style={styles.labelTotal}>{i18n.t('cart.coupon')}</Text>
             </View>
             <View style={styles.colValueTotal}>
-              <Text style={styles.valueTotal}>
-                {currencyFormat(voucherValue, CURRENCY_VIET_NAM)}
+              <Text style={[styles.valueTotal, styles.valueTotalBlue]}>
+                - {currencyFormat(voucherValue, CURRENCY_VIET_NAM)}
               </Text>
             </View>
           </View>
