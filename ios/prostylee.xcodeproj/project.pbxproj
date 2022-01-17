@@ -371,7 +371,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 8GPKTJ8259;
+						DevelopmentTeam = 8753P5RNY2;
 						LastSwiftMigration = 1240;
 						ProvisioningStyle = Manual;
 					};
@@ -868,8 +868,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 15;
-				DEVELOPMENT_TEAM = 8GPKTJ8259;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8753P5RNY2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = prostylee/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -881,7 +881,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.prostylee;
 				PRODUCT_NAME = prostylee;
-				PROVISIONING_PROFILE_SPECIFIER = provisioning_prostylee;
+				PROVISIONING_PROFILE_SPECIFIER = prostylee4AppStoreDistributionProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = "prostylee-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -897,8 +897,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 15;
-				DEVELOPMENT_TEAM = 8GPKTJ8259;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8753P5RNY2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = prostylee/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -910,7 +910,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.prostylee;
 				PRODUCT_NAME = prostylee;
-				PROVISIONING_PROFILE_SPECIFIER = provisioning_prostylee;
+				PROVISIONING_PROFILE_SPECIFIER = prostylee4AppStoreDistributionProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = "prostylee-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -927,6 +927,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -956,6 +957,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "prostylee-tvOS/Info.plist";
