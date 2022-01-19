@@ -35,6 +35,7 @@ const ChatBox = ({navigation, route}) => {
     : '';
   const userName = route?.params?.userName ? route.params.userName : '';
   const userPhone = route?.params?.userPhone ? route.params.userPhone : '';
+  const userAvatar = route?.params?.userAvatar ? route.params.userAvatar : '';
   const productData = route?.params?.productData
     ? route.params.productData
     : {};
@@ -144,7 +145,9 @@ const ChatBox = ({navigation, route}) => {
     }
   };
 
-  const otherUserAvatar = `${configEnv.api_url}/profile/${otherChatUserId}/avatar`;
+  const otherUserAvatar = userAvatar
+    ? userAvatar
+    : `${configEnv.api_url}/profile/${otherChatUserId}/avatar`;
 
   return (
     <ThemeView style={styles.wrapper} isFullView>

@@ -19,7 +19,12 @@ import {updateChat} from 'graphqlLocal/mutations';
 const Item = ({item, index, userData = {}, onPress}) => {
   const {colors} = useTheme();
   const navigation = useNavigation();
-  const itemContent = JSON.parse(item.content) || {};
+  let itemContent;
+  if (item.content) {
+    itemContent = JSON.parse(item.content) || {};
+  } else {
+    itemContent = {};
+  }
   const swipeItemRef = React.useRef();
   // TODO update api so I can use field "childrens" to update check new messages
   const itemNewMessage = item.imageUrls;
@@ -120,6 +125,7 @@ const Item = ({item, index, userData = {}, onPress}) => {
             otherChatUserId: userData.id,
             userName: userData.fullName,
             userPhone: userData.phoneNumber,
+            userAvatar: userData.avatar,
             productData: itemContent,
             fullItem: item,
           });
@@ -127,7 +133,9 @@ const Item = ({item, index, userData = {}, onPress}) => {
         <View style={[styles.itemStyle, borderItemStyle(index)]}>
           <Image
             source={{
-              uri: `${configEnv.api_url}/profile/${userData?.id}/avatar`,
+              uri: userData?.avatar
+                ? userData?.avatar
+                : `${configEnv.api_url}/profile/${userData?.id}/avatar`,
             }}
             resizeMode={'cover'}
             style={styles.img}
@@ -135,7 +143,9 @@ const Item = ({item, index, userData = {}, onPress}) => {
           <View style={styles.itemInfo}>
             <Text style={styles.Card}>{userData?.fullName}</Text>
             <Text style={styles.fomat} numberOfLines={2}>
-              {`${itemContent.name} • ${getNewChatTime()}`}
+              {itemContent?.name
+                ? `${itemContent.name} • ${getNewChatTime()}`
+                : getNewChatTime()}
             </Text>
           </View>
           <Icon

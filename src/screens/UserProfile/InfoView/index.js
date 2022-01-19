@@ -47,12 +47,12 @@ const InfoView = ({profile, statistics}) => {
               },
               {
                 participantUserIds: {
-                  contains: profile.id,
+                  contains: userProfile.id,
                 },
               },
               {
                 content: {
-                  contains: '"id":"none"',
+                  eq: '',
                 },
               },
             ],
@@ -73,6 +73,7 @@ const InfoView = ({profile, statistics}) => {
               otherChatUserId: profile.id,
               userName: profile.fullName,
               userPhone: profile.phoneNumber,
+              userAvatar: profile.avatar,
               productData: null,
             });
           }

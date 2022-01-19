@@ -12,7 +12,7 @@ import {ThemeView, Header} from 'components';
 import ListProduct from './ListProduct';
 import {cartActions} from 'reducers';
 
-const Cart = ({navigation}) => {
+const Checkout = ({navigation}) => {
   const dispatch = useDispatch();
   const selectedCartAddress = useSelector((state) =>
     getSelectedCartAddressSelector(state),
@@ -57,8 +57,8 @@ const Cart = ({navigation}) => {
   );
 };
 
-Cart.defaultProps = {};
+Checkout.defaultProps = {};
 
-Cart.propTypes = {};
+Checkout.propTypes = {};
 
-export default Cart;
+export default Checkout;

@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, TextInput, Keyboard} from 'react-native';
+import {View, TextInput, Keyboard, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import {useTheme} from '@react-navigation/native';
-import IconFeather from 'react-native-vector-icons/Feather';
+import {EmojyChat, SendChat} from 'svg/social';
 import EmojiBoard from 'react-native-emoji-board';
 import {isIphoneX} from 'utils/ui';
-import {FEED_TYPE} from 'constants';
 /******** chat aws ********/
 import {API, graphqlOperation} from 'aws-amplify';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,7 +16,10 @@ import {commonActions, userSelectors} from 'reducers';
 const FooterInput = (props) => {
   const user = props.user ? props.user : {};
   const feedId = props.feedId ? props.feedId : '';
-  const DEFAULT_PARENT_COMMENT_ID = `${FEED_TYPE}_${feedId}`; // Rule: <targetType>_<targetId>
+  const commentTargetType = props.commentTargetType
+    ? props.commentTargetType
+    : '';
+  const DEFAULT_PARENT_COMMENT_ID = `${commentTargetType}_${feedId}`; // Rule: <targetType>_<targetId>
 
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
@@ -59,7 +61,7 @@ const FooterInput = (props) => {
               ? `${user?.attributes.name}&${userProfile.avatar}`
               : user?.attributes?.name,
             targetId: feedId,
-            targetType: FEED_TYPE,
+            targetType: commentTargetType,
             content: text,
             numberOfLikes: 0,
             createdAt: new Date().toISOString(), // "2021-02-18T15:41:16Z"
@@ -88,22 +90,19 @@ const FooterInput = (props) => {
         }}
         value={text}
         placeholder={i18n.t('chat.inputPlaceholder')}
-        onSubmitEditing={() => {
-          addCommentHandler();
-        }}
       />
       <View style={styles.iconRow}>
-        <View style={styles.iconFooter}>
-          <IconFeather
-            name="smile"
-            color={colors.$black}
-            size={25}
-            onPress={() => {
-              Keyboard.dismiss();
-              setEmojiShow(!emojiShow);
-            }}
-          />
-        </View>
+        <TouchableOpacity
+          style={styles.iconFooter}
+          onPress={() => {
+            Keyboard.dismiss();
+            setEmojiShow(!emojiShow);
+          }}>
+          <EmojyChat />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconFooter} onPress={addCommentHandler}>
+          <SendChat />
+        </TouchableOpacity>
       </View>
       <EmojiBoard
         showBoard={emojiShow}

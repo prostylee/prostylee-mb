@@ -1,5 +1,4 @@
 import {call, put, takeLatest, select} from 'redux-saga/effects';
-
 import {cartActions, cartTypes} from 'reducers';
 import {getProductVarient} from 'utils/product';
 
@@ -244,10 +243,18 @@ const createOrder = function* ({payload}) {
     const res = yield call(createOrdersApi, orderData);
 
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      // yield put(cartActions.resetListCart());
-      // yield put(cartActions.getListCartAddressSuccess(res.data.data.content));
+      yield orderData.orderDetails.forEach((item) => {
+        put(cartActions.removeItemFromCart({id: item.productId}));
+      });
+      yield put(cartActions.getListCartAddressSuccess(res.data.data.content));
+      payload?.successAction ? payload.successAction() : null;
     } else {
-      // yield put(cartActions.getListCartAddressFailed());
+      showMessage({
+        message: i18n.t('unknownMessage'),
+        type: 'danger',
+        position: 'top',
+      });
+      yield put(cartActions.getListCartAddressFailed());
     }
   } catch (e) {
     showMessage({

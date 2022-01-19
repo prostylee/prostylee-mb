@@ -13,20 +13,19 @@ import {API, graphqlOperation} from 'aws-amplify';
 import {listComments} from 'graphqlLocal/queries';
 import {onCreateComment} from 'graphqlLocal/subscriptions';
 import {showMessage} from 'react-native-flash-message';
-import {FEED_TYPE} from 'constants';
 
 import styles from './styles';
 
 const IC_BACK = require('assets/icons/arrowLeft.png');
 
 const Comment = (props) => {
-  const {item, currentUser, goBack} = props;
+  const {item, currentUser, goBack, commentTargetType} = props;
   const dispatch = useDispatch();
 
   const [listComment, setListComment] = React.useState([]);
 
   const commentId = item && item.id ? item.id : '';
-  const COMMENT_PARENT = `${FEED_TYPE}_${commentId}`; // Rule: <targetType>_<targetId>
+  const COMMENT_PARENT = `${commentTargetType}_${commentId}`; // Rule: <targetType>_<targetId>
 
   React.useEffect(() => {
     executeGetComment();
@@ -62,7 +61,7 @@ const Comment = (props) => {
           filter: {
             parentId: {eq: COMMENT_PARENT},
           },
-          targetType: {eq: FEED_TYPE},
+          targetType: {eq: commentTargetType},
           // limit: 4,
           // nextToken: null,
         }),

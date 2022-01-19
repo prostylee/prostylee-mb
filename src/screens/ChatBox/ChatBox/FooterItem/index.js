@@ -1,10 +1,15 @@
 import React from 'react';
-import {View, Platform, TextInput, Keyboard, Alert} from 'react-native';
+import {
+  View,
+  Platform,
+  TextInput,
+  Keyboard,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
-import {useTheme} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import IconFeather from 'react-native-vector-icons/Feather';
+import {ImageChat, EmojyChat, SendChat} from 'svg/social';
 import EmojiBoard from 'react-native-emoji-board';
 import {isIphoneX} from 'utils/ui';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -33,7 +38,6 @@ const FooterItem = (props) => {
   const otherChatUserId = props.otherChatUserId ? props.otherChatUserId : '';
   const fullItem = props.fullItem ? props.fullItem : {};
 
-  const {colors} = useTheme();
   const dispatch = useDispatch();
   const [text, onChangeText] = React.useState('');
   const [emojiShow, setEmojiShow] = React.useState(false);
@@ -213,32 +217,26 @@ const FooterItem = (props) => {
         }}
         value={text}
         placeholder={i18n.t('chat.inputPlaceholder')}
-        onSubmitEditing={() => {
-          addChatHandler();
-        }}
       />
       <View style={styles.iconRow}>
-        <View style={styles.iconFooter}>
-          <Icon
-            name="ios-image"
-            size={30}
-            color={colors['$black']}
-            onPress={() => {
-              actionSheetRef.current.show();
-            }}
-          />
-        </View>
-        <View style={styles.iconFooter}>
-          <IconFeather
-            name="smile"
-            color={colors['$black']}
-            size={25}
-            onPress={() => {
-              Keyboard.dismiss();
-              setEmojiShow(!emojiShow);
-            }}
-          />
-        </View>
+        <TouchableOpacity
+          style={styles.iconFooter}
+          onPress={() => {
+            actionSheetRef.current.show();
+          }}>
+          <ImageChat />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.iconFooter}
+          onPress={() => {
+            Keyboard.dismiss();
+            setEmojiShow(!emojiShow);
+          }}>
+          <EmojyChat />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconFooter} onPress={addChatHandler}>
+          <SendChat />
+        </TouchableOpacity>
       </View>
       <EmojiBoard
         showBoard={emojiShow}

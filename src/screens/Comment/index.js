@@ -43,7 +43,8 @@ const Comment = () => {
   const userProfile = newFeedItem?.userResponseLite
     ? newFeedItem?.userResponseLite
     : null;
-  const DEFAULT_PARENT_COMMENT_ID = `${FEED_TYPE}_${feedId}`; // Rule: <targetType>_<targetId>
+  const commentTargetType = newFeedItem.type || FEED_TYPE;
+  const DEFAULT_PARENT_COMMENT_ID = `${commentTargetType}_${feedId}`; // Rule: <targetType>_<targetId>
 
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
@@ -91,13 +92,20 @@ const Comment = () => {
           filter: {
             parentId: {eq: DEFAULT_PARENT_COMMENT_ID},
           },
-          targetType: {eq: FEED_TYPE},
+          targetType: {eq: commentTargetType},
           // limit: 4,
           // nextToken: null,
         }),
       )
         .then((result) => {
-          setListComment(result.data.listComments.items);
+          const listCommentsResult = result.data.listComments.items;
+          const filterListComments =
+            listCommentsResult && listCommentsResult?.length
+              ? listCommentsResult?.sort(
+                  (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+                )
+              : [];
+          setListComment(filterListComments);
         })
         .catch(() => {
           showMessage({
@@ -159,7 +167,11 @@ const Comment = () => {
         ) : (
           <EmptyList />
         )}
-        <FooterInput user={currentUser} feedId={feedId} />
+        <FooterInput
+          user={currentUser}
+          feedId={feedId}
+          commentTargetType={commentTargetType}
+        />
       </>
     );
   };
@@ -182,6 +194,7 @@ const Comment = () => {
             </View>
           ) : null
         }
+        titleStyle={styles.headerTitle}
         rightComponent={
           <FollowTextButton
             item={{
@@ -201,6 +214,7 @@ const Comment = () => {
             item={parentComment}
             currentUser={currentUser}
             goBack={() => setGoToChild(false)}
+            commentTargetType={commentTargetType}
           />
         ) : (
           <ScrollView style={styles.scrollContainer}>

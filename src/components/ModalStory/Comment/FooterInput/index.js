@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, TextInput, Keyboard} from 'react-native';
+import {View, TextInput, Keyboard, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import i18n from 'i18n';
 import {useTheme} from '@react-navigation/native';
-import IconFeather from 'react-native-vector-icons/Feather';
+import {EmojyChat, SendChat} from 'svg/social';
 import EmojiBoard from 'react-native-emoji-board';
 import {isIphoneX} from 'utils/ui';
 import {STORY_TYPE} from 'constants';
@@ -88,22 +88,19 @@ const FooterInput = (props) => {
         }}
         value={text}
         placeholder={i18n.t('chat.inputPlaceholder')}
-        onSubmitEditing={() => {
-          addCommentHandler();
-        }}
       />
       <View style={styles.iconRow}>
-        <View style={styles.iconFooter}>
-          <IconFeather
-            name="smile"
-            color={colors.$black}
-            size={25}
-            onPress={() => {
-              Keyboard.dismiss();
-              setEmojiShow(!emojiShow);
-            }}
-          />
-        </View>
+        <TouchableOpacity
+          style={styles.iconFooter}
+          onPress={() => {
+            Keyboard.dismiss();
+            setEmojiShow(!emojiShow);
+          }}>
+          <EmojyChat />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconFooter} onPress={addCommentHandler}>
+          <SendChat />
+        </TouchableOpacity>
       </View>
       <EmojiBoard
         showBoard={emojiShow}

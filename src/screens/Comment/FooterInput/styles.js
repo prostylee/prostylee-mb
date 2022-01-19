@@ -7,7 +7,8 @@ export default EStyleSheet.create({
     alignItems: 'center',
     paddingBottom: 25,
     paddingTop: 12,
-    paddingHorizontal: 16,
+    paddingLeft: 16,
+    paddingRight: 8,
   },
   input: {
     height: 40,
@@ -20,9 +21,10 @@ export default EStyleSheet.create({
   iconRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingLeft: 8,
   },
   iconFooter: {
-    paddingLeft: 13,
+    padding: 8,
   },
   emoji: {
     paddingBottom: isIphoneX() ? 20 : 0,

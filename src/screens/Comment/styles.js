@@ -1,4 +1,5 @@
 import {dim} from 'utils/ui';
+import {Platform} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const WIDTH = dim.width;
@@ -13,6 +14,14 @@ export default EStyleSheet.create({
   },
   header: {
     paddingRight: 16,
+  },
+  headerTitle: {
+    fontWeight: Platform.OS === 'android' ? '700' : '500',
+    fontSize: 16,
+    lineHeight: 24,
+    fontFamily: '$font1',
+    letterSpacing: -0.02,
+    paddingLeft: 46,
   },
   emptyContainer: {
     flex: 1,
