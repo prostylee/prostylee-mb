@@ -83,29 +83,32 @@ const ListProduct = ({navigation, data, validateButton}) => {
       }
     };
 
-    if (cart.length) {
+    if (selectedItems.length) {
       let sum = 0;
       let productPriceVarient = {};
-      cart.forEach(function (c, index) {
-        const productVarient = getProductVarient(c.options);
-        const productPriceData = processProductPriceData(
-          c.item.productPriceResponseList,
-        );
-        const productPrice = getProductChoicePrice(
-          productVarient,
-          productPriceData,
-        );
-        productPriceVarient[`${c.item.id}${productVarient}`] = productPrice;
-        if (productPrice.priceSale) {
-          sum += productPrice.priceSale * c.quantity;
-        } else {
-          sum += productPrice.price * c.quantity;
+      selectedItems.forEach(function (item, index) {
+        const c = cart?.find((cartItem) => cartItem.productVarient === item);
+        if (c) {
+          const productVarient = getProductVarient(c.options);
+          const productPriceData = processProductPriceData(
+            c.item.productPriceResponseList,
+          );
+          const productPrice = getProductChoicePrice(
+            productVarient,
+            productPriceData,
+          );
+          productPriceVarient[`${c.item.id}${productVarient}`] = productPrice;
+          if (productPrice.priceSale) {
+            sum += productPrice.priceSale * c.quantity;
+          } else {
+            sum += productPrice.price * c.quantity;
+          }
         }
       });
       setTotal(sum);
       setProductVarientPriceData(productPriceVarient);
     }
-  }, [JSON.stringify(cart)]);
+  }, [JSON.stringify(cart), selectedItems]);
 
   useEffect(() => {
     handleRefreshing(false);
@@ -235,6 +238,9 @@ const ListProduct = ({navigation, data, validateButton}) => {
   };
 
   const onPayment = () => {
+    const successAction = () => {
+      navigation.navigate('Home');
+    };
     dispatch(
       cartActions.createOrder({
         productVarientPriceData,
@@ -242,9 +248,9 @@ const ListProduct = ({navigation, data, validateButton}) => {
         paymentTypeId: paymentSelected,
         shippingProviderId: deliveryMethod?.id,
         selectedItems: selectedItems,
+        successAction: successAction,
       }),
     );
-    // navigation.navigate('Home');
   };
 
   /* Extract note */

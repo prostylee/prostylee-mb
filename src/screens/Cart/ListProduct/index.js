@@ -149,30 +149,35 @@ const ListProduct = ({navigation}) => {
       }
     };
 
-    if (cart.length) {
+    if (allItems.length) {
       let sum = 0;
       let productPriceVarient = {};
-      cart.forEach(function (c, index) {
-        const productVarient = getProductVarient(c.options);
-        const productPriceData = processProductPriceData(
-          c.item.productPriceResponseList,
-        );
-        const productPrice = getProductChoicePrice(
-          productVarient,
-          productPriceData,
-        );
-        productPriceVarient[`${c.item.id}${productVarient}`] = productPrice;
-        if (productPrice.priceSale) {
-          sum += productPrice.priceSale * c.quantity;
-        } else {
-          sum += productPrice.price * c.quantity;
-        }
+      allItems.forEach(function (item, index) {
+        item?.forEach((innerItem) => {
+          const c = cart?.find(
+            (cartItem) => cartItem.productVarient === innerItem,
+          );
+          if (c) {
+            const productVarient = getProductVarient(c.options);
+            const productPriceData = processProductPriceData(
+              c.item.productPriceResponseList,
+            );
+            const productPrice = getProductChoicePrice(
+              productVarient,
+              productPriceData,
+            );
+            productPriceVarient[`${c.item.id}${productVarient}`] = productPrice;
+            if (productPrice.priceSale) {
+              sum += productPrice.priceSale * c.quantity;
+            } else {
+              sum += productPrice.price * c.quantity;
+            }
+          }
+        });
       });
       setTotal(sum);
     }
-  }, [JSON.stringify(cart)]);
-
-  console.log('Dimensions', Dimensions.get('window').width);
+  }, [JSON.stringify(cart), allItems]);
 
   return (
     <View style={styles.container}>

@@ -144,46 +144,42 @@ const Message = (props) => {
           uniqueUser.push(e.imageUrls[0]);
         }
       }
-      try {
-        let res = await getProfile(otherUserId);
-        if (otherUserId) {
-          res = await getProfile(otherUserId);
-        } else {
-          res = await getProfile(e.imageUrls[0]);
-        }
-        if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-          let thisUserId = '';
-          if (otherUserId) {
-            thisUserId = otherUserId;
-          } else {
-            thisUserId = e.imageUrls[0];
+    });
+    uniqueUser.forEach(async (user) => {
+      if (user) {
+        try {
+          const res = await getProfile(user);
+          if (res.ok && res.data.status === SUCCESS && !res.data.error) {
+            let thisUserId = '';
+            if (user) {
+              thisUserId = user;
+            }
+            userDataList[thisUserId] = res.data.data;
+            userDataFilterList.push({
+              id: res.data.data.id,
+              name: res.data.data.fullName,
+            });
           }
-          userDataList[thisUserId] = res.data.data;
-          userDataFilterList.push({
-            id: res.data.data.id,
-            name: res.data.data.fullName,
+        } catch (err) {
+          showMessage({
+            message: i18n.t('unknownMessage'),
+            type: 'danger',
+            position: 'top',
           });
-        }
-      } catch (err) {
-        showMessage({
-          message: i18n.t('unknownMessage'),
-          type: 'danger',
-          position: 'top',
-        });
-        setLoading(false);
-      } finally {
-        if (
-          userDataFilterList.length === list.length &&
-          Object.keys(userDataList).length === uniqueUser.length
-        ) {
-          setUserData(userDataList);
-          setUserFilterData(userDataFilterList);
           setLoading(false);
+        } finally {
+          if (Object.keys(userDataList).length === uniqueUser.length) {
+            setUserData(userDataList);
+            setUserFilterData(userDataFilterList);
+          }
+          setChatList(list);
+          setChatListDisplay(list);
         }
-        setChatList(list);
-        setChatListDisplay(list);
       }
     });
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const executeListChats = async () => {

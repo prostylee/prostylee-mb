@@ -48,7 +48,7 @@ const Header = ({
       ) : null}
       {title ? (
         <Text
-          style={isDefault ? styles.titleStyle : titleStyle}
+          style={titleStyle ? titleStyle : isDefault ? styles.titleStyle : {}}
           numberOfLines={1}>
           {title}
         </Text>
