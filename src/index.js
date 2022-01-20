@@ -226,11 +226,9 @@ const Index = () => {
         dispatch(userActions.userSignInSuccess(data));
         dispatch(commonActions.toggleLoading(false));
       })
-      .catch((err) => {
+      .catch(() => {
         Auth.signOut({global: true});
-
         dispatch(userActions.userClearExpiredToken());
-        RootNavigator.navigate('SignInOptions');
         dispatch(commonActions.toggleLoading(false));
       });
   };

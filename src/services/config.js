@@ -40,11 +40,12 @@ export async function _fetch(method, path, data) {
       });
     }
   } catch (e) {
-    showMessage({
-      message: i18n.t('unknownMessage'),
-      type: 'danger',
-      position: 'top',
-    });
+    console.log('aws _fetch error', e);
+    // showMessage({
+    //   message: i18n.t('unknownMessage'),
+    //   type: 'danger',
+    //   position: 'top',
+    // });
   }
 
   return api[method](path, data).then((res) => {
