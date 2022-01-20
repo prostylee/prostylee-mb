@@ -319,20 +319,18 @@ const getUserAddressMore = function* ({payload}) {
 
 const userLogout = function* ({payload}) {
   try {
-    Auth.currentAuthenticatedUser()
-      .then((user) => {
-        messaging()
-          .unsubscribeFromTopic(`user_${user.idToken.payload.sub}`)
-          .then(() => {});
-      })
-      .catch((_) => {
-        showMessage({
-          message: I18n.t('unknownMessage'),
-          type: 'danger',
-          position: 'top',
-        });
-      });
-
+    const user = yield Auth.currentAuthenticatedUser();
+    if (user?.attributes?.sub) {
+      messaging()
+        .unsubscribeFromTopic(`user_${user.attributes.sub}`)
+        .then(() => {});
+    } else if (user?.signInUserSession?.idToken) {
+      messaging()
+        .unsubscribeFromTopic(
+          `user_${user.signInUserSession.idToken.payload.sub}`,
+        )
+        .then(() => {});
+    }
     yield authService.logOut();
     yield put(userActions.userLogOutSuccess());
     yield put(commonActions.toggleLoading(false));
