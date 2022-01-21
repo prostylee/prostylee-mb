@@ -1,5 +1,10 @@
 import {call, put, takeLatest, select} from 'redux-saga/effects';
-import {commonActions, userActions, userTypes} from 'reducers';
+import {
+  commonActions,
+  userActions,
+  userTypes,
+  notificationActions,
+} from 'reducers';
 import {Auth} from 'aws-amplify';
 import {
   getProductsByUser,
@@ -16,6 +21,7 @@ import {UNKNOWN_MESSAGE, SUCCESS, LIMIT_DEFAULT} from 'constants';
 import messaging from '@react-native-firebase/messaging';
 import I18n from '../../../i18n';
 import authService from '../../../services/authService';
+import {getDeviceInfo} from 'utils/common';
 
 const userSignUp = function* ({
   payload: {fullname, email, password, onSuccess},
@@ -31,6 +37,22 @@ const userSignUp = function* ({
     };
 
     const {user} = yield Auth.signUp(request);
+
+    const token = yield messaging().getToken();
+    const deviceInfo = yield getDeviceInfo();
+    yield put(
+      notificationActions.subscribePushNotification({
+        token,
+        deviceName: deviceInfo.device_name,
+        deviceId: deviceInfo.device_id,
+        software: deviceInfo.device_type,
+        osVersion: deviceInfo.os_version,
+        osName: deviceInfo.device_type,
+        brand: deviceInfo.brand,
+        manufacturer: deviceInfo.manufacturer,
+        modelName: deviceInfo.modal || 'no_modal',
+      }),
+    );
 
     yield onSuccess();
   } catch (e) {
@@ -62,6 +84,23 @@ const userSignIn = function* ({payload: {email, password, onSuccess, onFail}}) {
     yield authService.setAuthUser(user);
     yield fetchProfile({payload: user.attributes['custom:userId']});
     yield put(userActions.userSignInSuccess(user));
+
+    const token = yield messaging().getToken();
+    const deviceInfo = yield getDeviceInfo();
+    yield put(
+      notificationActions.subscribePushNotification({
+        token,
+        deviceName: deviceInfo.device_name,
+        deviceId: deviceInfo.device_id,
+        software: deviceInfo.device_type,
+        osVersion: deviceInfo.os_version,
+        osName: deviceInfo.device_type,
+        brand: deviceInfo.brand,
+        manufacturer: deviceInfo.manufacturer,
+        modelName: deviceInfo.modal || 'no_modal',
+      }),
+    );
+
     yield onSuccess();
   } catch (e) {
     yield onFail(e.code);

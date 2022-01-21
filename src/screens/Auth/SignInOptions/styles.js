@@ -1,5 +1,7 @@
+import {Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
+const HEIGHT = Dimensions.get('window').height;
 export default EStyleSheet.create({
   background: {
     flex: 1,
@@ -7,7 +9,7 @@ export default EStyleSheet.create({
   },
   mainWrapper: {
     flex: 1,
-    paddingTop: '115%',
+    paddingTop: HEIGHT * 0.55,
   },
   logoWrapper: {
     justifyContent: 'center',

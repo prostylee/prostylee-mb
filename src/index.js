@@ -4,7 +4,7 @@ import {
   View,
   Platform,
   StatusBar,
-  NativeModules,
+  AppState,
   Alert,
 } from 'react-native';
 
@@ -51,7 +51,6 @@ import LocalStorageService from './services/LocalStorageService';
 import {notificationActions} from 'redux/reducers';
 
 import PushNotification from '@aws-amplify/pushnotification';
-import {PushNotificationIOS} from '@react-native-community/push-notification-ios';
 
 Geocoder.init(GOOGLE_API_KEY, {
   language: 'vi',
@@ -86,6 +85,8 @@ const codePushOptions = {
 };
 
 const Index = () => {
+  const appState = React.useRef(AppState.currentState);
+  // const [appStateVisible, setAppStateVisible] = useState(appState.current);
   // useEffect functions
   React.useEffect(() => {
     requestUserPermission(); // TODO
@@ -100,6 +101,23 @@ const Index = () => {
   React.useEffect(() => {
     onCheckNetWorkStatus();
   });
+  React.useEffect(() => {
+    dispatch(commonActions.setIsForeground(true));
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        dispatch(commonActions.setIsForeground(true));
+      } else {
+        dispatch(commonActions.setIsForeground(false));
+      }
+      appState.current = nextAppState;
+    });
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   //redux dispatch
   const dispatch = useDispatch();

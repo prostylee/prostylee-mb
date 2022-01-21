@@ -14,7 +14,7 @@ export default EStyleSheet.create({
   },
   backButton: {
     position: 'relative',
-    left: -16,
+    top: -8,
   },
   emptyContainer: {
     flex: 1,
@@ -36,6 +36,25 @@ export default EStyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     paddingLeft: 44,
+    width: WIDTH - 32,
+  },
+  parentCommentContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    position: 'relative',
+    left: -14,
+    paddingVertical: 8,
+  },
+  parentCommentItem: {
+    width: '90%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 16,
   },
   commentItem: {
     width: '100%',
@@ -44,6 +63,14 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingBottom: 16,
+    paddingLeft: 32,
+  },
+  parentItemAvatar: {
+    width: 44,
+    display: 'flex',
+    height: '100%',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   itemAvatar: {
     width: 44,
@@ -51,6 +78,7 @@ export default EStyleSheet.create({
     height: '100%',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+    paddingTop: 16,
   },
   avatar: {
     width: 32,

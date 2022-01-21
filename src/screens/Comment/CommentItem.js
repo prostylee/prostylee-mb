@@ -10,6 +10,7 @@ import {commonActions} from 'reducers';
 import {API, graphqlOperation} from 'aws-amplify';
 import {likeComment, unlikeComment} from 'graphqlLocal/mutations';
 import {showMessage} from 'react-native-flash-message';
+import configEnv from 'config';
 
 import styles from './styles';
 
@@ -75,7 +76,11 @@ const CommentItem = ({item, currentUser, moveToCommentDetail}) => {
   const nameAvatar = item.ownerFullname.split('&') || [];
   const name = nameAvatar.length ? nameAvatar[0] : '';
   const avatar =
-    nameAvatar?.length && nameAvatar.length > 1 ? nameAvatar[1] : '';
+    nameAvatar?.length && nameAvatar.length > 1
+      ? nameAvatar[1]
+      : item?.ownerId
+      ? `${configEnv.api_url}/profile/${item?.ownerId}/avatar`
+      : '';
   const userLike =
     item.userIdLikes && item.userIdLikes.length
       ? item.userIdLikes.includes(currentUser?.attributes.sub)

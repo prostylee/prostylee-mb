@@ -9,7 +9,7 @@ import debounce from 'lodash/debounce';
 /******** chat aws ********/
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {useDispatch, useSelector} from 'react-redux';
-import {commonActions, userSelectors} from 'reducers';
+import {commonActions, userSelectors, commonSelectors} from 'reducers';
 import {updateChat} from 'graphqlLocal/mutations';
 import {listChats} from 'graphqlLocal/queries';
 import {onCreateChat, onUpdateChat} from 'graphqlLocal/subscriptions';
@@ -33,46 +33,61 @@ const Message = (props) => {
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
   );
+  const isForeGround = useSelector((state) =>
+    commonSelectors.isForeGroundSelector(state),
+  );
+
+  let createChatListener, updateChatListener;
 
   React.useEffect(() => {
-    executeListChats();
-  }, []);
+    if (isForeGround) {
+      executeListChats();
+    }
+  }, [isForeGround]);
 
   React.useEffect(() => {
-    const createChatListener = API.graphql(
-      graphqlOperation(onCreateChat),
-    ).subscribe({
-      next: (chatData) => {
-        const addedChat = chatData.value.data.onCreateChat;
-        if (addedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
-          return;
-        }
-        const updatedChats = [...chatList];
-        getUserDataList([...chatList, addedChat], userProfile.id);
-        updatedChats.push(addedChat);
-        setChatList(updatedChats);
-        setChatListDisplay(updatedChats);
-      },
-    });
+    dispatch(commonActions.toggleLoading(false));
+    if (isForeGround) {
+      subScribeToChatChannel();
+    }
 
-    const updateChatListener = API.graphql(
-      graphqlOperation(onUpdateChat),
-    ).subscribe({
-      next: (chatData) => {
-        const updatedChat = chatData.value.data.onUpdateChat;
-        if (updatedChat.participantUserIds.length === 2) {
-          const updatedChatIndex = chatList.findIndex(
-            (item) => item.id === updatedChat.id,
-          );
-          const newChatList = [
-            ...chatList.slice(0, updatedChatIndex),
-            updatedChat,
-            ...chatList.slice(updatedChatIndex + 1),
-          ];
-          setChatList(newChatList);
-          setChatListDisplay(newChatList);
-        } else if (updatedChat.participantUserIds.length === 1) {
-          if (updatedChat.participantUserIds[0] == userProfile.id) {
+    return () => {
+      if (createChatListener) {
+        createChatListener.unsubscribe();
+      }
+      if (updateChatListener) {
+        updateChatListener.unsubscribe();
+      }
+    };
+  }, [chatList, dispatch, isForeGround]);
+
+  const subScribeToChatChannel = async () => {
+    try {
+      createChatListener = API.graphql(
+        graphqlOperation(onCreateChat),
+      ).subscribe({
+        next: (chatData) => {
+          const addedChat = chatData.value.data.onCreateChat;
+          if (addedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
+            return;
+          }
+          const updatedChats = [...chatList];
+          getUserDataList([...chatList, addedChat], userProfile.id);
+          updatedChats.push(addedChat);
+          setChatList(updatedChats);
+          setChatListDisplay(updatedChats);
+        },
+        error: (error) => {
+          console.warn(error);
+        },
+      });
+
+      updateChatListener = API.graphql(
+        graphqlOperation(onUpdateChat),
+      ).subscribe({
+        next: (chatData) => {
+          const updatedChat = chatData.value.data.onUpdateChat;
+          if (updatedChat.participantUserIds.length === 2) {
             const updatedChatIndex = chatList.findIndex(
               (item) => item.id === updatedChat.id,
             );
@@ -83,6 +98,29 @@ const Message = (props) => {
             ];
             setChatList(newChatList);
             setChatListDisplay(newChatList);
+          } else if (updatedChat.participantUserIds.length === 1) {
+            if (updatedChat.participantUserIds[0] == userProfile.id) {
+              const updatedChatIndex = chatList.findIndex(
+                (item) => item.id === updatedChat.id,
+              );
+              const newChatList = [
+                ...chatList.slice(0, updatedChatIndex),
+                updatedChat,
+                ...chatList.slice(updatedChatIndex + 1),
+              ];
+              setChatList(newChatList);
+              setChatListDisplay(newChatList);
+            } else {
+              const updatedChatIndex = chatList.findIndex(
+                (item) => item.id === updatedChat.id,
+              );
+              const newChatList = [
+                ...chatList.slice(0, updatedChatIndex),
+                ...chatList.slice(updatedChatIndex + 1),
+              ];
+              setChatList(newChatList);
+              setChatListDisplay(newChatList);
+            }
           } else {
             const updatedChatIndex = chatList.findIndex(
               (item) => item.id === updatedChat.id,
@@ -94,32 +132,15 @@ const Message = (props) => {
             setChatList(newChatList);
             setChatListDisplay(newChatList);
           }
-        } else {
-          const updatedChatIndex = chatList.findIndex(
-            (item) => item.id === updatedChat.id,
-          );
-          const newChatList = [
-            ...chatList.slice(0, updatedChatIndex),
-            ...chatList.slice(updatedChatIndex + 1),
-          ];
-          setChatList(newChatList);
-          setChatListDisplay(newChatList);
-        }
-      },
-    });
-
-    dispatch(commonActions.toggleLoading(false));
-
-    return () => {
-      if (createChatListener) {
-        createChatListener.unsubscribe();
-      }
-      if (updateChatListener) {
-        updateChatListener.unsubscribe();
-      }
-    };
-  }, [chatList, dispatch]);
-
+        },
+        error: (error) => {
+          console.warn(error);
+        },
+      });
+    } catch (e) {
+      console.log('error subscribe chat channel');
+    }
+  };
   const refreshChatList = async () => {
     setRefreshing(true);
     try {

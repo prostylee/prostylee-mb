@@ -17,7 +17,7 @@ import CommentItem from './CommentItem';
 import DetailComment from './DetailComment';
 
 import {useSelector, useDispatch} from 'react-redux';
-import {commonActions} from 'reducers';
+import {commonActions, commonSelectors} from 'reducers';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {listComments} from 'graphqlLocal/queries';
 import {onCreateComment} from 'graphqlLocal/subscriptions';
@@ -31,6 +31,9 @@ const Comment = () => {
   const route = useRoute();
   const dispatch = useDispatch();
   const targetType = useSelector((state) => targetTypeSelector(state));
+  const isForeGround = useSelector((state) =>
+    commonSelectors.isForeGroundSelector(state),
+  );
   const newFeedItem = route?.params?.newFeedItem || {};
 
   const [currentUser, setCurrentUser] = React.useState();
@@ -46,6 +49,8 @@ const Comment = () => {
   const commentTargetType = newFeedItem.type || FEED_TYPE;
   const DEFAULT_PARENT_COMMENT_ID = `${commentTargetType}_${feedId}`; // Rule: <targetType>_<targetId>
 
+  let createCommentListener;
+
   React.useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((user) => {
@@ -58,31 +63,47 @@ const Comment = () => {
           position: 'top',
         });
       });
-    executeGetComment();
   }, []);
 
   React.useEffect(() => {
-    const createCommentListener = API.graphql(
-      graphqlOperation(onCreateComment),
-    ).subscribe({
-      next: (commentData) => {
-        const addedComment = commentData.value.data.onCreateComment;
+    if (isForeGround) {
+      executeGetComment();
+    }
+  }, [isForeGround]);
 
-        if (addedComment.parentId === DEFAULT_PARENT_COMMENT_ID) {
-          const updatedComments = [...listComment];
-          updatedComments.push(addedComment);
-          setListComment(updatedComments);
-        } else {
-        }
-      },
-    });
-
+  React.useEffect(() => {
+    if (isForeGround) {
+      subScribeToCommentChannel();
+    }
     return () => {
       if (createCommentListener) {
-        createCommentListener.unsubscribe();
+        createCommentListener?.unsubscribe();
       }
     };
-  }, [listComment, dispatch]);
+  }, [listComment, dispatch, isForeGround]);
+
+  const subScribeToCommentChannel = async () => {
+    try {
+      createCommentListener = API.graphql(
+        graphqlOperation(onCreateComment),
+      ).subscribe({
+        next: (commentData) => {
+          const addedComment = commentData.value.data.onCreateComment;
+          if (addedComment.parentId === DEFAULT_PARENT_COMMENT_ID) {
+            const updatedComments = [...listComment];
+            updatedComments.push(addedComment);
+            setListComment(updatedComments);
+          } else {
+          }
+        },
+        error: (error) => {
+          console.warn(error);
+        },
+      });
+    } catch (e) {
+      console.log('error subscribe chat channel');
+    }
+  };
 
   const executeGetComment = async () => {
     dispatch(commonActions.toggleLoading(true));
@@ -217,7 +238,9 @@ const Comment = () => {
             commentTargetType={commentTargetType}
           />
         ) : (
-          <ScrollView style={styles.scrollContainer}>
+          <ScrollView
+            style={styles.scrollContainer}
+            keyboardShouldPersistTaps={'handled'}>
             {MemoFeed}
             <ListComment />
           </ScrollView>

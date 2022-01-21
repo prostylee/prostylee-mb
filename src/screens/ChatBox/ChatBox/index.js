@@ -19,8 +19,8 @@ import ProductItem from './ProductItem';
 import FooterItem from './FooterItem';
 /******** chat aws ********/
 import {API, Auth, graphqlOperation} from 'aws-amplify';
-import {useDispatch} from 'react-redux';
-import {commonActions} from 'reducers';
+import {useDispatch, useSelector} from 'react-redux';
+import {commonActions, commonSelectors} from 'reducers';
 import {getChat} from 'graphqlLocal/queries';
 import {onCreateChat, onDeleteChat} from 'graphqlLocal/subscriptions';
 const DEFAULT_CHAT_GROUP_ID = 'USER_2_USER'; // Rule: USER_2_USER
@@ -42,67 +42,57 @@ const ChatBox = ({navigation, route}) => {
 
   const fullItem = route?.params?.fullItem ? route.params.fullItem : {};
 
+  let createChatListener, deleteChatListener;
+
+  const isForeGround = useSelector((state) =>
+    commonSelectors.isForeGroundSelector(state),
+  );
+
   const dispatch = useDispatch();
   const [currentUser, setCurrentUser] = React.useState();
   const [chatDataList, setChatDataList] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  React.useEffect(() => {
-    Auth.currentAuthenticatedUser()
-      .then((user) => {
-        setCurrentUser(user);
-      })
-      .catch((err) => {
-        showMessage({
-          message: i18n.t('unknownMessage'),
-          type: 'danger',
-          position: 'top',
-        });
+  const subScribeToChatChannel = async () => {
+    try {
+      createChatListener = API.graphql(
+        graphqlOperation(onCreateChat),
+      ).subscribe({
+        next: (chatData) => {
+          const addedChat = chatData.value.data.onCreateChat;
+
+          if (addedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
+            const updatedChats = [...chatDataList];
+            updatedChats.push(addedChat);
+            setChatDataList(updatedChats);
+          }
+        },
+        error: (error) => {
+          console.warn(error);
+        },
       });
-    executeGetChat();
-  }, []);
 
-  React.useEffect(() => {
-    const createChatListener = API.graphql(
-      graphqlOperation(onCreateChat),
-    ).subscribe({
-      next: (chatData) => {
-        const addedChat = chatData.value.data.onCreateChat;
-
-        if (addedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
-          const updatedChats = [...chatDataList];
-          updatedChats.push(addedChat);
-          setChatDataList(updatedChats);
-        }
-      },
-    });
-
-    const deleteChatListener = API.graphql(
-      graphqlOperation(onDeleteChat),
-    ).subscribe({
-      next: (chatData) => {
-        const deletedChat = chatData.value.data.onDeleteChat;
-        if (deletedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
-          const updatedChats = chatData.filter(
-            (cmt) => cmt.id !== deletedChat.id,
-          );
-          setChatDataList(updatedChats);
-        }
-      },
-    });
-
-    dispatch(commonActions.toggleLoading(false));
-
-    return () => {
-      if (createChatListener) {
-        createChatListener.unsubscribe();
-      }
-      if (deleteChatListener) {
-        deleteChatListener.unsubscribe();
-      }
-    };
-  }, [chatDataList, dispatch]);
+      deleteChatListener = API.graphql(
+        graphqlOperation(onDeleteChat),
+      ).subscribe({
+        next: (chatData) => {
+          const deletedChat = chatData.value.data.onDeleteChat;
+          if (deletedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
+            const updatedChats = chatData.filter(
+              (cmt) => cmt.id !== deletedChat.id,
+            );
+            setChatDataList(updatedChats);
+          }
+        },
+        error: (error) => {
+          console.warn(error);
+        },
+      });
+    } catch (e) {
+      console.log('error subscribe chat channel');
+    }
+  };
 
   const refreshChatList = async () => {
     setRefreshing(true);
@@ -144,6 +134,40 @@ const ChatBox = ({navigation, route}) => {
       Alert.alert(i18n.t('common.textNoPhoneNumber'));
     }
   };
+
+  React.useEffect(() => {
+    Auth.currentAuthenticatedUser()
+      .then((user) => {
+        setCurrentUser(user);
+      })
+      .catch(() => {
+        showMessage({
+          message: i18n.t('unknownMessage'),
+          type: 'danger',
+          position: 'top',
+        });
+      });
+  }, []);
+  React.useEffect(() => {
+    if (isForeGround) {
+      executeGetChat();
+    }
+  }, [isForeGround]);
+
+  React.useEffect(() => {
+    dispatch(commonActions.toggleLoading(false));
+    if (isForeGround) {
+      subScribeToChatChannel();
+    }
+    return () => {
+      if (createChatListener) {
+        createChatListener?.unsubscribe();
+      }
+      if (deleteChatListener) {
+        deleteChatListener?.unsubscribe();
+      }
+    };
+  }, [chatDataList, dispatch, isForeGround]);
 
   const otherUserAvatar = userAvatar
     ? userAvatar
