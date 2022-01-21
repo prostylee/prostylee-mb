@@ -9,10 +9,11 @@ import {commonActions} from 'reducers';
 import {API, graphqlOperation} from 'aws-amplify';
 import {likeComment, unlikeComment} from 'graphqlLocal/mutations';
 import {showMessage} from 'react-native-flash-message';
+import configEnv from 'config';
 
 import styles from './styles';
 
-const CommentItem = ({item, currentUser}) => {
+const CommentItem = ({item, currentUser, isParent}) => {
   const dispatch = useDispatch();
   const likeCommentHandler = async (itemComment) => {
     dispatch(commonActions.toggleLoading(true));
@@ -74,7 +75,11 @@ const CommentItem = ({item, currentUser}) => {
   const nameAvatar = item.ownerFullname ? item.ownerFullname.split('&') : [];
   const name = nameAvatar.length ? nameAvatar[0] : '';
   const avatar =
-    nameAvatar?.length && nameAvatar.length > 1 ? nameAvatar[1] : '';
+    nameAvatar?.length && nameAvatar.length > 1
+      ? nameAvatar[1]
+      : item?.ownerId
+      ? `${configEnv.api_url}/profile/${item?.ownerId}/avatar`
+      : '';
   const userLike =
     item.userIdLikes && item.userIdLikes.length
       ? item.userIdLikes.includes(currentUser?.attributes.sub)
@@ -112,8 +117,8 @@ const CommentItem = ({item, currentUser}) => {
   };
 
   return (
-    <View style={styles.commentItem}>
-      <View style={styles.itemAvatar}>
+    <View style={isParent ? styles.parentCommentItem : styles.commentItem}>
+      <View style={isParent ? styles.parentItemAvatar : styles.itemAvatar}>
         {avatar ? (
           <Image
             style={styles.avatar}

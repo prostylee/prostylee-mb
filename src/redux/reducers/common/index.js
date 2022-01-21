@@ -13,6 +13,7 @@ export const types = {
   TOGGLE_ADD_PICTURE_OPTION: 'TOGGLE_ADD_PICTURE_OPTION',
   TOGGLE_ADD_PICTURE_OPTION_TARGET: 'TOGGLE_ADD_PICTURE_OPTION_TARGET',
   TOGGLE_STORY_MODAL: 'TOGGLE_STORY_MODAL',
+  SET_IS_FOREGROUND: 'SET_IS_FOREGROUND',
 };
 
 export const actions = {
@@ -30,6 +31,7 @@ export const actions = {
     types.TOGGLE_ADD_PICTURE_OPTION_TARGET,
   ),
   toggleStoryModal: createAction(types.TOGGLE_STORY_MODAL),
+  setIsForeground: createAction(types.SET_IS_FOREGROUND),
 };
 
 export const selectors = {
@@ -44,6 +46,7 @@ export const selectors = {
   addPictureOptionTarget: (state) => state.common.addPictureOptionTarget,
   isShowStoryModal: (state) => state.common.isShowStoryModal,
   storyModalInitPage: (state) => state.common.storyModalInitPage,
+  isForeGroundSelector: (state) => state.common.isForeGround,
 };
 
 const intialState = {
@@ -60,6 +63,7 @@ const intialState = {
   addPictureOptionTarget: '',
   isShowStoryModal: false,
   storyModalInitPage: 0,
+  isForeGround: true,
 };
 
 export default handleActions(
@@ -100,6 +104,9 @@ export default handleActions(
         isShowStoryModal: payload.show,
         storyModalInitPage: payload.page || 0,
       };
+    },
+    [types.SET_IS_FOREGROUND]: (state, {payload}) => {
+      return {...state, isForeGround: payload};
     },
   },
   intialState,

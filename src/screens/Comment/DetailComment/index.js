@@ -6,9 +6,10 @@ import {IconButton} from 'react-native-paper';
 
 import FooterInput from '../FooterInput';
 import CommentItem from './CommentItem';
+import {ChevronLeft} from 'svg/common';
 
-import {useDispatch} from 'react-redux';
-import {commonActions} from 'reducers';
+import {useDispatch, useSelector} from 'react-redux';
+import {commonActions, commonSelectors} from 'reducers';
 import {API, graphqlOperation} from 'aws-amplify';
 import {listComments} from 'graphqlLocal/queries';
 import {onCreateComment} from 'graphqlLocal/subscriptions';
@@ -23,35 +24,52 @@ const Comment = (props) => {
   const dispatch = useDispatch();
 
   const [listComment, setListComment] = React.useState([]);
+  const isForeGround = useSelector((state) =>
+    commonSelectors.isForeGroundSelector(state),
+  );
 
   const commentId = item && item.id ? item.id : '';
   const COMMENT_PARENT = `${commentTargetType}_${commentId}`; // Rule: <targetType>_<targetId>
 
+  let createCommentListener;
   React.useEffect(() => {
-    executeGetComment();
-  }, [item?.id]);
+    if (isForeGround) {
+      executeGetComment();
+    }
+  }, [item?.id, isForeGround]);
 
   React.useEffect(() => {
-    const createCommentListener = API.graphql(
-      graphqlOperation(onCreateComment),
-    ).subscribe({
-      next: (commentData) => {
-        const addedComment = commentData.value.data.onCreateComment;
-        if (addedComment.parentId === COMMENT_PARENT) {
-          const updatedComments = [...listComment];
-          updatedComments.push(addedComment);
-          setListComment(updatedComments);
-        } else {
-        }
-      },
-    });
-
+    if (isForeGround) {
+      subScribeToCommentChannel();
+    }
     return () => {
       if (createCommentListener) {
-        createCommentListener.unsubscribe();
+        createCommentListener?.unsubscribe();
       }
     };
-  }, [listComment, dispatch]);
+  }, [listComment, dispatch, isForeGround]);
+  const subScribeToCommentChannel = async () => {
+    try {
+      createCommentListener = API.graphql(
+        graphqlOperation(onCreateComment),
+      ).subscribe({
+        next: (commentData) => {
+          const addedComment = commentData.value.data.onCreateComment;
+          if (addedComment.parentId === COMMENT_PARENT) {
+            const updatedComments = [...listComment];
+            updatedComments.push(addedComment);
+            setListComment(updatedComments);
+          } else {
+          }
+        },
+        error: (error) => {
+          console.warn(error);
+        },
+      });
+    } catch (e) {
+      console.log('error subscribe chat channel');
+    }
+  };
 
   const executeGetComment = async () => {
     dispatch(commonActions.toggleLoading(true));
@@ -97,17 +115,14 @@ const Comment = (props) => {
 
   return (
     <View style={styles.container}>
-      <IconButton
-        style={styles.backButton}
-        icon={({size, color}) => (
-          <Image
-            source={IC_BACK}
-            style={{width: size, height: size, tintColor: color}}
-          />
-        )}
-        onPress={goBack}
-      />
-      <CommentItem item={item} currentUser={currentUser} />
+      <View style={styles.parentCommentContainer}>
+        <IconButton
+          style={styles.backButton}
+          icon={({size, color}) => <ChevronLeft />}
+          onPress={goBack}
+        />
+        <CommentItem item={item} currentUser={currentUser} isParent={true} />
+      </View>
       <FlatList
         style={styles.list}
         renderItem={({item}) => (
@@ -116,7 +131,11 @@ const Comment = (props) => {
         data={listComment}
         ListEmptyComponent={<EmptyList />}
       />
-      <FooterInput user={currentUser} storyId={commentId} />
+      <FooterInput
+        user={currentUser}
+        feedId={commentId}
+        commentTargetType={commentTargetType}
+      />
     </View>
   );
 };
