@@ -84,6 +84,7 @@ const userSignIn = function* ({payload: {email, password, onSuccess, onFail}}) {
     yield authService.setAuthUser(user);
     yield fetchProfile({payload: user.attributes['custom:userId']});
     yield put(userActions.userSignInSuccess(user));
+    yield onSuccess();
 
     const token = yield messaging().getToken();
     const deviceInfo = yield getDeviceInfo();
@@ -100,9 +101,8 @@ const userSignIn = function* ({payload: {email, password, onSuccess, onFail}}) {
         modelName: deviceInfo.modal || 'no_modal',
       }),
     );
-
-    yield onSuccess();
   } catch (e) {
+    console.log('e', e);
     yield onFail(e.code);
   }
 };

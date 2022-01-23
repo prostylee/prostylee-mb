@@ -94,6 +94,7 @@
 		BC5907D2FBC7AE7C9E98F591 /* libPods-prostylee-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-prostylee-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7C888F264DC52400BDBC08 /* prostylee-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "prostylee-Bridging-Header.h"; sourceTree = "<group>"; };
 		BF7C8890264DC52500BDBC08 /*  MultipleImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = " MultipleImagePicker.swift"; sourceTree = "<group>"; };
+		BF893DCC279DCFB100C16CBE /* prostylee.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = prostylee.entitlements; path = prostylee/prostylee.entitlements; sourceTree = "<group>"; };
 		C340A12A85B45AB6E207DAB4 /* Pods-prostylee-prostyleeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prostylee-prostyleeTests.release.xcconfig"; path = "Target Support Files/Pods-prostylee-prostyleeTests/Pods-prostylee-prostyleeTests.release.xcconfig"; sourceTree = "<group>"; };
 		C9ECA9CA0DA797AC285CA5CE /* Pods-prostylee-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-prostylee-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-prostylee-tvOSTests/Pods-prostylee-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		CA0E2FD608B04D829F1927D9 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -163,6 +164,7 @@
 		13B07FAE1A68108700A75B9A /* prostylee */ = {
 			isa = PBXGroup;
 			children = (
+				BF893DCC279DCFB100C16CBE /* prostylee.entitlements */,
 				ADA3555E25C7B82D00437DCA /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -868,7 +870,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 8753P5RNY2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = prostylee/Info.plist;
@@ -895,9 +897,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = prostylee/prostylee.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 8753P5RNY2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = prostylee/Info.plist;

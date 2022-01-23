@@ -61,8 +61,13 @@ const ChatBox = ({navigation, route}) => {
       ).subscribe({
         next: (chatData) => {
           const addedChat = chatData.value.data.onCreateChat;
-
-          if (addedChat.parentId !== DEFAULT_CHAT_GROUP_ID) {
+          if (
+            addedChat.parentId !== DEFAULT_CHAT_GROUP_ID &&
+            addedChat.participantUserIds?.includes(
+              `${currentUser.attributes['custom:userId']}`,
+            ) &&
+            addedChat.participantUserIds?.includes(`${otherChatUserId}`)
+          ) {
             const updatedChats = [...chatDataList];
             updatedChats.push(addedChat);
             setChatDataList(updatedChats);
