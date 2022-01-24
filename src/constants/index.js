@@ -76,6 +76,11 @@ export const VOUCHER_SORT_ITEM = [
 ];
 
 // FILTER TAG
+export const DEFAULT_TAG = {
+  description: 'Tất cả sản phẩm',
+  id: null,
+  name: 'Tất cả sản phẩm',
+};
 
 export const FILTER_TAGS = [
   {

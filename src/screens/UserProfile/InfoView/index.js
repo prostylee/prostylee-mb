@@ -3,7 +3,12 @@ import i18n from 'i18n';
 import {useNavigation} from '@react-navigation/native';
 import {View, Text} from 'react-native';
 import {Avatar, Button} from 'react-native-paper';
-import {commonActions, userSelectors} from 'reducers';
+import {
+  commonActions,
+  userSelectors,
+  newFeedSelectors,
+  newFeedActions,
+} from 'reducers';
 
 import styles from './styles';
 
@@ -24,6 +29,9 @@ const InfoView = ({profile, statistics}) => {
 
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
+  );
+  const localFollowedUser = useSelector((state) =>
+    newFeedSelectors.getLocalFollowedUser(state),
   );
   const [followed, setFollowed] = useState(profile?.followedByLoggedInUser);
   const [awsData, setAwsData] = React.useState({});
@@ -141,6 +149,18 @@ const InfoView = ({profile, statistics}) => {
       });
       if (res.ok && res.data.status === SUCCESS) {
         setFollowed(true);
+        if (localFollowedUser && localFollowedUser?.length) {
+          if (!localFollowedUser?.includes(profile?.id)) {
+            dispatch(
+              newFeedActions.setLocalFollowedUser([
+                ...localFollowedUser,
+                profile?.id,
+              ]),
+            );
+          }
+        } else {
+          dispatch(newFeedActions.setLocalFollowedUser([profile?.id]));
+        }
       }
     } else {
       const res = await unfollow({
@@ -149,6 +169,19 @@ const InfoView = ({profile, statistics}) => {
       });
       if (res.ok && res.data.status === SUCCESS) {
         setFollowed(false);
+        if (localFollowedUser && localFollowedUser?.length) {
+          if (localFollowedUser?.includes(profile?.id)) {
+            const itemIndex = localFollowedUser?.findIndex(
+              (item) => item == profile?.id,
+            );
+            dispatch(
+              newFeedActions.setLocalFollowedUser([
+                ...localFollowedUser.slice(0, itemIndex),
+                ...localFollowedUser.slice(itemIndex + 1),
+              ]),
+            );
+          }
+        }
       }
     }
   };

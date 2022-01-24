@@ -1,10 +1,19 @@
 import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
+import {TouchableOpacity, Text, Image} from 'react-native';
 import styles from './styles';
 import PropTypes from 'prop-types';
 const Item = ({item, onPress, parentName}) => {
+  console.log('firstitem', item);
   return (
     <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
+      <Image
+        source={
+          item?.icon
+            ? {uri: decodeURI(item?.icon)}
+            : require('assets/images/default.png')
+        }
+        style={styles.categoryIcon}
+      />
       <Text style={styles.itemText}>
         {parentName} / {item.name}
       </Text>

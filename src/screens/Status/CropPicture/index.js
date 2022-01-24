@@ -32,7 +32,6 @@ import {dim} from 'utils/common';
 
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
-const IC_BACK = require('assets/icons/arrowLeft.png');
 let activeIndex = 0;
 
 const CropPicture = () => {
@@ -435,12 +434,18 @@ const CropPicture = () => {
   };
 
   return (
-    <ThemeView style={styles.container} isFullView>
+    <ThemeView
+      style={[
+        styles.container,
+        {
+          paddingBottom: isCropList ? 16 : 0,
+        },
+      ]}
+      isFullView>
       <Header
         isDefault
         title={''}
         containerStyle={styles.headerContainer}
-        leftIcon={<Image source={IC_BACK} style={styles.headerImage} />}
         rightComponent={
           <TouchableOpacity style={styles.cropButton} onPress={cropAllImage}>
             <Text style={styles.cropText}>

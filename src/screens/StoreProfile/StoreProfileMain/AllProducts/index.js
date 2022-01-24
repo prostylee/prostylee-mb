@@ -8,7 +8,7 @@ import {Colors, ListLayoutSelection} from 'components';
 import ProductList from './ProductList';
 import TagList from './TagList';
 
-import {PAGE_DEFAULT, LIMIT_DEFAULT} from 'constants';
+import {PAGE_DEFAULT, LIMIT_DEFAULT, DEFAULT_TAG} from 'constants';
 
 import {
   getStoreAllProductCurrentPage,
@@ -50,7 +50,7 @@ const AllProducts = ({
       storeInfo?.categoryResponseLites &&
       storeInfo?.categoryResponseLites?.length
     ) {
-      setFilterTags(storeInfo?.categoryResponseLites);
+      setFilterTags([DEFAULT_TAG, ...storeInfo?.categoryResponseLites]);
     }
   }, [storeInfo]);
 

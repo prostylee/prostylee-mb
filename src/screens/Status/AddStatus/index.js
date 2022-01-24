@@ -164,16 +164,14 @@ const AddStatus = (props) => {
         const result = await Storage.put(fileName, blob, {
           contentType: 'image/png',
         });
-        if (result) {
-          setUploadList((prev) => {
-            let newList = prev;
-            newList[image.index] = {
-              name: `status_${time}.png`,
-              index: image.index,
-            };
-            return newList;
-          });
-        }
+        setUploadList((prev) => {
+          let newList = prev;
+          newList[image.index] = {
+            name: `status_${time}.png`,
+            index: image.index,
+          };
+          return newList;
+        });
       } catch (err) {
         dispatch(commonActions.toggleLoading(false));
         Alert.alert(i18n.t('error.cannotUploadImage'));

@@ -118,9 +118,10 @@ export default StyleSheet.create({
     marginLeft: 5,
   },
   verticalLine: {
-    color: '#333333',
-    fontSize: 14,
-    fontWeight: '400',
+    backgroundColor: '#E9EAEB',
+    width: 1,
+    height: 26,
+    marginHorizontal: 8,
   },
   closeButton: {
     position: 'absolute',

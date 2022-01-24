@@ -26,6 +26,7 @@ import {
   dynamicUsersActions,
   newFeedActions,
   storeActions,
+  newFeedSelectors,
 } from 'redux/reducers';
 import {
   getHasLoadMoreSelector,
@@ -78,9 +79,12 @@ const NewFeed = ({navigation}) => {
   const flatListRef = useRef();
   const [refreshing, handleRefreshing] = useState(false);
   const [allNewFeedsStore, setAllNewFeedsStore] = useState([]);
-  const [allNewFeedsStoreFollowed, setAllNewFeedsStoreFollowed] = useState([]);
+  const [allNewFeedsStoreFollowedScreen, setAllNewFeedsStoreFollowed] =
+    useState([]);
   const [allNewFeedsUser, setAllNewFeedsUser] = useState([]);
-  const [allNewFeedsUserFollowed, setAllNewFeedsUserFollowed] = useState([]);
+  const [allNewFeedsUserFollowedScreen, setAllNewFeedsUserFollowed] = useState(
+    [],
+  );
 
   const newFeedList = useSelector((state) => getNewFeedSelector(state));
   const threeFirstNewFeedItem = useSelector((state) =>
@@ -106,6 +110,21 @@ const NewFeed = ({navigation}) => {
   );
   const storiesLoading = useSelector((state) => getStoriesLoading(state));
   const stories = useSelector((state) => getStories(state));
+
+  const localFollowedStore = useSelector(
+    newFeedSelectors.getLocalFollowedStore,
+  );
+  const localFollowedUser = useSelector(newFeedSelectors.getLocalFollowedUser);
+
+  const allNewFeedsStoreFollowed =
+    localFollowedStore && localFollowedStore?.length
+      ? [...allNewFeedsStoreFollowedScreen, ...localFollowedStore]
+      : allNewFeedsStoreFollowedScreen;
+
+  const allNewFeedsUserFollowed =
+    localFollowedUser && localFollowedUser?.length
+      ? [...allNewFeedsUserFollowedScreen, ...localFollowedUser]
+      : allNewFeedsUserFollowedScreen;
 
   React.useEffect(() => {
     if (flatListRef && flatListRef.current) {
@@ -285,6 +304,15 @@ const NewFeed = ({navigation}) => {
   const renderItem = (item, index) => {
     const followStoreAction = (id) => {
       setAllNewFeedsStoreFollowed((prev) => [...prev, id]);
+      if (localFollowedStore && localFollowedStore?.length) {
+        if (!localFollowedStore?.includes(id)) {
+          dispatch(
+            newFeedActions.setLocalFollowedStore([...localFollowedStore, id]),
+          );
+        }
+      } else {
+        dispatch(newFeedActions.setLocalFollowedStore([id]));
+      }
     };
     const unFollowStoreAction = (id) => {
       setAllNewFeedsStoreFollowed((prev) => {
@@ -295,9 +323,29 @@ const NewFeed = ({navigation}) => {
           return prev;
         }
       });
+      if (localFollowedStore && localFollowedStore?.length) {
+        if (localFollowedStore?.includes(id)) {
+          const itemIndex = localFollowedStore?.findIndex((item) => item == id);
+          dispatch(
+            newFeedActions.setLocalFollowedStore([
+              ...localFollowedStore.slice(0, itemIndex),
+              ...localFollowedStore.slice(itemIndex + 1),
+            ]),
+          );
+        }
+      }
     };
     const followUserAction = (id) => {
       setAllNewFeedsUserFollowed((prev) => [...prev, id]);
+      if (localFollowedUser && localFollowedUser?.length) {
+        if (!localFollowedUser?.includes(id)) {
+          dispatch(
+            newFeedActions.setLocalFollowedUser([...localFollowedUser, id]),
+          );
+        }
+      } else {
+        dispatch(newFeedActions.setLocalFollowedUser([id]));
+      }
     };
     const unFollowUserAction = (id) => {
       setAllNewFeedsUserFollowed((prev) => {
@@ -308,6 +356,17 @@ const NewFeed = ({navigation}) => {
           return prev;
         }
       });
+      if (localFollowedUser && localFollowedUser?.length) {
+        if (localFollowedUser?.includes(id)) {
+          const itemIndex = localFollowedUser?.findIndex((item) => item == id);
+          dispatch(
+            newFeedActions.setLocalFollowedUser([
+              ...localFollowedUser.slice(0, itemIndex),
+              ...localFollowedUser.slice(itemIndex + 1),
+            ]),
+          );
+        }
+      }
     };
     if (item.type === NewFeedRowItemType.STORES.type) {
       return (

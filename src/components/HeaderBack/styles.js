@@ -11,7 +11,9 @@ export default EStyleSheet.create({
     borderColor: '$line',
   },
   headerTitle: {
-    fontSize: '$largeText',
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: '500',
     color: '$black',
     fontFamily: '$font1',
   },
