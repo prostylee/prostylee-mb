@@ -150,6 +150,7 @@ const PaymentShipping = () => {
         description,
         brand,
         price,
+        priceSale,
       } = postProductInfo;
 
       const imagesList = upLoadedImages.map((item) => {
@@ -166,7 +167,7 @@ const PaymentShipping = () => {
           productId: null,
           sku: null,
           price: price * 1,
-          priceSale: 0,
+          priceSale: priceSale * 1,
           productAttributes: [...item],
         };
       });

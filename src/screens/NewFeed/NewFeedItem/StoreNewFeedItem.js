@@ -36,6 +36,8 @@ const StoreNewFeedItem = ({
     productOwnerResponse = newFeedItem?.newFeedOwnerResponse;
   } else if (!isEmpty(newFeedItem?.productOwnerResponse)) {
     productOwnerResponse = newFeedItem?.productOwnerResponse;
+  } else if (!isEmpty(newFeedItem?.storeOwnerResponseLite)) {
+    productOwnerResponse = newFeedItem?.storeOwnerResponseLite;
   }
 
   const urlImage = productOwnerResponse?.logoUrl;

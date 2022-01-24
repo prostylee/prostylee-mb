@@ -7,7 +7,6 @@ export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$white',
-    paddingBottom: 12,
   },
   safeAreaTopStyle: {
     backgroundColor: '$bgColor',

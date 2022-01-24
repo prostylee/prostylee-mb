@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
-import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
-import {Image} from 'components';
+import {
+  Text,
+  Image,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {categoriesActions} from 'redux/reducers';
@@ -35,9 +40,9 @@ const FeaturedCategoriesItem = ({item, index, navigation}) => {
         <Image
           source={
             item?.icon
-              ? {uri: item?.icon}
+              ? {uri: decodeURI(item?.icon)}
               : item?.banner
-              ? {uri: item?.banner}
+              ? {uri: decodeURI(item?.banner)}
               : require('assets/images/default.png')
           }
           resizeMode="cover"

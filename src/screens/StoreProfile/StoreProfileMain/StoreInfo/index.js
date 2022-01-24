@@ -4,8 +4,10 @@ import styles from './style';
 
 import img from 'assets/images/slider1.png';
 import {Image} from 'components';
+import {useDispatch, useSelector} from 'react-redux';
 import {MapPin, TreeDotHorizontal} from 'svg/common';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {newFeedActions, newFeedSelectors} from 'reducers';
 import i18n from 'i18n';
 import {showMessage} from 'react-native-flash-message';
 import {
@@ -13,16 +15,48 @@ import {
   unFollowStoreService,
 } from '../../../../services/api/storeApi';
 const StoreInfo = ({storeInfo = {}}) => {
-  const [followed, setFollowed] = React.useState(
-    storeInfo?.followStatusOfUserLogin ? true : false,
+  const dispatch = useDispatch();
+  const localFollowedStore = useSelector((state) =>
+    newFeedSelectors.getLocalFollowedStore(state),
   );
+  const [followed, setFollowed] = React.useState(
+    storeInfo?.followStatusOfUserLogin
+      ? true
+      : localFollowedStore?.includes(storeInfo.id),
+  );
+
   const _handleClick = async () => {
     let res = null;
     try {
       if (followed) {
         res = await unFollowStoreService(storeInfo?.id);
+        if (localFollowedStore && localFollowedStore?.length) {
+          if (localFollowedStore?.includes(storeInfo?.id)) {
+            const itemIndex = localFollowedStore?.findIndex(
+              (item) => item == storeInfo?.id,
+            );
+            dispatch(
+              newFeedActions.setLocalFollowedStore([
+                ...localFollowedStore.slice(0, itemIndex),
+                ...localFollowedStore.slice(itemIndex + 1),
+              ]),
+            );
+          }
+        }
       } else {
         res = await followStoreService(storeInfo?.id);
+        if (localFollowedStore && localFollowedStore?.length) {
+          if (!localFollowedStore?.includes(storeInfo?.id)) {
+            dispatch(
+              newFeedActions.setLocalFollowedStore([
+                ...localFollowedStore,
+                storeInfo?.id,
+              ]),
+            );
+          }
+        } else {
+          dispatch(newFeedActions.setLocalFollowedStore([storeInfo?.id]));
+        }
       }
       setFollowed(!followed);
     } catch (err) {

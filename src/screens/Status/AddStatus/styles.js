@@ -20,6 +20,7 @@ export default EStyleSheet.create({
   },
   textInput: {
     width: '100%',
+    paddingTop: 20,
     paddingVertical: 20,
     paddingHorizontal: 15, //Settting padding for textbox "Viết chú thích"
   },

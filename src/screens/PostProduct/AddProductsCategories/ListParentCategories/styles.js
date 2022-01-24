@@ -35,8 +35,9 @@ export default EStyleSheet.create({
     height: 48,
   },
   categoryIcon: {
-    height: 16,
-    width: 16,
+    height: 32,
+    width: 32,
+    borderRadius: 16,
     marginRight: 12,
   },
   itemText: {

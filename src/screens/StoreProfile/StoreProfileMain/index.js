@@ -80,7 +80,7 @@ const StoreProfileMain = (props) => {
       storeProfileActions.getStorePost({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
-        storeId: storeId,
+        storeOwnerId: storeId,
       }),
     );
   }, [storeId]);
@@ -128,7 +128,7 @@ const StoreProfileMain = (props) => {
       storeProfileActions.getStorePost({
         page: PAGE_DEFAULT,
         limit: LIMIT_DEFAULT,
-        storeId: storeId,
+        storeOwnerId: storeId,
       }),
     );
   };

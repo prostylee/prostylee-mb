@@ -32,7 +32,6 @@ import {dim} from 'utils/common';
 
 const WIDTH = dim.width;
 const HEIGHT = dim.height;
-const IC_BACK = require('assets/icons/arrowLeft.png');
 let activeIndex = 0;
 
 const CropPostProductImage = () => {
@@ -440,7 +439,6 @@ const CropPostProductImage = () => {
         isDefault
         title={''}
         containerStyle={styles.headerContainer}
-        leftIcon={<Image source={IC_BACK} style={styles.headerImage} />}
         rightComponent={
           <TouchableOpacity style={styles.cropButton} onPress={cropAllImage}>
             <Text style={styles.cropText}>

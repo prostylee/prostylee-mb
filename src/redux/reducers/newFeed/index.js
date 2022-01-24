@@ -41,6 +41,9 @@ export const types = {
   POST_STORY: 'POST_STORY',
   POST_STORY_SUCCESS: 'POST_STORY_SUCCESS',
   POST_STORY_FAIL: 'POST_STORY_FAIL',
+
+  SET_LOCAL_FOLLOWED_STORE: 'SET_LOCAL_FOLLOWED_STORE',
+  SET_LOCAL_FOLLOWED_USER: 'SET_LOCAL_FOLLOWED_USER',
 };
 
 export const actions = {
@@ -96,6 +99,8 @@ export const actions = {
   postStory: createAction(types.POST_STORY),
   postStorySuccess: createAction(types.POST_STORY_SUCCESS),
   postStoryFail: createAction(types.POST_STORY_FAIL),
+  setLocalFollowedStore: createAction(types.SET_LOCAL_FOLLOWED_STORE),
+  setLocalFollowedUser: createAction(types.SET_LOCAL_FOLLOWED_USER),
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -122,12 +127,17 @@ const intialState = {
   hasLoadMoreStoreMini: false,
   pageStoreMini: PAGE_DEFAULT,
   limitStoreMini: LIMIT_DEFAULT,
+
+  localFollowedStore: [],
+  localFollowedUser: [],
 };
 
 export const selectors = {
   getStoreMini: (state) => state.newFeed.storeMini,
   getStoreMiniLoading: (state) => state.newFeed.storeMiniLoading,
   getNewFeedStore: (state) => state.newFeed.newFeedStoreSelect,
+  getLocalFollowedStore: (state) => state.newFeed.localFollowedStore,
+  getLocalFollowedUser: (state) => state.newFeed.localFollowedUser,
 };
 
 export default handleActions(
@@ -258,6 +268,13 @@ export default handleActions(
     },
     [types.REMOVE_NEW_FEED_STORE]: (state, {payload}) => {
       return {...state, newFeedStoreSelect: {}};
+    },
+
+    [types.SET_LOCAL_FOLLOWED_STORE]: (state, {payload}) => {
+      return {...state, localFollowedStore: payload};
+    },
+    [types.SET_LOCAL_FOLLOWED_USER]: (state, {payload}) => {
+      return {...state, localFollowedUser: payload};
     },
   },
   intialState,

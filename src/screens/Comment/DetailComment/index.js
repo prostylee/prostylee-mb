@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Image, FlatList, Text} from 'react-native';
-import PropTypes from 'prop-types';
+import {View, FlatList, Text} from 'react-native';
 import i18n from 'i18n';
 import {IconButton} from 'react-native-paper';
 
@@ -16,8 +15,6 @@ import {onCreateComment} from 'graphqlLocal/subscriptions';
 import {showMessage} from 'react-native-flash-message';
 
 import styles from './styles';
-
-const IC_BACK = require('assets/icons/arrowLeft.png');
 
 const Comment = (props) => {
   const {item, currentUser, goBack, commentTargetType} = props;

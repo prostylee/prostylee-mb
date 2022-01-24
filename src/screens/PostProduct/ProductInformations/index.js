@@ -8,6 +8,7 @@ import {
   Platform,
   KeyboardAvoidingView,
   Dimensions,
+  Alert,
 } from 'react-native';
 import i18n from 'i18n';
 import {ProgressBar} from 'react-native-paper';
@@ -45,6 +46,10 @@ const ProductInfor = () => {
 
   const [productPrice, setProductPrice] = useState(
     postProductInfo?.price ? postProductInfo?.price : null,
+  );
+
+  const [productPriceSale, setProductPriceSale] = useState(
+    postProductInfo?.priceSale ? postProductInfo?.priceSale : null,
   );
 
   const [selectedAttributes, setSelectedAttributes] = useState(
@@ -88,7 +93,20 @@ const ProductInfor = () => {
     setProductPrice(parseValue);
   };
 
+  const _handleChangePriceSale = (value) => {
+    let parseValue = `${value}`.split('.').join('');
+    if (parseValue.length > 8) console.log('lớn hơn');
+    if (`${parseValue * 1}` === 'NaN') {
+      return;
+    }
+    setProductPriceSale(parseValue);
+  };
+
   const onSubmitPress = () => {
+    if (productPriceSale / productPrice < 0.1) {
+      Alert.alert(i18n.t('addProduct.productPriceInvalid'));
+      return;
+    }
     const idx = Object.values(selectedAttributes).findIndex(
       (item) => item.length,
     );
@@ -141,6 +159,7 @@ const ProductInfor = () => {
       postProductActions.setProductInfo({
         attributeOptions: matrixOptions,
         price: productPrice,
+        priceSale: productPriceSale,
       }),
     );
   };
@@ -174,6 +193,7 @@ const ProductInfor = () => {
         postProductActions.setProductInfo({
           attributeOptions: attrRef.current,
           price: priceRef.current,
+          priceSale: productPriceSale,
         }),
       );
     });
@@ -242,7 +262,32 @@ const ProductInfor = () => {
                   keyboardType="numeric"
                   maxLength={10}
                 />
-                <Text style={styles.verticalLine}>|</Text>
+                <View style={styles.verticalLine} />
+                <Text style={styles.currencyUnitText}>đ</Text>
+              </View>
+            </View>
+
+            <View style={styles.boxWrap}>
+              <View style={styles.wrapTitle}>
+                <Text style={styles.title}>
+                  {i18n.t('addProduct.productSale')}
+                </Text>
+                <IconFont name="asterisk" size={6} color="red" />
+              </View>
+              <View style={styles.inputPrice}>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={_handleChangePriceSale}
+                  value={
+                    productPriceSale
+                      ? getNumberWidthDot(productPriceSale * 1 || 0)
+                      : null
+                  }
+                  placeholder="0"
+                  keyboardType="numeric"
+                  maxLength={10}
+                />
+                <View style={styles.verticalLine} />
                 <Text style={styles.currencyUnitText}>đ</Text>
               </View>
             </View>

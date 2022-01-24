@@ -484,6 +484,9 @@ export default {
     yourLocation: 'Địa điểm của bạn',
     changeLocation: 'Thay đổi địa điểm',
     productPrice: 'Giá sản phẩm',
+    productSale: 'Giá sale',
+    productPriceInvalid:
+      'Giá sale phải lớn hơn hoặc bằng 10% giá sản phẩm. Vui long nhập lại!',
     priceMustBeInteger: 'Giá của sản phẩm phải là số nguyên!',
     limitPriceReached: 'Đã đạt giới hạn giá sản phẩm, vui lòng nhập lại',
     primaryImg: 'Ảnh chính',

@@ -10,7 +10,12 @@ import {
 
 import {useDispatch, useSelector} from 'react-redux';
 
-import {commonActions, commonSelectors, userActions} from './redux/reducers';
+import {
+  commonActions,
+  commonSelectors,
+  userActions,
+  postProductActions,
+} from './redux/reducers';
 
 import {common} from './utils';
 
@@ -94,7 +99,7 @@ const Index = () => {
     async function getInfo() {
       const res = await getDeviceInfo();
     }
-
+    dispatch(postProductActions.clearPostInfo());
     getInfo();
   }, []);
 

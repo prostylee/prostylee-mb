@@ -43,6 +43,12 @@ export default EStyleSheet.create({
     fontWeight: '400',
     color: '$gray',
   },
+  categoryIcon: {
+    height: 32,
+    width: 32,
+    borderRadius: 16,
+    marginRight: 12,
+  },
   contentWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
