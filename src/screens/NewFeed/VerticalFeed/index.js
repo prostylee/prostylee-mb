@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {View, ActivityIndicator, FlatList} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {newFeedSelectors, newFeedActions} from 'reducers';
@@ -18,8 +18,10 @@ const VerticalFeed = ({
   isFirst,
   isProfile,
   targetType,
+  initIndex,
 }) => {
   const dispatch = useDispatch();
+  const postListRef = useRef();
   const [allNewFeedsStoreFollowedScreen, setAllNewFeedsStoreFollowed] =
     useState([]);
   const [allNewFeedsUserFollowedScreen, setAllNewFeedsUserFollowed] = useState(
@@ -39,6 +41,17 @@ const VerticalFeed = ({
     localFollowedUser && localFollowedUser?.length
       ? [...allNewFeedsUserFollowedScreen, ...localFollowedUser]
       : allNewFeedsUserFollowedScreen;
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (initIndex && postListRef && postListRef.current) {
+        postListRef.current?.scrollToIndex({
+          index: initIndex,
+        });
+      }
+    }, 400);
+  }, [initIndex, postListRef]);
+
   if (isFirst && loading) {
     return null;
   }
@@ -124,10 +137,14 @@ const VerticalFeed = ({
 
   return (
     <FlatList
+      ref={postListRef}
       data={newFeedList?.content || []}
       keyExtractor={(item, index) =>
         'newFeedKeyExtractor' + targetType + index + item?.likeStatusOfUserLogin
       }
+      onScrollToIndexFailed={(e) => {
+        console.log('Fail scroll to post item', e);
+      }}
       renderItem={({item, index}) => (
         <FeedItem
           isProfile={isProfile}
@@ -147,7 +164,8 @@ const VerticalFeed = ({
       onRefresh={handleRefresh}
       ListFooterComponent={renderFooter}
       onEndReachedThreshold={0.5}
-      initialNumToRender={10}
+      initialNumToRender={99}
+      windowSize={21}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
     />
@@ -157,6 +175,7 @@ const VerticalFeed = ({
 VerticalFeed.defaultProps = {
   isFirst: false,
   isProfile: false,
+  initIndex: 0,
 };
 
 VerticalFeed.propTypes = {};

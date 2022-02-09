@@ -48,13 +48,18 @@ const Grid = ({column, wImage, hImage, userProfile}) => {
         showsHorizontalScrollIndicator={false}
         key={column}
         numColumns={column}
-        columnWrapperStyle={styles.viewCol}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
+        contentContainerStyle={styles.listContent}
         keyExtractor={(item, index) => 'profileMeTab' + index}
         data={postOfUser?.content || []}
-        renderItem={({item}) => (
+        renderItem={({item, index}) => (
           <TouchableOpacity
-            style={styles.viewImage}
+            style={[
+              styles.viewImage,
+              {
+                marginLeft: index % 2 === 0 ? 0 : 12,
+              },
+            ]}
             onPress={() =>
               navigation.navigate('PostList', {
                 profile: userProfile,
@@ -96,8 +101,8 @@ const Grid = ({column, wImage, hImage, userProfile}) => {
 
 Grid.defaultProps = {
   column: 2,
-  wImage: (width - 48) / 2,
-  hImage: (width - 48) / 2,
+  wImage: (width - 42) / 2,
+  hImage: (width - 42) / 2,
 };
 
 Grid.propTypes = {};

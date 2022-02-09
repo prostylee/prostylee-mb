@@ -5,15 +5,13 @@ const {width} = Dimensions.get('window');
 
 export default EStyleSheet.create({
   container: {
-    paddingHorizontal: 12,
     backgroundColor: '$white',
-  },
-  viewImage: {
-    width: (width - 48) / 2,
-    marginHorizontal: 8,
   },
   viewFooter: {
     marginBottom: 26,
+  },
+  listContent: {
+    paddingHorizontal: 13,
   },
   viewLoadingFooter: {
     position: 'relative',
