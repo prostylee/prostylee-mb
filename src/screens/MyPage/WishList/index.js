@@ -97,11 +97,7 @@ const WishList = (props) => {
             renderItem={({item, index}) => {
               return (
                 <View style={styles.wrapProduct}>
-                  <ProductItem
-                    index={index}
-                    item={item?.product}
-                    index={index}
-                  />
+                  <ProductItem index={index} item={item?.product} />
                 </View>
               );
             }}

@@ -40,7 +40,18 @@ const GridView = ({column, wImage, hImage, productList}) => {
         numColumns={column}
         keyExtractor={(_, index) => 'profileMeTab' + index}
         data={productList?.content || []}
-        renderItem={({item}) => <ProductItem item={item} />}
+        renderItem={({item}) => {
+          const data = {
+            ...item,
+            ...(item.product ? item.product : {}),
+            ...(item.productResponseLite ? item.productResponseLite : {}),
+            product: {
+              ...(item.product ? item.product : {}),
+              ...(item.productResponseLite ? item.productResponseLite : {}),
+            },
+          };
+          return <ProductItem item={data} />;
+        }}
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
         ListFooterComponent={renderFooter}

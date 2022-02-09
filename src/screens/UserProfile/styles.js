@@ -6,6 +6,13 @@ export default EStyleSheet.create({
     flex: 1,
     backgroundColor: '$white',
   },
+  headerTitle: {
+    fontWeight: '700',
+    fontSize: 16,
+    lineHeight: 24,
+    letterSpacing: -0.02,
+    fontFamily: '$font1Bold',
+  },
   header: {
     paddingHorizontal: 10,
   },

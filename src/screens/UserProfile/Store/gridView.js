@@ -1,10 +1,10 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {View, FlatList, ActivityIndicator, Dimensions} from 'react-native';
+import {View, FlatList, ActivityIndicator} from 'react-native';
 
 import {ContainerView as Container, Colors} from 'components';
 
-import ProductItem from 'components/ProductItem';
+import ProductItem from './ProductItem';
 
 import {productByUserSelector} from 'redux/selectors/user';
 
@@ -13,9 +13,7 @@ import {EmptyProduct} from 'svg/profile';
 import {EmptyComponent} from 'components';
 import i18n from 'i18n';
 
-const {width} = Dimensions.get('window');
-
-const GridView = ({column, wImage, hImage, userProfile}) => {
+const GridView = ({column, userProfile}) => {
   const loadMoreLoading = false;
 
   const productByUser = useSelector((state) => productByUserSelector(state));
@@ -39,7 +37,15 @@ const GridView = ({column, wImage, hImage, userProfile}) => {
         numColumns={column}
         keyExtractor={(_, index) => 'profileMeTab' + index}
         data={productByUser?.content || []}
-        renderItem={({item}) => <ProductItem item={item} />}
+        renderItem={({item, index}) => (
+          <View
+            style={{
+              marginLeft: index % 2 === 0 ? 0 : 8,
+            }}>
+            <ProductItem item={item} />
+          </View>
+        )}
+        contentContainerStyle={styles.listContent}
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
         ListFooterComponent={renderFooter}
@@ -59,8 +65,6 @@ const GridView = ({column, wImage, hImage, userProfile}) => {
 
 GridView.defaultProps = {
   column: 2,
-  wImage: (width - 48) / 2,
-  hImage: (width - 48) / 2,
 };
 
 GridView.propTypes = {};

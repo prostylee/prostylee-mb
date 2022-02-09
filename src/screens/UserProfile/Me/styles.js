@@ -8,15 +8,14 @@ export default EStyleSheet.create({
     paddingVertical: 16,
     backgroundColor: '$white',
   },
-  viewImage: {
-    width: (width - 48) / 2,
-    marginHorizontal: 8,
+  listContent: {
+    paddingHorizontal: 15,
   },
-  viewCol: {
-    marginLeft: 8,
+  viewImage: {
+    width: (width - 42) / 2,
   },
   separator: {
-    height: 16,
+    height: 12,
   },
   viewFooter: {
     marginBottom: 26,

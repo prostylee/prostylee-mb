@@ -95,6 +95,7 @@ const UserProfile = () => {
           </Touch>
         }
         containerStyle={styles.header}
+        titleStyle={styles.headerTitle}
       />
       <ScrollView
         ref={scrollRef}

@@ -17,6 +17,9 @@ const FullView = () => {
   const profile = route?.params?.profile || {};
   const postOfUser = route?.params?.postOfUser || {};
   const selectedPost = route?.params?.selectedPost || {};
+  const initIndex = postOfUser.content?.findIndex(
+    (item) => item.id === selectedPost.id,
+  );
   const targetType = useSelector((state) => targetTypeSelector(state));
   // const postOfUser = useSelector((state) => postOfUserSlector(state));
   return (
@@ -40,6 +43,7 @@ const FullView = () => {
         refreshing={false}
         isProfile
         loadMoreLoading={false}
+        initIndex={initIndex}
       />
     </ThemeView>
   );

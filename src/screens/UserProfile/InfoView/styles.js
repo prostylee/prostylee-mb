@@ -28,7 +28,7 @@ export default EStyleSheet.create({
   textName: {
     textAlign: 'left',
     fontFamily: '$font1',
-    fontWeight: '500',
+    fontWeight: '700',
     lineHeight: 28,
     fontSize: 17,
     color: '#333333',
@@ -75,7 +75,7 @@ export default EStyleSheet.create({
     marginVertical: 0,
     width: '100%',
     fontFamily: '$font1',
-    fontWeight: '500',
+    fontWeight: '600',
     fontSize: 14,
     lineHeight: 20,
     marginHorizontal: 0,
@@ -95,7 +95,7 @@ export default EStyleSheet.create({
   messageBtnLabel: {
     color: '$black',
     fontFamily: '$font1',
-    fontWeight: '500',
+    fontWeight: '600',
     fontSize: 14,
     lineHeight: 20,
   },
@@ -107,6 +107,8 @@ export default EStyleSheet.create({
   },
   viewSection: {
     ...center,
+    flex: 1,
+    paddingHorizontal: 4,
   },
   textLabel: {
     fontFamily: '$font1',
@@ -115,7 +117,7 @@ export default EStyleSheet.create({
   },
   textTitle: {
     fontSize: 20,
-    fontWeight: '500',
+    fontWeight: '700',
     lineHeight: 28,
     fontFamily: '$font1',
   },

@@ -14,6 +14,7 @@ const ProductItem = ({item}) => {
   } else {
     productInfo = item;
   }
+  const isSale = Number(productInfo.priceSale) > 0;
   return (
     <View style={styles.wrapItems}>
       <TouchableOpacity
@@ -34,7 +35,7 @@ const ProductItem = ({item}) => {
               style={styles.imageThumbnail}
               PlaceholderContent={<ActivityIndicator />}
             />
-            {productInfo?.priceSale < productInfo?.price ? (
+            {isSale && productInfo?.priceSale < productInfo?.price ? (
               <View style={styles.wrapTextSale}>
                 <Text style={styles.textSale}>
                   -
@@ -47,19 +48,43 @@ const ProductItem = ({item}) => {
           <Text numberOfLines={2} style={styles.title}>
             {productInfo.name}
           </Text>
-          {productInfo?.priceSale ? (
-            <Text numberOfLines={1} style={styles.price}>
-              {currencyFormat(productInfo?.priceSale, CURRENCY_VIET_NAM)}
-            </Text>
-          ) : null}
 
-          <View style={styles.wrapPriceRoot}>
-            {productInfo?.price ? (
-              <Text numberOfLines={1} style={styles.priceRoot}>
-                {currencyFormat(productInfo?.price, CURRENCY_VIET_NAM)}
-              </Text>
-            ) : null}
-
+          <View style={styles.priceInfoContainer}>
+            <View style={styles.priceContainer}>
+              {isSale && productInfo?.priceSale ? (
+                <Text numberOfLines={1} style={styles.price}>
+                  {currencyFormat(productInfo?.priceSale, '')}
+                  <Text style={[styles.price, styles.currencyBlack]}>
+                    {CURRENCY_VIET_NAM}
+                  </Text>
+                </Text>
+              ) : null}
+              {productInfo?.price ? (
+                <Text
+                  numberOfLines={1}
+                  style={
+                    isSale && productInfo?.priceSale
+                      ? styles.priceRoot
+                      : styles.price
+                  }>
+                  {currencyFormat(
+                    productInfo?.price,
+                    isSale && productInfo?.priceSale ? CURRENCY_VIET_NAM : '',
+                  )}
+                  {isSale && productInfo?.priceSale ? null : (
+                    <Text
+                      style={[
+                        isSale && productInfo?.priceSale
+                          ? styles.priceRoot
+                          : styles.price,
+                        styles.currencyBlack,
+                      ]}>
+                      {CURRENCY_VIET_NAM}
+                    </Text>
+                  )}
+                </Text>
+              ) : null}
+            </View>
             <ProductLike item={productInfo} />
           </View>
         </View>
