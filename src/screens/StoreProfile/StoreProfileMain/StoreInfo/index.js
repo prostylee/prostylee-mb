@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
 import styles from './style';
 
@@ -24,6 +24,21 @@ const StoreInfo = ({storeInfo = {}}) => {
       ? true
       : localFollowedStore?.includes(storeInfo.id),
   );
+
+  useEffect(() => {
+    if (
+      followed !==
+      (storeInfo?.followStatusOfUserLogin
+        ? true
+        : localFollowedStore?.includes(storeInfo.id))
+    ) {
+      setFollowed(
+        storeInfo?.followStatusOfUserLogin
+          ? true
+          : localFollowedStore?.includes(storeInfo.id),
+      );
+    }
+  }, [storeInfo]);
 
   const _handleClick = async () => {
     let res = null;

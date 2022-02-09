@@ -51,9 +51,9 @@ export default EStyleSheet.create({
     maxWidth: '80%',
   },
   followButton: {
-    width: 100,
+    width: 106,
     backgroundColor: '$purple',
-    paddingHorizontal: 10,
+    paddingHorizontal: 6,
     paddingVertical: 4,
     borderRadius: 4,
     justifyContent: 'center',

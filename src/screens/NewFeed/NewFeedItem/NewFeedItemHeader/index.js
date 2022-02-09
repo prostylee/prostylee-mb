@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import i18n from 'i18n';
 import styles from './styles';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Avatar} from 'react-native-paper';
-import {userSelectors} from 'reducers';
+import {userSelectors, newFeedSelectors} from 'reducers';
 import {ContainerView, FollowTextButton} from 'components';
 import {MapPin} from 'svg/common';
 import {TYPE_STORE} from 'constants';
@@ -27,6 +27,38 @@ const NewFeedItemHeader = ({
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
   );
+  const localFollowedStore = useSelector(
+    newFeedSelectors.getLocalFollowedStore,
+  );
+  const localFollowedUser = useSelector(newFeedSelectors.getLocalFollowedUser);
+  let localFollowData = [];
+  if (targetType === TYPE_STORE) {
+    localFollowData = localFollowedStore;
+  } else {
+    localFollowData = localFollowedUser;
+  }
+
+  const FollowButtonComponent = useMemo(() => {
+    return (
+      <FollowTextButton
+        item={{
+          followStatusOfUserLogin: allNewFeedsFollowed?.includes(targetId),
+          id: targetId,
+        }}
+        targetType={targetType}
+        addFollowAction={addFollowAction}
+        removeFollowAction={removeFollowAction}
+      />
+    );
+  }, [
+    targetType,
+    addFollowAction,
+    removeFollowAction,
+    allNewFeedsFollowed,
+    localFollowData,
+    targetId,
+  ]);
+
   if (!showHeader) {
     return null;
   }
@@ -63,17 +95,7 @@ const NewFeedItemHeader = ({
           style={{
             paddingBottom: isAdvertising || Boolean(subTitle) ? 20 : 0,
           }}>
-          <FollowTextButton
-            item={{
-              followStatusOfUserLogin:
-                followStatusOfUserLogin ||
-                allNewFeedsFollowed?.includes(targetId),
-              id: targetId,
-            }}
-            targetType={targetType}
-            addFollowAction={addFollowAction}
-            removeFollowAction={removeFollowAction}
-          />
+          {FollowButtonComponent}
         </View>
       ) : null}
     </ContainerView>

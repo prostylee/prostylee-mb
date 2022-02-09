@@ -118,12 +118,12 @@ const NewFeed = ({navigation}) => {
 
   const allNewFeedsStoreFollowed =
     localFollowedStore && localFollowedStore?.length
-      ? [...allNewFeedsStoreFollowedScreen, ...localFollowedStore]
+      ? [...new Set([...allNewFeedsStoreFollowedScreen, ...localFollowedStore])]
       : allNewFeedsStoreFollowedScreen;
 
   const allNewFeedsUserFollowed =
     localFollowedUser && localFollowedUser?.length
-      ? [...allNewFeedsUserFollowedScreen, ...localFollowedUser]
+      ? [...new Set([...allNewFeedsUserFollowedScreen, ...localFollowedUser])]
       : allNewFeedsUserFollowedScreen;
 
   React.useEffect(() => {
@@ -140,6 +140,18 @@ const NewFeed = ({navigation}) => {
       return unsubscribe;
     }
   }, [navigation, isFocused, flatListRef]);
+
+  React.useEffect(() => {
+    if (allNewFeedsStoreFollowedScreen?.length !== localFollowedStore?.length) {
+      setAllNewFeedsStoreFollowed(localFollowedStore);
+    }
+  }, [localFollowedStore, allNewFeedsStoreFollowedScreen]);
+
+  React.useEffect(() => {
+    if (allNewFeedsUserFollowedScreen?.length !== localFollowedUser?.length) {
+      setAllNewFeedsUserFollowed(localFollowedUser);
+    }
+  }, [localFollowedUser, allNewFeedsUserFollowedScreen]);
 
   useEffect(() => {
     dispatch(newFeedActions.resetPage());
@@ -266,6 +278,14 @@ const NewFeed = ({navigation}) => {
 
       if (targetType === TYPE_STORE) {
         setAllNewFeedsStore(items);
+        const followList = items.filter((item) => item.followStatusOfUserLogin);
+        const followListId = followList.map(
+          (item) => item?.newFeedOwnerResponse?.id,
+        );
+        setAllNewFeedsStoreFollowed([...new Set(followListId)]);
+        dispatch(
+          newFeedActions.setLocalFollowedStore([...new Set(followListId)]),
+        );
         let listFollowed = [];
         items?.map((item) => {
           if (
@@ -285,6 +305,14 @@ const NewFeed = ({navigation}) => {
         });
       } else if (targetType === TYPE_USER) {
         setAllNewFeedsUser(items);
+        const followList = items.filter((item) => item.followStatusOfUserLogin);
+        const followListId = followList.map(
+          (item) => item?.newFeedOwnerResponse?.id,
+        );
+        setAllNewFeedsUserFollowed([...new Set(followListId)]);
+        dispatch(
+          newFeedActions.setLocalFollowedUser([...new Set(followListId)]),
+        );
       }
     }
   }, [threeFirstNewFeedItem, topProduct, listDynamicUsers, newFeedList]);
