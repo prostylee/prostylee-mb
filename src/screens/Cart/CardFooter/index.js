@@ -71,7 +71,12 @@ const CardFooter = ({
   }, []);
 
   useEffect(() => {
-    if (paymentList && paymentList?.length && isEmpty(paymentSelected)) {
+    if (
+      paymentList &&
+      paymentList?.length &&
+      !paymentSelected &&
+      isEmpty(paymentSelected)
+    ) {
       const defaultMethod =
         paymentList.find((item) => item.id == 1) || paymentList[0];
       dispatch(cartActions.setPaymentMethodData(defaultMethod.id));

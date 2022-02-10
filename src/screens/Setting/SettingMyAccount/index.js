@@ -34,6 +34,7 @@ import {
   validateEmail,
   validateFullname,
   validatePhone,
+  validateUsername,
 } from 'utils/validatorUtils';
 import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
@@ -64,6 +65,8 @@ const SettingMyAccount = () => {
   });
 
   const name = userProfile.fullName ? userProfile.fullName : '';
+
+  const username = userProfile.username ? userProfile.username : '';
 
   const bio = userProfile.bio ? userProfile.bio : '';
 
@@ -131,6 +134,7 @@ const SettingMyAccount = () => {
         bio: payload.bio,
         phoneNumber: payload.phone,
         email: payload.email,
+        username: payload.username,
         ...birthdayData,
       }),
     );
@@ -304,6 +308,7 @@ const SettingMyAccount = () => {
         validateOnMount={true}
         initialValues={{
           name,
+          username,
           bio,
           gender,
           birthday,
@@ -397,6 +402,18 @@ const SettingMyAccount = () => {
                       validate={validateFullname}
                       label={setLabelTextInput(
                         I18n.t('settingProfile.name'),
+                        true,
+                      )}
+                      onChange={() => {
+                        setisChange(true);
+                      }}
+                    />
+                    <Field
+                      component={CustomTextInput}
+                      name="username"
+                      validate={validateUsername}
+                      label={setLabelTextInput(
+                        I18n.t('settingProfile.username'),
                         true,
                       )}
                       onChange={() => {
@@ -525,13 +542,15 @@ const SettingMyAccount = () => {
                 options={PICK_IMAGE_OPTIONS}
                 cancelButtonIndex={CANCEL_INDEX}
                 onPress={(value) => {
-                  if (value === 1) {
-                    onPickImagePress();
-                    return;
-                  }
-                  if (value === 2) {
-                    onCaptureImagePress();
-                  }
+                  setTimeout(() => {
+                    if (value === 1) {
+                      onPickImagePress();
+                      return;
+                    }
+                    if (value === 2) {
+                      onCaptureImagePress();
+                    }
+                  }, 500);
                 }}
               />
             </>

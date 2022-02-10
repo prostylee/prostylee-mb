@@ -113,7 +113,8 @@ export default EStyleSheet.create({
   textLabel: {
     fontFamily: '$font1',
     fontSize: 11,
-    lineHeight: 18,
+    lineHeight: 15,
+    textAlign: 'center',
   },
   textTitle: {
     fontSize: 20,

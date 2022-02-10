@@ -18,6 +18,7 @@ export default {
   undefined: 'Không xác định',
   post: 'Bài viết',
   product: 'Sản phẩm',
+  call: 'Gọi',
   stores: {
     titleTopStore: 'Cửa hàng nổi bật',
     textNear: 'Cửa hàng gần đây',
@@ -164,6 +165,7 @@ export default {
   user: {
     email: 'Email',
     name: 'Họ tên',
+    username: 'Tên người dùng',
     phone: 'Số điện thoại',
     password: 'Mật khẩu',
   },
@@ -361,6 +363,8 @@ export default {
     settingChat: 'Cài đặt Chat',
     settingNotification: 'Cài đặt Thông báo',
     settingLanguage: 'Ngôn ngữ',
+    settingSupport: 'Hỗ trợ',
+    callSupportTitle: 'Gọi đến tổng đài hỗ trợ!',
     setAddressAsDefault: 'Đặt làm địa chỉ mặc định',
     default: 'Mặc định',
     newAddress: 'Thêm địa chỉ mới',
@@ -368,6 +372,7 @@ export default {
   },
   settingProfile: {
     name: 'Tên',
+    username: 'Tên người dùng',
     bio: 'Bio',
     gender: 'Giới tính',
     birthday: 'Ngày sinh',

@@ -1,6 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {center, flexRow} from 'theme/style';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -44,7 +44,7 @@ export default EStyleSheet.create({
   },
   textTitle: {
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: Platform.OS === 'android' ? '700' : '600',
     lineHeight: 20,
     fontFamily: '$font1',
   },

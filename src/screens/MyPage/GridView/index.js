@@ -111,13 +111,18 @@ const GridView = ({column, wImage, hImage}) => {
           scrollEnabled={false}
           key={column}
           numColumns={column}
-          columnWrapperStyle={styles.viewCol}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
+          contentContainerStyle={styles.listContent}
           keyExtractor={(item, index) => 'profileMeTab' + index}
           data={postList || []}
-          renderItem={({item}) => (
+          renderItem={({item, index}) => (
             <TouchableOpacity
-              style={styles.viewImage}
+              style={[
+                styles.viewImage,
+                {
+                  marginLeft: index % 2 === 0 ? 0 : 12,
+                },
+              ]}
               onPress={() =>
                 navigation.navigate('PostList', {
                   profile: userProfile,
@@ -143,7 +148,6 @@ const GridView = ({column, wImage, hImage}) => {
           ListFooterComponent={renderFooter}
           refreshing={isRefreshing}
           onRefresh={handleRefresh}
-          contentContainerStyle={{paddingTop: 10}}
           ListEmptyComponent={
             <EmptyComponent
               icon={<EmptyPost />}
@@ -161,8 +165,8 @@ const GridView = ({column, wImage, hImage}) => {
 
 GridView.defaultProps = {
   column: 2,
-  wImage: (width - 48) / 2,
-  hImage: (width - 48) / 2,
+  wImage: (width - 42) / 2,
+  hImage: (width - 42) / 2,
 };
 
 GridView.propTypes = {};

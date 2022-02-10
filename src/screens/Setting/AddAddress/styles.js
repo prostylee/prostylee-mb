@@ -1,9 +1,19 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform, StatusBar} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
+  wrapper: {
+    flex: 1,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+  },
   container: {
     flex: 1,
+  },
+  titleStyle: {
+    fontSize: 16,
+    lineHeight: 24,
+    fontFamily: '$font1',
+    fontWeight: '500',
   },
   headerIcon: {
     paddingHorizontal: 16,

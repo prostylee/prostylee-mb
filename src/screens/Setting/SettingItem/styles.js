@@ -1,4 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {Dimensions} from 'react-native';
+const WIDTH = Dimensions.get('window').width;
 
 export default EStyleSheet.create({
   container: {
@@ -11,7 +13,7 @@ export default EStyleSheet.create({
   },
   textViewLabel: {
     top: 10,
-    left: 16,
+    left: 0,
     paddingVertical: 10,
   },
   textLabel: {
@@ -21,9 +23,29 @@ export default EStyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     fontWeight: '500',
+    paddingLeft: 16,
   },
   textItemList: {
-    left: -16,
+    width: '100%',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textItemListText: {
+    fontFamily: '$font1',
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '500',
+  },
+  textItemListIcon: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  divider: {
+    width: WIDTH - 24,
+    marginLeft: 12,
   },
   listDividerView: {
     backgroundColor: '$bgColor',

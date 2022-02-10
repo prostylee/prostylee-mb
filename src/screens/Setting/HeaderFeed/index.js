@@ -28,7 +28,7 @@ const HeaderFeed = () => {
       }
       middleComponent={
         <View style={styles.midHeader}>
-          <Text>{i18n.t('setting.title')}</Text>
+          <Text style={styles.title}>{i18n.t('setting.title')}</Text>
         </View>
       }
       rightComponent={

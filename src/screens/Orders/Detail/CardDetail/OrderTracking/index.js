@@ -7,6 +7,7 @@ import Header from '../Header';
 import i18n from 'i18n';
 import {getListUserOrderStatusSelector} from 'redux/selectors/myPage';
 import {useSelector} from 'react-redux';
+import moment from 'moment';
 
 const thirdIndicatorStyles = {
   stepIndicatorSize: 16,
@@ -68,8 +69,18 @@ const OrderTracking = ({navigation, timeLine = []}) => {
           <View style={styles.seperator} />
         </View>
         <View style={styles.inforWrapper}>
-          <Text style={styles.labelStepTitle}>{timeLine?.[0]?.statusName}</Text>
-          <Text style={styles.labelStepTime}>{timeLine?.[0]?.updatedAt}</Text>
+          <Text style={styles.labelStepTitle}>
+            {
+              timeLine?.[timeLine?.length ? timeLine?.length - 1 : 0]
+                ?.statusName
+            }
+          </Text>
+          <Text style={styles.labelStepTime}>
+            {moment(
+              timeLine?.[timeLine?.length ? timeLine?.length - 1 : 0]
+                ?.updatedAt,
+            ).format('HH:mm DD-MM-YYYY')}
+          </Text>
         </View>
         {/* <StepIndicator
           stepCount={newTimeLine?.length || 0}

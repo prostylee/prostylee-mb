@@ -32,9 +32,14 @@ const list = [
         title: i18n.t('setting.settingNotification'),
         screen: 'SettingNotification',
       },
+      // {
+      //   title: i18n.t('setting.settingLanguage'),
+      //   screen: '', // 'SettingLanguage',
+      // },
       {
-        title: i18n.t('setting.settingLanguage'),
-        screen: '', // 'SettingLanguage',
+        title: i18n.t('setting.settingSupport'),
+        type: 'call',
+        value: '0973411895',
       },
     ],
   },

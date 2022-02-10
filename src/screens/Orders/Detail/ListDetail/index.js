@@ -70,10 +70,13 @@ const ListDetail = ({
     return (
       <>
         <View style={styles.wrapItem}>
-          <Info dealData={orderData} infor={orderData?.orderHistory?.[0]} />
+          <Info dealData={orderData} />
         </View>
-        {orderData?.orderHistory?.[0]?.actCode !==
-        ORDER_STATUS_ACT_CODE.CANCEL_ORDER ? (
+        {orderData?.orderHistory?.[
+          orderData.orderHistory?.length
+            ? orderData.orderHistory?.length - 1
+            : 0
+        ]?.actCode !== ORDER_STATUS_ACT_CODE.CANCEL_ORDER ? (
           <View style={[styles.wrapItem, styles.paddingBottomNone]}>
             <Tracking timeLine={orderData?.orderHistory} />
           </View>

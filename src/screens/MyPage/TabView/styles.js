@@ -3,6 +3,15 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 const TABS_HEIGHT = 45;
 
 export default EStyleSheet.create({
+  container: {
+    marginTop: 0,
+  },
+  tabBarStyle: {
+    backgroundColor: '$white',
+  },
+  indicatorStyle: {
+    backgroundColor: '$purple',
+  },
   tab: {
     flex: 1,
     alignItems: 'center',
