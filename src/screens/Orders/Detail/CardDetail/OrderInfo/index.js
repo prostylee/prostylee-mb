@@ -2,57 +2,57 @@ import styles from './styles';
 import React from 'react';
 import {Text, View} from 'react-native';
 import {OrderIdIcon} from 'svg/common';
+import moment from 'moment';
+
 import i18n from 'i18n';
 
-import {ORDER_STATUS_ACT_CODE} from 'constants';
+import {ORDER_STATUS} from 'constants';
 
-const OrderInfo = ({dealData = {}, infor = {}}) => {
-  const {statusName} = infor;
-
+const OrderInfo = ({dealData = {}}) => {
   const renderStatus = () => {
-    switch (infor?.actCode) {
-      case ORDER_STATUS_ACT_CODE.PROCESSING:
+    switch (dealData?.status) {
+      case ORDER_STATUS.PROCESSING:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#823FFD'}}>
-            {statusName}
+            {'Đang xử lý'}
           </Text>
         );
-      case ORDER_STATUS_ACT_CODE.ON_DELIVERY:
+      case ORDER_STATUS.ON_DELIVERY:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#F48231'}}>
-            {statusName}
+            {'Đang vận chuyển'}
           </Text>
         );
-      case ORDER_STATUS_ACT_CODE.COMPLETED:
+      case ORDER_STATUS.COMPLETED:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#3FBA44'}}>
-            {statusName}
+            {'Đã giao'}
           </Text>
         );
-      case ORDER_STATUS_ACT_CODE.CANCEL_ORDER:
+      case ORDER_STATUS.CANCEL_ORDER:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#ED2727'}}>
-            {statusName}
+            {'Đã huỷ'}
           </Text>
         );
-      case ORDER_STATUS_ACT_CODE.WAIT_FOR_PAYMENT:
+      case ORDER_STATUS.WAIT_FOR_PAYMENT:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#ED2727'}}>
-            {statusName}
+            {'Chờ thanh toán'}
           </Text>
         );
 
       default:
         return (
           <Text style={{...styles.labelOrderStatus, color: '#333333'}}>
-            {statusName}
+            {'Không xác định'}
           </Text>
         );
     }
   };
 
-  switch (infor?.actCode) {
-    case ORDER_STATUS_ACT_CODE.CANCEL_ORDER:
+  switch (dealData?.status) {
+    case ORDER_STATUS.CANCEL_ORDER:
       return (
         <View style={styles.container}>
           <View style={styles.wrapOrderId}>
@@ -76,13 +76,11 @@ const OrderInfo = ({dealData = {}, infor = {}}) => {
           <View style={styles.wrapOrderDate}>
             <Text style={styles.labelOrderDate}>
               {i18n.t('orders.dealDate', {
-                date: infor?.createdAt,
+                date: moment(dealData.createdAt).format('HH:mm DD-MM-YYYY'),
               })}
             </Text>
           </View>
-          <View style={styles.wrapOrderStatus}>
-            {renderStatus(infor?.orderHistory?.[0])}
-          </View>
+          <View style={styles.wrapOrderStatus}>{renderStatus()}</View>
         </View>
       );
   }

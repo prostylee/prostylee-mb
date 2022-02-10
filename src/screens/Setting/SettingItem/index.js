@@ -2,7 +2,7 @@ import styles from './styles';
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import i18n from 'i18n';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, Linking, Alert} from 'react-native';
 import {Divider, Text, List} from 'react-native-paper';
 import list from './items';
 import {RightArrow} from 'svg/common';
@@ -14,7 +14,24 @@ import {showMessage} from 'react-native-flash-message';
 const SettingItem = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const callSupport = (phone) => {
+    Alert.alert(i18n.t('setting.callSupportTitle'), '', [
+      {
+        text: i18n.t('call'),
+        onPress: () => Linking.openURL(`tel:${phone}`),
+        style: 'default',
+      },
+      {
+        text: i18n.t('cancel'),
+        style: 'cancel',
+      },
+    ]);
+  };
   const onNavigateSetting = (setting) => {
+    if (setting?.type && setting.type === 'call') {
+      callSupport(setting.value);
+      return;
+    }
     if (typeof setting?.params === 'object') {
       navigation.navigate(setting?.screen, setting?.params);
       return;
@@ -52,9 +69,18 @@ const SettingItem = () => {
                         <List.Item
                           style={styles.textItemList}
                           title={item.title}
-                          right={(props) => <RightArrow />}
+                          titleStyle={styles.textItemListText}
+                          right={(props) => (
+                            <View style={styles.textItemListIcon}>
+                              <RightArrow />
+                            </View>
+                          )}
                         />
-                        {indexList == tab.list.length - 1 ? <></> : <Divider />}
+                        {indexList == tab.list.length - 1 ? (
+                          <></>
+                        ) : (
+                          <Divider style={styles.divider} />
+                        )}
                       </TouchableOpacity>
                     );
                   })}

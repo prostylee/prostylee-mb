@@ -1,9 +1,12 @@
 import styles from './styles';
-import React from 'react';
+import React, {useState} from 'react';
 import {Bag, Menu, Heart, BookMark} from 'svg/common';
-import {View, TouchableOpacity} from 'react-native';
+import {View, Dimensions} from 'react-native';
 import Order from '../Order';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+import {TabView, TabBar} from 'react-native-tab-view';
+
+import {ContainerView as Container} from 'components';
+
 import GridView from '../GridView';
 import {
   getListProductSaleSelector,
@@ -12,7 +15,16 @@ import {
 } from 'redux/selectors/myPage';
 import {useSelector} from 'react-redux';
 
+const initialLayout = {width: Dimensions.get('window').width};
+
 const TabViewContainer = ({style}) => {
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    {key: 'menu', title: ''},
+    {key: 'bag', title: ''},
+    {key: 'like', title: ''},
+    {key: 'save', title: ''},
+  ]);
   const productByUser = useSelector((state) =>
     getListProductSaleSelector(state),
   );
@@ -22,6 +34,35 @@ const TabViewContainer = ({style}) => {
   const productSaveByUser = useSelector((state) =>
     getListProductSavedSelector(state),
   );
+
+  const renderScene = ({route, jumpTo}) => {
+    switch (route.key) {
+      case 'menu':
+        return <GridView index={index} jumpTo={jumpTo} />;
+      case 'bag':
+        return (
+          <Order index={index} jumpTo={jumpTo} productList={productByUser} />
+        );
+      case 'like':
+        return (
+          <Order
+            index={index}
+            jumpTo={jumpTo}
+            productList={productLikeByUser}
+          />
+        );
+      case 'save':
+        return (
+          <Order
+            index={index}
+            jumpTo={jumpTo}
+            productList={productSaveByUser}
+          />
+        );
+      default:
+        return <GridView index={index} jumpTo={jumpTo} />;
+    }
+  };
   const renderItem = (name, active) => {
     switch (name) {
       case 'menu':
@@ -36,44 +77,32 @@ const TabViewContainer = ({style}) => {
         return <Menu color={active ? '#823FFD' : '#8B9399'} />;
     }
   };
-  const RenderLabel = ({tabs, goToPage, activeTab}) => {
+  const renderLabel = ({route, focused, color}) => {
     return (
-      <View style={styles.tabs}>
-        {tabs.map((tab, i) => {
-          return (
-            <TouchableOpacity
-              key={tab}
-              onPress={() => {
-                goToPage(i);
-              }}
-              style={[styles.tab, activeTab == i ? styles.activeTab : null]}>
-              {renderItem(tab, activeTab == i)}
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+      <View style={styles.labelWrapper}>{renderItem(route.key, focused)}</View>
     );
   };
 
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorStyle={styles.indicatorStyle}
+      style={styles.tabBarStyle}
+      renderLabel={renderLabel}
+    />
+  );
+
   return (
-    <ScrollableTabView
-      tabBarUnderlineStyle={{backgroundColor: '#823FFD'}}
-      tabBarActiveTextColor="#823FFD"
-      initialPage={0}
-      renderTabBar={() => <RenderLabel />}>
-      <View style={{flex: 1}} tabLabel={'menu'}>
-        <GridView />
-      </View>
-      <View style={{flex: 1, flexDirection: 'column'}} tabLabel={'bag'}>
-        <Order productList={productByUser} />
-      </View>
-      <View style={{flex: 1, flexDirection: 'column'}} tabLabel={'like'}>
-        <Order productList={productLikeByUser} />
-      </View>
-      <View style={{flex: 1, flexDirection: 'column'}} tabLabel={'save'}>
-        <Order productList={productSaveByUser} />
-      </View>
-    </ScrollableTabView>
+    <Container fluid style={styles.container}>
+      <TabView
+        navigationState={{index, routes}}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+        renderTabBar={renderTabBar}
+        lazy
+      />
+    </Container>
   );
 };
 

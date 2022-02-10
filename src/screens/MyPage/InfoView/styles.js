@@ -12,6 +12,7 @@ export default EStyleSheet.create({
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     zIndex: 99,
+    paddingTop: 10,
   },
   infoTop: {
     paddingLeft: 20,
@@ -28,7 +29,7 @@ export default EStyleSheet.create({
   textName: {
     textAlign: 'left',
     fontFamily: '$font1',
-    fontWeight: '500',
+    fontWeight: '700',
     lineHeight: 28,
     fontSize: 17,
     color: '#333333',
@@ -66,7 +67,7 @@ export default EStyleSheet.create({
   buttonLabel: {
     color: '$black',
     fontFamily: '$font1',
-    fontWeight: '500',
+    fontWeight: '600',
     fontSize: 14,
     lineHeight: 20,
   },
@@ -78,15 +79,18 @@ export default EStyleSheet.create({
   },
   viewSection: {
     ...center,
+    flex: 1,
+    paddingHorizontal: 4,
   },
   textLabel: {
     fontFamily: '$font1',
     fontSize: 11,
-    lineHeight: 18,
+    lineHeight: 15,
+    textAlign: 'center',
   },
   textTitle: {
     fontSize: 20,
-    fontWeight: '500',
+    fontWeight: '600',
     lineHeight: 28,
     fontFamily: '$font1',
   },

@@ -1,19 +1,24 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {flexRow} from 'theme/style';
-import {Dimensions} from 'react-native';
-
-const {width} = Dimensions.get('window');
+import {Platform} from 'react-native';
 
 export default EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '$bgColor',
   },
+  title: {
+    fontWeight: Platform.OS === 'android' ? '700' : '500',
+    fontSize: 16,
+    lineHeight: 24,
+    fontFamily: '$font1',
+    letterSpacing: -0.02,
+  },
   rightHeader: {
     ...flexRow,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    width: width / 3,
+    width: 80,
     paddingRight: 0,
   },
   touch: {
@@ -22,13 +27,13 @@ export default EStyleSheet.create({
   midHeader: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: width / 3,
+    flex: 1,
     marginBottom: -4,
   },
   leftHeader: {
     justifyContent: 'center',
     paddingLeft: 20,
-    width: width / 3,
+    width: 80,
   },
   midTouch: {
     padding: 10,

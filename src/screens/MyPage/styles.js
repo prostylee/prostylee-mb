@@ -15,7 +15,6 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 30,
   },
   header: {
     paddingHorizontal: 10,
@@ -34,6 +33,9 @@ export default EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     paddingRight: 12,
+  },
+  rightHeaderIcon: {
+    paddingLeft: 8,
   },
 
   backgroundImageStyle: {

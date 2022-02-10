@@ -18,7 +18,6 @@ import {ORDER_STATUS_ACT_CODE} from 'constants';
 
 const TabOrders = ({navigation, status}) => {
   const dispatch = useDispatch();
-
   const statusSelector = useSelector((state) =>
     getListUserOrderStatusSelector(state),
   );
@@ -29,7 +28,9 @@ const TabOrders = ({navigation, status}) => {
 
   let listStatus = statusSelector?.content || [];
   listStatus = listStatus.sort((a, b) => a.id - b.id);
-
+  const [activeTab, setActiveTab] = useState(
+    listStatus.findIndex((item) => item.id === status) || 0,
+  );
   useEffect(() => {
     dispatch(myPageActions.getUserOrdersStatusList());
   }, []);
@@ -42,6 +43,8 @@ const TabOrders = ({navigation, status}) => {
           tabBarActiveTextColor="#823FFD"
           tabBarUnderlineStyle={{backgroundColor: '#823FFD'}}
           initialPage={listStatus.findIndex((item) => item.id === status)}
+          onChangeTab={({i}) => setActiveTab(i)}
+          locked
           renderTabBar={() => (
             <ScrollableTabBar
               textStyle={styles.tabbarTextStyle}
@@ -54,35 +57,54 @@ const TabOrders = ({navigation, status}) => {
               case ORDER_STATUS_ACT_CODE.PROCESSING:
                 return (
                   <View tabLabel={item.name} key={item?.id}>
-                    <Waiting status={item.key} {...item} statusId={item?.id} />
+                    {activeTab === index ? (
+                      <Waiting
+                        status={item.key}
+                        {...item}
+                        statusId={item?.id}
+                        activeTab={activeTab === 0}
+                      />
+                    ) : null}
                   </View>
                 );
               case ORDER_STATUS_ACT_CODE.ON_DELIVERY:
                 return (
                   <View tabLabel={item.name} key={item?.id}>
-                    <Delivery status={item.key} {...item} statusId={item?.id} />
+                    {activeTab === index ? (
+                      <Delivery
+                        status={item.key}
+                        {...item}
+                        statusId={item?.id}
+                      />
+                    ) : null}
                   </View>
                 );
               case ORDER_STATUS_ACT_CODE.COMPLETED:
                 return (
                   <View tabLabel={item.name} key={item?.id}>
-                    <Done status={item.key} {...item} statusId={item?.id} />
+                    {activeTab === index ? (
+                      <Done status={item.key} {...item} statusId={item?.id} />
+                    ) : null}
                   </View>
                 );
               case ORDER_STATUS_ACT_CODE.CANCEL_ORDER:
                 return (
                   <View tabLabel={item.name} key={item?.id}>
-                    <Cancel status={item.key} {...item} statusId={item?.id} />
+                    {activeTab === index ? (
+                      <Cancel status={item.key} {...item} statusId={item?.id} />
+                    ) : null}
                   </View>
                 );
               case ORDER_STATUS_ACT_CODE.WAIT_FOR_PAYMENT:
                 return (
                   <View tabLabel={item.name} key={item?.id}>
-                    <WaitForPayment
-                      status={item.key}
-                      {...item}
-                      statusId={item?.id}
-                    />
+                    {activeTab === index ? (
+                      <WaitForPayment
+                        status={item.key}
+                        {...item}
+                        statusId={item?.id}
+                      />
+                    ) : null}
                   </View>
                 );
               default:

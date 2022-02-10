@@ -1,5 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 
 const {width} = Dimensions.get('window');
 
@@ -20,9 +20,9 @@ export default EStyleSheet.create({
   },
   title: {
     fontSize: 14,
-    lineHeight: 20,
-    fontWeight: 'bold',
+    fontWeight: Platform.OS === 'android' ? '700' : '600',
     color: '$black',
+    fontFamily: '$font1',
   },
   carouselContainer: {
     paddingLeft: 16,

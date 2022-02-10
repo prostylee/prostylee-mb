@@ -62,6 +62,7 @@ const Index = () => {
   React.useEffect(() => {
     if (isFocused) {
       dispatch(userActions.getStatistics(userProfile?.id));
+      getData();
     }
   }, [isFocused]);
 
@@ -71,40 +72,83 @@ const Index = () => {
 
   React.useEffect(() => {
     if (userProfile?.id) {
-      dispatch(
-        myPageActions.getListUserPost({
-          userId: userProfile?.id,
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-          sorts: '-createdAt&+name',
-        }),
-      );
-      dispatch(
-        myPageActions.getListProductSale({
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-          userId: userProfile?.id,
-          sorts: '-createdAt&+name',
-        }),
-      );
-      dispatch(
-        myPageActions.getListProductLiked({
-          userId: userProfile?.id,
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-        }),
-      );
-      dispatch(
-        myPageActions.getListProductSaved({
-          page: PAGE_DEFAULT,
-          limit: LIMIT_DEFAULT,
-        }),
-      );
+      getData();
     }
   }, [userProfile]);
 
+  const getData = () => {
+    dispatch(
+      myPageActions.getListUserPost({
+        userId: userProfile?.id,
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: '-createdAt&+name',
+      }),
+    );
+    dispatch(
+      myPageActions.getListProductSale({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        userId: userProfile?.id,
+        sorts: '-createdAt&+name',
+      }),
+    );
+    dispatch(
+      myPageActions.getListProductLiked({
+        userId: userProfile?.id,
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: '-createdAt&+name',
+      }),
+    );
+    dispatch(
+      myPageActions.getListProductSaved({
+        page: PAGE_DEFAULT,
+        limit: LIMIT_DEFAULT,
+        sorts: '-createdAt&+name',
+      }),
+    );
+  };
+
   const onNavigateSetting = () => {
     navigation.navigate('Setting');
+  };
+
+  const TokenDisplay = () => {
+    return (
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingTop: 16,
+          paddingHorizontal: 12,
+        }}>
+        <Text style={{fontSize: 13, lineHeight: 18}}>Token</Text>
+        <TextInput
+          value={userToken}
+          style={{
+            height: 32,
+            borderWidth: 1,
+            borderColor: 'gray',
+            borderRadius: 4,
+            paddingHorizontal: 8,
+            marginHorizontal: 12,
+            flex: 1,
+            backgroundColor: '#F2F2F2',
+            color: '#A2A2A2',
+          }}
+          numberOfLines={1}
+          editable={false}
+        />
+        <ButtonRounded
+          style={styles.editButton}
+          labelStyle={styles.editLabelButton}
+          label={'Copy'}
+          onPress={() => Clipboard.setString(userToken)}
+        />
+      </View>
+    );
   };
 
   return (
@@ -117,7 +161,9 @@ const Index = () => {
             <TouchableOpacity>
               <ChatIcon color={Colors['$black']} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={onNavigateSetting}>
+            <TouchableOpacity
+              onPress={onNavigateSetting}
+              style={styles.rightHeaderIcon}>
               <Setting color={Colors['$black']} />
             </TouchableOpacity>
           </View>
@@ -133,38 +179,7 @@ const Index = () => {
         showsHorizontalScrollIndicator={false}
         style={styles.viewScroll}>
         <InfoView statistics={statisticsData} profile={userProfile} />
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingTop: 16,
-            paddingHorizontal: 12,
-          }}>
-          <Text style={{fontSize: 13, lineHeight: 18}}>Token</Text>
-          <TextInput
-            value={userToken}
-            style={{
-              height: 32,
-              borderWidth: 1,
-              borderColor: 'gray',
-              borderRadius: 4,
-              paddingHorizontal: 8,
-              marginHorizontal: 12,
-              flex: 1,
-              backgroundColor: '#F2F2F2',
-              color: '#A2A2A2',
-            }}
-            numberOfLines={1}
-            editable={false}
-          />
-          <ButtonRounded
-            style={styles.editButton}
-            labelStyle={styles.editLabelButton}
-            label={'Copy'}
-            onPress={() => Clipboard.setString(userToken)}
-          />
-        </View>
+        <TokenDisplay />
         <TabViewContainer />
       </ScrollView>
     </ThemeView>

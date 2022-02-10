@@ -12,7 +12,7 @@ const Orders = ({navigation, route: {params}}) => {
     <ThemeView style={styles.container} isFullView>
       <Header isDefault title={i18n.t('orders.title')} />
       <View style={styles.wrapContent}>
-        <TabOrders status={status}/>
+        <TabOrders status={status} />
       </View>
     </ThemeView>
   );
