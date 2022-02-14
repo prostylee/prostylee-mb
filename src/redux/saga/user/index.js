@@ -104,6 +104,8 @@ const userSignIn = function* ({payload: {email, password, onSuccess, onFail}}) {
   } catch (e) {
     console.log('e', e);
     yield onFail(e.code);
+  } finally {
+    yield put(commonActions.toggleLoading(false));
   }
 };
 
