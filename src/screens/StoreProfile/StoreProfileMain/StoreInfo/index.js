@@ -22,7 +22,7 @@ const StoreInfo = ({storeInfo = {}}) => {
   const [followed, setFollowed] = React.useState(
     storeInfo?.followStatusOfUserLogin
       ? true
-      : localFollowedStore?.includes(storeInfo.id),
+      : localFollowedStore?.includes(storeInfo?.id),
   );
 
   useEffect(() => {
@@ -30,12 +30,12 @@ const StoreInfo = ({storeInfo = {}}) => {
       followed !==
       (storeInfo?.followStatusOfUserLogin
         ? true
-        : localFollowedStore?.includes(storeInfo.id))
+        : localFollowedStore?.includes(storeInfo?.id))
     ) {
       setFollowed(
         storeInfo?.followStatusOfUserLogin
           ? true
-          : localFollowedStore?.includes(storeInfo.id),
+          : localFollowedStore?.includes(storeInfo?.id),
       );
     }
   }, [storeInfo]);

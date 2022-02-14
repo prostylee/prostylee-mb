@@ -182,7 +182,6 @@ const Index = () => {
       let isUpdate = await codePush.checkForUpdate();
 
       if (isUpdate) {
-        await dispatch(commonActions.toggleLoading(false));
         setTimeout(async () => {
           //await dispatch(commonActions.setRequireUpdate());
         }, 300);
@@ -195,7 +194,8 @@ const Index = () => {
         type: 'danger',
         position: 'top',
       });
-      await dispatch(commonActions.toggleLoading(false));
+    } finally {
+      dispatch(commonActions.toggleLoading(false));
     }
   };
 
@@ -247,11 +247,12 @@ const Index = () => {
     Auth.currentAuthenticatedUser()
       .then((data) => {
         dispatch(userActions.userSignInSuccess(data));
-        dispatch(commonActions.toggleLoading(false));
       })
       .catch(() => {
         Auth.signOut({global: true});
         dispatch(userActions.userClearExpiredToken());
+      })
+      .finally(() => {
         dispatch(commonActions.toggleLoading(false));
       });
   };

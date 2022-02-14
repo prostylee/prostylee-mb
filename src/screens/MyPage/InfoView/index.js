@@ -26,20 +26,21 @@ const InfoView = ({profile, statistics}) => {
         />
         <View style={styles.statisticalView}>
           <View style={styles.viewSection}>
-            <Text style={styles.textTitle}>{statistics?.followers}</Text>
+            <Text style={styles.textTitle}>{statistics?.followers || 0}</Text>
             <Text style={styles.textLabel} numberOfLines={2}>
               {i18n.t('common.textFollower')}
             </Text>
           </View>
           <View style={styles.viewSection}>
-            <Text style={styles.textTitle}>{statistics?.followings}</Text>
+            <Text style={styles.textTitle}>{statistics?.followings || 0}</Text>
             <Text style={styles.textLabel} numberOfLines={2}>
               {i18n.t('common.textFollowing')}
             </Text>
           </View>
           <View style={styles.viewSection}>
             <Text style={styles.textTitle}>
-              {Number(statistics?.posts) + Number(statistics?.productPosts)}
+              {Number(statistics?.posts) + Number(statistics?.productPosts) ||
+                0}
             </Text>
             <Text style={styles.textLabel} numberOfLines={2}>
               {i18n.t('common.textPost')}

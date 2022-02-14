@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import {
@@ -142,16 +142,12 @@ const NewFeed = ({navigation}) => {
   }, [navigation, isFocused, flatListRef]);
 
   React.useEffect(() => {
-    if (allNewFeedsStoreFollowedScreen?.length !== localFollowedStore?.length) {
-      setAllNewFeedsStoreFollowed(localFollowedStore);
-    }
-  }, [localFollowedStore, allNewFeedsStoreFollowedScreen]);
+    setAllNewFeedsStoreFollowed(localFollowedStore);
+  }, [localFollowedStore]);
 
   React.useEffect(() => {
-    if (allNewFeedsUserFollowedScreen?.length !== localFollowedUser?.length) {
-      setAllNewFeedsUserFollowed(localFollowedUser);
-    }
-  }, [localFollowedUser, allNewFeedsUserFollowedScreen]);
+    setAllNewFeedsUserFollowed(localFollowedUser);
+  }, [localFollowedUser]);
 
   useEffect(() => {
     dispatch(newFeedActions.resetPage());
@@ -228,6 +224,10 @@ const NewFeed = ({navigation}) => {
       storiesLoading
     );
   };
+  const handleLoadingValue = useMemo(
+    () => handleLoading(),
+    [newFeedLoading, topProductLoading, dynamicUsersLoading, storiesLoading],
+  );
 
   const LoadingComponent = () => {
     return (
@@ -278,14 +278,6 @@ const NewFeed = ({navigation}) => {
 
       if (targetType === TYPE_STORE) {
         setAllNewFeedsStore(items);
-        const followList = items.filter((item) => item.followStatusOfUserLogin);
-        const followListId = followList.map(
-          (item) => item?.newFeedOwnerResponse?.id,
-        );
-        setAllNewFeedsStoreFollowed([...new Set(followListId)]);
-        dispatch(
-          newFeedActions.setLocalFollowedStore([...new Set(followListId)]),
-        );
         let listFollowed = [];
         items?.map((item) => {
           if (
@@ -305,6 +297,56 @@ const NewFeed = ({navigation}) => {
         });
       } else if (targetType === TYPE_USER) {
         setAllNewFeedsUser(items);
+      }
+    }
+  }, [threeFirstNewFeedItem, topProduct, listDynamicUsers, newFeedList]);
+
+  useEffect(() => {
+    if (!handleLoading()) {
+      const items = [];
+
+      if (threeFirstNewFeedItem && threeFirstNewFeedItem?.content?.length) {
+        items.push(...threeFirstNewFeedItem?.content);
+      }
+
+      if (
+        targetType === TYPE_STORE &&
+        topProduct &&
+        topProduct?.content?.length
+      ) {
+        items.push({
+          id: NewFeedRowItemType.STORES.id,
+          type: NewFeedRowItemType.STORES.type,
+          items: topProduct,
+        });
+      }
+
+      if (
+        targetType === TYPE_USER &&
+        listDynamicUsers &&
+        listDynamicUsers?.content?.length
+      ) {
+        items.push({
+          id: NewFeedRowItemType.USERS.id,
+          type: NewFeedRowItemType.USERS.type,
+          items: listDynamicUsers,
+        });
+      }
+
+      if (newFeedList && newFeedList?.content?.length) {
+        items.push(...newFeedList?.content);
+      }
+
+      if (targetType === TYPE_STORE) {
+        const followList = items.filter((item) => item.followStatusOfUserLogin);
+        const followListId = followList.map(
+          (item) => item?.newFeedOwnerResponse?.id,
+        );
+        setAllNewFeedsStoreFollowed([...new Set(followListId)]);
+        dispatch(
+          newFeedActions.setLocalFollowedStore([...new Set(followListId)]),
+        );
+      } else if (targetType === TYPE_USER) {
         const followList = items.filter((item) => item.followStatusOfUserLogin);
         const followListId = followList.map(
           (item) => item?.newFeedOwnerResponse?.id,
@@ -315,7 +357,7 @@ const NewFeed = ({navigation}) => {
         );
       }
     }
-  }, [threeFirstNewFeedItem, topProduct, listDynamicUsers, newFeedList]);
+  }, [handleLoadingValue]);
 
   const renderFooter = () => {
     if (!loadMoreLoading) {

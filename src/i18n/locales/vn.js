@@ -154,6 +154,7 @@ export default {
   someThingWrong: 'Có lỗi xảy ra, vui lòng thử lại sau',
   serverError: 'Lỗi hệ thống',
   deleteSuccess: 'Xoá thành công',
+  createOrderSuccess: 'Đặt hàng thành công',
 
   validation: {
     required: '%{field} bắt buộc nhập',

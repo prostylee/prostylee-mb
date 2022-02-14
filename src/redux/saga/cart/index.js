@@ -1,4 +1,4 @@
-import {call, put, takeLatest, select} from 'redux-saga/effects';
+import {call, put, takeLatest, select, all} from 'redux-saga/effects';
 import {cartActions, cartTypes} from 'reducers';
 import {getProductVarient} from 'utils/product';
 
@@ -12,7 +12,7 @@ import {
   createOrders as createOrdersApi,
 } from 'services/api/cartApi';
 
-import {SUCCESS} from 'constants';
+import {SUCCESS, POST_SUCCESS} from 'constants';
 import {showMessage} from 'react-native-flash-message';
 import i18n from 'i18n';
 //List Cart
@@ -242,11 +242,22 @@ const createOrder = function* ({payload}) {
     yield put(cartActions.setOrderData(orderData));
     const res = yield call(createOrdersApi, orderData);
 
-    if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      yield orderData.orderDetails.forEach((item) => {
-        put(cartActions.removeItemFromCart({id: item.productId}));
+    if (
+      res.ok &&
+      (res.data.status === SUCCESS || res.data.status === POST_SUCCESS) &&
+      !res.data.error
+    ) {
+      yield all(
+        orderData.orderDetails?.map((item) =>
+          put(cartActions.removeItemFromCart({id: item.productId})),
+        ),
+      );
+
+      showMessage({
+        message: i18n.t('createOrderSuccess'),
+        type: 'success',
+        position: 'top',
       });
-      yield put(cartActions.getListCartAddressSuccess(res.data.data.content));
       payload?.successAction ? payload.successAction() : null;
     } else {
       showMessage({
