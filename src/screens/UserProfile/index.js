@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {useRoute} from '@react-navigation/native';
+import {useRoute, useIsFocused} from '@react-navigation/native';
 
 import styles from './styles';
 
@@ -26,6 +26,7 @@ const UserProfile = () => {
   const dispatch = useDispatch();
   const scrollRef = useRef();
   const route = useRoute();
+  const isFocused = useIsFocused();
   const userId = route?.params?.userId || 1;
 
   const [loading, setLoading] = useState(true);
@@ -55,7 +56,12 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    getUserProfile();
+    if (isFocused) {
+      getUserProfile();
+    }
+  }, [isFocused, userId]);
+
+  useEffect(() => {
     dispatch(
       userActions.getUserPost({
         page: PAGE_DEFAULT,
@@ -72,7 +78,7 @@ const UserProfile = () => {
         sorts: '-createdAt&+name',
       }),
     );
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   const morePress = () => {};
 

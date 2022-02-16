@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import i18n from 'i18n';
 import styles from './styles';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View, Dimensions} from 'react-native';
 import {Avatar} from 'react-native-paper';
 import {userSelectors, newFeedSelectors} from 'reducers';
 import {ContainerView, FollowTextButton} from 'components';
@@ -10,8 +10,11 @@ import {MapPin} from 'svg/common';
 import {TYPE_STORE} from 'constants';
 import {useSelector} from 'react-redux';
 
+const WIDTH = Dimensions.get('window').width - 30;
+
 const NewFeedItemHeader = ({
   showHeader = true,
+  showFollowText = true,
   avatar,
   title,
   subTitle,
@@ -64,7 +67,9 @@ const NewFeedItemHeader = ({
   }
   return (
     <ContainerView style={styles.headerContainer}>
-      <TouchableOpacity onPress={onAvatarPress} style={[styles.headerWrap]}>
+      <TouchableOpacity
+        onPress={onAvatarPress}
+        style={[styles.headerWrap, showFollowText ? null : {width: WIDTH}]}>
         <Avatar.Image
           size={32}
           source={avatar ? {uri: avatar} : require('assets/images/profile.png')}
@@ -90,7 +95,7 @@ const NewFeedItemHeader = ({
           ) : null}
         </View>
       </TouchableOpacity>
-      {userProfile?.id !== targetId ? (
+      {showFollowText && userProfile?.id !== targetId ? (
         <View
           style={{
             paddingBottom: isAdvertising || Boolean(subTitle) ? 20 : 0,
