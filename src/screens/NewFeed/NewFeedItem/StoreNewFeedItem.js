@@ -22,6 +22,7 @@ import RootNavigator from '../../../navigator/rootNavigator';
 import ReadMore from '@fawazahmed/react-native-read-more';
 
 const StoreNewFeedItem = ({
+  showFollowText = true,
   newFeedItem,
   targetType,
   allNewFeedsFollowed = [],
@@ -111,6 +112,7 @@ const StoreNewFeedItem = ({
   return (
     <View style={styles.container}>
       <NewFeedItemHeader
+        showFollowText={showFollowText}
         subTitle={address}
         targetId={storeId}
         title={name}

@@ -17,14 +17,20 @@ import CommentItem from './CommentItem';
 import DetailComment from './DetailComment';
 
 import {useSelector, useDispatch} from 'react-redux';
-import {commonActions, commonSelectors} from 'reducers';
+import {
+  commonActions,
+  commonSelectors,
+  newFeedActions,
+  newFeedSelectors,
+} from 'reducers';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import {listComments} from 'graphqlLocal/queries';
 import {onCreateComment} from 'graphqlLocal/subscriptions';
 import {showMessage} from 'react-native-flash-message';
-import {FEED_TYPE, TYPE_USER} from 'constants';
+import {FEED_TYPE, TYPE_USER, SUCCESS} from 'constants';
 import {targetTypeSelector} from 'redux/selectors/common';
-
+import {followStoreService, unFollowStoreService} from 'services/api/storeApi';
+import {follow, unfollow} from 'services/api/socialApi';
 import styles from './styles';
 
 const Comment = () => {
@@ -35,7 +41,12 @@ const Comment = () => {
     commonSelectors.isForeGroundSelector(state),
   );
   const newFeedItem = route?.params?.newFeedItem || {};
-
+  const localFollowedStore = useSelector((state) =>
+    newFeedSelectors.getLocalFollowedStore(state),
+  );
+  const localFollowedUser = useSelector((state) =>
+    newFeedSelectors.getLocalFollowedUser(state),
+  );
   const [currentUser, setCurrentUser] = React.useState();
   const [listComment, setListComment] = React.useState([]);
 
@@ -151,6 +162,96 @@ const Comment = () => {
     setGoToChild(true);
   };
 
+  const _handleFollowUser = async (followed) => {
+    if (!followed) {
+      const res = await follow({
+        targetId: newFeedItem?.ownerId,
+        targetType: TYPE_USER,
+      });
+      if (res.ok && res.data.status === SUCCESS) {
+        // setFollowed(true);
+        if (localFollowedUser && localFollowedUser?.length) {
+          if (!localFollowedUser?.includes(newFeedItem?.ownerId)) {
+            dispatch(
+              newFeedActions.setLocalFollowedUser([
+                ...localFollowedUser,
+                newFeedItem?.ownerId,
+              ]),
+            );
+          }
+        } else {
+          dispatch(newFeedActions.setLocalFollowedUser([newFeedItem?.ownerId]));
+        }
+      }
+    } else {
+      const res = await unfollow({
+        targetId: newFeedItem?.ownerId,
+        targetType: TYPE_USER,
+      });
+      if (res.ok && res.data.status === SUCCESS) {
+        // setFollowed(false);
+        if (localFollowedUser && localFollowedUser?.length) {
+          if (localFollowedUser?.includes(newFeedItem?.ownerId)) {
+            const itemIndex = localFollowedUser?.findIndex(
+              (item) => item == newFeedItem?.ownerId,
+            );
+            dispatch(
+              newFeedActions.setLocalFollowedUser([
+                ...localFollowedUser.slice(0, itemIndex),
+                ...localFollowedUser.slice(itemIndex + 1),
+              ]),
+            );
+          }
+        }
+      }
+    }
+  };
+
+  const _handleFollowStore = async (followed) => {
+    let res = null;
+    try {
+      if (followed) {
+        res = await unFollowStoreService(newFeedItem?.ownerId);
+        if (localFollowedStore && localFollowedStore?.length) {
+          if (localFollowedStore?.includes(newFeedItem?.ownerId)) {
+            const itemIndex = localFollowedStore?.findIndex(
+              (item) => item == newFeedItem?.ownerId,
+            );
+            dispatch(
+              newFeedActions.setLocalFollowedStore([
+                ...localFollowedStore.slice(0, itemIndex),
+                ...localFollowedStore.slice(itemIndex + 1),
+              ]),
+            );
+          }
+        }
+      } else {
+        res = await followStoreService(newFeedItem?.ownerId);
+        if (localFollowedStore && localFollowedStore?.length) {
+          if (!localFollowedStore?.includes(newFeedItem?.ownerId)) {
+            dispatch(
+              newFeedActions.setLocalFollowedStore([
+                ...localFollowedStore,
+                newFeedItem?.ownerId,
+              ]),
+            );
+          }
+        } else {
+          dispatch(
+            newFeedActions.setLocalFollowedStore([newFeedItem?.ownerId]),
+          );
+        }
+      }
+      // setFollowed(!followed);
+    } catch (err) {
+      showMessage({
+        message: `${res?.data?.status}: ${res?.data?.error}`,
+        type: 'danger',
+        position: 'top',
+      });
+    }
+  };
+
   const EmptyList = () => {
     return (
       <View style={styles.emptyContainer}>
@@ -165,6 +266,7 @@ const Comment = () => {
         newFeedItem={newFeedItem}
         targetType={targetType}
         showHeader={false}
+        showFollowText={false}
       />
     );
   }, []);
@@ -201,9 +303,9 @@ const Comment = () => {
     <ThemeView isFullView>
       <Header
         isDefault
-        title={userProfile ? null : 'Comment'}
+        title={targetType === TYPE_USER && userProfile ? null : 'Comment'}
         middleComponent={
-          userProfile ? (
+          targetType === TYPE_USER && userProfile ? (
             <View style={styles.title}>
               <Image
                 style={styles.avatar}
@@ -219,10 +321,27 @@ const Comment = () => {
         rightComponent={
           <FollowTextButton
             item={{
-              followStatusOfUserLogin: newFeedItem?.followStatusOfUserLogin,
-              id: userProfile?.id || 0,
+              followStatusOfUserLogin:
+                targetType === TYPE_USER
+                  ? localFollowedUser?.includes(newFeedItem?.ownerId)
+                  : localFollowedStore?.includes(newFeedItem?.ownerId),
+              id: newFeedItem?.ownerId || 0,
             }}
-            targetType={TYPE_USER}
+            addFollowAction={() => {
+              if (targetType === TYPE_USER) {
+                _handleFollowUser(false);
+              } else {
+                _handleFollowStore(false);
+              }
+            }}
+            removeFollowAction={() => {
+              if (targetType === TYPE_USER) {
+                _handleFollowUser(true);
+              } else {
+                _handleFollowStore(true);
+              }
+            }}
+            targetType={targetType}
           />
         }
         containerStyle={styles.header}

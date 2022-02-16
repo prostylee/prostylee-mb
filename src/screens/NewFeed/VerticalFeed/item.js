@@ -6,6 +6,7 @@ import PostNewFeedItem from '../NewFeedItem/PostNewFeedItem';
 
 const VerticalFeedItem = ({
   showHeader = true,
+  showFollowText = true,
   newFeedItem,
   targetType,
   allNewFeedsStoreFollowed = [],
@@ -19,6 +20,7 @@ const VerticalFeedItem = ({
     return (
       <PostNewFeedItem
         showHeader={showHeader}
+        showFollowText={showFollowText}
         newFeedItem={newFeedItem}
         targetType={targetType}
         allNewFeedsFollowed={allNewFeedsUserFollowed}
@@ -29,6 +31,7 @@ const VerticalFeedItem = ({
   }
   return (
     <StoreNewFeedItem
+      showFollowText={showFollowText}
       newFeedItem={newFeedItem}
       targetType={targetType}
       allNewFeedsFollowed={allNewFeedsStoreFollowed}

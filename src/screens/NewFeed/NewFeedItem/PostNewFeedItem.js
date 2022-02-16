@@ -20,6 +20,7 @@ import {tabsSetting} from 'config/navigator';
 
 const PostNewFeedItem = ({
   showHeader = true,
+  showFollowText = true,
   newFeedItem,
   targetType,
   allNewFeedsFollowed = [],
@@ -124,6 +125,7 @@ const PostNewFeedItem = ({
     <View style={styles.container}>
       <NewFeedItemHeader
         showHeader={showHeader}
+        showFollowText={showFollowText}
         targetId={userId}
         subTitle={address}
         title={name}

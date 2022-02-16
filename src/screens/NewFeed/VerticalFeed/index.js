@@ -44,7 +44,7 @@ const VerticalFeed = ({
 
   useEffect(() => {
     setTimeout(() => {
-      if (initIndex && postListRef && postListRef.current) {
+      if (initIndex >= 0 && postListRef && postListRef.current) {
         postListRef.current?.scrollToIndex({
           index: initIndex,
         });
@@ -149,7 +149,14 @@ const VerticalFeed = ({
         <FeedItem
           isProfile={isProfile}
           targetType={targetType}
-          key={'newFeedItem' + targetType + index + item?.likeStatusOfUserLogin}
+          key={
+            'newFeedItem' +
+            targetType +
+            index +
+            item?.likeStatusOfUserLogin +
+            allNewFeedsStoreFollowed?.length +
+            allNewFeedsUserFollowed?.length
+          }
           newFeedItem={item}
           allNewFeedsStoreFollowed={allNewFeedsStoreFollowed}
           followStoreAction={followStoreAction}

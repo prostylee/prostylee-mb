@@ -1,12 +1,5 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {
-  View,
-  ScrollView,
-  Dimensions,
-  RefreshControl,
-  Platform,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, ScrollView, RefreshControl, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import i18n from 'i18n';
 
@@ -31,13 +24,14 @@ import PostList from './PostList';
 import StoreInfo from './StoreInfo';
 import BestSeller from './BestSeller';
 import AllProducts from './AllProducts';
-import {useRoute} from '@react-navigation/native';
+import {useRoute, useIsFocused} from '@react-navigation/native';
 
 let timeoutSearch = null;
 
 const StoreProfileMain = (props) => {
   const dispatch = useDispatch();
   const route = useRoute();
+  const isFocused = useIsFocused();
   const storeId = route?.params?.storeId || 1;
 
   const [isEndReached, setIsEndReached] = useState(false);
@@ -60,8 +54,12 @@ const StoreProfileMain = (props) => {
     }
   }, [valueSort]);
   useEffect(() => {
-    dispatch(storeProfileActions.getStoreInfo(storeId));
-    dispatch(storeProfileActions.getStoreStatistics(storeId));
+    if (isFocused) {
+      dispatch(storeProfileActions.getStoreInfo(storeId));
+      dispatch(storeProfileActions.getStoreStatistics(storeId));
+    }
+  }, [storeId, isFocused]);
+  useEffect(() => {
     dispatch(
       storeProfileActions.getAllStoreProduct({
         page: PAGE_DEFAULT,
