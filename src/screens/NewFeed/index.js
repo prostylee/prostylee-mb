@@ -318,7 +318,6 @@ const NewFeed = ({navigation}) => {
         const followListId = followList.map(
           (item) => item?.newFeedOwnerResponse?.id,
         );
-        setAllNewFeedsStoreFollowed([...new Set(followListId)]);
         dispatch(
           newFeedActions.setLocalFollowedStore([...new Set(followListId)]),
         );
@@ -327,13 +326,20 @@ const NewFeed = ({navigation}) => {
         const followListId = followList.map(
           (item) => item?.newFeedOwnerResponse?.id,
         );
-        setAllNewFeedsUserFollowed([...new Set(followListId)]);
         dispatch(
           newFeedActions.setLocalFollowedUser([...new Set(followListId)]),
         );
       }
     }
-  }, [handleLoadingValue, threeFirstNewFeedItem, newFeedList]);
+  }, [
+    handleLoadingValue,
+    threeFirstNewFeedItem,
+    newFeedList,
+    newFeedLoading,
+    topProductLoading,
+    dynamicUsersLoading,
+    storiesLoading,
+  ]);
 
   const renderFooter = () => {
     if (!loadMoreLoading) {
