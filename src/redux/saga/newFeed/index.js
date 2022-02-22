@@ -20,13 +20,38 @@ import {
 } from 'constants';
 import i18n from 'i18n';
 import {showMessage} from 'react-native-flash-message';
+import {targetTypeSelector} from 'redux/selectors/common';
 
 const getNewFeeds = function* ({payload}) {
+  const targetType = yield select(targetTypeSelector);
   try {
     yield put(newFeedActions.setLoading(true));
     const res = yield call(getNewFeed, payload);
     if (res.ok && res.data.status === SUCCESS && !res.data.error) {
-      yield put(newFeedActions.getNewFeedSuccess(res.data.data));
+      const data = res.data?.data || {};
+      const dataList = data?.content || [];
+      if (targetType === TYPE_STORE) {
+        const followList = dataList.filter(
+          (item) => item.followStatusOfUserLogin,
+        );
+        const followListId = followList.map(
+          (item) => item?.newFeedOwnerResponse?.id,
+        );
+        yield put(
+          newFeedActions.setLocalFollowedStore([...new Set(followListId)]),
+        );
+      } else if (targetType === TYPE_USER) {
+        const followList = dataList.filter(
+          (item) => item.followStatusOfUserLogin,
+        );
+        const followListId = followList.map(
+          (item) => item?.newFeedOwnerResponse?.id,
+        );
+        yield put(
+          newFeedActions.setLocalFollowedUser([...new Set(followListId)]),
+        );
+      }
+      yield put(newFeedActions.getNewFeedSuccess(data));
     } else {
       yield put(newFeedActions.getNewFeedFailed());
     }

@@ -34,10 +34,13 @@ const thirdIndicatorStyles = {
   currentStepLabelColor: '#823FFD',
 };
 
-const OrderTracking = ({navigation, timeLine = []}) => {
+const OrderTracking = ({navigation, timeLine = [], status = 1}) => {
   const statusSelector = useSelector((state) =>
     getListUserOrderStatusSelector(state),
   );
+  const currentHistory =
+    timeLine?.find((item) => item?.statusId == status) ||
+    timeLine?.[timeLine?.length ? timeLine?.length - 1 : 0];
 
   let listStatus = statusSelector?.content || [];
 
@@ -70,16 +73,10 @@ const OrderTracking = ({navigation, timeLine = []}) => {
         </View>
         <View style={styles.inforWrapper}>
           <Text style={styles.labelStepTitle}>
-            {
-              timeLine?.[timeLine?.length ? timeLine?.length - 1 : 0]
-                ?.statusName
-            }
+            {currentHistory?.statusName}
           </Text>
           <Text style={styles.labelStepTime}>
-            {moment(
-              timeLine?.[timeLine?.length ? timeLine?.length - 1 : 0]
-                ?.updatedAt,
-            ).format('HH:mm DD-MM-YYYY')}
+            {moment(currentHistory?.updatedAt).format('HH:mm DD-MM-YYYY')}
           </Text>
         </View>
         {/* <StepIndicator

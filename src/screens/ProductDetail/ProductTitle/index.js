@@ -125,10 +125,9 @@ const ProductTitle = ({
             });
           }}>
           <Rating rate={totalRate} />
-          <Text
-            style={
-              styles.rateNumber
-            }>{`${totalRateDisplay} (${numberOfRate})`}</Text>
+          <Text style={styles.rateNumber}>{`${totalRateDisplay} (${
+            numberOfRate || 0
+          })`}</Text>
           <IonIcons
             name={'ios-chevron-forward'}
             size={14}

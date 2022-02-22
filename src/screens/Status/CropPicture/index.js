@@ -351,7 +351,15 @@ const CropPicture = () => {
     } else if (Platform.OS === 'ios') {
       return (
         <CropView
-          sourceUrl={Platform.OS === 'ios' ? item.sourceURL : item.path}
+          sourceUrl={
+            Platform.OS === 'ios'
+              ? item.sourceURL
+                ? item.sourceURL
+                : item.path
+                ? `file:/${item.path}`
+                : ''
+              : ''
+          }
           style={CropViewStyle}
           ref={cropViewRefList[index]}
           onImageCrop={(res) => {

@@ -78,7 +78,10 @@ const ListDetail = ({
             : 0
         ]?.actCode !== ORDER_STATUS_ACT_CODE.CANCEL_ORDER ? (
           <View style={[styles.wrapItem, styles.paddingBottomNone]}>
-            <Tracking timeLine={orderData?.orderHistory} />
+            <Tracking
+              timeLine={orderData?.orderHistory}
+              status={orderData?.statusId}
+            />
           </View>
         ) : null}
 

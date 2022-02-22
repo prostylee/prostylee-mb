@@ -410,8 +410,9 @@ const SettingMyAccount = () => {
                     />
                     <Field
                       component={CustomTextInput}
+                      editable={false}
                       name="username"
-                      validate={validateUsername}
+                      // validate={validateUsername}
                       label={setLabelTextInput(
                         I18n.t('settingProfile.username'),
                         true,

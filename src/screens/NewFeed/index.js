@@ -301,46 +301,6 @@ const NewFeed = ({navigation}) => {
     }
   }, [threeFirstNewFeedItem, topProduct, listDynamicUsers, newFeedList]);
 
-  useEffect(() => {
-    if (!handleLoading()) {
-      const items = [];
-
-      if (threeFirstNewFeedItem && threeFirstNewFeedItem?.content?.length) {
-        items.push(...threeFirstNewFeedItem?.content);
-      }
-
-      if (newFeedList && newFeedList?.content?.length) {
-        items.push(...newFeedList?.content);
-      }
-
-      if (targetType === TYPE_STORE) {
-        const followList = items.filter((item) => item.followStatusOfUserLogin);
-        const followListId = followList.map(
-          (item) => item?.newFeedOwnerResponse?.id,
-        );
-        dispatch(
-          newFeedActions.setLocalFollowedStore([...new Set(followListId)]),
-        );
-      } else if (targetType === TYPE_USER) {
-        const followList = items.filter((item) => item.followStatusOfUserLogin);
-        const followListId = followList.map(
-          (item) => item?.newFeedOwnerResponse?.id,
-        );
-        dispatch(
-          newFeedActions.setLocalFollowedUser([...new Set(followListId)]),
-        );
-      }
-    }
-  }, [
-    handleLoadingValue,
-    threeFirstNewFeedItem,
-    newFeedList,
-    newFeedLoading,
-    topProductLoading,
-    dynamicUsersLoading,
-    storiesLoading,
-  ]);
-
   const renderFooter = () => {
     if (!loadMoreLoading) {
       return <View style={styles.viewFooter} />;
