@@ -155,12 +155,15 @@ const Index = () => {
     <ThemeView isFullView style={styles.container}>
       <Header
         title={userProfile?.username || ''}
-        leftComponent={<View style={{width: 80}} />}
-        rightComponent={
-          <View style={styles.rightHeader}>
+        leftComponent={
+          <View style={styles.leftHeader}>
             <TouchableOpacity>
               <ChatIcon color={Colors['$black']} />
             </TouchableOpacity>
+          </View>
+        }
+        rightComponent={
+          <View style={styles.rightHeader}>
             <TouchableOpacity
               onPress={onNavigateSetting}
               style={styles.rightHeaderIcon}>

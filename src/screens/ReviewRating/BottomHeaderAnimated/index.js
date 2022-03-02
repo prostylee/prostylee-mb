@@ -57,7 +57,11 @@ const BottomHeaderAnimated = ({
   };
 
   const handleFilter = (value) => {
-    setFilterValue(value);
+    if (filterValue !== value) {
+      setFilterValue(value);
+    } else {
+      setFilterValue(undefined);
+    }
     setAction(null);
     setVisible(false);
   };

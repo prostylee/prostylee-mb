@@ -45,7 +45,7 @@ const StoreNewFeedItem = ({
   const name = productOwnerResponse?.name || '';
   const storeId = productOwnerResponse?.id || 0;
   const address = productOwnerResponse?.fullAddress || '';
-  const postType = newFeedItem?.type || USER_POST_TYPE_PRODUCT;
+  const postType = newFeedItem?.type || USER_POST_TYPE_POST;
 
   const navigateStore = () => {
     if (targetType === TYPE_STORE) {

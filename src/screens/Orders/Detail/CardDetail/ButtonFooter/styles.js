@@ -14,7 +14,7 @@ export default EStyleSheet.create({
     paddingBottom: 16,
   },
   colButton: {
-    flex: 0.5,
+    flex: 1,
     paddingLeft: 5,
     paddingRight: 5,
   },

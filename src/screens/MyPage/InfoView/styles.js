@@ -87,6 +87,7 @@ export default EStyleSheet.create({
     fontSize: 11,
     lineHeight: 15,
     textAlign: 'center',
+    height: 30,
   },
   textTitle: {
     fontSize: 20,

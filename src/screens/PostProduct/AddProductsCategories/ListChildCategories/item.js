@@ -3,7 +3,6 @@ import {TouchableOpacity, Text, Image} from 'react-native';
 import styles from './styles';
 import PropTypes from 'prop-types';
 const Item = ({item, onPress, parentName}) => {
-  console.log('firstitem', item);
   return (
     <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
       <Image

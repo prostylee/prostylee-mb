@@ -28,7 +28,7 @@ const ReviewItem = ({item, navigation}) => {
           backgroundColor: `rgba(0, 0, 0, 0,8)`,
         }}
         source={
-          item.url ? {uri: item.url} : require('assets/images/default.png')
+          item.image ? {uri: item.image} : require('assets/images/default.png')
         }
       />
     );
@@ -51,7 +51,11 @@ const ReviewItem = ({item, navigation}) => {
         {item.images.length > 0 && (
           <View style={styles.images}>
             <GridImageReviewer
-              data={item.images}
+              data={item.images?.map(item => ({
+                ...item,
+                url: item?.thumbnail,
+                image: item?.original,
+              }))}
               renderGridImage={renderGridImage}
               renderModalImage={renderModalImage}
             />

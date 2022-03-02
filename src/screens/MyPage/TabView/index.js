@@ -19,6 +19,7 @@ const initialLayout = {width: Dimensions.get('window').width};
 
 const TabViewContainer = ({style}) => {
   const [index, setIndex] = useState(0);
+  const [listLayout, setListLayout] = useState({});
   const [routes] = useState([
     {key: 'menu', title: ''},
     {key: 'bag', title: ''},
@@ -34,33 +35,90 @@ const TabViewContainer = ({style}) => {
   const productSaveByUser = useSelector((state) =>
     getListProductSavedSelector(state),
   );
-
-  const renderScene = ({route, jumpTo}) => {
+  const renderScene = (props) => {
+    const jumpTo = props.jumpTo;
+    const route = props.route;
     switch (route.key) {
       case 'menu':
-        return <GridView index={index} jumpTo={jumpTo} />;
+        return (
+          <View
+            onLayout={({nativeEvent: {layout}}) => {
+              if (layout.height && !Object.keys(listLayout)?.includes('menu')) {
+                setListLayout((prev) => ({
+                  ...prev,
+                  ['menu']: layout.height,
+                }));
+              }
+            }}>
+            <GridView index={index} jumpTo={jumpTo} />
+          </View>
+        );
       case 'bag':
         return (
-          <Order index={index} jumpTo={jumpTo} productList={productByUser} />
+          <View
+            onLayout={({nativeEvent: {layout}}) => {
+              if (layout.height && !Object.keys(listLayout)?.includes('bag')) {
+                setListLayout((prev) => ({
+                  ...prev,
+                  ['bag']: layout.height,
+                }));
+              }
+            }}>
+            <Order index={index} jumpTo={jumpTo} productList={productByUser} />
+          </View>
         );
       case 'like':
         return (
-          <Order
-            index={index}
-            jumpTo={jumpTo}
-            productList={productLikeByUser}
-          />
+          <View
+            onLayout={({nativeEvent: {layout}}) => {
+              if (layout.height && !Object.keys(listLayout)?.includes('like')) {
+                setListLayout((prev) => ({
+                  ...prev,
+                  ['like']: layout.height,
+                }));
+              }
+            }}>
+            <Order
+              index={index}
+              jumpTo={jumpTo}
+              productList={productLikeByUser}
+            />
+          </View>
         );
       case 'save':
         return (
-          <Order
-            index={index}
-            jumpTo={jumpTo}
-            productList={productSaveByUser}
-          />
+          <View
+            onLayout={({nativeEvent: {layout}}) => {
+              if (layout.height && !Object.keys(listLayout)?.includes('save')) {
+                setListLayout((prev) => ({
+                  ...prev,
+                  ['save']: layout.height,
+                }));
+              }
+            }}>
+            <Order
+              index={index}
+              jumpTo={jumpTo}
+              productList={productSaveByUser}
+            />
+          </View>
         );
       default:
         return <GridView index={index} jumpTo={jumpTo} />;
+    }
+  };
+  const getContainerHeight = () => {
+    switch (index) {
+      case 0:
+        return listLayout['menu'] ? listLayout['menu'] + 40 : null;
+      case 1:
+        return listLayout['bag'] ? listLayout['bag'] + 40 : null;
+      case 2:
+        return listLayout['like'] ? listLayout['like'] + 40 : null;
+      case 3:
+        return listLayout['save'] ? listLayout['save'] + 40 : null;
+      default:
+        return 'auto';
     }
   };
   const renderItem = (name, active) => {
@@ -93,7 +151,9 @@ const TabViewContainer = ({style}) => {
   );
 
   return (
-    <Container fluid style={styles.container}>
+    <Container
+      fluid
+      style={[styles.container, {height: getContainerHeight() || 'auto'}]}>
       <TabView
         navigationState={{index, routes}}
         renderScene={renderScene}

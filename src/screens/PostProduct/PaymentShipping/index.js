@@ -22,7 +22,6 @@ import {userTokenSelector} from 'redux/selectors/user';
 import {useDispatch, useSelector, shallowEqual} from 'react-redux';
 import {getPostProductInfoSelector} from 'redux/selectors/postProduct';
 import {
-  commonActions,
   dynamicUsersActions,
   newFeedActions,
   storeActions,
@@ -129,6 +128,7 @@ const PaymentShipping = () => {
     }
   };
   const postProduct = async () => {
+    let status = '';
     if (!selectedPaymentMethods.length || !selectedDeliveryType.length) {
       showMessage({
         message: i18n.t('addProduct.pleaseFillInformation'),
@@ -140,7 +140,6 @@ const PaymentShipping = () => {
     try {
       SlideInModal.show(() => {}, <Loading />, 'fadeIn', 'fadeOut');
       setPostProductLoading(true);
-      dispatch(commonActions.toggleLoading(true));
       const upLoadedImages = await uploadImages(images);
 
       const {
@@ -178,12 +177,14 @@ const PaymentShipping = () => {
         name: name,
         description: description,
         price: price * 1,
+        priceSale: priceSale * 1,
         productPriceRequest: [...newProductPriceRequest],
         paymentTypes: [...selectedPaymentMethods?.map((v) => v.id)],
         shippingProviders: [...selectedDeliveryType?.map((v) => v.id)],
         productImageRequests: [...imagesList],
       });
       if (res.data.status === POST_SUCCESS) {
+        status = res.data.status;
         reloadNewFeed();
         showMessage({
           titleStyle: {...styles.notiTitle},
@@ -212,7 +213,6 @@ const PaymentShipping = () => {
             />
           ),
         });
-        dispatch(postProductActions.clearPostProduct());
         navigation.navigate('Home');
       } else {
         showMessage({
@@ -228,8 +228,12 @@ const PaymentShipping = () => {
         position: 'top',
       });
     } finally {
+      if (status === POST_SUCCESS) {
+        setTimeout(() => {
+          dispatch(postProductActions.clearPostProduct());
+        }, 1000);
+      }
       setPostProductLoading(false);
-      dispatch(commonActions.toggleLoading(false));
       SlideInModal.hide();
     }
   };

@@ -97,48 +97,57 @@ const SettingMyAccount = () => {
   const genderRef = React.useRef();
 
   const updateUserProfile = async (payload) => {
-    const birthdayValue = payload.birthday;
-    const listDate = birthdayValue.split('/');
-    const birthdayData = {
-      date: Number(listDate[0]),
-      month: Number(listDate[1]),
-      year: Number(listDate[2]),
-    };
-    let userGender = '';
-    if (payload.gender === I18n.t('male')) {
-      userGender = 'M';
-    } else if (payload.gender === I18n.t('female')) {
-      userGender = 'F';
-    } else {
-      await showMessage({
+    navigation.goBack();
+    try {
+      const birthdayValue = payload.birthday;
+      const listDate = birthdayValue.split('/');
+      const birthdayData = {
+        date: Number(listDate[0]),
+        month: Number(listDate[1]),
+        year: Number(listDate[2]),
+      };
+      let userGender = '';
+      if (payload.gender === I18n.t('male')) {
+        userGender = 'M';
+      } else if (payload.gender === I18n.t('female')) {
+        userGender = 'F';
+      } else {
+        showMessage({
+          message: I18n.t('error.formError'),
+          type: 'danger',
+          position: 'top',
+        });
+        return;
+      }
+      const hasNewAvatar = userProfile?.avatar !== userAvatar?.path;
+      if (hasNewAvatar) {
+        uploadToStorage(userAvatar?.path, {
+          ...payload,
+          userGender,
+          birthdayData,
+        });
+        return;
+      }
+      dispatch(
+        userActions.updateUserProfile({
+          fullName: payload.name,
+          gender: userGender,
+          bio: payload.bio,
+          phoneNumber: payload.phone,
+          email: payload.email,
+          username: payload.username,
+          ...birthdayData,
+        }),
+      );
+    } catch (e) {
+      showMessage({
         message: I18n.t('error.formError'),
         type: 'danger',
         position: 'top',
       });
-      return;
+    } finally {
+      dispatch(commonActions.toggleLoading(false));
     }
-    const hasNewAvatar = userProfile?.avatar !== userAvatar?.path;
-    if (hasNewAvatar) {
-      uploadToStorage(userAvatar?.path, {
-        ...payload,
-        userGender,
-        birthdayData,
-      });
-      return;
-    }
-
-    dispatch(
-      userActions.updateUserProfile({
-        fullName: payload.name,
-        gender: userGender,
-        bio: payload.bio,
-        phoneNumber: payload.phone,
-        email: payload.email,
-        username: payload.username,
-        ...birthdayData,
-      }),
-    );
-    navigation.goBack();
   };
   const onCaptureImagePress = () => {
     ImagePicker.openCamera({
@@ -316,7 +325,12 @@ const SettingMyAccount = () => {
           email,
         }}
         enableReinitialize={true}
-        onSubmit={(values) => updateUserProfile(values)}>
+        onSubmit={(values) => {
+          dispatch(commonActions.toggleLoading(true));
+          setTimeout(() => {
+            updateUserProfile(values);
+          }, 500);
+        }}>
         {({handleSubmit, setFieldValue, values, isValid}) => {
           const changeBirthday = (value) => {
             const dateTime = moment(value);

@@ -6,6 +6,7 @@ import HeartButton from '../../components/HeartButton';
 import CommentButton from '../../components/CommentButton';
 import {ContainerView} from '../../../../components';
 import {More} from '../../../../svg/social';
+import {USER_POST_TYPE_POST} from 'constants';
 
 const NewFeedItemFooter = ({newFeedItem, targetType}) => {
   return (
@@ -14,7 +15,7 @@ const NewFeedItemFooter = ({newFeedItem, targetType}) => {
         <HeartButton
           targetId={newFeedItem?.id}
           targetType={targetType}
-          itemType={newFeedItem?.type}
+          itemType={newFeedItem?.type || USER_POST_TYPE_POST}
           numberOfLike={
             newFeedItem?.productStatisticResponse?.numberOfLike || 0
           }

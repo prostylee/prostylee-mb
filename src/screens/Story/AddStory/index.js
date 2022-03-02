@@ -248,9 +248,11 @@ const AddStory = (props) => {
           {Platform.OS === 'ios' ? (
             <CropView
               sourceUrl={
-                image.sourceURL && typeof image.sourceURL === 'string'
+                image.sourceURL
                   ? image.sourceURL
                   : image.path
+                  ? `file:/${image.path}`
+                  : ''
               }
               style={viewShotStyle}
               ref={cropViewRef}

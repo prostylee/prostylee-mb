@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import styles from './styles';
 
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 
 /*Hooks*/
 import I18n from 'i18n';
@@ -30,12 +30,15 @@ import {useRoute} from '@react-navigation/native';
 const RatingProduct = ({navigation, product, productId}) => {
   const route = useRoute();
 
-  const [star, setStar] = useState();
+  const [star, setStar] = useState(5);
   const [imageList, setImageList] = useState([]);
   const [imgs, setImgs] = useState([]);
   const [userId, setUserId] = useState('');
   const [content, setContent] = useState('');
+  const [uploadComplete, setUploadComplete] = useState(false);
   const onRateSuccess = route?.params?.onRateSuccess || (() => {});
+
+  const customPrefix = `/public/${userId}/reviewrating/`;
 
   const dispatch = useDispatch();
 
@@ -46,7 +49,7 @@ const RatingProduct = ({navigation, product, productId}) => {
       .then((user) => {
         setUserId(user.signInUserSession.idToken.payload.sub);
       })
-      .catch((err) => {
+      .catch(() => {
         showMessage({
           message: I18n.t('unknownMessage'),
           type: 'danger',
@@ -55,10 +58,15 @@ const RatingProduct = ({navigation, product, productId}) => {
       });
   }, []);
 
+  useEffect(() => {
+    if (uploadComplete && imageList.length === imgs.length) {
+      onSubmit();
+    }
+  }, [uploadComplete, imgs, imageList, star, content]);
+
   //handle User signIn
   const onRate = async () => {
     await mapData();
-    await onSubmit();
   };
 
   const onSubmit = async () => {
@@ -99,6 +107,8 @@ const RatingProduct = ({navigation, product, productId}) => {
         });
         onRateSuccess(productId);
         navigation.goBack();
+        setImgs([]);
+        setImageList([]);
       })
       .catch((e) => {
         showMessage({
@@ -106,6 +116,10 @@ const RatingProduct = ({navigation, product, productId}) => {
           type: 'danger',
           position: 'top',
         });
+      })
+      .finally(() => {
+        dispatch(commonActions.toggleLoading(false));
+        setUploadComplete(false);
       });
   };
 
@@ -114,12 +128,16 @@ const RatingProduct = ({navigation, product, productId}) => {
   };
 
   const mapData = async () => {
-    await Promise.all(
-      await imageList.map(async (item) => {
-        await uploadToStorage(item.source);
-        return item + 1;
-      }),
-    );
+    try {
+      await Promise.all(
+        imageList.map(async (item) => {
+          await uploadToStorage(item.source);
+          return item + 1;
+        }),
+      );
+    } finally {
+      setUploadComplete(true);
+    }
   };
 
   const uploadToStorage = async (uri) => {
@@ -151,8 +169,6 @@ const RatingProduct = ({navigation, product, productId}) => {
             position: 'top',
           });
         });
-
-      dispatch(commonActions.toggleLoading(false));
     } catch (err) {
       showMessage({
         message: I18n.t('unknownMessage'),
@@ -161,12 +177,10 @@ const RatingProduct = ({navigation, product, productId}) => {
       });
     }
   };
-
   const getUrl = async (key, name) => {
-    const signedURL = await Storage.get(key);
     const newImg = {
       name: name,
-      path: signedURL,
+      path: customPrefix,
     };
     setImgs([...imgs, newImg]);
   };
