@@ -13,12 +13,10 @@ import {
   Header,
   ThemeView,
   CustomTextInput,
-  ButtonRounded,
   RnDateTimePicker,
   ActionSheet,
 } from 'components';
 import {showMessage} from 'react-native-flash-message';
-import RNPickerSelect from 'react-native-picker-select';
 import {Camera} from 'svg/common';
 import styles from './styles';
 import I18n from 'i18n';
@@ -44,6 +42,7 @@ import {Storage} from 'aws-amplify';
 const CANCEL_INDEX = 0;
 // const DESTRUCTIVE_INDEX = 0;
 const PICK_IMAGE_OPTIONS = ['Huỷ', 'Chọn từ bộ sưu tập ảnh', 'Chụp hình'];
+const PICK_GENDER_OPTIONS_ANDROID = ['Huỷ', I18n.t('male'), I18n.t('female')];
 
 const SettingMyAccount = () => {
   const navigation = useNavigation();
@@ -455,7 +454,7 @@ const SettingMyAccount = () => {
                         true,
                       )}
                       onFocus={() => {
-                        genderRef.current.togglePicker(true);
+                        genderRef.current.show();
                       }}
                       onChange={() => {
                         setisChange(true);
@@ -523,19 +522,6 @@ const SettingMyAccount = () => {
                         </Text>
                       </TouchableOpacity>
                     </View>
-                    <View style={styles.pickerContainer}>
-                      <RNPickerSelect
-                        ref={genderRef}
-                        onValueChange={(value) => {
-                          setFieldValue('gender', value);
-                        }}
-                        items={[
-                          {value: I18n.t('male'), label: I18n.t('male')},
-                          {value: I18n.t('female'), label: I18n.t('female')},
-                        ]}
-                        style={styles.pickerContainer}
-                      />
-                    </View>
                     <RnDateTimePicker
                       visible={showDatePicker}
                       maxDate={new Date()}
@@ -566,6 +552,26 @@ const SettingMyAccount = () => {
                       onCaptureImagePress();
                     }
                   }, 500);
+                }}
+              />
+              <ActionSheet
+                ref={genderRef}
+                options={PICK_GENDER_OPTIONS_ANDROID}
+                cancelButtonIndex={CANCEL_INDEX}
+                onPress={(value) => {
+                  if (value === 0) {
+                    birthdayRef.current.forceFocus();
+                    return;
+                  }
+                  if (value === 1) {
+                    setFieldValue('gender', I18n.t('male'));
+                    birthdayRef.current.forceFocus();
+                    return;
+                  }
+                  if (value === 2) {
+                    setFieldValue('gender', I18n.t('female'));
+                    birthdayRef.current.forceFocus();
+                  }
                 }}
               />
             </>

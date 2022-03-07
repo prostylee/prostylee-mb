@@ -7,7 +7,7 @@ import React, {useEffect, useState} from 'react';
 import I18n from 'i18n';
 
 /*Components*/
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, Alert} from 'react-native';
 import {
   ThemeView,
   AirbnbRating,
@@ -32,10 +32,8 @@ const RatingProduct = ({navigation, product, productId}) => {
 
   const [star, setStar] = useState(5);
   const [imageList, setImageList] = useState([]);
-  const [imgs, setImgs] = useState([]);
   const [userId, setUserId] = useState('');
   const [content, setContent] = useState('');
-  const [uploadComplete, setUploadComplete] = useState(false);
   const onRateSuccess = route?.params?.onRateSuccess || (() => {});
 
   const customPrefix = `/public/${userId}/reviewrating/`;
@@ -58,24 +56,25 @@ const RatingProduct = ({navigation, product, productId}) => {
       });
   }, []);
 
-  useEffect(() => {
-    if (uploadComplete && imageList.length === imgs.length) {
-      onSubmit();
-    }
-  }, [uploadComplete, imgs, imageList, star, content]);
-
   //handle User signIn
   const onRate = async () => {
-    await mapData();
+    await onSubmit();
   };
 
   const onSubmit = async () => {
+    const upLoadedImages = await uploadImages(imageList);
+    const imagesList = upLoadedImages.map((item) => {
+      return {
+        name: item.name,
+        path: customPrefix,
+      };
+    });
     const body = {
       targetId: productId,
       targetType: 'PRODUCT',
       value: star,
       content: content,
-      images: imgs,
+      images: imagesList,
     };
     addReview(body)
       .then((res) => {
@@ -107,7 +106,6 @@ const RatingProduct = ({navigation, product, productId}) => {
         });
         onRateSuccess(productId);
         navigation.goBack();
-        setImgs([]);
         setImageList([]);
       })
       .catch((e) => {
@@ -119,7 +117,6 @@ const RatingProduct = ({navigation, product, productId}) => {
       })
       .finally(() => {
         dispatch(commonActions.toggleLoading(false));
-        setUploadComplete(false);
       });
   };
 
@@ -127,16 +124,18 @@ const RatingProduct = ({navigation, product, productId}) => {
     setStar(rate);
   };
 
-  const mapData = async () => {
-    try {
-      await Promise.all(
-        imageList.map(async (item) => {
-          await uploadToStorage(item.source);
-          return item + 1;
-        }),
-      );
-    } finally {
-      setUploadComplete(true);
+  const uploadImages = async () => {
+    let promises = [];
+    if (imageList.length) {
+      try {
+        imageList.forEach(async (item) => {
+          promises.push(uploadToStorage(item.source));
+        });
+        let res = await Promise.all(promises);
+        return res;
+      } catch (err) {
+        throw Error('Can not upload image');
+      }
     }
   };
 
@@ -155,20 +154,19 @@ const RatingProduct = ({navigation, product, productId}) => {
       const blob = await response.blob();
       const time = Date.now();
       const fileName = `${userId}/reviewrating/review_${time}.png`;
-      Storage.put(fileName, blob, {
-        contentType: 'image/png',
-      })
-        .then(async (result) => {
-          const name = `review_${time}.png`;
-          await getUrl(result?.key, name);
-        })
-        .catch((_) => {
-          showMessage({
-            message: I18n.t('unknownMessage'),
-            type: 'danger',
-            position: 'top',
-          });
+      try {
+        const result = await Storage.put(fileName, blob, {
+          contentType: 'image/png',
         });
+        if (result) {
+          return {
+            name: `review_${time}.png`,
+          };
+        }
+      } catch (err) {
+        Alert.alert(I18n.t('error.cannotUploadImage'));
+        throw Error('Can not upload image');
+      }
     } catch (err) {
       showMessage({
         message: I18n.t('unknownMessage'),
@@ -176,13 +174,6 @@ const RatingProduct = ({navigation, product, productId}) => {
         position: 'top',
       });
     }
-  };
-  const getUrl = async (key, name) => {
-    const newImg = {
-      name: name,
-      path: customPrefix,
-    };
-    setImgs([...imgs, newImg]);
   };
 
   const onChangeContent = (value) => {

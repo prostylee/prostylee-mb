@@ -95,12 +95,6 @@ export default EStyleSheet.create({
     fontWeight: '400',
     color: '$purple',
   },
-  pickerContainer: {
-    position: 'absolute',
-    opacity: 0,
-    zIndex: -1,
-    bottom: -100,
-  },
   avatar: {
     width: 100,
     height: 100,
