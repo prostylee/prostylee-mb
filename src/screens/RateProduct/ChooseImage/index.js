@@ -1,6 +1,6 @@
 import styles from './styles';
 
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
   TouchableOpacity,
   ActivityIndicator,
@@ -9,16 +9,35 @@ import {
   Image,
 } from 'react-native';
 
-import i18n from 'i18n';
-
 /*Components*/
 
 import {UploadIcon} from 'svg/common';
 import ImagePicker from 'react-native-image-crop-picker';
-import {showMessage} from 'react-native-flash-message';
 
 const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
-  const openImagePicker = async () => {
+  const openImagePicker = async (index) => {
+    if (index < images.length) {
+      ImagePicker.openPicker({
+        mediaType: 'photo',
+        multiple: true,
+        maxFiles: 1,
+      })
+        .then((res) => {
+          let image = {
+            source: res?.[0].path,
+            id: res?.[0].filename,
+          };
+          const listImage = handleReplaceImage(image, index);
+
+          if (typeof setImages === 'function') {
+            setImages(listImage);
+          }
+        })
+        .catch((e) => {
+          console.log('User canceled', e);
+        });
+      return;
+    }
     ImagePicker.openPicker({
       mediaType: 'photo',
       multiple: true,
@@ -36,12 +55,16 @@ const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
         }
       })
       .catch((e) => {
-        showMessage({
-          message: i18n.t('unknownMessage'),
-          type: 'danger',
-          position: 'top',
-        });
+        console.log('User canceled', e);
       });
+  };
+  const handleReplaceImage = (image, index) => {
+    let newListImage = [
+      ...images.slice(0, index),
+      image,
+      ...images.slice(index + 1),
+    ];
+    return newListImage;
   };
   const handlePushNewImage = (listImagePicked = []) => {
     let newListImage = [];
@@ -72,7 +95,7 @@ const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
               return (
                 <TouchableOpacity
                   key={index}
-                  onPress={openImagePicker}
+                  onPress={() => openImagePicker(index)}
                   style={styles.btnImageUpload}>
                   <Image
                     source={
@@ -90,7 +113,7 @@ const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
               return (
                 <TouchableOpacity
                   key={index}
-                  onPress={openImagePicker}
+                  onPress={() => openImagePicker(index)}
                   style={styles.btnImageUpload}>
                   <View style={styles.buttonUpload}>
                     <UploadIcon />
@@ -105,7 +128,7 @@ const ChooseImage = ({label, images, setImages, length = 5, pickerConfig}) => {
         ) : (
           <>
             <TouchableOpacity
-              onPress={openImagePicker}
+              onPress={() => openImagePicker(0)}
               style={styles.btnImageUpload}>
               <View style={styles.buttonUpload}>
                 <UploadIcon />

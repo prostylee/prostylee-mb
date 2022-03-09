@@ -9,7 +9,7 @@ import {CURRENCY_VIET_NAM} from 'constants';
 const ProductItem = ({item, navigation, onRateSuccess = () => {}}) => {
   const onNavigate = () => {
     navigation.navigate('RateProduct', {
-      productId: item.id,
+      productId: item.productData?.id,
       product: item,
       onRateSuccess: onRateSuccess,
     });

@@ -26,7 +26,6 @@ import PropTypes from 'prop-types';
 const ProductTitle = ({
   productId,
   name,
-  numberOfRate,
   navigation,
   bookmarkStatus,
   priceList,
@@ -37,6 +36,9 @@ const ProductTitle = ({
 
   const totalRate = useSelector((state) =>
     productSelectors.getProductCommentsAverage(state),
+  );
+  const productRating = useSelector((state) =>
+    productSelectors.getProductComments(state),
   );
 
   const totalRateDisplay =
@@ -126,7 +128,7 @@ const ProductTitle = ({
           }}>
           <Rating rate={totalRate} />
           <Text style={styles.rateNumber}>{`${totalRateDisplay} (${
-            numberOfRate || 0
+            productRating?.totalElements || 0
           })`}</Text>
           <IonIcons
             name={'ios-chevron-forward'}
