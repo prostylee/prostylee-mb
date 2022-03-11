@@ -48,6 +48,15 @@ const TabViewContainer = ({style}) => {
                   ...prev,
                   ['menu']: layout.height,
                 }));
+              } else if (
+                layout.height &&
+                Object.keys(listLayout)?.includes('menu') &&
+                layout.height > listLayout['menu']
+              ) {
+                setListLayout((prev) => ({
+                  ...prev,
+                  ['menu']: layout.height,
+                }));
               }
             }}>
             <GridView index={index} jumpTo={jumpTo} />
@@ -58,6 +67,15 @@ const TabViewContainer = ({style}) => {
           <View
             onLayout={({nativeEvent: {layout}}) => {
               if (layout.height && !Object.keys(listLayout)?.includes('bag')) {
+                setListLayout((prev) => ({
+                  ...prev,
+                  ['bag']: layout.height,
+                }));
+              } else if (
+                layout.height &&
+                Object.keys(listLayout)?.includes('bag') &&
+                layout.height > listLayout['bag']
+              ) {
                 setListLayout((prev) => ({
                   ...prev,
                   ['bag']: layout.height,
@@ -76,6 +94,15 @@ const TabViewContainer = ({style}) => {
                   ...prev,
                   ['like']: layout.height,
                 }));
+              } else if (
+                layout.height &&
+                Object.keys(listLayout)?.includes('like') &&
+                layout.height > listLayout['like']
+              ) {
+                setListLayout((prev) => ({
+                  ...prev,
+                  ['like']: layout.height,
+                }));
               }
             }}>
             <Order
@@ -90,6 +117,15 @@ const TabViewContainer = ({style}) => {
           <View
             onLayout={({nativeEvent: {layout}}) => {
               if (layout.height && !Object.keys(listLayout)?.includes('save')) {
+                setListLayout((prev) => ({
+                  ...prev,
+                  ['save']: layout.height,
+                }));
+              } else if (
+                layout.height &&
+                Object.keys(listLayout)?.includes('save') &&
+                layout.height > listLayout['save']
+              ) {
                 setListLayout((prev) => ({
                   ...prev,
                   ['save']: layout.height,

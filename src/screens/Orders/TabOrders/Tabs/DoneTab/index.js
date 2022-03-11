@@ -5,6 +5,7 @@ import Product from '../../../ProductItem';
 import {currencyFormat} from 'utils/currency';
 import {ButtonRounded, ButtonOutlined} from 'components';
 import i18n from 'i18n';
+import {getRatedListSelector} from 'redux/selectors/reviewRating';
 
 import {myPageActions, userSelectors} from 'reducers';
 import {
@@ -46,6 +47,8 @@ const DoneTab = ({status, actCode, statusId = 0}) => {
   const hasLoadmore = useSelector((state) =>
     getHasLoadMoreCompletedOrdersSelector(state),
   );
+  const ratedList = useSelector(getRatedListSelector);
+
   const scrollAnimated = useRef(new Animated.Value(0)).current;
   const userProfile = useSelector((state) =>
     userSelectors.getUserProfile(state),
@@ -166,8 +169,11 @@ const DoneTab = ({status, actCode, statusId = 0}) => {
   };
   const hasUserRatedAllProducts = (listProduct = []) => {
     return (
-      listProduct.filter((item) => item?.productData?.reviewedStatusOfUserLogin)
-        .length === listProduct.length
+      listProduct.filter(
+        (item) =>
+          item?.productData?.reviewedStatusOfUserLogin ||
+          ratedList?.includes(item?.productData?.id),
+      ).length === listProduct.length
     );
   };
 

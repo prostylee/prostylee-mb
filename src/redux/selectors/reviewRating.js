@@ -27,3 +27,8 @@ export const getPageReviewRatingSelector = createSelector(
   productReducer,
   (data) => data?.pageReviewRating,
 );
+
+export const getRatedListSelector = createSelector(
+  productReducer,
+  (data) => data?.ratedList,
+);

@@ -15,6 +15,7 @@ export const types = {
     'GET_LIST_REVIEW_RATING_LOAD_MORE_SUCCESS',
   GET_LIST_REVIEW_RATING_LOAD_MORE_FAILED:
     'GET_LIST_REVIEW_RATING_LOAD_MORE_FAILED',
+  SET_LIST_REVIEW_RATED: 'SET_LIST_REVIEW_RATED',
 };
 
 export const actions = {
@@ -45,6 +46,7 @@ export const actions = {
   getListReviewRatingLoadMoreFailed: createAction(
     types.GET_LIST_REVIEW_RATING_LOAD_MORE_FAILED,
   ),
+  setRatedListItem: createAction(types.SET_LIST_REVIEW_RATED),
 };
 
 export const selectors = {
@@ -60,6 +62,7 @@ const defaultState = {
   hasLoadMoreReviewRating: false,
   pageReviewRating: 0,
   limitReviewRating: 12,
+  ratedList: [],
 };
 const PAGE_INIT = 0;
 const UNIT_INCREASE = 1;
@@ -110,6 +113,13 @@ export default handleActions(
     },
     [types.GET_LIST_REVIEW_RATING_LOAD_MORE_FAILED]: (state, {payload}) => {
       return {...state};
+    },
+    [types.SET_LIST_REVIEW_RATED]: (state, {payload}) => {
+      if (state.ratedList?.length) {
+        return {...state, ratedList: [...state.ratedList, payload]};
+      } else {
+        return {...state, ratedList: [payload]};
+      }
     },
   },
   defaultState,

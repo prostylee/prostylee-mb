@@ -20,6 +20,7 @@ import {commonActions} from 'reducers';
 import {useDispatch} from 'react-redux';
 import {Storage, Auth} from 'aws-amplify';
 import {addReview} from 'services/api/reviewRatingApi';
+import {reviewRatingActions} from 'reducers';
 
 import {showMessage} from 'react-native-flash-message';
 import * as ImageManipulator from '@pontusab/react-native-image-manipulator';
@@ -104,6 +105,7 @@ const RatingProduct = ({navigation, product, productId}) => {
           textStyle: {fontSize: 13, fontWeight: '300'},
           icon: {icon: 'success', position: 'left'},
         });
+        dispatch(reviewRatingActions(productId));
         onRateSuccess(productId);
         navigation.goBack();
         setImageList([]);
