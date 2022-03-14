@@ -105,7 +105,7 @@ const RatingProduct = ({navigation, product, productId}) => {
           textStyle: {fontSize: 13, fontWeight: '300'},
           icon: {icon: 'success', position: 'left'},
         });
-        dispatch(reviewRatingActions(productId));
+        dispatch(reviewRatingActions.setRatedListItem(productId));
         onRateSuccess(productId);
         navigation.goBack();
         setImageList([]);
